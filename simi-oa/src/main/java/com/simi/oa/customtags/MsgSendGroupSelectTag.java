@@ -6,10 +6,7 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.simi.service.dict.DictUtil;
 import com.meijia.utils.OneCareUtil;
-import com.simi.po.model.dict.DictServiceTypes;
-import com.simi.po.model.promotion.Msg;
 
 public class MsgSendGroupSelectTag extends SimpleTagSupport {
 

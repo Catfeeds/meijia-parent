@@ -1,6 +1,5 @@
 package com.simi.oa.auth;
 
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +11,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.simi.oa.common.PermissionException;
-import com.meijia.utils.MathBigDeciamlUtil;
 
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {

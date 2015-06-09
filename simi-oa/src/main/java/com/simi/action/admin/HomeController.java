@@ -1,13 +1,10 @@
 package com.simi.action.admin;
 
-import java.sql.SQLException;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.simi.oa.auth.AuthPassport;
-import com.simi.oa.common.ValidatException;
 
 
 @Controller

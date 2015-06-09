@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.pagehelper.PageInfo;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
-import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ArrayHelper;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.admin.AdminAuthority;

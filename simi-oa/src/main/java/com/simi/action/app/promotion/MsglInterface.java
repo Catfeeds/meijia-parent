@@ -2,12 +2,8 @@ package com.simi.action.app.promotion;
 
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javassist.expr.NewArray;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,23 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.baidu.yun.push.exception.PushClientException;
-import com.baidu.yun.push.exception.PushServerException;
 import com.simi.action.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 
 
-import com.simi.po.model.dict.DictServiceTypes;
-import com.simi.po.model.promotion.Channel;
 import com.simi.po.model.promotion.Msg;
-import com.simi.service.promotion.ChannelService;
 import com.simi.service.promotion.MsgService;
 import com.meijia.utils.JspToHtmlFile;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.StatVo;
 
 @Controller
 @RequestMapping(value = "/interface-promotion")

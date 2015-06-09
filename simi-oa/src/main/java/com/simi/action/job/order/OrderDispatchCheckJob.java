@@ -1,19 +1,11 @@
 package com.simi.action.job.order;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.simi.action.BaseController;
-import com.simi.common.Constants;
-import com.simi.po.model.order.Orders;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
-import com.meijia.utils.SendMailUtil;
-import com.meijia.utils.TimeStampUtil;
 
 /**
  * 提醒订单已付款，但是超过两个小时未派工的

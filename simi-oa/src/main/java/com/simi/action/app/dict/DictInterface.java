@@ -1,11 +1,6 @@
 package com.simi.action.app.dict;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.service.dict.AdService;

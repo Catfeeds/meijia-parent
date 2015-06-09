@@ -4,14 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.action.admin.AdminController;
-import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -40,9 +35,7 @@ import com.simi.service.user.UsersService;
 import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.chan.ChannelSearchVo;
 import com.simi.vo.user.UserSearchVo;
-import com.simi.vo.user.UserEchartsVo;
 
 @Controller
 @RequestMapping(value = "/user")

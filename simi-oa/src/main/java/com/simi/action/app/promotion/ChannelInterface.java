@@ -17,7 +17,6 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 
 
-import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.po.model.promotion.Channel;
 import com.simi.service.promotion.ChannelService;
 import com.simi.vo.AppResultData;

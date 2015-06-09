@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.simi.models.AuthorityEditModel;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
-import com.simi.oa.auth.AuthPassport;
 import com.simi.po.model.admin.AdminAuthority;
 import com.simi.service.admin.AdminAuthorityService;
 import com.meijia.utils.common.extension.StringHelper;

@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.simi.po.model.promotion.Msg;
 import com.meijia.utils.OneCareUtil;
 
 public class MsgSendGroupTag extends SimpleTagSupport {

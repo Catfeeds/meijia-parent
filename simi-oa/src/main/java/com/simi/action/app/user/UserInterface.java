@@ -4,26 +4,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.simi.action.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.order.OrderPrices;
-import com.simi.po.model.user.Users;
-import com.simi.service.promotion.ChannelService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.StatVo;
 
 @Controller
 @RequestMapping(value = "/interface-user")

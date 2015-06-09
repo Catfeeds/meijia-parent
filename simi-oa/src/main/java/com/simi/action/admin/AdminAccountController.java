@@ -1,12 +1,9 @@
 package com.simi.action.admin;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,20 +15,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.simi.oa.common.ConstantOa;
 import com.simi.oa.common.ValidatException;
 import com.simi.oa.vo.account.AccountRegisterVo;
 import com.simi.po.model.admin.AdminAccount;
-import com.simi.po.model.dict.DictServiceTypes;
-import com.simi.po.model.promotion.Channel;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.admin.AdminAuthorityService;
 import com.simi.service.admin.AdminRoleService;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.admin.AccountSearchVo;
 
 @Controller

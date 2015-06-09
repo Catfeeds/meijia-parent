@@ -1,8 +1,5 @@
 package com.simi.action.order;
 
-import java.util.Date;
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageInfo;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.user.Users;
-import com.simi.service.admin.AdminAccountService;
-import com.simi.service.admin.AdminAuthorityService;
-import com.simi.service.admin.AdminRoleService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrderSeniorService;
-import com.simi.service.order.OrdersService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.order.OrderSearchVo;
 import com.simi.vo.user.UserViewVo;
 
