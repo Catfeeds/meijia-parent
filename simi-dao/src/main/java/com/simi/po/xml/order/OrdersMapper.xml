@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.order.OrdersMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.order.Orders">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="custom_name" property="customName" jdbcType="VARCHAR" />
+		<result column="agent_mobile" property="agentMobile" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="service_type" property="serviceType" jdbcType="NUMERIC" />
+		<result column="service_date" property="serviceDate" jdbcType="NUMERIC" />
+		<result column="start_time" property="startTime" jdbcType="NUMERIC" />
+		<result column="service_hours" property="serviceHours"
+			jdbcType="NUMERIC" />
+		<result column="cell_id" property="cellId" jdbcType="NUMERIC" />
+		<result column="addr_id" property="addrId" jdbcType="NUMERIC" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="order_from" property="orderFrom" jdbcType="NUMERIC" />
+		<result column="order_status" property="orderStatus" jdbcType="NUMERIC" />
+		<result column="order_rate" property="orderRate" jdbcType="NUMERIC" />
+		<result column="order_rate_content" property="orderRateContent"
+			jdbcType="VARCHAR" />
+		<result column="is_score" property="isScore" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<resultMap id="OrderListMap" type="com.simi.vo.OrdersList">
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="custom_name" property="customName" jdbcType="VARCHAR" />
+		<result column="agent_mobile" property="agentMobile" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="service_type" property="serviceType" jdbcType="NUMERIC" />
+		<result column="service_date" property="serviceDate" jdbcType="NUMERIC" />
+
+		<result column="start_time" property="startTime" jdbcType="NUMERIC" />
+		<result column="service_hours" property="serviceHours"
+			jdbcType="NUMERIC" />
+		<result column="cell_id" property="cellId" jdbcType="NUMERIC" />
+		<result column="cell_name" property="cellName" jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="NUMERIC" />
+		<result column="addr_id" property="addrId" jdbcType="NUMERIC" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="order_from" property="orderFrom" jdbcType="NUMERIC" />
+		<result column="order_status" property="orderStatus" jdbcType="NUMERIC" />
+		<result column="order_rate" property="orderRate" jdbcType="NUMERIC" />
+		<result column="order_rate_content" property="orderRateContent"
+			jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+		<result column="order_money" property="orderMoney" jdbcType="DECIMAL" />
+		<result column="addr" property="addr" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, mobile, custom_name, agent_mobile, city_id, order_no,
+		service_type, service_date, start_time, service_hours,
+		cell_id, addr_id, remarks, order_from, order_status, order_rate,
+		order_rate_content, is_score,
+		add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+
+	<select id="queryOrdersByState" resultMap="BaseResultMap"
+		parameterType="java.lang.Short">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_status = #{orderStatus,jdbcType=NUMERIC}
+		order by add_time desc
+	</select>
+<!-- 根据多个orderstate进行查询 -->
+	<select id="queryOrdersByStates" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_status  in
+		 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+ 		 #{item}
+ 		</foreach>
+		order by add_time desc
+	</select>
+
+	<select id="queryOrdersByStateAndStartTime" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_status = #{orderStatus,jdbcType=NUMERIC}
+		and start_time = #{now,jdbcType=NUMERIC}
+	</select>
+
+	<select id="queryOrdersCompletedAndUnEvaluated" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_status = #{orderStatus,jdbcType=NUMERIC}
+		and start_time > #{now,jdbcType=NUMERIC}
+	</select>
+
+	<select id="totalCountByStartTime" resultType="HashMap"  parameterType="java.util.HashMap">
+		select from_unixtime(start_time,'%Y-%m-%d') as startTime ,count(*) as total,from_unixtime(service_date,'%Y-%m-%d') as serviceDate
+		from orders where order_status in (3,4,5) and start_time between #{startTime,jdbcType=NUMERIC}
+		and #{endTime,jdbcType=NUMERIC} group by from_unixtime(start_time,'%Y-%m-%d')
+	</select>
+	<select id="queryOrdersByStateAndScore" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_status in (2,3,4,5,6)
+		and is_score = 0
+		order by add_time desc
+	</select>
+	<select id="selectByMobile" resultMap="OrderListMap">
+		select
+		p.order_id,o.user_id, o.mobile, o.custom_name, o.agent_mobile, o.city_id, o.order_no,
+		o.service_type, o.service_date, o.start_time, o.service_hours,
+		o.cell_id, o.addr_id, o.remarks, o.order_from, o.order_status,
+		o.order_rate, o.order_rate_content, o.add_time, o.update_time,
+		p.order_money,a.addr, a.name
+		from orders o
+		LEFT JOIN order_prices p
+		ON o.id=p.order_id
+		LEFT JOIN user_addrs a
+		ON o.addr_id=a.id
+		where o.mobile = #{0}
+		order by add_time desc
+		limit #{1},#{2}
+	</select>
+
+	<select id="selectByAgentMobile" resultMap="OrderListMap">
+		select
+		p.order_id,o.user_id, o.mobile, o.custom_name, o.agent_mobile, o.city_id, o.order_no,
+		o.service_type, o.service_date, o.start_time, o.service_hours,
+		o.cell_id, o.addr_id, o.remarks, o.order_from, o.order_status,
+		o.order_rate, o.order_rate_content, o.add_time, o.update_time,
+		p.order_money,a.addr, a.name
+		from orders o
+		LEFT JOIN order_prices p
+		ON o.id=p.order_id
+		LEFT JOIN user_addrs a
+		ON o.addr_id=a.id
+		where o.mobile = #{0} or o.agent_mobile = #{0}
+		order by add_time desc
+		limit #{1},#{2}
+	</select>
+
+	<select id="selectByOrderNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_no = #{orderNo,jdbcType=VARCHAR}
+	</select>
+	<!-- 查出所用下过单用户的手机号 -->
+	<select id="selectDistinctMobileLists" resultType="java.lang.String" >
+		select mobile
+		from orders group by mobile
+	</select>
+
+	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
+	<select id="selectByListPage" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where 1=1
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+
+		<if test="orderNo != null">
+			and order_no like CONCAT('%','${orderNo}','%' )
+		</if>
+		<if test="orderFrom != null">
+			and order_from = #{orderFrom,jdbcType=NUMERIC}
+		</if>
+		<if test="orderStatus != null">
+			and order_status = #{orderStatus,jdbcType=NUMERIC}
+		</if>
+
+		<if test="serviceType != null">
+			and service_type = #{serviceType,jdbcType=NUMERIC}
+		</if>
+		<if test="addTime != null">
+			and add_time between #{addTime,jdbcType=NUMERIC} and
+			#{addTimeOneDay,jdbcType=NUMERIC}
+		</if>
+		<if test="serviceDate != null">
+			and service_date = #{serviceDate,jdbcType=NUMERIC}
+		</if>
+		<if test="startTime != null">
+			and start_time = #{startTime,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+
+	<!-- oa订单查询，找出同一个时段的订单号 -->
+	<select id="selectBySameDateTime" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where 1=1
+
+		<if test="cityId != null">
+			and city_id = #{cityId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="serviceType != null">
+			and service_type = #{serviceType,jdbcType=NUMERIC}
+		</if>
+		<if test="orderStatus != null">
+			and order_status = #{orderStatus,jdbcType=NUMERIC}
+		</if>
+
+		<if test="serviceDate != null">
+			and service_date = #{serviceDate,jdbcType=NUMERIC}
+		</if>
+
+		<if test="startTime != null">
+			<![CDATA[
+			and start_time >= #{startTime,jdbcType=NUMERIC}
+			]]>
+		</if>
+
+		<if test="endTime != null">
+			<![CDATA[
+			and start_time <= #{endTime,jdbcType=NUMERIC}
+		]]>
+		</if>
+		order by add_time desc
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from orders
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.order.Orders">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into orders (id, user_id, mobile, custom_name, agent_mobile,
+		city_id, order_no, service_type,
+		service_date, start_time, service_hours,
+		cell_id, addr_id, remarks,
+		order_from, order_status, order_rate, order_rate_content,
+		is_score, add_time, update_time)
+		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{mobile,jdbcType=CHAR},
+		#{customName,jdbcType=VARCHAR}, #{agentMobile,jdbcType=VARCHAR},
+		#{cityId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR}, #{serviceType,jdbcType=NUMERIC},
+		#{serviceDate,jdbcType=NUMERIC}, #{startTime,jdbcType=NUMERIC},
+		#{serviceHours,jdbcType=NUMERIC},
+		#{cellId,jdbcType=NUMERIC}, #{addrId,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR},
+		#{orderFrom,jdbcType=NUMERIC}, #{orderStatus,jdbcType=NUMERIC},
+		#{orderRate,jdbcType=NUMERIC},
+		#{orderRateContent,jdbcType=VARCHAR}, #{isScore,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.order.Orders">
+		insert into orders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="customName != null">
+				custom_name,
+			</if>
+			<if test="agentMobile != null">
+				agent_mobile,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="serviceType != null">
+				service_type,
+			</if>
+			<if test="serviceDate != null">
+				service_date,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="serviceHours != null">
+				service_hours,
+			</if>
+			<if test="cellId != null">
+				cell_id,
+			</if>
+			<if test="addrId != null">
+				addr_id,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="orderFrom != null">
+				order_from,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="orderRate != null">
+				order_rate,
+			</if>
+			<if test="orderRateContent != null">
+				order_rate_content,
+			</if>
+			<if test="isScore != null">
+				is_score,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="customName != null">
+				#{customName,jdbcType=VARCHAR},
+			</if>
+			<if test="agentMobile != null">
+				#{agentMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceType != null">
+				#{serviceType,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceDate != null">
+				#{serviceDate,jdbcType=NUMERIC},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceHours != null">
+				#{serviceHours,jdbcType=NUMERIC},
+			</if>
+			<if test="cellId != null">
+				#{cellId,jdbcType=NUMERIC},
+			</if>
+			<if test="addrId != null">
+				#{addrId,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="orderFrom != null">
+				#{orderFrom,jdbcType=NUMERIC},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="orderRate != null">
+				#{orderRate,jdbcType=NUMERIC},
+			</if>
+			<if test="orderRateContent != null">
+				#{orderRateContent,jdbcType=VARCHAR},
+			</if>
+			<if test="isScore != null">
+				#{isScore,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.Orders">
+		update orders
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="customName != null">
+				custom_name = #{customName,jdbcType=VARCHAR},
+			</if>
+			<if test="agentMobile != null">
+				agent_mobile = #{agentMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceType != null">
+				service_type = #{serviceType,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceDate != null">
+				service_date = #{serviceDate,jdbcType=NUMERIC},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceHours != null">
+				service_hours = #{serviceHours,jdbcType=NUMERIC},
+			</if>
+			<if test="cellId != null">
+				cell_id = #{cellId,jdbcType=NUMERIC},
+			</if>
+			<if test="addrId != null">
+				addr_id = #{addrId,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="orderFrom != null">
+				order_from = #{orderFrom,jdbcType=NUMERIC},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="orderRate != null">
+				order_rate = #{orderRate,jdbcType=NUMERIC},
+			</if>
+			<if test="orderRateContent != null">
+				order_rate_content = #{orderRateContent,jdbcType=NUMERIC},
+			</if>
+			<if test="isScore != null">
+				is_score = #{isScore,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.Orders">
+		update orders
+		set user_id = #{userId,jdbcType=NUMERIC},
+		mobile = #{mobile,jdbcType=CHAR},
+		custom_name= #{customName,jdbcType=VARCHAR},
+		agent_mobile= #{agentMobile,jdbcType=VARCHAR},
+		city_id = #{cityId,jdbcType=NUMERIC},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		service_type = #{serviceType,jdbcType=NUMERIC},
+		service_date = #{serviceDate,jdbcType=NUMERIC},
+		start_time = #{startTime,jdbcType=NUMERIC},
+		service_hours = #{serviceHours,jdbcType=NUMERIC},
+		cell_id = #{cellId,jdbcType=NUMERIC},
+		addr_id = #{addrId,jdbcType=NUMERIC},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		order_from = #{orderFrom,jdbcType=NUMERIC},
+		order_status = #{orderStatus,jdbcType=NUMERIC},
+		order_rate = #{orderRate,jdbcType=NUMERIC},
+		order_rate_content = #{orderRateContent,jdbcType=VARCHAR},
+		is_score = #{isScore,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

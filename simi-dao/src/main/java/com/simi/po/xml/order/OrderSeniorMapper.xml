@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.order.OrderSeniorMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderSenior" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="senior_order_no" property="seniorOrderNo" jdbcType="VARCHAR" />
+    <result column="senior_type" property="seniorType" jdbcType="NUMERIC" />
+    <result column="senior_pay" property="seniorPay" jdbcType="DECIMAL" />
+    <result column="valid_month" property="validMonth" jdbcType="SMALLINT" />
+    <result column="start_date" property="startDate" jdbcType="DATE" />
+    <result column="end_date" property="endDate" jdbcType="DATE" />
+    <result column="pay_type" property="payType" jdbcType="NUMERIC" />
+    <result column="order_status" property="orderStatus" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, mobile, senior_order_no, senior_type, senior_pay,
+    valid_month, start_date, end_date, pay_type, order_status,
+    add_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from order_senior
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+
+  <select id="selectByMobileAndPay" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from order_senior
+    where mobile = #{mobile,jdbcType=NUMERIC} and order_status = 1
+    order by add_time desc;
+  </select>
+
+  <select id="selectByOrderSeniorNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from order_senior
+    where senior_order_no = #{senior_order_no,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_senior
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.order.OrderSenior" >
+	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID() AS id
+	</selectKey>
+    insert into order_senior (id, user_id, mobile,
+      senior_order_no, senior_type, senior_pay,
+      valid_month, start_date, end_date,
+      pay_type, order_status, add_time,
+      update_time)
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+      #{seniorOrderNo,jdbcType=VARCHAR}, #{seniorType,jdbcType=NUMERIC}, #{seniorPay,jdbcType=DECIMAL},
+      #{validMonth,jdbcType=SMALLINT},  #{startDate,jdbcType=DATE},
+      #{endDate,jdbcType=DATE}, #{payType,jdbcType=NUMERIC},
+      #{orderStatus,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+      #{updateTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.order.OrderSenior" >
+    insert into order_senior
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="seniorOrderNo != null" >
+        senior_order_no,
+      </if>
+      <if test="seniorType != null" >
+        senior_type,
+      </if>
+      <if test="seniorPay != null" >
+        senior_pay,
+      </if>
+      <if test="validMonth != null" >
+        valid_month,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=NUMERIC},
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="seniorOrderNo != null" >
+        #{seniorOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="seniorType != null" >
+        #{seniorType,jdbcType=NUMERIC},
+      </if>
+      <if test="seniorPay != null" >
+        #{seniorPay,jdbcType=DECIMAL},
+      </if>
+      <if test="validMonth != null" >
+        #{validMonth,jdbcType=SMALLINT},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=NUMERIC},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderSenior" >
+    update order_senior
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="seniorOrderNo != null" >
+        senior_order_no = #{seniorOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="seniorType != null" >
+        senior_type = #{seniorType,jdbcType=NUMERIC},
+      </if>
+      <if test="seniorPay != null" >
+        senior_pay = #{seniorPay,jdbcType=DECIMAL},
+      </if>
+      <if test="validMonth != null" >
+        valid_month = #{validMonth,jdbcType=SMALLINT},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=NUMERIC},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderSenior" >
+    update order_senior
+    set user_id = #{userId,jdbcType=NUMERIC},
+      mobile = #{mobile,jdbcType=CHAR},
+      senior_order_no = #{seniorOrderNo,jdbcType=VARCHAR},
+      senior_type = #{seniorType,jdbcType=NUMERIC},
+      senior_pay = #{seniorPay,jdbcType=DECIMAL},
+      valid_month = #{validMonth,jdbcType=SMALLINT},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      pay_type = #{payType,jdbcType=NUMERIC},
+      order_status = #{orderStatus,jdbcType=NUMERIC},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

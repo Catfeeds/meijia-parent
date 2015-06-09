@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserBaiduBindMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserBaiduBind">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="app_id" property="appId" jdbcType="VARCHAR" />
+		<result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+		<result column="app_user_id" property="appUserId" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, mobile, app_id, channel_id, app_user_id,
+		add_time,device_type
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_baidu_bind
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_baidu_bind
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByOrdered" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_baidu_bind
+		where user_id in (SELECT distinct user_id FROM orders)
+	</select>
+
+	<select id="selectByNotOrdered" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_baidu_bind
+		where user_id not in (SELECT distinct user_id FROM orders)
+	</select>
+	
+	<select id="totalBaiduBind" resultType="java.lang.Integer">
+		select count(*) from user_baidu_bind
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_baidu_bind
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserBaiduBind">
+		insert into user_baidu_bind (id, user_id, mobile,
+		app_id, channel_id, app_user_id,
+		add_time,device_type)
+		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{mobile,jdbcType=CHAR},
+		#{appId,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, #{appUserId,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC},#{deviceType,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserBaiduBind">
+		insert into user_baidu_bind
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="appId != null">
+				app_id,
+			</if>
+			<if test="channelId != null">
+				channel_id,
+			</if>
+			<if test="appUserId != null">
+				app_user_id,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="addTime != null">
+				device_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="appId != null">
+				#{appId,jdbcType=VARCHAR},
+			</if>
+			<if test="channelId != null">
+				#{channelId,jdbcType=VARCHAR},
+			</if>
+			<if test="appUserId != null">
+				#{appUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{deviceType,jdbcType=VARCHAR}),
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserBaiduBind">
+		update user_baidu_bind
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="appId != null">
+				app_id = #{appId,jdbcType=VARCHAR},
+			</if>
+			<if test="channelId != null">
+				channel_id = #{channelId,jdbcType=VARCHAR},
+			</if>
+			<if test="appUserId != null">
+				app_user_id = #{appUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				device_type = #{deviceType,jdbcType=VARCHAR})
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserBaiduBind">
+		update user_baidu_bind
+		set user_id = #{userId,jdbcType=NUMERIC},
+		mobile = #{mobile,jdbcType=CHAR},
+		app_id = #{appId,jdbcType=VARCHAR},
+		channel_id = #{channelId,jdbcType=VARCHAR},
+		app_user_id = #{appUserId,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		device_type = #{deviceType,jdbcType=VARCHAR})
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

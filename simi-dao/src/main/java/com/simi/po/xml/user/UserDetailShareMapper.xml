@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserDetailShareMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserDetailShare" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="share_type" property="shareType" jdbcType="VARCHAR" />
+    <result column="share_account" property="shareAccount" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, mobile, share_type, share_account, add_time
+  </sql>
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_detail_share
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+
+
+
+  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_detail_share
+    where mobile = #{mobile,jdbcType=CHAR}
+  </select>
+
+  <select id="selectByMobileAndShareType" resultMap="BaseResultMap"	parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_detail_share
+		where 1=1
+		<if test="mobile != null">
+			and mobile = #{mobile,jdbcType=NUMERIC}
+		</if>
+		<if test="shareType != null">
+			and share_type = #{shareType,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_detail_share
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserDetailShare" >
+    insert into user_detail_share (id, user_id, mobile,
+      share_type, share_account, add_time
+      )
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+      #{shareType,jdbcType=VARCHAR}, #{shareAccount,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserDetailShare" >
+    insert into user_detail_share
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="shareType != null" >
+        share_type,
+      </if>
+      <if test="shareAccount != null" >
+        share_account,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="shareType != null" >
+        #{shareType,jdbcType=VARCHAR},
+      </if>
+      <if test="shareAccount != null" >
+        #{shareAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserDetailShare" >
+    update user_detail_share
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="shareType != null" >
+        share_type = #{shareType,jdbcType=VARCHAR},
+      </if>
+      <if test="shareAccount != null" >
+        share_account = #{shareAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserDetailShare" >
+    update user_detail_share
+    set user_id = #{userId,jdbcType=NUMERIC},
+      mobile = #{mobile,jdbcType=CHAR},
+      share_type = #{shareType,jdbcType=VARCHAR},
+      share_account = #{shareAccount,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

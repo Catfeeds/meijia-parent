@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserAddrsMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserAddrs" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="cell_id" property="cellId" jdbcType="NUMERIC" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="poi_type" property="poiType" jdbcType="NUMERIC" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, mobile, cell_id, latitude, longitude, poi_type, name, address, addr,
+    city, uid, phone, post_code, is_default, add_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_addrs
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+  	  select
+    <include refid="Base_Column_List" />
+    	from user_addrs
+    order by id asc
+  </select>
+  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_addrs
+    where mobile = #{id,jdbcType=CHAR}
+    order by is_default desc, add_time desc
+  </select>
+  <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_addrs
+    where id in
+ 	<foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+        #{item}
+    </foreach>
+
+    order by add_time asc
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_addrs
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserAddrs" >
+    insert into user_addrs (id, user_id, mobile,
+      cell_id, latitude, longitude,
+      poi_type, name, address,
+      addr, city, uid, phone,
+      post_code, is_default, add_time,
+      update_time)
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+      #{cellId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
+      #{poiType,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{addr,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{postCode,jdbcType=VARCHAR}, #{isDefault,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+      #{updateTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserAddrs" >
+    insert into user_addrs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="cellId != null" >
+        cell_id,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="poiType != null" >
+        poi_type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="cellId != null" >
+        #{cellId,jdbcType=NUMERIC},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="poiType != null" >
+        #{poiType,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+   <update id="updateByMobile">
+    update user_addrs
+    set is_default = 0
+    where mobile = #{0}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserAddrs" >
+    update user_addrs
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="cellId != null" >
+        cell_id = #{cellId,jdbcType=NUMERIC},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="poiType != null" >
+        poi_type = #{poiType,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserAddrs" >
+    update user_addrs
+    set user_id = #{userId,jdbcType=NUMERIC},
+      mobile = #{mobile,jdbcType=CHAR},
+      cell_id = #{cellId,jdbcType=NUMERIC},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      poi_type = #{poiType,jdbcType=NUMERIC},
+      name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=NUMERIC},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateDefaultByMobile" parameterType="java.lang.String" >
+    update user_addrs
+    set is_default = "0"
+    where  mobile = #{mobile,jdbcType=CHAR}
+  </update>
+</mapper>

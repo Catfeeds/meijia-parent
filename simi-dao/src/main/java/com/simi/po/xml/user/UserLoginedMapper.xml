@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserLoginedMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserLogined" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="login_from" property="loginFrom" jdbcType="NUMERIC" />
+    <result column="login_ip" property="loginIp" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, mobile, login_from, login_ip, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_logined
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_logined
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserLogined" >
+    insert into user_logined (id, user_id, mobile,
+      login_from, login_ip, add_time
+      )
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+      #{loginFrom,jdbcType=NUMERIC}, #{loginIp,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserLogined" >
+    insert into user_logined
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="loginFrom != null" >
+        login_from,
+      </if>
+      <if test="loginIp != null" >
+        login_ip,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="loginFrom != null" >
+        #{loginFrom,jdbcType=NUMERIC},
+      </if>
+      <if test="loginIp != null" >
+        #{loginIp,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserLogined" >
+    update user_logined
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="loginFrom != null" >
+        login_from = #{loginFrom,jdbcType=NUMERIC},
+      </if>
+      <if test="loginIp != null" >
+        login_ip = #{loginIp,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserLogined" >
+    update user_logined
+    set user_id = #{userId,jdbcType=NUMERIC},
+      mobile = #{mobile,jdbcType=CHAR},
+      login_from = #{loginFrom,jdbcType=NUMERIC},
+      login_ip = #{loginIp,jdbcType=NUMERIC},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

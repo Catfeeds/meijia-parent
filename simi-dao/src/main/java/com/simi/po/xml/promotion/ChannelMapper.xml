@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.promotion.ChannelMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.promotion.Channel">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="channel_type" property="channelType" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+		<result column="is_qrcode" property="isQrcode" jdbcType="NUMERIC" />
+		<result column="short_url" property="shortUrl" jdbcType="VARCHAR" />
+		<result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR" />
+		<result column="total_downloads" property="totalDownloads"
+			jdbcType="INTEGER" />
+		<result column="is_online" property="isOnline" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, channel_type, name, token, download_url, is_qrcode,
+		short_url,
+		qrcode_url, total_downloads,
+		is_online, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from channel
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByToken" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from channel
+		where token = #{token,jdbcType=VARCHAR}
+	</select>
+
+    <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from channel where 1=1
+    <if test="name!=null">
+         and name like CONCAT('%','${name}','%' )
+    </if>
+    <if test="token!=null">
+         and token like CONCAT('%','${token}','%' )
+    </if>
+    <if test="channelType!=null">
+         and channel_type =#{channelType,jdbcType=NUMERIC}
+    </if>
+    order by id desc
+   </select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		channel
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.promotion.Channel">
+		insert into channel (id,
+		channel_type, name,
+		token, download_url, is_qrcode,
+		short_url,
+		qrcode_url, total_downloads,
+		is_online, add_time, update_time
+		)
+		values
+		(#{id,jdbcType=NUMERIC}, #{channelType,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR},
+		#{token,jdbcType=VARCHAR},
+		#{downloadUrl,jdbcType=VARCHAR}, #{isQrcode,jdbcType=NUMERIC},
+		#{shortUrl,jdbcType=VARCHAR}, #{qrcodeUrl,jdbcType=VARCHAR},
+		#{totalDownloads,jdbcType=INTEGER},
+		#{isOnline,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.promotion.Channel">
+		insert into channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="channelType != null">
+				channel_type,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="token != null">
+				token,
+			</if>
+			<if test="downloadUrl != null">
+				download_url,
+			</if>
+			<if test="isQrcode != null">
+				is_qrcode,
+			</if>
+			<if test="shortUrl != null">
+				short_url,
+			</if>
+			<if test="qrcodeUrl != null">
+				qrcode_url,
+			</if>
+			<if test="totalDownloads != null">
+				total_downloads,
+			</if>
+			<if test="isOnline != null">
+				is_online,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="channelType != null">
+				#{channelType,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="token != null">
+				#{token,jdbcType=VARCHAR},
+			</if>
+			<if test="downloadUrl != null">
+				#{downloadUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="isQrcode != null">
+				#{isQrcode,jdbcType=NUMERIC},
+			</if>
+			<if test="shortUrl != null">
+				#{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="qrcodeUrl != null">
+				#{qrcodeUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="totalDownloads != null">
+				#{totalDownloads,jdbcType=INTEGER},
+			</if>
+			<if test="isOnline != null">
+				#{isOnline,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.promotion.Channel">
+		update channel
+		<set>
+			<if test="channelType != null">
+				channel_type = #{channelType,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="token != null">
+				token = #{token,jdbcType=VARCHAR},
+			</if>
+			<if test="downloadUrl != null">
+				download_url = #{downloadUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="isQrcode != null">
+				is_qrcode = #{isQrcode,jdbcType=NUMERIC},
+			</if>
+			<if test="shortUrl != null">
+				short_url = #{shortUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="qrcodeUrl != null">
+				qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="totalDownloads != null">
+				total_downloads = #{totalDownloads,jdbcType=INTEGER},
+			</if>
+			<if test="isOnline != null">
+				is_online = #{isOnline,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.promotion.Channel">
+		update channel
+		set
+		channel_type = #{channelType,jdbcType=NUMERIC},
+		name =
+		#{name,jdbcType=VARCHAR},
+		token = #{token,jdbcType=VARCHAR},
+		download_url = #{downloadUrl,jdbcType=VARCHAR},
+		is_qrcode =
+		#{isQrcode,jdbcType=NUMERIC},
+		short_url = #{shortUrl,jdbcType=VARCHAR},
+		qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+		total_downloads =
+		#{totalDownloads,jdbcType=INTEGER},
+		is_online =
+		#{isOnline,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id =
+		#{id,jdbcType=NUMERIC}
+	</update>
+
+	<update id="updateByTotalDownload" parameterType="java.lang.String">
+		update channel
+		set total_downloads = total_downloads + 1,
+			update_time = unix_timestamp(now())
+		where token = #{token,jdbcType=VARCHAR} limit 1
+	</update>
+</mapper>
