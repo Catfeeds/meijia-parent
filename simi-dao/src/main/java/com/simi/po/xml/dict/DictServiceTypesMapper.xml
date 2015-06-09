@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.dict.DictServiceTypesMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.dict.DictServiceTypes" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="tips" property="tips" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="dis_price" property="disPrice" jdbcType="DECIMAL"/>
+    <result column="desc_url" property="descUrl" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+    <result column="enable" property="enable" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, keyword, tips, price, dis_price, desc_url, add_time, update_time,enable
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from dict_service_types
+    order by id asc
+  </select>
+
+  <select id="selectByListPage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from dict_service_types
+    order by id asc
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from dict_service_types
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dict_service_types
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.dict.DictServiceTypes" >
+    insert into dict_service_types (id, name, keyword,
+      tips, price, dis_price,
+      desc_url, add_time, update_time,enable
+      )
+    values (#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR},
+      #{tips,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{disPrice,jdbcType=DECIMAL},
+      #{descUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC}
+      )
+  </insert>
+  	<select id="selectByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from dict_service_types
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+
+  	<select id="selectByNameAndOtherId" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from dict_service_types
+		where 1=1
+
+		<if test="name != null" >
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+
+		<if test="id != null" >
+		     and id != #{id,jdbcType=NUMERIC}
+		 </if>
+		 limit 1
+	</select>
+
+
+  <insert id="insertSelective" parameterType="com.simi.po.model.dict.DictServiceTypes" >
+    insert into dict_service_types
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="tips != null" >
+        tips,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="disPrice != null" >
+        dis_price,
+      </if>
+      <if test="descUrl != null" >
+        desc_url,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="disPrice != null" >
+        #{disPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="descUrl != null" >
+        #{descUrl,jdbcType=VARCHAR},
+      </if>
+       <if test="enable != null" >
+        #{enable,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.dict.DictServiceTypes" >
+    update dict_service_types
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        tips = #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="disPrice != null" >
+        dis_price = #{disPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="descUrl != null" >
+        desc_url = #{descUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.dict.DictServiceTypes" >
+    update dict_service_types
+    set name = #{name,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      dis_price = #{disPrice,jdbcType=DECIMAL},
+      desc_url = #{descUrl,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC}
+      enable = #{enable,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>
