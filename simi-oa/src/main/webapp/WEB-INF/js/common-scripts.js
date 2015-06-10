@@ -1,3 +1,8 @@
+//Global host+url
+var host = window.location.host;
+var appName = "simi-oa";
+
+var appRootUrl = "http://" + host + "/" + appName + "/";
 /*---LEFT BAR ACCORDION----*/
 $(function() {
     $('#nav-accordion').dcAccordion({
