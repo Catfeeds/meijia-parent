@@ -37,7 +37,7 @@
                           	用户管理
                           	
                           	<div class="pull-right">
-                          		<button class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                          		<button onClick="btn_add('/account/register?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
                     		</div>      
                           </header>
                           
@@ -66,8 +66,8 @@
 						            <td>${ item.enable }</td>
 						            <td><fmt:formatDate value="${item.registerTime}" pattern="yyyy-MM-dd HH:mm:ss " /></td>
                                   	<td>
-	                                    <button id="btn_update" onClick="btn_update(${item.id})" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-	                                    <button id="btn_del" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+	                                    <button id="btn_update" onClick="btn_update('/account/register?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+	                                    <button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
                                   	</td>
                               </tr>
                               </c:forEach>

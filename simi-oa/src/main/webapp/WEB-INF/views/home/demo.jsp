@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<!--common tag for all pages-->
 <%@ include file="../shared/taglib.jsp"%>
+
+<!--tag for this page-->
 
 <html>
   <head>
@@ -43,6 +46,6 @@
 
     <!--script for this page-->	
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
-
+	
   </body>
 </html>
