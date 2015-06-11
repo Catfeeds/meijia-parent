@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>isRead</name>
-		<tag-class>com.zrj.oa.customtags.IsReadTag</tag-class>
+		<tag-class>com.simi.oa.customtags.IsReadTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>isRead</name>

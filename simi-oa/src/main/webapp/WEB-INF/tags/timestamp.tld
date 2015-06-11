@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>timestamp</name>
-		<tag-class>com.zrj.oa.customtags.TimeStampTag</tag-class>
+		<tag-class>com.simi.oa.customtags.TimeStampTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>t</name>

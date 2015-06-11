@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>formatNumber</name>
-		<tag-class>com.zrj.oa.customtags.NumberFormatterTag</tag-class>
+		<tag-class>com.simi.oa.customtags.NumberFormatterTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>format</name>

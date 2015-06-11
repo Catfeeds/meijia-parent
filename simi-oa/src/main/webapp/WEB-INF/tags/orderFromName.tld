@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>orderfrom</name>
-		<tag-class>com.zrj.oa.customtags.OrderFromNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.OrderFromNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>orderFrom</name>

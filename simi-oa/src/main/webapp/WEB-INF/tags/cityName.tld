@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>cityname</name>
-		<tag-class>com.zrj.oa.customtags.CityNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.CityNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>cityId</name>

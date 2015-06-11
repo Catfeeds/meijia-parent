@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>cellname</name>
-		<tag-class>com.zrj.oa.customtags.CellNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.CellNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>cellName</name>

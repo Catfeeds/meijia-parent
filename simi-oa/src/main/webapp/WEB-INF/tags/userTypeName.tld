@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>userTypeId</name>
-		<tag-class>com.zrj.oa.customtags.UserTypeNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.UserTypeNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>userTypeId</name>

@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>orderstatus</name>
-		<tag-class>com.zrj.oa.customtags.OrderStatusNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.OrderStatusNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>orderStatus</name>

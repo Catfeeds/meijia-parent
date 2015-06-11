@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>payType</name>
-		<tag-class>com.zrj.oa.customtags.PayTypeNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.PayTypeNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>payType</name>

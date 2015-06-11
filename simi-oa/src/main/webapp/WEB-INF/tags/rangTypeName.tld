@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>rangType</name>
-		<tag-class>com.zrj.oa.customtags.RangTypeNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.RangTypeNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>rangType</name>

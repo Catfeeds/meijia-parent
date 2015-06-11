@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>sendStatus</name>
-		<tag-class>com.zrj.oa.customtags.SendStatusNameTag</tag-class>
+		<tag-class>com.simi.oa.customtags.SendStatusNameTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>sendStatus</name>
