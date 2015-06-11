@@ -62,7 +62,7 @@ public class MsglInterface extends BaseController {
 	        String addTime = TimeStampUtil.timeStampToDateStr(TimeStampUtil.getNow(),"yyyy-MM-dd");
 	        map.put("addTime",addTime);
 	        JspToHtmlFile.JspToHtmlFile(templatePath, destPath, map);
-	        String tempUrl = "/simi-oa/upload/html/temp/"+msgUrl+".html";
+	        String tempUrl = "upload/html/temp/"+msgUrl+".html";
 	        result.setData(tempUrl);
 	      return result;
 	}

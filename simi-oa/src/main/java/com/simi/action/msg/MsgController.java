@@ -1,4 +1,4 @@
-package com.simi.action.promotion;
+package com.simi.action.msg;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class MsgController extends BaseController {
 
 		model.addAttribute("contentModel",result);
 
-		return "promotion/msgList";
+		return "msg/msgList";
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class MsgController extends BaseController {
 
 		model.addAttribute("msgModel", msg);
 
-		return "promotion/msgForm";
+		return "msg/msgForm";
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class MsgController extends BaseController {
 				msgTemp.getAddTime() * 1000, "yyyy-MM-dd");
 		map.put("addTime", addTime);
 		JspToHtmlFile.JspToHtmlFile(templatePath, destPath, map);
-		msg.setHtmlUrl("/simi-oa/upload/html/" + msg.getId() + ".html");
+		msg.setHtmlUrl("upload/html/" + msg.getId() + ".html");
 		msgService.updateByPrimaryKeySelective(msg);
 		
 
@@ -256,7 +256,7 @@ public class MsgController extends BaseController {
 
 		model.addAttribute("contentModel",result);
 
-		return "promotion/userMsgList";
+		return "msg/userMsgList";
 	}
 
 
