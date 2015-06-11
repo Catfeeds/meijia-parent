@@ -92,7 +92,7 @@ public class UserController extends AdminController {
 				pageSize);
 		model.addAttribute("contentModel", result);
 
-		return "user/list";
+		return "user/userList";
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class UserController extends AdminController {
 				pageNo, pageSize);
 		model.addAttribute("contentModel", result);
 
-		return "user/payDetail";
+		return "user/userDetailPayList";
 	}
 	
 /*	@RequestMapping(value = "/userStat-total", method = { RequestMethod.GET })
