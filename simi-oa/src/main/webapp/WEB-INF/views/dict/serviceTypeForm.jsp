@@ -36,7 +36,7 @@
                              服务类型
                           </header>
                           
-                          <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+                         <!--  <hr style="width: 100%; color: black; height: 1px; background-color:black;" /> -->
                           
                           <div class="panel-body">
                              <form:form modelAttribute="serviceTypeModel"
@@ -123,11 +123,12 @@
     <!-- js placed at the end of the document so the pages load faster -->
     <!--common script for all pages-->
     <%@ include file="../shared/importJs.jsp"%>
-
-
-    <!--script for this page-->	
-	<script src="<c:url value='/js/simi/demo.js'/>"></script>
+     <!--script for this page-->	
     <script src="<c:url value='/js/simi/dict/serviceTypeForm.js'/>"
 		type="text/javascript"></script>
+
+   
+	<script src="<c:url value='/js/simi/demo.js'/>"></script>
+    
   </body>
 </html>
