@@ -96,6 +96,7 @@ var formVal = $('#dict-form').validate({
 });
 
 $("#editServiceType_btn").click(function() {
+	alert("1111111111");
 	if (confirm("确认要保存吗?")) {
 		if ($('#dict-form').validate().form()) {
 			$('#dict-form').submit();
