@@ -70,7 +70,7 @@
 					<li><a href="#"><i class=" icon-suitcase"></i>Profile</a></li>
 					<li><a href="#"><i class="icon-cog"></i> Settings</a></li>
 					<li><a href="#"><i class="icon-bell-alt"></i> Notification</a></li>
-					<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+					<li><a href="/simi-oa/account/logout"><i class="icon-key"></i> Log Out</a></li>
 				</ul></li>
 			<!-- user login dropdown end -->
 		</ul>
