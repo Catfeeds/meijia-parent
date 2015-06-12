@@ -60,14 +60,14 @@ public class DictCouponsController extends BaseController {
 
 		model.addAttribute("contentModel", result);
 
-		return "coupons/list";
+		return "coupons/couponList";
 	}
 
 	@RequestMapping(value = "/toAddCoupons", method = { RequestMethod.GET })
 	public String toAddCoupons(
 			@ModelAttribute("dictCoupons") DictCoupons dictCoupons) {
 
-		return "coupons/addCoupons";
+		return "coupons/couponForm";
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class DictCouponsController extends BaseController {
 				pageSize);
 		model.addAttribute("contentModel", result);
 
-		return "coupons/userCouponsList";
+		return "coupons/userCouponList";
 	}
 
 }
