@@ -84,11 +84,3 @@ $("#previewMsg_btn").click(function() {
 	    }
     });
 });
-//富编辑器
-KindEditor.ready(function(K) {
-  	 K.create("#some-textarea",{
-         	width:'300px',
-         	height:'300px',
-         	afterBlur: function(){this.sync();}//帮助KindEditor获得textarea的值
-  	 });
-         });
