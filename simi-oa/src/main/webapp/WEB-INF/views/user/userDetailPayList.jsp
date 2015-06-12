@@ -40,9 +40,9 @@
                           <header class="panel-heading">
                           	用户消费明细
                           	
-                          	<div class="pull-right">
+                         <!--  	<div class="pull-right">
                           		<button onClick="btn_add('/account/register?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
-                    		</div>      
+                    		</div>    -->   
                           </header>
                           
                           <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
@@ -60,7 +60,7 @@
 		                              <th>交易状态</th>
 		                              <th>交易方式</th>
 		                              <th >添加时间</th>
-		                              <th>操作</th>
+		                             <!--  <th>操作</th> -->
                               </tr>
                               </thead>
                               <tbody>
@@ -99,11 +99,11 @@
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd HH:mm:ss" t="${item.addTime * 1000}"/>
 							            </td>
-							            <td>
-							            	<button id="btn_update" <%-- onClick="btn_update('msg/msgForm?id=${ item.id }')" --%> class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-	                                  		<button id="btn_del" <%-- onClick="btn_del('/account/delete/${item.id}')" --%> class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+							           <%--  <td>
+							            	<button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+	                                  		<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
 							            
-							            </td>
+							            </td> --%>
                               </tr>
                               </c:forEach>
                               </tbody>
