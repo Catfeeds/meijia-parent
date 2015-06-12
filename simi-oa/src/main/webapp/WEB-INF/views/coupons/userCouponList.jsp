@@ -40,8 +40,8 @@
                       <section class="panel">
                           <header class="panel-heading">
                           	用户兑换优惠券列表
-                          	<div class="pull-right">
-                          		<button <!-- onClick="btn_add('/account/register?id=0')" --> class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                          	<div class="pull-right"><!--'/account/register?id=0'  -->
+                          		<button onClick="btn_add()" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
                     		</div>      
                           </header>
                           
