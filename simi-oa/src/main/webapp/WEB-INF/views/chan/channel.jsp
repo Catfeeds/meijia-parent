@@ -62,7 +62,7 @@
 							<td>${ item.addTime }</td>
 							<td>${ item.updateTime }</td>
 							<td>
-	                            <button id="btn_update" onClick="btn_update('/simi-oa//chan/channelForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>                                    
+	                            <button id="btn_update" onClick="btn_update('/chan/channelForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>                                    
                             </td>
 						</tr>
 					</c:forEach>
