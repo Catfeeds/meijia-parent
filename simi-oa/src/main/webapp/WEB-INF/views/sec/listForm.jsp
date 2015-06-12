@@ -10,6 +10,8 @@
 	<%@ include file="../shared/importCss.jsp"%>
 	
 	<!--css for this page-->
+<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
+	type="text/css" />
 
   </head>
 
@@ -156,6 +158,11 @@
 
 
     <!--script for this page-->	
+    <script type="text/javascript"
+		src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>"></script>
+	<script
+		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
+		type="text/javascript"></script>
     	<script src="<c:url value='/js/simi/sec/listForm.js'/>"
 		type="text/javascript"></script>
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
