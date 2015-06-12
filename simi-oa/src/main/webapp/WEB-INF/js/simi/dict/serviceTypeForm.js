@@ -9,7 +9,6 @@ $.validator.addMethod("uniqueName", function(value, element) {
 	  success: function(msg) {
 		  response = msg.data;
 	  }
-
   });
 
   //不存在，则返回true
@@ -70,7 +69,7 @@ var formVal = $('#dict-form').validate({
 		},
 
 	},
-/*
+
 	invalidHandler : function(event, validator) { // display error alert on
 													// form submit
 		$('.alert-error', $('#dict-form')).show();
@@ -91,17 +90,15 @@ var formVal = $('#dict-form').validate({
 
 	errorPlacement : function(error, element) {
 		error.insertAfter(element.parents(".col-md-5"));
-	}*/
-
-	
-	$("#editServiceType_btn").click(function() {
-		alert("1111111111");
-		if (confirm("确认要保存吗?")) {
-			if ($('#dict-form').validate().form()) {
-				$('#dict-form').submit();
-			}
-		}
-	})
-
+	}
 });
+
+$("#editServiceType_btn").click(function() {
+	alert("1111111111");
+	if (confirm("确认要保存吗?")) {
+		if ($('#dict-form').validate().form()) {
+			$('#dict-form').submit();
+		}
+	}
+})
 

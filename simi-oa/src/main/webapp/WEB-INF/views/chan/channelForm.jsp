@@ -33,34 +33,43 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                             服务类型
+                             用户管理
                           </header>
                           
-                         <!--  <hr style="width: 100%; color: black; height: 1px; background-color:black;" /> -->
+                          <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
                           
                           <div class="panel-body">
-                            <form:form modelAttribute="channelModel" class="form-horizontal"
+                              <form:form modelAttribute="channelModel" class="form-horizontal"
 								method="POST" action="channelForm" id="channel-form" >
 
 								<form:hidden path="id" />
-                                  <div class="form-group required" >
-                                      <label class="col-sm-2 col-sm-2 control-label">名称</label>
-                                      <div class="col-sm-10">
-                                      		<form:input path="name" class="form-control placeholder-no-fix" autocomplete="off" placeholder="名称"/><br/>
-											<form:errors path="name" class="field-has-error"></form:errors>
-                                      </div>
-                                  </div>
-                                  <div class="form-group required">
-                                      <label class="col-sm-2 col-sm-2 control-label">唯一标识</label>
-                                      <div class="col-sm-10">
-											<form:input path="token" class="form-control placeholder-no-fix" autocomplete="off" placeholder="唯一标识"/><br/>
-											<form:errors path="token" class="field-has-error"></form:errors>
-                                      </div>
-                                  </div>
+								<div class="form-body">
 
-                                  <div class="form-group required">
-                                      <label class="col-sm-2 col-sm-2 control-label">类型</label>
-                                      <div class="col-sm-10" id="channelTypeGroup">
+									<div class="form-group required">
+
+										<label class="col-md-2 control-label">名称</label>
+										<div class="col-md-5">
+											<form:input path="name" class="form-control" placeholder="名称"
+												maxLength="32" />
+											<form:errors path="name" class="field-has-error"></form:errors>
+										</div>
+									</div>
+                              </div>
+
+                                       <div class="form-group required">
+										<label class="col-md-2 control-label">唯一标识</label>
+										<div class="col-md-5">
+											<form:input path="token" class="form-control"
+										     placeholder="唯一标识" maxLength="32" />
+											<form:errors path="token" class="field-has-error"></form:errors>
+										</div>
+									</div>
+
+
+									<div class="form-group required">
+										<!-- Text input-->
+										<label class="col-md-2 control-label">类型</label>
+										<div class="col-md-10" id="channelTypeGroup">
 
 											<div class="row">
 												<div class="col-md-2" align="right">
@@ -83,24 +92,24 @@
 												</div>
 											</div>
                                       </div>
-                                  </div>
-
-                                  <div class="form-group required">
-                                      <label class="col-sm-2 col-sm-2 control-label">下载地址</label>
-                                      <div class="col-sm-10">
+                                    </div>
+                                       <div class="form-group required">
+										<label class="col-md-2 control-label">下载地址</label>
+										<div class="col-md-5">
 											<form:input path="downloadUrl" class="form-control"
 												placeholder="下载地址"  maxLength="128"
 												readonly="${channelModel.channelType == 1}"
 												/>
 											<form:errors path="downloadUrl" class="field-has-error"></form:errors>
-											<input type="hidden" id="downloadUrlDefault" value="${channelModel.downloadUrl}"/>                  	
-                                      </div>
-                                  </div>
-                                  
-                                  <div class="form-group">
-                                      <label class="col-sm-2 col-sm-2 control-label">是否上线</label>
-                                      <div class="col-sm-10">
-											<div class="col-md-10">
+											<input type="hidden" id="downloadUrlDefault" value="${channelModel.downloadUrl}"/>
+										</div>
+									</div>
+
+									<div class="form-group required">
+										<!-- Text input-->
+										<label class="col-md-2 control-label">是否上线</label>
+										<div class="col-md-10">
+
 											<div class="row">
 												<div class="col-md-2" align="right">
 													<label class="radio"> <input value="0" name="isOnline"
@@ -113,14 +122,16 @@
 													</label>
 												</div>
 											</div>
-                                        </div>         	
+                                        </div>
                                       </div>
-                                  </div> 
-                                  
-                                  <div class="form-group required">
-										<label class="col-sm-2 col-sm-2 control-label">是否生成二维码</label>
-										<div class="col-sm-10">
-												<div class="row">
+
+									<div class="form-group required">
+
+										<!-- Text input-->
+										<label class="col-md-2 control-label">是否生成二维码</label>
+										<div class="col-md-10">
+
+											<div class="row">
 												<div class="col-md-2" align="right">
 													<label class="radio"> <input value="0" name="isQrcode"
 														type="radio"> 否
@@ -132,37 +143,36 @@
 													</label>
 												</div>
 											</div>
-										
-										</div>
+                                   </div>
 									</div>
-                                  <c:if test="${channelModel.token != null && channelModel.token  != '' }">
-                                  <div class="form-group required">
-                                      <label class="col-sm-2 col-sm-2 control-label">二维码图片</label>                                    
-											<div class="col-sm-5">
+
+									 <c:if test="${channelModel.token != null && channelModel.token  != '' }">
+										<div class="form-group ">
+
+											<label class="col-md-2 control-label">二维码图片</label>
+											<div class="col-md-5">
 												<img src="${ channelModel.qrcodeUrl }"/>
-                                       </div>						                                                                           
-                                  </div>
-                                  <div class="form-group required">
-                                      <label class="col-sm-2 col-sm-2 control-label">短地址</label>
-                                      <div class="col-sm-5">
+                                       </div>
+                                       </div>
+                                        <div class="form-group ">
+                                           <label class="col-md-2 control-label">短地址</label>
+										   <div class="col-md-5">
+
 											<form:input path="shortUrl" class="form-control"
 												placeholder="短地址" maxLength="32" />
 											<form:errors path="downloadUrl" class="field-has-error"></form:errors>
-						                                          	
-                                      </div>
-                                  </div>
-                                  </c:if>
-                                  
-                                  
-                                  <div class="form-actions fluid">
-                       
+										  </div>
+                                          </div>
+									</c:if>
+
+									<div class="form-actions fluid">
 										<div class="col-md-offset-6 col-md-6">
 										 <c:if test="${channelModel.id == 0 }">
 											<button type="button" id="channelForm_btn" class="btn btn-success">保存</button>
-										</c:if>
+										 </c:if>
 										</div>
-									</div>                                                      
-                              </form:form>
+									</div>
+							</form:form>
                           </div>
                       </section>
                   </div>
@@ -180,14 +190,17 @@
     <!-- js placed at the end of the document so the pages load faster -->
     <!--common script for all pages-->
     <%@ include file="../shared/importJs.jsp"%>
-     <!--script for this page-->	
-  <script
+
+
+    <!--script for this page-->	
+    <script
+		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
+		type="text/javascript"></script>
+      <script
 	   src= "<c:url value='/js/simi/chan/channelForm.js'/>"
 	   type="text/javascript"></script>
-
     
-   
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
-    
+
   </body>
 </html>
