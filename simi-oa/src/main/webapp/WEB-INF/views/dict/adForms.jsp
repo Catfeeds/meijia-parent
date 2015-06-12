@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<%-- <%@ taglib prefix="ServiceTypeSelectTag"
+	uri="/WEB-INF/tags/serviceTypeSelect.tld"%>
+ --%>
 <%@ include file="../shared/taglib.jsp"%>
-<%@ taglib prefix="ServiceTypeSelectTag" uri="/WEB-INF/tags/serviceTypeSelect.tld"%>
 <html>
   <head>
 	
@@ -10,8 +11,6 @@
 	<%@ include file="../shared/importCss.jsp"%>
 	
 	<!--css for this page-->
-	<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
-	type="text/css" />
 
   </head>
 
@@ -145,12 +144,10 @@
 
 
     <!--script for this page-->	
-    <script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>"></script>
-	<script
+    <script
 		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/dict/adForm.js'/>"
+    <script src="<c:url value='/js/simi/dict/adForm.js'/>"
 		type="text/javascript"></script>
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
 
