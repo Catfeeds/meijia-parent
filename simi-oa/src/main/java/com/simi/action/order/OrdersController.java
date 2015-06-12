@@ -68,7 +68,7 @@ public class OrdersController extends AdminController {
 		PageInfo result = orderQueryService.searchVoListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);
-		return "order/list";
+		return "order/orderList";
 	}
 
 	@AuthPassport
@@ -112,7 +112,7 @@ public class OrdersController extends AdminController {
 		List<OrderLog> orderLogs = orderLogService.selectByOrderNo(orderNo);
 		model.addAttribute("orderLogs", orderLogs);
 
-		return "order/detail";
+		return "order/orderDetail";
 	}
 
 	@RequestMapping(value = "/placeOrders", method = { RequestMethod.GET })

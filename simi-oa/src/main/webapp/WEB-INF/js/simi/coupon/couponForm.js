@@ -1,3 +1,6 @@
+$(function() {
+			addCouponFormValidate.handleAddCoupon();
+		});
 var addCouponFormValidate = function () {
 
 	var handleAddCoupon = function() {
@@ -75,7 +78,6 @@ var addCouponFormValidate = function () {
 		});
 
 		$("#addCoupon_btn").click(function(){
-			alert("kk");
 			if (confirm("确认要新增吗?")){
 				if ($('#coupon-form').validate().form()) {
 					$('#coupon-form').submit();
@@ -92,4 +94,16 @@ var addCouponFormValidate = function () {
     };
 
 }();
+$('.input-group.date').datepicker({
+    format: "yyyy-mm-dd",
+    language: "zh-CN",
+    autoclose: true,
+    startView: 1,
+    defaultViewDate : {
+    		year:1980,
+    		month:0,
+    		day:1
+    }
+});
+
 

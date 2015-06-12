@@ -177,6 +177,15 @@
 
 	<script charset="utf-8" src="<c:url value='/assets/kindeditor-4.1.10/kindeditor.js'/>"></script>
 	<script charset="utf-8" src="<c:url value='/assets/kindeditor-4.1.10/lang/zh_CN.js'/>"></script>
-
+	<script type="text/javascript">
+	//富编辑器
+	KindEditor.ready(function(K) {
+	  	 K.create("#some-textarea",{
+	         	width:'300px',
+	         	height:'300px',
+	         	afterBlur: function(){this.sync();}//帮助KindEditor获得textarea的值
+	  	 });
+	         });
+	</script>
   </body>
 </html>

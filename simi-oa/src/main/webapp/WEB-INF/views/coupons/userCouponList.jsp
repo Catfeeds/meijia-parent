@@ -41,7 +41,7 @@
                           <header class="panel-heading">
                           	用户兑换优惠券列表
                           	<div class="pull-right">
-                          		<button onClick="btn_add('/account/register?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                          		<button <!-- onClick="btn_add('/account/register?id=0')" --> class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
                     		</div>      
                           </header>
                           
@@ -61,7 +61,7 @@
 	                              <th >使用时间</th>
 	                              <th >对应订单号</th>
 	                              <th >添加时间</th>
-	                              <th >更新时间</th>
+	                              <th>操作</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -92,10 +92,11 @@
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							            </td>
-
-							            <td>
-							      		      <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.updateTime * 1000}"/>
-							            </td>
+										<td>
+											<button id="btn_update" <%-- onClick="btn_update('msg/msgForm?id=${ item.id }')" --%> class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+	                                  		<button id="btn_del" <%-- onClick="btn_del('/coupon/delete/${item.id}')" --%> class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+										</td>
+							          
                               </tr>
                               </c:forEach>
                               </tbody>

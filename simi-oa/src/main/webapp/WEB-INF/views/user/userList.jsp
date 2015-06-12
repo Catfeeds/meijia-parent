@@ -64,7 +64,7 @@
 		                              <th >用户类型</th>
 		                              <th>用户来源</th>
 		                              <th >添加时间</th>
-		                              <th >更新时间</th>
+		                              <th>操作</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -92,7 +92,8 @@
 							            </td>
 
 							            <td>
-							      		      <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.updateTime * 1000}"/>
+							            <button id="btn_update" <%-- onClick="btn_update('msg/msgForm?id=${ item.id }')" --%> class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+	                                  	<button id="btn_del" <%-- onClick="btn_del('/account/delete/${item.id}')" --%> class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
 							            </td>
                               </tr>
                               </c:forEach>

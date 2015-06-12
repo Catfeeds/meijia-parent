@@ -51,22 +51,21 @@
                           <table class="table table-striped table-advance table-hover">
                               <thead>
                               <tr>
-                                  <th>序号</th>
 		                              <th >用户手机号</th>
 		                              <th >订单类型</th>
 		                              <th >订单号</th>
 		                              <th>订单总金额</th>
 		                              <th >订单实际支付/退款金额</th>
-		                              <th >交易号</th>
+		                             <!--  <th >交易号</th> -->
 		                              <th>交易状态</th>
 		                              <th>交易方式</th>
 		                              <th >添加时间</th>
+		                              <th>操作</th>
                               </tr>
                               </thead>
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-                                  	 <td>${ item.id }</td>
 							            <td>${ item.mobile }</td>
 							            <td>
 							            	<orderTypeTag:orderTypeId orderTypeId="${ item.orderType }"/>
@@ -87,9 +86,9 @@
 									       </c:otherwise>
 										</c:choose>
 							            </td>
-							            <td>
+							           <%--  <td>
 											${ item.tradeNo }
-							            </td>
+							            </td> --%>
 							            <td>
 											${ item.tradeStatus }
 							            </td>
@@ -99,6 +98,11 @@
 							            </td>
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd HH:mm:ss" t="${item.addTime * 1000}"/>
+							            </td>
+							            <td>
+							            	<button id="btn_update" <%-- onClick="btn_update('msg/msgForm?id=${ item.id }')" --%> class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+	                                  		<button id="btn_del" <%-- onClick="btn_del('/account/delete/${item.id}')" --%> class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+							            
 							            </td>
                               </tr>
                               </c:forEach>
