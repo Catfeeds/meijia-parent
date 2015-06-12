@@ -24,32 +24,10 @@
 		<property name="jobFactory" ref="jobFactory"></property>
 		<property name="triggers">
 			<list>
-				<ref local="cron_trigger_dispatch_notice" />
 			</list>
 		</property>
 
 		<property name="startupDelay" value="60"/>
 		<property name="overwriteExistingJobs" value="true" />
-
-
-	</bean>
-
-	<!--定时提醒订单已付款，为派工  -->
-	<bean id="job_dispatch_notice" class="com.simi.action.job.order.OrderDispatchCheckJob" />
-
-	<!-- 调度业务 -->
-	<bean id="job_detail_dispatch_notice"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="job_dispatch_notice" />
-
-		<property name="targetMethod" value="remindCheck" />
-	</bean>
-
-	<bean id="cron_trigger_dispatch_notice"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean ">
-		<property name="jobDetail" ref="job_detail_dispatch_notice" />
-		<!-- 每小时第10分钟  -->
-		<!-- <property name="cronExpression" value="0 10 * * * ? " /> -->
-		<property name="cronExpression" value="0 10 * * * ? 2016" />
 	</bean>
 </beans>

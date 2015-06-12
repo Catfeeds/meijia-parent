@@ -27,17 +27,11 @@
 		<property name="triggers">
 			<list>
 				<ref local="cron_trigger_order_cancel" />
-				<ref local="cron_trigger_service_notice" />
-				<ref local="cron_trigger_order_done" />
-				<ref local="cron_trigger_orderState_changeTo_WillDone" />
-				<ref local="cron_trigger_orderState_changeTo_Evaluate" />
-				<ref local="cron_trigger_orderState_changeTo_Closeded" />
 			</list>
 		</property>
 
 		<property name="startupDelay" value="60"/>
 		<property name="overwriteExistingJobs" value="true" />
-
 
 	</bean>
 
@@ -45,23 +39,8 @@
 		init-method="initTask" />
 
 
-	<!--订单取消执行方法 -->
+	<!--超过1小时未付款订单，将订单置为关闭 -->
 	<bean id="job_order_cancel" class="com.simi.action.job.order.CancelOrderJob" />
-
-	<!--提前两个小时短信提醒用户被服务和阿姨提供服务 -->
-	<bean id="job_service_notice" class="com.simi.action.job.order.OrderWillServiceJob" />
-
-	<!--定时提醒已经完成的订单，用户获得积分 -->
-	<bean id="job_order_done" class="com.simi.action.job.order.OrderScoreJob" />
-
-	<!-- 定时任务：将开始时间等于当前并且订单为已派工的订单状态置为即将服务 -->
-	<bean id="job_orderState_to_WillDone" class="com.simi.action.job.order.OrderStateToWillDoneJob" />
-
-	<!-- 定时任务：将已完成但没有评价的订单的状态置为待评价 -->
-	<bean id="job_orderState_to_Evaluate" class="com.simi.action.job.order.OrderStateToEvaluateJob" />
-
-	<!-- 定时任务：7天后未评价的订单，自动好评和订单状态改为已完成-->
-	<bean id="job_orderState_to_Closed" class="com.simi.action.job.order.OrderStateToClosedJob" />
 
 
 	<!-- 调度业务 -->
@@ -72,47 +51,6 @@
 
 	</bean>
 
-	<!-- 调度业务 -->
-	<bean id="job_detail_service_notice"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="job_service_notice" />
-		<property name="targetMethod" value="messageRemind" />
-
-	</bean>
-
-	<!-- 调度业务 -->
-	<bean id="job_detail_order_done"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="job_order_done" />
-		<property name="targetMethod" value="orderScoreAdd" />
-
-	</bean>
-
-	<!-- 调度业务 -->
-	<bean id="job_orderState_dispatch_to_WillDone"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="job_orderState_to_WillDone" />
-		<property name="targetMethod" value="changeOrderStateToWillDone" />
-
-	</bean>
-
-	<!-- 调度业务 -->
-	<bean id="job_orderState_to_Evaluated"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="job_orderState_to_Evaluate" />
-		<property name="targetMethod" value="changeOrderStateToEvaluate" />
-
-	</bean>
-
-
-
-	<!-- 调度业务 -->
-	<bean id="job_orderState_to_Closeded"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="job_orderState_to_Closed" />
-		<property name="targetMethod" value="changeOrderStateToClosedJob" />
-
-	</bean>
 	<!--订单取消执行方法 -->
 	<bean id="cron_trigger_order_cancel"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -120,43 +58,4 @@
 		<!-- 每15分钟执行执行 -->
 		<property name="cronExpression" value="0 0/15 * * * ? 2015 " />
 	</bean>
-	<!--提前两个小时短信提醒用户被服务和阿姨提供服务 -->
-	<bean id="cron_trigger_service_notice"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean ">
-		<property name="jobDetail" ref="job_detail_service_notice" />
-		<!--每30分钟执行一次 -->
-		<!-- <property name="cronExpression" value="0 0/10 * * * ? " /> -->
-		<property name="cronExpression" value="0 0/30 * * * ? " />
-	</bean>
-	<!--定时提醒已经完成的订单，用户获得积分 -->
-	<bean id="cron_trigger_order_done"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean ">
-		<property name="jobDetail" ref="job_detail_order_done" />
-		<!-- 每30分钟 执行-->
-		<property name="cronExpression" value="0 0/30 * * * ? 2015" />
-	</bean>
-
-	<!-- 定时任务：将开始时间等于当前并且订单为已派工的订单状态置为即将服务 -->
-	<bean id="cron_trigger_orderState_changeTo_WillDone"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean ">
-		<property name="jobDetail" ref="job_orderState_dispatch_to_WillDone" />
-		<!-- 每30分钟  -->
-		<property name="cronExpression" value="0 0/30 * * * ? 2015" />
-	</bean>
-	<!-- 定时任务：将已完成但没有评价的订单的状态置为待评价 -->
-	<bean id="cron_trigger_orderState_changeTo_Evaluate"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean ">
-		<property name="jobDetail" ref="job_orderState_to_Evaluated" />
-		<!-- 每30分钟  -->
-		<property name="cronExpression" value="0 0/30 * * * ? 2015" />
-	</bean>
-	<!-- 定时任务：7天后未评价的订单，自动好评和订单状态改为已完成-->
-	<bean id="cron_trigger_orderState_changeTo_Closeded"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean ">
-		<property name="jobDetail" ref="job_orderState_to_Closeded" />
-			<!-- 每天凌晨一点执行  -->
-		<property name="cronExpression" value="0 0 1 * * ? " />
-
-	</bean>
-
 </beans>
