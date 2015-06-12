@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zrj.po.dao.sec.SecMapper" >
+<mapper namespace="com.simi.po.dao.sec.SecMapper" >
   <resultMap id="BaseResultMap" type="com.simi.po.model.sec.Sec" >
     <id column="id" property="id" jdbcType="NUMERIC" />
     <result column="name" property="name" jdbcType="VARCHAR" />

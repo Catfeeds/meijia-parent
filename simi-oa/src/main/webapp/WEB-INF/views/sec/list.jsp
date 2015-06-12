@@ -34,14 +34,13 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
-                          	用户管理
+                          	秘书管理
                           	
                           	<div class="pull-right">
-                          		<button onClick="btn_add('/senior/listForm?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                          		<button onClick="btn_add('/sec/listForm?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
                     		</div>      
                           </header>
-                          
-                          <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+                         
                           
 
                           <table class="table table-striped table-advance table-hover">
@@ -60,18 +59,18 @@
                               </tr>
                               </thead>
                               <tbody>
-                              <c:forEach items="${contentModel.list}" var="item">
+                              <c:forEach items="${secModel.list}" var="item">
                               <tr>
                                   	    <td>${ item.name}</td>
 							            <td>${ item.mobile}</td>
 							            <td>${ item.nickName}</td>
-							            <td>${ item.birthDay}</td>
+							            <td><fmt:formatDate value="${ item.birthDay}" pattern="yyyy-MM-dd" /></td>
 							            <td><img src="${ item.headImg}"/></td>
 							            <td>${ item.status}</td>
 							            <td>${ item.addTime}</td>
 							            <td>${ item.updateTime}</td>							         							            
 	                                  	<td>	                                   
-		                                    <button id="btn_del" onClick="btn_del('/senior/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+		                                    <button id="btn_del" onClick="btn_del('/sec/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
 	                                  	</td>
                               </tr>
                               </c:forEach>
@@ -83,7 +82,7 @@
                       
                       <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="secModel"/>
-	        				<c:param name="urlAddress" value="/account/list"/>
+	        				<c:param name="urlAddress" value="/sec/list"/>
 	       			  </c:import>
                   </div>
               </div>
