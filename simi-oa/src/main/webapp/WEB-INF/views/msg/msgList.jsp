@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+import="com.simi.oa.common.UrlHelper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
@@ -10,7 +11,7 @@
 <%@ taglib prefix="statusTag" uri="/WEB-INF/tags/statusName.tld" %>
 <%@ taglib prefix="sendStatusTag" uri="/WEB-INF/tags/sendStatusName.tld" %>
 
-<html>/
+<html>
   <head>
 	
 	<!--common css for all pages-->
@@ -20,6 +21,9 @@
    <link rel="stylesheet" href="<c:url value='/assets/bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css'/>" type="text/css"/>
    <link rel="stylesheet" href="<c:url value='/assets/data-tables/DT_bootstrap.css'/>" type="text/css"/>
    <style>
+.modal-backdrop {
+    position: relative;
+}
    	#sum{
 	 width: 100px; 
 	 overflow: hidden; 

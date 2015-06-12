@@ -1,6 +1,5 @@
 
 function preview(htmlUrl){
-		//var localUri = "http://localhost:8080";
    		window.open(appRootUrl+htmlUrl); 
 	}
 function sendAgain(msgId){
