@@ -127,6 +127,15 @@
 									</div>
 									<div class="form-group required">
 
+										<label class="col-md-2 control-label">所在城市</label>
+										<div class="col-md-5">
+											<form:select path="cityId" class="form-control">
+												<option value="">请选择</option>
+											</form:select>    
+										</div>
+									</div>
+									<div class="form-group required">
+
 										<label class="col-md-2 control-label">状态</label>
 										<div class="col-md-10">
 										<div class="row">

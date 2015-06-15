@@ -52,6 +52,7 @@
 		                              <th >昵称</th>
 		                              <th >出生日期</th>
 		                              <th >头像</th>
+		                              <th>所在城市</th>
 		                              <th>状态</th>
                                       <th >添加时间</th>
 		                              <th>更新时间</th>
@@ -68,6 +69,7 @@
 							            <td>${ item.nickName}</td>
 							            <td><fmt:formatDate value="${ item.birthDay}" pattern="yyyy-MM-dd" /></td>
 							            <td><img src="${ item.headImg}"/></td>
+							            <td>${ item.cityId}</td>
 							            <td>${ item.status}</td>
 							            <td>${ item.addTime}</td>
 							            <td>${ item.updateTime}</td>							         							            
