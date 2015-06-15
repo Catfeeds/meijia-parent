@@ -150,7 +150,6 @@ public class SecController extends BaseController{
 		
 		String status = request.getParameter("status");
 		
-		sec.setCityId(0L);
 		sec.setBirthDay(da);
 		sec.setId(Long.valueOf(request.getParameter("id")));
 		sec.setAddTime(TimeStampUtil.getNow() / 1000);

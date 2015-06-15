@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-
+<%@ taglib prefix="CitySelectTag" uri="/WEB-INF/tags/citySelect.tld"%>
 <html>
   <head>
 	
@@ -129,9 +129,7 @@
 
 										<label class="col-md-2 control-label">所在城市</label>
 										<div class="col-md-5">
-											<form:select path="cityId" class="form-control">
-												<option value="">请选择</option>
-											</form:select>    
+											<CitySelectTag:select />   
 										</div>
 									</div>
 									<div class="form-group required">
