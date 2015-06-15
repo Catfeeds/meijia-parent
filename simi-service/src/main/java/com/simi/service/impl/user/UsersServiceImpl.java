@@ -350,8 +350,8 @@ public class UsersServiceImpl implements UsersService {
 	public Map<String, String> getImRobot(Users user) {
 
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", Constants.YGGJ_ROBOT_FEMALE_USERNAME);
-		map.put("nickname", Constants.YGGJ_ROBOT_FEMALE_NICKNAME);
+		map.put("username", Constants.ROBOT_FEMALE_USERNAME);
+		map.put("nickname", Constants.ROBOT_FEMALE_NICKNAME);
 		return map;
 	}
 

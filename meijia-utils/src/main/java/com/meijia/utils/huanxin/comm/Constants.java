@@ -23,5 +23,5 @@ public interface Constants {
     // ORG_ADMIN_PASSWORD
     public static String ORG_ADMIN_PASSWORD = PropertiesUtils.getProperties().getProperty("ORG_ADMIN_PASSWORD");
 	// DEFAULT_PASSWORD
-	public static String DEFAULT_PASSWORD = "yggj123456";
+	public static String DEFAULT_PASSWORD = "simi123456";
 }

@@ -169,10 +169,10 @@ public class Constants {
 	public static String IM_PROVIDE = "huanxin";
 
 	//IM机器人账号和密码
-	public static String YGGJ_ROBOT_FEMALE_USERNAME = "yggj_amei";
-	public static String YGGJ_ROBOT_FEMALE_NICKNAME = "阿美";
-	public static String YGGJ_ROBOT_MALE_USERNAME = "yggj_afu";
-	public static String YGGJ_ROBOT_MALE_NICKNAME = "阿福";
+	public static String ROBOT_FEMALE_USERNAME = "robot-amei";
+	public static String ROBOT_FEMALE_NICKNAME = "阿美";
+	public static String ROBOT_MALE_USERNAME = "robot-afu";
+	public static String ROBOT_MALE_NICKNAME = "阿福";
 
 	//新用户注册赠送优惠劵码
 	public static String NEW_USER_COUPON_CARD_PASSWORD = "I0RBCOJL";
