@@ -28,4 +28,6 @@ public interface UserRefSeniorMapper {
     <HashMap> List<HashMap> statBySeniorId();
 
     List<UserRefSenior> searchListByConditions(Map<String,Object> conditions);
+    
+    
 }

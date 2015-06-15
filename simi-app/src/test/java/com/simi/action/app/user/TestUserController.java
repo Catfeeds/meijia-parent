@@ -106,6 +106,31 @@ public class TestUserController extends JUnitActionBase  {
 
 	}
 
+	/**
+	 * 	      用户信息修改接口
+	 *    ​http://182.92.160.194/simi/app/user/post_userinfo.json
+	      http://182.92.160.194:8080/trac/wiki/%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9%E6%8E%A5%E5%8F%A3
+	 */
+	@Test
+	public void testUpdateUserInfo() throws Exception {
+
+		String url ="/app/user/post_userinfo.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+	    postRequest = postRequest.param("mobile", "13146012753");
+	    postRequest = postRequest.param("name", "kerry");
+	    postRequest = postRequest.param("sex", "男士");
+	    postRequest = postRequest.param("head_img", "");
+
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+		System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+	}
 
 
 }

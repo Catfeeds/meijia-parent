@@ -34,6 +34,20 @@
     from user_ref_3rd
     where mobile = #{mobile,jdbcType=CHAR}
   </select>
+  <!-- 根据第三方主键和3rdType查记录 -->
+  <select id="selectByPidAnd3rdType" resultType="com.simi.po.model.user.UserRef3rd" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_ref_3rd
+    where 1=1
+      <if test="refType != null" >
+       and ref_type = #{refType,jdbcType=VARCHAR}
+      </if>
+      <if test="refPrimaryKey != null" >
+       and ref_primary_key  = #{refPrimaryKey,jdbcType=VARCHAR}
+      </if>
+    order by add_time desc
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user_ref_3rd

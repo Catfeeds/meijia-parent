@@ -6,6 +6,8 @@
     <result column="mobile" property="mobile" jdbcType="CHAR" />
     <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
     <result column="rest_money" property="restMoney" jdbcType="DECIMAL" />
     <result column="score" property="score" jdbcType="INTEGER" />
     <result column="user_type" property="userType" jdbcType="NUMERIC" />
@@ -20,7 +22,7 @@
 	</resultMap>
     
   <sql id="Base_Column_List" >
-    id, mobile, province_name, name, rest_money, score, user_type, add_from, add_time, update_time
+    id, mobile, province_name, name,sex,head_img, rest_money, score, user_type, add_from, add_time, update_time
   </sql>
 
   <select id="selectByAll" resultMap="BaseResultMap" >
@@ -115,12 +117,12 @@
     where id = #{id,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.user.Users" >
-    insert into users (id, province_name, mobile,  name,
+    insert into users (id, province_name, mobile,  name,sex,head_img,
       rest_money, score, user_type, add_from,
       add_time, update_time)
     values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},
-      #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER}, #{userType,jdbcType=NUMERIC},
-      #{addFrom,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+      #{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},#{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER}, 
+      #{userType,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.user.Users" >
     insert into users
@@ -136,6 +138,12 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="headImg != null" >
+        head_img,
       </if>
       <if test="restMoney != null" >
         rest_money,
@@ -169,6 +177,12 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null" >
+        #{headImg,jdbcType=VARCHAR},
+      </if>
       <if test="restMoney != null" >
         #{restMoney,jdbcType=DECIMAL},
       </if>
@@ -201,6 +215,12 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null" >
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
       <if test="restMoney != null" >
         rest_money = #{restMoney,jdbcType=DECIMAL},
       </if>
@@ -227,6 +247,8 @@
     set mobile = #{mobile,jdbcType=CHAR},
       province_name = #{provinceName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR},
       rest_money = #{restMoney,jdbcType=DECIMAL},
       score = #{score,jdbcType=INTEGER},
       user_type = #{userType,jdbcType=NUMERIC},

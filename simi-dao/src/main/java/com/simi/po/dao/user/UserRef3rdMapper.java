@@ -1,5 +1,7 @@
 package com.simi.po.dao.user;
 
+import java.util.Map;
+
 import com.simi.po.model.user.UserRef3rd;
 
 public interface UserRef3rdMapper {
@@ -18,4 +20,6 @@ public interface UserRef3rdMapper {
     UserRef3rd selectByMobile(String mobile);
     
     UserRef3rd selectByUserId(Long userId);
+    
+    UserRef3rd selectByPidAnd3rdType(Map<String ,Object> conditions );
 }

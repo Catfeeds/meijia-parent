@@ -10,6 +10,10 @@ public class Users {
     private String provinceName;
 
     private String name;
+    
+    private String sex;
+    
+    private	String headImg;
 
     private BigDecimal restMoney;
 
@@ -110,4 +114,21 @@ public class Users {
 	public void setProvinceName(String provinceName) {
 		this.provinceName = provinceName;
 	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+	
 }

@@ -65,4 +65,7 @@ public class ConstantMsg {
 
 	//手机号不合法
 	public static String MIBILE_IS_INVALID_MG = "手机号不正确";
+	
+	//第三方登录提示未绑定
+	public static String USER_REF_3RD_NO_BIND = "账号未绑定,请先绑定账号！";
 }

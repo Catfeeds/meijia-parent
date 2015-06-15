@@ -1,4 +1,4 @@
-package com.zrj.filters;
+package com.simi.filters;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;

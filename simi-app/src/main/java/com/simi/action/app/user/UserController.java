@@ -1,26 +1,38 @@
 package com.simi.action.app.user;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.UserLogined;
+import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
@@ -82,7 +94,7 @@ public class UserController extends BaseController {
 		if (mobile.equals("18610807136") && sms_token.equals("000000")) {
 
 			Users u = userService.getUserByMobile(mobile);
-			
+
 			// 根据mobile找到user_baidu_bind信息
 			UserBaiduBind userBaiduBind = userBaiduBindService
 					.selectByPrimaryKey(u.getId());
@@ -109,7 +121,7 @@ public class UserController extends BaseController {
 			}
 
 			result = new AppResultData<Object>(Constants.SUCCESS_0,
-					ConstantMsg.SUCCESS_0_MSG, vo);			
+					ConstantMsg.SUCCESS_0_MSG, vo);
 
 			return result;
 		}
@@ -149,7 +161,8 @@ public class UserController extends BaseController {
 
 				// 根据mobile找到user_baidu_bind信息
 
-				System.out.println(u.getId()+"id==========mobile"+u.getMobile());
+				System.out.println(u.getId() + "id==========mobile"
+						+ u.getMobile());
 				UserBaiduBind userBaiduBind = userBaiduBindService
 						.selectByUserId(u.getId());
 
@@ -312,4 +325,76 @@ public class UserController extends BaseController {
 		}
 		return result;
 	}
+
+	/**
+	 * 用户信息修改接口
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "post_userinfo", method = RequestMethod.POST)
+	public AppResultData<Object> updateUserInfo(
+			HttpServletRequest request,
+			@RequestParam("mobile") String mobile,
+			@RequestParam(value = "name", required = false, defaultValue = "") String name,
+			@RequestParam(value = "sex", required = false, defaultValue = "") String sex,
+			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg)
+			throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users users = userService.getUserByMobile(mobile);
+		// 创建一个通用的多部分解析器.
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		String path = request.getSession().getServletContext()
+				.getRealPath("/WEB-INF/upload/users");
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+
+					String fileName = file.getOriginalFilename();
+					String extensionName = fileName.substring(fileName
+							.lastIndexOf(".") + 1);
+					// 新的图片文件名 = 获取时间戳+随机六位数+"."图片扩展名
+					String before = TimeStampUtil.getNow()
+							+ String.valueOf(RandomUtil.randomNumber());
+					String newFileName = String.valueOf(before + "."
+							+ extensionName);
+					// 获取系统发布后upload路径
+					FileUtils.copyInputStreamToFile(file.getInputStream(),
+							new File(path, newFileName));
+					String headImgs = "/simi-app/upload/users/" + newFileName;
+					users.setHeadImg(headImgs);
+
+					// 生成缩略图
+					BufferedImage bufferedImage1 = new BufferedImage(60, 60,
+							BufferedImage.TYPE_INT_BGR);
+					BufferedImage bufferedImage = ImageIO.read(file
+							.getInputStream());
+					Image image = bufferedImage.getScaledInstance(60, 60,
+							Image.SCALE_DEFAULT);
+					bufferedImage1.getGraphics().drawImage(image, 0, 0, null);
+					String newFileName1 = String.valueOf(before + "_small."
+							+ extensionName);
+
+					FileOutputStream out = new FileOutputStream(path + "/"
+							+ newFileName1);
+					ImageIO.write(bufferedImage1, "jpg", out);// 把图片输出
+				}
+			}
+		}
+		users.setName(name);
+		users.setSex(sex);
+		users.setHeadImg(headImg);
+		userService.updateByPrimaryKeySelective(users);
+		result.setData(users);
+		return result;
+
+	}
+
 }
