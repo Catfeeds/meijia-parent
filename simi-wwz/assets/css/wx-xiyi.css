@@ -1,0 +1,79 @@
+#service-order-form .line_number {
+  /*height: 35px;*/
+  line-height: 35px;
+  padding: 10px 0 10px 19px;
+}
+#service-order-form .line_number before{}
+#service-order-form .line_number after{}
+.number_input {
+  background-color: #fff;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 0;
+  height: 35px;
+  overflow: hidden;
+  text-align: center;
+}
+#service-order-form .right {
+  float: right;
+}
+#service-order-form .line_number .number_input {
+  border: 1px solid #ff753e;
+  color: #484d57;
+  height: 35px;
+  line-height: 35px;
+  width: 110px;
+}
+
+.number_input.disabled {
+  background-color: #ccc;
+}
+
+.number_input .left {
+  border-right: 1px solid #ededed;
+  width: 32.5px;
+}
+
+
+.number_input > * {
+  display: inline-block;
+  height: 35px;
+  vertical-align: middle;
+}
+.number_input input {
+  font-size: 21px;
+}
+.number_input input {
+  border: medium none;
+  padding: 0;
+  text-align: center;
+  width: 40px;
+}
+
+#service-order-form .line_number .number_input input {
+    /*color: #484d57;*/
+    color: #ff753e;
+}
+
+.number_input input:active {
+  border: medium none;
+  outline: medium none;
+}
+.number_input .right {
+  border-left: 1px solid #ededed;
+  width: 32.5px;
+}
+.number_input .left:before {
+  /*color:#ff753e;*/
+  content: "-";
+}
+.number_input .right:before {
+  /*color:#ff753e;*/
+  content: "+";
+}
+
+.number_input .left:before, .number_input .right:before {
+  display: block;
+  font-size: 25px;
+  padding-top: 0;
+}

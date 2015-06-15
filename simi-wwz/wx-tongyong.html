@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>通用服务单 | 私秘-秘书版</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="keywords" content="有个管家,管家,生活助手,钟点工,小时工,保洁,开荒,家政,清洗,打扫,清洁,家庭保洁,北京家政,天津家政,管家云,开放平台">
+  <meta name="description" content="有个管家，最值得信任的生活服务助手。下载有个管家app，各类生活服务一站式帮助您。预约保洁小时工阿姨，钟点工阿姨会上门提供专业的家庭保洁服务。找保洁钟点工、新居开荒、油烟机清洗等家政服务，赶快下载有个管家!">
+  <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+    .input-block{margin:0px;padding:0px;margin-bottom:10px;}
+  </style>
+</head>
+
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+  <div class="am-header-left am-header-nav">
+    <a href="index.html" class="">
+      <span class="am-header-nav-title"></span>
+      <i class="am-header-icon am-icon-home am-icon-md"></i>
+    </a>
+  </div>
+  <h1 class="am-header-title">私秘-秘书版</h1>
+  <div class="am-header-right am-header-nav">
+    <a href="wx-baojie-help.html" class="">
+      <span class="am-header-nav-title"></span>
+      <i class="am-header-icon am-icon-question-circle am-icon-md"></i>
+    </a>
+  </div>
+</header>
+<div class="header">
+  <div class="am-g">
+    <h2>填写通用服务单</h21>
+    <p>提示：请按照客户的需求填写服务单</p>
+  </div>
+</div>
+
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+    <form method="post" id="baojieform" class="am-form">
+      
+         <div class="input-block">
+            <label for="true-user">客户昵称（必填）：</label>
+            <span><input type="text" id="true_user" placeholder="客户姓名"></span>
+         </div>
+         <div class="input-block">
+            <label for="true-phone">联系方式（必填）：</label>
+            <span><input type="text" id="true_phone" placeholder="客户电话"></span>
+         </div>
+         
+         <div class="input-block" style="width:100%;height:80px;">
+        <label for="doc-select-1" style="float:left;width:100%">服务品类（必填）</label>
+        <select id="service_catalog_list" style="width:100%;float:left;">
+          <option value="0">选择服务品类...</option>
+          <option value="0">订机票</option>
+          <option value="0">订酒店</option>
+          <option value="0">订餐饮</option>
+          <option value="0">叫车</option>
+          <option value="0">提醒</option>
+          <option value="0">保洁</option>
+          <option value="0">做饭</option>
+          <option value="0">手机充值</option>
+          <option value="0">其他.</option>
+         </select>
+        <span class="am-form-caret"></span>
+      </div>
+      
+	<div class="input-block">
+        <label for="user-intro">服务内容（必填）：</label>
+        <textarea class="" rows="5" id="user_remark" placeholder="具体服务需求写在这里...."></textarea>
+      </div>
+       
+	<div class="input-block">
+        <label for="user-phone">支付方式（必填）：</label>
+        <div class="am-btn-group" data-am-button>
+            <label class="am-btn am-btn-warning am-btn-xs am-active" id="80_2">
+              <input type="radio" name="service_hours" id="option1" value="80_2">客户线上自行支付
+            </label>
+            <label class="am-btn am-btn-warning am-btn-xs" id="80-200_3">
+              <input type="radio" name="service_hours" id="option2" value="80-200_3">客户线下自行支付
+            </label>
+            <label class="am-btn am-btn-warning am-btn-xs" id="200_4">
+              <input type="radio" name="service_hours" id="option3" value="200_4">委托秘书平台支付
+            </label>
+         </div>
+       </div>
+       <div class="input-block">
+            <label for="true-phone">支付金额：</label>
+            <span><input type="text" id="true_fee" placeholder="支付金额"></span>
+       </div>
+       
+      <div class="input-block" style="width:100%;height:80px;">
+        <label for="doc-select-1" style="float:left;width:100%">服务时间</label>
+        <select id="service_date_list" style="width:60%;float:left;margin-right:3%" onchange="changeServiceTimeList();">
+          <option value="0">选择日期...</option>
+        </select>
+        <span class="am-form-caret"></span>
+        <select id="service_time_list" style="width:30%;float:left;">
+          <option value="0">选择时间...</option>
+        </select>
+        <span class="am-form-caret"></span>
+      </div>
+
+      <div class="input-block" id="user_cell">
+        <label for="user-address">服务地址:</label>
+        <span><input type="text" id="user_address" placeholder="需要登录后选择或添加新地址"></span>
+      </div>
+      
+
+      <div class="input-block">
+        <label for="user-intro">备注：</label>
+        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里...."></textarea>
+      </div>
+
+      
+       <input id="service_type" value="4" type="hidden" />
+       
+       
+      <div class="input-block"><button type="button" id="baojie_submit" class="am-btn am-btn-primary am-btn-block">推送订单给客户</button></div>
+    </form>
+   </div>
+</div>
+<footer align="center">
+
+</footer>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="assets/js/app.js"></script>
+<script src="assets/js/wx-site.js"></script>
+<script src="assets/js/wx-baojie.js"></script>
+</body>
+</html>

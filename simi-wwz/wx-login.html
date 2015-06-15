@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>用户登录 | 私秘-秘书版</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="keywords" content="有个管家,管家,生活助手,钟点工,小时工,保洁,开荒,家政,清洗,打扫,清洁,家庭保洁,北京家政,天津家政,管家云,开放平台">
+		<meta name="description" content="有个管家，最值得信任的生活服务助手。下载有个管家app，各类生活服务一站式帮助您。预约保洁小时工阿姨，钟点工阿姨会上门提供专业的家庭保洁服务。找保洁钟点工、新居开荒、油烟机清洗等家政服务，赶快下载有个管家!">
+  <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+    .input-block{margin:0px;padding:0px;margin-bottom:10px;}
+  </style>
+</head>
+
+<body>
+<header data-am-widget="header" class="am-header am-header-default">
+  <div class="am-header-left am-header-nav">
+    <a href="javascript:;" onClick="javascript:history.back(-1);">
+      <span class="am-header-nav-title"></span>
+      <i class="am-header-icon am-icon-chevron-left am-icon-md"></i>
+    </a>
+  </div>
+  <h1 class="am-header-title">私秘-秘书版</h1>
+  <div class="am-header-right am-header-nav">
+    
+  </div>
+</header>
+
+<div class="header">
+  <div class="am-g">
+    <h1>注册与登录</h1>
+    <h3>注册并认证后就能开始赚钱喽~</h3>
+  </div>
+</div>
+
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+    <form method="post" id="loginform" class="am-form">
+      <div class="input-block">
+        <label for="user-phone">手机号：</label>
+        <input type="text" id="user_phone" name="user_phone" >
+      </div>
+      
+      <div class="input-block">
+        <label for="password">验证码:</label>
+        <div class="am-input-group">
+          <input type="text" id="verify_code" name="verify_code" class="am-form-field" placeholder="填写手机收到的验证码">
+          <span class="am-input-group-btn">
+            <span type="button" id="get_code" class="am-btn am-btn-warning"> 获取验证码 </span>
+          </span>
+        </div>
+      </div>
+      <input type="hidden" id="login_from" name="login_from" value=1>
+      <input type="hidden" id="user_type" name="user_type" value=0>
+      <div class="input-block"><button type="button" id="login_submit" class="am-btn am-btn-primary am-btn-block">立即登录</button></div>
+      <div class="input-block"><button type="button" id="login_submit" class="am-btn am-btn-success am-btn-block">欢迎注册加入</button></div>
+      <div class="input-block">
+        <div id="sms_tips" style="margin-top:30px;padding:10px 0 0 0;text-align:center;color:#ff753e;border-top:1px dashed #ff753e;display:none;">
+          如果长时间未收到短信验证码，您可以拨打客服电话 400-169-1615 获取帮助。
+        </div>
+      </div>
+    </form>
+   </div>
+</div>
+<footer>
+  
+</footer>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/wx-site.js"></script>
+<script src="assets/js/wx-login.js"></script>
+</body>
+</html>
