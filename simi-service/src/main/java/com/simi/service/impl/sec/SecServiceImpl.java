@@ -74,6 +74,7 @@ public class SecServiceImpl implements SecService{
 		sec.setNickName("");
 		sec.setBirthDay(null);
 		sec.setHeadImg("");
+		sec.setCityId(0L);
 		sec.setStatus(null);
 		sec.setAddTime(TimeStampUtil.getNow()/1000);
 	    sec.setUpdateTime(0L);
