@@ -44,7 +44,6 @@ public class SecInterface extends BaseController {
 		AppResultData<Boolean> result = new AppResultData<Boolean>(
 		Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, false);
 		Sec record = secService.selectByUserNameAndOtherId(username, sec);
-        System.out.println("------------------------"+record);
 		if(record != null && record.getId() > 0){
 			result.setMsg("名称已经存在");
 			result.setData(true);
