@@ -36,15 +36,15 @@ public class SecInterface extends BaseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "check-name-dumplicate", method = RequestMethod.POST)
 	public  AppResultData<Boolean> checkName(
-			@RequestParam(value = "name", required = true, defaultValue = "") String name,
+			@RequestParam(value = "username", required = true, defaultValue = "") String username,
 			@RequestParam(value = "sec", required = true, defaultValue = "0") Long sec
 
 			) {
 
 		AppResultData<Boolean> result = new AppResultData<Boolean>(
 		Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, false);
-		Sec record = secService.selectByNameAndOtherId(name, sec);
-
+		Sec record = secService.selectByUserNameAndOtherId(username, sec);
+        System.out.println("------------------------"+record);
 		if(record != null && record.getId() > 0){
 			result.setMsg("名称已经存在");
 			result.setData(true);

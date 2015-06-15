@@ -2,8 +2,8 @@ $.validator.addMethod("uniqueName", function(value, element) {
   var response;
   $.ajax({
       type: "POST",
-      url:"/onecare-oa/interface-sec/check-name-dumplicate.json", //发送给服务器的url
-      data: "name="+value + "&sec="+$('#id').val(),
+      url:"/simi-oa/interface-sec/check-name-dumplicate.json", //发送给服务器的url
+      data: "username="+value + "&sec="+$('#id').val(),
       dataType:"json",
       async: false,
 	  success: function(msg) {
@@ -24,15 +24,21 @@ $('#sec-form').validate({
 	errorClass: 'help-block', // default input error message class
 	focusInvalid: false, // do not focus the last invalid input
 	rules : {
-		name : {
+		username : {
 			required : true,
 			uniqueName : true
+		},
+		password : {
+			required : true		
+		},
+		name : {
+			required : true			
 		},
 		mobile : {
 			required : true
 		},
 		birthDay:{
-			required:true,
+			required:true
 		},
 		headImg : {
 			required : true
@@ -47,9 +53,17 @@ $('#sec-form').validate({
 	},
 
 	messages : {
-		name : {
-			required : "请输入名称。",
+		username : {
+			required : "请输入登录名。",
 			uniqueName : "名称已经存在"
+		},
+		password : {
+			required : "密码不可以为空"
+		
+		},
+		name : {
+			required : "请输入名称。"
+			
 		},
 		mobile : {
 			required : "请输入手机号。"

@@ -45,7 +45,8 @@
 
                           <table class="table table-striped table-advance table-hover">
                               <thead>
-                              <tr>
+                              <tr>    
+                                      <th >登陆名</th>
                                       <th >姓名</th>
 		                              <th >手机号</th>
 		                              <th >昵称</th>
@@ -61,6 +62,7 @@
                               <tbody>
                               <c:forEach items="${secModel.list}" var="item">
                               <tr>
+                                  	    <td>${ item.username}</td>
                                   	    <td>${ item.name}</td>
 							            <td>${ item.mobile}</td>
 							            <td>${ item.nickName}</td>
