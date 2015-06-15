@@ -46,6 +46,5 @@
 		<module>simi-service</module>
 		<module>simi-app</module>
 		<module>simi-oa</module>
-		<module>simi-wwz</module>
 	</modules>
 </project>
