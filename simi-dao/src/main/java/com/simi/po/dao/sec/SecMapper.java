@@ -21,5 +21,5 @@ public interface SecMapper {
     
     List<Sec> selectByListPage();
 
-	Sec selectByNameAndOtherId(HashMap map);
+	Sec selectByUserNameAndOtherId(HashMap map);
 }
