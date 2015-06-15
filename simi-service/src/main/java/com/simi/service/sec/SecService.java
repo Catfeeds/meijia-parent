@@ -13,5 +13,5 @@ public interface SecService {
 
 	 Sec initSec();
 	
-	 Sec selectByNameAndOtherId(String name, Long id);
+	 Sec selectByUserNameAndOtherId(String username, Long id);
 }

@@ -67,6 +67,8 @@ public class SecServiceImpl implements SecService{
 	public Sec initSec() {
 		Sec sec=new Sec();
 		sec.setId(0L);
+		sec.setUsername("");
+		sec.setPassword("");
 		sec.setName("");
 		sec.setMobile("");
 		sec.setNickName("");
@@ -80,11 +82,11 @@ public class SecServiceImpl implements SecService{
 	}
 	//判断秘书名称是否重复
 	@Override
-	public Sec selectByNameAndOtherId(String name, Long id) {
+	public Sec selectByUserNameAndOtherId(String username, Long id) {
 		HashMap map = new HashMap();
-		map.put("name", name);
+		map.put("username", username);
 		map.put("id", id);
-		return secMapper.selectByNameAndOtherId(map);
+		return secMapper.selectByUserNameAndOtherId(map);
 	}
 	
 }
