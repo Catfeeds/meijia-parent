@@ -291,6 +291,7 @@ public class UsersServiceImpl implements UsersService {
 		ObjectNode datanode = JsonNodeFactory.instance.objectNode();
         datanode.put("username", username);
         datanode.put("password", defaultPassword);
+        datanode.put("nickname", "");
         ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
 
         JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
