@@ -17,6 +17,8 @@ public class Sec {
 
     private Date birthDay;
 
+    private Long cityId;
+    
     private String headImg;
 
     private Boolean status;
@@ -98,7 +100,15 @@ public class Sec {
         this.status = status;
     }
 
-    public Long getAddTime() {
+    public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getAddTime() {
         return addTime;
     }
 

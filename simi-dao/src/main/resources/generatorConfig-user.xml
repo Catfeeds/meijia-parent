@@ -347,6 +347,7 @@
 			enableSelectByExample="false"
 			enableCountByExample="false">
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
