@@ -128,7 +128,7 @@ public class SecController extends BaseController{
 		                      String newFileName = String.valueOf(before+"."+extensionName);
 		                     //获取系统发布后upload路径
 		                     FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path,newFileName));
-		                     String headImg =  "/onecare-oa/upload/sec/"+newFileName;
+		                     String headImg =  "/simi-oa/upload/sec/"+newFileName;
 		                     sec.setHeadImg(headImg);
 
 		                     //生成缩略图
