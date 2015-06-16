@@ -31,6 +31,10 @@ public class UserSmsTokenServiceImpl implements UserSmsTokenService{
 	public UserSmsToken selectByMobile(String mobile) {
 		return userSmsTokenMapper.selectByMobile(mobile);
 	}
+	@Override
+	public UserSmsToken selectByMobileAndType(String mobile) {
+		return userSmsTokenMapper.selectByMobileAndType(mobile);
+	}
 
 	@Override
 	public UserSmsToken selectByPrimaryKey(Long id) {
