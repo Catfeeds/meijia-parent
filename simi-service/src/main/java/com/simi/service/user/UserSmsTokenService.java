@@ -21,4 +21,6 @@ public interface UserSmsTokenService {
 	UserSmsToken initUserSmsToken(String mobile, int sms_type, String code,
 			HashMap<String, String> sendSmsResult);
 
+	UserSmsToken selectByMobileAndType(String mobile);
+
 }
