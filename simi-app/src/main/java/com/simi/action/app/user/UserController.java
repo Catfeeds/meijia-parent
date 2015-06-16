@@ -390,7 +390,6 @@ public class UserController extends BaseController {
 		}
 		users.setName(name);
 		users.setSex(sex);
-		users.setHeadImg(headImg);
 		userService.updateByPrimaryKeySelective(users);
 		result.setData(users);
 		return result;

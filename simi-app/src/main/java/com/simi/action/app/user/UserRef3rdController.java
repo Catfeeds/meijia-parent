@@ -53,9 +53,6 @@ public class UserRef3rdController extends BaseController {
 	@Autowired
 	private UserSmsTokenService userSmsTokenService;
 
-	@Autowired
-	private UserRefSeniorService userRefSeniorService;
-
 	// 1、第三方登录接口
 	@RequestMapping(value = "login-3rd", method = RequestMethod.POST)
 	public AppResultData<Object> login3rd(
@@ -101,8 +98,8 @@ public class UserRef3rdController extends BaseController {
 			// 第三方账号注册绑定环信账号
 			String nickName = "simi-user-[" + users.getId() + "]";
 			userService.genImUser(users, nickName);
-
-			userRefSeniorService.allotSenior(users);
+			//为第三方登录的用户分配秘书
+			userRef3rdService.allotSec(users);
 		}
 
 		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(users
