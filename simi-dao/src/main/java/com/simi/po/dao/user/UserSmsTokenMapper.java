@@ -16,4 +16,6 @@ public interface UserSmsTokenMapper {
     int updateByPrimaryKeySelective(UserSmsToken record);
 
     int updateByPrimaryKey(UserSmsToken record);
+
+	UserSmsToken selectByMobileAndType(String mobile);
 }

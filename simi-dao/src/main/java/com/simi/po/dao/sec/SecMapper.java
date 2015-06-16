@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.simi.po.model.sec.Sec;
+import com.simi.vo.SecList;
 
 
 public interface SecMapper {
@@ -21,5 +22,14 @@ public interface SecMapper {
     
     List<Sec> selectByListPage();
 
-	Sec selectByUserNameAndOtherId(HashMap map);
+	Sec selectByNameAndOtherId(HashMap map);
+
+	SecList selectByMobile(String mobile);
+	
+	
+	
+	
+	
+	
+	
 }
