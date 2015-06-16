@@ -24,7 +24,8 @@
     									  com.simi.action.app.**,
     									  com.simi.action.app.dict.**,
     									  com.simi.action.app.order.**,
-    									  com.simi.action.app.user.**"
+    									  com.simi.action.app.user.**,
+    									  com.simi.action.app.sec.**"
     									 use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
