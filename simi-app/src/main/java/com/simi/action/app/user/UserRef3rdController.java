@@ -81,7 +81,9 @@ public class UserRef3rdController extends BaseController {
 			userLoginedService.insertSelective(userLogined);
 
 			users.setName(name);
-			users.setHeadImg(headImg);
+			if(headImg!=null && !headImg.isEmpty()){
+				users.setHeadImg(headImg);
+			}
 			users.setAddFrom((short) loginFrom);
 			userService.updateByPrimaryKeySelective(users);
 
@@ -91,7 +93,9 @@ public class UserRef3rdController extends BaseController {
 			users.setOpenId(openid);
 			users.setThirdType(thirdType);
 			users.setName(name);
-			users.setHeadImg(headImg);
+			if(headImg!=null && !headImg.isEmpty()){
+				users.setHeadImg(headImg);
+			}
 			users.setAddFrom((short) loginFrom);
 			userService.saveUser(users);
 

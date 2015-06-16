@@ -1,14 +1,20 @@
 package com.simi.action.app.user;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 
 import org.junit.Test;
-import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.simi.action.app.JUnitActionBase;
 
@@ -117,13 +123,27 @@ public class TestUserController extends JUnitActionBase  {
 		String url ="/app/user/post_userinfo.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "13146012753");
+	 /*   postRequest = postRequest.param("mobile", "13146012753");
 	    postRequest = postRequest.param("name", "kerry");
 	    postRequest = postRequest.param("sex", "男士");
-	    postRequest = postRequest.param("head_img", "");
-
-	    ResultActions resultActions = mockMvc.perform(postRequest);
-
+	    postRequest = postRequest.param("head_img", "");*/
+	    
+   
+     	 FileInputStream fis = new FileInputStream("D:/a.jpg");
+         MockMultipartFile multipartFile = new MockMultipartFile("file", fis);
+     	
+     	
+     	 ResultActions resultActions  =  mockMvc.perform(MockMvcRequestBuilders.fileUpload(url)
+	            .file(multipartFile)
+	            .param("mobile","13146012753")
+	            .param("name","kerry")
+	            .param("sex","男士")
+	            .contentType(MediaType.MULTIPART_FORM_DATA)
+	            .accept(MediaType.APPLICATION_JSON))
+	        .andExpect(status().isOk());
+	    //ResultActions resultActions = mockMvc.perform(postRequest);
+	    
+	  
 	    resultActions.andExpect(content().contentType(this.mediaType));
 	    resultActions.andExpect(status().isOk());
 

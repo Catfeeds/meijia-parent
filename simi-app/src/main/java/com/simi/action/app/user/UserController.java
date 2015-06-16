@@ -347,8 +347,9 @@ public class UserController extends BaseController {
 		// 创建一个通用的多部分解析器.
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
-		String path = request.getSession().getServletContext()
-				.getRealPath("/WEB-INF/upload/users");
+		String paths = request.getSession().getServletContext().getRealPath("/");
+		String p = paths.substring(0,paths.lastIndexOf("\\"));
+		String path = p+File.separator+"uplaod"+File.separator+"users";
 		if (multipartResolver.isMultipart(request)) {
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
@@ -370,23 +371,10 @@ public class UserController extends BaseController {
 							new File(path, newFileName));
 					String headImgs = "/simi-app/upload/users/" + newFileName;
 					users.setHeadImg(headImgs);
-
-					// 生成缩略图
-					BufferedImage bufferedImage1 = new BufferedImage(60, 60,
-							BufferedImage.TYPE_INT_BGR);
-					BufferedImage bufferedImage = ImageIO.read(file
-							.getInputStream());
-					Image image = bufferedImage.getScaledInstance(60, 60,
-							Image.SCALE_DEFAULT);
-					bufferedImage1.getGraphics().drawImage(image, 0, 0, null);
-					String newFileName1 = String.valueOf(before + "_small."
-							+ extensionName);
-
-					FileOutputStream out = new FileOutputStream(path + "/"
-							+ newFileName1);
-					ImageIO.write(bufferedImage1, "jpg", out);// 把图片输出
 				}
 			}
+		}else{
+			users.setHeadImg(headImg);
 		}
 		users.setName(name);
 		users.setSex(sex);
