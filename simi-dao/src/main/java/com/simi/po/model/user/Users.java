@@ -7,6 +7,10 @@ public class Users {
 
     private String mobile;
     
+    private String thirdType;
+    
+    private String openId;
+    
     private String provinceName;
 
     private String name;
@@ -130,5 +134,22 @@ public class Users {
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
 	}
+
+	public String getThirdType() {
+		return thirdType;
+	}
+
+	public void setThirdType(String thirdType) {
+		this.thirdType = thirdType;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+	
 	
 }
