@@ -45,7 +45,7 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
- 				<!-- 用户表 -->
+  				<!-- 用户表 -->
 		<table schema="simi" tableName="users"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -336,8 +336,8 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 		
-		 <!-- 秘书表 -->
-       <table schema="onecare" tableName="sec"
+		<!--  秘书表 -->
+       <table schema="simi" tableName="sec"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -350,6 +350,21 @@
 			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table> 
+		
+                 <!--   用户与第三方账号关联表 -->
+        <table schema="simi" tableName="sec_ref_3rd"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="sec_id" property="secId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 
 	</context>
