@@ -5,6 +5,8 @@
     <id column="id" property="id" jdbcType="NUMERIC" />
     <result column="mobile" property="mobile" jdbcType="CHAR" />
     <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="3rd_type" property="thirdType" jdbcType="VARCHAR" />
+    <result column="openid" property="openId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="head_img" property="headImg" jdbcType="VARCHAR" />
@@ -22,7 +24,7 @@
 	</resultMap>
     
   <sql id="Base_Column_List" >
-    id, mobile, province_name, name,sex,head_img, rest_money, score, user_type, add_from, add_time, update_time
+    id, mobile, province_name,3rd_type,openid, name,sex,head_img, rest_money, score, user_type, add_from, add_time, update_time
   </sql>
 
   <select id="selectByAll" resultMap="BaseResultMap" >
@@ -60,6 +62,20 @@
              open="(" separator="," close=")">
         #{item}
    	  </foreach>
+    </if>
+    order by add_time desc
+  </select>
+  <!--根据openid和登录类型查询用户信息  -->
+ <select id="selectByOpenidAnd3rdType" resultType="com.simi.po.model.user.Users" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where 1=1
+      <if test="openId != null" >
+       and openid = #{openId,jdbcType=VARCHAR}
+      </if>
+      <if test="thirdType != null">
+      and 3rd_type = #{thirdType,jdbcType=VARCHAR}
     </if>
     order by add_time desc
   </select>
@@ -117,12 +133,13 @@
     where id = #{id,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.user.Users" >
-    insert into users (id, province_name, mobile,  name,sex,head_img,
+    insert into users (id, province_name, mobile,3rd_type,openid, name,sex,head_img,
       rest_money, score, user_type, add_from,
       add_time, update_time)
-    values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},
-      #{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},#{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER}, 
-      #{userType,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+    values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},#{thirdType,jdbcType=VARCHAR},
+      #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},
+      #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, 
+      #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.user.Users" >
     insert into users
@@ -135,6 +152,12 @@
       </if>
       <if test="provinceName != null" >
         province_name,
+      </if>
+      <if test="thirdType != null" >
+        3rd_type,
+      </if>
+      <if test="openId != null" >
+        openid,
       </if>
       <if test="name != null" >
         name,
@@ -174,6 +197,12 @@
       <if test="provinceName != null" >
         #{provinceName,jdbcType=VARCHAR},
       </if>
+       <if test="thirdType != null" >
+        #{thirdType,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -212,6 +241,12 @@
       <if test="provinceName != null" >
         province_name = #{provinceName,jdbcType=VARCHAR},
       </if>
+      <if test="thirdType != null" >
+        3rd_type = #{thirdType,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        openid = #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -245,6 +280,8 @@
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.Users" >
     update users
     set mobile = #{mobile,jdbcType=CHAR},
+      3rd_type = #{thirdType,jdbcType=VARCHAR},
+      openid = #{openId,jdbcType=VARCHAR},
       province_name = #{provinceName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
