@@ -26,7 +26,7 @@ import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserRefSeniorService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSeniorMapper;
@@ -177,6 +177,29 @@ public class UsersServiceImpl implements UsersService {
 		u.setUserType((short) 0);
 		u.setAddFrom((short) 0);
 		u.setScore(0);
+		u.setAddTime(TimeStampUtil.getNow()/1000);
+		u.setUpdateTime(TimeStampUtil.getNow()/1000);
+		return u;
+	}
+	/*
+	 * 初始化用户对象
+	 */
+	@Override
+	public Users initUser(String openid,Short addFrom) {
+		Users u =  new Users();
+		u.setId(0L);
+		u.setProvinceName("");
+		u.setMobile(" ");
+		u.setThirdType(" ");
+		u.setOpenId(openid);
+		u.setSex(" ");
+		u.setName(" ");
+		u.setHeadImg(" ");
+		u.setRestMoney(new BigDecimal(0));
+		u.setUserType((short) 0);
+		u.setAddFrom(addFrom);
+		u.setScore(0);
+		u.setRestMoney(new BigDecimal(0.00));
 		u.setAddTime(TimeStampUtil.getNow()/1000);
 		u.setUpdateTime(TimeStampUtil.getNow()/1000);
 		return u;
@@ -364,6 +387,58 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public List<Users> selectUsersNoOrdered(List<String> mobiles) {
 		return usersMapper.selectNotInMobiles(mobiles);
+	}
+
+	@Override
+	public Users selectByOpenidAndThirdType(String openid, String thirdType) {
+		Map<String,Object> conditions = new HashMap<String, Object>();
+		if(openid!=null && !openid.isEmpty()){
+			conditions.put("openId",openid);
+		}
+		if(thirdType!=null && !thirdType.isEmpty()){
+			conditions.put("thirdType",thirdType);
+		}
+		return usersMapper.selectByOpenidAnd3rdType(conditions);
+	}
+	/**
+	 * 第三方登录，注册绑定环信账号
+	 */
+	@Override
+	public UserRef3rd genImUser(Users user, String nickName) {
+		UserRef3rd record = new UserRef3rd();
+		Long userId = user.getId();
+		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserId(userId);
+		if (userRef3rd !=null) {
+			return userRef3rd;
+		}
+
+		//如果不存在则新增.并且存入数据库
+		String username = "yggj_user_"+ user.getId().toString();
+		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
+		ObjectNode datanode = JsonNodeFactory.instance.objectNode();
+        datanode.put("username", username);
+        datanode.put("password", defaultPassword);
+        datanode.put("nickname",nickName);
+        ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
+
+        JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
+		if (!statusCode.toString().equals("200"))
+			return record;
+
+		JsonNode entity = createNewIMUserSingleNode.get("entities");
+		String uuid = entity.get(0).get("uuid").toString();
+//		username = entity.get(0).get("username").toString();
+
+		record.setId(0L);
+		record.setUserId(userId);
+		record.setRefType(Constants.IM_PROVIDE);
+		record.setMobile(user.getMobile());
+		record.setUsername(username);
+		record.setPassword(defaultPassword);
+		record.setRefPrimaryKey(uuid);
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		userRef3rdMapper.insert(record);
+        return record;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.simi.vo.user;
+package com.simi.vo;
 
 
 public class UserSearchVo {

@@ -35,7 +35,7 @@ import com.simi.service.user.UsersService;
 import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.UserSearchVo;
 
 @Controller
 @RequestMapping(value = "/user")

@@ -1,7 +1,7 @@
 package com.simi.service.user;
 
 import com.github.pagehelper.PageInfo;
-import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.UserSearchVo;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;

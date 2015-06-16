@@ -24,7 +24,7 @@
 	</resultMap>
     
   <sql id="Base_Column_List" >
-    id, mobile, province_name,3rd_type,openid, name,sex,head_img, rest_money, score, user_type, add_from, add_time, update_time
+    id, mobile, province_name,3rd_type,openid, name,sex,head_img,rest_money,score, user_type, add_from, add_time, update_time
   </sql>
 
   <select id="selectByAll" resultMap="BaseResultMap" >
@@ -141,7 +141,7 @@
       #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, 
       #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
   </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.user.Users" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.simi.po.model.user.Users" >
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.user.UserDetailPayService;
-import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.UserSearchVo;
 import com.simi.po.dao.user.UserDetailPayMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.order.OrderCards;

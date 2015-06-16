@@ -6,10 +6,11 @@ import java.util.Map;
 
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
+import com.simi.vo.UserSearchVo;
 
 
 
-public interface UsersMapper<UserSearchVo> {
+public interface UsersMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(Users record);
@@ -39,4 +40,7 @@ public interface UsersMapper<UserSearchVo> {
 	List<Users> searchVoByAll(UserSearchVo searchVo);
 
 	List<HashMap> selectUserStat(HashMap map);
+	
+    Users selectByOpenidAnd3rdType(Map<String ,Object> conditions );
+
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
-import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
@@ -21,12 +21,16 @@ public interface UsersService {
 	int updateByPrimaryKeySelective(Users user) ;
 
 	Users initUsers(String mobile, Short addFrom);
+	
+	Users initUser(String openid, Short addFrom);
 
 	UserViewVo getUserViewByMobile(String mobile);
 
 	PageInfo searchVoListPage(UserSearchVo searchVo,int pageNo,int pageSize);
 
 	UserRef3rd genImUser(Users user);
+
+	UserRef3rd genImUser(Users user,String nickName);
 
 	Map<String, String> getImRobot(Users user);
 
@@ -43,6 +47,8 @@ public interface UsersService {
 	List<Users> selectUsersHaveOrdered(List<String> mobiles);
 
 	List<Users> selectUsersNoOrdered(List<String> mobiles);
+	
+	Users selectByOpenidAndThirdType(String openid,String thirdType);
 
 
 
