@@ -3,8 +3,6 @@
 <mapper namespace="com.simi.po.dao.sec.SecMapper" >
   <resultMap id="BaseResultMap" type="com.simi.po.model.sec.Sec" >
     <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="CHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
@@ -15,8 +13,17 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
     <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
   </resultMap>
+  
+   <resultMap id="SecListMap" type="com.simi.vo.SecList" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id,username,password,name, mobile, nick_name, birth_day, head_img,city_id,status, add_time, update_time
+    id,name, mobile, nick_name, birth_day, head_img,city_id,status, add_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -30,15 +37,15 @@
     from sec
     order by id asc
   </select>
-  <select id="selectByUserNameAndOtherId" resultMap="BaseResultMap"
+  <select id="selectByNameAndOtherId" resultMap="BaseResultMap"
 		parameterType="java.util.HashMap">
 		select
 		<include refid="Base_Column_List" />
 		from sec
 		where 1=1
 
-		<if test="username != null" >
-			and username = #{username,jdbcType=VARCHAR}
+		<if test="name != null" >
+			and name = #{name,jdbcType=VARCHAR}
 		</if>
 
 		<if test="id != null" >
@@ -46,16 +53,23 @@
 		 </if>
 		 limit 1
 	</select>
+	<select id="selectByMobile" resultMap="SecListMap"  >
+    select 
+    id,name,mobile,nick_name,city_id,head_img
+    from sec
+    where mobile = #{mobile,jdbcType=CHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from sec
     where id = #{id,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.sec.Sec" >
-    insert into sec (id,username,password,name, mobile, 
+    insert into sec (id,name, mobile, 
       nick_name, birth_day, head_img, city_id,
       status, add_time, update_time
       )
-    values (#{id,jdbcType=NUMERIC}, #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, 
+    values (#{id,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, 
       #{nickName,jdbcType=VARCHAR}, #{birthDay,jdbcType=DATE}, #{headImg,jdbcType=VARCHAR}, #{cityId,jdbcType=NUMERIC},
       #{status,jdbcType=BIT}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
       )
@@ -65,12 +79,6 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
-      </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="password != null" >
-        password,
       </if>
       <if test="name != null" >
         name,
@@ -104,12 +112,6 @@
       <if test="id != null" >
         #{id,jdbcType=NUMERIC},
       </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -142,12 +144,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.sec.Sec" >
     update sec
     <set >
-     <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-       <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -181,8 +177,6 @@
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.sec.Sec" >
     update sec
     set 
-      username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=CHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
