@@ -3,7 +3,7 @@ $.validator.addMethod("uniqueName", function(value, element) {
   $.ajax({
       type: "POST",
       url:"/simi-oa/interface-sec/check-name-dumplicate.json", //发送给服务器的url
-      data: "username="+value + "&sec="+$('#id').val(),
+      data: "name="+value + "&sec="+$('#id').val(),
       dataType:"json",
       async: false,
 	  success: function(msg) {
@@ -24,15 +24,10 @@ $('#sec-form').validate({
 	errorClass: 'help-block', // default input error message class
 	focusInvalid: false, // do not focus the last invalid input
 	rules : {
-		username : {
-			required : true,
-			uniqueName : true
-		},
-		password : {
-			required : true		
-		},
+
 		name : {
-			required : true			
+			required : true,
+			uniqueName : true		
 		},
 		mobile : {
 			required : true
@@ -53,16 +48,10 @@ $('#sec-form').validate({
 	},
 
 	messages : {
-		username : {
+
+		name : {
 			required : "请输入登录名。",
 			uniqueName : "名称已经存在"
-		},
-		password : {
-			required : "密码不可以为空"
-		
-		},
-		name : {
-			required : "请输入名称。"
 			
 		},
 		mobile : {

@@ -47,24 +47,6 @@
 
 								<form:hidden path="id" />
 								<div class="form-body">
-                                    <div class="form-group required">
-
-										<label class="col-md-2 control-label">登录名</label>
-										<div class="col-md-5">
-											<form:input path="username" class="form-control" placeholder="登陆名"
-												maxLength="32" />
-											<form:errors path="username" class="field-has-error"></form:errors>
-										</div>
-									</div>
-									<div class="form-group required">
-
-										<label class="col-md-2 control-label">密码</label>
-										<div class="col-md-5">
-											<form:password path="password" class="form-control" placeholder="密码"
-												maxLength="32" />
-											<form:errors path="password" class="field-has-error"></form:errors>
-										</div>
-									</div>
 									<div class="form-group required">
 
 										<label class="col-md-2 control-label">姓名</label>
