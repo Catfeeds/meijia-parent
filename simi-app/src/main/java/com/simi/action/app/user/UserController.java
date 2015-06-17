@@ -329,7 +329,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "post_userinfo", method = RequestMethod.POST)
 	public AppResultData<Object> updateUserInfo(
 			HttpServletRequest request,
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "name", required = false, defaultValue = "") String name,
 			@RequestParam(value = "sex", required = false, defaultValue = "") String sex,
 			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg)
@@ -338,7 +338,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		Users users = userService.getUserByMobile(mobile);
+		Users users = userService.getUserById(userId);
 		// 创建一个通用的多部分解析器.
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
