@@ -100,8 +100,7 @@ public class UserRef3rdController extends BaseController {
 			userService.saveUser(users);
 
 			// 第三方账号注册绑定环信账号
-			String nickName = "simi-user-[" + users.getId() + "]";
-			userService.genImUser(users, nickName);
+			userService.genImUser(users);
 			//为第三方登录的用户分配秘书
 			userRef3rdService.allotSec(users);
 		}

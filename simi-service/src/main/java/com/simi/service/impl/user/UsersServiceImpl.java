@@ -299,47 +299,6 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/**
-	 *  注册环信用户
-	 */
-	@Override
-	public UserRef3rd genImUser(Users user) {
-		UserRef3rd record = new UserRef3rd();
-		Long userId = user.getId();
-		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserId(userId);
-		if (userRef3rd !=null) {
-			return userRef3rd;
-		}
-
-		//如果不存在则新增.并且存入数据库
-		String username = "yggj_user_"+ user.getId().toString();
-		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
-		ObjectNode datanode = JsonNodeFactory.instance.objectNode();
-        datanode.put("username", username);
-        datanode.put("password", defaultPassword);
-        datanode.put("nickname", "");
-        ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
-
-        JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
-		if (!statusCode.toString().equals("200"))
-			return record;
-
-		JsonNode entity = createNewIMUserSingleNode.get("entities");
-		String uuid = entity.get(0).get("uuid").toString();
-//		username = entity.get(0).get("username").toString();
-
-		record.setId(0L);
-		record.setUserId(userId);
-		record.setRefType(Constants.IM_PROVIDE);
-		record.setMobile(user.getMobile());
-		record.setUsername(username);
-		record.setPassword(defaultPassword);
-		record.setRefPrimaryKey(uuid);
-		record.setAddTime(TimeStampUtil.getNowSecond());
-		userRef3rdMapper.insert(record);
-        return record;
-	}
-
-	/**
 	 * 查询用户与管家绑定的环信账号
 	 * 1. 如果用户没有购买过管家卡，则为默认Constans.YGGJ_AMEI
 	 * 2. 如果用户购买过管家卡，则为真人管家绑定的环信IM账号
@@ -406,7 +365,7 @@ public class UsersServiceImpl implements UsersService {
 	 * 第三方登录，注册绑定环信账号
 	 */
 	@Override
-	public UserRef3rd genImUser(Users user, String nickName) {
+	public UserRef3rd genImUser(Users user) {
 		UserRef3rd record = new UserRef3rd();
 		Long userId = user.getId();
 		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserId(userId);
@@ -415,12 +374,14 @@ public class UsersServiceImpl implements UsersService {
 		}
 
 		//如果不存在则新增.并且存入数据库
-		String username = "yggj_user_"+ user.getId().toString();
+		String username = "simi-user-"+ user.getId().toString();
 		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
 		ObjectNode datanode = JsonNodeFactory.instance.objectNode();
         datanode.put("username", username);
         datanode.put("password", defaultPassword);
-        datanode.put("nickname",nickName);
+        if (user.getName() != null && user.getName().length() > 0) {
+        	datanode.put("nickname", user.getName());
+        }
         ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
 
         JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");

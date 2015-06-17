@@ -30,8 +30,6 @@ public interface UsersService {
 
 	UserRef3rd genImUser(Users user);
 
-	UserRef3rd genImUser(Users user,String nickName);
-
 	Map<String, String> getImRobot(Users user);
 
 	Map<String, String> getSeniorImUsername(Users user);
