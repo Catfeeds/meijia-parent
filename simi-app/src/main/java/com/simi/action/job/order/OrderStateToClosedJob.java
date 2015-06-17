@@ -39,26 +39,26 @@ public class OrderStateToClosedJob extends BaseJob {
 	public void changeOrderStateToClosedJob(){
 
 		//获得订单状态为3,4,5的所用订单
-		List<Short> orderStates = new ArrayList<Short>();
-		orderStates.add((short)3);
-		orderStates.add((short)4);
-		orderStates.add((short)5);
-
-		List<Orders> list = orderQueryService.queryOrdersByStates(orderStates);
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			Orders orders = (Orders) iterator.next();
-			Long endTime = orders.getStartTime()+orders.getServiceHours()*3600;
-			Long timeAfter7Days = endTime+604800;
-			Long nowSeconds = TimeStampUtil.getNow()/1000;
-			String orderRateContent = orders.getOrderRateContent();
-			//当订单已经结束,大于七天为评价，则自动好评
-			if(endTime<=nowSeconds && timeAfter7Days <=nowSeconds &&
-					(orderRateContent==null || orderRateContent.equals(""))){
-				orders.setOrderStatus(Constants.ORDER_STATS_6_COMPLETE);
-				orders.setOrderRate(Constants.ORDER_RATE_GOOD);
-				orders.setOrderRateContent("系统自动好评");
-				ordersService.updateByPrimaryKeySelective(orders);
-			}
-		}
+//		List<Short> orderStates = new ArrayList<Short>();
+//		orderStates.add((short)3);
+//		orderStates.add((short)4);
+//		orderStates.add((short)5);
+//
+//		List<Orders> list = orderQueryService.queryOrdersByStates(orderStates);
+//		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+//			Orders orders = (Orders) iterator.next();
+//			Long endTime = orders.getStartTime()+orders.getServiceHours()*3600;
+//			Long timeAfter7Days = endTime+604800;
+//			Long nowSeconds = TimeStampUtil.getNow()/1000;
+//			String orderRateContent = orders.getOrderRateContent();
+//			//当订单已经结束,大于七天为评价，则自动好评
+//			if(endTime<=nowSeconds && timeAfter7Days <=nowSeconds &&
+//					(orderRateContent==null || orderRateContent.equals(""))){
+//				orders.setOrderStatus(Constants.ORDER_STATS_6_COMPLETE);
+//				orders.setOrderRate(Constants.ORDER_RATE_GOOD);
+//				orders.setOrderRateContent("系统自动好评");
+//				ordersService.updateByPrimaryKeySelective(orders);
+//			}
+//		}
 	}
 }

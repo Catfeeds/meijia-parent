@@ -82,15 +82,15 @@ public class OrderCancelController extends BaseController {
 
 
 		// 1. 如果订单的状态为未支付，订单取消直接将orders表 order_status = 0 即可完成流程
-		Orders orders = orderQueryService.selectByOrderNo(order_no);
-		if (orders.getOrderStatus().equals(Constants.ORDER_STATUS_1)||orders.getOrderStatus().equals(Constants.ORDER_STATS_0_CANCLEED)) {//0 = 已取消 1 = 待付款
-			orders.setOrderStatus((short)0);
-			ordersService.updateByPrimaryKeySelective(orders);
-
-			return result;
-		}
-
-		result = orderCancelService.orderCancel(order_no);
+//		Orders orders = orderQueryService.selectByOrderNo(order_no);
+//		if (orders.getOrderStatus().equals(Constants.ORDER_STATUS_1)||orders.getOrderStatus().equals(Constants.ORDER_STATS_0_CANCLEED)) {//0 = 已取消 1 = 待付款
+//			orders.setOrderStatus((short)0);
+//			ordersService.updateByPrimaryKeySelective(orders);
+//
+//			return result;
+//		}
+//
+//		result = orderCancelService.orderCancel(order_no);
 		return result;
 	}
 

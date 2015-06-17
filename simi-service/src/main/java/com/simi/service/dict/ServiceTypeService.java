@@ -3,9 +3,6 @@ package com.simi.service.dict;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
-import com.simi.vo.dict.CouponSearchVo;
-import com.simi.vo.dict.ServiceTypeVo;
-import com.simi.po.model.admin.AdminRole;
 import com.simi.po.model.dict.DictServiceTypes;
 
 public interface ServiceTypeService {
@@ -23,8 +20,6 @@ public interface ServiceTypeService {
     int deleteByPrimaryKey(Long id);
 
 	DictServiceTypes getServiceTypesByPk(Long id);
-
-	List<ServiceTypeVo> getServiceTypeVos();
 
 	PageInfo searchVoListPage( int pageNo, int pageSize);
 

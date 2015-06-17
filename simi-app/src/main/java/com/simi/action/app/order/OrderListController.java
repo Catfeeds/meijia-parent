@@ -17,7 +17,7 @@ import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.OrdersList;
+import com.simi.vo.order.OrderViewVo;
 
 @Controller
 @RequestMapping(value = "/app/order")
@@ -36,36 +36,26 @@ public class OrderListController extends BaseController {
 	 * mobile:手机号 page分页页码
 	 */
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
-	public AppResultData<List<OrdersList>> list(@RequestParam("mobile")
-		String mobile, @RequestParam("page")
-		int page) {
+	public AppResultData<List<OrderViewVo>> list(
+			@RequestParam("user_id") Long userId, 
+			@RequestParam(value = "page", required = false, defaultValue = "0") int page) {
 		
-		Users u = userService.getUserByMobile(mobile);
+		List<OrderViewVo> orderList = new ArrayList<OrderViewVo>();
 		
-		List<OrdersList> orderList = new ArrayList<OrdersList>();
-		if (u.getUserType().equals(Short.valueOf("1"))) {
-			orderList = orderQueryService.selectByAgentMobile(mobile, page);
-		} else {
-			orderList = orderQueryService.selectByMobile(mobile, page);
-		}
+		AppResultData<List<OrderViewVo>> result = new AppResultData<List<OrderViewVo>>(Constants.SUCCESS_0,
+				ConstantMsg.SUCCESS_0_MSG, orderList);
 		
-		List<OrdersList> orderViewList = new ArrayList<OrdersList>();
-		OrdersList o = null;
-		for(int i = 0; i < orderList.size(); i++) {
-			o = orderList.get(i);
-			o.setServieDate(o.getServiceDate());
-			o.setId(o.getOrderId());
-			orderViewList.add(o);
-		}
+		Users u = userService.getUserById(userId);
 		
-		if (orderViewList != null && orderViewList.size() > 0) {
-			AppResultData<List<OrdersList>> result = new AppResultData<List<OrdersList>>(Constants.SUCCESS_0,
-					ConstantMsg.SUCCESS_0_MSG, orderViewList);
-			return result;
-		} else {
-			AppResultData<List<OrdersList>> result = new AppResultData<List<OrdersList>>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_10, orderViewList);
+		if (u == null) {
 			return result;
 		}
+		
+		orderList = orderQueryService.selectByUserId(userId, page, Constants.PAGE_MAX_NUMBER);
+		
+		result.setData(orderList);
+		
+		return result;
+
 	}
 }

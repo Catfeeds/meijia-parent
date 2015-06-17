@@ -15,6 +15,7 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.TimeStampUtil;
 
 @Service
 public class OrderPricesServiceImpl implements OrderPricesService{
@@ -63,26 +64,29 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 	}
 
 	@Override
-	public OrderPrices initOrderPrices(String mobile, Users u,
-			BigDecimal orderPay, BigDecimal orderMoney, String orderNo,
-			Long now, OrderPrices orderPrices) {
-		orderPrices.setAddTime(now);
-		orderPrices.setMobile(mobile);
-		orderPrices.setOrderMoney(orderMoney);
-		orderPrices.setUserId(u.getId());
-		orderPrices.setOrderNo(orderNo);
-		orderPrices.setCardPasswd("");
-		orderPrices.setOrderPay(orderPay);
-		orderPrices.setOrderPayBack(orderPay);
-		orderPrices.setOrderPayBackFee(new BigDecimal(Constants.BACK_MONEY_FEE));
-		orderPrices.setCleanTools((short) 0);
-		orderPrices.setCleanToolsPrice(new BigDecimal(0));
-		orderPrices.setPriceHour(Constants.PRICE_HOUR);
-		orderPrices.setPriceHourDiscount(Constants.PRICE_HOUR_DIS_COUNT);
-		orderPrices.setUsedScore(0l);
-		orderPrices.setPayType((short)Constants.PAY_TYPE_0);
-		orderPrices.setUpdateTime(now);
-		return orderPrices;
+	public OrderPrices initOrderPrices() {
+		
+		OrderPrices record = new OrderPrices();
+		
+		record.setId(0L);
+		record.setUserId(0L);
+		record.setMobile("");
+		record.setOrderId(0L);
+		record.setOrderNo("");
+		record.setPayType((short)Constants.PAY_TYPE_0);
+		record.setCardPasswd("");
+		record.setUsedScore(0l);
+		
+		BigDecimal defaultValue = new BigDecimal(0);
+		record.setOrderMoney(defaultValue);
+
+		record.setOrderPay(defaultValue);
+		record.setOrderPayBack(defaultValue);
+		record.setOrderPayBackFee(defaultValue);
+		
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		record.setUpdateTime(TimeStampUtil.getNowSecond());
+		return record;
 	}
 	
 	/**

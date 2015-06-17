@@ -64,8 +64,8 @@ public class AdServiceImpl implements AdService {
 		return adMapper.selectByPrimaryKey(id);
 	}
 	@Override
-	public List<DictAd> getAdByServiceType(Long serviceType) {
-		return adMapper.selectByServiceType(serviceType);
+	public List<DictAd> selectByAdType(Short adType) {
+		return adMapper.selectByAdType(adType);
 	}
 	@Override
 	public int insertSelective(DictAd record) {
@@ -78,7 +78,7 @@ public class AdServiceImpl implements AdService {
 		record.setNo((short)0);
 		record.setImgUrl("");
 		record.setGotoUrl("");
-		record.setServiceType(0L);
+		record.setAdType((short) 0);
 		record.setAddTime(TimeStampUtil.getNow()/1000);
 		record.setUpdateTime(0L);
 		record.setEnable((short)0);

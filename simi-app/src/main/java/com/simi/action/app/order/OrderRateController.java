@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailScore;
+import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserDetailScoreService;
@@ -20,14 +22,16 @@ import com.simi.vo.AppResultData;
 @Controller
 @RequestMapping(value = "/app/order")
 public class OrderRateController extends BaseController {
-	@Autowired
-	UserDetailScoreService userDetailScoreService;
+
 
 	@Autowired
 	private OrdersService ordersService;
 
 	@Autowired
     private OrderQueryService orderQueryService;
+	
+	@Autowired
+	OrderLogService orderLogService;
 
 	// 22.订单评价接口
 	/**
@@ -56,17 +60,19 @@ public class OrderRateController extends BaseController {
 		}
 
 
-		orders.setOrderStatus(Constants.ORDER_STATS_6_COMPLETE);
+		orders.setOrderStatus(Constants.ORDER_STATUS_9_COMPLETE);
 		long now = TimeStampUtil.getNow() / 1000;
 		orders.setUpdateTime(now);
+		
+		//更新订单
+		ordersService.updateByPrimaryKeySelective(orders);
+		
+		//新增订单日志
+		OrderLog orderLog = orderLogService.initOrderLog(orders);
+		orderLogService.insert(orderLog);
 
-		UserDetailScore userDetailScore = new UserDetailScore();
-		userDetailScore.setIsConsume(Constants.CONSUME_SCORE_GET);
-		userDetailScore.setScore(Constants.RATE_CORE);
-		userDetailScore.setActionId(Constants.ACTION_ORDER_RATE);
-		userDetailScoreService.initUserDetailScore(mobile, orders, now, userDetailScore);
-
-		ordersService.upderOrdeRateAbout(orders, userDetailScore);
+		//评价成功后的操作
+		ordersService.ordeRatedTodo(orders);
 
 		AppResultData<String> result = new AppResultData<String>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,  "");

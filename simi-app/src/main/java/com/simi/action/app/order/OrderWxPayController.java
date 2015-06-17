@@ -94,7 +94,7 @@ public class OrderWxPayController extends BaseController {
 			
 			// 订单已经支付过，不需要重复支付
 			if (order.getOrderStatus()
-					.equals(Constants.ORDER_STATS_2_PAID)) {
+					.equals(Constants.ORDER_STATUS_4_PAY_DONE)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("订单已经支付过！");
 				return result;
@@ -116,7 +116,7 @@ public class OrderWxPayController extends BaseController {
 			mobile = orderCard.getMobile();
 			// 订单已经支付过，不需要重复支付
 			if (orderCard.getOrderStatus()
-					.equals(Constants.ORDER_STATS_2_PAID)) {
+					.equals(Constants.PAY_STATUS_1)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("订单已经支付过！");
 				return result;
@@ -303,7 +303,7 @@ public class OrderWxPayController extends BaseController {
 			mobile = orderCard.getMobile();
 			// 订单已经支付过，不需要重复支付
 			if (orderCard.getOrderStatus()
-					.equals(Constants.ORDER_STATS_2_PAID)) {
+					.equals(Constants.PAY_STATUS_1)) {
 				return result;
 			}
 		}

@@ -6,29 +6,22 @@ import com.simi.po.model.dict.DictAd;
 
 public interface DictAdMapper {
 
-    int deleteByPrimaryKey(Long id);
+	int deleteByPrimaryKey(Long id);
 
+	int insertSelective(DictAd record);
 
+	int updateByPrimaryKeySelective(DictAd record);
 
-    int insertSelective(DictAd record);
+	int updateByPrimaryKey(DictAd record);
 
+	List<DictAd> selectAll();
 
-    int updateByPrimaryKeySelective(DictAd record);
+	List<DictAd> selectByListPage();
 
-    int updateByPrimaryKey(DictAd record);
+	DictAd selectByPrimaryKey(Long id);
 
-    List<DictAd> selectAll();
+	int insert(DictAd record);
 
-    List<DictAd> selectByListPage();
-
-
-
-    DictAd selectByPrimaryKey(Long id);
-    List<DictAd> selectByServiceType(Long serviceType);
-    int insert(DictAd record);
-
-
-
-
+	List<DictAd> selectByAdType(Short adType);
 
 }

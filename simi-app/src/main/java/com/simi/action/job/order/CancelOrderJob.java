@@ -35,17 +35,17 @@ public class CancelOrderJob extends BaseController {
 
 	public void cancelOrder() {
 		// 查询所用未付款的订单 order_state=1
-		List<Orders> list = orderQueryService.queryOrdersByState(Constants.ORDER_STATS_1_PAYING);
+		List<Orders> list = orderQueryService.selectByStatus(Constants.ORDER_STATUS_3_PAY_WAIT);
 		Long now = TimeStampUtil.getNow()/1000;
 		Long addTime = TimeStampUtil.getNow()/1000;
 		// 当未付款的订单时间超过60分钟时，将订单状态置为以关闭 order_state=7
 		for (Orders orders : list) {
 			addTime = orders.getAddTime();
 			if ((now - addTime) / 60 >= 60) {
-				orders.setOrderStatus(Constants.ORDER_STATS_7_CLOSE);
+				orders.setOrderStatus(Constants.ORDER_STATUS_0_CLOSE);
 			}
 			ordersService.updateByPrimaryKey(orders);
-			UserCoupons userCoupons = userCouponService.selectByMobileOrderNo(orders.getMobile(),orders.getOrderNo());
+			UserCoupons userCoupons = userCouponService.selectByUserIdOrderNo(orders.getUserId(),orders.getOrderNo());
 			if(userCoupons!=null){
 				userCoupons.setOrderNo("0");
 				userCouponService.updateByPrimaryKeySelective(userCoupons);

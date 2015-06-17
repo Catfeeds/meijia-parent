@@ -7,8 +7,6 @@ import com.simi.po.model.dict.DictAd;
 
 public interface AdService {
 
-	List<DictAd> getAdByServiceType(Long serviceType);
-
 	DictAd initAd();
 
     DictAd selectByPrimaryKey(Long id);
@@ -21,6 +19,6 @@ public interface AdService {
 
 	int deleteByPrimaryKey(Long id);
 
-
+	List<DictAd> selectByAdType(Short adType);
 
 }

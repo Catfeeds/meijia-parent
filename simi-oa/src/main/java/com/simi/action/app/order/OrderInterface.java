@@ -27,12 +27,12 @@ public class OrderInterface extends BaseController {
 	 * @return
 	 * @throws IOException
 	 */
-	@SuppressWarnings("rawtypes")//传递参数时也要传递带泛型的参数--压制这种警告
-	@RequestMapping(value = "get-dispatch-by-month.json", method = RequestMethod.GET)
-    public List<Map<String,Object>>  getDispatch(HttpServletResponse response,
-    		@RequestParam(value = "start", required = true, defaultValue = "" ) String start,
-    		@RequestParam(value="end" ,required = true, defaultValue = "") String end) {
-
-		return ordersService.selectOrdersCountByYearAndMonth(start, end);
-    }
+//	@SuppressWarnings("rawtypes")//传递参数时也要传递带泛型的参数--压制这种警告
+//	@RequestMapping(value = "get-dispatch-by-month.json", method = RequestMethod.GET)
+//    public List<Map<String,Object>>  getDispatch(HttpServletResponse response,
+//    		@RequestParam(value = "start", required = true, defaultValue = "" ) String start,
+//    		@RequestParam(value="end" ,required = true, defaultValue = "") String end) {
+//
+//		return ordersService.selectOrdersCountByYearAndMonth(start, end);
+//    }
 }

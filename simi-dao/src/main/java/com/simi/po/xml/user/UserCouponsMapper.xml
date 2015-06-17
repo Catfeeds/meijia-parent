@@ -1,262 +1,270 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.user.UserCouponsMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserCoupons" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="mobile" property="mobile" jdbcType="CHAR" />
-    <result column="coupon_id" property="couponId" jdbcType="NUMERIC" />
-    <result column="card_passwd" property="cardPasswd" jdbcType="VARCHAR" />
-    <result column="value" property="value" jdbcType="DECIMAL" />
-    <result column="exp_time" property="expTime" jdbcType="NUMERIC" />
-    <result column="is_used" property="isUsed" jdbcType="NUMERIC" />
-    <result column="used_time" property="usedTime" jdbcType="NUMERIC" />
-    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, mobile, coupon_id, card_passwd, value, exp_time, is_used, used_time,
-    order_no, add_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
+<mapper namespace="com.simi.po.dao.user.UserCouponsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserCoupons">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="coupon_id" property="couponId" jdbcType="NUMERIC" />
+		<result column="card_passwd" property="cardPasswd" jdbcType="VARCHAR" />
+		<result column="value" property="value" jdbcType="DECIMAL" />
+		<result column="exp_time" property="expTime" jdbcType="NUMERIC" />
+		<result column="is_used" property="isUsed" jdbcType="NUMERIC" />
+		<result column="used_time" property="usedTime" jdbcType="NUMERIC" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, mobile, coupon_id, card_passwd, value, exp_time, is_used, used_time,
+		order_no, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
 
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where 1=1
-        <if test="cardPasswd != null" >
-        and card_passwd like CONCAT('%','${cardPasswd}','%' )
-      </if>
-    order by add_time desc
-  </select>
-  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where mobile = #{mobile,jdbcType=CHAR} and is_used = 0
-    and (exp_time = 0 OR exp_time > unix_timestamp(now()) ) order by add_time desc
-  </select>
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where 1=1
+		<if test="cardPasswd != null">
+			and card_passwd like CONCAT('%','${cardPasswd}','%' )
+		</if>
+		order by add_time desc
+	</select>
+	<select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where mobile = #{mobile,jdbcType=CHAR} and is_used = 0
+		and (exp_time = 0 OR exp_time > unix_timestamp(now()) ) order by add_time desc
+	</select>
 
-  <select id="selectByCardPasswd" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where card_passwd = #{cardPasswd,jdbcType=VARCHAR}
-  </select>
+	<select id="selectByCardPasswd" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where card_passwd = #{cardPasswd,jdbcType=VARCHAR}
+	</select>
 
-  <!-- 多条件查询，where 1 = 1 会被mysql 过滤，不影响性能 -->
-  <select id="selectByConditions" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where 1=1
-      <if test="mobile != null" >
-        and mobile = #{mobile,jdbcType=CHAR}
-      </if>
+	<!-- 多条件查询，where 1 = 1 会被mysql 过滤，不影响性能 -->
+	<select id="selectByConditions" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where 1=1
+		<if test="mobile != null">
+			and mobile = #{mobile,jdbcType=CHAR}
+		</if>
 
-      <if test="userId != null" >
-        and user_id = #{userId,jdbcType=NUMERIC}
-      </if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
 
-      <if test="couponId != null" >
-        and coupon_id = #{couponId,jdbcType=NUMERIC}
-      </if>
-      <if test="cardPasswd != null" >
-        and card_passwd = #{cardPasswd,jdbcType=VARCHAR}
-      </if>
+		<if test="couponId != null">
+			and coupon_id = #{couponId,jdbcType=NUMERIC}
+		</if>
+		<if test="cardPasswd != null">
+			and card_passwd = #{cardPasswd,jdbcType=VARCHAR}
+		</if>
 
-      <if test="orderNo != null" >
-        and order_no = #{orderNo,jdbcType=VARCHAR}
-      </if>
-      
-      <if test="isUsed != null" >
-        and is_used = #{isUsed,jdbcType=VARCHAR}
-      </if>      
-  </select>
+		<if test="orderNo != null">
+			and order_no = #{orderNo,jdbcType=VARCHAR}
+		</if>
 
-  <select id="selectByMobileCardPwd" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where mobile = #{0} and card_passwd = #{1} and is_used = 0
-    order by add_time asc limit 1
-  </select>
+		<if test="isUsed != null">
+			and is_used = #{isUsed,jdbcType=VARCHAR}
+		</if>
+	</select>
 
-  <select id="selectByMobileOrderNo" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_coupons
-    where mobile = #{0} and order_no = #{1}
-    order by add_time asc limit 1
-  </select>
+	<select id="selectByMobileCardPwd" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where mobile = #{0} and card_passwd = #{1} and is_used = 0
+		order by add_time asc limit 1
+	</select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from user_coupons
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.user.UserCoupons" >
-  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-	SELECT LAST_INSERT_ID() AS id
-	</selectKey>
-    insert into user_coupons (id, user_id, mobile,
-      coupon_id, card_passwd, value,
-      exp_time, is_used, used_time,
-      order_no, add_time, update_time
-      )
-    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
-      #{couponId,jdbcType=NUMERIC}, #{cardPasswd,jdbcType=VARCHAR}, #{value,jdbcType=DECIMAL},
-      #{expTime,jdbcType=NUMERIC}, #{isUsed,jdbcType=NUMERIC}, #{usedTime,jdbcType=NUMERIC},
-      #{orderNo,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserCoupons" >
-    insert into user_coupons
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="couponId != null" >
-        coupon_id,
-      </if>
-      <if test="cardPasswd != null" >
-        card_passwd,
-      </if>
-      <if test="value != null" >
-        value,
-      </if>
-      <if test="expTime != null" >
-        exp_time,
-      </if>
-      <if test="isUsed != null" >
-        is_used,
-      </if>
-      <if test="usedTime != null" >
-        used_time,
-      </if>
-      <if test="orderNo != null" >
-        order_no,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="couponId != null" >
-        #{couponId,jdbcType=NUMERIC},
-      </if>
-      <if test="cardPasswd != null" >
-        #{cardPasswd,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null" >
-        #{value,jdbcType=DECIMAL},
-      </if>
-      <if test="expTime != null" >
-        #{expTime,jdbcType=NUMERIC},
-      </if>
-      <if test="isUsed != null" >
-        #{isUsed,jdbcType=NUMERIC},
-      </if>
-      <if test="usedTime != null" >
-        #{usedTime,jdbcType=NUMERIC},
-      </if>
-      <if test="orderNo != null" >
-        #{orderNo,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserCoupons" >
-    update user_coupons
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        mobile = #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="couponId != null" >
-        coupon_id = #{couponId,jdbcType=NUMERIC},
-      </if>
-      <if test="cardPasswd != null" >
-        card_passwd = #{cardPasswd,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null" >
-        value = #{value,jdbcType=DECIMAL},
-      </if>
-      <if test="expTime != null" >
-        exp_time = #{expTime,jdbcType=NUMERIC},
-      </if>
-      <if test="isUsed != null" >
-        is_used = #{isUsed,jdbcType=NUMERIC},
-      </if>
-      <if test="usedTime != null" >
-        used_time = #{usedTime,jdbcType=NUMERIC},
-      </if>
-      <if test="orderNo != null" >
-        order_no = #{orderNo,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserCoupons" >
-    update user_coupons
-    set user_id = #{userId,jdbcType=NUMERIC},
-      mobile = #{mobile,jdbcType=CHAR},
-      coupon_id = #{couponId,jdbcType=NUMERIC},
-      card_passwd = #{cardPasswd,jdbcType=VARCHAR},
-      value = #{value,jdbcType=DECIMAL},
-      exp_time = #{expTime,jdbcType=NUMERIC},
-      is_used = #{isUsed,jdbcType=NUMERIC},
-      used_time = #{usedTime,jdbcType=NUMERIC},
-      order_no = #{orderNo,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+	<select id="selectByMobileOrderNo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where mobile = #{0} and order_no = #{1}
+		order by add_time asc limit 1
+	</select>
 
-   <update id="updateUserCouponsByOrderNo" parameterType="java.lang.String" >
-    update user_coupons
-    set
-      is_used = 1,
-      used_time = unix_timestamp(now()),
-      update_time = unix_timestamp(now())
-    where order_no = #{orderNo,jdbcType=VARCHAR}
-  </update>
+	<select id="selectByUserIdOrderNo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where user_id = #{0} and order_no = #{1}
+		order by add_time asc limit 1
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_coupons
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserCoupons">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into user_coupons (id, user_id, mobile,
+		coupon_id, card_passwd, value,
+		exp_time, is_used, used_time,
+		order_no, add_time, update_time
+		)
+		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+		#{couponId,jdbcType=NUMERIC}, #{cardPasswd,jdbcType=VARCHAR}, #{value,jdbcType=DECIMAL},
+		#{expTime,jdbcType=NUMERIC}, #{isUsed,jdbcType=NUMERIC}, #{usedTime,jdbcType=NUMERIC},
+		#{orderNo,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserCoupons">
+		insert into user_coupons
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="couponId != null">
+				coupon_id,
+			</if>
+			<if test="cardPasswd != null">
+				card_passwd,
+			</if>
+			<if test="value != null">
+				value,
+			</if>
+			<if test="expTime != null">
+				exp_time,
+			</if>
+			<if test="isUsed != null">
+				is_used,
+			</if>
+			<if test="usedTime != null">
+				used_time,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="couponId != null">
+				#{couponId,jdbcType=NUMERIC},
+			</if>
+			<if test="cardPasswd != null">
+				#{cardPasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				#{value,jdbcType=DECIMAL},
+			</if>
+			<if test="expTime != null">
+				#{expTime,jdbcType=NUMERIC},
+			</if>
+			<if test="isUsed != null">
+				#{isUsed,jdbcType=NUMERIC},
+			</if>
+			<if test="usedTime != null">
+				#{usedTime,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserCoupons">
+		update user_coupons
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="couponId != null">
+				coupon_id = #{couponId,jdbcType=NUMERIC},
+			</if>
+			<if test="cardPasswd != null">
+				card_passwd = #{cardPasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				value = #{value,jdbcType=DECIMAL},
+			</if>
+			<if test="expTime != null">
+				exp_time = #{expTime,jdbcType=NUMERIC},
+			</if>
+			<if test="isUsed != null">
+				is_used = #{isUsed,jdbcType=NUMERIC},
+			</if>
+			<if test="usedTime != null">
+				used_time = #{usedTime,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserCoupons">
+		update user_coupons
+		set user_id = #{userId,jdbcType=NUMERIC},
+		mobile = #{mobile,jdbcType=CHAR},
+		coupon_id = #{couponId,jdbcType=NUMERIC},
+		card_passwd = #{cardPasswd,jdbcType=VARCHAR},
+		value = #{value,jdbcType=DECIMAL},
+		exp_time = #{expTime,jdbcType=NUMERIC},
+		is_used = #{isUsed,jdbcType=NUMERIC},
+		used_time = #{usedTime,jdbcType=NUMERIC},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<update id="updateUserCouponsByOrderNo" parameterType="java.lang.String">
+		update user_coupons
+		set
+		is_used = 1,
+		used_time = unix_timestamp(now()),
+		update_time = unix_timestamp(now())
+		where order_no = #{orderNo,jdbcType=VARCHAR}
+	</update>
 
 </mapper>

@@ -30,6 +30,8 @@ public interface UserCouponsMapper {
 	UserCoupons selectByMobileCardPwd(String mobile, String card_passwd);
 
 	UserCoupons selectByMobileOrderNo(String mobile, String orderNo);
+	
+	UserCoupons selectByUserIdOrderNo(Long userId, String orderNo);
 
 	List<UserCoupons> selectByListPage(Map<String,Object> conditions);
 }

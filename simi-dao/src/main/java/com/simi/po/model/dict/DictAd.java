@@ -9,7 +9,7 @@ public class DictAd {
 
     private String gotoUrl;
 
-    private Long serviceType;
+    private Short adType;
 
     private Long addTime;
 
@@ -49,14 +49,6 @@ public class DictAd {
         this.gotoUrl = gotoUrl == null ? null : gotoUrl.trim();
     }
 
-    public Long getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(Long serviceType) {
-        this.serviceType = serviceType;
-    }
-
     public Long getAddTime() {
         return addTime;
     }
@@ -79,6 +71,14 @@ public class DictAd {
 
 	public void setEnable(Short enable) {
 		this.enable = enable;
+	}
+
+	public Short getAdType() {
+		return adType;
+	}
+
+	public void setAdType(Short adType) {
+		this.adType = adType;
 	}
 
 }

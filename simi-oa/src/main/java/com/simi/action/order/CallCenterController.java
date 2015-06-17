@@ -17,7 +17,7 @@ import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.DateUtil;
-import com.simi.vo.order.OrderSearchVo;
+import com.simi.vo.OrderSearchVo;
 import com.simi.vo.user.UserViewVo;
 
 @Controller
@@ -61,8 +61,9 @@ public class CallCenterController extends AdminController {
 		if (searchVo.getMobile() == null) {
 			searchVo.setMobile(customerNumber);
 		}
+		
 		model.addAttribute("searchModel", searchVo);
-		PageInfo result = orderQueryService.searchVoListPage(searchVo, pageNo, pageSize);
+		PageInfo result = orderQueryService.selectByListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);
 

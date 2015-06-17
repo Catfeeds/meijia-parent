@@ -56,28 +56,20 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	}
 
 	@Override
-	public UserDetailScore initUserDetailScore(String mobile, Orders orders, long now,
-			UserDetailScore userDetailScore) {
-				userDetailScore.setAddTime(now);
-				userDetailScore.setUserId(orders.getUserId());
-				userDetailScore.setMobile(mobile);
-				return userDetailScore;
+	public UserDetailScore initUserDetailScore() {
+		UserDetailScore record = new UserDetailScore();
+		record.setId(0L);
+		record.setUserId(0L);
+		record.setMobile("");
+		record.setActionId((short) 0);
+		record.setIsConsume((short) 0);
+		record.setScore(0);
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		return record;
 	}
 
 	@Override
 	public UserDetailScore selectByPrimaryKey(Long id) {
 		return userDetailScoreMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public UserDetailScore initUserDetailScore(Users users) {
-		UserDetailScore userDetailScore = new UserDetailScore();
-		userDetailScore.setUserId(users.getId());
-		userDetailScore.setMobile(users.getMobile());
-		userDetailScore.setScore(100);
-		userDetailScore.setActionId(Constants.ACTION_CONVERT_SCORE);
-		userDetailScore.setIsConsume(Constants.CONSUME_SCORE_USED);
-		userDetailScore.setAddTime(TimeStampUtil.getNow()/1000);
-		return userDetailScore;
 	}
 }

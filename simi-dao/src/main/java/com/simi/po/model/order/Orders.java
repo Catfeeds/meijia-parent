@@ -7,23 +7,17 @@ public class Orders {
 
     private String mobile;
 
-    private String customName;
-
-    private String agentMobile;
-
     private Long cityId;
 
     private String orderNo;
+    
+    private Short orderPayType;
 
     private Short serviceType;
 
     private Long serviceDate;
 
     private Long startTime;
-
-    private Short serviceHours;
-
-    private Long cellId;
 
     private Long addrId;
 
@@ -99,22 +93,6 @@ public class Orders {
         this.startTime = startTime;
     }
 
-    public Short getServiceHours() {
-        return serviceHours;
-    }
-
-    public void setServiceHours(Short serviceHours) {
-        this.serviceHours = serviceHours;
-    }
-
-    public Long getCellId() {
-        return cellId;
-    }
-
-    public void setCellId(Long cellId) {
-        this.cellId = cellId;
-    }
-
     public Long getAddrId() {
         return addrId;
     }
@@ -187,27 +165,19 @@ public class Orders {
 		this.isScore = isScore;
 	}
 
-	public String getAgentMobile() {
-		return agentMobile;
-	}
-
-	public void setAgentMobile(String agentMobile) {
-		this.agentMobile = agentMobile;
-	}
-
-	public String getCustomName() {
-		return customName;
-	}
-
-	public void setCustomName(String customName) {
-		this.customName = customName;
-	}
-
 	public Long getServiceDate() {
 		return serviceDate;
 	}
 
 	public void setServiceDate(Long serviceDate) {
 		this.serviceDate = serviceDate;
+	}
+
+	public Short getOrderPayType() {
+		return orderPayType;
+	}
+
+	public void setOrderPayType(Short orderPayType) {
+		this.orderPayType = orderPayType;
 	}
 }

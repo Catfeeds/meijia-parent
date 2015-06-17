@@ -40,4 +40,6 @@ public interface UserCouponService {
 
 	UserCoupons initUserCoupons(Users users,DictCoupons dictCoupons);
 
+	UserCoupons selectByUserIdOrderNo(Long userId, String orderNo);
+
 }

@@ -26,5 +26,7 @@ public interface OrderPayService {
 		OrderSenior orderSeniorPayMoney(String mobile, DictSeniorType seniorType,
 				Short payType);
 
+		void orderPaySuccessToDo(Orders orders);
+
 
 }

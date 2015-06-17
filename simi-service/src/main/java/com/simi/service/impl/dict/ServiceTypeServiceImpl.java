@@ -13,8 +13,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.dict.ServiceTypeService;
 import com.simi.vo.dict.CouponSearchVo;
-import com.simi.vo.dict.ServiceTypeItemVo;
-import com.simi.vo.dict.ServiceTypeVo;
 import com.simi.po.dao.dict.DictServiceTypesMapper;
 import com.simi.po.model.dict.DictServiceTypes;
 import com.meijia.utils.TimeStampUtil;
@@ -77,28 +75,6 @@ public class ServiceTypeServiceImpl implements ServiceTypeService {
 		 PageHelper.startPage(pageNo, pageSize);
          List<DictServiceTypes> list = serviceTypeMapper.selectByListPage();
         PageInfo result = new PageInfo(list);
-		return result;
-	}
-
-	/*
-	 * 形成ServiceTypeVo 对象的形态
-	 */
-	@Override
-	public List<ServiceTypeVo> getServiceTypeVos() {
-
-		List<ServiceTypeVo> result = new ArrayList<ServiceTypeVo>();
-
-		List<DictServiceTypes> servcieTypes = serviceTypeMapper.selectAll();
-
-		DictServiceTypes servcieType;
-		for(int i=0; i<servcieTypes.size(); i++) {
-			servcieType = servcieTypes.get(i);
-			ServiceTypeVo serviceTypeVo = new ServiceTypeVo();
-			BeanUtils.copyProperties(servcieType, serviceTypeVo);
-
-			result.add(serviceTypeVo);
-		}
-
 		return result;
 	}
 

@@ -169,11 +169,11 @@ public class MsgController extends BaseController {
 	        if(sendGroup==(short)0){
 	        	list = usersService.selectByAll();
 	        }else if(sendGroup==(short)1){
-	        	List<String> mobileLists = ordersService.selectDistinctMobileLists();
+	        	List<String> mobileLists = ordersService.selectByDistinctMobileLists();
 	        	list = usersService.selectUsersHaveOrdered(mobileLists);
 
 	        }else{
-	        	List<String> mobileLists = ordersService.selectDistinctMobileLists();
+	        	List<String> mobileLists = ordersService.selectByDistinctMobileLists();
 	        	list = usersService.selectUsersNoOrdered(mobileLists);
 	        }
 	        for (Iterator iterator = list.iterator(); iterator.hasNext();) {
@@ -196,11 +196,11 @@ public class MsgController extends BaseController {
 	        	list = usersService.selectByAll();
 
 	        }else if(sendGroup==(short)1){
-	        	List<String> mobileLists = ordersService.selectDistinctMobileLists();
+	        	List<String> mobileLists = ordersService.selectByDistinctMobileLists();
 	        	 list = usersService.selectUsersHaveOrdered(mobileLists);
 
 	        }else{
-	        	List<String> mobileLists = ordersService.selectDistinctMobileLists();
+	        	List<String> mobileLists = ordersService.selectByDistinctMobileLists();
 	        	list = usersService.selectUsersNoOrdered(mobileLists);
 	        }
 	        for (Iterator iterator = list.iterator(); iterator.hasNext();) {

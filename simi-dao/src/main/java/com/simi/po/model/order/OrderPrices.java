@@ -19,14 +19,6 @@ public class OrderPrices {
 
     private Long usedScore;
 
-    private Short cleanTools;
-
-    private BigDecimal cleanToolsPrice;
-
-    private BigDecimal priceHour;
-
-    private BigDecimal priceHourDiscount;
-
     private BigDecimal orderMoney;
 
     private BigDecimal orderPay;
@@ -103,22 +95,6 @@ public class OrderPrices {
         this.usedScore = usedScore;
     }
 
-    public BigDecimal getPriceHour() {
-        return priceHour;
-    }
-
-    public void setPriceHour(BigDecimal priceHour) {
-        this.priceHour = priceHour;
-    }
-
-    public BigDecimal getPriceHourDiscount() {
-        return priceHourDiscount;
-    }
-
-    public void setPriceHourDiscount(BigDecimal priceHourDiscount) {
-        this.priceHourDiscount = priceHourDiscount;
-    }
-
     public BigDecimal getOrderMoney() {
         return orderMoney;
     }
@@ -166,20 +142,4 @@ public class OrderPrices {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
-
-	public Short getCleanTools() {
-		return cleanTools;
-	}
-
-	public void setCleanTools(Short cleanTools) {
-		this.cleanTools = cleanTools;
-	}
-
-	public BigDecimal getCleanToolsPrice() {
-		return cleanToolsPrice;
-	}
-
-	public void setCleanToolsPrice(BigDecimal cleanToolsPrice) {
-		this.cleanToolsPrice = cleanToolsPrice;
-	}
 }

@@ -2,10 +2,9 @@ package com.simi.po.dao.order;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.simi.po.model.order.Orders;
-import com.simi.vo.OrdersList;
+import com.simi.vo.OrderSearchVo;
 
 public interface OrdersMapper {
     int deleteByPrimaryKey(Long id);
@@ -13,39 +12,21 @@ public interface OrdersMapper {
     Long insert(Orders record);
 
     int insertSelective(Orders record);
+    
+    int updateByPrimaryKeySelective(Orders record);
+
+    int updateByPrimaryKey(Orders record);    
 
     Orders selectByOrderNo(String orderNo);
 
     Orders selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Orders record);
+    List<Orders> selectByListPage(OrderSearchVo orderSearchVo);
 
-    int updateByPrimaryKey(Orders record);
+    List<Orders> selectByStatus(Short orderStatus);
 
-    List<Orders> queryOrdersByState(Short order_state);
+    List<Orders> selectByStatuses(List<Short> orderStatus);
 
-    List<Orders> queryOrdersByStates(List<Short> orderStates);
-
-    List<Orders> queryOrdersByStateAndScore();
-
-    List<Orders> selectByListPage(HashMap conditions);
-
-    List<Orders> queryOrdersByStateAndStartTime(HashMap conditions);
-
-    List<Orders> queryOrdersCompletedAndUnEvaluated(HashMap conditions);
-
-    List<OrdersList> selectByMobile(String mobile, int start, int end);
-
-    List<OrdersList> selectByAgentMobile(String mobile, int start, int end);
-
-    List<Orders> selectBySameDateTime(HashMap conditions);
-
-
-	List<Map<String, Object>> totalCountByStartTime(Map<String, Object> conditions);
-
-	List<String> selectDistinctMobileLists();
-
-
-
+	List<String> selectByDistinctMobileLists();
 
 }

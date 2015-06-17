@@ -1,281 +1,251 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.order.OrderPricesMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderPrices" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="mobile" property="mobile" jdbcType="CHAR" />
-    <result column="order_id" property="orderId" jdbcType="NUMERIC" />
-    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-    <result column="pay_type" property="payType" jdbcType="NUMERIC" />
-    <result column="card_passwd" property="cardPasswd" jdbcType="VARCHAR" />
-    <result column="used_score" property="usedScore" jdbcType="NUMERIC" />
-    <result column="clean_tools" property="cleanTools" jdbcType="NUMERIC" />
-    <result column="clean_tools_price" property="cleanToolsPrice" jdbcType="DECIMAL" />
-    <result column="price_hour" property="priceHour" jdbcType="DECIMAL" />
-    <result column="price_hour_discount" property="priceHourDiscount" jdbcType="DECIMAL" />
-    <result column="order_money" property="orderMoney" jdbcType="DECIMAL" />
-    <result column="order_pay" property="orderPay" jdbcType="DECIMAL" />
-    <result column="order_pay_back" property="orderPayBack" jdbcType="DECIMAL" />
-    <result column="order_pay_back_fee" property="orderPayBackFee" jdbcType="DECIMAL" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, mobile, order_id, order_no, pay_type, card_passwd, used_score, clean_tools, clean_tools_price,
-    price_hour, price_hour_discount, order_money, order_pay, order_pay_back, order_pay_back_fee,
-    add_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from order_prices
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
+<mapper namespace="com.simi.po.dao.order.OrderPricesMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderPrices">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="order_id" property="orderId" jdbcType="NUMERIC" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="pay_type" property="payType" jdbcType="NUMERIC" />
+		<result column="card_passwd" property="cardPasswd" jdbcType="VARCHAR" />
+		<result column="used_score" property="usedScore" jdbcType="NUMERIC" />
+		<result column="order_money" property="orderMoney" jdbcType="DECIMAL" />
+		<result column="order_pay" property="orderPay" jdbcType="DECIMAL" />
+		<result column="order_pay_back" property="orderPayBack" jdbcType="DECIMAL" />
+		<result column="order_pay_back_fee" property="orderPayBackFee" jdbcType="DECIMAL" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, mobile, order_id, order_no, pay_type,
+		card_passwd,
+		used_score,
+		order_money, order_pay, order_pay_back,
+		order_pay_back_fee,
+		add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_prices
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
 
-  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from order_prices
-    where order_id = #{order_id,jdbcType=NUMERIC}
-  </select>
+	<select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_prices
+		where order_id = #{order_id,jdbcType=NUMERIC}
+	</select>
 
-  <select id="selectByOrderIds" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from order_prices
-    where order_id in
- 	<foreach item="item" index="index" collection="list"
-             open="(" separator="," close=")">
-        #{item}
-    </foreach>
+	<select id="selectByOrderIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from order_prices
+		where order_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
 
-    order by add_time asc
-  </select>
+		order by add_time asc
+	</select>
 
-  <select id="selectByOrderNos" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from order_prices
-    where order_id in
- 	<foreach item="item" index="index" collection="list"
-             open="(" separator="," close=")">
-        #{item}
-    </foreach>
+	<select id="selectByOrderNos" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from order_prices
+		where order_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
 
-    order by add_time asc
-  </select>
+		order by add_time asc
+	</select>
 
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from order_prices
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.order.OrderPrices" >
-    insert into order_prices (id, user_id, mobile,
-      order_id, order_no, pay_type,
-      card_passwd, used_score, clean_tools, clean_tools_price,
-      price_hour, price_hour_discount, order_money, order_pay,
-      order_pay_back, order_pay_back_fee, add_time,
-      update_time)
-    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
-      #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR}, #{payType,jdbcType=NUMERIC},
-      #{cardPasswd,jdbcType=VARCHAR}, #{usedScore,jdbcType=NUMERIC}, #{cleanTools,jdbcType=NUMERIC}, #{cleanToolsPrice,jdbcType=DECIMAL},
-      #{priceHour,jdbcType=DECIMAL}, #{priceHourDiscount,jdbcType=DECIMAL}, #{orderMoney,jdbcType=DECIMAL}, #{orderPay,jdbcType=DECIMAL},
-      #{orderPayBack,jdbcType=DECIMAL}, #{orderPayBackFee,jdbcType=DECIMAL}, #{addTime,jdbcType=NUMERIC},
-      #{updateTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.order.OrderPrices" >
-    insert into order_prices
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="orderId != null" >
-        order_id,
-      </if>
-      <if test="orderNo != null" >
-        order_no,
-      </if>
-      <if test="payType != null" >
-        pay_type,
-      </if>
-      <if test="cardPasswd != null" >
-        card_passwd,
-      </if>
-      <if test="usedScore != null" >
-        used_score,
-      </if>
-      <if test="cleanTools != null" >
-        clean_tools,
-      </if>
-      <if test="cleanToolsPrice != null" >
-        clean_tools_price,
-      </if>
-      <if test="priceHour != null" >
-        price_hour,
-      </if>
-      <if test="priceHourDiscount != null" >
-        price_hour_discount,
-      </if>
-      <if test="orderMoney != null" >
-        order_money,
-      </if>
-      <if test="orderPay != null" >
-        order_pay,
-      </if>
-      <if test="orderPayBack != null" >
-        order_pay_back,
-      </if>
-      <if test="orderPayBackFee != null" >
-        order_pay_back_fee,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="orderId != null" >
-        #{orderId,jdbcType=NUMERIC},
-      </if>
-      <if test="orderNo != null" >
-        #{orderNo,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null" >
-        #{payType,jdbcType=NUMERIC},
-      </if>
-      <if test="cardPasswd != null" >
-        #{cardPasswd,jdbcType=VARCHAR},
-      </if>
-      <if test="usedScore != null" >
-        #{usedScore,jdbcType=NUMERIC},
-      </if>
-      <if test="cleanTools != null" >
-        #{cleanTools,jdbcType=NUMERIC}
-      </if>
-      <if test="cleanToolsPrice != null" >
-        #{cleanToolsPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="priceHour != null" >
-        #{priceHour,jdbcType=DECIMAL},
-      </if>
-      <if test="priceHourDiscount != null" >
-        #{priceHourDiscount,jdbcType=DECIMAL},
-      </if>
-      <if test="orderMoney != null" >
-        #{orderMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="orderPay != null" >
-        #{orderPay,jdbcType=DECIMAL},
-      </if>
-      <if test="orderPayBack != null" >
-        #{orderPayBack,jdbcType=DECIMAL},
-      </if>
-      <if test="orderPayBackFee != null" >
-        #{orderPayBackFee,jdbcType=DECIMAL},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderPrices" >
-    update order_prices
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        mobile = #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="orderId != null" >
-        order_id = #{orderId,jdbcType=NUMERIC},
-      </if>
-      <if test="orderNo != null" >
-        order_no = #{orderNo,jdbcType=VARCHAR},
-      </if>
-      <if test="payType != null" >
-        pay_type = #{payType,jdbcType=NUMERIC},
-      </if>
-      <if test="cardPasswd != null" >
-        card_passwd = #{cardPasswd,jdbcType=VARCHAR},
-      </if>
-      <if test="usedScore != null" >
-        used_score = #{usedScore,jdbcType=NUMERIC},
-      </if>
-      <if test="cleanTools != null" >
-        clean_tools = #{cleanTools,jdbcType=NUMERIC}
-      </if>
-      <if test="cleanToolsPrice != null" >
-        clean_tools_price = #{cleanToolsPrice,jdbcType=DECIMAL},
-      </if>
-
-
-      <if test="priceHour != null" >
-        price_hour = #{priceHour,jdbcType=DECIMAL},
-      </if>
-      <if test="priceHourDiscount != null" >
-        price_hour_discount = #{priceHourDiscount,jdbcType=DECIMAL},
-      </if>
-      <if test="orderMoney != null" >
-        order_money = #{orderMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="orderPay != null" >
-        order_pay = #{orderPay,jdbcType=DECIMAL},
-      </if>
-      <if test="orderPayBack != null" >
-        order_pay_back = #{orderPayBack,jdbcType=DECIMAL},
-      </if>
-      <if test="orderPayBackFee != null" >
-        order_pay_back_fee = #{orderPayBackFee,jdbcType=DECIMAL},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderPrices" >
-    update order_prices
-    set user_id = #{userId,jdbcType=NUMERIC},
-      mobile = #{mobile,jdbcType=CHAR},
-      order_id = #{orderId,jdbcType=NUMERIC},
-      order_no = #{orderNo,jdbcType=VARCHAR},
-      pay_type = #{payType,jdbcType=NUMERIC},
-      card_passwd = #{cardPasswd,jdbcType=VARCHAR},
-      used_score = #{usedScore,jdbcType=NUMERIC},
-      price_hour = #{priceHour,jdbcType=DECIMAL},
-      price_hour_discount = #{priceHourDiscount,jdbcType=DECIMAL},
-      order_money = #{orderMoney,jdbcType=DECIMAL},
-      order_pay = #{orderPay,jdbcType=DECIMAL},
-      order_pay_back = #{orderPayBack,jdbcType=DECIMAL},
-      order_pay_back_fee = #{orderPayBackFee,jdbcType=DECIMAL},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		order_prices
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.order.OrderPrices">
+		insert into order_prices (id,
+		user_id, mobile,
+		order_id, order_no, pay_type,
+		card_passwd, used_score,
+		order_money, order_pay,
+		order_pay_back, order_pay_back_fee, add_time,
+		update_time)
+		values
+		(#{id,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC},
+		#{mobile,jdbcType=CHAR},
+		#{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR},
+		#{payType,jdbcType=NUMERIC},
+		#{cardPasswd,jdbcType=VARCHAR},
+		#{usedScore,jdbcType=NUMERIC},
+		#{orderMoney,jdbcType=DECIMAL},
+		#{orderPay,jdbcType=DECIMAL},
+		#{orderPayBack,jdbcType=DECIMAL},
+		#{orderPayBackFee,jdbcType=DECIMAL},
+		#{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.order.OrderPrices">
+		insert into order_prices
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="cardPasswd != null">
+				card_passwd,
+			</if>
+			<if test="usedScore != null">
+				used_score,
+			</if>
+			
+			<if test="orderMoney != null">
+				order_money,
+			</if>
+			<if test="orderPay != null">
+				order_pay,
+			</if>
+			<if test="orderPayBack != null">
+				order_pay_back,
+			</if>
+			<if test="orderPayBackFee != null">
+				order_pay_back_fee,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=NUMERIC},
+			</if>
+			<if test="cardPasswd != null">
+				#{cardPasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="usedScore != null">
+				#{usedScore,jdbcType=NUMERIC},
+			</if>
+			<if test="orderMoney != null">
+				#{orderMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPay != null">
+				#{orderPay,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPayBack != null">
+				#{orderPayBack,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPayBackFee != null">
+				#{orderPayBackFee,jdbcType=DECIMAL},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderPrices">
+		update order_prices
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=NUMERIC},
+			</if>
+			<if test="cardPasswd != null">
+				card_passwd = #{cardPasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="usedScore != null">
+				used_score = #{usedScore,jdbcType=NUMERIC},
+			</if>
+			
+			<if test="orderMoney != null">
+				order_money = #{orderMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPay != null">
+				order_pay = #{orderPay,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPayBack != null">
+				order_pay_back = #{orderPayBack,jdbcType=DECIMAL},
+			</if>
+			<if test="orderPayBackFee != null">
+				order_pay_back_fee = #{orderPayBackFee,jdbcType=DECIMAL},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderPrices">
+		update
+		order_prices
+		set user_id = #{userId,jdbcType=NUMERIC},
+		mobile = #{mobile,jdbcType=CHAR},
+		order_id = #{orderId,jdbcType=NUMERIC},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		pay_type = #{payType,jdbcType=NUMERIC},
+		card_passwd = #{cardPasswd,jdbcType=VARCHAR},
+		used_score = #{usedScore,jdbcType=NUMERIC},
+		order_money = #{orderMoney,jdbcType=DECIMAL},
+		order_pay = #{orderPay,jdbcType=DECIMAL},
+		order_pay_back = #{orderPayBack,jdbcType=DECIMAL},
+		order_pay_back_fee = #{orderPayBackFee,jdbcType=DECIMAL},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

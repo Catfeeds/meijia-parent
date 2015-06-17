@@ -26,7 +26,7 @@ import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.order.OrderSearchVo;
+import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.vo.user.UserViewVo;
 
@@ -65,7 +65,7 @@ public class OrdersController extends AdminController {
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 
-		PageInfo result = orderQueryService.searchVoListPage(searchVo, pageNo, pageSize);
+		PageInfo result = orderQueryService.selectByListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);
 		return "order/orderList";

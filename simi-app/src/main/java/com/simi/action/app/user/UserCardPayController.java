@@ -94,7 +94,7 @@ public class UserCardPayController extends BaseController {
 
 		// 更新orders,orderPrices,Users,插入消费明细UserDetailPay
 		if (orderCardsService.updateOrderByAlipay(orderCards, updateTime,
-				Constants.ORDER_STATUS_1, payType, tradeNo, tradeStatus, payAccount) > 0) {
+				Constants.PAY_STATUS_1, payType, tradeNo, tradeStatus, payAccount) > 0) {
 			return result_success;
 		} else {
 			return result_fail;

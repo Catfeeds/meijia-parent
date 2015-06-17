@@ -6,21 +6,21 @@
     <result column="no" property="No" jdbcType="NUMERIC" />
     <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
     <result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
-    <result column="service_type" property="serviceType" jdbcType="NUMERIC" />
+    <result column="ad_type" property="adType" jdbcType="NUMERIC" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
     <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
     <result column="enable" property="enable" jdbcType="NUMERIC" />
 
   </resultMap>
   <sql id="Base_Column_List" >
-    id, no, img_url, goto_url, service_type, add_time, update_time,enable
+    id, no, img_url, goto_url, ad_type, add_time, update_time,enable
   </sql>
 
-  <select id="selectByServiceType"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByAdType"  resultMap="BaseResultMap" parameterType="java.lang.Short" >
     select
     <include refid="Base_Column_List" />
     from dict_ad
-    where service_type = #{servcie_type,jdbcType=NUMERIC}
+    where ad_type = #{adType,jdbcType=NUMERIC}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select
@@ -48,10 +48,10 @@
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.dict.DictAd" >
     insert into dict_ad (id, no, img_url,
-      goto_url, service_type, add_time,
+      goto_url, ad_type, add_time,
       update_time,enable)
     values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC},  #{imgUrl,jdbcType=VARCHAR},
-      #{gotoUrl,jdbcType=VARCHAR}, #{serviceType,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+      #{gotoUrl,jdbcType=VARCHAR}, #{adType,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
       #{updateTime,jdbcType=NUMERIC},#{enable,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.dict.DictAd" >
@@ -69,8 +69,8 @@
       <if test="gotoUrl != null" >
         goto_url,
       </if>
-      <if test="serviceType != null" >
-        service_type,
+      <if test="adType != null" >
+        ad_type,
       </if>
       <if test="addTime != null" >
         add_time,
@@ -95,8 +95,8 @@
       <if test="gotoUrl != null" >
         #{gotoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="serviceType != null" >
-        #{serviceType,jdbcType=NUMERIC},
+      <if test="adType != null" >
+        #{adType,jdbcType=NUMERIC},
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=NUMERIC},
@@ -121,8 +121,8 @@
       <if test="gotoUrl != null" >
         goto_url = #{gotoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="serviceType != null" >
-        service_type = #{serviceType,jdbcType=NUMERIC},
+      <if test="adType != null" >
+        ad_type = #{adType,jdbcType=NUMERIC},
       </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=NUMERIC},
@@ -141,7 +141,7 @@
     set no = #{No,jdbcType=NUMERIC},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       goto_url = #{gotoUrl,jdbcType=VARCHAR},
-      service_type = #{serviceType,jdbcType=NUMERIC},
+      ad_type = #{adType,jdbcType=NUMERIC},
       add_time = #{addTime,jdbcType=NUMERIC},
       update_time = #{updateTime,jdbcType=NUMERIC},
       enable = #{enable,jdbcType=NUMERIC}

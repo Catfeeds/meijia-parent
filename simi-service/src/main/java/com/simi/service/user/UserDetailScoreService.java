@@ -8,8 +8,7 @@ import com.simi.po.model.user.Users;
 
 public interface UserDetailScoreService {
 
-	public UserDetailScore initUserDetailScore(String mobile, Orders orders, long now,
-			UserDetailScore userDetailScore);
+
     int deleteByPrimaryKey(Long id);
 
     int insert(UserDetailScore record);
@@ -22,6 +21,6 @@ public interface UserDetailScoreService {
 
     List<UserDetailScore> selectByPage(String mobile, int page);
 
-    UserDetailScore initUserDetailScore(Users users);
+	UserDetailScore initUserDetailScore();
 
 }

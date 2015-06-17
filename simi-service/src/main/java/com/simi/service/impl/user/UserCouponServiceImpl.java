@@ -331,5 +331,10 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public UserCoupons selectByMobileOrderNo(String mobile, String orderNo) {
 		return userCouponsMapper.selectByMobileOrderNo(mobile, orderNo);
 	}
+	
+	@Override
+	public UserCoupons selectByUserIdOrderNo(Long userId, String orderNo) {
+		return userCouponsMapper.selectByUserIdOrderNo(userId, orderNo);
+	}
 
 }

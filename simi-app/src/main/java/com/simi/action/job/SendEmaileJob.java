@@ -19,15 +19,15 @@ public class SendEmaileJob implements Job{
 	private UserRemindService userRemindService;
 	@Override
 	public void execute(JobExecutionContext context)throws JobExecutionException {
-		try{
-		UserReminds userReminds = (UserReminds)context.getMergedJobDataMap().get("scheduleJob");
-		SendMailUtil sendMailUtil = new SendMailUtil();
-		sendMailUtil.sendHtml(Constants.TO_EMAIL, "我是邮件提醒","祝生活愉快");
-		userReminds.setIsExecuted(Short.valueOf("1"));
-		userReminds.setLastExecuted(TimeStampUtil.getNow()/1000);
-		userRemindService.updateByPrimaryKey(userReminds);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+//		try{
+//		UserReminds userReminds = (UserReminds)context.getMergedJobDataMap().get("scheduleJob");
+//		SendMailUtil sendMailUtil = new SendMailUtil();
+//		sendMailUtil.sendHtml(Constants.TO_EMAIL, "我是邮件提醒","祝生活愉快");
+//		userReminds.setIsExecuted(Short.valueOf("1"));
+//		userReminds.setLastExecuted(TimeStampUtil.getNow()/1000);
+//		userRemindService.updateByPrimaryKey(userReminds);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
 	}
 }

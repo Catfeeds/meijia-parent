@@ -39,43 +39,42 @@ public class UserExchangeController extends BaseController {
 	private UserDetailScoreService userDetailScoreService;
 
 	/**
-	 * 积分兑换接口
-	 * mobile true  手机号
-	 * exchange_id 兑换物品ID
+	 * 积分兑换接口 mobile true 手机号 exchange_id 兑换物品ID
 	 */
 	@RequestMapping(value = "/post_score_exchange", method = RequestMethod.POST)
 	public AppResultData<Object> scoreExchange(
-			@RequestParam("mobile") 	String mobile,
-			@RequestParam(value = "exchangeId", defaultValue = "0") Long exchangeId ) {
+			@RequestParam("mobile") String mobile, 
+			@RequestParam(value = "exchangeId", defaultValue = "0") Long exchangeId) {
 
-		AppResultData<Object> result_success = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,
-				"");
+		AppResultData<Object> result_success = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		AppResultData<Object> result_fail = new AppResultData<Object>(
-				Constants.ERROR_999, ConstantMsg.USER_SOCRE_NOT_ENOUGH_MSG,
-				"");
+		AppResultData<Object> result_fail = new AppResultData<Object>(Constants.ERROR_999, ConstantMsg.USER_SOCRE_NOT_ENOUGH_MSG, "");
 		Users users = usersService.getUserByMobile(mobile);
 		DictCoupons dictCoupons = couponService.selectByCardPasswd(Constants.SCORE_CONVERT_COUPON_CARD_PASSWORD);
-		if(users!=null && dictCoupons !=null){
+		if (users != null && dictCoupons != null) {
 			int score = users.getScore();
-			//1、判断用户积分是否足够兑换
+			// 1、判断用户积分是否足够兑换
 			if (score < 100) {
 				return result_fail;
 			}
-			//2、满足兑换条件，将用户同20元优惠券(券码：CSNINL8B)进行绑定
+			// 2、满足兑换条件，将用户同20元优惠券(券码：CSNINL8B)进行绑定
 			UserCoupons userCoupons = userCouponService.initUserCoupons(users, dictCoupons);
 			userCouponService.insertSelective(userCoupons);
 
-			//绑定优惠券后，将用户的积分减去100
-			users.setScore((score-100));
+			// 绑定优惠券后，将用户的积分减去100
+			users.setScore((score - 100));
 			usersService.updateByPrimaryKeySelective(users);
-			//增加一条用户明细记录，
-			UserDetailScore userDetailScore = userDetailScoreService.initUserDetailScore(users);
+			// 增加一条用户明细记录，
+			UserDetailScore userDetailScore = userDetailScoreService.initUserDetailScore();
+			userDetailScore.setUserId(users.getId());
+			userDetailScore.setMobile(users.getMobile());
+			userDetailScore.setScore(100);
+			userDetailScore.setActionId(Constants.ACTION_CONVERT_SCORE);
+			userDetailScore.setIsConsume(Constants.CONSUME_SCORE_USED);
 			userDetailScoreService.insertSelective(userDetailScore);
 
 			return result_success;
-		}else{
+		} else {
 			return result_fail;
 		}
 

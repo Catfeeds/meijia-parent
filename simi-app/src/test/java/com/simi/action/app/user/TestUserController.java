@@ -26,20 +26,20 @@ public class TestUserController extends JUnitActionBase  {
 	 *     ​http://localhost:8080/onecare/app/get_sms_token.json
 	 *     http://182.92.160.194/trac/wiki/%E8%8E%B7%E5%8F%96%E9%AA%8C%E8%AF%81%E7%A0%81%E6%8E%A5%E5%8F%A3
 	 */
-//	@Test
-//    public void testGetSmsToken() throws Exception {
-//
-//		String url = "/app/user/get_sms_token.json";
-//		String params = "?mobile=18249516801&sms_type=0";
-//		MockHttpServletRequestBuilder getRequest = get(url + params);
-//
-//	    ResultActions resultActions = this.mockMvc.perform(getRequest);
-//	    resultActions.andExpect(content().contentType(this.mediaType));
-//	    resultActions.andExpect(status().isOk());
-//
-//	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-//
-//    }
+	@Test
+    public void testGetSmsToken() throws Exception {
+
+		String url = "/app/user/get_sms_token.json";
+		String params = "?mobile=18612514665&sms_type=0";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
 
 	/**
 	 * 		用户登陆接口 单元测试
