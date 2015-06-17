@@ -79,7 +79,13 @@ public class UserRef3rdController extends BaseController {
 			userLogined.setUserId(users.getId());
 			userLogined.setAddTime(TimeStampUtil.getNow() / 1000);
 			userLoginedService.insertSelective(userLogined);
-
+			
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserId(users.getId());
+			//如果第一次登陆未注册成功环信，则再次注册
+			if(userRef3rd == null){
+				userService.genImUser(users);
+			}
+			
 			users.setName(name);
 			if(headImg!=null && !headImg.isEmpty()){
 				users.setHeadImg(headImg);
