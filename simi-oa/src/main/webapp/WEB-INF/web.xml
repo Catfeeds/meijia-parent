@@ -69,7 +69,7 @@
     <!-- 浏览器不支持put,delete等method,由该filter将/example?_method=delete转换为标准的http delete方法 -->
     
     <servlet>
-        <servlet-name>spring-oa</servlet-name>
+        <servlet-name>spring-simi-oa</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> 
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -80,7 +80,7 @@
     <!-- Spring MVC配置文件结束 -->
     
     <servlet-mapping>
-        <servlet-name>spring-oa</servlet-name>
+        <servlet-name>spring-simi-oa</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
