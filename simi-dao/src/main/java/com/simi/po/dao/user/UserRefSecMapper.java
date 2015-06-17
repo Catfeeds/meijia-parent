@@ -16,8 +16,8 @@ public interface UserRefSecMapper {
     int updateByPrimaryKeySelective(UserRefSec record);
 
     int updateByPrimaryKey(UserRefSec record);
-    
-    UserRefSec selectByUserId(Long userId);
-    
-    <HashMap> List<HashMap> statBySecId();
+
+	<UserViewVo> List<UserViewVo> selectVoByUserId(Long userId);
+
+	UserRefSec selectBySecId(Long secId);
 }
