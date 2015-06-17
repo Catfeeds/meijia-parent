@@ -18,29 +18,32 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
+import com.simi.po.dao.sec.SecMapper;
+import com.simi.po.dao.user.UserRef3rdMapper;
+import com.simi.po.dao.user.UserRefSecMapper;
+import com.simi.po.dao.user.UserRefSeniorMapper;
+import com.simi.po.dao.user.UsersMapper;
+import com.simi.po.model.admin.AdminAccount;
+import com.simi.po.model.dict.DictCoupons;
+import com.simi.po.model.sec.Sec;
+import com.simi.po.model.user.UserCoupons;
+import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
+import com.simi.po.model.user.UserRefSenior;
+import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserRefSeniorService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.AppResultData;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
-import com.simi.po.dao.user.UserRef3rdMapper;
-import com.simi.po.dao.user.UserRefSeniorMapper;
-import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.admin.AdminAccount;
-import com.simi.po.model.dict.DictCoupons;
-import com.simi.po.model.user.UserCoupons;
-import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSenior;
-import com.simi.po.model.user.Users;
-import com.meijia.utils.DateUtil;
-import com.meijia.utils.MobileUtil;
-import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.huanxin.EasemobIMUsers;
 
 
 @Service
@@ -48,6 +51,9 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private UsersMapper usersMapper;
+	
+	@Autowired
+	private SecMapper secMapper;
 
 	@Autowired
 	private UserCouponService userCouponService;
@@ -69,6 +75,9 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private UserRefSeniorService userRefSeniorService;
+	
+	@Autowired
+	private UserRefSecMapper userRefSecMapper;
 
 	/**
 	 * 新用户注册流程
@@ -255,36 +264,26 @@ public class UsersServiceImpl implements UsersService {
 
 		BeanUtils.copyProperties(u, vo);
 		vo.setUser_id(u.getId());
-
-		//获取用户与绑定的管家环信IM账号
+		
+		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
+		
+		
+		//获取用户与绑定的秘书的环信IM账号
 		Map imRobot = this.getImRobot(u);
 		vo.setImRobotUsername(imRobot.get("username").toString());
 		vo.setImRobotNickname(imRobot.get("nickname").toString());
-		vo.setImSeniorUsername("");
-		vo.setImSeniorNickname("");
-
+		if(userRefSec!=null){
+			Sec sec = secMapper.selectByPrimaryKey(userRefSec.getSecId());
+			vo.setImSecUsername(sec.getName());
+			vo.setImSecNickname(sec.getNickName());
+		}else{
+			vo.setImSecUsername("");
+			vo.setImSecNickname("");
+		}
+		
 		vo.setIsSenior((short) 1);
 		String seniorRange = "";
-		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(userId);
-
-		if (!seniorRangeResult.isEmpty()) {
-			Date startDate = seniorRangeResult.get("startDate");
-			Date endDate = seniorRangeResult.get("endDate");
-			/*String endDateStr = DateUtil.formatDate(endDate);
-			String nowStr = DateUtil.getToday();
-			if(DateUtil.compareDateStr(nowStr, endDateStr) > 0) {
-				vo.setIsSenior((short) 1);
-			}*/
-
-			seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至" + DateUtil.formatDate(endDate);
-
-			Map seniorIm = this.getSeniorImUsername(u);
-			if (seniorIm != null && seniorIm.get("seniorImUsername") != null)
-				vo.setImSeniorUsername(seniorIm.get("seniorImUsername").toString());
-
-			if (seniorIm != null && seniorIm.get("seniorImNickname") != null)
-				vo.setImSeniorNickname(seniorIm.get("seniorImNickname").toString());
-		}
+		
 
 		vo.setSeniorRange(seniorRange);
 

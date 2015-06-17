@@ -77,7 +77,7 @@ public class TestUserController extends JUnitActionBase  {
     public void testGetUserInfo() throws Exception {
 
 		String url = "/app/user/get_userinfo.json";
-		String params = "?mobile=18610807136";
+		String params = "?user_id=88";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 

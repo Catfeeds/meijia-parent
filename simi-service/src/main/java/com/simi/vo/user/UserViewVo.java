@@ -16,14 +16,14 @@ public class UserViewVo extends Users {
      */
     private Short isSenior;
     /**
-     * 真人管家IM账号
+     * 秘书IM账号
      */
-    private String imSeniorUsername;
+    private String imSecUsername;
     
     /**
-     * 真人管家IM昵称
+     * 秘书IM昵称
      */
-    private String imSeniorNickname;
+    private String imSecNickname;
     
     /**
      * 用户Im用户名
@@ -98,20 +98,21 @@ public class UserViewVo extends Users {
 		this.isSenior = isSenior;
 	}
 
-	public String getImSeniorUsername() {
-		return imSeniorUsername;
+
+	public String getImSecUsername() {
+		return imSecUsername;
 	}
 
-	public void setImSeniorUsername(String imSeniorUsername) {
-		this.imSeniorUsername = imSeniorUsername;
+	public void setImSecUsername(String imSecUsername) {
+		this.imSecUsername = imSecUsername;
 	}
 
-	public String getImSeniorNickname() {
-		return imSeniorNickname;
+	public String getImSecNickname() {
+		return imSecNickname;
 	}
 
-	public void setImSeniorNickname(String imSeniorNickname) {
-		this.imSeniorNickname = imSeniorNickname;
+	public void setImSecNickname(String imSecNickname) {
+		this.imSecNickname = imSecNickname;
 	}
 
 	public long getUser_id() {

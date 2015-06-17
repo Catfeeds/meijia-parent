@@ -158,12 +158,11 @@ public class SecController extends BaseController{
 		vo.setUserType(u.getUserType());
 		vo.setAddFrom(u.getAddFrom());
 		vo.setAddTime(u.getAddTime());
-	
 		vo.setUser_id(userReSec.getUserId());
 		vo.setSeniorRange(seniorRange);
 		vo.setIsSenior(isSenior);
-		vo.setImSeniorUsername(imSeniorUsername);
-		vo.setImSeniorNickname(imSeniorNickname);
+		vo.setImSecUsername(imSeniorUsername);
+		vo.setImSecNickname(imSeniorNickname);
 		vo.setImUsername(imUsername);
 		vo.setImPassword(imPassword);
 		vo.setImRobotNickname(imRobotNickname);
