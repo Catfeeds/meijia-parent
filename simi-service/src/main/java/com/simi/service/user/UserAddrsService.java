@@ -20,6 +20,8 @@ public interface UserAddrsService {
     int updateByPrimaryKey(UserAddrs record);
 
 	List<UserAddrs> selectByMobile(String mobile);
+	
+	List<UserAddrs> selectByUserId(Long userId);
 
 	List<UserAddrs> getAll();
 

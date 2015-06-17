@@ -99,6 +99,11 @@ public class UserAddrsServiceImpl implements UserAddrsService {
 		return userAddrs;
 	}
 
+	@Override
+	public List<UserAddrs> selectByUserId(Long userId) {
+		return userAddrsMapper.selectByUserId(userId);
+	}
+
 
 
 

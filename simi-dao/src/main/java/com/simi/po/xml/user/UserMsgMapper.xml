@@ -31,6 +31,12 @@
     from user_msg
     where mobile = #{mobile,jdbcType=CHAR} and msg_id= #{msgId,jdbcType=NUMERIC}
   </select>
+  <select id="selectByUserId"  resultMap="BaseResultMap"  parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_msg
+    where user_id = #{userId,jdbcType=CHAR} and msg_id= #{msgId,jdbcType=NUMERIC}
+  </select>
 
     <select id="selectUserByMobile"  resultMap="BaseResultMap"  parameterType="java.util.HashMap" >
     select
@@ -52,12 +58,26 @@
     where mobile = #{mobile,jdbcType=CHAR}
     order by add_time desc
   </select>
+<select id="selectListByUserId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_msg
+    where user_id = #{userId,jdbcType=CHAR}
+    order by add_time desc
+  </select>
 
 	<!-- 根据手机号查询出用户有几条未读信息 -->
   <select id="countNewMsgByMobile"  resultType="java.lang.Long"  parameterType="java.lang.String" >
     select count(*)
     from user_msg
     where mobile = #{mobile,jdbcType=CHAR} and is_readed = 0
+  </select>
+  
+	<!-- 根据用户Id查询出用户有几条未读信息 -->
+  <select id="countNewMsgByUserId"  resultType="java.lang.Long"  parameterType="java.lang.String" >
+    select count(*)
+    from user_msg
+    where user_id = #{userId,jdbcType=CHAR} and is_readed = 0
   </select>
 
 

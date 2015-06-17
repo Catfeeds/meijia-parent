@@ -29,16 +29,16 @@ public class UserTrailController extends BaseController{
 
 	@RequestMapping(value = "post_trail", method = RequestMethod.POST)
 	public AppResultData<String> trail(
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("latitude") String latitude,
 			@RequestParam("longitude") String longitude
 
 			) {
 		UserTrail userTrail=new UserTrail();
-		Users u = userService.getUserByMobile(mobile);
+		Users u = userService.getUserById(userId);
 
 		userTrail.setUserId(u.getId());
-		userTrail.setMobile(mobile);
+		userTrail.setMobile(u.getMobile());
 		userTrail.setLatitude(latitude);
 		userTrail.setLongitude(longitude);
 		userTrail.setAddTime(TimeStampUtil.getNow() / 1000);

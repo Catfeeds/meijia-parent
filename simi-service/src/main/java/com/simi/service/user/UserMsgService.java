@@ -22,12 +22,18 @@ public interface UserMsgService {
     List<UserMsg> selectByMsgId(Long msgId);
 
 	UserMsg getUserByMobile(String mobile, Long msgId);
+	
+	UserMsg getUserByUserId(Long userId, Long msgId);
 
 	UserMsg selectUserByMobile(String mobile,int page);
 
 	PageInfo searchVoListPage(int pageNo, int pageSize, String mobile);
+	
+	PageInfo searchVoListPage(int pageNo, int pageSize, Long userId);
 
     Long countNewMsgByMobile(String mobile);
+    
+    Long countNewMsgByUserId(Long userId);
 
     int postMsgRead(String mobile,Long msgId);
 

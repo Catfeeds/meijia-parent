@@ -104,4 +104,25 @@ public class UserMsgServiceImpl implements UserMsgService {
 		return result;
 	}
 
+	@Override
+	public UserMsg getUserByUserId(Long userId, Long msgId) {
+		HashMap<String, Object> conditions = new HashMap<String,Object>();
+		conditions.put("userId",userId);
+		conditions.put("msgId",msgId);
+		return userMsgMapper.selectByUserId(conditions);
+	}
+
+	@Override
+	public PageInfo searchVoListPage(int pageNo, int pageSize, Long userId) {
+		 PageHelper.startPage(pageNo, pageSize);
+         List<UserMsg> list = userMsgMapper.selectListByUserId(userId);
+        PageInfo result = new PageInfo(list);
+		return result;
+	}
+
+	@Override
+	public Long countNewMsgByUserId(Long userId) {
+		return userMsgMapper.countNewMsgByUserId(userId);
+	}
+
 }

@@ -121,7 +121,7 @@ public class UserAddressController extends BaseController {
 	 */
 	@RequestMapping(value = "post_del_addrs", method = RequestMethod.POST)
 	public AppResultData<String> delAddress(
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") int addr_id) {
 		UserAddrs userAddrs = userAddrsService.selectByPrimaryKey(Long
 				.valueOf(addr_id));
@@ -145,8 +145,8 @@ public class UserAddressController extends BaseController {
 	 * addr_id地址ID mobile手机号
 	 */
 	@RequestMapping(value = "get_addrs", method = RequestMethod.GET)
-	public AppResultData<List> getAddress(@RequestParam("mobile") String mobile) {
-		List<UserAddrs> list = userAddrsService.selectByMobile(mobile);
+	public AppResultData<List> getAddress(@RequestParam("user_id") Long userId) {
+		List<UserAddrs> list = userAddrsService.selectByUserId(userId);
 
 		AppResultData<List> result = new AppResultData<List>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);

@@ -23,8 +23,12 @@ public interface UserAddrsMapper {
 	    int updateByPrimaryKey(UserAddrs record);
 
 		List<UserAddrs> selectByMobile(String mobile);
+		
+		List<UserAddrs> selectByUserId(Long userId);
 
 		List<UserAddrs> selectAll();
 
 		List<UserAddrs> selectByIds(List<Long> ids);
+		
+		
 }

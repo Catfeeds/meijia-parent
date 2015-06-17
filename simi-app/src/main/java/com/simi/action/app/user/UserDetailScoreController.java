@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,8 +63,8 @@ public class UserDetailScoreController extends BaseController {
 	 * share_account true string 分享的账号, 注意为urlencode
 	 */
 	@RequestMapping(value = "share", method = RequestMethod.POST)
-	public AppResultData<Object> share(@RequestParam("mobile")
-	String mobile, @RequestParam("share_type")
+	public AppResultData<Object> share(@RequestParam("user_id")
+	Long userId, @RequestParam("share_type")
 	String share_type, @RequestParam("share_account")
 	String share_account) {
 		// 1. 操作表 user_detail_share
@@ -77,14 +78,14 @@ public class UserDetailScoreController extends BaseController {
 		AppResultData<Object> result_fail = new AppResultData<Object>(
 				Constants.ERROR_999, ConstantMsg.USER_SOCRE_SHARE_FRIENDS_MSG,
 				"");
-		Users user = userService.getUserByMobile(mobile);
+		Users user = userService.getUserById(userId);
 		//根据用户手机号和分型的类型，查询是否已做过类似分享获得积分
-		List<UserDetailShare> list = userDetailShareService.selectByMobileAndShareType(mobile, share_type);
+		List<UserDetailShare> list = userDetailShareService.selectByMobileAndShareType(userId, share_type);
 		if (!(list!= null && list.size()>0)) {
 			//userDetailShare中增加记录
 			UserDetailShare userDetailShare = new UserDetailShare();
 			userDetailShare.setAddTime(TimeStampUtil.getNow() / 1000);
-			userDetailShare.setMobile(mobile);
+			userDetailShare.setMobile(user.getMobile());
 			userDetailShare.setUserId(user.getId());
 			userDetailShare.setShareType(share_type);
 			try {
@@ -99,7 +100,7 @@ public class UserDetailScoreController extends BaseController {
 			//用户明细积分新增记录
 			UserDetailScore userDetailScore = new UserDetailScore();
 			userDetailScore.setAddTime(TimeStampUtil.getNow() / 1000);
-			userDetailScore.setMobile(mobile);
+			userDetailScore.setMobile(user.getMobile());
 			userDetailScore.setUserId(user.getId());
 			userDetailScore.setScore(Constants.SHARE_CORE);
 			userDetailScore.setActionId(Constants.ACTION_SHARE);

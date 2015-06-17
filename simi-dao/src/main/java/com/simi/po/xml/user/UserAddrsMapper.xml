@@ -43,6 +43,14 @@
     where mobile = #{id,jdbcType=CHAR}
     order by is_default desc, add_time desc
   </select>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user_addrs
+    where user_id = #{userId,jdbcType=CHAR}
+    order by is_default desc, add_time desc
+  </select>
   <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

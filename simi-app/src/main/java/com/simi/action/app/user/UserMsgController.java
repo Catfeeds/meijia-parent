@@ -37,10 +37,10 @@ public class UserMsgController extends BaseController {
 	@RequestMapping(value = "post_msg_read", method = RequestMethod.POST)
 	public AppResultData<String> SaveMsg(
 
-	@RequestParam("mobile") String mobile, @RequestParam("msg_id") Long msgId,
+	@RequestParam("user_id") Long userId, @RequestParam("msg_id") Long msgId,
 			HttpServletRequest request) {
 
-		UserMsg userMsg = userMsgService.getUserByMobile(mobile, msgId);
+		UserMsg userMsg = userMsgService.getUserByUserId(userId, msgId);
 
 		AppResultData<String> result = new AppResultData<String>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -58,7 +58,7 @@ public class UserMsgController extends BaseController {
 	@RequestMapping(value = "get_msg", method = RequestMethod.GET)
 	public AppResultData<Object> getMsg(
 
-	@RequestParam("mobile") String mobile, @RequestParam("page") int page,
+	@RequestParam("user_id") Long  userId, @RequestParam("page") int page,
 			HttpServletRequest request, Model model) throws IllegalAccessException, InvocationTargetException {
 
 		AppResultData<Object> result = new AppResultData<Object>(
@@ -67,7 +67,7 @@ public class UserMsgController extends BaseController {
 		// 分页
 		int pageNo = page;
 		int pageSize = 10;
-		PageInfo results = userMsgService.searchVoListPage(pageNo, pageSize,mobile);
+		PageInfo results = userMsgService.searchVoListPage(pageNo, pageSize,userId);
 
 		List<UserMsgVo> resultData = new ArrayList<UserMsgVo>();
 		List<UserMsg> resultList = results.getList();
@@ -112,15 +112,15 @@ public class UserMsgController extends BaseController {
 	}
 	/**
 	 * 用户未读消息接口
-	 * 根据手机号查询用户消息未读消息的个数
+	 * 根据用户Id查询用户消息未读消息的个数
 	 * @param mobile
 	 * @return
 	 */
 	@RequestMapping(value = "get_new_msg", method = RequestMethod.POST)
 	public AppResultData<Long> getNewMsg(
-				@RequestParam("mobile") String mobile) {
+				@RequestParam("user_id") Long userId) {
 
-		Long counts = userMsgService.countNewMsgByMobile(mobile);
+		Long counts = userMsgService.countNewMsgByUserId(userId);
 
 		AppResultData<Long> result = new AppResultData<Long>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,counts);

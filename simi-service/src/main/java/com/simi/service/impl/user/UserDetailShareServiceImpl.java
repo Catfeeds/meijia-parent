@@ -63,10 +63,10 @@ public class UserDetailShareServiceImpl implements UserDetailShareService{
 	}
 
 	@Override
-	public List<UserDetailShare> selectByMobileAndShareType(String mobile,String shareType) {
+	public List<UserDetailShare> selectByMobileAndShareType(Long userId,String shareType) {
 		Map<String,Object> conditions = new HashMap<String, Object>();
-		if((mobile !=null && !mobile.isEmpty()) && (shareType!=null && !shareType.isEmpty())){
-			conditions.put("mobile", mobile.trim());
+		if((userId !=null ) && (shareType!=null && !shareType.isEmpty())){
+			conditions.put("userId", userId);
 			conditions.put("shareType", shareType.trim());
 		}
 		return userDetailShareMapper.selectByMobileAndShareType(conditions);

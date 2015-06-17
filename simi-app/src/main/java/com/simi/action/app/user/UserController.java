@@ -234,7 +234,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "get_userinfo", method = RequestMethod.GET)
 	public AppResultData<Object> getUserInfo(
-			@RequestParam("mobile") Long userId) {
+			@RequestParam("user_id") Long userId) {
 
 		AppResultData<Object> resultFail = new AppResultData<Object>(
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
@@ -252,7 +252,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "send_im", method = RequestMethod.GET)
 	public AppResultData<Object> sendImToRobot(
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("im_username_from") String imUsernameFrom,
 			@RequestParam("im_username_to") String imUsernameTo,
 			@RequestParam("msg") String msg) {
@@ -260,7 +260,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		Users u = userService.getUserByMobile(mobile);
+		Users u = userService.getUserById(userId);
 		if (u == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);

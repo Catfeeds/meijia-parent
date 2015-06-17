@@ -19,15 +19,20 @@ public interface UserMsgMapper {
     int updateByPrimaryKeySelective(UserMsg record);
 
     UserMsg selectByMobile(Map<String, Object> conditions);
+    
+    UserMsg selectByUserId(Map<String, Object> conditions);
 
     List<UserMsg> selectByMsgId(Long msgId);
 
 	UserMsg selectUserByMobile(Map<String, Object> conditions);
 
 	List<UserMsg> selectByListPage(String mobile);
-
+	
+	List<UserMsg> selectListByUserId(Long userId);
 
     Long countNewMsgByMobile(String mobile);
+    
+    Long countNewMsgByUserId(Long userId);
 
     int updateBySelect(UserMsg userMsg);
 

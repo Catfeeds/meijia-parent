@@ -18,5 +18,5 @@ public interface UserDetailShareService {
 
     int updateByPrimaryKey(UserDetailShare record);
 
-    List<UserDetailShare> selectByMobileAndShareType(String mobile,String shareType);
+    List<UserDetailShare> selectByMobileAndShareType(Long userId,String shareType);
 }
