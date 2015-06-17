@@ -7,10 +7,6 @@
     <result column="sec_id" property="secId" jdbcType="NUMERIC" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
-  <resultMap id="countBySeniorResultMap" type="java.util.HashMap">
-		<result column="senior_id" property="seniorId" jdbcType="NUMERIC" />
-		<result column="total_user" property="totalUser" jdbcType="NUMERIC" />
-	</resultMap>
   <sql id="Base_Column_List" >
     id, user_id, sec_id, add_time
   </sql>
@@ -20,28 +16,20 @@
     from user_ref_sec
     where id = #{id,jdbcType=NUMERIC}
   </select>
-  <!--通过userId查询出user_ref_sec  -->
-  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectVoByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from user_ref_sec
     where user_id = #{userId,jdbcType=NUMERIC}
   </select>
-  <select id="statBySecId" resultMap="countBySeniorResultMap" >
-	    SELECT * FROM
-			(select T1.id as sec_id,
-			(CASE WHEN T2.total_user is null THEN 0 ELSE T2.total_user END) as total_user FROM
-		(
-			SELECT id FROM admin_account where role_id = 2) as T1
-			left join
-			(select
-				sec_id, count(*) as total_user
-				from user_ref_sec
-				group by sec_id) as T2
-			on T1.id = T2.sec_id
-		) as T
-		order by total_user asc
-  	</select>
+  
+  <select id="selectBySecId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_ref_sec
+    where sec_id = #{secId,jdbcType=NUMERIC}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user_ref_sec
     where id = #{id,jdbcType=NUMERIC}

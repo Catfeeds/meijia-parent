@@ -7,6 +7,7 @@ import com.simi.po.model.sec.Sec;
 import com.simi.vo.SecList;
 
 
+
 public interface SecMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -25,6 +26,8 @@ public interface SecMapper {
 	Sec selectByNameAndOtherId(HashMap map);
 
 	SecList selectByMobile(String mobile);
+
+	<UserViewVo> List<UserViewVo> selectVoBySecId(int secId);
 	
 	
 	

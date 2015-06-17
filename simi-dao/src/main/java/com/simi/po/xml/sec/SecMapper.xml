@@ -59,7 +59,12 @@
     from sec
     where mobile = #{mobile,jdbcType=CHAR}
   </select>
-
+      <select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from sec
+	    where sec_id = #{secId,jdbcType=NUMERIC}
+	  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from sec
     where id = #{id,jdbcType=NUMERIC}

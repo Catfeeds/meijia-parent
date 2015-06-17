@@ -47,6 +47,14 @@
     from users
     where mobile = #{mobile,jdbcType=VARCHAR}
   </select>
+  
+  <!--根据秘书Id查询用户信息  -->
+  <select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
   <!--根据手机号查询用户信息  -->
  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
     select
@@ -78,6 +86,13 @@
       and 3rd_type = #{thirdType,jdbcType=VARCHAR}
     </if>
     order by add_time desc
+  </select>
+  
+  <select id="selectVoByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from users 
+    where id = #{id,jdbcType=NUMERIC}
   </select>
 
   <!--根据Ids查询Users -->
