@@ -152,7 +152,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>onecare</finalName>
+		<finalName>simi</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
