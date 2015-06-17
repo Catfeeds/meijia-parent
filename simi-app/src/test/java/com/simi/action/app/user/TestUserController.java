@@ -29,6 +29,18 @@ public class TestUserController extends JUnitActionBase  {
 	@Test
     public void testGetSmsToken() throws Exception {
 
+
+		String url = "/app/user/get_sms_token.json";
+		String params = "?mobile=18249516801&sms_type=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
 		String url = "/app/user/get_sms_token.json";
 		String params = "?mobile=18612514665&sms_type=0";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
@@ -40,6 +52,7 @@ public class TestUserController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
+
 
 	/**
 	 * 		用户登陆接口 单元测试
@@ -55,6 +68,7 @@ public class TestUserController extends JUnitActionBase  {
 	    postRequest = postRequest.param("mobile", "18249516801");
 	    postRequest = postRequest.param("sms_token", "550478");
 	    postRequest = postRequest.param("login_from", "0");
+	    
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
