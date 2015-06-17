@@ -43,4 +43,6 @@ public interface UsersMapper {
 	
     Users selectByOpenidAnd3rdType(Map<String ,Object> conditions );
 
+    List<Users> selectVoByUserId(Long id);
+
 }
