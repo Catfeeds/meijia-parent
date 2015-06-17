@@ -24,6 +24,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
 import com.simi.po.dao.sec.SecMapper;
+import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UserRefSeniorMapper;
@@ -31,6 +32,7 @@ import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.sec.Sec;
+import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
@@ -78,6 +80,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UserRefSecMapper userRefSecMapper;
+	
+	@Autowired
+	private SecRef3rdMapper secRef3rdMapper;
 
 	/**
 	 * 新用户注册流程
@@ -274,7 +279,8 @@ public class UsersServiceImpl implements UsersService {
 		vo.setImRobotNickname(imRobot.get("nickname").toString());
 		if(userRefSec!=null){
 			Sec sec = secMapper.selectByPrimaryKey(userRefSec.getSecId());
-			vo.setImSecUsername(sec.getName());
+			SecRef3rd secRef3rd  = secRef3rdMapper.selectBySecId(userRefSec.getSecId());
+			vo.setImSecUsername(secRef3rd.getUsername());
 			vo.setImSecNickname(sec.getNickName());
 		}else{
 			vo.setImSecUsername("");
