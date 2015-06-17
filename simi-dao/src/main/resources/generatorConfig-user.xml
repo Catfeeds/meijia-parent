@@ -44,8 +44,10 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
+
 		
 					<!-- 用户表 -->
+
 		<table schema="simi" tableName="users"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -336,7 +338,7 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 		
-		<!--  秘书表 -->
+		 <!-- 秘书表 -->
        <table schema="simi" tableName="sec"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -352,7 +354,7 @@
 			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table> 
 		
-                 <!--   用户与第三方账号关联表 -->
+        <!-- 用户与第三方账号关联表 -->
         <table schema="simi" tableName="sec_ref_3rd"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -366,6 +368,24 @@
 			<columnOverride  column="sec_id" property="secId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
+<<<<<<< .mine
+		
+		<!-- 用户与管家关联表 -->
+        <table schema="simi" tableName="user_ref_sec"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="sec_id" property="secId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		 </table>
+=======
   	
          <!--用户与秘书关联表 -->
         <table schema="simi" tableName="user_ref_sec"
@@ -383,5 +403,6 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 
+>>>>>>> .r105
 	</context>
 </generatorConfiguration>
