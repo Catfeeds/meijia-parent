@@ -47,23 +47,23 @@ public class EasemobIMUsers {
 
     public static void main(String[] args) {
     		
-	    	ObjectMapper mapper = new ObjectMapper();
-	    	JsonFactory factory = mapper.getJsonFactory();
-	    	JsonParser jp;
-			try {
-				jp = factory.createJsonParser( "{\"action\":\"post\",\"application\":\"fc294ae0-ade8-11e4-9922-3f1fe83e6c2c\",\"path\":\"/users\",\"uri\":\"https://a1.easemob.com/yougeguanjia/yougeguanjia/users\",\"entities\":[{\"uuid\":\"c3eb3b9a-d3a7-11e4-8621-43b15b304627\",\"type\":\"user\",\"created\":1427367822793,\"modified\":1427367822793,\"username\":\"18512514665\",\"activated\":true}],\"timestamp\":1427367822790,\"duration\":29,\"organization\":\"yougeguanjia\",\"applicationName\":\"yougeguanjia\",\"statusCode\":200}"  );
-				JsonNode json = mapper.readTree(jp);
-				ObjectNode createNewIMUserSingleNode = (ObjectNode)(json);
-				JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
-				JsonNode entity = createNewIMUserSingleNode.get("entities");
-				System.out.println(entity.get(0).get("uuid"));
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} //remember to escape "
+//	    	ObjectMapper mapper = new ObjectMapper();
+//	    	JsonFactory factory = mapper.getJsonFactory();
+//	    	JsonParser jp;
+//			try {
+//				jp = factory.createJsonParser( "{\"action\":\"post\",\"application\":\"fc294ae0-ade8-11e4-9922-3f1fe83e6c2c\",\"path\":\"/users\",\"uri\":\"https://a1.easemob.com/yougeguanjia/yougeguanjia/users\",\"entities\":[{\"uuid\":\"c3eb3b9a-d3a7-11e4-8621-43b15b304627\",\"type\":\"user\",\"created\":1427367822793,\"modified\":1427367822793,\"username\":\"18512514665\",\"activated\":true}],\"timestamp\":1427367822790,\"duration\":29,\"organization\":\"yougeguanjia\",\"applicationName\":\"yougeguanjia\",\"statusCode\":200}"  );
+//				JsonNode json = mapper.readTree(jp);
+//				ObjectNode createNewIMUserSingleNode = (ObjectNode)(json);
+//				JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
+//				JsonNode entity = createNewIMUserSingleNode.get("entities");
+//				System.out.println(entity.get(0).get("uuid"));
+//			} catch (JsonParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} //remember to escape "
 	    
     		
 	    
@@ -102,7 +102,7 @@ public class EasemobIMUsers {
         /**
          * 获取IM用户[主键查询]
          */
-//        String userPrimaryKey = "18612514665";
+//        String userPrimaryKey = "simi-sec-1";
 //        ObjectNode getIMUsersByPrimaryKeyNode = getIMUsersByPrimaryKey(userPrimaryKey);
 //        if (null != getIMUsersByPrimaryKeyNode) {
 //            LOGGER.info("获取IM用户[主键查询]: " + getIMUsersByPrimaryKeyNode.toString());
@@ -122,6 +122,18 @@ public class EasemobIMUsers {
 //        if (null != imUserLoginNode2) {
 //            LOGGER.info("重置IM用户密码后,IM用户登录: " + imUserLoginNode2.toString());
 //        }
+			
+		/**
+		 * 修改IM用户昵称
+		 */			
+//		String username = "simi-sec-1";
+//		ObjectNode json2 = JsonNodeFactory.instance.objectNode();
+//		json2.put("nickname", "小茶3");
+//		ObjectNode modifyIMUserNickName = modifyIMUserNickName(username, json2);
+//		if (null != modifyIMUserNickName) {
+//		    LOGGER.info("修改IM昵称: " + modifyIMUserNickName.toString());
+//		}
+	
 
         /**
          * 添加好友[单个]
@@ -513,6 +525,63 @@ public class EasemobIMUsers {
 
 		return objectNode;
 	}
+	
+	/**
+	 * 修改IM用户昵称
+	 * 
+	 * @param userPrimaryKey
+	 * @param dataObjectNode
+	 * @return
+	 */
+	public static ObjectNode modifyIMUserNickName(
+			String userPrimaryKey, ObjectNode dataObjectNode) {
+		ObjectNode objectNode = factory.objectNode();
+
+		// check appKey format
+		if (!JerseyUtils.match("^(?!-)[0-9a-zA-Z\\-]+#[0-9a-zA-Z]+", APPKEY)) {
+			LOGGER.error("Bad format of Appkey: " + APPKEY);
+
+			objectNode.put("message", "Bad format of Appkey");
+
+			return objectNode;
+		}
+
+		if (StringUtils.isEmpty(userPrimaryKey)) {
+			LOGGER.error("Property that named userPrimaryKey must be provided，the value is username or uuid of imuser.");
+
+			objectNode
+					.put("message",
+							"Property that named userPrimaryKey must be provided，the value is username or uuid of imuser.");
+
+			return objectNode;
+		}
+
+		if (null != dataObjectNode && !dataObjectNode.has("nickname")) {
+			LOGGER.error("Property that named nickname must be provided .");
+
+			objectNode.put("message",
+					"Property that named nickname must be provided .");
+
+			return objectNode;
+		}
+
+		try {
+
+			JerseyWebTarget webTarget = null;
+			webTarget = EndPoints.USERS_TARGET
+					.resolveTemplate("org_name", APPKEY.split("#")[0])
+					.resolveTemplate("app_name", APPKEY.split("#")[1])
+					.path(userPrimaryKey);
+
+			objectNode = JerseyUtils.sendRequest(webTarget, dataObjectNode,
+					credential, HTTPMethod.METHOD_PUT, null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return objectNode;
+	}	
 
 	/**
 	 * 添加好友[单个]
