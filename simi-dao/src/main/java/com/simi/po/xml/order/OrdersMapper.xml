@@ -73,7 +73,7 @@
 	<!-- 查出所用下过单用户的手机号 -->
 	<select id="selectByDistinctMobileLists" resultType="java.lang.String">
 		select mobile
-		from orders where mobile <> '' group by mobile
+		from orders group by mobile
 	</select>
 
 	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
