@@ -31,23 +31,23 @@ public class UserCardController extends BaseController {
 
 	// 8. 会员充值接口
 	/**
-	 * mobile true string 手机号
+	 * userId true long 用户Id
 	 * card_type true int 充值卡类型
 	 * pay_type true int 支付类型 0 =
 	 * 余额支付 1 = 支付宝 2 = 微信支付 3 = 智慧支付 4 = 上门刷卡（保留，站位）
 	 */
 	@RequestMapping(value = "card_buy", method = RequestMethod.POST)
-	public AppResultData<Object> cardBuy(@RequestParam("mobile")
-	String mobile, @RequestParam("card_type")
-	int card_type, @RequestParam("pay_type")
-	int pay_type) {
+	public AppResultData<Object> cardBuy(
+			@RequestParam("userId")	Long userId,
+			@RequestParam("card_type") int card_type,
+			@RequestParam("pay_type")  int pay_type) {
 //	    操作表 order_cards
 //	    根据card_type 传递参数从表 dict_card_type 获取相应的金额
 
-		Users users = usersService.getUserByMobile(mobile);
+		Users users = usersService.getUserById(userId);
 		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(Long.valueOf(card_type));
 
-		OrderCards record = orderCardsService.initOrderCards(mobile, card_type, users, dictCardType, pay_type);
+		OrderCards record = orderCardsService.initOrderCards(users.getMobile(), card_type, users, dictCardType, pay_type);
 		orderCardsService.insert(record);
 
 		AppResultData<Object> result = new AppResultData<Object>(

@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.DateUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UsersService;
-import com.meijia.utils.DateUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.user.UserViewVo;
 
@@ -35,7 +36,7 @@ public class CallCenterController extends AdminController {
 
 	@RequestMapping(value="/callcenter", method = {RequestMethod.GET})
     public String callCenter(Model model,HttpServletRequest request,
-    		@RequestParam(value="customerNumber") String customerNumber,
+    		@RequestParam(value="customeuserrNumber") String customerNumber,
     		//@RequestParam(value="customerAreaCode") String customerAreaCode
     		OrderSearchVo searchVo
     		){
@@ -45,7 +46,8 @@ public class CallCenterController extends AdminController {
 		model.addAttribute("callTime", DateUtil.getNow());
 
 		//用户信息
-		UserViewVo users = usersService.getUserViewByMobile(customerNumber);
+		Users u = usersService.getUserByMobile(customerNumber);
+		UserViewVo users = usersService.getUserViewByUserId(u.getId());
 		model.addAttribute("userModel", users);
 
 		//用户订单信息

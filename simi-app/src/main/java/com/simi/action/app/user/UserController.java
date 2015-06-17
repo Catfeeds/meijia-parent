@@ -1,9 +1,6 @@
 package com.simi.action.app.user;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -32,7 +28,6 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.UserLogined;
-import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
@@ -239,12 +234,12 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "get_userinfo", method = RequestMethod.GET)
 	public AppResultData<Object> getUserInfo(
-			@RequestParam("mobile") String mobile) {
+			@RequestParam("mobile") Long userId) {
 
 		AppResultData<Object> resultFail = new AppResultData<Object>(
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
 
-		UserViewVo vo = userService.getUserInfo(mobile);
+		UserViewVo vo = userService.getUserInfo(userId);
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);

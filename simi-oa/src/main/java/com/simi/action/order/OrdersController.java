@@ -91,7 +91,7 @@ public class OrdersController extends AdminController {
 
 		Orders order  = orderQueryService.selectByOrderNo(orderNo);
 		Long orderId = order.getId();
-		String mobile = order.getMobile();
+		Long userId = order.getUserId();
 
 		List<Orders> orderList = new ArrayList<Orders>();
 		orderList.add(order);
@@ -102,7 +102,7 @@ public class OrdersController extends AdminController {
 		}
 		model.addAttribute("orderModel", orderViewVo);
 
-		UserViewVo user = usersService.getUserViewByMobile(mobile);
+		UserViewVo user = usersService.getUserViewByUserId(userId);
 		model.addAttribute("userModel", user);
 
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);

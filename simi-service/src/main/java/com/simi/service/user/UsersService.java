@@ -24,7 +24,7 @@ public interface UsersService {
 	
 	Users initUser(String openid, Short addFrom);
 
-	UserViewVo getUserViewByMobile(String mobile);
+	UserViewVo getUserViewByUserId(Long userId);
 
 	PageInfo searchVoListPage(UserSearchVo searchVo,int pageNo,int pageSize);
 
@@ -36,7 +36,7 @@ public interface UsersService {
 
 	Map<String, String> getSeniorImUsername(Users user);
 
-	UserViewVo getUserInfo(String mobile);
+	UserViewVo getUserInfo(Long userId);
 
 	Users genUser(String mobile, Short addFrom);
 

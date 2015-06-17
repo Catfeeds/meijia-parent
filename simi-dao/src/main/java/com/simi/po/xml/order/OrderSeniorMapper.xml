@@ -35,6 +35,14 @@
     where mobile = #{mobile,jdbcType=NUMERIC} and order_status = 1
     order by add_time desc;
   </select>
+  
+  <select id="selectByUserIdAndPay" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from order_senior
+    where user_id = #{userId,jdbcType=NUMERIC} and order_status = 1
+    order by add_time desc;
+  </select>
 
   <select id="selectByOrderSeniorNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select

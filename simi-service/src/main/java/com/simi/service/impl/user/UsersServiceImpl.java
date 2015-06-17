@@ -130,8 +130,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public UserViewVo getUserViewByMobile(String mobile) {
-		Users user  =  usersMapper.selectByMobile(mobile);
+	public UserViewVo getUserViewByUserId(Long userId) {
+		Users user  = usersMapper.selectByPrimaryKey(userId);
 
 		UserViewVo userInfo = new UserViewVo();
 		if (user == null) {
@@ -141,7 +141,7 @@ public class UsersServiceImpl implements UsersService {
 		BeanUtils.copyProperties(user, userInfo);
 
 		String seniorRange = "";
-		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(mobile);
+		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(userId);
 
 		if (!seniorRangeResult.isEmpty()) {
 			Date startDate = seniorRangeResult.get("startDate");
@@ -244,9 +244,10 @@ public class UsersServiceImpl implements UsersService {
 	 * 获取用户账号详情接口
 	 */
 	@Override
-	public UserViewVo getUserInfo(String mobile) {
+	public UserViewVo getUserInfo(Long userId) {
 		UserViewVo vo = new UserViewVo();
-		Users u = usersMapper.selectByMobile(mobile);
+		Users u = usersMapper.selectByPrimaryKey(userId);;
+		
 		if (u == null) {
 			return vo;
 		}
@@ -263,7 +264,7 @@ public class UsersServiceImpl implements UsersService {
 
 		vo.setIsSenior((short) 0);
 		String seniorRange = "";
-		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(mobile);
+		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(userId);
 
 		if (!seniorRangeResult.isEmpty()) {
 			Date startDate = seniorRangeResult.get("startDate");

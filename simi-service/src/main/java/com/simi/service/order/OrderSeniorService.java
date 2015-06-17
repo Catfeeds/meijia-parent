@@ -25,5 +25,5 @@ public interface OrderSeniorService {
 
 	Date getSeniorStartDate(String mobile);
 
-	HashMap<String, Date> getSeniorRangeDate(String mobile);
+	HashMap<String, Date> getSeniorRangeDate(Long userId);
 }

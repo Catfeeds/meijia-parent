@@ -2,6 +2,7 @@ package com.simi.action.app.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +56,7 @@ public class UserCardPayController extends BaseController {
 	 */
 	@RequestMapping(value = "card_online_pay", method = RequestMethod.POST)
 	public AppResultData<Object> cardOnlinePay(
-		@RequestParam(value = "mobile", defaultValue = "0")			String mobile,
+		@RequestParam(value = "user_id", defaultValue = "0")Long userId, 
 		@RequestParam("card_order_no") 	String cardOrderNo,
 		@RequestParam("pay_type") 			Short payType,
 		@RequestParam("notify_id") 			String notifyId,
@@ -83,8 +84,8 @@ public class UserCardPayController extends BaseController {
 		Long updateTime = TimeStampUtil.getNow() / 1000;
 
 		//如果mobile没有参数或者等于0,则用orderCards 获得
-		if (mobile.equals("0") || mobile.equals("") || mobile == null) {
-			mobile = orderCards.getMobile();
+		if (userId.equals("0") || userId.equals("") || userId == null) {
+			userId = orderCards.getUserId();
 		}
 
 		//如果已经付款，则直接返回

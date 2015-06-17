@@ -96,10 +96,10 @@ public class OrderSeniorServiceImpl implements OrderSeniorService {
 	 * 根据历史管家卡订单获得有效期
 	 */
 	@Override
-	public HashMap<String, Date> getSeniorRangeDate(String mobile) {
+	public HashMap<String, Date> getSeniorRangeDate(Long userId) {
 
 		//找出最新一个的历史订单.已支付状态.
-		List<OrderSenior> list = orderSeniorMapper.selectByMobileAndPay(mobile);
+		List<OrderSenior> list = orderSeniorMapper.selectByUserIdAndPay(userId);
 		HashMap<String, Date> result = new HashMap<String,Date>();
 		//如果没有历史订单，则有效期为空
 		if (list.isEmpty()) {

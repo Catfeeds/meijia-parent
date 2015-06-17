@@ -20,5 +20,7 @@ public interface OrderSeniorMapper {
     int updateByPrimaryKey(OrderSenior record);
 
     List<OrderSenior> selectByMobileAndPay(String mobile);
+    
+    List<OrderSenior> selectByUserIdAndPay(Long userId);
 
 }
