@@ -240,6 +240,7 @@ public class UsersServiceImpl implements UsersService {
 
 	return list;
 	}
+	
 	/**
 	 * 获取用户账号详情接口
 	 */
@@ -440,6 +441,12 @@ public class UsersServiceImpl implements UsersService {
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		userRef3rdMapper.insert(record);
         return record;
+	}
+
+	@Override
+	public Users selectVoByUserId(Long id) {
+		 
+		return usersMapper.selectVoByUserId(id);
 	}
 
 }

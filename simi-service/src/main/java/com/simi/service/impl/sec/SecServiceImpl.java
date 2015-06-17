@@ -27,6 +27,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.sec.SecService;
 import com.simi.vo.SecList;
 import com.simi.vo.sec.SecVo;
+import com.simi.vo.user.UserViewVo;
 
 
 
@@ -147,6 +148,12 @@ public class SecServiceImpl implements SecService{
 		
 		return secMapper.selectByMobile(mobile);
 		
+	}
+	@Override
+	public List<UserViewVo> selectVoBySecId(int secId) {
+		List<UserViewVo> list = secMapper.selectVoBySecId(secId);
+		return list;
+	
 	}
 
 }

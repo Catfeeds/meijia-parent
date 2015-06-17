@@ -50,6 +50,9 @@ public interface UsersService {
 	
 	Users selectByOpenidAndThirdType(String openid,String thirdType);
 
+	Users selectVoByUserId(Long id);
+
+
 
 
 
