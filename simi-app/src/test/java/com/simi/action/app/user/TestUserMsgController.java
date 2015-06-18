@@ -44,7 +44,7 @@ public class TestUserMsgController extends JUnitActionBase{
 
 		String url="/app/user/get_new_msg.json";
 		MockHttpServletRequestBuilder postRequest = post(url);
-		postRequest=postRequest.param("mobile","13146012753");
+		postRequest=postRequest.param("user_id","90");
 
 		ResultActions resultActions=mockMvc.perform(postRequest);
 		resultActions.andExpect(content().contentType(this.mediaType));

@@ -74,7 +74,7 @@
   </select>
   
 	<!-- 根据用户Id查询出用户有几条未读信息 -->
-  <select id="countNewMsgByUserId"  resultType="java.lang.Long"  parameterType="java.lang.String" >
+  <select id="countNewMsgByUserId"  resultType="java.lang.Long"  parameterType="java.lang.Long" >
     select count(*)
     from user_msg
     where user_id = #{userId,jdbcType=NUMERIC} and is_readed = 0
