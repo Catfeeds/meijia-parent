@@ -214,8 +214,7 @@ public class UserController extends BaseController {
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 				Constants.GET_CODE_TEMPLE_ID, content);
-System.out.println(sendSmsResult+"");
-		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, 0, code,
+		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, sms_type, code,
 				sendSmsResult);
 		smsTokenService.insert(record);
 

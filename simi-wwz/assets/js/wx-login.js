@@ -33,8 +33,7 @@ $(function(){
 
             $.ajax({
                 type:"GET",
-                url:localPath+"/user/get_sms_token.json",
-//                url:siteAPIPath+"/user/get_sms_token.json",
+                url:siteAPIPath+"/user/get_sms_token.json",
                 dataType:"json",
                 cache:false,
                 data:{"mobile":userPhone,"sms_type":1},
@@ -62,10 +61,10 @@ $(function(){
 
             $.ajax({
                 type : "POST",
-                url  : siteAPIPath+"user/login.json",
+                url  : siteAPIPath+"/sec/login.json",
                 dataType: "json",
                 cache : false,
-                data : {"mobile":userPhone,"sms_token":verifyCode,"login_from":1},
+                data : {"mobile":userPhone,"sms_token":verifyCode,"login_from":1,"user_type":2},
                 success : onLoginSuccess,
                 error : onLoginError
             });
@@ -123,6 +122,6 @@ function onLoginSuccess(data, status){
 }
 
 function onLoginError(data, status){
-    //console.log(data.msg);
-    alert("登录网络繁忙，请稍后再试111。(5)");
+//    console.log(data.msg);
+    alert("登录网络繁忙，请稍后再试。(5)");
 }
