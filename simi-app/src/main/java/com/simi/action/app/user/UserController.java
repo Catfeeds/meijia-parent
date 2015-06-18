@@ -203,20 +203,7 @@ public class UserController extends BaseController {
 	public AppResultData<String> getSmsToken(
 			@RequestParam("mobile") String mobile,
 			@RequestParam("sms_type") int sms_type) {
-		// Users u = userService.getUserByMobile(mobile);
-		// int saveUserFlag = 0;
-		// if (u == null) {// 1'验证手机号是否已经注册，如果未注册，则自动注册用户，
-		// u = userService.initUsers(mobile, Constants.USER_APP);
-		// saveUserFlag = userService.saveUser(u);
-		// } else {
-		// saveUserFlag = 1;
-		// }
-		// if (saveUserFlag < 1) {// 注册用户失败
-		// AppResultData<String> result = new AppResultData<String>(
-		// Constants.ERROR_100, ConstantMsg.ERROR_100_MSG, "");
-		// return result;
-		// }
-
+	
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
@@ -352,7 +339,8 @@ public class UserController extends BaseController {
 				request.getSession().getServletContext());
 		String paths = request.getSession().getServletContext().getRealPath("/");
 		String p = paths.substring(0,paths.lastIndexOf("\\"));
-		String path = p+File.separator+"uplaod"+File.separator+"users";
+		String path = p+File.separator+"WEB-INF"+File.separator+"upload"+File.separator+"users";
+System.out.println("paths---"+paths+"----path--"+path);
 		if (multipartResolver.isMultipart(request)) {
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
