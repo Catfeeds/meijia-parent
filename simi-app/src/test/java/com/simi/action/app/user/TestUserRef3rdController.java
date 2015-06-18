@@ -27,9 +27,9 @@ public class TestUserRef3rdController extends JUnitActionBase  {
 		String url = "/app/user/login-3rd.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("openid", "jackMa123");
+	    postRequest = postRequest.param("openid", "kerryg123");
 	    postRequest = postRequest.param("3rd_type", "weixin");
-	    postRequest = postRequest.param("name", "kerryg");
+	    postRequest = postRequest.param("name", "林夕一梦");
 	    postRequest = postRequest.param("head_img", "www.baidu.com");
 	    postRequest = postRequest.param("login_from", "0");
 

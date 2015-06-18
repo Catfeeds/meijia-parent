@@ -125,19 +125,13 @@ public class TestUserController extends JUnitActionBase  {
 		String url ="/app/user/post_userinfo.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	 /*   postRequest = postRequest.param("mobile", "13146012753");
-	    postRequest = postRequest.param("name", "kerry");
-	    postRequest = postRequest.param("sex", "男士");
-	    postRequest = postRequest.param("head_img", "");*/
-	    
-   
      	 FileInputStream fis = new FileInputStream("D:/a.jpg");
          MockMultipartFile multipartFile = new MockMultipartFile("file", fis);
      	
      	
      	 ResultActions resultActions  =  mockMvc.perform(MockMvcRequestBuilders.fileUpload(url)
 	            .file(multipartFile)
-	            .param("mobile","13146012753")
+	            .param("user_id","90")
 	            .param("name","kerry")
 	            .param("sex","男士")
 	            .contentType(MediaType.MULTIPART_FORM_DATA)

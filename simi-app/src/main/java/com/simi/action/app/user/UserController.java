@@ -23,11 +23,22 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.meijia.utils.IPUtil;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.RandomUtil;
+import com.meijia.utils.SmsUtil;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.huanxin.EasemobIMUsers;
+import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.UserLogined;
+import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
@@ -35,15 +46,9 @@ import com.simi.service.user.UserBaiduBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserMsgService;
+import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
-import com.meijia.utils.IPUtil;
-import com.meijia.utils.MobileUtil;
-import com.meijia.utils.RandomUtil;
-import com.meijia.utils.SmsUtil;
-import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.LoginVo;
 import com.simi.vo.user.UserBaiduBindVo;
@@ -73,6 +78,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserMsgService userMsgService;
+	
+	@Autowired
+	private UserRef3rdService userRef3rdService;
 
 	// 5. 会员登陆接口
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -370,6 +378,21 @@ public class UserController extends BaseController {
 			}
 		}else{
 			users.setHeadImg(headImg);
+		}
+		//如果昵称name不为空，则对环信中昵称进行修改
+		if(name!=null){
+			String username = "";
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserId(userId);
+			//如果该账号未绑定环信账号
+			if(userRef3rd!=null){
+				username = userRef3rd.getUsername();
+				ObjectNode json2 = JsonNodeFactory.instance.objectNode();
+				json2.put("nickname", name);
+				ObjectNode modifyIMUserNickName = EasemobIMUsers. modifyIMUserNickName(username, json2);
+				if (null != modifyIMUserNickName) {
+					EasemobIMUsers.LOGGER.info("修改IM昵称: " + modifyIMUserNickName.toString());
+				}
+			}
 		}
 		users.setName(name);
 		users.setSex(sex);
