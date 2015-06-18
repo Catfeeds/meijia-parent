@@ -388,10 +388,7 @@ public class UserController extends BaseController {
 				username = userRef3rd.getUsername();
 				ObjectNode json2 = JsonNodeFactory.instance.objectNode();
 				json2.put("nickname", name);
-				ObjectNode modifyIMUserNickName = EasemobIMUsers. modifyIMUserNickName(username, json2);
-				if (null != modifyIMUserNickName) {
-					EasemobIMUsers.LOGGER.info("修改IM昵称: " + modifyIMUserNickName.toString());
-				}
+				EasemobIMUsers. modifyIMUserNickName(username, json2);
 			}
 		}
 		users.setName(name);

@@ -37,7 +37,7 @@ import com.meijia.utils.huanxin.vo.EndPoints;
  */
 public class EasemobIMUsers {
 
-	public static Logger LOGGER = LoggerFactory.getLogger(EasemobIMUsers.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(EasemobIMUsers.class);
 	private static final String APPKEY = Constants.APPKEY;
 	private static JsonNodeFactory factory = new JsonNodeFactory(false);
 
