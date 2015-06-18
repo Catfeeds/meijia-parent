@@ -65,6 +65,7 @@ public class OrderAddController extends BaseController {
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("user_id") Long userId,
 			@RequestParam("service_type") Short serviceType,
+			@RequestParam("service_content") String serviceContent,
 			@RequestParam("order_pay_type") Short orderPayType,
 			@RequestParam("remarks") String remarks, 
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
@@ -87,9 +88,13 @@ public class OrderAddController extends BaseController {
 			return result;
 		}
 		
-		// 备注信息需要进行urldecode;
+		// 服务内容及备注信息需要进行urldecode;
     	try {
-    		remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
+    		serviceContent = URLDecoder.decode(serviceContent,Constants.URL_ENCODE);
+    		
+    		if (remarks != null && remarks.length() > 0) {
+    			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
+    		}
     	} catch (UnsupportedEncodingException e) {
     		e.printStackTrace();
 			result.setStatus(Constants.ERROR_999);

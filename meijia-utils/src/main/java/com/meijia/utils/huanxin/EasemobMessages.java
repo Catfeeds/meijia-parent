@@ -123,18 +123,24 @@ public class EasemobMessages {
 
         // 给用户发一条透传消息
         ObjectNode cmdmsg = factory.objectNode();
-        cmdmsg.put("action", "gogogo");
+        cmdmsg.put("action", "order");
         cmdmsg.put("type","cmd");
+        
+        ext.put("order_id", 1);
+        ext.put("order_no", "611081901792296960");
+        ext.put("order_pay_type", 0);
+        ext.put("add_time", "2015-06-18 13:34:33");
+        ext.put("service_type", "通用");
+        ext.put("service_content", "下午2点叫快递");
+        ext.put("service_time", "2015-06-18 14:00:00");
+        ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");
+        ext.put("order_money", "0.0");
+        
         ObjectNode sendcmdMessageusernode = sendMessages(targetTypeus, targetusers, cmdmsg, from, ext);
         if (null != sendcmdMessageusernode) {
             LOGGER.info("给用户发一条透传消息: " + sendcmdMessageusernode.toString());
         }
-        
-        /**
-         * 发送透传消息
-         */    	
-    	String targetUserName = "simi-sec-1";
-    	String fromUserName = "simi-sec-2";
+
     }
 
     /**

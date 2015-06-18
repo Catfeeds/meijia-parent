@@ -10,6 +10,7 @@
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
 		<result column="order_pay_type" property="orderPayType" jdbcType="NUMERIC" />
 		<result column="service_type" property="serviceType" jdbcType="NUMERIC" />
+		<result column="service_content" property="serviceContent" jdbcType="VARCHAR" />
 		<result column="service_date" property="serviceDate" jdbcType="NUMERIC" />
 		<result column="start_time" property="startTime" jdbcType="NUMERIC" />
 		<result column="addr_id" property="addrId" jdbcType="NUMERIC" />
@@ -25,7 +26,7 @@
 
 	<sql id="Base_Column_List">
 		id, sec_id, user_id, mobile, city_id, order_no, order_pay_type,
-		service_type, service_date, start_time,
+		service_type, service_content, service_date, start_time,
 		addr_id, remarks, order_from,
 		order_status, order_rate,
 		order_rate_content, is_score,
@@ -126,7 +127,7 @@
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
 		insert into orders (id, sec_id, user_id, mobile, city_id, order_no,
-		order_pay_type, service_type,
+		order_pay_type, service_type, service_content,
 		service_date, start_time, addr_id,
 		remarks,
 		order_from, order_status,
@@ -141,6 +142,7 @@
 		#{orderNo,jdbcType=VARCHAR},
 		#{orderPayType,jdbcType=NUMERIC},
 		#{serviceType,jdbcType=NUMERIC},
+		#{serviceContent,jdbcType=VARCHAR},
 		#{serviceDate,jdbcType=NUMERIC},
 		#{startTime,jdbcType=NUMERIC},
 		#{addrId,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR},
@@ -178,6 +180,9 @@
 			</if>
 			<if test="serviceType != null">
 				service_type,
+			</if>
+			<if test="serviceContent != null">
+				service_content,
 			</if>
 			<if test="serviceDate != null">
 				service_date,
@@ -238,6 +243,9 @@
 			<if test="serviceType != null">
 				#{serviceType,jdbcType=NUMERIC},
 			</if>
+			<if test="serviceContent != null">
+				#{serviceContent,jdbcType=NUMERIC},
+			</if>
 			<if test="serviceDate != null">
 				#{serviceDate,jdbcType=NUMERIC},
 			</if>
@@ -297,6 +305,9 @@
 			<if test="serviceType != null">
 				service_type = #{serviceType,jdbcType=NUMERIC},
 			</if>
+			<if test="serviceContent != null">
+				service_content = #{serviceContent,jdbcType=NUMERIC},
+			</if>
 			<if test="serviceDate != null">
 				service_date = #{serviceDate,jdbcType=NUMERIC},
 			</if>
@@ -342,30 +353,20 @@
 		mobile = #{mobile,jdbcType=CHAR},
 		city_id = #{cityId,jdbcType=NUMERIC},
 		order_no = #{orderNo,jdbcType=VARCHAR},
-		order_pay_type =
-		#{orderPayType,jdbcType=NUMERIC},
-		service_type =
-		#{serviceType,jdbcType=NUMERIC},
-		service_date =
-		#{serviceDate,jdbcType=NUMERIC},
-		start_time =
-		#{startTime,jdbcType=NUMERIC},
+		order_pay_type = #{orderPayType,jdbcType=NUMERIC},
+		service_type = #{serviceType,jdbcType=NUMERIC},
+		service_content = #{serviceContent,jdbcType=NUMERIC},
+		service_date = #{serviceDate,jdbcType=NUMERIC},
+		start_time = #{startTime,jdbcType=NUMERIC},
 		addr_id = #{addrId,jdbcType=NUMERIC},
-		remarks =
-		#{remarks,jdbcType=VARCHAR},
-		order_from =
-		#{orderFrom,jdbcType=NUMERIC},
-		order_status =
-		#{orderStatus,jdbcType=NUMERIC},
-		order_rate =
-		#{orderRate,jdbcType=NUMERIC},
-		order_rate_content =
-		#{orderRateContent,jdbcType=VARCHAR},
-		is_score =
-		#{isScore,jdbcType=NUMERIC},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		order_from = #{orderFrom,jdbcType=NUMERIC},
+		order_status = #{orderStatus,jdbcType=NUMERIC},
+		order_rate = #{orderRate,jdbcType=NUMERIC},
+		order_rate_content = #{orderRateContent,jdbcType=VARCHAR},
+		is_score = #{isScore,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
-		where id =
-		#{id,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
 	</update>
 </mapper>

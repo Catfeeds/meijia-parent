@@ -16,6 +16,8 @@ public class Orders {
     private Short orderPayType;
 
     private Short serviceType;
+    
+    private String serviceContent;
 
     private Long serviceDate;
 
@@ -189,5 +191,13 @@ public class Orders {
 
 	public void setSecId(Long secId) {
 		this.secId = secId;
+	}
+
+	public String getServiceContent() {
+		return serviceContent;
+	}
+
+	public void setServiceContent(String serviceContent) {
+		this.serviceContent = serviceContent;
 	}
 }
