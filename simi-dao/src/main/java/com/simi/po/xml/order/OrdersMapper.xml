@@ -3,6 +3,7 @@
 <mapper namespace="com.simi.po.dao.order.OrdersMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.order.Orders">
 		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="sec_id" property="secId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="mobile" property="mobile" jdbcType="CHAR" />
 		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
@@ -23,7 +24,7 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, user_id, mobile, city_id, order_no, order_pay_type,
+		id, sec_id, user_id, mobile, city_id, order_no, order_pay_type,
 		service_type, service_date, start_time,
 		addr_id, remarks, order_from,
 		order_status, order_rate,
@@ -84,6 +85,10 @@
 		from orders
 		where 1=1
 		
+		<if test="secId != null">
+			and sec_id = = #{secId,jdbcType=NUMERIC}
+		</if>	
+				
 		<if test="userId != null">
 			and user_id = = #{userId,jdbcType=NUMERIC}
 		</if>		
@@ -120,7 +125,7 @@
 			keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
-		insert into orders (id, user_id, mobile, city_id, order_no,
+		insert into orders (id, sec_id, user_id, mobile, city_id, order_no,
 		order_pay_type, service_type,
 		service_date, start_time, addr_id,
 		remarks,
@@ -129,6 +134,7 @@
 		is_score, add_time, update_time)
 		values
 		(#{id,jdbcType=NUMERIC},
+		#{secId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC},
 		#{mobile,jdbcType=CHAR},
 		#{cityId,jdbcType=NUMERIC},
@@ -151,6 +157,9 @@
 			<if test="id != null">
 				id,
 			</if>
+			<if test="secId != null">
+				sec_id,
+			</if>			
 			<if test="userId != null">
 				user_id,
 			</if>
@@ -208,6 +217,9 @@
 			<if test="id != null">
 				#{id,jdbcType=NUMERIC},
 			</if>
+			<if test="secId != null">
+				#{secId,jdbcType=NUMERIC},
+			</if>			
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
 			</if>
@@ -264,6 +276,9 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.Orders">
 		update orders
 		<set>
+			<if test="secId != null">
+				sec_id = #{secId,jdbcType=NUMERIC},
+			</if>
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
 			</if>
@@ -322,6 +337,7 @@
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.Orders">
 		update orders
 		set
+		sec_id = #{secId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		mobile = #{mobile,jdbcType=CHAR},
 		city_id = #{cityId,jdbcType=NUMERIC},

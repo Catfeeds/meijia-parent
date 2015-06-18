@@ -6,7 +6,7 @@ import com.simi.po.model.order.Orders;
 
 public class OrderViewVo extends Orders {
 
-	private String userName;
+	private String name;
 
 	private String userAddrs;
 
@@ -17,14 +17,6 @@ public class OrderViewVo extends Orders {
 	private BigDecimal orderPay;
 
 	private String cardPasswd;
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 	public String getUserAddrs() {
 		return userAddrs;
@@ -64,5 +56,13 @@ public class OrderViewVo extends Orders {
 
 	public void setCardPasswd(String cardPasswd) {
 		this.cardPasswd = cardPasswd;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

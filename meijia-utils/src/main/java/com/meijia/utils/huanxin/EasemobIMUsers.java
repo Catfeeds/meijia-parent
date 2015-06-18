@@ -177,6 +177,8 @@ public class EasemobIMUsers {
 //        if (null != deleteIMUserByUsernameBatchNode) {
 //            LOGGER.info("删除IM用户[批量]: " + deleteIMUserByUsernameBatchNode.toString());
 //        }
+    	
+
     }
 
     /**

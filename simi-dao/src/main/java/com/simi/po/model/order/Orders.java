@@ -2,6 +2,8 @@ package com.simi.po.model.order;
 
 public class Orders {
     private Long id;
+    
+    private Long secId;
 
     private Long userId;
 
@@ -179,5 +181,13 @@ public class Orders {
 
 	public void setOrderPayType(Short orderPayType) {
 		this.orderPayType = orderPayType;
+	}
+
+	public Long getSecId() {
+		return secId;
+	}
+
+	public void setSecId(Long secId) {
+		this.secId = secId;
 	}
 }

@@ -46,9 +46,11 @@ public class OrdersServiceImpl implements OrdersService {
 
 		Orders record = new Orders();
 		record.setId(0L);
+		record.setSecId(0L);
 		record.setMobile("");
 		record.setUserId(0L);
 		record.setCityId(0L);
+		record.setAddrId(0L);
 		record.setServiceType((short) 1);
 		
 		record.setServiceDate(0L);

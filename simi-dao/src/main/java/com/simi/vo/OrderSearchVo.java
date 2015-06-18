@@ -2,6 +2,8 @@ package com.simi.vo;
 
 public class OrderSearchVo {
 	
+	private Long secId;
+	
 	private Long userId;
 	
 	private String mobile;
@@ -60,6 +62,14 @@ public class OrderSearchVo {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Long getSecId() {
+		return secId;
+	}
+
+	public void setSecId(Long secId) {
+		this.secId = secId;
 	}
 
 }
