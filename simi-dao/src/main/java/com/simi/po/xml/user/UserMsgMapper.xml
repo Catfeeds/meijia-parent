@@ -58,11 +58,11 @@
     where mobile = #{mobile,jdbcType=CHAR}
     order by add_time desc
   </select>
-<select id="selectListByUserId" resultMap="BaseResultMap" >
+<select id="selectListByUserId" resultMap="BaseResultMap"   parameterType="java.lang.Long">
     select
     <include refid="Base_Column_List" />
     from user_msg
-    where user_id = #{userId,jdbcType=CHAR}
+    where user_id = #{userId,jdbcType=NUMERIC}
     order by add_time desc
   </select>
 
@@ -77,7 +77,7 @@
   <select id="countNewMsgByUserId"  resultType="java.lang.Long"  parameterType="java.lang.String" >
     select count(*)
     from user_msg
-    where user_id = #{userId,jdbcType=CHAR} and is_readed = 0
+    where user_id = #{userId,jdbcType=NUMERIC} and is_readed = 0
   </select>
 
 
