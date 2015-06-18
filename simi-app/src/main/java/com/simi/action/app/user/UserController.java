@@ -338,11 +338,12 @@ System.out.println(sendSmsResult+"");
 		// 创建一个通用的多部分解析器.
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
-		String paths = request.getSession().getServletContext().getRealPath("/");
-		String p = paths.substring(0,paths.lastIndexOf("\\"));
-		String path = p+File.separator+"upload"+File.separator+"users";
-System.out.println("paths---"+paths+"----path--"+path);
 		if (multipartResolver.isMultipart(request)) {
+			String paths = request.getSession().getServletContext().getRealPath("/");
+			System.out.println("paths---"+paths);
+			String p = paths.substring(0,paths.lastIndexOf("\\"));
+			String path = p+File.separator+"upload"+File.separator+"users";
+			
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
 			Iterator<String> iter = multiRequest.getFileNames();
@@ -366,10 +367,13 @@ System.out.println("paths---"+paths+"----path--"+path);
 				}
 			}
 		}else{
-			users.setHeadImg(headImg);
+			if(!StringUtil.isEmpty(headImg)){
+				users.setHeadImg(headImg);
+			}
 		}
 		//如果昵称name不为空，则对环信中昵称进行修改
-		if(name!=null){
+		if(!StringUtil.isEmpty(name)){
+			users.setName(name);
 			String username = "";
 			UserRef3rd userRef3rd = userRef3rdService.selectByUserId(userId);
 			//如果该账号未绑定环信账号
@@ -380,8 +384,9 @@ System.out.println("paths---"+paths+"----path--"+path);
 				EasemobIMUsers. modifyIMUserNickName(username, json2);
 			}
 		}
-		users.setName(name);
-		users.setSex(sex);
+		if(!StringUtil.isEmpty(sex)){
+			users.setSex(sex);
+		}
 		userService.updateByPrimaryKeySelective(users);
 		result.setData(users);
 		return result;
