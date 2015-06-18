@@ -66,7 +66,8 @@ public class Constants {
 	public static String SMS_STATUS_MSG= "msg";
 
 	public static String PAY_SUCCESS_SMS_TEMPLE_ID= "9282";
-	public static String GET_CODE_TEMPLE_ID= "8429";
+	//public static String GET_CODE_TEMPLE_ID= "8429";
+	public static String GET_CODE_TEMPLE_ID= "20911";
 	public static String GET_CODE_REMIND_ID= "10923";
 	public static String GET_CODE_MAX_VALID= "30";//短信有效时间
 	public static String NOTICE_CUSTOMER_Message_ID= "9280";

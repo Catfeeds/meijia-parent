@@ -33,10 +33,11 @@ $(function(){
 
             $.ajax({
                 type:"GET",
-                url:siteAPIPath+"user/get_sms_token.json",
+                url:localPath+"/user/get_sms_token.json",
+//                url:siteAPIPath+"/user/get_sms_token.json",
                 dataType:"json",
                 cache:false,
-                data:{"mobile":userPhone,"sms_type":0},
+                data:{"mobile":userPhone,"sms_type":1},
                 success : onSmsSuccess,
                 error : onSmsError
             });

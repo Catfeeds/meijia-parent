@@ -198,7 +198,7 @@ public class UserController extends BaseController {
 		}
 	}
 
-	// 4. 获取验证码接口sms_type：0 = 登陆 1 = 支付（保留）
+	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
 	@RequestMapping(value = "get_sms_token", method = RequestMethod.GET)
 	public AppResultData<String> getSmsToken(
 			@RequestParam("mobile") String mobile,
@@ -214,6 +214,7 @@ public class UserController extends BaseController {
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 				Constants.GET_CODE_TEMPLE_ID, content);
+System.out.println(sendSmsResult+"");
 		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, 0, code,
 				sendSmsResult);
 		smsTokenService.insert(record);
@@ -339,7 +340,7 @@ public class UserController extends BaseController {
 				request.getSession().getServletContext());
 		String paths = request.getSession().getServletContext().getRealPath("/");
 		String p = paths.substring(0,paths.lastIndexOf("\\"));
-		String path = p+File.separator+"WEB-INF"+File.separator+"upload"+File.separator+"users";
+		String path = p+File.separator+"upload"+File.separator+"users";
 System.out.println("paths---"+paths+"----path--"+path);
 		if (multipartResolver.isMultipart(request)) {
 			// 判断 request 是否有文件上传,即多部分请求...
