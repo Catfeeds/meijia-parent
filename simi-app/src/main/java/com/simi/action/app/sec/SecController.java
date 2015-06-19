@@ -181,8 +181,8 @@ public class SecController extends BaseController{
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-	@RequestMapping(value = "get_users", method = RequestMethod.POST)
-	public AppResultData<Object> alterSec(
+	@RequestMapping(value = "post_secinfo", method = RequestMethod.POST)
+	public AppResultData<Object> secInfo(
 			@RequestParam("sec_id") Long secId,		
 			@RequestParam(value = "name", required = false, defaultValue="") String name,
 			@RequestParam(value = "nick_name", required = false, defaultValue="") String nickName,
