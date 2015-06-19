@@ -47,16 +47,7 @@ public class TestSecController extends JUnitActionBase{
      	MockHttpServletRequestBuilder postRequest = post(url);
 	    postRequest = postRequest.param("mobile", "18249516801");
 	    postRequest = postRequest.param("sec_id", "1");
-	
-	   /* postRequest = postRequest.param("im_username", "hhhxxx");
-	    postRequest = postRequest.param("im_password", "hxhxhx");
-	    postRequest = postRequest.param("senior_range", "2015-02-25");
-	    postRequest = postRequest.param("is_senior", "1");
-	    postRequest = postRequest.param("im_senior_username", "zzzzzzzzrrrrrrrrr");
-	    postRequest = postRequest.param("im_senior_nickname", "zrgj");
-	    postRequest = postRequest.param("im_robot_username", "jqrrrrrrr");
-	    postRequest = postRequest.param("im_robot_nickname", "jqrgj");
-*/
+	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
 	    resultActions.andExpect(content().contentType(this.mediaType));
@@ -67,5 +58,25 @@ public class TestSecController extends JUnitActionBase{
 
 	
     }
+	
+/*	@Test
+    public void testGetSec() throws Exception {
+		String url = "/app/sec/get_secinfo.json";
 
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	postRequest = postRequest.param("sec_id", "1");
+	    postRequest = postRequest.param("mobile", "18249516801");
+	    
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+	
+    }
+*/
 }
