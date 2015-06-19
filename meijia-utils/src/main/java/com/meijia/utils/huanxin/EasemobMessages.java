@@ -126,15 +126,29 @@ public class EasemobMessages {
         cmdmsg.put("action", "order");
         cmdmsg.put("type","cmd");
         
-        ext.put("order_id", 1);
-        ext.put("order_no", "611081901792296960");
-        ext.put("order_pay_type", 0);
-        ext.put("add_time", "2015-06-18 13:34:33");
-        ext.put("service_type_name", "通用");
-        ext.put("service_content", "下午2点叫快递");
-        ext.put("service_time", "2015-06-18 14:00:00");
-        ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");
-        ext.put("order_money", "0.0");
+//        ext.put("order_id", 1);
+//        ext.put("order_no", "611081901792296960");
+//        ext.put("order_pay_type", 0);
+//        ext.put("add_time", "2015-06-18 13:34:33");
+//        ext.put("service_type_name", "通用");
+//        ext.put("service_content", "下午2点叫快递");
+////        ext.put("service_time", "2015-06-18 14:00:00");
+////        ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");
+//        ext.put("service_time", "");
+//        ext.put("service_addr", "");
+//        ext.put("order_money", "10");
+
+      ext.put("order_id", 1);
+      ext.put("order_no", "611081901792296960");
+      ext.put("order_pay_type", 1);
+      ext.put("add_time", "2015-06-18 13:34:33");
+      ext.put("service_type_name", "定机票");
+      ext.put("service_content", "2015-06-20 13:25 北京到上海, 航班号 CA8802, T3航站楼起飞");
+//      ext.put("service_time", "2015-06-18 14:00:00");
+//      ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");
+      ext.put("service_time", "");
+      ext.put("service_addr", "");
+      ext.put("order_money", "560");        
         
         ObjectNode sendcmdMessageusernode = sendMessages(targetTypeus, targetusers, cmdmsg, from, ext);
         if (null != sendcmdMessageusernode) {

@@ -31,7 +31,11 @@ public class Constants {
 	//地址默认 默认地址 1 = 默认  0 = 不默认
 	public static int ADDRESS_DEFAULT_1 = 1;
 	public static int ADDRESS_DEFAULT_NOT_0 = 0;
-
+	
+	//订单类型  0 = 无需支付 1 = 线上支付
+	public static short ORDER_PAY_TYPE_0 = 0;
+	public static short ORDER_PAY_TYPE_1 = 1;
+	
 	//0 = 已关闭 1 = 待确认 2 = 已确认 3 = 待支付 4 = 已支付
 	public static short ORDER_STATUS_0_CLOSE = 0;
 	public static short ORDER_STATUS_1_CONFIRM = 1;

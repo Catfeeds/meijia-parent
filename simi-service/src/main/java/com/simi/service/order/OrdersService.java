@@ -29,4 +29,6 @@ public interface OrdersService {
 
 	void orderRatedTodo(Orders orders);
 
+	Boolean orderConfirmTodo(String orderNo);
+
 }

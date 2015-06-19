@@ -131,6 +131,24 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         List<OrderViewVo> result = this.getOrderViewList(list);
         return result;
 	}
+	
+	/**
+	 * 根据用户ID进行订单查询，并分页展现
+	 * @param orderSearchVo  查询条件，OrderSearchVo
+	 * @param pageNo  		 页码
+	 * @param pageSize		 每页个数
+	 * @return PageInfo  List<OrderViewVo>
+	 */
+	@Override
+	public List<OrderViewVo> selectBySecId(Long secId, int pageNo, int pageSize) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+		OrderSearchVo orderSearchVo = new OrderSearchVo();
+		orderSearchVo.setSecId(secId);
+        List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
+        List<OrderViewVo> result = this.getOrderViewList(list);
+        return result;
+	}	
 
 	/*
 	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素

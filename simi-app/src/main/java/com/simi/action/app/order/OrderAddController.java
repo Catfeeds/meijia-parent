@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.OrderNoUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
@@ -71,6 +72,7 @@ public class OrderAddController extends BaseController {
 	public AppResultData<Object> saveOrder(
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("user_id") Long userId,
+			@RequestParam("mobile") String mobile,
 			@RequestParam("service_type") Long serviceType,
 			@RequestParam("service_content") String serviceContent,
 			@RequestParam("order_pay_type") Short orderPayType,
@@ -95,6 +97,12 @@ public class OrderAddController extends BaseController {
 			return result;
 		}
 		
+		//如果用户没有手机号，则需要更新用户手机号.
+		if (StringUtil.isEmpty(u.getMobile())) {
+			u.setMobile(mobile);
+			userService.updateByPrimaryKeySelective(u);
+		}
+		
 		// 服务内容及备注信息需要进行urldecode;
     	try {
     		serviceContent = URLDecoder.decode(serviceContent,Constants.URL_ENCODE);
@@ -108,7 +116,19 @@ public class OrderAddController extends BaseController {
 			result.setMsg(ConstantMsg.ERROR_100_MSG);
     		return result;
     	}
+    	
+    	//订单状态判断
+    	//1. order_pay_type = 0 无需支付， order_status = 1
+    	//2. order_paty_type = 1 线上支付, order_status = 3
+    	Short orderStatus = 0;
+    	if (orderPayType.equals(Constants.ORDER_PAY_TYPE_0)) {
+    		orderStatus = 1;
+    	}
 		
+    	if (orderPayType.equals(Constants.ORDER_PAY_TYPE_1)) {
+    		orderStatus = 3;
+    	}    	
+    	
 		// 调用公共订单号类，生成唯一订单号
 		String orderNo = String.valueOf(OrderNoUtil.genOrderNo());
 
@@ -123,6 +143,7 @@ public class OrderAddController extends BaseController {
 		order.setServiceContent(serviceContent);
 		order.setOrderPayType(orderPayType);
 		order.setOrderNo(orderNo);
+		order.setOrderStatus(orderStatus);
 		order.setRemarks(remarks);
 		
 		ordersService.insert(order);
@@ -179,6 +200,7 @@ public class OrderAddController extends BaseController {
         ext.put("service_time", DateUtil.getNow());
         ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");
         ext.put("order_money", "0.0");
+        ext.put("order_status", 1);
         
         ObjectNode sendcmdMessageusernode = EasemobMessages.sendMessages(targetTypeus, targetusers, cmdmsg, from, ext);
   

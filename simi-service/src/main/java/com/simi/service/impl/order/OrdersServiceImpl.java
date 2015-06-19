@@ -129,11 +129,20 @@ public class OrdersServiceImpl implements OrdersService {
 			return false;
 		}
 		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
-		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getId());
-		
+
 		Users u = usersService.selectVoByUserId(order.getUserId());
 		//1. 环信透传功能.
-		orderPushNotify(orderViewVo, orderPrice, u);
+		//获得发送者的环信账号
+		Long secId = orderViewVo.getSecId();
+		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
+		String fromIm = secRef3rd.getUsername();
+		Long userId = u.getId();
+		//获得接收者的环信账号.
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
+		String toIm = userRef3rd.getUsername();
+		
+		
+		orderPushNotify(orderViewVo, fromIm, toIm);
 		
 		//2. 百度推送功能 todo
 		
@@ -141,28 +150,49 @@ public class OrdersServiceImpl implements OrdersService {
 		
 	}
 	
+	
+	/**
+	 * 用户确认订单后的操作
+	 * 1. 环信透传功能.
+	 * 2. 百度推送功能.(todo)
+	 */
+	@Override
+	public Boolean orderConfirmTodo(String orderNo) {
+		Orders order = ordersMapper.selectByOrderNo(orderNo);
+		
+		if (order == null) {
+			return false;
+		}
+		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
+
+		//1. 环信透传功能.
+		//获得接受者的环信账号
+		Long secId = orderViewVo.getSecId();
+		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
+		String toIm = secRef3rd.getUsername();
+
+		orderPushNotify(orderViewVo, "", toIm);
+		
+		//2. 百度推送功能 todo
+		
+		return true;
+		
+	}	
+	
 	/**
 	 * 订单推送，触发环信的透传功能
 	 * @param orderNo
 	 * @return
 	 */
 	
-	public Boolean orderPushNotify(OrderViewVo orderViewVo, OrderPrices orderPrice, Users user) {
+	public Boolean orderPushNotify(OrderViewVo orderViewVo, String fromIm, String toIm) {
 		
-		//获得发送者的环信账号
-		Long secId = orderViewVo.getSecId();
-		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
-		String from = secRef3rd.getUsername();
-		Long userId = user.getId();
-		//获得接收者的环信账号.
-		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
-		String to = userRef3rd.getUsername();
-		JsonNodeFactory factory = new JsonNodeFactory(false);
-		
+
+		JsonNodeFactory factory = new JsonNodeFactory(false);		
 		String targetTypeus = "users";
 		ObjectNode ext = factory.objectNode();
 		ArrayNode targetusers = factory.arrayNode();
-		targetusers.add(to);
+		targetusers.add(toIm);
 
 		// 给用户发一条透传消息
 		ObjectNode cmdmsg = factory.objectNode();
@@ -176,7 +206,7 @@ public class OrdersServiceImpl implements OrdersService {
 		ext.put("add_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getAddTime()));
 		ext.put("service_type_name", orderViewVo.getServiceTypeName());
 		ext.put("service_content", orderViewVo.getServiceContent());
-		
+		ext.put("order_status", orderViewVo.getOrderStatus());
 		
 		if (orderViewVo.getStartTime() > 0L) {
 			ext.put("service_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getStartTime()));
@@ -187,7 +217,7 @@ public class OrdersServiceImpl implements OrdersService {
 		ext.put("service_addr", orderViewVo.getServiceAddr());
 		ext.put("order_money", orderViewVo.getOrderMoney());
 
-		ObjectNode sendcmdMessageusernode = EasemobMessages.sendMessages(targetTypeus, targetusers, cmdmsg, from, ext);
+		ObjectNode sendcmdMessageusernode = EasemobMessages.sendMessages(targetTypeus, targetusers, cmdmsg, fromIm, ext);
 
 		return true;
 	}
