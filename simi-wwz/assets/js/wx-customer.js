@@ -11,7 +11,7 @@ $(function(){
 function getUserList(secId,mobile){
     $.ajax({
         type:"POST",
-        url:siteAPIPath+"/user/get_users.json",
+        url:siteAPIPath+"/sec/get_users.json",
         dataType:"json",
         cache:false,
         data:"sec_id="+secId+"&mobile="+mobile,
