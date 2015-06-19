@@ -80,7 +80,7 @@ public class UserRef3rdController extends BaseController {
 			userLogined.setAddTime(TimeStampUtil.getNow() / 1000);
 			userLoginedService.insertSelective(userLogined);
 			
-			UserRef3rd userRef3rd = userRef3rdService.selectByUserId(users.getId());
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(users.getId());
 			//如果第一次登陆未注册成功环信，则再次注册
 			if(userRef3rd == null){
 				userService.genImUser(users);

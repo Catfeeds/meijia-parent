@@ -23,4 +23,6 @@ public interface OrderQueryService {
 
 	List<OrderViewVo> selectByUserId(Long userId, int pageNo, int pageSize);
 
+	OrderViewVo getOrderView(Orders order);
+
 }

@@ -100,7 +100,7 @@ public class SmsUtil {
 	public static void main(String[] args) {
 
 		String mobile = "18612514665";
-		String templeId = "7082";
+		String templeId = "20911";
 
 		String token = RandomUtil.randomNumber();
 

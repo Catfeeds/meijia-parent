@@ -76,7 +76,7 @@ public class SecServiceImpl implements SecService{
 					e.printStackTrace();
 				}
 	             
-	             SecRef3rd  secRef3rd =secRef3rdMapper.selectBySecId(sec.getId());
+	             SecRef3rd  secRef3rd =secRef3rdMapper.selectBySecIdForIm(sec.getId());
 	             if (secRef3rd==null) {            
 		             secNew.setUsername("");
 		             secNew.setPassword("");	 
@@ -108,7 +108,7 @@ public class SecServiceImpl implements SecService{
 	public SecRef3rd genImSec(Sec sec) {
 		SecRef3rd record = new SecRef3rd();
 		Long secId =sec.getId();
-		SecRef3rd secRef3rd = secRef3rdMapper.selectBySecId(secId);
+		SecRef3rd secRef3rd = secRef3rdMapper.selectBySecIdForIm(secId);
 		if (secRef3rd !=null) {
 			return secRef3rd;
 		}
@@ -182,23 +182,27 @@ public class SecServiceImpl implements SecService{
 	}
 	@Override
 	public Sec selectVoBySecId(Long id) {
-		
 		return secMapper.selectVoBySecId(id);
 	}
-	@Override
-	public int updateByPrimaryKeySelective(Sec record) {
 	
+	public int updateByPrimaryKeySelective(Sec record) {
 		return secMapper.updateByPrimaryKeySelective(record);
 	}
+	
+	
+	/**
+	 * 获取秘书第三方账号信息
+	 * @param Long secId  秘书ID
+	 * @return	 SecRef3rd
+	 */
 	@Override
-	public SecRef3rd selectBySecId(Long secId) {
-		return secRef3rdMapper.selectBySecId(secId);
+	public SecRef3rd selectBySecIdForIm(Long secId) {
+		return secRef3rdMapper.selectBySecIdForIm(secId);
 	}
+
 	/*@Override
 	public Sec selectById(Long id) {
 		
 		return secMapper.selectByPrimaryKey(id);
 	}*/
-
-
 }

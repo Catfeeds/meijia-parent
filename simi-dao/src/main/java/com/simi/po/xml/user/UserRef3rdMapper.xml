@@ -21,11 +21,11 @@
     where id = #{id,jdbcType=NUMERIC}
   </select>
   
-  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByUserIdForIm" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from user_ref_3rd
-    where user_id = #{userId,jdbcType=NUMERIC}
+    where user_id = #{userId,jdbcType=NUMERIC} and ref_type = 'huanxin'
   </select>
   
   <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >

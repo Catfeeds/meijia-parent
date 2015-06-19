@@ -283,7 +283,7 @@ public class UsersServiceImpl implements UsersService {
 		vo.setImRobotNickname(imRobot.get("nickname").toString());
 		if(userRefSec!=null){
 			Sec sec = secMapper.selectByPrimaryKey(userRefSec.getSecId());
-			SecRef3rd secRef3rd  = secRef3rdMapper.selectBySecId(userRefSec.getSecId());
+			SecRef3rd secRef3rd  = secRef3rdMapper.selectBySecIdForIm(userRefSec.getSecId());
 			vo.setImSecUsername(secRef3rd.getUsername());
 			vo.setImSecNickname(sec.getNickName());
 		}else{
@@ -377,7 +377,7 @@ public class UsersServiceImpl implements UsersService {
 	public UserRef3rd genImUser(Users user) {
 		UserRef3rd record = new UserRef3rd();
 		Long userId = user.getId();
-		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserId(userId);
+		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
 		if (userRef3rd !=null) {
 			return userRef3rd;
 		}

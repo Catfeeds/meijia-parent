@@ -25,13 +25,10 @@ public interface SecService {
 
 	SecRef3rd genImSec(Sec sec);
 
-	Sec selectVoBySecId(Long id);
+	SecRef3rd selectBySecIdForIm(Long secId);
+
+	Sec selectVoBySecId(Long secId);
 
 	int updateByPrimaryKeySelective(Sec record);
-
-	SecRef3rd selectBySecId(Long secId);
-
-
-
 
 }

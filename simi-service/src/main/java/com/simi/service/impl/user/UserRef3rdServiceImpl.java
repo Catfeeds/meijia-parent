@@ -63,8 +63,8 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 	}
 
 	@Override
-	public UserRef3rd selectByUserId(Long userId) {
-		return userRef3rdMapper.selectByUserId(userId);
+	public UserRef3rd selectByUserIdForIm(Long userId) {
+		return userRef3rdMapper.selectByUserIdForIm(userId);
 	}
 
 	@Override

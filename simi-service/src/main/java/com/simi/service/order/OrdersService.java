@@ -25,6 +25,8 @@ public interface OrdersService {
 
 	List<String> selectByDistinctMobileLists();
 
-	void ordeRatedTodo(Orders orders);
+	Boolean orderSuccessTodo(String orderNo);
+
+	void orderRatedTodo(Orders orders);
 
 }

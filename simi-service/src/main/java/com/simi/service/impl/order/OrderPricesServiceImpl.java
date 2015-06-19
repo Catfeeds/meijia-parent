@@ -105,8 +105,8 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 		BigDecimal orderMoney = orderPrices.getOrderMoney();
 		BigDecimal orderPay = orderPrices.getOrderMoney();
 		String mobile = order.getMobile();
-		Short orderFrom = order.getOrderFrom();
-		Short serviceType = order.getServiceType();
+		order.getOrderFrom();
+		order.getServiceType();
 		
 		if (cardPasswd == null || cardPasswd.equals("0")) {
 			cardPasswd = orderPrices.getCardPasswd();

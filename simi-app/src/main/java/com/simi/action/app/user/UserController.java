@@ -379,7 +379,7 @@ public class UserController extends BaseController {
 		if (!StringUtil.isEmpty(name)) {
 			users.setName(name);
 			String username = "";
-			UserRef3rd userRef3rd = userRef3rdService.selectByUserId(userId);
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
 			// 如果该账号未绑定环信账号
 			if (userRef3rd != null) {
 				username = userRef3rd.getUsername();

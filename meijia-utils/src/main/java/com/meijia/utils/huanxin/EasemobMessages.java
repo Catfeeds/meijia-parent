@@ -50,7 +50,7 @@ public class EasemobMessages {
         ObjectNode ext = factory.objectNode();
         ArrayNode targetusers = factory.arrayNode();
         targetusers.add("simi-sec-1");
-        targetusers.add("simi-user-91");
+        targetusers.add("simi-user-92");
         ObjectNode txtmsg = factory.objectNode();
         txtmsg.put("msg", "Hello simi!");
         txtmsg.put("type","txt");
@@ -130,7 +130,7 @@ public class EasemobMessages {
         ext.put("order_no", "611081901792296960");
         ext.put("order_pay_type", 0);
         ext.put("add_time", "2015-06-18 13:34:33");
-        ext.put("service_type", "通用");
+        ext.put("service_type_name", "通用");
         ext.put("service_content", "下午2点叫快递");
         ext.put("service_time", "2015-06-18 14:00:00");
         ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");

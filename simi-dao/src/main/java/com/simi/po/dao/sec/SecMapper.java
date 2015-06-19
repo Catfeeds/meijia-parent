@@ -27,12 +27,6 @@ public interface SecMapper {
 
 	SecList selectByMobile(String mobile);
 
-	Sec selectVoBySecId(Long id);
-	
-	
-	
-	
-	
-	
-	
+	Sec selectVoBySecId(Long secId);
+
 }

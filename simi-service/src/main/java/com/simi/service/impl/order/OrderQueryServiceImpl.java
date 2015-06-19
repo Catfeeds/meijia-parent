@@ -183,12 +183,29 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         		}
         	}
 
-        	vo.setUserAddrs(addrName);
+        	vo.setServiceAddr(addrName);
 
         	result.add(vo);
         }
 
         return result;
 	}
+	
+	/*
+	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素
+	 */
+	@Override
+	public OrderViewVo getOrderView(Orders order) {
+
+	    // 加载更多订单的信息
+		OrderViewVo vo = new OrderViewVo();
+		BeanUtils.copyProperties(order, vo);
+		
+        //用户地址
+
+
+
+        return vo;
+	}	
 
 }

@@ -15,7 +15,7 @@ public class Orders {
     
     private Short orderPayType;
 
-    private Short serviceType;
+    private Long serviceType;
     
     private String serviceContent;
 
@@ -81,11 +81,11 @@ public class Orders {
         this.orderNo = orderNo == null ? null : orderNo.trim();
     }
 
-    public Short getServiceType() {
+    public Long getServiceType() {
         return serviceType;
     }
 
-    public void setServiceType(Short serviceType) {
+    public void setServiceType(Long serviceType) {
         this.serviceType = serviceType;
     }
 

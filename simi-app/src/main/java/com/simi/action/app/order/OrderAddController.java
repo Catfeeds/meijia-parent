@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -49,6 +54,7 @@ public class OrderAddController extends BaseController {
 	 *  @param user_id			int		用户id
 	 *  @param mobile			string	手机号
 	 *	@param service_type		int		服务类型
+	 *  @param service_content  string  服务内容
 	 *	@param order_pay_type	int		支付方式 0 = 无需支付 1 = 线上支付
 	 *	@param remarks			string	备注,urlencode
 	 *	@param order_from		int		来源 0 = APP 1 = 微网站 2 = 管理后台
@@ -57,6 +63,7 @@ public class OrderAddController extends BaseController {
 	 *	@param service_date		int		服务开始日期， 时间戳，精确到秒, 2014-12-17 00:00:00 变成的时间戳
 	 *	@param start_time		int		服务开始时间, 时间戳，精确到秒,2014-12-17 07:00:00 变成时间戳的
 	 *	@param addr_id	false	int		服务地址ID 
+	 *  @param is_push			int     是否需要推送给用户,  is_push = 0 不推送， 1 = 推送
 	 *
 	 *  @return  OrderViewVo
 	 */
@@ -64,17 +71,17 @@ public class OrderAddController extends BaseController {
 	public AppResultData<Object> saveOrder(
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("user_id") Long userId,
-			@RequestParam("service_type") Short serviceType,
+			@RequestParam("service_type") Long serviceType,
 			@RequestParam("service_content") String serviceContent,
 			@RequestParam("order_pay_type") Short orderPayType,
 			@RequestParam("remarks") String remarks, 
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
-			@RequestParam(value = "is_push", required = false, defaultValue = "0") Short isPush,
 			@RequestParam(value = "order_pay", required = false, defaultValue = "0") BigDecimal orderPay,
 			@RequestParam(value = "service_date", required = false, defaultValue = "0") Long serviceDate,
 			@RequestParam(value = "start_time", required = false, defaultValue = "0") Long startTime,
 			@RequestParam(value = "addr_id", required = false, defaultValue = "0") Long addrId,			
-			@RequestParam(value = "city_id", required = false, defaultValue = "0") int city_id) {
+			@RequestParam(value = "city_id", required = false, defaultValue = "0") int city_id,
+			@RequestParam(value = "is_push", required = false, defaultValue = "1") Short isPush) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
@@ -113,6 +120,7 @@ public class OrderAddController extends BaseController {
 		order.setMobile(u.getMobile());
 		order.setUserId(u.getId());
 		order.setServiceType(serviceType);
+		order.setServiceContent(serviceContent);
 		order.setOrderPayType(orderPayType);
 		order.setOrderNo(orderNo);
 		order.setRemarks(remarks);
@@ -134,13 +142,48 @@ public class OrderAddController extends BaseController {
 		
 		
 		//推送给用户.通过环信的透传消息
-		if (isPush.equals((short)0)) {
-			UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(u.getId());
-			if (userBaiduBind != null) {
-				
-			}
+		if (isPush.equals((short)1)) {
+			ordersService.orderSuccessTodo(orderNo);
 		}
 		
 		return result;
 	}
+	
+	/**
+	 * 透传消息测试
+	 */
+	@RequestMapping(value = "im_tc", method = RequestMethod.GET)
+	public AppResultData<Object> imTcTest(
+			@RequestParam("to") String toIm
+			) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		JsonNodeFactory factory = new JsonNodeFactory(false);
+		 String from = "simi-sec-2";
+        String targetTypeus = "users";
+        ObjectNode ext = factory.objectNode();
+        ArrayNode targetusers = factory.arrayNode();
+        targetusers.add("toIm");
+        
+        // 给用户发一条透传消息
+        ObjectNode cmdmsg = factory.objectNode();
+        cmdmsg.put("action", "order");
+        cmdmsg.put("type","cmd");
+        
+        ext.put("order_id", 1);
+        ext.put("order_no", "611081901792296960");
+        ext.put("order_pay_type", 0);
+        ext.put("add_time", DateUtil.getNow());
+        ext.put("service_type_name", "通用");
+        ext.put("service_content", "下午2点叫快递");
+        ext.put("service_time", DateUtil.getNow());
+        ext.put("service_addr", "北京东直门外大街42号宇飞大厦612");
+        ext.put("order_money", "0.0");
+        
+        ObjectNode sendcmdMessageusernode = EasemobMessages.sendMessages(targetTypeus, targetusers, cmdmsg, from, ext);
+  
+        
+		return result;
+	}
+			
 }

@@ -19,7 +19,7 @@ public interface SecRef3rdMapper {
 
     int updateByPrimaryKey(SecRef3rd record);
 
-	SecRef3rd selectBySecId(Long secId);
+	SecRef3rd selectBySecIdForIm(Long secId);
 
 	int updateByPrimaryKeySelective(Sec sec);
 

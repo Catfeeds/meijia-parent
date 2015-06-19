@@ -21,8 +21,6 @@ public interface UserRef3rdService {
 	    
 	    UserRef3rd selectByMobile(String mobile);
 	    
-	    UserRef3rd selectByUserId(Long userId);
-	    
 	    UserRef3rd selectByPidAnd3rdType(String pid,String thirdType);
 	    
 	    UserRef3rd initUserRef3rd(String mobile);
@@ -30,5 +28,7 @@ public interface UserRef3rdService {
 		Boolean allotSec(Users user);
 
 		UserRefSec initUserRefSec();
+
+		UserRef3rd selectByUserIdForIm(Long userId);
 
 }

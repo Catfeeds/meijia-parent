@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
@@ -41,6 +43,9 @@ public class OrderDetailController extends BaseController {
 
 	@Autowired
     private OrderQueryService orderQueryService;
+	
+	@Autowired
+	private DictService dictService;
 
 	// 19.订单详情接口
 	/**
@@ -80,16 +85,19 @@ public class OrderDetailController extends BaseController {
 		if (orderPrices == null) {
 			orderPrices = orderPricesService.initOrderPrices();
 		}
+		orderViewVo.setOrderMoney(orderPrices.getOrderMoney());
+		orderViewVo.setOrderPay(orderPrices.getOrderPay());
+		orderViewVo.setPayType(orderPrices.getPayType());
+		
+		String serviceTypeName = dictService.getServiceTypeName(orders.getServiceType());
+		
 		
 		orderViewVo.setName(u.getName());
 		
 		UserAddrs userAddrs = userAddrsService.selectByPrimaryKey(orders.getAddrId());
 
-		orderViewVo.setUserAddrs(userAddrs.getName() + userAddrs.getAddr());
+		orderViewVo.setServiceAddr(userAddrs.getName() + userAddrs.getAddr());
 
-		orderViewVo.setOrderMoney(orderPrices.getOrderMoney());
-		orderViewVo.setOrderPay(orderPrices.getOrderPay());
-		orderViewVo.setPayType(orderPrices.getPayType());
 
 		result.setData(orderViewVo);
 		

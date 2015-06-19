@@ -20,11 +20,11 @@
     from sec_ref_3rd
     where id = #{id,jdbcType=NUMERIC}
   </select>
-  <select id="selectBySecId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectBySecIdForIM" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from sec_ref_3rd
-    where sec_id = #{secId,jdbcType=NUMERIC}
+    where sec_id = #{secId,jdbcType=NUMERIC} and ref_type = 'huanxin'
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

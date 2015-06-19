@@ -169,7 +169,7 @@ public class SecController extends BaseController{
 					secService.updateByPrimaryKeySelective(sec);
 												
 					if (!StringUtils.isEmpty(newNickName) && !newNickName.equals(oldNickName)) {
-						SecRef3rd secRef3rd = secService.selectBySecId(sec.getId());
+						SecRef3rd secRef3rd = secService.selectBySecIdForIm(sec.getId());
 						//如果该账号未绑定环信账号
 						if(secRef3rd!=null){
 							String username = secRef3rd.getUsername();

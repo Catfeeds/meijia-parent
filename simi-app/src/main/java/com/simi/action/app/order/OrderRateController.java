@@ -72,7 +72,7 @@ public class OrderRateController extends BaseController {
 		orderLogService.insert(orderLog);
 
 		//评价成功后的操作
-		ordersService.ordeRatedTodo(orders);
+		ordersService.orderRatedTodo(orders);
 
 		AppResultData<String> result = new AppResultData<String>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,  "");
