@@ -1,6 +1,6 @@
 $(function(){
     var  url = location.href;
- alert(url+"--url);
+ alert(url+"--url");
    
     var secId = 1;
     var mobile = 13810002890;
