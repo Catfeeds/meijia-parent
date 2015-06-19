@@ -1,6 +1,5 @@
 $(function(){
 	
-	alert(siteAPIPath+"url");
     var secId = 1;
     var mobile = 13810002890;
     //获取用户消息列表
