@@ -22,5 +22,6 @@ public interface UserSmsTokenService {
 			HashMap<String, String> sendSmsResult);
 
 	UserSmsToken selectByMobileAndType(String mobile);
+	
 
 }

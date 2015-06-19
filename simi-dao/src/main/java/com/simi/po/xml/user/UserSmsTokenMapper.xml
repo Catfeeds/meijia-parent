@@ -31,6 +31,15 @@
     ORDER BY add_time DESC
     LIMIT 0,1
   </select>
+  <!-- add By SunWenbao@2014-11-19 -->
+  <select id="selectByMobileAndTypes" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_sms_token
+    where mobile = #{mobile,jdbcType=CHAR} and sms_type = 0
+    ORDER BY add_time DESC
+    LIMIT 0,1
+  </select>
 <select id="selectByMobileAndType" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

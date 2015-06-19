@@ -186,7 +186,11 @@ public class UsersServiceImpl implements UsersService {
 		Users u =  new Users(mobile);
 		u.setId(0L);
 		u.setProvinceName("");
+		u.setThirdType(" ");
+		u.setOpenId(" ");
 		u.setName(" ");
+		u.setSex(" ");
+		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));
 		u.setUserType((short) 0);
 		u.setAddFrom((short) 0);

@@ -78,7 +78,7 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserMsgService userMsgService;
-	
+
 	@Autowired
 	private UserRef3rdService userRef3rdService;
 
@@ -97,38 +97,40 @@ public class UserController extends BaseController {
 		if (mobile.equals("18610807136") && sms_token.equals("000000")) {
 
 			Users u = userService.getUserByMobile(mobile);
+			if(u!=null){
+				// 根据mobile找到user_baidu_bind信息
+				UserBaiduBind userBaiduBind = userBaiduBindService
+						.selectByPrimaryKey(u.getId());
+				UserBaiduBindVo vo = new UserBaiduBindVo();
 
-			// 根据mobile找到user_baidu_bind信息
-			UserBaiduBind userBaiduBind = userBaiduBindService
-					.selectByPrimaryKey(u.getId());
-			UserBaiduBindVo vo = new UserBaiduBindVo();
+				try {
+					BeanUtils.copyProperties(vo, u);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-			try {
-				BeanUtils.copyProperties(vo, u);
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				vo.setAppId("");
+				vo.setChannelId("");
+				vo.setAppUserId("");
+
+				if (userBaiduBind != null) {
+					vo.setAppId(userBaiduBind.getAppId());
+					vo.setChannelId(userBaiduBind.getChannelId());
+					vo.setAppUserId(userBaiduBind.getAppUserId());
+				}
+
+				result = new AppResultData<Object>(Constants.SUCCESS_0,
+						ConstantMsg.SUCCESS_0_MSG, vo);
+			}else{
+				result = new AppResultData<Object>(Constants.ERROR_999,"该测试账号已不存在！", "");
 			}
-
-			vo.setAppId("");
-			vo.setChannelId("");
-			vo.setAppUserId("");
-
-			if (userBaiduBind != null) {
-				vo.setAppId(userBaiduBind.getAppId());
-				vo.setChannelId(userBaiduBind.getChannelId());
-				vo.setAppUserId(userBaiduBind.getAppUserId());
-			}
-
-			result = new AppResultData<Object>(Constants.SUCCESS_0,
-					ConstantMsg.SUCCESS_0_MSG, vo);
-
 			return result;
 		}
-
+		//根据手机号查询出普通用户的验证码sms_type = 0
 		UserSmsToken smsToken = smsTokenService.selectByMobile(mobile);// 1、根据mobile
 		// 从表user_sms_token找出最新一条记录
 		LoginVo loginVo = new LoginVo(0l, mobile);
@@ -141,10 +143,10 @@ public class UserController extends BaseController {
 		// 2、判断是否表记录字段add_time 是否超过十分钟.
 		long expTime = TimeStampUtil.compareTimeStr(smsToken.getAddTime(),
 				System.currentTimeMillis() / 1000);
-		if (expTime > 1800) {// 超时
+		if (expTime > 600) {// 超时
 			// 999
 			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_1, "");
+					ConstantMsg.ERROR_999_MSG_4, "");
 			return result;
 		} else {
 			long ip = IPUtil.getIpAddr(request);
@@ -203,7 +205,7 @@ public class UserController extends BaseController {
 	public AppResultData<String> getSmsToken(
 			@RequestParam("mobile") String mobile,
 			@RequestParam("sms_type") int sms_type) {
-	
+
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
@@ -214,8 +216,9 @@ public class UserController extends BaseController {
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 				Constants.GET_CODE_TEMPLE_ID, content);
-		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, sms_type, code,
-				sendSmsResult);
+		UserSmsToken record = smsTokenService.initUserSmsToken(mobile,
+				sms_type, code, sendSmsResult);
+		System.out.println(record);
 		smsTokenService.insert(record);
 
 		AppResultData<String> result = new AppResultData<String>(
@@ -338,11 +341,13 @@ public class UserController extends BaseController {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
 		if (multipartResolver.isMultipart(request)) {
-			String paths = request.getSession().getServletContext().getRealPath("/");
-			System.out.println("paths---"+paths);
-			String p = paths.substring(0,paths.lastIndexOf("\\"));
-			String path = p+File.separator+"upload"+File.separator+"users";
-			
+			String paths = request.getSession().getServletContext()
+					.getRealPath("/");
+			System.out.println("paths---" + paths);
+			String p = paths.substring(0, paths.lastIndexOf("\\"));
+			String path = p + File.separator + "upload" + File.separator
+					+ "users";
+
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
 			Iterator<String> iter = multiRequest.getFileNames();
@@ -365,25 +370,25 @@ public class UserController extends BaseController {
 					users.setHeadImg(headImgs);
 				}
 			}
-		}else{
-			if(!StringUtil.isEmpty(headImg)){
+		} else {
+			if (!StringUtil.isEmpty(headImg)) {
 				users.setHeadImg(headImg);
 			}
 		}
-		//如果昵称name不为空，则对环信中昵称进行修改
-		if(!StringUtil.isEmpty(name)){
+		// 如果昵称name不为空，则对环信中昵称进行修改
+		if (!StringUtil.isEmpty(name)) {
 			users.setName(name);
 			String username = "";
 			UserRef3rd userRef3rd = userRef3rdService.selectByUserId(userId);
-			//如果该账号未绑定环信账号
-			if(userRef3rd!=null){
+			// 如果该账号未绑定环信账号
+			if (userRef3rd != null) {
 				username = userRef3rd.getUsername();
 				ObjectNode json2 = JsonNodeFactory.instance.objectNode();
 				json2.put("nickname", name);
-				EasemobIMUsers. modifyIMUserNickName(username, json2);
+				EasemobIMUsers.modifyIMUserNickName(username, json2);
 			}
 		}
-		if(!StringUtil.isEmpty(sex)){
+		if (!StringUtil.isEmpty(sex)) {
 			users.setSex(sex);
 		}
 		userService.updateByPrimaryKeySelective(users);
