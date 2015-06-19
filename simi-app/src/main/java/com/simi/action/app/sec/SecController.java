@@ -90,7 +90,7 @@ public class SecController extends BaseController{
 		if (expTime > 1800) {// 超时
 			// 999
 			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_1, "");
+					ConstantMsg.ERROR_999_MSG_8, "");
 			return result;
 		} else {
 			
@@ -119,7 +119,7 @@ public class SecController extends BaseController{
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-	@RequestMapping(value = "get_users", method = RequestMethod.POST)
+/*	@RequestMapping(value = "get_users", method = RequestMethod.POST)
 	public AppResultData<Object> getUsers(
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("mobile") String mobile,
@@ -142,7 +142,7 @@ public class SecController extends BaseController{
 					ConstantMsg.ERROR_999_MSG_1, "");
 			return result;
 		} 		
-		/*List<UserViewVo> vo =userRefSecService.selectVoByUserId(userReSec.getUserId());*/	
+		List<UserViewVo> vo =userRefSecService.selectVoByUserId(userReSec.getUserId());	
 			
 		Users u =userService.selectVoByUserId(userReSec.getUserId());	
 		
@@ -172,5 +172,39 @@ public class SecController extends BaseController{
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);
 		return result;
 	}
+	*//**
+	 * 秘书信息修改 
+	 * @param secId
+	 * @param mobile
+	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 *//*
+	@RequestMapping(value = "get_users", method = RequestMethod.POST)
+	public AppResultData<Object> getUsers(
+			@RequestParam("sec_id") Long secId,		
+			@RequestParam(value = "name", required = false, defaultValue="") String name,
+			@RequestParam(value = "nick_name", required = false, defaultValue="") String nickName,
+			@RequestParam(value = "sex", required = false, defaultValue="") String sex,
+			@RequestParam(value = "birth_day", required = false, defaultValue="") String birthDay,
+			@RequestParam(value = "city_id", required = false, defaultValue="") Long cityId,
+			@RequestParam(value = "head_img", required = false, defaultValue="") String headImg
+			){
+			
+			AppResultData<Object> result = new AppResultData<Object>(
+					Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
+			
+             Sec sec = secService.selectVoBySecId(secId);
+           
+             
+			result = new AppResultData<Object>(
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+			return result;
+
+	}
+*/
+
 
 }
+
+
