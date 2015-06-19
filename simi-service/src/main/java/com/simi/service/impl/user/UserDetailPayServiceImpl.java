@@ -11,12 +11,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.UserSearchVo;
+import com.simi.common.Constants;
 import com.simi.po.dao.user.UserDetailPayMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailPay;
+import com.simi.po.model.user.Users;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -62,42 +64,9 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	public int updateByPrimaryKeySelective(UserDetailPay record) {
 		return userDetailPayMapper.updateByPrimaryKeySelective(record);
 	}
-
+	
 	@Override
-	public UserDetailPay initUserDetailPay(String mobile, String trade_status, OrderCards orderCards,
-			Long userId, Long orderId, short payType, OrderPrices orderPrices, String trade_no, String payAccount) {
-		return setUserDetailPay(mobile, trade_status, orderCards.getCardOrderNo(), userId, orderId, payType,orderPrices, trade_no, payAccount);
-	}
-
-	@Override
-	public UserDetailPay initUserDetailPay(String mobile, String trade_status, Orders orders,
-			Long userId, Long orderId, short payType, OrderPrices orderPrices, String trade_no, String payAccount) {
-		return setUserDetailPay(mobile, trade_status, orders.getOrderNo(), userId, orderId, payType, orderPrices, trade_no, payAccount);
-	}
-
-	private UserDetailPay setUserDetailPay(String mobile, String trade_status,
-			String orderNo, Long userId, Long orderId, short payType, OrderPrices orderPrices, String tradeNo, String payAccount) {
-		UserDetailPay userDetailPay = new UserDetailPay();
-		userDetailPay.setAddTime(TimeStampUtil.getNow() / 1000);
-		userDetailPay.setMobile(mobile);
-		userDetailPay.setOrderNo(orderNo);
-
-		userDetailPay.setOrderType(payType);
-		userDetailPay.setOrderMoney(orderPrices.getOrderMoney());
-		userDetailPay.setOrderPay(orderPrices.getOrderPay());
-
-		//trade_no
-		userDetailPay.setPayAccount(payAccount);
-		userDetailPay.setTradeNo(tradeNo);
-		userDetailPay.setTradeStatus(trade_status);
-		userDetailPay.setUserId(userId);
-		userDetailPay.setOrderId(orderId);
-		userDetailPay.setPayType(payType);
-		return userDetailPay;
-	}
-
-	@Override
-	public UserDetailPay initUserDetailDefault() {
+	public UserDetailPay initUserDetail() {
 		UserDetailPay userDetailPay = new UserDetailPay();
 		userDetailPay.setId(0L);
 		userDetailPay.setUserId(0L);
@@ -107,14 +76,45 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		userDetailPay.setOrderNo("");
 		userDetailPay.setOrderMoney(new BigDecimal(0.0));
 		userDetailPay.setOrderPay(new BigDecimal(0.0));
-
-
 		userDetailPay.setTradeNo("");
-
 		userDetailPay.setTradeStatus("");
 		userDetailPay.setPayType((short) 0);
 		userDetailPay.setAddTime(TimeStampUtil.getNow() / 1000);
+		return userDetailPay;
+	}	
+	
+	/**
+	 * 用户明细- 订单支付.
+	 */
+	@Override
+	public UserDetailPay addUserDetailPayForOrder(
+			Users user, 
+			Orders order, 
+			OrderPrices orderPrice, 
+			String tradeStatus,
+			String tradeNo, 
+			String payAccount) {
+		
+		UserDetailPay userDetailPay = new UserDetailPay();
+		
+		userDetailPay.setUserId(user.getId());
+		userDetailPay.setMobile(user.getMobile());
+		userDetailPay.setOrderId(order.getId());
+		userDetailPay.setOrderNo(order.getOrderNo());
 
+		userDetailPay.setOrderType(Constants.ORDER_TYPE_0);
+		userDetailPay.setPayType(orderPrice.getPayType());
+		userDetailPay.setOrderMoney(orderPrice.getOrderMoney());
+		userDetailPay.setOrderPay(orderPrice.getOrderPay());
+		
+		//trade_no
+		userDetailPay.setPayAccount(payAccount);
+		userDetailPay.setTradeNo(tradeNo);
+		userDetailPay.setTradeStatus(tradeStatus);
+		
+		userDetailPay.setAddTime(TimeStampUtil.getNowSecond());
+		
+		userDetailPayMapper.insert(userDetailPay);
 		return userDetailPay;
 	}
 

@@ -6,6 +6,7 @@ import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailPay;
+import com.simi.po.model.user.Users;
 
 public interface UserDetailPayService {
     int deleteByPrimaryKey(Long id);
@@ -16,19 +17,9 @@ public interface UserDetailPayService {
 
     UserDetailPay selectByPrimaryKey(Long id);
 
-	UserDetailPay initUserDetailPay(String mobile, String trade_status,
-			OrderCards orderCards, Long userId, Long orderId, short payType,
-			OrderPrices orderPrices, String trade_no, String payAccount);
-
-	UserDetailPay initUserDetailPay(String mobile, String trade_status,
-			Orders orders, Long userId, Long orderId, short payType,
-			OrderPrices orderPrices, String trade_no, String payAccount);
-
     int updateByPrimaryKeySelective(UserDetailPay record);
 
     int updateByPrimaryKey(UserDetailPay record);
-
-	UserDetailPay initUserDetailDefault();
 
 	UserDetailPay selectByTradeNo(String tradeNo);
 
@@ -36,6 +27,8 @@ public interface UserDetailPayService {
 
 	PageInfo searchVoListPage(UserSearchVo searchVo,int pageNo,int pageSize);
 
+	UserDetailPay initUserDetail();
 
+	UserDetailPay addUserDetailPayForOrder(Users user, Orders order, OrderPrices orderPrice, String tradeStatus, String tradeNo, String payAccount);
 
 }

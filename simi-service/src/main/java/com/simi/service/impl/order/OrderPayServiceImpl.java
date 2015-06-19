@@ -59,13 +59,14 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	OrderSeniorService orderSeniorService;
-	
+		
 	/**
 	 * 订单支付成功,后续通知功能
+	 * 1. 如果为
 	 */
 	@Override
 	public void orderPaySuccessToDo(Orders orders) {
-
+		
 //		String serviceDate = TimeStampUtil.timeStampToDateStr(orders.getStartTime()*1000);
 //		String serviceTypeName = OneCareUtil.getserviceTypeName(orders.getServiceType());
 //		String[] content = new String[] { serviceDate, serviceTypeName };
@@ -74,64 +75,6 @@ public class OrderPayServiceImpl implements OrderPayService {
 //		System.out.println(sendSmsResult.get(sendSmsResult.get(Constants.SMS_STATUS_CODE)));
 	}
 	
-
-	@Override
-	public int updateOrderByRestMoney(String mobile, int order_id, Orders orders, OrderPrices orderPrices, short payType, long updateTime, String trade_no,
-			String payAccount) {
-		return updateOrderAbout(mobile, order_id, orders, orderPrices, payType, updateTime, trade_no, payAccount);
-	}
-
-	private int updateOrderAbout(String mobile, int order_id, Orders orders, OrderPrices orderPrices, short payType, long updateTime, String trade_no,
-			String payAccount) {
-		Users users = usersMapper.selectByMobile(mobile);
-		// 只有余额支付才会扣除用户余额
-		if (String.valueOf(orderPrices.getPayType()).equals(String.valueOf(Constants.PAY_TYPE_0))) {
-			users.setRestMoney(users.getRestMoney().subtract(orderPrices.getOrderPay()));
-		}
-		users.setUpdateTime(updateTime);
-		usersMapper.updateByPrimaryKeySelective(users);
-
-		UserDetailPay userDetailPay = userDetailPayService.initUserDetailPay(mobile, "success", orders, users.getId(), Long.valueOf(order_id), payType,
-				orderPrices, trade_no, payAccount);
-		return userDetailPayService.insert(userDetailPay);
-	}
-
-	@Override
-	public int updateOrderByAlipay(Orders orders, OrderPrices orderPrices, long updateTime, Short orderStatus, Short pay_type, String trade_no,
-			String payAccount) {
-		orders.setOrderStatus(orderStatus);// 支付状态
-		orders.setUpdateTime(updateTime);
-		ordersService.updateByPrimaryKey(orders);
-
-		orderPrices.setPayType(pay_type);// 支付类型
-		orderPrices.setUpdateTime(updateTime);
-		orderPricesService.updateByPrimaryKey(orderPrices);
-
-		OrderLog orderLog = orderLogService.initOrderLog(orders);
-		orderLogService.insert(orderLog);
-
-		return 1;
-	}
-
-	@Override
-	public int updateOrderByRestMoney(String mobile, int order_id, Orders orders, OrderPrices orderPrices, short payType, long updateTime,
-			UserCoupons userCoupons) {
-		if (userCoupons != null) {
-			userCoupons.setOrderNo(orders.getOrderNo());
-			userCoupons.setIsUsed(Constants.IS_USER_1);
-			userCouponsMapper.updateByPrimaryKeySelective(userCoupons);
-		}
-		OrderLog orderLog = orderLogService.initOrderLog(orders);
-		orderLogService.insert(orderLog);
-
-		if (updateOrderAbout(mobile, order_id, orders, orderPrices, payType, updateTime, "0", mobile) > 0)
-			if (ordersService.updateByPrimaryKey(orders) > 0) {
-				return orderPricesService.updateByPrimaryKey(orderPrices);
-			}
-
-		return 0;
-	}
-
 	// 1. 操作表 order_senior
 	// 2. 根据senior_type 传递参数从表 dict_senior_type 获取相应的金额
 	// 3. 调用生成订单号的util.生成一个order_senior 的订单号

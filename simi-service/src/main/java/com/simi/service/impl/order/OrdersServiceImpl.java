@@ -17,6 +17,7 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.sec.SecRef3rd;
@@ -118,20 +119,29 @@ public class OrdersServiceImpl implements OrdersService {
 	
 	/**
 	 * 下单成功后的操作
-	 * 1. 环信透传功能.
-	 * 2. 百度推送功能.(todo)
+	 * 1. 记录订单日志.
+	 * 2. 环信透传功能.
+	 * 3. 百度推送功能.(todo)
 	 */
 	@Override
 	public Boolean orderSuccessTodo(String orderNo) {
+		
+		
+		
 		Orders order = ordersMapper.selectByOrderNo(orderNo);
 		
 		if (order == null) {
 			return false;
 		}
+		
+		//记录订单日志.
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLogService.insert(orderLog);
+		
 		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
 
 		Users u = usersService.selectVoByUserId(order.getUserId());
-		//1. 环信透传功能.
+		//2. 环信透传功能.
 		//获得发送者的环信账号
 		Long secId = orderViewVo.getSecId();
 		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
@@ -144,7 +154,7 @@ public class OrdersServiceImpl implements OrdersService {
 		
 		orderPushNotify(orderViewVo, fromIm, toIm);
 		
-		//2. 百度推送功能 todo
+		//3. 百度推送功能 todo
 		
 		return true;
 		
@@ -153,8 +163,9 @@ public class OrdersServiceImpl implements OrdersService {
 	
 	/**
 	 * 用户确认订单后的操作
-	 * 1. 环信透传功能.
-	 * 2. 百度推送功能.(todo)
+	 * 1. 记录订单日志
+	 * 2. 环信透传功能.
+	 * 3. 百度推送功能.(todo)
 	 */
 	@Override
 	public Boolean orderConfirmTodo(String orderNo) {
@@ -163,9 +174,14 @@ public class OrdersServiceImpl implements OrdersService {
 		if (order == null) {
 			return false;
 		}
+		
+		//1.记录订单日志
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLogService.insert(orderLog);
+		
 		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
 
-		//1. 环信透传功能.
+		//2. 环信透传功能.
 		//获得接受者的环信账号
 		Long secId = orderViewVo.getSecId();
 		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
@@ -173,7 +189,7 @@ public class OrdersServiceImpl implements OrdersService {
 
 		orderPushNotify(orderViewVo, "", toIm);
 		
-		//2. 百度推送功能 todo
+		//3. 百度推送功能 todo
 		
 		return true;
 		
