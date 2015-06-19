@@ -1,8 +1,5 @@
 package com.simi.action.app.order;
 
-import java.math.BigDecimal;
-
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictServiceTypes;
-import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
-import com.simi.service.dict.DictService;
-import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.order.OrderViewVo;
@@ -33,20 +24,11 @@ public class OrderDetailController extends BaseController {
 	private UsersService userService;
 	
 	@Autowired
-	private OrderPricesService orderPricesService;
-
-	@Autowired
 	private OrdersService ordersService;
-
-	@Autowired
-	private UserAddrsService userAddrsService;
 
 	@Autowired
     private OrderQueryService orderQueryService;
 	
-	@Autowired
-	private DictService dictService;
-
 	// 19.订单详情接口
 	/**
 	 * mobile:手机号 order_id订单ID
@@ -76,29 +58,8 @@ public class OrderDetailController extends BaseController {
 			return result;
 		}
 		
-		OrderViewVo orderViewVo = new OrderViewVo();
+		OrderViewVo orderViewVo = orderQueryService.getOrderView(orders);
 		
-		BeanUtils.copyProperties(orders, orderViewVo);
-		
-		OrderPrices orderPrices = orderPricesService.selectByOrderId(orders.getId());
-		
-		if (orderPrices == null) {
-			orderPrices = orderPricesService.initOrderPrices();
-		}
-		orderViewVo.setOrderMoney(orderPrices.getOrderMoney());
-		orderViewVo.setOrderPay(orderPrices.getOrderPay());
-		orderViewVo.setPayType(orderPrices.getPayType());
-		
-		String serviceTypeName = dictService.getServiceTypeName(orders.getServiceType());
-		
-		
-		orderViewVo.setName(u.getName());
-		
-		UserAddrs userAddrs = userAddrsService.selectByPrimaryKey(orders.getAddrId());
-
-		orderViewVo.setServiceAddr(userAddrs.getName() + userAddrs.getAddr());
-
-
 		result.setData(orderViewVo);
 		
 		return result;

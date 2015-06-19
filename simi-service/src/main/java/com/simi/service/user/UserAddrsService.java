@@ -32,4 +32,6 @@ public interface UserAddrsService {
 
 	int updataDefaultByMobile(String mobile);
 
+	List<UserAddrs> selectByIds(List<Long> addrIds);
+
 }

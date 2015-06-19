@@ -418,5 +418,10 @@ public class UsersServiceImpl implements UsersService {
 		 
 		return usersMapper.selectVoByUserId(id);
 	}
+	
+	@Override
+	public List<Users> selectByUserIds(List<Long> ids) {
+		return usersMapper.selectByUserIds(ids);
+	}	
 
 }

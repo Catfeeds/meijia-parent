@@ -8,22 +8,26 @@ import org.springframework.stereotype.Service;
 import com.simi.common.Constants;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
+import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.sec.SecService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.order.OrderViewVo;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
-import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.huanxin.EasemobMessages;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -51,6 +55,9 @@ public class OrdersServiceImpl implements OrdersService {
 	
 	@Autowired
 	OrderPricesService orderPricesService;
+	
+	@Autowired
+	OrderQueryService orderQueryService;	
 	
 
 	@Override
@@ -121,12 +128,12 @@ public class OrdersServiceImpl implements OrdersService {
 		if (order == null) {
 			return false;
 		}
-		
+		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getId());
 		
 		Users u = usersService.selectVoByUserId(order.getUserId());
 		//1. 环信透传功能.
-		orderPushNotify(order, orderPrice, u);
+		orderPushNotify(orderViewVo, orderPrice, u);
 		
 		//2. 百度推送功能 todo
 		
@@ -140,17 +147,48 @@ public class OrdersServiceImpl implements OrdersService {
 	 * @return
 	 */
 	
-	public Boolean orderPushNotify(Orders order, OrderPrices orderPrice, Users user) {
+	public Boolean orderPushNotify(OrderViewVo orderViewVo, OrderPrices orderPrice, Users user) {
 		
 		//获得发送者的环信账号
-		Long secId = order.getSecId();
+		Long secId = orderViewVo.getSecId();
 		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
-		
+		String from = secRef3rd.getUsername();
 		Long userId = user.getId();
 		//获得接收者的环信账号.
 		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
+		String to = userRef3rd.getUsername();
+		JsonNodeFactory factory = new JsonNodeFactory(false);
+		
+		String targetTypeus = "users";
+		ObjectNode ext = factory.objectNode();
+		ArrayNode targetusers = factory.arrayNode();
+		targetusers.add(to);
+
+		// 给用户发一条透传消息
+		ObjectNode cmdmsg = factory.objectNode();
+		cmdmsg.put("action", "order");
+		cmdmsg.put("type", "cmd");
+		
+
+		ext.put("order_id", orderViewVo.getId());
+		ext.put("order_no", orderViewVo.getOrderNo());
+		ext.put("order_pay_type", orderViewVo.getOrderPayType());
+		ext.put("add_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getAddTime()));
+		ext.put("service_type_name", orderViewVo.getServiceTypeName());
+		ext.put("service_content", orderViewVo.getServiceContent());
 		
 		
+		if (orderViewVo.getStartTime() > 0L) {
+			ext.put("service_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getStartTime()));
+		} else {
+			ext.put("service_time", "");
+		}
+		
+		ext.put("service_addr", orderViewVo.getServiceAddr());
+		ext.put("order_money", orderViewVo.getOrderMoney());
+
+		ObjectNode sendcmdMessageusernode = EasemobMessages.sendMessages(targetTypeus, targetusers, cmdmsg, from, ext);
+
 		return true;
 	}
 	
@@ -172,7 +210,6 @@ public class OrdersServiceImpl implements OrdersService {
 		userDetailScore.setActionId(Constants.ACTION_ORDER_RATE);		
 		userDetailScore.setIsConsume(Constants.CONSUME_SCORE_GET);
 		userDetailScoreService.insert(userDetailScore);
-		
 		
 		users.setScore(users.getScore()+Constants.RATE_CORE);
 		usersService.updateByPrimaryKeySelective(users);

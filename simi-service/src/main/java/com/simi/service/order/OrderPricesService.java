@@ -1,6 +1,7 @@
 package com.simi.service.order;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.simi.po.model.order.OrderPrices;
 
@@ -23,5 +24,7 @@ public interface OrderPricesService {
 	int updateByPrimaryKey(OrderPrices record);
 
 	BigDecimal getPayByOrder(String orderNo, String cardPasswd);
+
+	List<OrderPrices> selectByOrderIds(List<Long> orderIds);
 
 }

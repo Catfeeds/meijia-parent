@@ -9,17 +9,23 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderLogService;
+import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
+import com.simi.service.user.UserAddrsService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.dao.user.UserAddrsMapper;
 import com.simi.po.dao.user.UsersMapper;
+import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserAddrs;
+import com.simi.po.model.user.Users;
 
 @Service
 public class OrderQueryServiceImpl implements OrderQueryService {
@@ -28,17 +34,19 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	private OrdersMapper ordersMapper;
 
 	@Autowired
-	private OrderPricesMapper orderPricesMapper;
+	private OrderPricesService orderPricesService;
 
 	@Autowired
-	UsersMapper usersMapper;
+	UsersService usersService;
 
 	@Autowired
-	private UserAddrsMapper userAddrsMapper;
+	private UserAddrsService userAddrsService;
 
 	@Autowired
 	OrderLogService orderLogService;
-	
+
+	@Autowired
+	DictService dictService;
 	/**
 	 * 根据订单主键进行查询
 	 * @param id  订单id
@@ -130,35 +138,46 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	@Override
 	public List<OrderViewVo> getOrderViewList(List<Orders> list) {
 
-	       // 加载更多订单的信息
-
+	    // 加载更多订单的信息
+		List<Long> userIds = new ArrayList<Long>();
 		List<Long> addrIds = new ArrayList<Long>();
         List<Long> orderIds = new ArrayList<Long>();
         List<String> orderNos = new ArrayList<String>();
         Orders item = null;
         for (int i = 0 ; i < list.size(); i ++) {
         	item = list.get(i);
-        	addrIds.add(item.getAddrId());
+        	if (item.getAddrId() > 0L) {
+        		addrIds.add(item.getAddrId());
+        	}
+        	userIds.add(item.getUserId());
         	orderIds.add(item.getId());
         	orderNos.add(item.getOrderNo());
         }
-        List<OrderPrices> orderPricesList = orderPricesMapper.selectByOrderIds(orderIds);
-
-        List<UserAddrs> addrList = userAddrsMapper.selectByIds(addrIds);
+        
+        List<OrderPrices> orderPricesList = orderPricesService.selectByOrderIds(orderIds);
+        
+        List<Users> userList = usersService.selectByUserIds(userIds);
+        
+        List<UserAddrs> addrList = new ArrayList<UserAddrs>();
+        if (addrIds.size() > 0) {
+        	addrList = userAddrsService.selectByIds(addrIds);
+        }
         //进行orderViewVo  结合了 orders , order_prices,  order_dispatchs 三张表的元素
         List<OrderViewVo> result = new ArrayList<OrderViewVo>();
         Long orderId = 0L;
         Long addrId = 0L;
+        Long userId = 0L;
 
         for (int i = 0 ; i < list.size(); i ++) {
         	item = list.get(i);
         	orderId = item.getId();
         	addrId = item.getAddrId();
+        	userId = item.getUserId();
 
         	OrderViewVo vo = new OrderViewVo();
         	BeanUtils.copyProperties(item, vo);
 
-        	//用户地址
+        	
 
         	//查找订单金额信息.
         	OrderPrices  orderPrice = null;
@@ -173,6 +192,34 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         		}
         	}
 
+        	//城市名称
+    		vo.setCityName("");
+    		if (vo.getCityId() > 0L) {
+    			String cityName = dictService.getCityName(vo.getCityId());
+    			vo.setCityName(cityName);
+    		}
+    		
+    		//服务类型名称
+    		vo.setServiceTypeName("");
+    		if (vo.getServiceType() > 0L) {
+    			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
+    			vo.setServiceTypeName(serviceTypeName);
+    		}
+    		
+    		//用户姓名
+    		String name = "";
+    		Users u = null;
+    		for (int j = 0; j < userList.size(); j++) {
+    			u = userList.get(j);
+    			if (u.getId().equals(userId)) {
+    				name = u.getName();
+    				break;
+    			}
+    		}
+    		vo.setName("");
+    		
+        	
+        	//用户地址
         	String addrName = "";
         	UserAddrs addr = null;
         	for(int n = 0; n < addrList.size(); n++) {
@@ -201,10 +248,42 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		OrderViewVo vo = new OrderViewVo();
 		BeanUtils.copyProperties(order, vo);
 		
+		//订单价格信息
+		OrderPrices orderPrice = orderPricesService.selectByOrderId(vo.getId());
+		
+		vo.setPayType(orderPrice.getPayType());
+		vo.setOrderMoney(orderPrice.getOrderMoney());
+		vo.setOrderPay(orderPrice.getOrderPay());
+		vo.setCardPasswd(orderPrice.getCardPasswd());
+		
+		//城市名称
+		vo.setCityName("");
+		if (vo.getCityId() > 0L) {
+			String cityName = dictService.getCityName(vo.getCityId());
+			vo.setCityName(cityName);
+		}
+		
+		//服务类型名称
+		vo.setServiceTypeName("");
+		if (vo.getServiceType() > 0L) {
+			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
+			vo.setServiceTypeName(serviceTypeName);
+		}
+		
+		//用户称呼
+		vo.setName("");
+		if (vo.getUserId() > 0L) {
+			Users user = usersService.getUserById(vo.getUserId());
+			vo.setName(user.getName());
+		}
+		
         //用户地址
-
-
-
+		vo.setServiceAddr("");
+		if (vo.getAddrId() > 0L) {
+			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(vo.getAddrId());
+			vo.setServiceAddr(userAddr.getName() + userAddr.getAddr());
+		}
+		
         return vo;
 	}	
 

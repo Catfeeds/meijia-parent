@@ -50,6 +50,8 @@ public interface UsersService {
 
 	Users selectVoByUserId(Long id);
 
+	List<Users> selectByUserIds(List<Long> ids);
+
 
 
 

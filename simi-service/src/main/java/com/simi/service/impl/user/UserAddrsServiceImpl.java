@@ -104,7 +104,10 @@ public class UserAddrsServiceImpl implements UserAddrsService {
 		return userAddrsMapper.selectByUserId(userId);
 	}
 
-
+	@Override
+	public List<UserAddrs> selectByIds(List<Long> addrIds) {
+		return userAddrsMapper.selectByIds(addrIds);
+	}
 
 
 
