@@ -24,6 +24,7 @@ public class ConstantMsg {
 	public static String ERROR_999_MSG_4 = "验证码超时,请重新获取验证码";
 	public static String ERROR_999_MSG_5 = "您的余额不足，请及时充值哦!";
 	public static String ERROR_999_MSG_6 = "抱歉，你之前添加过该地址了。";
+	public static String ERROR_999_MSG_8 = "验证码超时，请重新获取验证码";
 
 	public static String ERROR_999_MSG_7 = "您的服务即将开始，现在无法取消订单。有问题请与我们的客服人员联系：）";
 	public static String ERROR_999_MSG_10 = "查询没有数据";
