@@ -35,10 +35,6 @@ $('#sec-form').validate({
 		birthDay:{
 			required:true
 		},
-		headImg : {
-			required : true
-
-		},
 		status : {
 
 			required : true
@@ -59,10 +55,6 @@ $('#sec-form').validate({
 		},
 		birthDay : {
 			required : "请输入出生日期。"
-		},
-		headImg:{
-			required: "请选择上传路径"
-		
 		},
 		status : {
 			required : "请选择状态"
@@ -112,12 +104,14 @@ $("#headImg").fileinput({
 	msgSizeTooLarge: "上传文件大小超过8mb"
 });
 
-
-/*$("#adForm_btn").click(function() {
-	if (confirm("确认要保存吗?")) {
-		if ($('#dict-form').validate().form()) {
-			$('#dict-form').submit();
-		}
-	}
-});*/
-
+$('.input-group.date').datepicker({
+    format: "yyyy-mm-dd",
+    language: "zh-CN",
+    autoclose: true,
+    startView: 1,
+    defaultViewDate : {
+    		year:1980,
+    		month:0,
+    		day:1
+    }
+});

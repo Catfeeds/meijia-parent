@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-
+<%@ taglib prefix="timestampTag" uri="/WEB-INF/tags/timestamp.tld" %>
+<%@ taglib prefix="cityNameTag" uri="/WEB-INF/tags/cityName.tld" %>	
 <html>
   <head>
 	
@@ -55,7 +56,10 @@
 		                              <th>所在城市</th>
 		                              <th>状态</th>
                                       <th >添加时间</th>
-		                              <th>更新时间</th>
+
+                                      <th >环信用户名</th>
+                                      <th >环信密码</th>
+ 
 		                              <th>操作</th>
 
                               </tr>
@@ -69,11 +73,43 @@
 							            <td>${ item.nickName}</td>
 							            <td><fmt:formatDate value="${ item.birthDay}" pattern="yyyy-MM-dd" /></td>
 							            <td><img src="${ item.headImg}"/></td>
-							            <td>${ item.cityId}</td>
-							            <td>${ item.status}</td>
-							            <td>${ item.addTime}</td>
-							            <td>${ item.updateTime}</td>							         							            
-	                                  	<td>	                                   
+							            <td>
+							            	<cityNameTag:cityname cityId="${ item.cityId }"/>
+							            </td>
+							            <td>${item.status}</td>
+							            
+							         <%-- <td>
+							         
+							            <c:choose>
+										
+										<c:when test="${item.status==0}">
+																				　　
+										    <c:set value="注册中" var="action" scope="page"/>
+										
+										</c:when>
+										
+										<c:when test="${item.status==1}">
+																				　　
+										   <c:set value="审核中" var="action" scope="page"/>
+										
+										</c:when>
+										
+										<c:otherwise>
+										
+										　    <c:set value="审核通过" var="action" scope="page"/>
+										
+										</c:otherwise>
+										</c:choose>
+										
+							            </td>
+ --%>
+							            <td>
+							                  <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
+							           	</td>	
+							           	<td>${ item.username}</td>	
+							           	<td>${ item.password}</td>	>				         							            
+	                                  	<td>	
+	                                  	    <button id="btn_update" onClick="btn_update('/sec/listForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>                                   
 		                                    <button id="btn_del" onClick="btn_del('/sec/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
 	                                  	</td>
                               </tr>
