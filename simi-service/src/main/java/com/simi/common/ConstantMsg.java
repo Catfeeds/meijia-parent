@@ -18,7 +18,7 @@ public class ConstantMsg {
 	public static String ERROR_102_MSG = "参数值非法，需为 (%s)，实际为 (%s)";
 
 	//验证码错误提示
-	public static String ERROR_999_MSG_1 = "验证码超时,请重新获取验证码";
+	public static String ERROR_999_MSG_1 = "秘书不存在";
 	public static String ERROR_999_MSG_2 = "验证码错误,请重新输入";
 	public static String ERROR_999_MSG_3 = "该手机号未曾获取过验证码";
 	public static String ERROR_999_MSG_4 = "验证码超时,请重新获取验证码";
