@@ -23,5 +23,7 @@ public interface UserRef3rdMapper {
     UserRef3rd selectByUserId(Long userId);
     
     UserRef3rd selectByPidAnd3rdType(Map<String ,Object> conditions );
+
+	int selectBySecId(Long id);
     
 }

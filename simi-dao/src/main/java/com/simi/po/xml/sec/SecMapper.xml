@@ -1,196 +1,209 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.sec.SecMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.sec.Sec" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="mobile" property="mobile" jdbcType="CHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="birth_day" property="birthDay" jdbcType="DATE" />
-    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
-    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
-    <result column="status" property="status" jdbcType="BIT" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-  </resultMap>
-  
-   <resultMap id="SecListMap" type="com.simi.vo.SecList" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="mobile" property="mobile" jdbcType="CHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
-    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id,name, mobile, nick_name, birth_day, head_img,city_id,status, add_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from sec
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <select id="selectByListPage" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from sec
-    order by id asc
-  </select>
-  <select id="selectByNameAndOtherId" resultMap="BaseResultMap"
+<mapper namespace="com.simi.po.dao.sec.SecMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.sec.Sec">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="birth_day" property="birthDay" jdbcType="DATE" />
+		<result column="head_img" property="headImg" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
+		<result column="status" property="status" jdbcType="BIT" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+
+	<resultMap id="SecListMap" type="com.simi.vo.SecList">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+		<result column="head_img" property="headImg" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,name, mobile, nick_name, birth_day, head_img,city_id,status, add_time,
+		update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sec
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByListPage" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sec
+		order by id asc
+	</select>
+	<select id="selectByNameAndOtherId" resultMap="BaseResultMap"
 		parameterType="java.util.HashMap">
 		select
 		<include refid="Base_Column_List" />
 		from sec
 		where 1=1
 
-		<if test="name != null" >
+		<if test="name != null">
 			and name = #{name,jdbcType=VARCHAR}
 		</if>
 
-		<if test="id != null" >
-		     and id != #{id,jdbcType=NUMERIC}
-		 </if>
-		 limit 1
+		<if test="id != null">
+			and id != #{id,jdbcType=NUMERIC}
+		</if>
+		limit 1
 	</select>
-	<select id="selectByMobile" resultMap="SecListMap"  >
-    select 
-    id,name,mobile,nick_name,city_id,head_img
-    from sec
-    where mobile = #{mobile,jdbcType=CHAR}
-  </select>
-      <select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-	    select 
-	    <include refid="Base_Column_List" />
-	    from sec
-	    where sec_id = #{secId,jdbcType=NUMERIC}
-	  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from sec
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.sec.Sec" >
-    insert into sec (id,name, mobile, 
-      nick_name, birth_day, head_img, city_id,
-      status, add_time, update_time
-      )
-    values (#{id,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, 
-      #{nickName,jdbcType=VARCHAR}, #{birthDay,jdbcType=DATE}, #{headImg,jdbcType=VARCHAR}, #{cityId,jdbcType=NUMERIC},
-      #{status,jdbcType=BIT}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.sec.Sec" >
-    insert into sec
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="nickName != null" >
-        nick_name,
-      </if>
-      <if test="birthDay != null" >
-        birth_day,
-      </if>
-      <if test="headImg != null" >
-        head_img,
-      </if>
-       <if test="cityId != null" >
-        city_id,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="nickName != null" >
-        #{nickName,jdbcType=VARCHAR},
-      </if>
-      <if test="birthDay != null" >
-        #{birthDay,jdbcType=DATE},
-      </if>
-      <if test="headImg != null" >
-        #{headImg,jdbcType=VARCHAR},
-      </if>
-       <if test="cityId != null" >
-        #{cityId,jdbcType=NUMERIC},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=BIT},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.sec.Sec" >
-    update sec
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null" >
-        mobile = #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="nickName != null" >
-        nick_name = #{nickName,jdbcType=VARCHAR},
-      </if>
-      <if test="birthDay != null" >
-        birth_day = #{birthDay,jdbcType=DATE},
-      </if>
-      <if test="headImg != null" >
-        head_img = #{headImg,jdbcType=VARCHAR},
-      </if>
-       <if test="cityId != null" >
-        city_id = #{cityId,jdbcType=NUMERIC},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=BIT},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.sec.Sec" >
-    update sec
-    set 
-      name = #{name,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=CHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
-      birth_day = #{birthDay,jdbcType=DATE},
-      head_img = #{headImg,jdbcType=VARCHAR},
-      city_id = #{cityId,jdbcType=NUMERIC},
-      status = #{status,jdbcType=BIT},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+	<select id="selectByMobile" resultMap="SecListMap">
+		select
+		id,name,mobile,nick_name,city_id,head_img
+		from sec
+		where mobile = #{mobile,jdbcType=CHAR}
+	</select>
+	<select id="selectVoBySecId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sec
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sec
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.sec.Sec">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into sec (id,name, mobile,
+		nick_name, birth_day, head_img, city_id,
+		status, add_time, update_time
+		)
+		values (#{id,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR},
+		#{mobile,jdbcType=CHAR},
+		#{nickName,jdbcType=VARCHAR}, #{birthDay,jdbcType=DATE}, #{headImg,jdbcType=VARCHAR},
+		#{cityId,jdbcType=NUMERIC},
+		#{status,jdbcType=BIT}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.sec.Sec">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into sec
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="birthDay != null">
+				birth_day,
+			</if>
+			<if test="headImg != null">
+				head_img,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="birthDay != null">
+				#{birthDay,jdbcType=DATE},
+			</if>
+			<if test="headImg != null">
+				#{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=NUMERIC},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=BIT},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.sec.Sec">
+		update sec
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="birthDay != null">
+				birth_day = #{birthDay,jdbcType=DATE},
+			</if>
+			<if test="headImg != null">
+				head_img = #{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=NUMERIC},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=BIT},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.sec.Sec">
+		update sec
+		set
+		name = #{name,jdbcType=VARCHAR},
+		mobile = #{mobile,jdbcType=CHAR},
+		nick_name = #{nickName,jdbcType=VARCHAR},
+		birth_day = #{birthDay,jdbcType=DATE},
+		head_img = #{headImg,jdbcType=VARCHAR},
+		city_id = #{cityId,jdbcType=NUMERIC},
+		status = #{status,jdbcType=BIT},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

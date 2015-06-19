@@ -11,9 +11,9 @@ import com.simi.vo.SecList;
 public interface SecMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Sec record);
+    Long insert(Sec record);
 
-    int insertSelective(Sec record);
+    Long insertSelective(Sec record);
 
     Sec selectByPrimaryKey(Long id);
 
@@ -27,7 +27,7 @@ public interface SecMapper {
 
 	SecList selectByMobile(String mobile);
 
-	<UserViewVo> List<UserViewVo> selectVoBySecId(int secId);
+	Sec selectVoBySecId(Long id);
 	
 	
 	

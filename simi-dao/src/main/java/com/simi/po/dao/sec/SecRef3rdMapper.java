@@ -1,6 +1,8 @@
 package com.simi.po.dao.sec;
 
+import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
+import com.simi.po.model.user.UserRef3rd;
 
 
 
@@ -18,4 +20,7 @@ public interface SecRef3rdMapper {
     int updateByPrimaryKey(SecRef3rd record);
 
 	SecRef3rd selectBySecId(Long secId);
+
+	int updateByPrimaryKeySelective(Sec sec);
+
 }
