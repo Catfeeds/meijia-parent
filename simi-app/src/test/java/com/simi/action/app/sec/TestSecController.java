@@ -26,7 +26,8 @@ public class TestSecController extends JUnitActionBase{
 
      	MockHttpServletRequestBuilder postRequest = post(url);
 	    postRequest = postRequest.param("mobile", "18249516801");
-	    postRequest = postRequest.param("sms_token", "550478");
+	    postRequest = postRequest.param("sms_token", "594988");
+	    postRequest = postRequest.param("login_from", "1");
 	
 	  
 	    ResultActions resultActions = mockMvc.perform(postRequest);
