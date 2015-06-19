@@ -2,6 +2,7 @@ var host = window.location.host;
 var appName = "simi/app";
 var localUrl = "http://" + host;
 var siteAPIPath = localUrl + "/" + appName; //正式
+var localPath = "http://localhost:8080/simi/app"//测试
 
 // $(function(){
     // if(supports_html5_storage()){}
