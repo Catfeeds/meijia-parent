@@ -119,19 +119,20 @@ public class SecController extends BaseController{
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-/*	@RequestMapping(value = "get_users", method = RequestMethod.POST)
+
+	@RequestMapping(value = "get_users", method = RequestMethod.POST)
 	public AppResultData<Object> getUsers(
 			@RequestParam("sec_id") Long secId,
-			@RequestParam("mobile") String mobile,
+			@RequestParam("mobile") String mobile
 	
-			@RequestParam("im_username")  String imUsername,
+			/*@RequestParam("im_username")  String imUsername,
 			@RequestParam("im_password")  String imPassword,
 			@RequestParam("senior_range")  String seniorRange,
 			@RequestParam("is_senior")  short isSenior,
 			@RequestParam("im_senior_username")  String imSeniorUsername,
 			@RequestParam("im_senior_nickname")  String imSeniorNickname,
 			@RequestParam("im_robot_username")  String imRobotUsername,
-			@RequestParam("im_robot_nickname")  String imRobotNickname) throws IllegalAccessException, InvocationTargetException {
+			@RequestParam("im_robot_nickname")  String imRobotNickname*/) throws IllegalAccessException, InvocationTargetException {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
@@ -142,7 +143,7 @@ public class SecController extends BaseController{
 					ConstantMsg.ERROR_999_MSG_1, "");
 			return result;
 		} 		
-		List<UserViewVo> vo =userRefSecService.selectVoByUserId(userReSec.getUserId());	
+		//List<UserViewVo> vo =userRefSecService.selectVoByUserId(userReSec.getUserId());	
 			
 		Users u =userService.selectVoByUserId(userReSec.getUserId());	
 		
@@ -159,29 +160,29 @@ public class SecController extends BaseController{
 		vo.setAddFrom(u.getAddFrom());
 		vo.setAddTime(u.getAddTime());
 		vo.setUser_id(userReSec.getUserId());
-		vo.setSeniorRange(seniorRange);
-		vo.setIsSenior(isSenior);
-		vo.setImSecUsername(imSeniorUsername);
-		vo.setImSecNickname(imSeniorNickname);
-		vo.setImUsername(imUsername);
-		vo.setImPassword(imPassword);
-		vo.setImRobotNickname(imRobotNickname);
-		vo.setImRobotUsername(imRobotUsername);
+		vo.setSeniorRange(vo.getSeniorRange());
+		vo.setIsSenior(vo.getIsSenior());
+		vo.setImSecUsername(vo.getImSecUsername());
+		vo.setImSecNickname(vo.getImSecNickname());
+		vo.setImUsername(vo.getImUsername());
+		vo.setImPassword(vo.getImPassword());
+		vo.setImRobotNickname(vo.getImRobotNickname());
+		vo.setImRobotUsername(vo.getImRobotUsername());
 		
 		 result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);
 		return result;
 	}
-	*//**
+	/**
 	 * 秘书信息修改 
 	 * @param secId
 	 * @param mobile
 	 * @return
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
-	 *//*
+	 */
 	@RequestMapping(value = "get_users", method = RequestMethod.POST)
-	public AppResultData<Object> getUsers(
+	public AppResultData<Object> alterSec(
 			@RequestParam("sec_id") Long secId,		
 			@RequestParam(value = "name", required = false, defaultValue="") String name,
 			@RequestParam(value = "nick_name", required = false, defaultValue="") String nickName,
@@ -202,7 +203,31 @@ public class SecController extends BaseController{
 			return result;
 
 	}
-*/
+	/**
+	 * 秘书信息展现
+	 * @param secId
+	 * @param mobile
+	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	@RequestMapping(value = "get_secinfo", method = RequestMethod.POST)
+	public AppResultData<Object> getSec(
+			@RequestParam("sec_id") Long secId,		
+			@RequestParam("mobile") String mobile	
+			){
+			
+			AppResultData<Object> result = new AppResultData<Object>(
+					Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
+			
+             Sec sec = secService.selectVoBySecId(secId);
+           
+             
+			result = new AppResultData<Object>(
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+			return result;
+
+	}
 
 
 }
