@@ -1,7 +1,6 @@
 $(function(){
-    var  url = location.href;
- alert(url+"--url");
-   
+	
+	alert(siteAPIPath+"url");
     var secId = 1;
     var mobile = 13810002890;
     //获取用户消息列表
@@ -13,7 +12,7 @@ $(function(){
 function getUserList(secId,mobile){
     $.ajax({
         type:"POST",
-        url:url+"/simi/app/user/get_users.json",
+        url:siteAPIPath+"/user/get_users.json",
         dataType:"json",
         cache:false,
         data:"sec_id="+secId+"&mobile="+mobile,
