@@ -27,13 +27,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.alibaba.druid.util.StringUtils;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.sec.Sec;
+import com.simi.po.model.sec.SecRef3rd;
+import com.simi.po.model.user.UserRef3rd;
 import com.simi.service.sec.SecService;
 
 
@@ -45,6 +51,9 @@ public class SecController extends BaseController{
 	@Autowired
 	private SecService secService;
 	
+
+	
+
 	/**秘书表单列表显示
 	 * @param request
 	 * @param model
@@ -88,6 +97,12 @@ public class SecController extends BaseController{
 		}
 		
 		Sec sec=secService.initSec();
+		
+		if (id != null && id > 0) {
+			sec = secService.selectVoBySecId(id);
+
+		}
+		
 		model.addAttribute("secModel", sec);
 	
 		return "sec/listForm";
@@ -140,25 +155,52 @@ public class SecController extends BaseController{
 
 		                     FileOutputStream out = new FileOutputStream(path + "/" + newFileName1);
 		                     ImageIO.write(bufferedImage1, "jpg",out);//把图片输出
-		                }
-		            }
+		             }
+		          }
 		        }
- 
-		String birthDay = request.getParameter("birthDay");
-		SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date da = sp.parse(birthDay);
-		
-		String status = request.getParameter("status");
-		
-		sec.setBirthDay(da);
-		sec.setId(Long.valueOf(request.getParameter("id")));
-		sec.setAddTime(TimeStampUtil.getNow() / 1000);
-		sec.setUpdateTime(0L);
-		sec.setStatus(Boolean.valueOf(status));
-		//sec.setStatus(null);
-		secService.insertSelective(sec);
-	        
-		return "redirect:list";
+				if (id != null && id > 0) {
+					sec.setAddTime(TimeStampUtil.getNow() / 1000);
+					sec.setUpdateTime(TimeStampUtil.getNow() / 1000);
+					
+					String newNickName =sec.getNickName();
+					Sec secOld=secService.selectVoBySecId(sec.getId());
+					String oldNickName = secOld.getNickName();
+										
+					secService.updateByPrimaryKeySelective(sec);
+												
+					if (!StringUtils.isEmpty(newNickName) && !newNickName.equals(oldNickName)) {
+						SecRef3rd secRef3rd = secService.selectBySecId(sec.getId());
+						//如果该账号未绑定环信账号
+						if(secRef3rd!=null){
+							String username = secRef3rd.getUsername();
+							ObjectNode json2 = JsonNodeFactory.instance.objectNode();
+							json2.put("nickname", newNickName);
+							EasemobIMUsers. modifyIMUserNickName(username, json2);
+						}
+					
+					}
+				} else {
+					
+					String birthDay = request.getParameter("birthDay");
+					SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd");
+					java.util.Date da = sp.parse(birthDay);
+					
+					String status = request.getParameter("status");
+					
+					sec.setBirthDay(da);
+					sec.setId(Long.valueOf(request.getParameter("id")));
+					sec.setAddTime(TimeStampUtil.getNow() / 1000);
+					sec.setUpdateTime(0L);
+					sec.setStatus(Boolean.valueOf(status));
+							
+					secService.insertSelective(sec);
+				
+					
+				}    
+				
+                
+				secService.genImSec(sec);		
+					return "redirect:list";
 	}
 	/**
 	 * 根据id删除记录
