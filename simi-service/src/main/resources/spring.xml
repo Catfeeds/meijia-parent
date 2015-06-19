@@ -20,7 +20,7 @@
     									  com.simi.service.impl.dict.**,
     									  com.simi.service.impl.order.**,
     									  com.simi.service.impl.user.**,
-    									  com.simi.service.impl.admin.**
+    									  com.simi.service.impl.admin.**,
     									  com.simi.service.impl.dispatch.**">
     	<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
   		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />

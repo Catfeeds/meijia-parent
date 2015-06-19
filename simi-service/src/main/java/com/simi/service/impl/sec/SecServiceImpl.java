@@ -1,12 +1,13 @@
 package com.simi.service.impl.sec;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,12 +23,10 @@ import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
-import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.Users;
 import com.simi.service.sec.SecService;
 import com.simi.vo.SecList;
 import com.simi.vo.sec.SecVo;
-import com.simi.vo.user.UserViewVo;
+
 
 
 
@@ -38,9 +37,10 @@ public class SecServiceImpl implements SecService{
 	private SecRef3rdMapper secRef3rdMapper;
 	@Autowired
 	private SecMapper secMapper;
-
+	
+	
 	@Override
-	public int insertSelective(Sec record) {
+	public Long insertSelective(Sec record) {
 		
 	   return secMapper.insert(record);
 		
@@ -58,14 +58,39 @@ public class SecServiceImpl implements SecService{
          List<Sec> listNew = new ArrayList<Sec>();
 	        for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 				Sec sec = (Sec) iterator.next();
-				SecVo dicAdNew = new SecVo();
+				
 				 String imgUrl = sec.getHeadImg();
 	             String extensionName = imgUrl.substring(imgUrl.lastIndexOf("."));
 	             String beforName = imgUrl.substring(0,(imgUrl.lastIndexOf(".")));
 	             String newImgUrl = beforName+"_small"+extensionName;
 	             sec.setHeadImg(newImgUrl);
-	             listNew.add(sec);
+	             
+	             SecVo secNew = new SecVo();  
+	             try {
+					BeanUtils.copyProperties(secNew, sec);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	             
+	             SecRef3rd  secRef3rd =secRef3rdMapper.selectBySecId(sec.getId());
+	             if (secRef3rd==null) {            
+		             secNew.setUsername("");
+		             secNew.setPassword("");	 
+		             secNew.setImgUrlNew("");					
+				}else {
+		             secNew.setUsername(secRef3rd.getUsername());
+		             secNew.setPassword(secRef3rd.getPassword());
+		             secNew.setImgUrlNew("");
+				}
+	             
+	             listNew.add(secNew);
+	             
 			}
+
 	        for(int i = 0; i < list.size(); i++) {
 	       	 if (listNew.get(i) != null) {
 	       		 list.set(i, listNew.get(i));
@@ -89,11 +114,17 @@ public class SecServiceImpl implements SecService{
 		}
 
 		//如果不存在则新增.并且存入数据库
-		String username = "yggj_user_"+ sec.getId().toString();
+		
+		String username = "simi-sec-"+ sec.getId().toString();
 		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
+		String nickName = sec.getNickName();
 		ObjectNode datanode = JsonNodeFactory.instance.objectNode();
         datanode.put("username", username);
         datanode.put("password", defaultPassword);
+        if (sec.getName() != null && sec.getName().length() > 0) {
+        	datanode.put("nickname", sec.getName());
+        }
+        //datanode.put("nickname", nickName);
         ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
 
         JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
@@ -139,7 +170,7 @@ public class SecServiceImpl implements SecService{
 	@Override
 	public Sec selectByUserNameAndOtherId(String name, Long id) {
 		HashMap map = new HashMap();
-		map.put("username", name);
+		map.put("name", name);
 		map.put("id", id);
 		return secMapper.selectByNameAndOtherId(map);
 	}
@@ -150,10 +181,24 @@ public class SecServiceImpl implements SecService{
 		
 	}
 	@Override
-	public List<UserViewVo> selectVoBySecId(int secId) {
-		List<UserViewVo> list = secMapper.selectVoBySecId(secId);
-		return list;
-	
+	public Sec selectVoBySecId(Long id) {
+		
+		return secMapper.selectVoBySecId(id);
 	}
+	@Override
+	public int updateByPrimaryKeySelective(Sec record) {
+	
+		return secMapper.updateByPrimaryKeySelective(record);
+	}
+	@Override
+	public SecRef3rd selectBySecId(Long secId) {
+		return secRef3rdMapper.selectBySecId(secId);
+	}
+	/*@Override
+	public Sec selectById(Long id) {
+		
+		return secMapper.selectByPrimaryKey(id);
+	}*/
+
 
 }
