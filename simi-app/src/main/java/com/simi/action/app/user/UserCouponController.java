@@ -158,7 +158,7 @@ public class UserCouponController extends BaseController {
 		// 如果优惠券类型为充值卡充值，则直接进行用户充值，并且返回提示信息.
 		if (dictCoupon.getCouponType().equals(Constants.COUPON_TYPE_1)) {
 			//先进行用户的账号明细记录
-			UserDetailPay userDetailPay = userDetailPayService.initUserDetailDefault();
+			UserDetailPay userDetailPay = userDetailPayService.initUserDetail();
 			userDetailPay.setMobile(mobile);
 			userDetailPay.setUserId(u.getId());
 			userDetailPay.setOrderType((short) 3);

@@ -146,6 +146,40 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
+	
+	/**
+	 * 用户明细- 会员卡充值明细
+	 */
+	@Override
+	public UserDetailPay addUserDetailPayForOrderCard(
+			Users user, 
+			OrderCards orderCard, 
+			String tradeStatus,
+			String tradeNo, 
+			String payAccount) {
+		
+		UserDetailPay userDetailPay = new UserDetailPay();
+		
+		userDetailPay.setUserId(user.getId());
+		userDetailPay.setMobile(user.getMobile());
+		userDetailPay.setOrderId(orderCard.getId());
+		userDetailPay.setOrderNo(orderCard.getCardOrderNo());
+
+		userDetailPay.setOrderType(Constants.ORDER_TYPE_0);
+		userDetailPay.setPayType(orderCard.getPayType());
+		userDetailPay.setOrderMoney(orderCard.getCardMoney());
+		userDetailPay.setOrderPay(orderCard.getCardPay());
+		
+		//trade_no
+		userDetailPay.setPayAccount(payAccount);
+		userDetailPay.setTradeNo(tradeNo);
+		userDetailPay.setTradeStatus(tradeStatus);
+		
+		userDetailPay.setAddTime(TimeStampUtil.getNowSecond());
+		
+		userDetailPayMapper.insert(userDetailPay);
+		return userDetailPay;
+	}
 
 
 

@@ -39,20 +39,28 @@ public class UserCardController extends BaseController {
 	@RequestMapping(value = "card_buy", method = RequestMethod.POST)
 	public AppResultData<Object> cardBuy(
 			@RequestParam("userId")	Long userId,
-			@RequestParam("card_type") int card_type,
-			@RequestParam("pay_type")  int pay_type) {
+			@RequestParam("card_type") Long cardType,
+			@RequestParam("pay_type")  Short payType) {
 //	    操作表 order_cards
 //	    根据card_type 传递参数从表 dict_card_type 获取相应的金额
 
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");		
+		
 		Users users = usersService.getUserById(userId);
-		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(Long.valueOf(card_type));
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (users == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}		
+		
+		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(cardType);
 
-		OrderCards record = orderCardsService.initOrderCards(users.getMobile(), card_type, users, dictCardType, pay_type);
+		OrderCards record = orderCardsService.initOrderCards(users, cardType, dictCardType, payType);
 		orderCardsService.insert(record);
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,
-				record);
+		result.setData(record);
 		return result;
 	}
 }

@@ -29,6 +29,17 @@ public interface UserDetailPayService {
 
 	UserDetailPay initUserDetail();
 
-	UserDetailPay addUserDetailPayForOrder(Users user, Orders order, OrderPrices orderPrice, String tradeStatus, String tradeNo, String payAccount);
+	UserDetailPay addUserDetailPayForOrder(Users user, 
+										   Orders order, 
+										   OrderPrices orderPrice, 
+										   String tradeStatus, 
+										   String tradeNo, 
+										   String payAccount);
+
+	UserDetailPay addUserDetailPayForOrderCard(Users user, 
+											   OrderCards orderCard, 
+											   String tradeStatus, 
+											   String tradeNo, 
+											   String payAccount);
 
 }

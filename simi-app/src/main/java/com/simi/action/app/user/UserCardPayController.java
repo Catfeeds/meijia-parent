@@ -56,7 +56,7 @@ public class UserCardPayController extends BaseController {
 	 */
 	@RequestMapping(value = "card_online_pay", method = RequestMethod.POST)
 	public AppResultData<Object> cardOnlinePay(
-		@RequestParam(value = "user_id", defaultValue = "0")Long userId, 
+		@RequestParam(value = "user_id", defaultValue = "0") Long userId, 
 		@RequestParam("card_order_no") 	String cardOrderNo,
 		@RequestParam("pay_type") 			Short payType,
 		@RequestParam("notify_id") 			String notifyId,
@@ -65,41 +65,31 @@ public class UserCardPayController extends BaseController {
 		@RequestParam("trade_status") 		String tradeStatus,
 		@RequestParam(value = "pay_account", required = false, defaultValue="") String payAccount) {
 
-		AppResultData<Object> result_success = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,
-				"");
-
-		AppResultData<Object> result_fail = new AppResultData<Object>(
-				Constants.ERROR_999, ConstantMsg.ORDER_PAY_NOT_SUCCESS_MSG,
-				"");
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,"");
 
 		//判断如果不是正确支付状态，则直接返回.
 		Boolean paySuccess = OneCareUtil.isPaySuccess(tradeStatus);
 		if (paySuccess == false )  {
-			return result_fail;
+			return result;
 		}
 
-		OrderCards orderCards = orderCardsService
-				.selectByOrderCardsNo(cardOrderNo);
+		OrderCards orderCards = orderCardsService.selectByOrderCardsNo(cardOrderNo);
 		Long updateTime = TimeStampUtil.getNow() / 1000;
 
-		//如果mobile没有参数或者等于0,则用orderCards 获得
-		if (userId.equals("0") || userId.equals("") || userId == null) {
-			userId = orderCards.getUserId();
-		}
+		userId = orderCards.getUserId();
+		
 
 		//如果已经付款，则直接返回
-		if (orderCards != null && orderCards.getOrderStatus().equals(Short.valueOf("1"))) {
-			return result_success;
+		if (orderCards != null && orderCards.getOrderStatus().equals(Constants.PAY_STATUS_0)) {
+			return result;
 		}
-
+		
+		orderCards.setPayType(payType);
+		orderCards.setOrderStatus(Constants.PAY_STATUS_1);
 		// 更新orders,orderPrices,Users,插入消费明细UserDetailPay
-		if (orderCardsService.updateOrderByAlipay(orderCards, updateTime,
-				Constants.PAY_STATUS_1, payType, tradeNo, tradeStatus, payAccount) > 0) {
-			return result_success;
-		} else {
-			return result_fail;
-		}
+		orderCardsService.updateOrderByOnlinePay(orderCards, tradeNo, tradeStatus, payAccount);
+		
+		return result;
 
 	}
 }
