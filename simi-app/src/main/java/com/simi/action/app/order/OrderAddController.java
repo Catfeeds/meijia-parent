@@ -163,7 +163,7 @@ public class OrderAddController extends BaseController {
         String targetTypeus = "users";
         ObjectNode ext = factory.objectNode();
         ArrayNode targetusers = factory.arrayNode();
-        targetusers.add("toIm");
+        targetusers.add(toIm);
         
         // 给用户发一条透传消息
         ObjectNode cmdmsg = factory.objectNode();

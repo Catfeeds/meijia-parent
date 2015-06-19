@@ -20,7 +20,7 @@
     from sec_ref_3rd
     where id = #{id,jdbcType=NUMERIC}
   </select>
-  <select id="selectBySecIdForIM" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectBySecIdForIm" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from sec_ref_3rd
