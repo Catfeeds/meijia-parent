@@ -108,19 +108,20 @@ function onLoginSuccess(data, status){
   }
   //登录成功后记录用户有关信息
   localStorage['user_phone'] = data.data.mobile;
-  localStorage['sec_id']=data.data.id;
-  localStorage['user_type']=data.data.user_type;
-  localStorage['user_msge_page']=1;
+  localStorage['id']=data.data.id;
+ alert(localStorage+"--");
+  /*localStorage['user_type']=data.data.user_type;
+  localStorage['user_msge_page']=1;*/
   
 
 
   //登录后是否立刻获取地址?还是加上吧,当用户修改常用地址后,本地存储用户常用地址，小区id，城市id。
 
   //跳
-  if (typeof queryVal('go')!="null" || queryVal('go')!=''){
+ /* if (typeof queryVal('go')!="null" || queryVal('go')!=''){
     var go = 'wx-'+queryVal('go')+'.html';
     window.location.href=go;
-  }
+  }*/
 }
 
 function onLoginError(data, status){
