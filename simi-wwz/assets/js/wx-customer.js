@@ -39,7 +39,7 @@ function onListSuccess(data, status){
     var tmpA = [];
     
     tmpA.push(" <li><a href='wx-customer-info.html'>");
-    tmpA.pusht("<img src="+item.headImg+"alt='...' width='50' height='50' class='am-radius'>"+item.name+"</a></li>");
+    tmpA.push("<img src="+item.headImg+"alt='...' width='50' height='50' class='am-radius'>"+item.name+"</a></li>");
     
    /* tmpA.push("<li class='am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left'> ");
     tmpA.push("<div class='am-u-sm-4 am-list-thumb'> ");
