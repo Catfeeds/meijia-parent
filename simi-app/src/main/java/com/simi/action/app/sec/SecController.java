@@ -2,6 +2,7 @@ package com.simi.action.app.sec;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -89,19 +90,20 @@ public class SecController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 		
-
+		SecList sec = secService.selectByMobile(mobile);
+		
        if (mobile.trim().equals("18610807136") && sms_token.trim().equals("000000")) {
-    	   
+    	   /*
     		SecCeShi secCeShi= new SecCeShi();
 			secCeShi.setId((long)1);
-			secCeShi.setMobile("13810002890");
+			secCeShi.setMobile("13810002890");*/
     	    result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, secCeShi);
+				ConstantMsg.SUCCESS_0_MSG, sec);
 			return result;
 			
 		}else {	
 			
-		SecList sec = secService.selectByMobile(mobile);
+		
 		if (sec == null) {
 			
 			result = new AppResultData<Object>(Constants.ERROR_999,
@@ -264,7 +266,7 @@ public class SecController extends BaseController {
 			@RequestParam(value = "birth_day", required = false, defaultValue = "") String birthDay,
 			@RequestParam(value = "city_id", required = false, defaultValue = "") Long cityId,
 			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg) {
-
+		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
 
@@ -276,11 +278,60 @@ public class SecController extends BaseController {
 			return result;
 		}
 		
-		//if (!StringUtils.isEmpty(newNickName) && !newNickName.equals(oldNickName)) {
-		SecInfoVo secInfoVo=new SecInfoVo();
-
+		
+		if (!StringUtils.isEmpty(name) && !name.equals(sec.getName())) {
+			
+			sec.setName(name);
+			
+		}
+        if (!StringUtils.isEmpty(nickName) && !nickName.equals(sec.getNickName())) {
+        	
+        	sec.setNickName(nickName);
+			
+		}
+		if (!StringUtils.isEmpty(sex) && !sex.equals(sec.getSex())) {
+		        	
+			sec.setSex(sex);
+					
+				}
+		/*if (!StringUtils.isEmpty(birthDay) && !birthDay.equals(sec.getBirthDay())) {
+			
+			    sec.setBirthDay(birthDay);
+			
+		}*/
+		if (!cityId.equals("") && !cityId.equals(sec.getCityId())) {
+			sec.setCityId(cityId);
+		}
+		
+          if (!StringUtils.isEmpty(headImg) && !headImg.equals(sec.getHeadImg())) {
+			
+        	  sec.setHeadImg(headImg);			
+		}
+          
+       
+        
+        secService.updateByPrimaryKeySelective(sec);
+        
+        SecInfoVo secInfoVo=new SecInfoVo();
+        
+        try {
+  			BeanUtils.copyProperties(secInfoVo, sec);
+  		} catch (IllegalAccessException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		} catch (InvocationTargetException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+        
+        secInfoVo.setAddTime(TimeStampUtil.getNow()/1000);
+        
+        DictCity city=cityService.selectByCityId(secInfoVo.getCityId());
+		
+		secInfoVo.setCityName(city.getName());
+        
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, "");
+				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 		return result;
 
 	}
@@ -310,8 +361,9 @@ public class SecController extends BaseController {
 		List<OrderViewVo> orderViewVo = orderQueryService.selectBySecId(secId, page, Constants.PAGE_MAX_NUMBER);
 		
 
-         result.setData(orderList);
+        result.setData(orderList);
 		
 		return result;
 }
+	
 }
