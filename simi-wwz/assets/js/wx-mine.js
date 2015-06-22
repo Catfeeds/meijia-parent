@@ -4,16 +4,16 @@ $(function(){
         return;
     }
 
-    var userPhone = localStorage['user_phone'];
+    var secMobile = localStorage['sec_mobile'];
     var secId = localStorage['sec_id'];
 
-    //获取账户余额等信息
+    //获取秘书的相关信息
     $.ajax({
         type : "POST",
         url  : siteAPIPath+"sec/get_secinfo.json",
         dataType: "json",
         cache : false,
-        data : {"mobile":userPhone,"sec_id":1},
+        data : {"mobile":secMobile,"sec_id":secId},
         success : onSecInfoSuccess,
         error : onSecInfoError
     });
@@ -43,7 +43,7 @@ function onSecInfoSuccess(data, status){
   }
   $("#user_phone").text(data.data.mobile);
   var yuan = data.data.rest_money+'元';
-  $("#user_money").text("0");
+  $("#user_money").text("0元");
 }
 
 function onSecInfoError(data, status){

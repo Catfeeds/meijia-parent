@@ -1,11 +1,13 @@
 $(function(){
 	
+	 if(!isLogin()){
+	        window.location.href="wx-login.html?go=mine";
+	        return;
+	    }
 	
-	
-	
-    var secId = 1;
-//    var secId = localStorage['sec_id'];
-    var mobile =  localStorage['user_phone'];
+   // var secId = 1;
+    var secId = localStorage['sec_id'];
+    var mobile =  localStorage['sec_mobile'];
     //获取用户消息列表
     getUserList(secId,mobile);
 
