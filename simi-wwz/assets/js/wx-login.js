@@ -116,8 +116,7 @@ function onLoginSuccess(data, status){
 
 
   //登录后是否立刻获取地址?还是加上吧,当用户修改常用地址后,本地存储用户常用地址，小区id，城市id。
-
-  //跳
+  
   if (typeof queryVal('go')!="null" || queryVal('go')!=''){
     var go = 'wx-'+queryVal('go')+'.html';
     window.location.href=go;

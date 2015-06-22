@@ -2,15 +2,15 @@ $(function(){
     var secId = localStorage['sec_id'];
     var mobile = localStorage['sec_mobile'];
     //获取用户消息列表
-    getUserList(secId,mobile);
+    getSecInfo(secId,mobile);
 
 }());
 
 //获取用户消息列表
-function getUserList(secId,mobile){
+function getSecInfo(secId,mobile){
     $.ajax({
         type:"POST",
-        url:siteAPIPath+"sec/get_users.json",
+        url:siteAPIPath+"sec/get_secinfo.json",
         dataType:"json",
         cache:false,
         data:"sec_id="+secId+"&mobile="+mobile,
@@ -27,26 +27,21 @@ function onListSuccess(data, status){
         alert("目前无法获取用户消息列表，请稍后再试。");*/
     return;
   }
-  var users = data.data;
-  if(users==''){
+  var sec = data.data;
+  if(sec==''){
 	$("#moreInfo").css("display","none");
   }
-  var usersList = [];
-  var addrH = '';
-  $.each(users,function(i,item){
-	  
-    var tmpA = [];
-    
-    tmpA.push(" <li><a href='wx-customer-info.html'>");
-    tmpA.push("<img src="+item.headImg+"alt='...' width='50' height='50' class='am-radius'>"+item.name+"</a></li>");
-    
-    usersList.push(tmpA.join(''));
-  });
-  if(usersList.length){
-    $('#customer_list').html(usersList.join(''));
-  }
+  $("#name").val(sec.name);
+  $("#nickName").val(sec.nickName);
+ // $("#sex").text(sec.sex);
+  $("#mobile").val(sec.mobile);
+  $("#birthDay").val(sec.birthDay);
+  $("#cityName").val(sec.cityName);
 }
-
-
 function onListError(data, status){
 }
+$("#mind_info_submit").bind("click",function(){
+	alert("表单提交");
+/*	window.location.href="wx-mine-info_edit.html";
+*/})
+

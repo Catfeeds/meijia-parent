@@ -1,9 +1,5 @@
 $(function(){
-    if(!isLogin()){
-        window.location.href="wx-login.html?go=mine";
-        return;
-    }
-
+   
     var secMobile = localStorage['sec_mobile'];
     var secId = localStorage['sec_id'];
 

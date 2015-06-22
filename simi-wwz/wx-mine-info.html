@@ -52,55 +52,39 @@
 <div class="am-g">
   <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
     <form method="post" id="baojieform" class="am-form">
-      	<div class="input-block">
-            <label for="true-user">昵称（必填）：</label>
-            <span><input type="text" id="true_user" placeholder="客户姓名"></span>
+      	
+         <div class="input-block">
+            <label for="true-phone">姓名:</label>
+            <span id="name"></span>
          </div>
          <div class="input-block">
-            <label for="true-phone">姓名（必填）：</label>
-            <span><input type="text" id="true_phone" placeholder="客户电话"></span>
+            <label for="true-phone">昵称:</label>
+            <span id="nickName"></span>
          </div>
          
-         <div class="input-block" style="width:100%;height:80px;">
-        <label for="doc-select-1" style="float:left;width:100%">性别</label>
-        <select id="service_catalog_list" style="width:100%;float:left;">
-          <option value="0">未选择...</option>
-          <option value="0">男</option>
-          <option value="0">女</option>
-         </select>
-        <span class="am-form-caret"></span>
-      </div>
+         <div class="input-block" >
+     	 <label for="true-phone">性别:</label>
+            <span id="sex"></span>
+     	 </div>
       
 	  <div class="input-block">
-            <label for="true-phone">手机号（必填）：</label>
-            <span><input type="text" id="true_phone" placeholder="客户电话"></span>
+            <label for="true-phone">手机号:</label>
+            <span id="mobile"></span>
          </div>
       
       <div class="input-block">
-        <label for="user-intro">身份证：</label>
-        <span><input type="text" id="true_phone" placeholder="身份证"></span>
+        <label for="user-intro">生日：</label>
+        <span id="birthDay"></span>
       </div>
       
       <div class="input-block">
-        <label for="user-intro">级别：</label>
-        <span><input type="text" id="true_phone" placeholder="身份证"></span>
+        <label for="user-intro">城市：</label>
+        <span id="cityName"></span>
       </div>
-      
-      <div class="input-block">
-        <label for="user-intro">积分：</label>
-        <span><input type="text" id="true_phone" placeholder="身份证"></span>
-      </div>
-
-      <div class="input-block">
-        <label for="user-intro">标签：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里...."></textarea>
-      </div>
-      
-      
       
        <input id="service_type" value="4" type="hidden" />
        
-       <div class="input-block"><button type="button" id="baojie_submit" class="am-btn am-btn-primary am-btn-block">修改并保存</button></div>
+       <div class="input-block"><button type="button" id="mine_info_edit" class="am-btn am-btn-primary am-btn-block">修改并保存</button></div>
     </form>
    </div>
 </div>
@@ -114,6 +98,6 @@
 <!--<![endif]-->
 <script src="assets/js/app.js"></script>
 <script src="assets/js/wx-site.js"></script>
-<script src="assets/js/wx-baojie.js"></script>
+<script src="assets/js/wx-mine-info.js"></script>
 </body>
 </html>
