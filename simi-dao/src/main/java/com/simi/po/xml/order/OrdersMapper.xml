@@ -87,11 +87,11 @@
 		where 1=1
 		
 		<if test="secId != null">
-			and sec_id = = #{secId,jdbcType=NUMERIC}
+			and sec_id = #{secId,jdbcType=NUMERIC}
 		</if>	
 				
 		<if test="userId != null">
-			and user_id = = #{userId,jdbcType=NUMERIC}
+			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>		
 		
 		<if test="mobile != null">
