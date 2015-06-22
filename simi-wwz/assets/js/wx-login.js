@@ -108,11 +108,9 @@ function onLoginSuccess(data, status){
   }
   //登录成功后记录用户有关信息
   localStorage['user_phone'] = data.data.mobile;
+  localStorage['sec_id']=data.data.id;
   localStorage['user_type']=data.data.user_type;
   localStorage['user_msge_page']=1;
- alert(data.data.id+"----"+data.data.mobile);
-  localStorage['sec_id']=data.data.id;
-  localStorage['sec_mobile']=data.data.mobile;
   
 
 

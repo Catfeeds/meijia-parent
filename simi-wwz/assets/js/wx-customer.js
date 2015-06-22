@@ -2,9 +2,9 @@ $(function(){
 	
 	
 	
-	alert(localStorage['sec_id']+"--"+localStorage['sec_mobile']);
+	alert(localStorage['sec_id']+"--"+ localStorage['user_phone']);
     var secId = localStorage['sec_id'];
-    var mobile = localStorage['sec_mobile'];
+    var mobile =  localStorage['user_phone'];
     //获取用户消息列表
     getUserList(secId,mobile);
 
