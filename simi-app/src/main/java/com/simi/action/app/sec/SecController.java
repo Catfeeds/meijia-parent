@@ -26,6 +26,7 @@ import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
+import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
 import com.simi.service.sec.SecService;
 import com.simi.service.user.UserBaiduBindService;
@@ -49,6 +50,10 @@ public class SecController extends BaseController {
 
 	@Autowired
 	private UsersService userService;
+	
+	
+	@Autowired
+	private CityService cityService;
 	
 	@Autowired
 	private DictService dictService;
@@ -199,7 +204,7 @@ public class SecController extends BaseController {
 	}
 
 	/**
-	 * 秘书信息展现
+	 * 秘书信息获取
 	 * 
 	 * @param secId
 	 * @param mobile
@@ -207,7 +212,7 @@ public class SecController extends BaseController {
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
-/*	@RequestMapping(value = "get_secinfo", method = RequestMethod.POST)
+	@RequestMapping(value = "get_secinfo", method = RequestMethod.POST)
 	public AppResultData<Object> getSec(
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("mobile") String mobile) {
@@ -227,12 +232,14 @@ public class SecController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//DictCity city=dictService.se
+		DictCity city=cityService.selectByCityId(secId);
+		
+		secInfoVo.setCityName(city.getName());
 		
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, "");
+				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 		return result;
 
-	}*/
+	}
 
 }

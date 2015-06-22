@@ -59,13 +59,13 @@ public class TestSecController extends JUnitActionBase{
 	
     }
 	
-/*	@Test
+	@Test
     public void testGetSec() throws Exception {
 		String url = "/app/sec/get_secinfo.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-     	postRequest = postRequest.param("sec_id", "1");
-	    postRequest = postRequest.param("mobile", "18249516801");
+     	postRequest = postRequest.param("sec_id", "2");
+	    postRequest = postRequest.param("mobile", "13701187136");
 	    
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -78,5 +78,5 @@ public class TestSecController extends JUnitActionBase{
 
 	
     }
-*/
+
 }
