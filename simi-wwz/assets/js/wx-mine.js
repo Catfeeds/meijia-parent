@@ -43,7 +43,7 @@ function onSecInfoSuccess(data, status){
   }
   $("#user_phone").text(data.data.mobile);
   var yuan = data.data.rest_money+'元';
-  $("#user_money").text(1);
+  $("#user_money").text("0");
 }
 /*
 function onSecInfoError(data, status){
