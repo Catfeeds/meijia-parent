@@ -99,6 +99,7 @@ function onSmsError(data, status){
 
 //登录后
 function onLoginSuccess(data, status){
+	console.log(data);
   if(data.status != "0"){
     if (data.status =="999")
         alert(data.msg);
