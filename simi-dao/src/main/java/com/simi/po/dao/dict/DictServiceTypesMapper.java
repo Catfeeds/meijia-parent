@@ -3,6 +3,7 @@ package com.simi.po.dao.dict;
 import java.util.HashMap;
 import java.util.List;
 
+import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictServiceTypes;
 
 public interface DictServiceTypesMapper {
@@ -25,5 +26,6 @@ public interface DictServiceTypesMapper {
     DictServiceTypes selectByName(String name);
 
     DictServiceTypes selectByNameAndOtherId(HashMap map);
+
 
 }
