@@ -48,9 +48,13 @@ public interface UsersService {
 	
 	Users selectByOpenidAndThirdType(String openid,String thirdType);
 
-	Users selectVoByUserId(Long id);
+	List<Users> selectVoByUserId(List<Long> ids);
+
+
+	Users selectVoByUserId(Long userId);
 
 	List<Users> selectByUserIds(List<Long> ids);
+
 
 
 
