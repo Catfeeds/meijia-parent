@@ -45,12 +45,12 @@ function onSecInfoSuccess(data, status){
   var yuan = data.data.rest_money+'元';
   $("#user_money").text("0");
 }
-/*
+
 function onSecInfoError(data, status){
     //console.log(data.msg);
     alert("获取账户信息出现一些问题，请稍后再试。(5)");
 }
-
+/*
 function onCardSuccess(data, status){
   if(data.status != "0"){
     if (data.status =="999")
