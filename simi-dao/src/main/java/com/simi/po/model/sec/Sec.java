@@ -10,6 +10,8 @@ public class Sec {
     private String mobile;
 
     private String nickName;
+    
+    private String sex;
 
     private Date birthDay;
 
@@ -55,7 +57,15 @@ public class Sec {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public Date getBirthDay() {
+    public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public Date getBirthDay() {
         return birthDay;
     }
 

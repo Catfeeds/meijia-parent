@@ -23,4 +23,5 @@ public interface SecRef3rdMapper {
 
 	int updateByPrimaryKeySelective(Sec sec);
 
+	SecRef3rd SelectBySecId(Long secId);
 }

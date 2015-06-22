@@ -92,8 +92,33 @@
     select 
     <include refid="Base_Column_List" />
     from users 
+    where id in
+    <foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+        #{item}
+    </foreach>
+   order by add_time asc
+  </select>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from users 
     where id = #{id,jdbcType=NUMERIC}
   </select>
+  
+ <!--   <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_addrs
+    where id in
+ 	<foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+        #{item}
+    </foreach>
+
+    order by add_time asc
+  </select> -->
 
   <!--根据Ids查询Users -->
 	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -19,7 +19,7 @@ public interface UserRefSecMapper {
 
 	<UserViewVo> List<UserViewVo> selectVoByUserId(Long userId);
 	
-	UserRefSec selectBySecId(Long secId);
+	List<UserRefSec> selectBySecId(Long secId);
 	
 	UserRefSec selectByUserId(Long userId);
 	    
