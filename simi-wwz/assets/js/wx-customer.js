@@ -29,7 +29,7 @@ function onListSuccess(data, status){
     return;
   }
   var users = data.data;
-  if(userMsg==''){
+  if(users==''){
 	$("#moreInfo").css("display","none");
   }
   var usersList = [];
