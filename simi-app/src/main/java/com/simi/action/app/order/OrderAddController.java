@@ -76,7 +76,7 @@ public class OrderAddController extends BaseController {
 			@RequestParam("service_type") Long serviceType,
 			@RequestParam("service_content") String serviceContent,
 			@RequestParam("order_pay_type") Short orderPayType,
-			@RequestParam("remarks") String remarks, 
+			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks,
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
 			@RequestParam(value = "order_pay", required = false, defaultValue = "0") BigDecimal orderPay,
 			@RequestParam(value = "service_date", required = false, defaultValue = "0") Long serviceDate,
