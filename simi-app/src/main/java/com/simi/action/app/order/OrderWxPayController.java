@@ -66,24 +66,25 @@ public class OrderWxPayController extends BaseController {
 	public AppResultData<Object> wxPre(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("mobile") String mobile, 
+			@RequestParam("user_id") Long userId, 
 			@RequestParam("order_no") String orderNo,
-			@RequestParam("order_type") String orderType) throws UnsupportedEncodingException {
+			@RequestParam("order_type") Short orderType) throws UnsupportedEncodingException {
 		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserByMobile(mobile);
+		Users u = userService.getUserById(userId);
 		
 		if (u == null) {// 判断是否为注册用户，非注册用户返回 999
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
+		String mobile = u.getMobile();
 		
 		String wxPay = "0";
 		
-		if (orderType.equals("0")) {
+		if (orderType.equals(Constants.ORDER_TYPE_0)) {
 			Orders order = orderQueryService.selectByOrderNo(orderNo);
 			
 			if (order == null) {
@@ -105,7 +106,7 @@ public class OrderWxPayController extends BaseController {
 		}
 		
 		//处理充值卡充值的情况
-		if (orderType.equals("1")) {
+		if (orderType.equals(Constants.ORDER_TYPE_1)) {
 			OrderCards orderCard = orderCardService.selectByOrderCardsNo(orderNo);
 			
 			if (orderCard == null || orderCard.getId().equals(0)) {
@@ -113,7 +114,7 @@ public class OrderWxPayController extends BaseController {
 				result.setMsg(ConstantMsg.ORDER_NO_NOT_EXIST_MG);
 				return result;
 			}
-			mobile = orderCard.getMobile();
+
 			// 订单已经支付过，不需要重复支付
 			if (orderCard.getOrderStatus()
 					.equals(Constants.PAY_STATUS_1)) {
@@ -129,21 +130,54 @@ public class OrderWxPayController extends BaseController {
 
 			wxPay = orderPayNow.toString();
 		}		
+		
+		//处理私密卡购买的情况
+		if (orderType.equals(Constants.ORDER_TYPE_2)) {
+			OrderCards orderCard = orderCardService.selectByOrderCardsNo(orderNo);
+			
+			if (orderCard == null || orderCard.getId().equals(0)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.ORDER_NO_NOT_EXIST_MG);
+				return result;
+			}
+
+			// 订单已经支付过，不需要重复支付
+			if (orderCard.getOrderStatus()
+					.equals(Constants.PAY_STATUS_1)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("订单已经支付过！");
+				return result;
+			}
+			
+			BigDecimal cardPay = orderCard.getCardPay();
+			BigDecimal p1 = new BigDecimal(100);
+			BigDecimal p2 = MathBigDeciamlUtil.mul(cardPay, p1);
+			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
+
+			wxPay = orderPayNow.toString();
+		}			
 
 		
 		
 		//测试
 		wxPay = "1";
 		
+		//基础信息
+		String appId = WxUtil.appId;
+		String mchId = WxUtil.mchId;
+		String wxKey = WxUtil.wxKey;
+		String notifyUrl = WxUtil.getNotifyUrl(orderType);
+		String openid = "";
+		
 		Map<String, Object> resultData = new HashMap<String, Object>();
 
 		String timeStamp = TimeStampUtil.getNowSecond().toString();
 		String nonceStr = WxUtil.getNonceStr();
 					
-		String openid = "";
 		
-		String appId = WxUtil.appId;
-		String notifyUrl = WxUtil.getNotifyUrl(orderType);
+		
+		
+		
 
 		// 签名参数
 		String[] s = new String[10];
@@ -155,7 +189,7 @@ public class OrderWxPayController extends BaseController {
 		s[5] = "spbill_create_ip=" + request.getRemoteAddr();
 		s[6] = "notify_url=" + notifyUrl;
 		s[7] = "trade_type=APP";
-		s[8] = "mch_id=" + WxUtil.mchId;
+		s[8] = "mch_id=" + mchId;
 		//s[9] = "openid=" + openid;
 		s[9] = "attach=" + mobile;
 		Arrays.sort(s);
@@ -163,13 +197,13 @@ public class OrderWxPayController extends BaseController {
 		for (String string : s) {
 			sign += string + "&";
 		}
-		sign = MD5Util.MD5Encode(sign + "key=" + WxUtil.wxKey, "GBK")
+		sign = MD5Util.MD5Encode(sign + "key=" + wxKey, "GBK")
 				.toUpperCase();
 
 		String xml = "";
 		xml += "<xml>";
 		xml += "<appid>" + appId + "</appid>";
-		xml += "<mch_id>" + WxUtil.mchId + "</mch_id>";
+		xml += "<mch_id>" + mchId + "</mch_id>";
 		xml += "<nonce_str>" + nonceStr + "</nonce_str>";
 		xml += "<sign>" + sign + "</sign>";
 		xml += "<body><![CDATA[" + mobile + "]]></body>";
@@ -177,7 +211,7 @@ public class OrderWxPayController extends BaseController {
 		xml += "<total_fee>" + wxPay + "</total_fee>";
 		xml += "<spbill_create_ip>" + request.getRemoteAddr()
 				+ "</spbill_create_ip>";
-		xml += "<notify_url>" + WxUtil.getNotifyUrl(orderType)
+		xml += "<notify_url>" + notifyUrl
 				+ "</notify_url>";
 		xml += "<trade_type>APP</trade_type>";
 //		xml += "<openid></openid>";
@@ -213,7 +247,7 @@ public class OrderWxPayController extends BaseController {
 			String paySign = "";
 			String b[] = new String[6];
 			b[0] = "appid=" + appId;
-			b[1] = "partnerid=" + WxUtil.mchId;
+			b[1] = "partnerid=" + mchId;
 			b[2] = "prepayid=" + prepayId;
 			b[3] = "package=Sign=WXPay";
 			b[4] = "noncestr=" + nonceStr;
@@ -222,12 +256,13 @@ public class OrderWxPayController extends BaseController {
 			for (String string : b) {
 				paySign += string + "&";
 			}
-			String f = paySign + "key=" + WxUtil.wxKey;
+			String f = paySign + "key=" + wxKey;
 			paySign = MD5Util.MD5Encode(f, "GBK").toUpperCase();
 			
+			resultData.put("userId", userId);
 			resultData.put("mobile", mobile);
-			resultData.put("appId", WxUtil.appId);
-			resultData.put("partnerId", WxUtil.mchId);
+			resultData.put("appId", appId);
+			resultData.put("partnerId", mchId);
 			resultData.put("prepayId", prepayId);
 			resultData.put("package", "Sign=WXPay");
 			resultData.put("timeStamp", timeStamp);
@@ -235,6 +270,7 @@ public class OrderWxPayController extends BaseController {
 			resultData.put("orderNo", orderNo);
 			resultData.put("sign", paySign);
 			resultData.put("signType", "MD5");
+			resultData.put("notifyUrl", notifyUrl);
 	
 			result.setData(resultData);
 		} catch (Exception e1) {
@@ -265,12 +301,22 @@ public class OrderWxPayController extends BaseController {
 	public AppResultData<Object> orderQuery(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("mobile") String mobile, 
+			@RequestParam("user_id") Long userId, 
 			@RequestParam("order_no") String orderNo,
-			@RequestParam("order_type") String orderType) throws UnsupportedEncodingException {
+			@RequestParam("order_type") Short orderType) throws UnsupportedEncodingException {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "SUCCESS");
+
+		Users u = userService.getUserById(userId);
+		
+		if (u == null) {// 判断是否为注册用户，非注册用户返回 999
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		String mobile = u.getMobile();		
 		
 		if (orderType.equals("0")) {
 			Orders order = orderQueryService.selectByOrderNo(orderNo);
@@ -291,7 +337,7 @@ public class OrderWxPayController extends BaseController {
 		}
 		
 		//处理充值卡充值的情况
-		if (orderType.equals("1")) {
+		if (orderType.equals(Constants.ORDER_TYPE_1)) {
 			OrderCards orderCard = orderCardService.selectByOrderCardsNo(orderNo);
 			
 			if (orderCard == null || orderCard.getId().equals(0)) {
@@ -300,7 +346,7 @@ public class OrderWxPayController extends BaseController {
 				result.setData("");
 				return result;
 			}
-			mobile = orderCard.getMobile();
+
 			// 订单已经支付过，不需要重复支付
 			if (orderCard.getOrderStatus()
 					.equals(Constants.PAY_STATUS_1)) {
@@ -308,41 +354,44 @@ public class OrderWxPayController extends BaseController {
 			}
 		}
 		
+		//基础信息
+		String appId = WxUtil.appId;
+		String mchId = WxUtil.mchId;
+		String wxKey = WxUtil.wxKey;
+		String notifyUrl = WxUtil.getNotifyUrl(orderType);	
+		String orderQueryUrl = WxUtil.orderQueryUrl;
+		String openid = "";
+		
 		Map<String, Object> resultData = new HashMap<String, Object>();
 
 		String timeStamp = TimeStampUtil.getNowSecond().toString();
 		String nonceStr = WxUtil.getNonceStr();
-					
-		String openid = "";
-		
-		String appId = WxUtil.appId;
-		String notifyUrl = WxUtil.getNotifyUrl(orderType);
 
 		// 签名参数
 		String[] s = new String[4];
 		s[0] = "appid=" + appId;
 		s[1] = "nonce_str=" + nonceStr;
 		s[2] = "out_trade_no=" + orderNo;
-		s[3] = "mch_id=" + WxUtil.mchId;
+		s[3] = "mch_id=" + mchId;
 		Arrays.sort(s);
 		String sign = "";
 		for (String string : s) {
 			sign += string + "&";
 		}
-		sign = MD5Util.MD5Encode(sign + "key=" + WxUtil.wxKey, "GBK")
+		sign = MD5Util.MD5Encode(sign + "key=" + wxKey, "GBK")
 				.toUpperCase();		
 
 		String xml = "";
 		xml += "<xml>";
 		xml += "<appid>" + appId + "</appid>";
-		xml += "<mch_id>" + WxUtil.mchId + "</mch_id>";
+		xml += "<mch_id>" + mchId + "</mch_id>";
 		xml += "<nonce_str>" + nonceStr + "</nonce_str>";
 		xml += "<out_trade_no>" + orderNo + "</out_trade_no>";
 		xml += "<sign>" + sign + "</sign>";		
 		xml += "</xml>";
 		
 		
-		String reqResult = HttpClientUtil.post_xml(WxUtil.orderQueryUrl, xml);		
+		String reqResult = HttpClientUtil.post_xml(orderQueryUrl, xml);		
 		try {
 			Map resultMap = XMLUtil.doXMLParse(reqResult);
 			String resultCode = resultMap.get("result_code").toString();

@@ -55,7 +55,7 @@ public class OrderPayController extends BaseController {
 	@Autowired
 	private UserDetailPayService userDetailPayService;
 
-	// 17.订单支付钱接口
+	// 17.订单支付前接口
 	/**
 	 * @param mobile true string 手机号 
 	 * @param order_id true int 订单id 

@@ -52,16 +52,16 @@ public class WxUtil {
 	public static String getCheckTokenUrl = WxConfig.getInstance().getRb().getString(
 			"wx_check_token_url");
 
-	public static String getNotifyUrl(String orderType) {
+	public static String getNotifyUrl(Short orderType) {
 		String notifyUrl = "";
 		switch (orderType) {
-			case "0" :
+			case (short)0 :
 				notifyUrl = WxConfig.getInstance().getRb().getString("wx_order_notify_url");
 				break;
-			case "1" :
+			case (short)1 :
 				notifyUrl = WxConfig.getInstance().getRb().getString("wx_ordercard_notify_url");
 				break;
-			case "2" :
+			case (short)2 :
 				notifyUrl = WxConfig.getInstance().getRb().getString("wx_ordersenior_notify_url");
 				break;
 			default :
