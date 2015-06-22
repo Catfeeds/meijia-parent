@@ -5,16 +5,17 @@ $(function(){
     }
 
     var userPhone = localStorage['user_phone'];
+    var secId = localStorage['sec_id'];
 
     //获取账户余额等信息
     $.ajax({
-        type : "GET",
+        type : "POST",
         url  : siteAPIPath+"sec/get_secinfo.json",
         dataType: "json",
         cache : false,
         data : {"mobile":userPhone,"sec_id":1},
-        success : onUserInfoSuccess,
-        error : onUserInfoError
+        success : onSecInfoSuccess,
+        error : onSecInfoError
     });
     // var order_id = localStorage[serviceType+'_order_id'];
     // var order_no = localStorage[serviceType+'_order_no'];
@@ -32,7 +33,7 @@ $(function(){
     });*/
 }());
 
-function onUserInfoSuccess(data, status){
+function onSecInfoSuccess(data, status){
   if(data.status != "0"){
     if (data.status =="999")
         alert(data.msg);
@@ -42,10 +43,10 @@ function onUserInfoSuccess(data, status){
   }
   $("#user_phone").text(data.data.mobile);
   var yuan = data.data.rest_money+'元';
-  $("#user_money").text(yuan);
+  $("#user_money").text(1);
 }
-
-function onUserInfoError(data, status){
+/*
+function onSecInfoError(data, status){
     //console.log(data.msg);
     alert("获取账户信息出现一些问题，请稍后再试。(5)");
 }
@@ -90,9 +91,9 @@ function onCardError(data, status){
     alert("获取会员卡信息出现一些问题，请稍后再试。(5)");
     return;
 }
-
+*/
 //会员卡充值购买
-function buyCard(cardID){
+/*function buyCard(cardID){
     //alert('购买'+cardID);
     var userMobile = localStorage['user_phone'];
     $.ajax({
@@ -128,4 +129,4 @@ function onBuySuccess(data, status){
 function onBuyError(){
     alert("购买会员卡出现一些问题，请稍后再试。(5)");
     return;
-}
+}*/

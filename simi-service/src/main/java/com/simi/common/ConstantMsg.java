@@ -16,6 +16,7 @@ public class ConstantMsg {
 	public static String ERROR_100_MSG = "服务器错误";
 	public static String ERROR_101_MSG = "缺失必选参数 (%s)";
 	public static String ERROR_102_MSG = "参数值非法，需为 (%s)，实际为 (%s)";
+	public static String ERROR_103_MSG = "手机号重复，修改失败";
 
 	//验证码错误提示
 	public static String ERROR_999_MSG_1 = "秘书不存在";

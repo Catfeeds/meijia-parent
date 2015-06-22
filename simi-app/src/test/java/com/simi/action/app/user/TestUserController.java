@@ -134,7 +134,8 @@ public class TestUserController extends JUnitActionBase  {
      	
      	 ResultActions resultActions  =  mockMvc.perform(MockMvcRequestBuilders.fileUpload(url)
 	            .file(multipartFile)
-	            .param("user_id","90")
+	            .param("user_id","93")
+	            .param("mobile","13146012753" )
 	            .param("name","kerry")
 	            .param("sex","男士")
 	            .contentType(MediaType.MULTIPART_FORM_DATA)

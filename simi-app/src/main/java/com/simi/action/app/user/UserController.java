@@ -329,6 +329,7 @@ public class UserController extends BaseController {
 			HttpServletRequest request,
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "name", required = false, defaultValue = "") String name,
+			@RequestParam(value = "mobile", required = false, defaultValue = "") String mobile,
 			@RequestParam(value = "sex", required = false, defaultValue = "") String sex,
 			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg)
 			throws IOException {
@@ -337,62 +338,75 @@ public class UserController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 		Users users = userService.getUserById(userId);
-		// 创建一个通用的多部分解析器.
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-				request.getSession().getServletContext());
-		if (multipartResolver.isMultipart(request)) {
-			String paths = request.getSession().getServletContext()
-					.getRealPath("/");
-			System.out.println("paths---" + paths);
-			String p = paths.substring(0, paths.lastIndexOf("\\"));
-			String path = p + File.separator + "upload" + File.separator
-					+ "users";
+		if(!StringUtil.isEmpty(mobile)){
+			Users  u  = userService.getUserByMobile(mobile);
+			//如果通过手机号查出的用户Id和userId相同则可以进行用户信息修改
+			if(u !=null &&(u.getId() == userId)){
+				//修改手机号
+				 users.setMobile(mobile);
+				// 创建一个通用的多部分解析器.
+				CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+						request.getSession().getServletContext());
+				if (multipartResolver.isMultipart(request)) {
+					String paths = request.getSession().getServletContext()
+							.getRealPath("/");
+					System.out.println("paths---" + paths);
+					String p = paths.substring(0, paths.lastIndexOf("\\"));
+					String path = p + File.separator + "upload" + File.separator
+							+ "users";
+					// 判断 request 是否有文件上传,即多部分请求...
+					MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+					Iterator<String> iter = multiRequest.getFileNames();
+					while (iter.hasNext()) {
+						MultipartFile file = multiRequest.getFile(iter.next());
+						if (file != null && !file.isEmpty()) {
 
-			// 判断 request 是否有文件上传,即多部分请求...
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-
-					String fileName = file.getOriginalFilename();
-					String extensionName = fileName.substring(fileName
-							.lastIndexOf(".") + 1);
-					// 新的图片文件名 = 获取时间戳+随机六位数+"."图片扩展名
-					String before = TimeStampUtil.getNow()
-							+ String.valueOf(RandomUtil.randomNumber());
-					String newFileName = String.valueOf(before + "."
-							+ extensionName);
-					// 获取系统发布后upload路径
-					FileUtils.copyInputStreamToFile(file.getInputStream(),
-							new File(path, newFileName));
-					String headImgs = "/simi-app/upload/users/" + newFileName;
-					users.setHeadImg(headImgs);
+							String fileName = file.getOriginalFilename();
+							String extensionName = fileName.substring(fileName
+									.lastIndexOf(".") + 1);
+							// 新的图片文件名 = 获取时间戳+随机六位数+"."图片扩展名
+							String before = TimeStampUtil.getNow()
+									+ String.valueOf(RandomUtil.randomNumber());
+							String newFileName = String.valueOf(before + "."
+									+ extensionName);
+							// 获取系统发布后upload路径
+							FileUtils.copyInputStreamToFile(file.getInputStream(),
+									new File(path, newFileName));
+							String headImgs = "/simi-app/upload/users/" + newFileName;
+							users.setHeadImg(headImgs);
+						}
+					}
+				} else {
+					if (!StringUtil.isEmpty(headImg)) {
+						users.setHeadImg(headImg);
+					}
 				}
-			}
-		} else {
-			if (!StringUtil.isEmpty(headImg)) {
-				users.setHeadImg(headImg);
-			}
+				// 如果昵称name不为空，则对环信中昵称进行修改
+				if (!StringUtil.isEmpty(name)) {
+					users.setName(name);
+					String username = "";
+					UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
+					// 如果该账号未绑定环信账号
+					if (userRef3rd != null) {
+						username = userRef3rd.getUsername();
+						ObjectNode json2 = JsonNodeFactory.instance.objectNode();
+						json2.put("nickname", name);
+						EasemobIMUsers.modifyIMUserNickName(username, json2);
+					}
+				}
+				if (!StringUtil.isEmpty(sex)) {
+					users.setSex(sex);
+				}
+				
+				userService.updateByPrimaryKeySelective(users);
+				result.setData(users);
+		}else{
+			result = new AppResultData<Object>(
+					Constants.ERROR_999, ConstantMsg.ERROR_103_MSG, new String());
 		}
-		// 如果昵称name不为空，则对环信中昵称进行修改
-		if (!StringUtil.isEmpty(name)) {
-			users.setName(name);
-			String username = "";
-			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
-			// 如果该账号未绑定环信账号
-			if (userRef3rd != null) {
-				username = userRef3rd.getUsername();
-				ObjectNode json2 = JsonNodeFactory.instance.objectNode();
-				json2.put("nickname", name);
-				EasemobIMUsers.modifyIMUserNickName(username, json2);
-			}
 		}
-		if (!StringUtil.isEmpty(sex)) {
-			users.setSex(sex);
-		}
-		userService.updateByPrimaryKeySelective(users);
-		result.setData(users);
+		
+		
 		return result;
 
 	}
