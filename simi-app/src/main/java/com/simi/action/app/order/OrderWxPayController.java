@@ -169,6 +169,7 @@ public class OrderWxPayController extends BaseController {
 		String notifyUrl = WxUtil.getNotifyUrl(orderType);
 		String openid = "";
 		
+		
 		Map<String, Object> resultData = new HashMap<String, Object>();
 
 		String timeStamp = TimeStampUtil.getNowSecond().toString();
@@ -183,7 +184,7 @@ public class OrderWxPayController extends BaseController {
 		String[] s = new String[10];
 		s[0] = "appid=" + appId;
 		s[1] = "nonce_str=" + nonceStr;
-		s[2] = "body=" + mobile;
+		s[2] = "body=" + userId;
 		s[3] = "out_trade_no=" + orderNo;
 		s[4] = "total_fee=" + wxPay;
 		s[5] = "spbill_create_ip=" + request.getRemoteAddr();
@@ -191,7 +192,7 @@ public class OrderWxPayController extends BaseController {
 		s[7] = "trade_type=APP";
 		s[8] = "mch_id=" + mchId;
 		//s[9] = "openid=" + openid;
-		s[9] = "attach=" + mobile;
+		s[9] = "attach=" + userId;
 		Arrays.sort(s);
 		String sign = "";
 		for (String string : s) {
@@ -206,7 +207,7 @@ public class OrderWxPayController extends BaseController {
 		xml += "<mch_id>" + mchId + "</mch_id>";
 		xml += "<nonce_str>" + nonceStr + "</nonce_str>";
 		xml += "<sign>" + sign + "</sign>";
-		xml += "<body><![CDATA[" + mobile + "]]></body>";
+		xml += "<body><![CDATA[" + userId + "]]></body>";
 		xml += "<out_trade_no>" + orderNo + "</out_trade_no>";
 		xml += "<total_fee>" + wxPay + "</total_fee>";
 		xml += "<spbill_create_ip>" + request.getRemoteAddr()
@@ -215,7 +216,7 @@ public class OrderWxPayController extends BaseController {
 				+ "</notify_url>";
 		xml += "<trade_type>APP</trade_type>";
 //		xml += "<openid></openid>";
-		xml += "<attach><![CDATA[" + mobile + "]]></attach>";
+		xml += "<attach><![CDATA[" + userId + "]]></attach>";
 		xml += "</xml>";
 		
 		

@@ -30,6 +30,14 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+	<bean name="/wxpay-notify-order.do" class="com.simi.action.WxNotifyOrder"/>
+	
+	<bean name="/wxpay-notify-ordercard.do" class="com.simi.action.WxNotifyOrderCard"/>
+	
+	<bean name="/wxpay-notify-ordersenior.do" class="com.simi.action.WxNotifyOrderSenior"/>
+
+
+
     <!-- bean name view resolver-->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
     <!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->

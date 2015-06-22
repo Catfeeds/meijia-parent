@@ -34,7 +34,7 @@ public class WxUtil {
 	
 	//服务器地址
 	public static String onecareUrl = WxConfig.getInstance().getRb().getString(
-			"onecare_url");
+			"simi_url");
 
 	//微信get_code_url
 	public static String getCodeUrl = WxConfig.getInstance().getRb().getString(

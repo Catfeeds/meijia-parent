@@ -29,8 +29,8 @@ public class TestOrderWxPayController extends JUnitActionBase  {
 		String url = "/app/order/wx_pre.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "13520256623");//13911489629
-	    postRequest = postRequest.param("order_no", "603753143028678656");
+	    postRequest = postRequest.param("user_id", "92");//13911489629
+	    postRequest = postRequest.param("order_no", "612919260536111104");
 	    postRequest = postRequest.param("order_type", "0");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
