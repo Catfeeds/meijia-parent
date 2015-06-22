@@ -20,7 +20,7 @@ function getUserList(secId,mobile){
         url:siteAPIPath+"sec/get_users.json",
         dataType:"json",
         cache:false,
-        data:"sec_id="+secId+"&mobile="+mobile,
+        data:"sec_id="+secId+"&mobile="+13810002890,
         success : onListSuccess,
         error : onListError
     });

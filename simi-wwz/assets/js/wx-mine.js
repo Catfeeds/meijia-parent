@@ -13,7 +13,7 @@ $(function(){
         url  : siteAPIPath+"sec/get_secinfo.json",
         dataType: "json",
         cache : false,
-        data : {"mobile":secMobile,"sec_id":1},
+        data : {"mobile":13810002890,"sec_id":1},
         success : onSecInfoSuccess,
         error : onSecInfoError
     });
