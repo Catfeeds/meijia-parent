@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.druid.util.StringUtils;
 import com.meijia.utils.IPUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -38,6 +39,7 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.SecList;
 import com.simi.vo.order.OrderViewVo;
+import com.simi.vo.sec.SecCeShi;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.user.LoginVo;
 import com.simi.vo.user.UserBaiduBindVo;
@@ -89,7 +91,7 @@ public class SecController extends BaseController {
 		
 
        if (mobile.trim().equals("18610807136") && sms_token.trim().equals("000000")) {
-    	
+    	    
     	    result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, "");
 			return result;
@@ -263,7 +265,16 @@ public class SecController extends BaseController {
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
 
 		Sec sec = secService.selectVoBySecId(secId);
+		if (sec==null) {
+			SecCeShi secCeShi= new SecCeShi();
+			secCeShi.setSecId((long)1);
+			secCeShi.setMobile("13810002890");
+			result = new AppResultData<Object>(Constants.ERROR_999,
+					ConstantMsg.ERROR_999_MSG_1, secCeShi);
+			return result;
+		}
 		
+		//if (!StringUtils.isEmpty(newNickName) && !newNickName.equals(oldNickName)) {
 		SecInfoVo secInfoVo=new SecInfoVo();
 
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
@@ -271,9 +282,15 @@ public class SecController extends BaseController {
 		return result;
 
 	}
-	
-	@RequestMapping(value = "post_secinfo", method = RequestMethod.GET)
-	public AppResultData<List<OrderViewVo>> secInfo(
+	/**
+	 * 秘书所有订单列表接口
+	 * @param secId
+	 * @param mobile
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "get_orderlist", method = RequestMethod.GET)
+	public AppResultData<List<OrderViewVo>> orderList(
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("mobile") String mobile,
 			@RequestParam(value = "page", required = false, defaultValue = "0") int page) {
