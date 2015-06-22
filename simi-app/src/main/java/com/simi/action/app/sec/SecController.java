@@ -91,15 +91,19 @@ public class SecController extends BaseController {
 		
 
        if (mobile.trim().equals("18610807136") && sms_token.trim().equals("000000")) {
-    	    
+    	   
+    		SecCeShi secCeShi= new SecCeShi();
+			secCeShi.setSecId((long)1);
+			secCeShi.setMobile("13810002890");
     	    result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, "");
+				ConstantMsg.SUCCESS_0_MSG, secCeShi);
 			return result;
 			
 		}else {	
 			
 		SecList sec = secService.selectByMobile(mobile);
 		if (sec == null) {
+			
 			result = new AppResultData<Object>(Constants.ERROR_999,
 					ConstantMsg.ERROR_999_MSG_1, "");
 			return result;
@@ -266,11 +270,9 @@ public class SecController extends BaseController {
 
 		Sec sec = secService.selectVoBySecId(secId);
 		if (sec==null) {
-			SecCeShi secCeShi= new SecCeShi();
-			secCeShi.setSecId((long)1);
-			secCeShi.setMobile("13810002890");
+			
 			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_1, secCeShi);
+					ConstantMsg.ERROR_999_MSG_1, "");
 			return result;
 		}
 		
