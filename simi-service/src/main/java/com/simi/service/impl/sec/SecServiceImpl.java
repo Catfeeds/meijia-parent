@@ -157,6 +157,7 @@ public class SecServiceImpl implements SecService{
 		sec.setName("");
 		sec.setMobile("");
 		sec.setNickName("");
+		sec.setSex("");
 		sec.setBirthDay(null);
 		sec.setHeadImg("");
 		sec.setCityId(0L);
