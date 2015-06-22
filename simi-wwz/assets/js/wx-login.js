@@ -107,9 +107,8 @@ function onLoginSuccess(data, status){
     return;
   }
   //登录成功后记录用户有关信息
-  console.log(data.data+"----"+data.data.id);
   localStorage['sec_mobile'] = data.data.mobile;
-  localStorage['sec_id']=data.data.secId;
+  localStorage['sec_id']= data.data.secId;
   /*localStorage['user_type']=data.data.user_type;
   localStorage['user_msge_page']=1;*/
   

@@ -5,9 +5,9 @@ $(function(){
 	        return;
 	    }
 	
-   // var secId = 1;
-    var secId = localStorage['sec_id'];
-    var mobile =  localStorage['sec_mobile'];
+    var secId = 1;
+   // var secId = localStorage['sec_id'];
+    var mobile = localStorage['sec_mobile'];
     //获取用户消息列表
     getUserList(secId,mobile);
 
