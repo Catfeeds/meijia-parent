@@ -182,8 +182,8 @@ public class SecServiceImpl implements SecService{
 		
 	}
 	@Override
-	public Sec selectVoBySecId(Long id) {
-		return secMapper.selectVoBySecId(id);
+	public Sec selectVoBySecId(Long secId) {
+		return secMapper.selectVoBySecId(secId);
 	}
 	
 	public int updateByPrimaryKeySelective(Sec record) {

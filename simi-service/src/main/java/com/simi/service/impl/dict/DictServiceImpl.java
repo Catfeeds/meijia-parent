@@ -15,6 +15,7 @@ import com.simi.service.dict.ProvinceService;
 import com.simi.service.dict.RegionService;
 import com.simi.service.dict.ServiceTypeService;
 import com.simi.service.user.UserAddrsService;
+import com.simi.po.dao.dict.DictCityMapper;
 import com.simi.po.dao.dict.DictServiceTypesMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictProvince;
@@ -28,6 +29,9 @@ public class DictServiceImpl implements DictService {
 
 	@Autowired
 	private DictServiceTypesMapper dictServiceTypesMapper;
+	
+	@Autowired
+	private DictCityMapper dictCityMapper;
 
 	@Autowired
 	private ProvinceService provinceService;
@@ -162,5 +166,7 @@ public class DictServiceImpl implements DictService {
 		}
 		return listServiceTypes;
 	}
+
+
 
 }

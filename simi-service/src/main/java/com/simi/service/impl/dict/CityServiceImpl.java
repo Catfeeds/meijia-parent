@@ -34,4 +34,10 @@ public class CityServiceImpl implements CityService {
 	public List<DictCity> selectAll() {
 		return cityMapper.selectAll();
 	}
+	
+	@Override
+	public DictCity selectByCityId(Long cityId) {
+		
+		return cityMapper.selectByPrimaryKey(cityId);
+	}
 }

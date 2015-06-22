@@ -10,4 +10,6 @@ public interface CityService {
 
 	List<DictCity> selectAll();
 
+	DictCity selectByCityId(Long secId);
+
 }
