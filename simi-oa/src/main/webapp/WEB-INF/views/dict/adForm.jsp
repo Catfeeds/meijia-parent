@@ -89,7 +89,7 @@
 
 									<div class="form-group required">
 
-										<label class="col-md-2 control-label">服务类型</label>
+										<label class="col-md-2 control-label">广告类型</label>
 										<div class="col-md-5">
 											<ServiceTypeSelectTag:select />
 										</div>

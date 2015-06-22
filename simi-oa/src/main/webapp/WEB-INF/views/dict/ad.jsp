@@ -51,7 +51,7 @@
                                  		<th>序号</th>
 										<th>图片地址</th>
 										<th>跳转地址</th>
-										<th>服务类型</th>
+										<th>广告类型</th>
 										<th>添加时间戳</th>
 										<th>更新时间戳</th>
                                         <th>操作</th>
@@ -63,7 +63,7 @@
                                   	        <td>${ item.no}</td>
 											<td><img src="${ item.imgUrl }"/></td>
 											<td>${ item.gotoUrl }</td>
-											<td>${ item.serviceType }</td>
+											<td>${ item.adType }</td>
 											<td>${ item.addTime }</td>
 											<td>${ item.updateTime }</td>
 									<td>
