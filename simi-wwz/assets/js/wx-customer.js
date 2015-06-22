@@ -1,7 +1,7 @@
 $(function(){
 	
-    var secId = 1;
-    var mobile = 13810002890;
+    var secId = localStorage['sec_id'];
+    var mobile = localStorage['sec_mobile'];
     //获取用户消息列表
     getUserList(secId,mobile);
 
@@ -11,7 +11,7 @@ $(function(){
 function getUserList(secId,mobile){
     $.ajax({
         type:"POST",
-        url:siteAPIPath+"/sec/get_users.json",
+        url:siteAPIPath+"sec/get_users.json",
         dataType:"json",
         cache:false,
         data:"sec_id="+secId+"&mobile="+mobile,

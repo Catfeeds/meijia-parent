@@ -33,7 +33,7 @@ $(function(){
 
             $.ajax({
                 type:"GET",
-                url:siteAPIPath+"/user/get_sms_token.json",
+                url:siteAPIPath+"user/get_sms_token.json",
                 dataType:"json",
                 cache:false,
                 data:{"mobile":userPhone,"sms_type":1},
@@ -61,7 +61,7 @@ $(function(){
 
             $.ajax({
                 type : "POST",
-                url  : siteAPIPath+"/sec/login.json",
+                url  : siteAPIPath+"sec/login.json",
                 dataType: "json",
                 cache : false,
                 data : {"mobile":userPhone,"sms_token":verifyCode,"login_from":1,"user_type":2},
@@ -110,6 +110,9 @@ function onLoginSuccess(data, status){
   localStorage['user_phone'] = data.data.mobile;
   localStorage['user_type']=data.data.user_type;
   localStorage['user_msge_page']=1;
+  localStorage['sec_id']=data.data.id;
+  localStorage['sec_mobile']=data.data.mobile;
+  
 
 
   //登录后是否立刻获取地址?还是加上吧,当用户修改常用地址后,本地存储用户常用地址，小区id，城市id。
