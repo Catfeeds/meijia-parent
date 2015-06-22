@@ -200,10 +200,10 @@ public class SecServiceImpl implements SecService{
 	public SecRef3rd selectBySecIdForIm(Long secId) {
 		return secRef3rdMapper.selectBySecIdForIm(secId);
 	}
-
-	/*@Override
-	public Sec selectById(Long id) {
+	@Override
+	public Sec getUserById(Long secId) {
 		
-		return secMapper.selectByPrimaryKey(id);
-	}*/
+		return secMapper.selectByPrimaryKey(secId);
+	}
+
 }

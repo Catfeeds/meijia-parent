@@ -31,4 +31,6 @@ public interface SecService {
 
 	int updateByPrimaryKeySelective(Sec record);
 
+	Sec getUserById(Long secId);
+
 }
