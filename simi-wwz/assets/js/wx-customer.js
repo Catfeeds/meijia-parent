@@ -64,7 +64,7 @@ function onListSuccess(data, status){
     
     usersList.push(tmpA.join(''));
   });
-  if(userMsgList.length){
+  if(usersList.length){
     $('#customer_list').html(usersList.join(''));
   }
 }
