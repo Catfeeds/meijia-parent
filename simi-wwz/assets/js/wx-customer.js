@@ -1,5 +1,8 @@
 $(function(){
 	
+	
+	
+	alert(localStorage['sec_id']+"--"+localStorage['sec_mobile']);
     var secId = localStorage['sec_id'];
     var mobile = localStorage['sec_mobile'];
     //获取用户消息列表
