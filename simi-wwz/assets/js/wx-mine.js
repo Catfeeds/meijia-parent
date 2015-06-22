@@ -9,10 +9,10 @@ $(function(){
     //获取账户余额等信息
     $.ajax({
         type : "GET",
-        url  : siteAPIPath+"user/get_userinfo.json",
+        url  : siteAPIPath+"sec/get_secinfo.json",
         dataType: "json",
         cache : false,
-        data : {"mobile":userPhone},
+        data : {"mobile":userPhone,"sec_id":1},
         success : onUserInfoSuccess,
         error : onUserInfoError
     });
@@ -21,7 +21,7 @@ $(function(){
     // var card_passwd = (typeof localStorage['coupon_value'] !== 'undefined')?localStorage['coupon_value']:0;
     
     //获取充值卡信息接口
-    $.ajax({
+    /*$.ajax({
         type : "GET",
         url  : siteAPIPath+"dict/get_cards.json",
         dataType: "json",
@@ -29,7 +29,7 @@ $(function(){
         data : {},
         success : onCardSuccess,
         error : onCardError
-    });
+    });*/
 }());
 
 function onUserInfoSuccess(data, status){
