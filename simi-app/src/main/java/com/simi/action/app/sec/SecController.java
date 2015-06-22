@@ -93,7 +93,7 @@ public class SecController extends BaseController {
        if (mobile.trim().equals("18610807136") && sms_token.trim().equals("000000")) {
     	   
     		SecCeShi secCeShi= new SecCeShi();
-			secCeShi.setSecId((long)1);
+			secCeShi.setId((long)1);
 			secCeShi.setMobile("13810002890");
     	    result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, secCeShi);

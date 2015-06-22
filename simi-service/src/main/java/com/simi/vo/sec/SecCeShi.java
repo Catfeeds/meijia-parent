@@ -2,13 +2,15 @@ package com.simi.vo.sec;
 
 public class SecCeShi {
 	
-private Long secId;
+private Long id;
 private String mobile;
-public Long getSecId() {
-	return secId;
+
+
+public Long getId() {
+	return id;
 }
-public void setSecId(Long secId) {
-	this.secId = secId;
+public void setId(Long id) {
+	this.id = id;
 }
 public String getMobile() {
 	return mobile;
