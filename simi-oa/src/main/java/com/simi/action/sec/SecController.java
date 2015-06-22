@@ -192,6 +192,7 @@ public class SecController extends BaseController{
 					sec.setAddTime(TimeStampUtil.getNow() / 1000);
 					sec.setUpdateTime(0L);
 					sec.setStatus(Boolean.valueOf(status));
+					//sec.setSex("男");
 							
 					secService.insertSelective(sec);
 				

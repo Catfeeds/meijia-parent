@@ -51,6 +51,7 @@
                                       <th >姓名</th>
 		                              <th >手机号</th>
 		                              <th >昵称</th>
+		                              <th>性别</th>
 		                              <th >出生日期</th>
 		                              <th >头像</th>
 		                              <th>所在城市</th>
@@ -71,6 +72,7 @@
                                   	    <td>${ item.name}</td>
 							            <td>${ item.mobile}</td>
 							            <td>${ item.nickName}</td>
+							            <td>${ item.sex}</td>
 							            <td><fmt:formatDate value="${ item.birthDay}" pattern="yyyy-MM-dd" /></td>
 							            <td><img src="${ item.headImg}"/></td>
 							            <td>

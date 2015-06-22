@@ -69,6 +69,25 @@
 								<form:errors path="nickName" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						
+						<div class="form-group required">
+						<label class="col-md-2 control-label">性别</label>
+										<div class="col-md-10" >
+
+											<div class="row">
+												<div class="col-md-2" align="right">
+													<label class="radio">
+														<form:radiobutton path="sex" value="0"/>男
+													</label>
+												</div>
+												<div class="col-md-2" align="left">
+													<label class="radio">
+													<form:radiobutton path="sex" value="1"/>女
+													</label>
+												</div>
+											</div>
+                                      </div>
+                                      </div>
 						<div class="form-group required">
 							<label class="col-md-2 control-label">出生日期</label>
 							<div class="col-md-5">
