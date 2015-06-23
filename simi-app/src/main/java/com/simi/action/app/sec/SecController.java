@@ -258,12 +258,12 @@ public class SecController extends BaseController {
         	sec.setMobile(request.getParameter("mobile"));
  			
  		}
-       if (!StringUtils.isEmpty(name) && !name.equals(sec.getName())) {
+       if (!StringUtils.isEmpty(name) ) {
 			
     	   sec.setName(name);
 			
 		}
-        if (!StringUtils.isEmpty(nickName) && !nickName.equals(sec.getNickName())) {
+        if (!StringUtils.isEmpty(nickName) ) {
         	
         	sec.setNickName(nickName);
 			
@@ -277,11 +277,11 @@ public class SecController extends BaseController {
 			sec.setBirthDay(DateUtil.parse(birthDay));
 			
 		}
-		if (!cityId.equals(cityId) && !cityId.equals(sec.getCityId())) {
+		if (!cityId.equals(cityId) ) {
 			sec.setCityId(cityId);
 		}
 		
-          if (!StringUtils.isEmpty(headImg) && !headImg.equals(sec.getHeadImg())) {
+          if (!StringUtils.isEmpty(headImg)) {
         	  sec.setHeadImg(headImg);			
 		}
      
@@ -329,16 +329,10 @@ public class SecController extends BaseController {
 		
 		AppResultData<List<OrderViewVo>> result = new AppResultData<List<OrderViewVo>>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG,orderList);
-	
-		Sec sec = secService.getUserById(secId);
-		
-		if (sec==null) {
-			return result;
-		}
-		List<OrderViewVo> orderViewVo = orderQueryService.selectBySecId(secId, page, Constants.PAGE_MAX_NUMBER);
-		
 
-        result.setData(orderList);
+		List<OrderViewVo> orderViewVo = orderQueryService.selectBySecId(secId, page, Constants.PAGE_MAX_NUMBER);
+	    
+        result.setData(orderViewVo);
 		
 		return result;
 }
