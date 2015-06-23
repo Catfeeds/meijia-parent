@@ -2,7 +2,7 @@ var host = window.location.host;
 var appName = "simi/app";
 var localUrl = "http://" + host;
 var siteAPIPath = localUrl + "/" + appName+"/"; //正式
-var localPath = "http://localhost:8080/simi/app"//测试
+//var localPath = "http://localhost:8080/simi/app"//测试
 
 // $(function(){
     // if(supports_html5_storage()){}
@@ -243,4 +243,18 @@ function getUrlArgStr(){
         }
     }
     return argStr;
+}
+
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+}
+
+function onError(data, status){
+	alert("网络繁忙");
 }

@@ -1,157 +1,171 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="UTF-8">
-  <title>通用服务单 | 私秘-秘书版</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta name="keywords" content="私秘,私密,秘书,O2O,小蜜,私人秘书,私人小蜜,助理,私人助理,虚拟秘书,虚拟小蜜,虚拟助理,网络秘书,网络小蜜,在线秘书,在线助理,生活秘书,生活小蜜,生活助理,招聘秘书,招聘助理,兼职秘书,兼职助理,文秘">
-  <meta name="description" content="私秘，您的专属私人秘书。私秘将为您提供高品质一站式的虚拟秘书和网络助理服务，不论个人还是企业，都能以极致的用户体验享受秘书O2O服务带来的私人秘书服务。">
-  <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-  <link rel="stylesheet" href="assets/css/admin.css">
-  <style>
-    .header {
-      text-align: center;
-    }
-    .header h1 {
-      font-size: 200%;
-      color: #333;
-      margin-top: 30px;
-    }
-    .header p {
-      font-size: 14px;
-    }
-    .input-block{margin:0px;padding:0px;margin-bottom:10px;}
-  </style>
+<meta charset="UTF-8">
+<title>通用服务单 | 私秘-秘书版</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="keywords"
+	content="私秘,私密,秘书,O2O,小蜜,私人秘书,私人小蜜,助理,私人助理,虚拟秘书,虚拟小蜜,虚拟助理,网络秘书,网络小蜜,在线秘书,在线助理,生活秘书,生活小蜜,生活助理,招聘秘书,招聘助理,兼职秘书,兼职助理,文秘">
+<meta name="description" content="私秘，您的专属私人秘书。私秘将为您提供高品质一站式的虚拟秘书和网络助理服务，不论个人还是企业，都能以极致的用户体验享受秘书O2O服务带来的私人秘书服务。">
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="assets/css/admin.css">
+
+<link rel="stylesheet" href="assets/plugins/datetimepicker/css/amazeui.datetimepicker.css"/>
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+
+.input-block {
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+</style>
 </head>
 
 <body>
-<header data-am-widget="header" class="am-header am-header-default">
-  <div class="am-header-left am-header-nav">
-    <a href="index.html" class="">
-      <span class="am-header-nav-title"></span>
-      <i class="am-header-icon am-icon-home am-icon-md"></i>
-    </a>
-  </div>
-  <h1 class="am-header-title">私秘-秘书版</h1>
-  <div class="am-header-right am-header-nav">
-    <a href="wx-baojie-help.html" class="">
-      <span class="am-header-nav-title"></span>
-      <i class="am-header-icon am-icon-question-circle am-icon-md"></i>
-    </a>
-  </div>
-</header>
-<div class="header">
-  <div class="am-g">
-    <h2>填写通用服务单</h21>
-    <p>提示：请按照客户的需求填写服务单</p>
-  </div>
-</div>
-
-<div class="am-g">
-  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-    <form method="post" id="baojieform" class="am-form">
-
-		<div class="am-form-group">
-		    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">客户昵称：</label>
-		    <div class="am-u-sm-10">
-		      <input type="text" id="name" placeholder="请输入客户姓名" required>
-		    </div>
+	<header data-am-widget="header" class="am-header am-header-default">
+		<div class="am-header-left am-header-nav">
+			<a href="index.html" class=""> <span class="am-header-nav-title"></span> <i
+				class="am-header-icon am-icon-home am-icon-md"></i>
+			</a>
 		</div>
-		
-		<div class="am-form-group">
-		    <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">联系方式：</label>
-		    <div class="am-u-sm-10">
-		      <input type="text" id="mobile" placeholder="请输入手机号">
-		    </div>
+		<h1 class="am-header-title">私秘-秘书版</h1>
+		<div class="am-header-right am-header-nav">
+			<a href="wx-order-help.html" class=""> <span class="am-header-nav-title"></span> <i
+				class="am-header-icon am-icon-question-circle am-icon-md"></i>
+			</a>
 		</div>
-		         
-         <div class="input-block" style="width:100%;height:80px;">
-        <label for="doc-select-1" style="float:left;width:100%">服务品类（必填）</label>
-        <select id="service_catalog_list" style="width:100%;float:left;">
-          <option value="0">选择服务品类...</option>
-          <option value="0">订机票</option>
-          <option value="0">订酒店</option>
-          <option value="0">订餐饮</option>
-          <option value="0">叫车</option>
-          <option value="0">提醒</option>
-          <option value="0">保洁</option>
-          <option value="0">做饭</option>
-          <option value="0">手机充值</option>
-          <option value="0">其他.</option>
-         </select>
-        <span class="am-form-caret"></span>
-      </div>
-      
-	<div class="input-block">
-        <label for="user-intro">服务内容（必填）：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="具体服务需求写在这里...."></textarea>
-      </div>
-       
-	<div class="input-block">
-        <label for="user-phone">支付方式（必填）：</label>
-        <div class="am-btn-group" data-am-button>
-            <label class="am-btn am-btn-warning am-btn-xs am-active" id="80_2">
-              <input type="radio" name="service_hours" id="option1" value="80_2">客户线上自行支付
-            </label>
-            <label class="am-btn am-btn-warning am-btn-xs" id="80-200_3">
-              <input type="radio" name="service_hours" id="option2" value="80-200_3">客户线下自行支付
-            </label>
-            <label class="am-btn am-btn-warning am-btn-xs" id="200_4">
-              <input type="radio" name="service_hours" id="option3" value="200_4">委托秘书平台支付
-            </label>
-         </div>
-       </div>
-       <div class="input-block">
-            <label for="true-phone">支付金额：</label>
-            <span><input type="text" id="true_fee" placeholder="支付金额"></span>
-       </div>
-       
-      <div class="input-block" style="width:100%;height:80px;">
-        <label for="doc-select-1" style="float:left;width:100%">服务时间</label>
-        <select id="service_date_list" style="width:60%;float:left;margin-right:3%" onchange="changeServiceTimeList();">
-          <option value="0">选择日期...</option>
-        </select>
-        <span class="am-form-caret"></span>
-        <select id="service_time_list" style="width:30%;float:left;">
-          <option value="0">选择时间...</option>
-        </select>
-        <span class="am-form-caret"></span>
-      </div>
+	</header>
+	<div class="header">
+		<div class="am-g">
+			<h2>
+				填写通用服务单
+				</h21>
+				<p>提示：请按照客户的需求填写服务单</p>
+		</div>
+	</div>
 
-      <div class="input-block" id="user_cell">
-        <label for="user-address">服务地址:</label>
-        <span><input type="text" id="user_address" placeholder="需要登录后选择或添加新地址"></span>
-      </div>
-      
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<form method="post" id="order-form" class="am-form am-form-horizontal">
+				<fieldset>
+					<legend>带*号为必填项</legend>
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">客户昵称*：</label>
+						<div class="am-u-sm-8 ">
+							<input type="text" id="name" placeholder="请输入客户姓名" class="am-form-field am-round" required>
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
 
-      <div class="input-block">
-        <label for="user-intro">备注：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里...."></textarea>
-      </div>
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">联系方式*：</label>
+						<div class="am-u-sm-8">
+							<input type="text" id="mobile" placeholder="请输入手机号" class="am-form-field am-round" required>
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
 
-      
-       <input id="service_type" value="4" type="hidden" />
-       
-       
-      <div class="input-block"><button type="button" id="baojie_submit" class="am-btn am-btn-primary am-btn-block">推送订单给客户</button></div>
-    </form>
-   </div>
-</div>
-<footer align="center">
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">服务类型*：</label>
+						<div class="am-u-sm-8">
+						<select id="service_type" class="am-form-field am-round">
+							<option value="1">通用</option>
+							<option value="2">叫快递</option>
+							<option value="3">充值</option>
+							<option value="4">订餐位</option>
+							<option value="5">火车票</option>
+							<option value="6">机票</option>
+						</select> 
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
 
-</footer>
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">服务内容*：</label>
+						<div class="am-u-sm-8">
+						<textarea class="" rows="5" id="service_content" placeholder="具体服务需求写在这里...." class="am-form-field am-round"></textarea>
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
 
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/amazeui.min.js"></script>
-<!--<![endif]-->
-<script src="assets/js/app.js"></script>
-<script src="assets/js/wx-site.js"></script>
-<script src="assets/js/wx-order-form.js"></script>
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">支付方式：</label>
+						<div class="am-u-sm-8">
+							<label class="am-radio-inline"> 
+								<input type="radio" value="" name="docInlineRadio">无需支付
+							</label> 
+							<label class="am-radio-inline"> 
+								<input type="radio" name="docInlineRadio">线上支付
+							</label>
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
+
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">支付金额：</label>
+						<div class="am-u-sm-8">
+							<input type="text" id="order_money" placeholder="请输入手机号" class="am-form-field am-round">
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
+
+					<div class="am-form-group am-form-inline">
+						<label class="am-u-sm-3 am-form-label">服务时间：</label>
+						<div class="am-u-sm-8 am-input-group date form_datetime-2">
+						  <input size="16" type="text" value="2015-02-14 14:45" class="am-form-field" readonly>
+						  <span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
+
+
+					<!--       <div class="input-block" id="user_cell">
+				        <label for="user-address">服务地址:</label>
+				        <span><input type="text" id="user_address" placeholder="需要登录后选择或添加新地址"></span>
+				      </div> -->
+
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">备注：</label>
+						<div class="am-u-sm-8">
+							<textarea class="" rows="5" id="remarks" placeholder="补充信息可以写在这里...." class="am-form-field am-round"></textarea>
+						</div>
+						<span class="am-form-caret"></span>
+					</div>
+
+					<div class="input-block">
+						<button type="button" id="order_submit" class="am-btn am-btn-primary am-btn-block">推送订单给客户</button>
+					</div>
+			</form>
+		</div>
+	</div>
+	<footer align="center"> </footer>
+
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/plugins/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/wx-site.js"></script>
+	<script src="assets/js/wx-order-form.js"></script>
 </body>
 </html>
