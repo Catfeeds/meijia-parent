@@ -31,17 +31,17 @@ function onListSuccess(data, status){
   if(sec==''){
 	$("#moreInfo").css("display","none");
   }
-  $("#name").val(sec.name);
-  $("#nickName").val(sec.nickName);
- // $("#sex").text(sec.sex);
-  $("#mobile").val(sec.mobile);
-  $("#birthDay").val(sec.birthDay);
-  $("#cityName").val(sec.cityName);
+ console.log(sec);
+  $("#name").text(sec.name);
+  $("#nickName").text(sec.nick_name);
+  $("#sex").text(sec.sex);
+  $("#mobile").text(sec.mobile);
+  $("#birthDay").text(sec.birth_day);
+  $("#cityName").text(sec.city_name);
 }
 function onListError(data, status){
 }
 $("#mine_info_edit").bind("click",function(){
-	alert("表单提交");
-/*	window.location.href="wx-mine-info_edit.html";
-*/})
+	window.location.href="wx-mine-info_edit.html";
+})
 

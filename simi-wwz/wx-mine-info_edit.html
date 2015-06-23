@@ -52,8 +52,6 @@
 <div class="am-g">
   <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
     <form method="post" id="sec_info_form" class="am-form">
-      	
-        
          <div class="input-block">
             <label for="true-user">姓名：</label>
             <span><input type="text" id="name" placeholder="姓名"></span>
@@ -64,31 +62,25 @@
          </div>
          
          <div class="input-block" style="width:100%;height:80px;">
-        <label for="doc-select-1" style="float:left;width:100%">性别</label>
-        <select id="service_catalog_list" style="width:100%;float:left;">
-          <option value="0">未选择...</option>
-          <option value="0">男</option>
-          <option value="0">女</option>
+        <label for="doc-select-1" style="float:left;width:100%">性别：</label>
+        <select class="selector" style="width:100%;float:left;" id="sex">
+          <option value="">未选择...</option>
+          <option value="先生">先生</option>
+          <option value="女士">女士</option>
          </select>
         <span class="am-form-caret"></span>
       </div>
-      
 	  <div class="input-block">
-            <label for="true-phone">手机号（必填）：</label>
-            <span><input type="text" id="true_phone" placeholder="手机号"></span>
-         </div>
-      
-	  <div class="input-block">
-            <label for="true-phone">生日（必填）：</label>
+            <label for="true-phone">生日：</label>
             <span><input type="text" id="birthDay" placeholder="生日"></span>
       </div>
       
 	  <div class="input-block">
-            <label for="true-phone">城市（必填）：</label>
-            <span><input type="text" id="true_phone" placeholder="城市"></span>
+            <label for="true-phone">城市：</label>
+            <span><input type="text" id="cityName" placeholder="城市"></span>
          </div>
       
-       <input id="service_type" value="4" type="hidden" />
+       <input id="sec_id"  type="hidden" />
        
        <div class="input-block"><button type="button" id="mind_info_submit" class="am-btn am-btn-primary am-btn-block">保存</button></div>
     </form>
