@@ -1,6 +1,8 @@
 package com.simi.action.app.sec;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.druid.util.StringUtils;
+import com.cloopen.rest.sdk.utils.DateUtil;
 import com.meijia.utils.IPUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -41,10 +44,13 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.SecList;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.vo.sec.SecCeShi;
+import com.simi.vo.sec.SecDateVo;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.user.LoginVo;
 import com.simi.vo.user.UserBaiduBindVo;
 import com.simi.vo.user.UserViewVo;
+import com.sun.tools.internal.ws.processor.model.Request;
+import com.meijia.utils.*;
 
 @Controller
 @RequestMapping(value = "/app/sec")
@@ -203,13 +209,14 @@ public class SecController extends BaseController {
 	 * @param secId
 	 * @param mobile
 	 * @return
+	 * @throws ParseException 
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 */
 	@RequestMapping(value = "get_secinfo", method = RequestMethod.POST)
-	public AppResultData<Object> Sec(
+	public AppResultData<Object> Sec(HttpServletRequest request,
 			@RequestParam("sec_id") Long secId,
-			@RequestParam("mobile") String mobile) {
+			@RequestParam("mobile") String mobile) throws ParseException {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
@@ -234,14 +241,19 @@ public class SecController extends BaseController {
 			e.printStackTrace();
 		}
          if (secInfoVo.getCityId()==0) {
-			secInfoVo.setCityId(null);
+
 			result = new AppResultData<Object>(Constants.SUCCESS_0,
 					ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 			return result;
 		}
+       
 		DictCity city=cityService.selectByCityId(secInfoVo.getCityId());
-		
+
 		secInfoVo.setCityName(city.getName());
+		
+		secInfoVo.setBirthDay((com.meijia.utils.DateUtil.getDefaultDate(sec.getBirthDay())));
+		
+		//secInfoVo.setAddTime((com.meijia.utils.TimeStampUtil.timeStampToDateHour((sec.getAddTime()))));
 		
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
@@ -277,9 +289,7 @@ public class SecController extends BaseController {
 					ConstantMsg.ERROR_999_MSG_1, "");
 			return result;
 		}
-		
-		
-		if (!StringUtils.isEmpty(name) && !name.equals(sec.getName())) {
+		/*if (!StringUtils.isEmpty(name) && !name.equals(sec.getName())) {
 			
 			sec.setName(name);
 			
@@ -294,11 +304,11 @@ public class SecController extends BaseController {
 			sec.setSex(sex);
 					
 				}
-		/*if (!StringUtils.isEmpty(birthDay) && !birthDay.equals(sec.getBirthDay())) {
+		if (!StringUtils.isEmpty(birthDay) && !birthDay.equals(sec.getBirthDay())) {
 			
 			    sec.setBirthDay(birthDay);
 			
-		}*/
+		}
 		if (!cityId.equals("") && !cityId.equals(sec.getCityId())) {
 			sec.setCityId(cityId);
 		}
@@ -306,7 +316,7 @@ public class SecController extends BaseController {
           if (!StringUtils.isEmpty(headImg) && !headImg.equals(sec.getHeadImg())) {
 			
         	  sec.setHeadImg(headImg);			
-		}
+		}*/
           
        
         
@@ -327,9 +337,15 @@ public class SecController extends BaseController {
         secInfoVo.setAddTime(TimeStampUtil.getNow()/1000);
         
         DictCity city=cityService.selectByCityId(secInfoVo.getCityId());
-		
-		secInfoVo.setCityName(city.getName());
         
+        /*SecDateVo secDateVo = new SecDateVo();     
+        String date = com.meijia.utils.DateUtil.getDefaultDate(birthDay); */      
+        //secDateVo.setBirthDay(date);
+        
+        //String birth = request.getParameter("birthDay");
+        
+		secInfoVo.setCityName(city.getName());
+
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 		return result;
