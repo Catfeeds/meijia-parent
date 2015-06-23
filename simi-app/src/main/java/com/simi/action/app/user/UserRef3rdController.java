@@ -19,12 +19,14 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserBaiduBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserRefSeniorService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
@@ -52,6 +54,9 @@ public class UserRef3rdController extends BaseController {
 
 	@Autowired
 	private UserSmsTokenService userSmsTokenService;
+	
+	@Autowired
+	private UserRefSecService userRefSecService;
 
 	// 1、第三方登录接口
 	@RequestMapping(value = "login-3rd", method = RequestMethod.POST)
@@ -81,11 +86,15 @@ public class UserRef3rdController extends BaseController {
 			userLoginedService.insertSelective(userLogined);
 			
 			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(users.getId());
-			//如果第一次登陆未注册成功环信，则再次注册
+			//如果第一次登陆未注册时未成功注册环信，则重新注册
 			if(userRef3rd == null){
 				userService.genImUser(users);
 			}
-			
+			UserRefSec userRefSec  = userRefSecService.selectByUserId(users.getId());
+			//如果第一次登录未注册时未成功分配秘书，则重新分配
+			if(userRefSec == null){
+				userRef3rdService.allotSec(users);
+			}
 			users.setName(name);
 			if(headImg!=null && !headImg.isEmpty()){
 				users.setHeadImg(headImg);

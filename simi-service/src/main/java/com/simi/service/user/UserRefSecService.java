@@ -10,5 +10,7 @@ public interface UserRefSecService {
 	List<UserViewVo> selectVoByUserId(Long userId);
 
 	List<UserRefSec> selectBySecId(Long secId);
+	
+	UserRefSec selectByUserId(Long userId);
 
 }

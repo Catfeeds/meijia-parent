@@ -341,7 +341,7 @@ public class UserController extends BaseController {
 		if(!StringUtil.isEmpty(mobile)){
 			Users  u  = userService.getUserByMobile(mobile);
 			//如果通过手机号查出的用户Id和userId相同则可以进行用户信息修改
-			if(u !=null &&(u.getId() == userId)){
+			if( (u == null)  || (u !=null &&(u.getId() == userId))){
 				//修改手机号
 				 users.setMobile(mobile);
 				// 创建一个通用的多部分解析器.

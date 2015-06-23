@@ -30,4 +30,9 @@ public class UserRefSecServiceImpl implements UserRefSecService{
 		return userRefSecMapper.selectBySecId(secId);
 	}
 
+	@Override
+	public UserRefSec selectByUserId(Long userId) {
+		return userRefSecMapper.selectByUserId(userId);
+	}
+
 }

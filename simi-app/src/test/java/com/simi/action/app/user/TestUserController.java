@@ -53,7 +53,7 @@ public class TestUserController extends JUnitActionBase  {
 		String url = "/app/user/login.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "13146012753");
+	    postRequest = postRequest.param("mobile", "13146012754");
 //	    postRequest = postRequest.param("mobile", "18610807136");
 	    postRequest = postRequest.param("sms_token", "469212");
 //	    postRequest = postRequest.param("sms_token", "000000");
@@ -133,9 +133,9 @@ public class TestUserController extends JUnitActionBase  {
      	
      	
      	 ResultActions resultActions  =  mockMvc.perform(MockMvcRequestBuilders.fileUpload(url)
-	            .file(multipartFile)
-	            .param("user_id","93")
-	            .param("mobile","13146012753" )
+	          /*  .file(multipartFile)*/
+	            .param("user_id","92")
+	            .param("mobile","13146012754" )
 	            .param("name","kerry")
 	            .param("sex","男士")
 	            .contentType(MediaType.MULTIPART_FORM_DATA)
