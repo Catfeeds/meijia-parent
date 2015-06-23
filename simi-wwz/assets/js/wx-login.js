@@ -113,13 +113,13 @@ function onLoginSuccess(data, status){
   /*localStorage['user_type']=data.data.user_type;
   localStorage['user_msge_page']=1;*/
   
-
-
   //登录后是否立刻获取地址?还是加上吧,当用户修改常用地址后,本地存储用户常用地址，小区id，城市id。
-  
-  if (typeof queryVal('go')!="null" || queryVal('go')!=''){
-    var go = 'wx-'+queryVal('go')+'.html';
-    window.location.href=go;
+
+  if (typeof $.urlParam('go')!="null" || $.urlParam('go')!=''){
+    var go = 'wx-'+$.urlParam('go')+'.html';
+    window.location.href="wx-mine.html";
+  }else{
+	  window.location.href="index.html";
   }
 }
 
