@@ -102,7 +102,11 @@
 			//当连接成功时的回调方法
 			onOpened : function() {
 				handleOpen(conn);
-				console.log('login ok')
+				console.log('login ok');
+				var user = $("#username").val();
+				var pass = $("#password").val();
+				window.localStorage.setItem("user", user);
+				window.localStorage.setItem("pass", pass);
 			},
 			//当连接关闭时的回调方法
 			onClosed : function() {
