@@ -461,6 +461,32 @@
 		return false;
 	};
 
+
+	var autoLogin = function() {
+		var user = window.localStorage.getItem("user");
+		var pass = window.localStorage.getItem("pass");
+		// if (user == '' || pass == '') {
+		// 	alert("请输入用户名和密码");
+		// 	return;
+		// }
+		hiddenLoginUI();
+		showWaitLoginedUI();
+		//根据用户名密码登录系统
+		conn.open({
+			apiUrl : apiURL,
+			user : user,
+			pwd : pass,
+			//连接时提供appkey
+			appKey : appkey
+		//accessToken : 'YWMt8bfZfFk5EeSiAzsQ0OXu4QAAAUpoZFOMJ66ic5m2LOZRhYUsRKZWINA06HI'
+		});
+
+	};
+
+	if(window.localStorage && window.localStorage.user && window.localStorage.pass){
+		autoLogin();
+	}
+
 	//注册新用户操作方法
 	var regist = function() {
 		var user = $("#regist_username").val();
