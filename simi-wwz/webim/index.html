@@ -104,7 +104,7 @@
 				handleOpen(conn);
 				console.log('login ok');
 
-				if(!window.localStorage.getItem("auto")){
+				if(window.localStorage.getItem("auto")==="0"){
 					var user = $("#username").val();
 					var pass = $("#password").val();
 					window.localStorage.setItem("user", user);
@@ -172,7 +172,7 @@
 
 		var autoLogin = function() {
 
-			window.localStorage.setItem("auto", true);
+			window.localStorage.setItem("auto", "1");
 			var user = window.localStorage.getItem("user");
 			var pass = window.localStorage.getItem("pass");
 			hiddenLoginUI();
@@ -481,8 +481,8 @@
 	//登录系统时的操作方法
 	var login = function() {
 
-		window.localStorage.setItem("auto", false);
-		
+		window.localStorage.setItem("auto", "0");
+
 		var user = $("#username").val();
 		var pass = $("#password").val();
 		if (user == '' || pass == '') {
