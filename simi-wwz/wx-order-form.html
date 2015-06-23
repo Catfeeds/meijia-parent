@@ -66,8 +66,10 @@
 	<div class="am-g">
 		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
 			<form method="post" id="order-form" class="am-form am-form-horizontal">
+				<input type="hidden" name="user_id" value=""/>
 				<fieldset>
 					<legend>带*号为必填项</legend>
+					
 					<div class="am-form-group">
 						<label class="am-u-sm-3 am-form-label">客户昵称*：</label>
 						<div class="am-u-sm-8 ">
@@ -111,10 +113,10 @@
 						<label class="am-u-sm-3 am-form-label">支付方式：</label>
 						<div class="am-u-sm-8">
 							<label class="am-radio-inline"> 
-								<input type="radio" value="" name="docInlineRadio">无需支付
+								<input type="radio" value="" name="order_pay_type">无需支付
 							</label> 
 							<label class="am-radio-inline"> 
-								<input type="radio" name="docInlineRadio">线上支付
+								<input type="radio" name="order_pay_type">线上支付
 							</label>
 						</div>
 						<span class="am-form-caret"></span>
@@ -123,16 +125,18 @@
 					<div class="am-form-group">
 						<label class="am-u-sm-3 am-form-label">支付金额：</label>
 						<div class="am-u-sm-8">
-							<input type="text" id="order_money" placeholder="请输入手机号" class="am-form-field am-round">
+							<input type="text" id="order_money" placeholder="" class="am-form-field am-round">
 						</div>
 						<span class="am-form-caret"></span>
 					</div>
 
 					<div class="am-form-group am-form-inline">
 						<label class="am-u-sm-3 am-form-label">服务时间：</label>
-						<div class="am-u-sm-8 am-input-group date form_datetime-2">
-						  <input size="16" type="text" value="2015-02-14 14:45" class="am-form-field" readonly>
-						  <span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
+						<div class="am-u-sm-8 am-input-group date form_datetime-1">
+							<input size="16" type="text" value=""  id="service_date" class="am-form-field" readonly> 
+							<span class="am-input-group-label add-on">
+								<i class="icon-th am-icon-calendar"></i>
+							</span>
 						</div>
 						<span class="am-form-caret"></span>
 					</div>
@@ -163,6 +167,7 @@
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/amazeui.min.js"></script>
 	<script src="assets/plugins/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+	<script src="assets/plugins/datetimepicker/js/locales/amazeui.datetimepicker.zh-CN.js"></script>
 	<!--<![endif]-->
 	<script src="assets/js/app.js"></script>
 	<script src="assets/js/wx-site.js"></script>

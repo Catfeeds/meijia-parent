@@ -3,7 +3,7 @@ $(function() {
 	var mobile = localStorage['sec_mobile'];
 
 	var userId = $.urlParam('user_id');
-	console.log(userId);
+
 
 	getUserInfo(userId);
 }());
@@ -30,11 +30,18 @@ function onUserInfoSuccess(data, status) {
 		return;
 	}
 
-	//
-	
+	formSetInfoSuccess(data.data);
 }
 
 function formSetInfoSuccess(data) {
 	//todo  form设定值.
 }
+
+
+function goToOrder() {
+	var userId = $.urlParam('user_id');
+	location.href = "wx-order-form.html?user_id=" + userId;
+}
+
+//wx-order-form.html
 
