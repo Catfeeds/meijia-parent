@@ -173,8 +173,8 @@
 		var autoLogin = function() {
 
 			window.localStorage.setItem("auto", "1");
-			var user = window.localStorage.getItem("user");
-			var pass = window.localStorage.getItem("pass");
+			var user = "simi-sec-1";
+			var pass = "simi123456";
 			hiddenLoginUI();
 			showWaitLoginedUI();
 			//根据用户名密码登录系统
@@ -189,7 +189,8 @@
 
 		};
 
-		if(window.localStorage && window.localStorage.user && window.localStorage.pass){
+		//if(window.localStorage && window.localStorage.user && window.localStorage.pass){
+		if(true){
 			autoLogin();
 		}
 
