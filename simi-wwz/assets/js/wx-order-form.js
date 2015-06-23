@@ -41,19 +41,48 @@ function onUserInfoSuccess(data, status) {
 }
 
 function formSetInfoSuccess(data) {
+	var secId = localStorage['sec_id'];
+	$('#sec_id').val(secId);
 	$('#user_id').val(data.id);
-	
 	
 	$('#name').val(data.name);
 	
 	if (data.mobile) {
 		$('#mobile').val(data.mobile);
 	}
+	
+	console.log(data);
+	console.log($('#user_id').val());
+	
 }
 
 //表单提交
-$('#order_sumbit').on('click',function() {
+$('#order-submit').on('click',function() {
 	alert("submit");
-	$('#order_submit').submit();
-})
+	var $form = $('#order-form');
+	var isValid = $('.am-form').data('amui.validator').isFormValid();
+	if (!isValid) {
+		alert("is false");
+		return ;
+	}
+	
+	var user_id = $("user_id").val();
+	var name = $("name").val();
+	
+	var ajaxUrl = siteAPIPath + "order/post_add.json";
+	$.ajax({
+        cache: true,
+        type: "POST",
+        url:ajaxUrl,
+        data:$form.serialize(),// 你的formid
+        async: false,
+        error: function(request) {
+            alert(" error");
+        },
+        success: function(data) {
+           console.log(data);
+        }
+    });	
+	
+});
 
