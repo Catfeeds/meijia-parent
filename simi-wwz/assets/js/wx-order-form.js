@@ -50,15 +50,29 @@ function formSetInfoSuccess(data) {
 	if (data.mobile) {
 		$('#mobile').val(data.mobile);
 	}
-	
 	console.log(data);
 	console.log($('#user_id').val());
-	
 }
 
-//表单提交
+////订单支付类型触发事件
+//$(":radio").click(function(){
+//	console.log($('#order_money'));
+//	var selected = $(this).val();
+//	if (selected == "0") {
+//		//不需要验证支付金额.
+//		$('#order_money').prop('required', false);
+//	}
+//	
+//	if (selected == "1") {
+//		//需要验证支付金额.
+//		$('#order_money').prop('required', true);
+//	}
+//	console.log($('#order_money'));
+//});
+
+//表单提交验证
 $('#order-submit').on('click',function() {
-	alert("submit");
+
 	var $form = $('#order-form');
 	var isValid = $('.am-form').data('amui.validator').isFormValid();
 	if (!isValid) {
@@ -66,8 +80,19 @@ $('#order-submit').on('click',function() {
 		return ;
 	}
 	
-	var user_id = $("user_id").val();
-	var name = $("name").val();
+	//处理时间变成时间戳的问题
+	var serviceDateSelect = $('#service_date_select').val();
+
+	if (serviceDateSelect != undefined) {
+		var date = new Date(serviceDateSelect.split(' ').join('T'))
+		
+		var serviceDate = date.getTime() /1000;
+		console.log("serviceDate = " + serviceDate);
+		$('#service_date').val(serviceDate);
+		$('#start_time').val(serviceDate);
+	}
+
+
 	
 	var ajaxUrl = siteAPIPath + "order/post_add.json";
 	$.ajax({
@@ -77,10 +102,17 @@ $('#order-submit').on('click',function() {
         data:$form.serialize(),// 你的formid
         async: false,
         error: function(request) {
-            alert(" error");
+            alert("订单提交失败，请查看你的输入是否正确!");
         },
         success: function(data) {
-           console.log(data);
+        	if (data.status == "999") {
+        		alert(data.msg);
+        		return;
+        	}
+        	
+        	if (data.status == "0") {
+        		alert("订单已经推送给用户,下一步会跳转到订单详情页面");
+        	}
         }
     });	
 	

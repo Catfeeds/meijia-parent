@@ -68,15 +68,15 @@
 			<form action="" id="order-form" class="am-form am-form-horizontal" data-am-validator>
 				<input type="hidden" id="user_id" name="user_id" value=""/>
 				<input type="hidden" id="sec_id" name="sec_id" value=""/>
-				<input type="hidden" id="service_date" name="service_date" value=""/>
-				<input type="hidden" id="start_time" name="start_time" value=""/>
+				<input type="hidden" id="service_date" name="service_date" value="0"/>
+				<input type="hidden" id="start_time" name="start_time" value="0"/>
 				<fieldset>
 					<legend>带*号为必填项</legend>
 					
 					<div class="am-form-group">
 						<label class="am-u-sm-3 am-form-label">客户昵称*：</label>
 						<div class="am-u-sm-8 ">
-							<input type="text" id="name" name="name" placeholder="请输入客户姓名" class="am-form-field am-round" required>
+							<input type="text" id="name" name="name" placeholder="请输入客户姓名" class="am-form-field am-round" required />
 						</div>
 						<span class="am-form-caret"></span>
 					</div>
@@ -84,7 +84,7 @@
 					<div class="am-form-group">
 						<label class="am-u-sm-3 am-form-label">联系方式*：</label>
 						<div class="am-u-sm-8">
-							<input type="text" id="mobile" name="mobile" placeholder="请输入手机号" class="am-form-field am-round" required>
+							<input type="text" id="mobile" name="mobile" placeholder="请输入手机号" class="am-form-field am-round" required />
 						</div>
 						<span class="am-form-caret"></span>
 					</div>
@@ -128,7 +128,7 @@
 					<div class="am-form-group">
 						<label class="am-u-sm-3 am-form-label">支付金额：</label>
 						<div class="am-u-sm-8">
-							<input type="text" id="order_money" name="order_money" value="0" placeholder="" class="am-form-field am-round" number>
+							<input type="number" id="order_money" name="order_money" value="0" placeholder="" class="am-form-field am-round" required>
 						</div>
 						<span class="am-form-caret"></span>
 					</div>
@@ -136,7 +136,7 @@
 					<div class="am-form-group am-form-inline">
 						<label class="am-u-sm-3 am-form-label">服务时间：</label>
 						<div class="am-u-sm-8 am-input-group date form_datetime-1">
-							<input size="16" type="text" value=""  id="service_date_select" class="am-form-field" readonly> 
+							<input size="16" type="text" value=""  id="service_date_select" name="service_date_select" class="am-form-field" readonly> 
 							<span class="am-input-group-label add-on">
 								<i class="icon-th am-icon-calendar"></i>
 							</span>

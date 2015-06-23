@@ -45,7 +45,7 @@ public class TestOrderAddController extends JUnitActionBase  {
 	    postRequest = postRequest.param("service_type", "6");
 	    postRequest = postRequest.param("order_pay_type", "1");
 	    postRequest = postRequest.param("service_content", "北京-上海 2015-07-22 18:00:00, 航班号CA5566");
-	    postRequest = postRequest.param("order_pay", "1500");
+	    postRequest = postRequest.param("order_pay", "10");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
