@@ -404,6 +404,9 @@ public class UserController extends BaseController {
 			result = new AppResultData<Object>(
 					Constants.ERROR_999, ConstantMsg.ERROR_103_MSG, new String());
 		}
+		}else {
+			result = new AppResultData<Object>(
+					Constants.ERROR_999, ConstantMsg.ERROR_104_MSG, new String());
 		}
 		
 		
