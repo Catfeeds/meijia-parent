@@ -13,6 +13,7 @@
   <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
   <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
   <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/plugins/datetimepicker/css/amazeui.datetimepicker.css"/>
   <style>
     .header {
       text-align: center;
@@ -72,24 +73,27 @@
       </div>
 	  <div class="input-block">
             <label for="true-phone">生日：</label>
-           	<span >
-           		<input type="text" id="birthDay" placeholder="生日">
-           	</span>
-           <!--  <div class="am-u-sm-17 am-input-group date form_datetime-1">
+            <div class="am-u-sm-17 am-input-group date form_datetime-1">
              <input size="30" type="text" id="birthDay" placeholder="生日" class="am-form-field" readonly>
             <span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
-		</div>  --> 
+		</div>  
       </div>
       
 	  <div class="input-block">
 	  	<div >
             <label for="true-phone">城市：</label>
-            <span><input type="text" id="cityName" placeholder="城市"></span>
+            <span>
+            <select id="city_name" style="width:100%;">
+            	<option value="0">--请选择城市--</option>
+			</select>
+           </span>
          </div>
       
        <input id="sec_id"  type="hidden" />
-       <span></span>
-       <div class="input-block"><button type="button" id="mind_info_submit" class="am-btn am-btn-primary am-btn-block">保存</button></div>
+      <hr/>
+       <div class="input-block">
+       <button type="button" id="mind_info_submit" class="am-btn am-btn-primary am-btn-block">保存</button>
+      </div>
     </form>
    </div>
 </div>
