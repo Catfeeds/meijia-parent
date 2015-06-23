@@ -163,6 +163,41 @@
 		} else {
 			showLoginUI();
 		}
+
+
+
+
+		var autoLogin = function() {
+			var user = window.localStorage.getItem("user");
+			var pass = window.localStorage.getItem("pass");
+			hiddenLoginUI();
+			showWaitLoginedUI();
+			//根据用户名密码登录系统
+			conn.open({
+				apiUrl : apiURL,
+				user : user,
+				pwd : pass,
+				//连接时提供appkey
+				appKey : appkey
+			//accessToken : 'YWMt8bfZfFk5EeSiAzsQ0OXu4QAAAUpoZFOMJ66ic5m2LOZRhYUsRKZWINA06HI'
+			});
+
+		};
+
+		if(window.localStorage && window.localStorage.user && window.localStorage.pass){
+			autoLogin();
+		}
+
+
+
+
+
+
+
+
+
+
+
 		//发送文件的模态窗口
 		$('#fileModal').on('hidden.bs.modal', function(e) {
 			var ele = document.getElementById(fileInputId);
@@ -1580,30 +1615,7 @@
 
 
 
-	var autoLogin = function() {
-		var user = window.localStorage.getItem("user");
-		var pass = window.localStorage.getItem("pass");
-		// if (user == '' || pass == '') {
-		// 	alert("请输入用户名和密码");
-		// 	return;
-		// }
-		hiddenLoginUI();
-		showWaitLoginedUI();
-		//根据用户名密码登录系统
-		conn.open({
-			apiUrl : apiURL,
-			user : user,
-			pwd : pass,
-			//连接时提供appkey
-			appKey : appkey
-		//accessToken : 'YWMt8bfZfFk5EeSiAzsQ0OXu4QAAAUpoZFOMJ66ic5m2LOZRhYUsRKZWINA06HI'
-		});
 
-	};
-
-	if(window.localStorage && window.localStorage.user && window.localStorage.pass){
-		autoLogin();
-	}
 </script>
 </head>
 <body>
