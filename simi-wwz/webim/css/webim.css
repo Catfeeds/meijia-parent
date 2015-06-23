@@ -91,13 +91,14 @@ a:hover {
 }
 
 .leftcontact {
-	float: left;
-	width: 196px;
+	/*float: left;*/
+	/*width: 196px;*/
+	width: 100%;
 	border: 1px #666666 solid;
 	height: auto;
 	margin: 0 auto;
-	margin-top: 80px;
-	margin-left: 120px;
+	margin-top: 30px;
+	/*margin-left: 120px;*/
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
