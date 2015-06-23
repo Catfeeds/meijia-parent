@@ -8,6 +8,7 @@ import com.simi.vo.SecList;
 
 
 
+
 public interface SecMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -28,5 +29,11 @@ public interface SecMapper {
 	SecList selectByMobile(String mobile);
 
 	Sec selectVoBySecId(Long secId);
+
+
+	
+	
+	
+	
 
 }
