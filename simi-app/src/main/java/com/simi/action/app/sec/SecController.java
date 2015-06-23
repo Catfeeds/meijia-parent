@@ -2,15 +2,12 @@ package com.simi.action.app.sec;
 
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.druid.util.StringUtils;
-import com.cloopen.rest.sdk.utils.DateUtil;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.IPUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRefSec;
@@ -40,17 +36,12 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.OrderSearchVo;
 import com.simi.vo.SecList;
 import com.simi.vo.order.OrderViewVo;
-import com.simi.vo.sec.SecCeShi;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.user.LoginVo;
-import com.simi.vo.user.UserBaiduBindVo;
 import com.simi.vo.user.UserViewVo;
-import com.sun.tools.classfile.StackMapTable_attribute.chop_frame;
-import com.sun.tools.internal.ws.processor.model.Request;
-import com.meijia.utils.*;
+
 
 @Controller
 @RequestMapping(value = "/app/sec")
@@ -99,10 +90,6 @@ public class SecController extends BaseController {
 		SecList sec = secService.selectByMobile(mobile);
 		
        if (mobile.trim().equals("18610807136") && sms_token.trim().equals("000000")) {
-    	   /*
-    		SecCeShi secCeShi= new SecCeShi();
-			secCeShi.setId((long)1);
-			secCeShi.setMobile("13810002890");*/
     	    result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, sec);
 			return result;
@@ -218,47 +205,21 @@ public class SecController extends BaseController {
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("mobile") String mobile) throws ParseException {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
         
 		Sec sec = secService.selectVoBySecId(secId);
 		
 		if (sec == null) {
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_1, "");
-			return result;
-		}else {
-			
-		
-		 SecInfoVo secInfoVo=new SecInfoVo();		 
-         try {
-			BeanUtils.copyProperties(secInfoVo, sec);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-         if (secInfoVo.getCityId()==0) {
-
-			result = new AppResultData<Object>(Constants.SUCCESS_0,
-					ConstantMsg.SUCCESS_0_MSG, secInfoVo);
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.ERROR_999_MSG_1);
 			return result;
 		}
-       
-		DictCity city=cityService.selectByCityId(secInfoVo.getCityId());
+		
+		SecInfoVo secInfoVo = secService.changeSecToVo(sec);
 
-		secInfoVo.setCityName(city.getName());
-		
-		secInfoVo.setBirthDay((com.meijia.utils.DateUtil.getDefaultDate(sec.getBirthDay())));
-		
-		//secInfoVo.setAddTime((com.meijia.utils.TimeStampUtil.timeStampToDateHour((sec.getAddTime()))));
-		
-		result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
+		result.setData(secInfoVo);
 		return result;
-		}
+		
 	}
 	/**
 	 * 秘书信息修改
@@ -271,6 +232,7 @@ public class SecController extends BaseController {
 	 */
 	@RequestMapping(value = "post_secinfo", method = RequestMethod.POST)
 	public AppResultData<Object> secInfo(
+			HttpServletRequest request,
 			@RequestParam("sec_id") Long secId,
 			@RequestParam(value = "name", required = false, defaultValue = "") String name,
 			@RequestParam(value = "nick_name", required = false, defaultValue = "") String nickName,
@@ -283,15 +245,22 @@ public class SecController extends BaseController {
 				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
 
 		Sec sec = secService.selectVoBySecId(secId);
+		
 		if (sec==null) {
 			
 			result = new AppResultData<Object>(Constants.ERROR_999,
 					ConstantMsg.ERROR_999_MSG_1, "");
 			return result;
 		}
-		/*if (!StringUtils.isEmpty(name) && !name.equals(sec.getName())) {
+      
+        if (!StringUtils.isEmpty(request.getParameter("mobile")) && !name.equals(sec.getMobile())) {
 			
-			sec.setName(name);
+        	sec.setMobile(request.getParameter("mobile"));
+ 			
+ 		}
+       if (!StringUtils.isEmpty(name) && !name.equals(sec.getName())) {
+			
+    	   sec.setName(name);
 			
 		}
         if (!StringUtils.isEmpty(nickName) && !nickName.equals(sec.getNickName())) {
@@ -299,50 +268,45 @@ public class SecController extends BaseController {
         	sec.setNickName(nickName);
 			
 		}
-		if (!StringUtils.isEmpty(sex) && !sex.equals(sec.getSex())) {
-		        	
-			sec.setSex(sex);
-					
-				}
-		if (!StringUtils.isEmpty(birthDay) && !birthDay.equals(sec.getBirthDay())) {
+		if (!StringUtils.isEmpty(sex) ) {
+			sec.setSex(sex);	
+		}
+		
+		if (!StringUtils.isEmpty(birthDay) ) {
 			
-			    sec.setBirthDay(birthDay);
+			sec.setBirthDay(DateUtil.parse(birthDay));
 			
 		}
-		if (!cityId.equals("") && !cityId.equals(sec.getCityId())) {
+		if (!cityId.equals(cityId) && !cityId.equals(sec.getCityId())) {
 			sec.setCityId(cityId);
 		}
 		
           if (!StringUtils.isEmpty(headImg) && !headImg.equals(sec.getHeadImg())) {
-			
         	  sec.setHeadImg(headImg);			
-		}*/
-          
-       
-        
-       // secService.updateByPrimaryKeySelective(sec);
-        
-        SecInfoVo secInfoVo=new SecInfoVo();
-        
-      
-        
-        try {
-  			BeanUtils.copyProperties(secInfoVo, sec);
-  		} catch (IllegalAccessException e) {
-  			// TODO Auto-generated catch block
-  			e.printStackTrace();
-  		} catch (InvocationTargetException e) {
-  			// TODO Auto-generated catch block
-  			e.printStackTrace();
-  		}
-        
-        //secInfoVo.setAddTime(TimeStampUtil.getNow()/1000);
-        
-        DictCity city=cityService.selectByCityId(secInfoVo.getCityId());
-                
-		secInfoVo.setCityName(city.getName());
-
-		//secInfoVo.setBirthDay(UtilbirthDay);
+		}
+     
+        if (cityId > 0L) {
+	        sec.setCityId(cityId);
+        }
+		
+		
+		// 保存上传的图像
+		
+		
+		//新建一个Smartupload对象
+		/*SmartUpload su=new SmartUpload();
+		//上传初始化
+		su.initialize(headImg);
+		//上传文件
+		su.upload();
+		//将上传文件全部保存到指定目录
+		int count=su.save("simi-oa/src/webapp/upload/sec/");
+		System.out.println(count+"个上传文件成功！<br>");*/
+		
+		secService.updateByPrimaryKeySelective(sec);
+		
+		SecInfoVo secInfoVo = secService.changeSecToVo(sec);
+		
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 		return result;
@@ -359,7 +323,7 @@ public class SecController extends BaseController {
 	public AppResultData<List<OrderViewVo>> orderList(
 			@RequestParam("sec_id") Long secId,
 			@RequestParam("mobile") String mobile,
-			@RequestParam(value = "page", required = false, defaultValue = "0") int page) {
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
 		List<OrderViewVo> orderList = new ArrayList<OrderViewVo>();
 		

@@ -123,7 +123,7 @@ public class TestSecController extends JUnitActionBase{
     public void testOrderList() throws Exception {
 		String url = "/app/sec/get_orderlist.json";
 		
-		String params = "?secId=1&mobile=18249516809&page=1";
+		String params = "?sec_id=1&mobile=18249516809&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
