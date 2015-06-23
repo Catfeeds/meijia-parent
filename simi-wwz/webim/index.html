@@ -262,10 +262,10 @@
 			$(window).bind('beforeunload', function() {
 				if (conn) {
 					conn.close();
-					if (navigator.userAgent.indexOf("Firefox") > 0)
-						return ' ';
-					else
-						return '';
+					// if (navigator.userAgent.indexOf("Firefox") > 0)
+					// 	return ' ';
+					// else
+					// 	return '';
 				}
 			});
 		});
@@ -541,6 +541,8 @@
 
 	var logout = function() {
 		conn.close();
+		window.localStorage.removeItem("user");
+		window.localStorage.removeItem("pass");
 	};
 
 	//设置当前显示的聊天窗口div，如果有联系人则默认选中联系人中的第一个联系人，如没有联系人则当前div为null-nouser
