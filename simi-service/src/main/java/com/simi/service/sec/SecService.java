@@ -7,6 +7,7 @@ import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.vo.SecList;
+import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.user.UserViewVo;
 
 public interface SecService {
@@ -32,5 +33,9 @@ public interface SecService {
 	int updateByPrimaryKeySelective(Sec record);
 
 	Sec getUserById(Long secId);
+
+	SecInfoVo changeSecToVo(Sec sec);
+
+
 
 }
