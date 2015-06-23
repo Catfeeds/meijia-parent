@@ -112,7 +112,7 @@ a:hover {
 	border-radius: 3px;
 	z-index: 1000;
 	position: relative;
-	width: 196px;
+	/*width: 196px;*/
 	background-color: #5D6978;
 }
 
