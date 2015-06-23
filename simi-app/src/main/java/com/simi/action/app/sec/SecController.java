@@ -44,11 +44,11 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.SecList;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.vo.sec.SecCeShi;
-import com.simi.vo.sec.SecDateVo;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.user.LoginVo;
 import com.simi.vo.user.UserBaiduBindVo;
 import com.simi.vo.user.UserViewVo;
+import com.sun.tools.classfile.StackMapTable_attribute.chop_frame;
 import com.sun.tools.internal.ws.processor.model.Request;
 import com.meijia.utils.*;
 
@@ -320,9 +320,11 @@ public class SecController extends BaseController {
           
        
         
-        secService.updateByPrimaryKeySelective(sec);
+       // secService.updateByPrimaryKeySelective(sec);
         
         SecInfoVo secInfoVo=new SecInfoVo();
+        
+      
         
         try {
   			BeanUtils.copyProperties(secInfoVo, sec);
@@ -334,18 +336,13 @@ public class SecController extends BaseController {
   			e.printStackTrace();
   		}
         
-        secInfoVo.setAddTime(TimeStampUtil.getNow()/1000);
+        //secInfoVo.setAddTime(TimeStampUtil.getNow()/1000);
         
         DictCity city=cityService.selectByCityId(secInfoVo.getCityId());
-        
-        /*SecDateVo secDateVo = new SecDateVo();     
-        String date = com.meijia.utils.DateUtil.getDefaultDate(birthDay); */      
-        //secDateVo.setBirthDay(date);
-        
-        //String birth = request.getParameter("birthDay");
-        
+                
 		secInfoVo.setCityName(city.getName());
 
+		//secInfoVo.setBirthDay(UtilbirthDay);
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 		return result;
