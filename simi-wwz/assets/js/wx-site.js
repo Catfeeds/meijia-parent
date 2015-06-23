@@ -3,6 +3,7 @@ var appName = "simi/app";
 var localUrl = "http://" + host;
 var siteAPIPath = localUrl + "/" + appName+"/"; //正式
 //var localPath = "http://localhost:8080/simi/app"//测试
+var siteApp = "simi-wwz";
 
 // $(function(){
     // if(supports_html5_storage()){}
@@ -18,7 +19,7 @@ function supports_html5_storage() {
     }
 }
 function isLogin(){
-    return typeof localStorage['user_phone']!='undefined' && localStorage['user_phone']!='';
+    return typeof localStorage['sec_id']!='undefined' && localStorage['sec_id']!='';
 }
 function changeAddr(f,g){
     if(isLogin){

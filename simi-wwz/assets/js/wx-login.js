@@ -99,7 +99,7 @@ function onSmsError(data, status){
 
 //登录后
 function onLoginSuccess(data, status){
-	console.log(data);
+
   if(data.status != "0"){
     if (data.status =="999")
         alert(data.msg);
@@ -114,10 +114,11 @@ function onLoginSuccess(data, status){
   localStorage['user_msge_page']=1;*/
   
   //登录后是否立刻获取地址?还是加上吧,当用户修改常用地址后,本地存储用户常用地址，小区id，城市id。
+  console.log($.urlParam('go'));
 
   if (typeof $.urlParam('go')!="null" || $.urlParam('go')!=''){
-    var go = 'wx-'+$.urlParam('go')+'.html';
-    window.location.href="wx-mine.html";
+    var go = decodeURIComponent($.urlParam('go'));
+    location.href= go;
   }else{
 	  window.location.href="index.html";
   }

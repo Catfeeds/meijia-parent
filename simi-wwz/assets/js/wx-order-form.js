@@ -50,8 +50,7 @@ function formSetInfoSuccess(data) {
 	if (data.mobile) {
 		$('#mobile').val(data.mobile);
 	}
-	console.log(data);
-	console.log($('#user_id').val());
+
 }
 
 ////订单支付类型触发事件
@@ -87,7 +86,6 @@ $('#order-submit').on('click',function() {
 		var date = new Date(serviceDateSelect.split(' ').join('T'))
 		
 		var serviceDate = date.getTime() /1000;
-		console.log("serviceDate = " + serviceDate);
 		$('#service_date').val(serviceDate);
 		$('#start_time').val(serviceDate);
 	}
