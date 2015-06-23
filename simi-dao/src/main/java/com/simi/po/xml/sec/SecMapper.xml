@@ -90,6 +90,7 @@
 		#{status,jdbcType=BIT}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
 		)
 	</insert>
+	
 	<insert id="insertSelective" parameterType="com.simi.po.model.sec.Sec">
 		<selectKey resultType="java.lang.Long" order="AFTER"
 			keyProperty="id">
