@@ -30,5 +30,19 @@ public class TestCardTypeController extends JUnitActionBase  {
 	    System.out.print("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
+	@Test
+    public void testDictList() throws Exception {
+		String url = "/app/dict/get_ads.json";
+		
+		String params = "?ad_type=0";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+		
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+	}
 
 }
