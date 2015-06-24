@@ -4,7 +4,7 @@ $(function() {
 	getUserInfo(userId);
 	
 	$('.form_datetime-1').datetimepicker({
-		format : 'yyyy-mm-dd hh:ii',
+		format : 'mm-dd hh:ii',
 		todayBtn : true,
 		todayHighlight : true,
 		language : 'zh-CN',
@@ -83,6 +83,8 @@ $('#order-submit').on('click',function() {
 	var serviceDateSelect = $('#service_date_select').val();
 
 	if (serviceDateSelect != undefined) {
+		var date = new Date();
+		serviceDateSelect = date.getFullYear() + "-" + serviceDateSelect;
 		var date = new Date(serviceDateSelect.split(' ').join('T'))
 		
 		var serviceDate = date.getTime() /1000;

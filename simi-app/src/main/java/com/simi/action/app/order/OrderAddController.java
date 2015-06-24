@@ -26,6 +26,7 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderPricesService;
+import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserBaiduBindService;
@@ -43,6 +44,9 @@ public class OrderAddController extends BaseController {
 	
 	@Autowired
 	private OrdersService ordersService;
+	
+	@Autowired
+	private OrderQueryService orderQueryService;	
 	
 	@Autowired
 	OrderPricesService orderPricesService;
@@ -166,6 +170,36 @@ public class OrderAddController extends BaseController {
 		if (isPush.equals((short)1)) {
 			ordersService.orderSuccessTodo(orderNo);
 		}
+		
+		return result;
+	}
+
+	/**
+	 * 再次推送订单给用户接口
+	 */
+	@RequestMapping(value = "push_order", method = RequestMethod.POST)
+	public AppResultData<Object> pushOrder(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("order_id") Long orderId
+			) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		
+		Users u = userService.getUserById(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}		
+		
+		Orders order = orderQueryService.selectByPrimaryKey(orderId);
+		String orderNo = order.getOrderNo();
+		
+		ordersService.orderSuccessTodo(orderNo);
+		
 		
 		return result;
 	}
