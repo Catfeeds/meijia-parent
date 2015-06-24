@@ -2,8 +2,7 @@ var secId,mobile;
 $(function() {
 	 secId = localStorage['sec_id'];
 	 mobile = localStorage['sec_mobile'];
-	// 获取用户消息列表
-	
+	// 获取城市信息列表
 	getCityList();
 }());
 // 获取秘书信息
