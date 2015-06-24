@@ -20,7 +20,7 @@
     select
     <include refid="Base_Column_List" />
     from dict_ad
-    where ad_type = #{adType,jdbcType=NUMERIC}
+    where ad_type = #{adType,jdbcType=NUMERIC} and enable = 1 
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select

@@ -71,6 +71,14 @@
 		from orders
 		where order_no = #{orderNo,jdbcType=VARCHAR}
 	</select>
+	
+		<select id="selectBySecId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where sec_id = #{secId,jdbcType=VARCHAR}
+	</select>
 
 	<!-- 查出所用下过单用户的手机号 -->
 	<select id="selectByDistinctMobileLists" resultType="java.lang.String">
