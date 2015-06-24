@@ -1,8 +1,8 @@
+var secId,mobile;
 $(function() {
-	var secId = localStorage['sec_id'];
-	var mobile = localStorage['sec_mobile'];
+	 secId = localStorage['sec_id'];
+	 mobile = localStorage['sec_mobile'];
 	// 获取用户消息列表
-	getSecInfo(secId, mobile);
 	
 	getCityList();
 
@@ -16,7 +16,6 @@ $(function() {
 		autoclose : true
 	});
 }());
-
 // 获取秘书信息
 function getSecInfo(secId, mobile) {
 	$.ajax({
@@ -25,11 +24,10 @@ function getSecInfo(secId, mobile) {
 		dataType : "json",
 		cache : false,
 		data : "sec_id=" + secId + "&mobile=" + mobile,
-		success : onListSuccess,
-		error : onListError
+		success : secInfoSuccess,
 	});
 }
-function onListSuccess(data, status) {
+function secInfoSuccess(data, status) {
 	if (data.status != "0") {
 		if (data.status == "999")
 			alert(data.msg);
@@ -38,19 +36,20 @@ function onListSuccess(data, status) {
 		return;
 	}
 	var sec = data.data;
-	if (sec == '') {
-		$("#moreInfo").css("display", "none");
-	}
 	$("#name").val(sec.name);
 	$("#nickName").val(sec.nick_name);
 	$("#sex option[value=" + sec.sex + "]").attr("selected", true);
 	$("#birthDay").val(sec.birth_day);
-	$("#cityName").val(sec.city_name);
+	$("#city_name option[value="+sec.city_id+"]").attr("selected", true);
 	$("#secId").val(sec.id);
 }
-function onListError(data, status) {
-}
 $("#mind_info_submit").bind("click", function() {
+	var $form = $('#order-form');
+	var isValid = $('.am-form').data('amui.validator').isFormValid();
+	if (!isValid) {
+		alert("is false");
+		return ;
+	}
 	var secId = localStorage['sec_id'];
 	var name = $("#name").val();
 	var nickName = $("#nickName").val();
@@ -72,11 +71,12 @@ $("#mind_info_submit").bind("click", function() {
 			"city_id" : cityId,
 			"head_img" : "",
 		},
-		success : onSuccess,
+		success : saveSecSuccess,
 		error : onError
 	});
 })
-function onSuccess(data, status) {
+//保存秘书信息
+function saveSecSuccess(data, status) {
 	if (data.status != "0") {
 		if (data.status == "999")
 			alert(data.msg);
@@ -90,7 +90,7 @@ function onError(data, status) {
 	console.log(data.msg);
 	alert("修改个人信息失败");
 }
-//获取用户消息列表
+//获取城市信息列表
 function getCityList() {
 	$.ajax({
 		type : "GET",
@@ -113,9 +113,8 @@ function onCityListSuccess(data, status) {
 	var citySelected = $("#city_name");
 	$.each(cityList,function(i,item){
 		citySelected.append('<option value="'+item.city_id+'">'+item.name+'</option>');
-		
 	});
-	
+	getSecInfo(secId, mobile);
 }
 function onCityListError(data, status) {
 	alert("获取城市信息失败");
