@@ -5,16 +5,6 @@ $(function() {
 	// 获取用户消息列表
 	
 	getCityList();
-
-	$('.form_datetime-1').datetimepicker({
-		format : 'yyyy-mm-dd ',
-		todayBtn : true,
-		todayHighlight : true,
-		language : 'zh-CN',
-		pickerPosition : 'top-left',
-		minuteStep : 30,
-		autoclose : true
-	});
 }());
 // 获取秘书信息
 function getSecInfo(secId, mobile) {
