@@ -38,9 +38,14 @@ function formSetInfoSuccess(data) {
 }
 
 
-function goToOrder() {
+function goToOrderForm() {
 	var userId = $.urlParam('user_id');
 	location.href = "wx-order-form.html?user_id=" + userId;
+}
+
+function goToOrderList() {
+	var userId = $.urlParam('user_id');
+	location.href = "wx-order-list.html?user_id=" + userId;
 }
 
 //wx-order-form.html

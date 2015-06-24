@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
   <meta charset="UTF-8">
-  <title>客户信息 | 私秘-秘书版</title>
+  <title>我的 | 私秘-秘书版</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
@@ -25,11 +25,11 @@
     .header p {
       font-size: 14px;
     }
-    .input-block{margin:0px;padding:0px;margin-bottom:10px;}
   </style>
 </head>
 
 <body>
+
 <header data-am-widget="header" class="am-header am-header-default">
   <div class="am-header-left am-header-nav">
     <a href="javascript:;" onClick="javascript:history.back(-1);">
@@ -37,74 +37,16 @@
       <i class="am-header-icon am-icon-chevron-left am-icon-md"></i>
     </a>
   </div>
-  <h1 class="am-header-title">私秘-秘书版</h1>
+  <h1 class="am-header-title">订单列表</h1>
   <div class="am-header-right am-header-nav">
-    <a href="wx-customer-info-edit.html" class="">
-      <span class="am-header-nav-title"></span>
-      <i class="am-header-icon am-icon-edit am-icon-md"></i>
-    </a>
+    
   </div>
 </header>
-<div class="header">
-  <div class="am-g">
-    <h2>客户信息</h21>
-    <ul class="am-avg-sm-2 boxes am-align-center am-text-center">
-        <a class="am-btn am-btn-warning" href="#">
-          <i class="am-icon-comments"></i>
-          在线交流
-        </a>
-        <a class="am-btn am-btn-warning" href="javascript:;" onClick="javascript:goToOrderForm();">
-          <i class="am-icon-shopping-cart"></i>
-          快速下单
-        </a>
-        <a class="am-btn am-btn-warning" href="javascript:;" onClick="javascript:goToOrderList();">
-          <i class="am-icon-file-text"></i>
-          订单查询
-        </a>
-    </ul>
-  </div>
-</div>
 
 <div class="am-g">
-  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-    <form method="post" id="baojieform" class="am-form">
-      
-         <div class="input-block">
-            <label for="true-user">客户昵称：</label>
-            <span>老马识途</span>
-         </div>
-         <div class="input-block">
-            <label for="true-phone">客户姓名：</label>
-            <span>哈雷</span>
-         </div>
-         
-         <div class="input-block">
-            <label for="true-phone">性别：</label>
-            <span>未填写</span>
-         </div>
-      
-	  <div class="input-block">
-            <label for="true-phone">手机号：</label>
-            <span>13810000000</span>
-         </div>
-      
-
-      <div class="input-block">
-        <label for="user-intro">标签：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里....">80后、爱吃辣</textarea>
-      </div>
-	  <div class="input-block">
-        <label for="user-intro">常用联系人：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里....">张三、137111100000、李四、13900000000</textarea>
-      </div>
-      
-       <input id="service_type" value="4" type="hidden" />
-       
-       
-    </form>
-    
-    
-   </div>
+  <div class="am-panel-group" id="accordion">
+  
+  </div> 
 </div>
 
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="footer">
@@ -116,13 +58,13 @@
 	</ul>
 </div>
 
-	<!--[if (gte IE 9)|!(IE)]><!-->
+<!--[if (gte IE 9)|!(IE)]><!-->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
 <!--<![endif]-->
 <script src="assets/js/app.js"></script>
 <script src="assets/js/wx-site.js"></script>
 <script src="assets/js/check-login.js"></script>
-<script src="assets/js/wx-customer-info.js"></script>
+<script src="assets/js/wx-order-list.js"></script>
 </body>
 </html>
