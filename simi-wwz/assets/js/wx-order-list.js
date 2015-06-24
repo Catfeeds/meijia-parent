@@ -160,7 +160,7 @@ function getOrderStatus(status){
 }
 
 
-function orderPush(orderId){
+function pushOrder(orderId){
 	var userId = $.urlParam('user_id');
     $.ajax({
         type:"GET",
