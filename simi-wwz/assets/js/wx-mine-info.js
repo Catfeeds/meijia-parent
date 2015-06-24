@@ -31,7 +31,6 @@ function onListSuccess(data, status){
   if(sec==''){
 	$("#moreInfo").css("display","none");
   }
- console.log(sec);
   $("#name").text(sec.name);
   $("#nickName").text(sec.nick_name);
   $("#sex").text(sec.sex);
