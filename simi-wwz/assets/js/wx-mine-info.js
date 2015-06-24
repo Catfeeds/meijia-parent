@@ -42,6 +42,6 @@ function onListSuccess(data, status){
 function onListError(data, status){
 }
 $("#mine_info_edit").bind("click",function(){
-	window.location.href="wx-mine-info_edit.html";
+	window.location.href="wx-mine-info-edit.html";
 })
 
