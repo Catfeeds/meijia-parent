@@ -24,6 +24,7 @@ function userInfoSuccess(data, status) {
 	var user = data.data;
 	$("#name").val(user.name);
 	$("#mobile").val(user.mobile);
+	$("#head_img").attr("src",user.head_img);
 	console.log(user.sex);
 	if(user.sex ==' '){
 		$("#sex option[value=" + user.sex + "]").attr("selected", true);
