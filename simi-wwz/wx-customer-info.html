@@ -38,12 +38,12 @@
     </a>
   </div>
   <h1 class="am-header-title">私秘-秘书版</h1>
-  <div class="am-header-right am-header-nav">
+  <!-- <div class="am-header-right am-header-nav">
     <a href="wx-customer-info-edit.html" class="">
       <span class="am-header-nav-title"></span>
       <i class="am-header-icon am-icon-edit am-icon-md"></i>
     </a>
-  </div>
+  </div> -->
 </header>
 <div class="header">
   <div class="am-g">
@@ -70,40 +70,51 @@
     <form method="post" id="baojieform" class="am-form">
       
          <div class="input-block">
-            <label for="true-user">客户昵称：</label>
-            <span>老马识途</span>
+            <label for="true-phone"> 头像：</label>
+           <span>
+            <img src="" alt='...' width='50' height='50' id="head_img" class='am-radius'>
+           </span>
          </div>
          <div class="input-block">
-            <label for="true-phone">客户姓名：</label>
-            <span>哈雷</span>
+            <label for="true-phone">姓名：</label>
+            <span id="name"></span>
          </div>
          
          <div class="input-block">
             <label for="true-phone">性别：</label>
-            <span>未填写</span>
+            <span id="sex"></span>
          </div>
       
 	  <div class="input-block">
             <label for="true-phone">手机号：</label>
-            <span>13810000000</span>
+            <span id="mobile"></span>
          </div>
       
-
-      <div class="input-block">
-        <label for="user-intro">标签：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里....">80后、爱吃辣</textarea>
-      </div>
 	  <div class="input-block">
-        <label for="user-intro">常用联系人：</label>
-        <textarea class="" rows="5" id="user_remark" placeholder="补充信息可以写在这里....">张三、137111100000、李四、13900000000</textarea>
-      </div>
+            <label for="true-phone">手机号归属地：</label>
+            <span id="province_name"></span>
+         </div>
+         
+       <div class="input-block">
+            <label for="true-phone">余额：</label>
+            <span id="rest_money"></span>
+         </div>
       
-       <input id="service_type" value="4" type="hidden" />
-       
-       
+	  <div class="input-block">
+            <label for="true-phone">积分：</label>
+            <span id="score"></span>
+         </div>
+	  <div class="input-block">
+            <label for="true-phone">用户类型：</label>
+            <span id="user_type"></span>
+         </div>
+      
+	  <div class="input-block">
+            <label for="true-phone">用户来源：</label>
+            <span id="add_from"></span>
+         </div>
+     <div class="input-block"><button type="button" id="coustomer_info_edit" class="am-btn am-btn-primary am-btn-block">修改用户信息</button></div>
     </form>
-    
-    
    </div>
 </div>
 

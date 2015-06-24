@@ -38,7 +38,9 @@ function secInfoSuccess(data, status) {
 	var sec = data.data;
 	$("#name").val(sec.name);
 	$("#nickName").val(sec.nick_name);
-	$("#sex option[value=" + sec.sex + "]").attr("selected", true);
+	if(sec.sex !=''){
+		$("#sex option[value=" + sec.sex + "]").attr("selected", true);
+	}
 	$("#birthDay").val(sec.birth_day);
 	$("#city_name option[value="+sec.city_id+"]").attr("selected", true);
 	$("#secId").val(sec.id);
