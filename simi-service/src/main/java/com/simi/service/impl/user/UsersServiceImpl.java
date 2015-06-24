@@ -20,6 +20,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MobileUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
@@ -273,6 +274,11 @@ public class UsersServiceImpl implements UsersService {
 
 		BeanUtils.copyProperties(u, vo);
 		vo.setUser_id(u.getId());
+		
+		
+		if (StringUtil.isEmpty(vo.getName())) {
+			vo.setName(vo.getMobile());
+		}
 		
 		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
 		

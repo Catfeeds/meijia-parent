@@ -34,10 +34,11 @@ function onListSuccess(data, status){
   var usersList = [];
   var addrH = '';
   $.each(users,function(i,item){
-	  
+	console.log(item);
     var tmpA = [];
     tmpA.push(" <li><a href='wx-customer-info.html?user_id="+item.id+"'>");
-    tmpA.push("<img src="+item.headImg+"alt='...' width='50' height='50' class='am-radius'>"+item.name+"</a></li>");
+    
+    tmpA.push("<img src="+item.head_img+" alt='...' width='50' height='50' class='am-radius'>"+item.name+"</a></li>");
     
     usersList.push(tmpA.join(''));
   });
