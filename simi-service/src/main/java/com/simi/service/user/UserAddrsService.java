@@ -31,6 +31,8 @@ public interface UserAddrsService {
 			String post_code, Short is_default, UserAddrs userAddrs);
 
 	int updataDefaultByMobile(String mobile);
+	
+	int updataDefaultByUserId(Long userId);
 
 	List<UserAddrs> selectByIds(List<Long> addrIds);
 

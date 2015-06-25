@@ -22,37 +22,37 @@ public class TestUserAddressController extends JUnitActionBase  {
 	 *     ​http://localhost:8080/onecare/app/user/post_addrs.json
 	 *     http://182.92.160.194/trac/wiki/%E5%9C%B0%E5%9D%80%E6%8F%90%E4%BA%A4%E6%8E%A5%E5%8F%A3
 	 */
-//	@Test
-//    public void testSaveAddress() throws Exception {
-//		String url = "/app/user/post_addrs.json";
-//
-//     	MockHttpServletRequestBuilder postRequest = post(url);
-//	    postRequest = postRequest.param("mobile", "18249516802");
-//	    postRequest = postRequest.param("addr_id", "0");
-//
-//	    postRequest = postRequest.param("poi_type", "0");
-//	    postRequest = postRequest.param("name", "宇飞大厦");
-//	    postRequest = postRequest.param("address", "东城区东直门外大街42号。。。");
-//	    postRequest = postRequest.param("latitude","39.946130678559037" );
-//	    postRequest = postRequest.param("longitude", "116.44400998619697");
-//	    postRequest = postRequest.param("city", "城市");
-//	    postRequest = postRequest.param("uid", "93df0dc…");
-//	    postRequest = postRequest.param("phone", "(010)84608109");
-//	    postRequest = postRequest.param("post_code", "asd");
-//	    postRequest = postRequest.param("addr", UrlEncoded.encodeString("17号楼"));
-//	    postRequest = postRequest.param("is_default", "1");
-//
-//	    postRequest = postRequest.param("city_id", "0");
-//	    postRequest = postRequest.param("cell_id", "0");
-//	    ResultActions resultActions = mockMvc.perform(postRequest);
-//
-//	    resultActions.andExpect(content().contentType(this.mediaType));
-//	    resultActions.andExpect(status().isOk());
-//
-//
-//	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-//
-//    }
+	@Test
+    public void testSaveAddress() throws Exception {
+		String url = "/app/user/post_addrs.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+	    postRequest = postRequest.param("user_id", "92");
+	    postRequest = postRequest.param("addr_id", "0");
+
+	    postRequest = postRequest.param("poi_type", "0");
+	    postRequest = postRequest.param("name", "宇飞大厦");
+	    postRequest = postRequest.param("address", "东城区东直门外大街42号。。。");
+	    postRequest = postRequest.param("latitude","39.946130678559037" );
+	    postRequest = postRequest.param("longitude", "116.44400998619697");
+	    postRequest = postRequest.param("city", "城市");
+	    postRequest = postRequest.param("uid", "93df0dc…");
+	    postRequest = postRequest.param("phone", "(010)84608109");
+	    postRequest = postRequest.param("post_code", "asd");
+	    postRequest = postRequest.param("addr", UrlEncoded.encodeString("17号楼"));
+	    postRequest = postRequest.param("is_default", "1");
+
+	    postRequest = postRequest.param("city_id", "0");
+	    postRequest = postRequest.param("cell_id", "0");
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
 
 	/**
 	 * 		获取用户地址接口 单元测试

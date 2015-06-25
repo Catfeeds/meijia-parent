@@ -20,6 +20,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -41,7 +42,7 @@ public class UserAddressController extends BaseController {
 	@RequestMapping(value = "post_addrs", method = RequestMethod.POST)
 	public AppResultData<UserAddrs> saveAddress(
 
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") Long addrId,
 			@RequestParam("poi_type") Short poiType,
 			@RequestParam("name") String name,
@@ -74,11 +75,11 @@ public class UserAddressController extends BaseController {
 			userAddrs = userAddrsService.selectByPrimaryKey(addrId);
 		}
 
-		Users u = usersService.getUserByMobile(mobile);
-
+		//Users u = usersService.getUserByMobile(mobile);
+		Users u  = usersService.getUserById(userId);
 		userAddrs.setId(addrId);
 		userAddrs.setUserId(u.getId());
-		userAddrs.setMobile(mobile);
+		userAddrs.setMobile(u.getMobile());
 		userAddrs.setAddr(addr);
 		userAddrs.setLongitude(longitude);
 		userAddrs.setLatitude(latitude);
@@ -101,7 +102,7 @@ public class UserAddressController extends BaseController {
 		if (isDefault.equals((short)1)) {
 			//todo  把当前用户的所有地址 is_default设置为0
 			// update user_addr set is_default =0 where mobile = ?
-			userAddrsService.updataDefaultByMobile(mobile);
+			userAddrsService.updataDefaultByUserId(userId);
 		}
 
 		if (addrId > 0L) {

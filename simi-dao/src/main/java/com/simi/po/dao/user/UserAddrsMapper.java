@@ -15,6 +15,8 @@ public interface UserAddrsMapper {
 	    UserAddrs selectByPrimaryKey(Long id);
 
 	    int updateDefaultByMobile(String mobile);
+	    
+	    int updateDefaultByUserId(Long userId);
 
 	    int updateByMobile(String mobile);
 

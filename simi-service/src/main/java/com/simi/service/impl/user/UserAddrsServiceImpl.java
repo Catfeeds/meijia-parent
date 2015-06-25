@@ -109,6 +109,11 @@ public class UserAddrsServiceImpl implements UserAddrsService {
 		return userAddrsMapper.selectByIds(addrIds);
 	}
 
+	@Override
+	public int updataDefaultByUserId(Long userId) {
+		return userAddrsMapper.updateDefaultByUserId(userId);
+	}
+
 
 
 
