@@ -2,6 +2,7 @@ package com.simi.po.dao.user;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserRefSec;
 
 public interface UserRefSecMapper {

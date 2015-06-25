@@ -5,7 +5,7 @@ public class UserSearchVo {
 
 	  private String mobile;
 	  
-	  private Long seniorId;
+	  private Long secId;
 
 	public String getMobile() {
 		return mobile;
@@ -15,14 +15,15 @@ public class UserSearchVo {
 		this.mobile = mobile;
 	}
 
-	public Long getSeniorId() {
-		return seniorId;
+	public Long getSecId() {
+		return secId;
 	}
 
-	public void setSeniorId(Long seniorId) {
-		this.seniorId = seniorId;
+	public void setSecId(Long secId) {
+		this.secId = secId;
 	}
-	
+
+
 	
 
 
