@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>地址管理-有个管家</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="assets/css/admin.css">
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+
+.input-block {
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+	<header data-am-widget="header" class="am-header am-header-default">
+		<div class="am-header-left am-header-nav">
+			<a href="javascript:;" onClick="javascript:history.back(-1);"> <span
+				class="am-header-nav-title"></span> <i
+				class="am-header-icon am-icon-chevron-left am-icon-md"></i>
+			</a>
+		</div>
+		<h1 class="am-header-title">有个管家</h1>
+	</header>
+
+	<div class="header">
+		<div class="am-g">
+			<h1>添加新地址</h1>
+		</div>
+	</div>
+
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<form>
+				<div class="input-block">
+					<label for="user-cell" style="font-size: 1.6rem"> 小区名:<span
+						style="font-size: 0.8em; color: #aaa; margin-left: 10px">(如果小区不在列表当中，请您输入
+							<span style="color: red">其他小区</span>)
+					</span></label>
+					<div class="am-input-group" style="width: 100%">
+						<select id="city_list" name="city-list"
+							style="width: 25%; float: left; height: 38px">
+							<option value="2">北京</option>
+							<option value="3">天津</option>
+						</select> <span class="am-form-caret"></span>
+						<div>
+							<input type="text" name="user-cell" id="user_cell"
+								style="height: 38px; width: 75%; margin: 0; border: 1px solid #ccc; border-radius: 0; font-size: 1.6rem; color: #555; float: right;"
+								placeholder="输入并选择小区名" autocomplete="off">
+						</div>
+					</div>
+				</div>
+				<div class="input-block">
+					<label for="user-address_no" style="font-size: 1.6rem">门牌号:</label>
+					<div class="am-input-group" style="width: 100%">
+						<input type="text" id="user_address_no" placeholder="填写具体门牌号"
+							style="height: 38px; width: 100%; margin: 0; border: 1px solid #ccc; border-radius: 0; font-size: 1.6rem; color: #555; float: right;">
+					</div>
+				</div>
+				<div class="input-block">
+					<button type="button" id="address_add"
+						class="am-btn am-btn-primary am-btn-block">添加</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default"
+		id="footer">
+		<ul class="am-navbar-nav am-cf am-avg-sm-4">
+			<li><a href="index.html" class=""><span class="am-icon-home"></span><span
+					class="am-navbar-label">工作台</span></a></li>
+			<li><a href="webim/index.html" class=""><span
+					class="am-icon-comments"></span><span class="am-navbar-label">会话</span></a></li>
+			<li><a href="wx-customer.html" class=""><span
+					class="am-icon-group"></span><span class="am-navbar-label">客户</span></a></li>
+			<li><a href="wx-mine.html" class=""><span
+					class="am-icon-user"></span><span class="am-navbar-label">我的</span></a></li>
+		</ul>
+	</div>
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap-typeahead.js"></script>
+	<script src="assets/js/amazeui.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/wx-site.js"></script>
+	<script src="assets/js/check-login.js"></script>
+	<script src="assets/js/wx-add-address.js"></script>
+</body>
+</html>

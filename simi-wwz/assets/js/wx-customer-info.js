@@ -79,3 +79,7 @@ $("#coustomer_info_edit").bind("click",function(){
 	var userId = $.urlParam('user_id');
 	location.href="wx-customer-info-edit.html?user_id="+ userId;
 });
+$("#coustomer_addr_info").bind("click",function(){
+	var userId = $.urlParam('user_id');
+	location.href="wx-addr-list.html?user_id="+userId;
+});
