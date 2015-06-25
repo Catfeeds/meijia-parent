@@ -1,6 +1,16 @@
 // Initialize your app
 var myApp = new Framework7({
     pushState:true,
+    cache: false,
+    // preroute: function (view, options) {
+    //     //var userLoggedIn = false;
+    //     console.log('abc')
+    //     if (!userLoggedIn) {
+    //         console.log('llll')
+    //         view.router.loadPage('about.html'); //load another page with auth form
+    //         return false; //required to prevent default router action
+    //     }
+    // }
 });
 
 // Export selectors engine
@@ -14,7 +24,10 @@ var mainView = myApp.addView('.view-main', {
 });
 
 // Callbacks to run specific code for specific pages, for example for About page:
-myApp.onPageInit('about', function (page) {
+myApp.onPageBeforeInit('mine', function (page) {
+
+    console.log(page);
+
     // run createContentPage func after link was clicked
     $$('.create-page').on('click', function () {
         createContentPage();
