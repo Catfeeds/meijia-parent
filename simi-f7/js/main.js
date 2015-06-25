@@ -1,3 +1,11 @@
+
+var host = window.location.host;
+var appName = "simi/app";
+var localUrl = "http://" + host;
+var siteAPIPath = localUrl + "/" + appName+"/"; //正式
+//var localPath = "http://localhost:8080/simi/app"//测试
+var siteApp = "simi-f7";
+
 // Initialize your app
 var myApp = new Framework7({
     pushState:true,
@@ -29,7 +37,10 @@ var mySwiper = myApp.swiper('.swiper-container', {
     autoplay: 2000
   });
 
-
+function isLogin(){
+	return false;
+    //return typeof localStorage['sec_id']!='undefined' && localStorage['sec_id']!='';
+}
 
 //Generate dynamic page
 //var dynamicPageIndex = 0;
