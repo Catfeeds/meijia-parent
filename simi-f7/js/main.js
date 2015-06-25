@@ -58,4 +58,4 @@ var mySwiper = myApp.swiper('.swiper-container', {
 //        '</div>'
 //    );
 //	return;
-}
+
