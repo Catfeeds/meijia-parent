@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,8 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
-import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.Users;
+import com.simi.service.order.OrdersService;
 import com.simi.service.sec.SecService;
 
 
@@ -50,6 +52,9 @@ public class SecController extends BaseController{
 
 	@Autowired
 	private SecService secService;
+	
+	@Autowired
+	private OrdersService ordersService;
 	
 
 	
@@ -91,6 +96,8 @@ public class SecController extends BaseController{
 	@RequestMapping(value = "/listForm", method = { RequestMethod.GET })
 	public String register(HttpServletRequest request,Model model,
 			               @RequestParam(value = "id") Long id) {
+		
+		
 		
 		if (id == null) {
 			id = 0L;

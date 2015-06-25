@@ -28,9 +28,11 @@ import com.simi.action.admin.AdminController;
 import com.simi.oa.common.ConstantOa;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -44,6 +46,7 @@ public class UserController extends AdminController {
 	@Autowired
 	private UsersService usersService;
 
+	
 	@Autowired
 	private UserAddrsService userAddrsService;
 
@@ -78,7 +81,7 @@ public class UserController extends AdminController {
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String userList(HttpServletRequest request, Model model,
 			UserSearchVo searchVo,
-			@RequestParam(value="seniorId", required = false) Long seniorId ) {
+			@RequestParam(value="sec_id", required = false) Long secId ) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
@@ -87,7 +90,7 @@ public class UserController extends AdminController {
 				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-		searchVo.setSeniorId(seniorId);
+		searchVo.setSecId(secId);
 		PageInfo result = usersService.searchVoListPage(searchVo, pageNo,
 				pageSize);
 		model.addAttribute("contentModel", result);

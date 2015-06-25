@@ -4,6 +4,7 @@
 <%@ include file="../shared/taglib.jsp"%>
 <%@ taglib prefix="timestampTag" uri="/WEB-INF/tags/timestamp.tld" %>
 <%@ taglib prefix="cityNameTag" uri="/WEB-INF/tags/cityName.tld" %>	
+<%@ taglib prefix="sexTypeNameTag" uri="/WEB-INF/tags/sexTypeName.tld" %>
 <html>
   <head>
 	
@@ -73,46 +74,54 @@
 							            <td>${ item.mobile}</td>
 							            <td>${ item.nickName}</td>
 							            <td>${ item.sex}</td>
+							           <%--  <td>
+							            	<sexTypeNameTag:sextype sexType="${item.sex}"/>
+
+							            </td> --%>
+							            
+							            
+							            
 							            <td><fmt:formatDate value="${ item.birthDay}" pattern="yyyy-MM-dd" /></td>
 							            <td><img src="${ item.headImg}"/></td>
 							            <td>
 							            	<cityNameTag:cityname cityId="${ item.cityId }"/>
 							            </td>
 							            <td>${item.status}</td>
-							            
-							         <%-- <td>
+							        <%--  <td>
 							         
 							            <c:choose>
 										
 										<c:when test="${item.status==0}">
 																				　　
-										    <c:set value="注册中" var="action" scope="page"/>
+										 注册中
 										
 										</c:when>
 										
 										<c:when test="${item.status==1}">
 																				　　
-										   <c:set value="审核中" var="action" scope="page"/>
+										   审核中
 										
 										</c:when>
 										
 										<c:otherwise>
 										
-										　    <c:set value="审核通过" var="action" scope="page"/>
+										　   审核通过
 										
 										</c:otherwise>
 										</c:choose>
 										
-							            </td>
- --%>
+							            </td> --%>
+
 							            <td>
 							                  <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							           	</td>	
 							           	<td>${ item.username}</td>	
 							           	<td>${ item.password}</td>	>				         							            
 	                                  	<td>	
-	                                  	    <button id="btn_update" onClick="btn_update('/sec/listForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>                                   
+	                                  	    <button id="btn_update" onClick="btn_update('/sec/listForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>    
+	                                  	    <button id="btn_update" onClick="btn_update('/user/list?sec_id=${item.id}')" class="btn btn-primary btn-xs" title="对应用户"><i class="icon-user "></i></button>                               
 		                                    <button id="btn_del" onClick="btn_del('/sec/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+	                                  	    
 	                                  	</td>
                               </tr>
                               </c:forEach>

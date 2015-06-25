@@ -37,7 +37,7 @@
       <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
-			 <%@ include file="../common/user/userStat.jsp"%>
+			 <%-- <%@ include file="../common/user/userStat.jsp"%> --%>
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
@@ -61,7 +61,7 @@
 		                              <th >用户姓名</th>
 		                              <th >用户余额</th>
 		                              <th >用户积分</th>
-		                              <th >用户类型</th>
+		                             <!--  <th >用户类型</th> -->
 		                              <th>用户来源</th>
 		                              <th >添加时间</th>
 		                             <!--  <th>操作</th> -->
@@ -80,10 +80,10 @@
 							            <td>
 											${ item.score }
 							            </td>
-							            <td>
+							            <%-- <td>
 							            	<userTypeTag:userTypeId userTypeId="${ item.userType }"/>
 
-							            </td>
+							            </td> --%>
 							            <td>
 							            	<orderFromTag:orderfrom orderFrom="${item.addFrom }"/>
 							            </td>
