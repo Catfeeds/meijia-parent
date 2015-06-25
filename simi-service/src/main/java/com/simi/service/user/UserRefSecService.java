@@ -2,6 +2,7 @@ package com.simi.service.user;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.vo.user.UserViewVo;
 

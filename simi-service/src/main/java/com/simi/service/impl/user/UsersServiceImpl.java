@@ -43,6 +43,7 @@ import com.simi.service.admin.AdminAccountService;
 import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserRefSeniorService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserSearchVo;
@@ -68,16 +69,13 @@ public class UsersServiceImpl implements UsersService {
 	private UserRef3rdMapper userRef3rdMapper;
 
 	@Autowired
-	private UserRefSeniorMapper userRefSeniorMapper;
+	private UserRefSecService userRefSecService;
 
 	@Autowired
 	private AdminAccountService adminAccountService;
 
 	@Autowired
 	private CouponService couponService;
-
-	@Autowired
-	private UserRefSeniorService userRefSeniorService;
 	
 	@Autowired
 	private UserRefSecMapper userRefSecMapper;
@@ -230,17 +228,17 @@ public class UsersServiceImpl implements UsersService {
 
 		HashMap<String,Object> conditions = new HashMap<String,Object>();
 		 String mobile = searchVo.getMobile();
-		 Long seniorId = searchVo.getSeniorId();
+		 Long secId = searchVo.getSecId();
 		 List<Long> userIdList = new ArrayList<Long>();
 
 		if(mobile !=null && !mobile.isEmpty()){
 			conditions.put("mobile",mobile.trim());
 		}
-		if(seniorId!=null){
-			List<UserRefSenior> list =  userRefSeniorService.selectBySeniorId(seniorId);
+		if(secId!=null){
+			List<UserRefSec> list =  userRefSecService.selectBySecId(secId);
 			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-				UserRefSenior userRefSenior = (UserRefSenior) iterator.next();
-				userIdList.add(userRefSenior.getUserId());
+				UserRefSec userRefSec = (UserRefSec) iterator.next();
+				userIdList.add(userRefSec.getUserId());
 			}
 		}
 		if(userIdList!=null  && userIdList.size()>0){
@@ -327,12 +325,13 @@ public class UsersServiceImpl implements UsersService {
 		}
 		//先找出真人管家的admin_id
 		Long userId = user.getId();
-		UserRefSenior userRefSenior = userRefSeniorMapper.selectByUserId(userId);
-		if (userRefSenior == null) {
+
+		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
+		if (userRefSec == null) {
 			return map;
 		}
 
-		Long adminId = userRefSenior.getSeniorId();
+		Long adminId = userRefSec.getSecId();
 		AdminAccount adminAccount = adminAccountService.selectByPrimaryKey(adminId);
 
 		String seniorImUsername = adminAccount.getImUsername();
@@ -419,11 +418,6 @@ public class UsersServiceImpl implements UsersService {
         return record;
 	}
 
-	@Override
-	public List<Users> selectVoByUserId(List<Long> ids) {
-		 
-		return usersMapper.selectVoByUserId(ids);
-	}
 	
 	@Override
 	public List<Users> selectByUserIds(List<Long> ids) {
@@ -435,5 +429,12 @@ public class UsersServiceImpl implements UsersService {
 		
 		return usersMapper.selectByUserId(userId);
 	}
+
+	@Override
+	public List<Users> selectVoByUserId(List<Long> ids) {
+		 
+		return usersMapper.selectVoByUserId(ids);
+	}
+
 
 }

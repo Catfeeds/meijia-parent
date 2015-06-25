@@ -6,9 +6,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+
+import org.springframework.web.bind.ServletRequestUtils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -19,13 +25,18 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
+import com.simi.oa.common.ConstantOa;
 import com.simi.po.dao.sec.SecMapper;
 import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
+import com.simi.po.model.user.UserRefSec;
+import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictService;
 import com.simi.service.sec.SecService;
+import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.SecList;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.sec.SecVo;
@@ -41,6 +52,12 @@ public class SecServiceImpl implements SecService {
 
 	@Autowired
 	private DictService dictService;
+
+	@Autowired
+	private UserRefSecService userRefSecService;
+
+	@Autowired
+	private UsersService usersService;
 
 	@Override
 	public Long insertSelective(Sec record) {
@@ -63,10 +80,16 @@ public class SecServiceImpl implements SecService {
 			Sec sec = (Sec) iterator.next();
 
 			String imgUrl = sec.getHeadImg();
-			String extensionName = imgUrl.substring(imgUrl.lastIndexOf("."));
-			String beforName = imgUrl.substring(0, (imgUrl.lastIndexOf(".")));
-			String newImgUrl = beforName + "_small" + extensionName;
-			sec.setHeadImg(newImgUrl);
+
+			if (imgUrl.length() > 0) {
+
+				String extensionName = imgUrl
+						.substring(imgUrl.lastIndexOf("."));
+				String beforName = imgUrl.substring(0,
+						(imgUrl.lastIndexOf(".")));
+				String newImgUrl = beforName + "_small" + extensionName;
+				sec.setHeadImg(newImgUrl);
+			}
 
 			SecVo secNew = new SecVo();
 			try {
@@ -105,6 +128,10 @@ public class SecServiceImpl implements SecService {
 		return result;
 
 	}
+
+	/**
+	 * 秘书对应的订单信息列表显示
+	 */
 
 	/**
 	 * 注册环信用户

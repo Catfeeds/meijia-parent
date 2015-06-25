@@ -50,10 +50,9 @@ public interface UsersService {
 
 	List<Users> selectVoByUserId(List<Long> ids);
 
+	List<Users> selectByUserIds(List<Long> ids);
 
 	Users selectVoByUserId(Long userId);
-
-	List<Users> selectByUserIds(List<Long> ids);
 
 
 

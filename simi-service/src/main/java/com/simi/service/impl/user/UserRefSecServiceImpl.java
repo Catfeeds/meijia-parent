@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.service.user.UserRefSecService;
@@ -24,15 +26,19 @@ public class UserRefSecServiceImpl implements UserRefSecService{
 		return list;
 	}
 
+
+	@Override
+	public UserRefSec selectByUserId(Long userId) {
+		return userRefSecMapper.selectByUserId(userId);
+	}
+
+
 	@Override
 	public List<UserRefSec> selectBySecId(Long secId) {
 		
 		return userRefSecMapper.selectBySecId(secId);
 	}
 
-	@Override
-	public UserRefSec selectByUserId(Long userId) {
-		return userRefSecMapper.selectByUserId(userId);
-	}
+
 
 }
