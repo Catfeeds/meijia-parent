@@ -61,10 +61,10 @@
 		                              <th >用户姓名</th>
 		                              <th >用户余额</th>
 		                              <th >用户积分</th>
-		                             <!--  <th >用户类型</th> -->
+		                            
 		                              <th>用户来源</th>
 		                              <th >添加时间</th>
-		                             <!--  <th>操作</th> -->
+		                              <th>操作</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -80,10 +80,7 @@
 							            <td>
 											${ item.score }
 							            </td>
-							            <%-- <td>
-							            	<userTypeTag:userTypeId userTypeId="${ item.userType }"/>
-
-							            </td> --%>
+							          
 							            <td>
 							            	<orderFromTag:orderfrom orderFrom="${item.addFrom }"/>
 							            </td>
@@ -91,6 +88,9 @@
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							            </td>
 
+                                       <td>
+                                            <button id="btn_update" onClick="btn_update('order/list?id=${ item.id }')" class="btn btn-primary btn-xs" title="订单"><i class=" icon-ambulance"></i></button>
+                                       </td>
 							           <%--  <td>
 							            <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 	                                  	<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
