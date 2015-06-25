@@ -10,15 +10,13 @@ var siteApp = "simi-f7";
 var myApp = new Framework7({
     pushState:true,
     cache: false,
-    // preroute: function (view, options) {
-    //     //var userLoggedIn = false;
-    //     console.log('abc')
-    //     if (!userLoggedIn) {
-    //         console.log('llll')
-    //         view.router.loadPage('about.html'); //load another page with auth form
-    //         return false; //required to prevent default router action
-    //     }
-    // }
+//    preroute: function (view, options) {
+//        if(!isLogin() && options.url!='login.html'){
+//            console.log('must login');
+//            view.router.loadPage('login.html');
+//            return false;
+//    }
+}
 });
 
 // Export selectors engine
