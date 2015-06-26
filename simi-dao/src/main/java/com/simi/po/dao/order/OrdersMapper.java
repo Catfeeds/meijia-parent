@@ -1,7 +1,7 @@
 package com.simi.po.dao.order;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.simi.po.model.order.Orders;
 import com.simi.vo.OrderSearchVo;
@@ -28,5 +28,11 @@ public interface OrdersMapper {
     List<Orders> selectByStatuses(List<Short> orderStatus);
 
 	List<String> selectByDistinctMobileLists();
+
+	List<Orders> selectByUserId(Long userId);
+	
+	Orders selectByUser(Long userId);
+
+	List<Orders> selectByUserIdList(Long userId);
 
 }

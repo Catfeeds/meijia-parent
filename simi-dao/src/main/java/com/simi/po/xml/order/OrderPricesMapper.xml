@@ -36,7 +36,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from order_prices
-		where order_id = #{order_id,jdbcType=NUMERIC}
+		where order_id = #{orderId,jdbcType=NUMERIC}
 	</select>
 
 	<select id="selectByOrderIds" parameterType="java.lang.String" resultMap="BaseResultMap">

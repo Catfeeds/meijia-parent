@@ -71,7 +71,27 @@
 		from orders
 		where order_no = #{orderNo,jdbcType=VARCHAR}
 	</select>
-	
+	<select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByUser" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByUserIdList" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
 		<select id="selectBySecId" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
 		select
@@ -87,6 +107,7 @@
 	</select>
 
 	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
+
 	<select id="selectByListPage" resultMap="BaseResultMap"
 		parameterType="com.simi.vo.OrderSearchVo">
 		select

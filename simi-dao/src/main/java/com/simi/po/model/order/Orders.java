@@ -1,6 +1,8 @@
 package com.simi.po.model.order;
 
 public class Orders {
+	
+	
     private Long id;
     
     private Long secId;
@@ -16,7 +18,7 @@ public class Orders {
     private Short orderPayType;
 
     private Long serviceType;
-    
+   
     private String serviceContent;
 
     private Long serviceDate;
@@ -30,7 +32,7 @@ public class Orders {
     private Short orderFrom;
 
     private Short orderStatus;
-
+    
     private Short orderRate;
 
     private Short isScore;
