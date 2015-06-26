@@ -39,6 +39,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
@@ -47,6 +48,7 @@ import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UserRef3rdService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
@@ -81,6 +83,10 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;
+	
+	
+	@Autowired
+	private UserRefSecService userRefSecService;
 
 	// 5. 会员登陆接口
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -102,7 +108,17 @@ public class UserController extends BaseController {
 				UserBaiduBind userBaiduBind = userBaiduBindService
 						.selectByPrimaryKey(u.getId());
 				UserBaiduBindVo vo = new UserBaiduBindVo();
-
+				
+				UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(u.getId());
+				//如果第一次登陆未注册时未成功注册环信，则重新注册
+				if(userRef3rd == null){
+					userService.genImUser(u);
+				}
+				UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
+				//如果第一次登录未注册时未成功分配秘书，则重新分配
+				if(userRefSec == null){
+					userRef3rdService.allotSec(u);
+				}
 				try {
 					BeanUtils.copyProperties(vo, u);
 				} catch (IllegalAccessException e) {
@@ -153,7 +169,7 @@ public class UserController extends BaseController {
 			UserLogined record = userLoginedService.initUserLogined(smsToken,
 					login_from, ip);
 			userLoginedService.insert(record);
-
+			
 			if (!smsToken.getSmsToken().equals(sms_token)) {// 验证码错误
 				result = new AppResultData<Object>(Constants.ERROR_999,
 						ConstantMsg.ERROR_999_MSG_2, "");
@@ -163,7 +179,16 @@ public class UserController extends BaseController {
 				if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 					u = userService.genUser(mobile, Constants.USER_APP);
 				}
-
+				UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(u.getId());
+				//如果第一次登陆未注册时未成功注册环信，则重新注册
+				if(userRef3rd == null){
+					userService.genImUser(u);
+				}
+				UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
+				//如果第一次登录未注册时未成功分配秘书，则重新分配
+				if(userRefSec == null){
+					userRef3rdService.allotSec(u);
+				}
 				// 根据mobile找到user_baidu_bind信息
 
 				System.out.println(u.getId() + "id==========mobile"
