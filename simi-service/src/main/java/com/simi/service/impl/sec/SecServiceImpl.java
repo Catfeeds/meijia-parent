@@ -6,16 +6,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-
-import org.springframework.web.bind.ServletRequestUtils;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,14 +18,11 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
-import com.simi.oa.common.ConstantOa;
 import com.simi.po.dao.sec.SecMapper;
 import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
-import com.simi.po.model.user.UserRefSec;
-import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictService;
 import com.simi.service.sec.SecService;
 import com.simi.service.user.UserRefSecService;
