@@ -37,16 +37,17 @@ $$('#userlist').on('click', function(){
                 	200: userListSuccess,
         	    	400: ajaxError,
         	    	500: ajaxError
-        	    }
+        	    },
+                success:function(){
+                    var html = compiledTemplate(data);
+                    mainView.router.loadContent(html);
+                }
             });
         	
 
 
 
             return false;            
-            
-            
-            
 //            $$.getJSON('data/userlist.json', {}, function (data) {
 //                var html = compiledTemplate(data);
 //                mainView.router.loadContent(html);
