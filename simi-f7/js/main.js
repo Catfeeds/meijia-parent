@@ -9,13 +9,27 @@ var siteApp = "simi-f7";
 // Initialize your app
 var myApp = new Framework7({
     pushState:true,
+    
     cache: false,
-//    preroute: function (view, options) {
-//        if(!isLogin() && options.url!='login.html'){
-//            console.log('must login');
-//            view.router.loadPage('login.html');
-//            return false;
-//    }
+    
+    modalTitle: "提示",
+    
+    // Hide and show indicator during ajax requests
+    onAjaxStart: function (xhr) {
+        myApp.showIndicator();
+    },
+    onAjaxComplete: function (xhr) {
+        myApp.hideIndicator();
+    },    
+    
+    preroute: function (view, options) {
+        if(!isLogin() && options.url!='login.html'){
+            console.log('must login');
+            view.router.loadPage('login.html');
+            return false;
+    }
+        
+        
 }
 });
 
@@ -29,6 +43,7 @@ var mainView = myApp.addView('.view-main', {
     domCache: true
 });
 
+
 //首页滚动广告
 var mySwiper = myApp.swiper('.swiper-container', {
     pagination:'.swiper-pagination',
@@ -39,6 +54,12 @@ function isLogin(){
 	return false;
     //return typeof localStorage['sec_id']!='undefined' && localStorage['sec_id']!='';
 }
+
+var ajaxError = function(data, textStatus, jqXHR) {	
+	// We have received response and can hide activity indicator
+    myApp.hideIndicator();		
+	myApp.alert('网络繁忙,请稍后再试.');
+};      
 
 //Generate dynamic page
 //var dynamicPageIndex = 0;
