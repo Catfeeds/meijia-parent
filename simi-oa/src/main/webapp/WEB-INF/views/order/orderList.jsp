@@ -60,7 +60,7 @@ import="com.simi.oa.common.UrlHelper"%>
 		                              <th >下单时间</th>
 		                              <th >服务类型</th>
 		                              <th >服务日期</th>
-		                              <th >服务时间</th>
+		                              <!-- <th >服务时间</th> -->
 		                              <th>用户手机号</th>
 		                              <th >地址</th>
 		                              <th >订单状态</th>
@@ -75,7 +75,7 @@ import="com.simi.oa.common.UrlHelper"%>
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-                                  	  <td>${ item.orderNo }</a></td>
+                                  	  <td>${ item.orderNo }</td>
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							            </td>
@@ -88,12 +88,12 @@ import="com.simi.oa.common.UrlHelper"%>
 											<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.serviceDate * 1000}"/>
 										</td>
 
-							            <td>
+							            <%-- <td>
 							            	<orderServiceTimeTag:serviceTime startTime="${item.startTime}" serviceHours="${item.serviceHours}"/>
-							            </td>
+							            </td> --%>
 
 										<td>${ item.mobile }</td>
-							            <td>${ item.userAddrs }</td>
+							            <td>${ item.addrId }</td>
 							            <td>
 							            	<c:if test="${ item.orderStatus < 2 }">
 							            		<orderStatusTag:orderstatus orderStatus="${ item.orderStatus }"/>
@@ -110,6 +110,7 @@ import="com.simi.oa.common.UrlHelper"%>
 							            <td><payTypeNameTag:payType payType="${ item.payType }" orderStatus="${ item.orderStatus }"/></td>
 							       		<%-- <td>${item.cardPasswd }</td> --%>
 							       	<%-- 	<td>${item.remarks }</td> --%>
+							       	<td><button id="btn_update" onClick="btn_update('order/orderView?user_id=${ item.userId }')" class="btn btn-primary btn-xs" title="订单详情"><i class=" icon-ambulance"></i></button></td>
 							       		<%-- <td>
 							       			<button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 	                                  		<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>

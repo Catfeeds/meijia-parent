@@ -56,12 +56,12 @@
 		                              <th >出生日期</th>
 		                              <th >头像</th>
 		                              <th>所在城市</th>
-		                              <th>状态</th>
-                                      <th >添加时间</th>
+		                              
 
                                       <th >环信用户名</th>
                                       <th >环信密码</th>
- 
+                                      <th>状态</th>
+                                      <th >添加时间</th>
 		                              <th>操作</th>
 
                               </tr>
@@ -86,7 +86,7 @@
 							            <td>
 							            	<cityNameTag:cityname cityId="${ item.cityId }"/>
 							            </td>
-							            <td>${item.status}</td>
+							            
 							        <%--  <td>
 							         
 							            <c:choose>
@@ -112,11 +112,13 @@
 										
 							            </td> --%>
 
-							            <td>
-							                  <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
-							           	</td>	
+							            	
 							           	<td>${ item.username}</td>	
-							           	<td>${ item.password}</td>	>				         							            
+							           	<td>${ item.password}</td>
+							           	<td>${item.status}</td>	
+							           	<td>
+							                  <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
+							           	</td>			         							            
 	                                  	<td>	
 	                                  	    <button id="btn_update" onClick="btn_update('/sec/listForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>    
 	                                  	    <button id="btn_update" onClick="btn_update('/user/list?sec_id=${item.id}')" class="btn btn-primary btn-xs" title="对应用户"><i class="icon-user "></i></button>                               

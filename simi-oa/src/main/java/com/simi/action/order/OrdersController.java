@@ -17,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
@@ -55,7 +56,8 @@ public class OrdersController extends AdminController {
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model,
-			OrderSearchVo searchVo) {
+			OrderSearchVo searchVo,
+			@RequestParam(value="user_id", required = false) Long userId) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
@@ -64,13 +66,49 @@ public class OrdersController extends AdminController {
 				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-
+        searchVo.setUserId(userId);
 		PageInfo result = orderQueryService.selectByListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);
 		return "order/orderList";
 	}
+/*	@AuthPassport
+    @RequestMapping(value = "/orderView", method = { RequestMethod.GET })
+	public String  viewList(HttpServletRequest request,Model model,OrderSearchVo orderSearchVo,
+			@RequestParam(value="user_id",required = false) Long userId){
+		model.addAttribute("requestUrl",request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		
+		model.addAttribute("orderSearchVo", orderSearchVo);
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		orderSearchVo.setUserId(userId);
+		List<OrderViewVo> result = orderQueryService.selectByUserId(userId, pageNo, pageSize);
+		
+		model.addAttribute("contentModel", result);
+		
+		return "order/orderView";	
+	}*/
+	
+	@AuthPassport
+	@RequestMapping(value = "/orderView", method = { RequestMethod.GET })
+	public String serviceTypeForm(Model model,
+			@RequestParam(value="user_id",required = false) Long userId,
+			HttpServletRequest request,
+			OrderSearchVo searchVo) {
+		
+		OrderViewVo vo = orderQueryService.selectByUserId(userId);
 
+		//List<OrderViewVo> list = orderQueryService.selectByUserIdList(userId);
+		model.addAttribute("contentModel", vo);
+
+		return "order/orderViewForm";
+	}
+	
+	
+	
 	@AuthPassport
 	@RequestMapping(value = "/listdetail", method = { RequestMethod.GET })
 	public String detail(HttpServletRequest request, Model model,

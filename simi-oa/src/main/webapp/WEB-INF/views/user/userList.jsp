@@ -89,7 +89,7 @@
 							            </td>
 
                                        <td>
-                                            <button id="btn_update" onClick="btn_update('order/list?id=${ item.id }')" class="btn btn-primary btn-xs" title="订单"><i class=" icon-ambulance"></i></button>
+                                            <button id="btn_update" onClick="btn_update('order/list?user_id=${ item.id }')" class="btn btn-primary btn-xs" title="订单"><i class=" icon-ambulance"></i></button>
                                        </td>
 							           <%--  <td>
 							            <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
