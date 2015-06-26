@@ -18,37 +18,30 @@
 
 <div class="pages">
 	<!-- Page, data-page contains page name-->
-	<div data-page="form" class="page">
+	<div data-page="user-list" class="page">
 		<div class="page-content">
 
-
-<div class="list-block">
-  <ul>
-  	{{#each pageform}}
-    <li class="swipeout">
-      <div class="swipeout-content item-content">
-        <div class="item-media"><i class="icon icon-f7"></i></div>
-        <div class="item-inner">
-                        <div class="item-title">{{im_sec_nickname}}</div>
-                        <div class="item-after"><span class="badge bg-green">5</span></div>
-        </div>
-      </div>
-      <div class="swipeout-actions-right">
-        <a href="#" class="action1 bg-red">删除好友</a>
-      </div>
-    </li>
-     {{/each}} 
-   </ul>
-</div>
-
-
-
-
-
-
-
-
-
+			<div class="list-block">
+				<ul>		
+					{{#each data}}			
+					<li class="swipeout">
+						<div class="swipeout-content item-content">
+							<div class="item-media">
+								{{#if head_img}} <img src="{{head_img}}" width='50' height='50'> {{else}} <i class="icon icon-f7"></i>
+								{{/if}}
+							</div>
+							<div class="item-inner">
+								<div class="item-title">{{name}}</div>
+							</div>
+						</div>
+						<div class="swipeout-actions-right">
+					        <a href="#" class="order-form-link bg-orange" userId="{{id}}">快递下单</a>
+					        <a href="#" class="order-list-link bg-blue" userId="{{id}}">订单查询</a>
+					    </div>
+					</li> 
+					{{/each}}
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

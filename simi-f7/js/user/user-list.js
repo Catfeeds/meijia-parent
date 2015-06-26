@@ -7,30 +7,24 @@ $$('#userlist').on('click', function(){
             var userListSuccess = function(data, textStatus, jqXHR) {
         		// We have received response and can hide activity indicator
         	   	myApp.hideIndicator();
-        	   	
         	   	var result = JSON.parse(data.response);
-        	   	console.log(result);
-        	   	var users = result.data;
-                var html = compiledTemplate(users);
-                console.log(users);
-                mainView.router.loadContent(html);
-
-        	   
+                var html = compiledTemplate(result);
+                mainView.router.loadContent(html);        	   
         	};                
             
             var secId = localStorage['sec_id'];
             var secMobile = localStorage['sec_mobile'];
             var postdata = {};
             postdata.mobile = secMobile;
-            postdata.sec_id = secId;        
+            postdata.sec_id = secId;    
 
 
             $$.ajax({
                 type : "POST",
                 url  : siteAPIPath+"sec/get_users.json",
                 dataType: "json",
-//                contentType:"application/x-www-form-urlencoded; charset=utf-8",
                 cache : true,
+                async : false,
                 data : postdata,
                 
                 statusCode: {
@@ -39,8 +33,7 @@ $$('#userlist').on('click', function(){
         	    	500: ajaxError
         	    },
                 success:function(){
-                    var html = compiledTemplate(data);
-                    mainView.router.loadContent(html);
+
                 }
             });
         	
@@ -60,37 +53,17 @@ $$('#userlist').on('click', function(){
 
 
 
-// //userlist: [
-// //        {
-// //            name: 'John',
-// //        },
-// //        {
-// //            name: 'Kyle',
-// //        },
-// // 
-// // ]
+myApp.onPageBeforeInit('user-list', function (page) {
+	//快速下单
+	$$('.order-form-link').on('click', function() {
+		var userId = $$(this).attr("userId");
+		myApp.alert('order-form' + userId);
+		mainView.router.loadPage("order/order-form.html?user_id="+userId);
+	});
 
-// //快速下单
-// $$('.order-form').on('click', function() {
-// 	myApp.alert('order-form');
-// });
-
-// //订单列表
-// $$('.order-list').on('click', function() {
-// 	myApp.alert('order-list');
-// });
-
-// myApp.onPageBeforeInit('form', function (page) {
-
-
-
-//     $$.getJSON('data/userlist.json', {}, function (d) {
-//         myApp.template7Data["page:form"]=d;
-        
-//     });
-
-//     console.log(page);
-   
-//     //return false;
-
-// });
+	//订单列表
+	$$('.order-list-link').on('click', function() {
+		myApp.alert('order-list');
+		var userId = $$(this).attr("userId");
+	});
+});
