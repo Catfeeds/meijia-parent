@@ -13,37 +13,42 @@
 		</div>
 	</div>
 </div>
+
+
+
 <div class="pages">
 	<!-- Page, data-page contains page name-->
 	<div data-page="form" class="page">
 		<div class="page-content">
-			<div class="content-block-title">向右滑动-快捷功能</div>
-			<div class="list-block">
-				<ul>
-					{{#each userlist}}
-					<li class="swipeout">
-						<div class="swipeout-content item-content">
-							<div class="item-media">
-								<i class="icon icon-f7"></i>
-							</div>
-							<div class="item-inner">
-								<div class="item-title">{{name}}</div>
-							</div>
-						</div>
-						<div class="swipeout-actions-right">
-							<a href="#" class="order-form bg-orange">快速下单</a>
-							<a href="#" class="order-list bg-blue">订单列表</a>
-						</div>
-					</li>
-					{{/each}}
-				</ul>
-			</div>
+
+
+<div class="list-block">
+  <ul>
+  	{{#each pageform}}
+    <li class="swipeout">
+      <div class="swipeout-content item-content">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner">
+                        <div class="item-title">{{im_sec_nickname}}</div>
+                        <div class="item-after"><span class="badge bg-green">5</span></div>
+        </div>
+      </div>
+      <div class="swipeout-actions-right">
+        <a href="#" class="action1 bg-red">删除好友</a>
+      </div>
+    </li>
+     {{/each}} 
+   </ul>
+</div>
+
+
+
+
+
+
+
+
+
 		</div>
 	</div>
 </div>
-<script type="text/template7" id="personTemplate">
-    <p>Hello, my name is {{name}} and i am {{age}} years old</p>
-    <p>I work as {{position}} at {{company}}</p>
-</script>
-
-<script type="text/javascript" src="../js/user/user-list.js"></script>

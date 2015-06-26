@@ -6,8 +6,11 @@ var siteAPIPath = localUrl + "/" + appName+"/"; //正式
 //var localPath = "http://localhost:8080/simi/app"//测试
 var siteApp = "simi-f7";
 
+
+var userLoggedIn = false;
 // Initialize your app
 var myApp = new Framework7({
+    // template7Pages: true,
     pushState:true,
     
     cache: false,
@@ -23,18 +26,39 @@ var myApp = new Framework7({
     },    
     
     preroute: function (view, options) {
-        if(!isLogin() && options.url!='login.html'){
-//            console.log('must login');
-            view.router.loadPage('login.html');
-            return false;
+//         if(!isLogin() && options.url!='login.html'){
+// //            console.log('must login');
+//             view.router.loadPage('login.html');
+//             return false;
     }
         
         
-}
 });
 
 // Export selectors engine
 var $$ = Dom7;
+
+
+
+//定义初始化事件
+ 
+$$('#userlist').on('click', function(){
+    
+    $$.get('user/user-list.html', {}, function (data) {
+            var compiledTemplate = Template7.compile(data);
+            $$.getJSON('data/userlist.json', {}, function (data) {
+                var html = compiledTemplate(data);
+                mainView.router.loadContent(html);
+            });
+    });
+
+
+    return false;
+});
+
+
+
+
 
 // Add view
 var mainView = myApp.addView('.view-main', {
