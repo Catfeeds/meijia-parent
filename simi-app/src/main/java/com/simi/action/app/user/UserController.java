@@ -100,7 +100,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		if (mobile.equals("18610807136") && sms_token.equals("000000")) {
+		if (mobile.equals("13810007136") && sms_token.equals("000000")) {
 
 			Users u = userService.getUserByMobile(mobile);
 			if(u!=null){
