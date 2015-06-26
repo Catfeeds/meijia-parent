@@ -40,8 +40,7 @@ var $$ = Dom7;
 
 
 
-//定义初始化事件
- 
+//客户动态模版实现
 $$('#userlist').on('click', function(){
     
     $$.get('user/user-list.html', {}, function (data) {
@@ -83,7 +82,18 @@ var ajaxError = function(data, textStatus, jqXHR) {
 	// We have received response and can hide activity indicator
     myApp.hideIndicator();		
 	myApp.alert('网络繁忙,请稍后再试.');
-};      
+};
+
+
+
+//控制消息的红点显示与隐藏
+var newMessageDot = function (flag){
+    if(flag){
+        $$('#messageDot').removeClass('hidden');
+    }else{
+        $$('#messageDot').addClass('hidden');
+    }
+}    
 
 //Generate dynamic page
 //var dynamicPageIndex = 0;
