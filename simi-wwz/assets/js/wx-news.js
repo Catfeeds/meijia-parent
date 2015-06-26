@@ -3,36 +3,36 @@ $(function(){
     var paraString = url.substring(url.indexOf("?")+1,url.length).split("&");
     var userMsgPage = 1;
     var userMsgPageTemp = userMsgPage;
-    var mobile = paraString[0];
-    var userPhone = mobile.substring(mobile.indexOf('=')+1,mobile.lenght);
+    var temp = paraString[0];
+    var userId = temp.substring(temp.indexOf('=')+1,temp.lenght);
     //获取用户消息列表
-    getUserMsg(userPhone,userMsgPage);
+    getUserMsg(userId,userMsgPage);
     $('#userMsgMore').bind('click',function(){
     	 userMsgPageTemp = parseInt(userMsgPageTemp)+1;
-    	 getUserMsgs(userPhone,userMsgPageTemp);
+    	 getUserMsgs(userId,userMsgPageTemp);
     });
 
 }());
 
 //获取用户消息列表
-function getUserMsg(userPhone,userMsgPage){
+function getUserMsg(userId,userMsgPage){
     $.ajax({
         type:"GET",
-        url:"/onecare/app/user/get_msg.json",
+        url:"/simi/app/user/get_msg.json",
         dataType:"json",
         cache:false,
-        data:"mobile="+userPhone+"&page="+userMsgPage,
+        data:"user_id="+userId+"&page="+userMsgPage,
         success : onListSuccess,
         error : onListError
     });
 }
-function getUserMsgs(userPhone,userMsgPage){
+function getUserMsgs(userId,userMsgPage){
 	$.ajax({
 		type:"GET",
-		url:"/onecare/app/user/get_msg.json",
+		url:"/simi/app/user/get_msg.json",
 		dataType:"json",
 		cache:false,
-		data:"mobile="+userPhone+"&page="+userMsgPage,
+		data:"user_id="+userId+"&page="+userMsgPage,
 		success : onListS,
 		error : onListError
 	});
@@ -100,7 +100,7 @@ function onListS(data, status){
 	    tmpA.push("<a href='"+url+"'");
 	    tmpA.push(" class=''>");
 	    if(item.is_readed==0){
-	    	tmpA.push("<img src='http://ico.ooopic.com/iconset02/3/gif/51110.gif'  alt='有个管家最新2.0版本升级有奖啦！' />");
+	    	tmpA.push("<img src='http://ico.ooopic.com/iconset02/3/gif/51110.gif'  alt='simi最新2.0版本升级有奖啦！' />");
 	    }else{
 	    	tmpA.push("<input type='hidden' />");
 	    }
