@@ -18,12 +18,12 @@ import com.simi.vo.order.OrderViewVo;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.order.OrderLog;
-import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -40,8 +40,8 @@ public class OrdersServiceImpl implements OrdersService {
 	private OrderPricesMapper orderPricesMapper;
 
 	@Autowired
-	UsersService usersService;
-	
+	UsersService usersService;	
+
 	@Autowired
 	UserRef3rdService userRef3rdService;
 	
@@ -258,8 +258,17 @@ public class OrdersServiceImpl implements OrdersService {
 		userDetailScoreService.insert(userDetailScore);
 		
 		users.setScore(users.getScore()+Constants.RATE_CORE);
-		usersService.updateByPrimaryKeySelective(users);
-				
+		usersService.updateByPrimaryKeySelective(users);				
 	}
+
+	@Override
+	public List<Orders> selectByUserId(Long userId) {
+		
+		return ordersMapper.selectByUserId(userId);
+	}
+	
+
+
+
 	
 }

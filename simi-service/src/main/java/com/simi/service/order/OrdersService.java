@@ -1,13 +1,9 @@
 package com.simi.service.order;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserDetailScore;
-import com.simi.po.model.user.Users;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 
 public interface OrdersService {
 	
@@ -30,5 +26,11 @@ public interface OrdersService {
 	void orderRatedTodo(Orders orders);
 
 	Boolean orderConfirmTodo(String orderNo);
+
+	List<Orders> selectByUserId(Long userId);
+
+
+
+	
 
 }

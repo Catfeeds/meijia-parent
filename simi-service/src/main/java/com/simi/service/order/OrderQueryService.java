@@ -25,6 +25,13 @@ public interface OrderQueryService {
 
 	OrderViewVo getOrderView(Orders order);
 
-	List<OrderViewVo> selectBySecId(Long secId, int pageNo, int pageSize);
+    List<OrderViewVo> selectBySecId(Long secId, int pageNo, int pageSize);
+
+	OrderViewVo selectByUserId(Long userId);
+
+	List<OrderViewVo> selectByUserIdList(Long userId);
+
+
+
 
 }

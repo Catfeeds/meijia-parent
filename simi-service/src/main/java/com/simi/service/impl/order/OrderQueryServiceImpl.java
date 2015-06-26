@@ -105,7 +105,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
             	 }
              }
          }
-
+		 
          PageInfo result = new PageInfo(list);
         return result;
     }
@@ -124,10 +124,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		OrderSearchVo orderSearchVo = new OrderSearchVo();
 		orderSearchVo.setUserId(userId);
         List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
-        List<OrderViewVo> result = this.getOrderViewList(list);
-        return result;
+            List<OrderViewVo> result = this.getOrderViewList(list);
+            
+            return result;
 	}
-	
+	  
 	/**
 	 * 根据用户ID进行订单查询，并分页展现
 	 * @param orderSearchVo  查询条件，OrderSearchVo
@@ -145,7 +146,15 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         List<OrderViewVo> result = this.getOrderViewList(list);
         return result;
 	}	
+	@Override
+	public List<OrderViewVo> selectByUserIdList(Long userId) {
+		
 
+        List<Orders> list = ordersMapper.selectByUserIdList(userId);
+        
+        List<OrderViewVo> result = this.getOrderViewList(list);
+        return result;
+	}
 	/*
 	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素
 	 */
@@ -252,6 +261,17 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         return result;
 	}
 	
+	@Override
+	public OrderViewVo selectByUserId(Long userId) {
+		
+		Orders orders = ordersMapper.selectByUser(userId);
+		
+        OrderViewVo result = this.getOrderView(orders);
+        
+		return result;
+	}
+
+	
 	/*
 	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素
 	 */
@@ -299,6 +319,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 		
         return vo;
-	}	
+	}
+
+	
+
+
+
+
 
 }
