@@ -2,27 +2,114 @@
 <!-- We don't need full layout here, because this page will be parsed with Ajax-->
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="left">
-      <!-- <a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a> -->
-    </div>
-    <div class="center sliding">我的</div>
-    <div class="right">
-      <!-- Right link contains only icon - additional "icon-only" class-->
-      <!-- <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a> -->
-    </div>
-  </div>
+	<div class="navbar-inner">
+		<div class="left">
+			<!-- <a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a> -->
+		</div>
+		<div class="center sliding">我的</div>
+		<div class="right">
+			<!-- Right link contains only icon - additional "icon-only" class-->
+			<!-- <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a> -->
+		</div>
+	</div>
 </div>
 <div class="pages">
-  <!-- Page, data-page contains page name-->
-  <div data-page="mine" class="page">
-    <!-- Scrollable page content-->
-    <div class="page-content">
-      <!-- <div class="content-block">
+	<!-- Page, data-page contains page name-->
+	<div data-page="mine" class="page">
+		<!-- Scrollable page content-->
+		<div class="page-content">
+			<form id="my-form" class="list-block">
+				<ul>
+					<li>
+						<div class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+									<img src="http://p.qq181.com/cms/13052/2013052204405056710.jpg"
+											alt="..." width="50" height="50" class="am-radius">
+								</div>
+								<div class="item-input">
+									<span id="user_phone">--</span>
+									<a class="am-btn am-btn-warning" href="wx-mine-info.html"> <i
+										class="am-icon-user"></i> 我的资料
+									</a>
+								</div>
+							</div>
+						</div>
+					</li> 
+				</ul>
+				<ul >
+					<li>
+						<div class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+									收入总额:	
+								</div>
+								<div class="item-input">
+									<h2>
+										<span class="am-text-danger" id="user_money">--</span>
+									</h2>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				
+				 <ul>
+				 	<li>
+						<div class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+								    <a href="wx-order.html" class="am-text-danger"><span class="am-icon-btn am-icon-file-text"></span><br/>服务单</a>
+
+								</div>
+								<div class="item-input">
+									 <a href="wx-income.html" class="am-text-secondary"><span class="am-icon-btn am-icon-briefcase"></span><br/>收入表</a>
+								</div>
+							</div>
+						</div>
+					</li>
+           		 </ul>
+			</form>
+           <ul>
+				<li>
+					<div class="item-content">
+						<div class="item-inner">
+							<div class="content-block">
+							  <a href="#" class="button form-to-json">Get Form Data</a>
+							</div>
+							
+						</div>
+					</div>
+				</li> 
+			</ul>
+			<!-- <div class="content-block">
         <div class="content-block-inner">
           
         </div>
       </div> -->
-    </div>
-  </div>
+		</div>
+		  <!-- Bottom Toolbar-->
+                    <div class="toolbar tabbar tabbar-labels layout-dark">
+                      <div class="toolbar-inner">
+                          <a href="#index" class="no-animation link">
+                              <i class="icon demo-icon-1"></i>
+                              <span class="tabbar-label">工作台</span>
+                          </a>
+                          <a href="webim/chat.html" class="no-animation link">
+                              <i class="icon demo-icon-2">
+                                  <span class="badge bg-red">5</span>
+                              </i>
+                              <span class="tabbar-label">会话</span>
+                          </a>
+                          <a href="user/user-list.html" class="no-animation link">
+                              <i class="icon demo-icon-3"></i>
+                              <span class="tabbar-label">客户</span>
+                          </a>
+                          <a href="sec/mine.html" class="no-animation link">
+                              <i class="icon demo-icon-4"></i>
+                              <span class="tabbar-label">我的</span>
+                          </a>
+                      </div>
+                  </div>
+	</div>
 </div>
