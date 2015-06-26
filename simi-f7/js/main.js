@@ -39,26 +39,6 @@ var myApp = new Framework7({
 var $$ = Dom7;
 
 
-
-//客户动态模版实现
-$$('#userlist').on('click', function(){
-    
-    $$.get('user/user-list.html', {}, function (data) {
-            var compiledTemplate = Template7.compile(data);
-            $$.getJSON('data/userlist.json', {}, function (data) {
-                var html = compiledTemplate(data);
-                mainView.router.loadContent(html);
-            });
-    });
-
-
-    return false;
-});
-
-
-
-
-
 // Add view
 var mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
