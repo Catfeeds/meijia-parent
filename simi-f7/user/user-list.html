@@ -25,17 +25,17 @@
 				<ul>		
 					{{#each data}}			
 					<li class="swipeout">
-						 
+						 <a href="#" class="user-info-link bg-orange" userId="{{id}}" >
 						<div class="swipeout-content item-content">
 							<div class="item-media">
 								{{#if head_img}} <img src="{{head_img}}" width='50' height='50'> {{else}} <i class="icon icon-f7"></i>
 								{{/if}}
 							</div>
 							<div class="item-inner">
-							<a href="#" class="user-info-link bg-orange" userId="{{id}}" >	<div class="item-title">{{name}}</div></a>
+								<div class="item-title">{{name}}</div>
 							</div>
 						</div>
-						
+						</a>
 						<div class="swipeout-actions-right">
 					        <a href="#" class="order-form-link bg-orange" userId="{{id}}">快递下单</a>
 					        <a href="#" class="order-list-link bg-blue" userId="{{id}}">订单查询</a>
