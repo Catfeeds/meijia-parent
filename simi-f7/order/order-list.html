@@ -1,0 +1,50 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="left">
+			<a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+		</div>
+		<div class="center sliding">订单列表</div>
+		<div class="right">
+			<!-- Right link contains only icon - additional "icon-only" class-->
+			<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+		</div>
+	</div>
+</div>
+
+<div class="pages">
+	<!-- Page, data-page contains page name-->
+	<div data-page="order-list-page" class="page">
+		<div class="page-content">
+
+			<div class="list-block">
+				<ul>
+
+				</ul>
+			</div>
+		</div>
+		
+<div id="order-list-part" style="display:none">
+	<li class="order-item" data-id="{id}"><a class="item-link"
+		href="order/order-view.html?user_id={user_id}&order_no={order_no}">
+			<div class="item-content">
+				<div class="item-media">
+					<!-- <img width="44" src="img/cats/2.png"> -->
+				</div>
+				<div class="item-inner">
+					<div class="item-title-row">
+						<div class="item-title">{service_type_name}</div>
+					</div>
+					<div class="item-subtitle">下单时间:{add_time}</div>
+				</div>
+			</div>
+	</a></li>
+</div>		
+		
+		
+	</div>
+</div>
+
+
+
