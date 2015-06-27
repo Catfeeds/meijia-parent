@@ -50,22 +50,12 @@ $$('#im-list').on('click', function(){
 
 
 
-myApp.onPageBeforeInit('user-list', function (page) {
-	//快速下单
-	$$('.order-form-link').on('click', function() {
-		var userId = $$(this).attr("userId");
-//		myApp.alert('order-form' + userId);
-		mainView.router.loadPage("order/order-form.html?user_id="+userId);
-	});
+myApp.onPageBeforeInit('im-list-page', function (page) {
 
-	//订单列表
-	$$('.order-list-link').on('click', function() {
-		var userId = $$(this).attr("userId");
-		mainView.router.loadPage("order/order-list.html?user_id="+userId);
-	});
 	//客户信息
-	$$('.user-info-link').on('click', function() {
+	$$('.im-link').on('click', function() {
+		console.log("im-link");
 		var userId = $$(this).attr("userId");
-		mainView.router.loadPage("user/user-info.html?user_id="+userId);
+		mainView.router.loadPage("webim/chat.html?user_id="+userId);
 	});
 });
