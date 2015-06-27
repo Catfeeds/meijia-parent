@@ -3,6 +3,7 @@ myApp.onPageInit('mine-info', function(page) {
 	var secMobile = localStorage['sec_mobile'];
 	var secId = localStorage['sec_id'];
 
+	
 	var secInfoSuccess = function(data, textStatus, jqXHR) {
 	  	myApp.hideIndicator();
 		var result = JSON.parse(data.response);
