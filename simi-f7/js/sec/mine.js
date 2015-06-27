@@ -2,7 +2,7 @@ myApp.onPageInit('mine', function(page) {
 
 	var secMobile = localStorage['sec_mobile'];
 	var secId = localStorage['sec_id'];
-
+	
 	var secInfoSuccess = function(data, textStatus, jqXHR) {
 	  	myApp.hideIndicator();
 		console.log(JSON.parse(data.response));
@@ -41,5 +41,8 @@ myApp.onPageInit('mine', function(page) {
 			500 : ajaxError
 		}
 	});
+	/*$$("#my_info").on("click",function(){
+		mainView.router.loadPage("sec/mine-info.html);
+	});*/
 
 });

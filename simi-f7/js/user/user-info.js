@@ -17,7 +17,7 @@ myApp.onPageBeforeInit('user-info', function (page) {
 function formSetInfoSuccess(result) {
 	var data = result.data;
 	$$("#head_img").attr("src",data.head_img);
-
+console.log(data);
 	$$("#name").text(data.name);
 	var sex = data.sex;
 	if(sex == 0){
@@ -52,24 +52,25 @@ function formSetInfoSuccess(result) {
 	$$("#user_from").text(userFrom);
 }
 
-var onUserInfoSuccess =function(data, textStatus, jqXHR) {
- 	myApp.hideIndicator();
-   	var result = JSON.parse(data.response);
-	if (result.status == "999") {
-		myApp.alert(result.msg);
-		return;
-	}
-	formSetInfoSuccess(result);
-}
 //获取用户信息接口
 function getUserInfo(userId) {
+
+	var onUserInfoSuccess =function(data, textStatus, jqXHR) {
+	 	myApp.hideIndicator();
+	   	var result = JSON.parse(data.response);
+		if (result.status == "999") {
+			myApp.alert(result.msg);
+			return;
+		}
+		formSetInfoSuccess(result);
+	}
 	var postdata = {};
     postdata.user_id = userId;    
 	$$.ajax({
 		type : "GET",
 		url : siteAPIPath + "user/get_userinfo.json",
 		dataType : "json",
-		cache : true,
+		cache : false,
 		data :postdata,
 		statusCode: {
          	200: onUserInfoSuccess,
@@ -87,4 +88,4 @@ function goToOrderList() {
 	var userId = $$.urlParam('user_id');
 	location.href = "wx-order-list.html?user_id=" + userId;
 }*/
-//wx-order-form.html
+
