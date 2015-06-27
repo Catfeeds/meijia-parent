@@ -66,4 +66,9 @@ myApp.onPageBeforeInit('user-list', function (page) {
 		myApp.alert('order-list');
 		var userId = $$(this).attr("userId");
 	});
+	//客户信息
+	$$('.user-info-link').on('click', function() {
+		var userId = $$(this).attr("userId");
+		mainView.router.loadPage("user/user-info.html?user_id="+userId);
+	});
 });

@@ -18,78 +18,90 @@
 	<div data-page="mine-info-edit" class="page">
 		<!-- Scrollable page content-->
 		<div class="page-content">
-			<form id="my-form" class="list-block">
+			<form id="mine-form" class="list-block">
 				<div class="list-block">
-  <ul>
-    <!-- Text inputs -->
-    <li>
-      <div class="item-content">
-        <div class="item-media"><i class="icon icon-form-name"></i></div>
-        <div class="item-inner">
-          <div class="item-title label">姓名*：</div>
-          <div class="item-input">
-            <input type="text" id="name" placeholder="Your name">
-          </div>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="item-content">
-        <div class="item-media"><i class="icon icon-form-email"></i></div>
-        <div class="item-inner">
-          <div class="item-title label">昵称</div>
-          <div class="item-input">
-            <input type="text" id="nickName" placeholder="E-mail">
-          </div>
-        </div>
-      </div>
-    </li>
-    ...
-    <!-- Select -->
-    <li>
-      <div class="item-content">
-        <div class="item-media"><i class="icon icon-form-gender"></i></div>
-        <div class="item-inner">
-          <div class="item-title label">性别</div>
-          <div class="item-input">
-            <select id="sex">
-              <option value="先生">先生</option>
-              <option vaue="女士">女士</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </li>
-    <!-- Date -->
-    <li>
-      <div class="item-content">
-        <div class="item-media"><i class="icon icon-form-calendar"></i></div>
-        <div class="item-inner">
-          <div class="item-title label">生日</div>
-          <div class="item-input">
-            <input type="date" placeholder="Birth day" id="birthDay">
-          </div>
-        </div>
-      </div>
-    </li>
-  <li>
-      <div class="item-content">
-        <div class="item-media"><i class="icon icon-form-gender"></i></div>
-        <div class="item-inner">
-          <div class="item-title label">性别</div>
-          <div class="item-input">
-            <select id="city_name">
-              <option value="0">--请选择城市--</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+					<input type="hidden" id="sec_id" name="sec_id" value=""/>
+					<ul>
+						<!-- Text inputs -->
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-name"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">姓名*：</div>
+									<div class="item-input">
+										<input type="text" id="name" name="name" placeholder="Your name">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-email"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">昵称</div>
+									<div class="item-input">
+										<input type="text" id="nickName" name="nickName" placeholder="E-mail">
+									</div>
+								</div>
+							</div>
+						</li> ...
+						<!-- Select -->
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-gender"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">性别</div>
+									<div class="item-input">
+										<select id="sex" name="sex">
+											<option value="先生">先生</option>
+											<option vaue="女士">女士</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<!-- Date -->
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-calendar"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">生日</div>
+									<div class="item-input">
+										<input type="date" name="birth_day" placeholder="Birth day" id="birthDay">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-gender"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">性别</div>
+									<div class="item-input">
+										<select id="city_name" name="city_id">
+											<option value="0">--请选择城市--</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</form>
-<!-- 			<p><input type="button" id="mind_info_submit" class="button button-round active" value="保存"></p>
- -->			<p><a  id="mind_info_submit" class="button button-big login-submit button-fill color-orange" href="#">保</a></p>
+			<p>
+				<input type="button" id="mine_info_submit"
+					class="button button-big button-fill color-green" value="保存">
+			</p>
 		</div>
 	</div>
 </div>

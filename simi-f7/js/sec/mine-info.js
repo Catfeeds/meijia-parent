@@ -5,7 +5,6 @@ myApp.onPageInit('mine-info', function(page) {
 
 	var secInfoSuccess = function(data, textStatus, jqXHR) {
 	  	myApp.hideIndicator();
-		console.log(JSON.parse(data.response));
 		var result = JSON.parse(data.response);
 		if (result.status == "999") {
 			myApp.alert(data.msg);

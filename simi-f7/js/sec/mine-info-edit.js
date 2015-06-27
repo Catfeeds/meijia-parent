@@ -69,42 +69,41 @@ function getSecInfo(secId, mobile) {
 //保存秘书信息
 
 function saveSecSuccess(data, textStatus, jqXHR) {
-	var result = JSON.parse(data.response);
-	if (result.status == "999") {
-		myApp.alert(result.msg);
-		return;
-	}
-	window.location.href = "mine-info.html";
+		myApp.hideIndicator();
+		console.log("submit success");
+		var result = JSON.parse(data.response);
+
+		console.log(result);
+		if (result.status == "999") {
+			myApp.alert(result.msg);
+			return;
+		}
+		
+		if (result.status == "0") {
+			myApp.alert("个人信息修改完成");
+			window.location.href = "mine-info.html";
+		}
 } 
 
 
-$$("#mind_info_submit").click(function() {
+$$("#mine_info_submit").on("click", function() {
 	myApp.alert("kk");
-console.log("kk");
-	
-});
-/*
-$$("#mind_info_submit").on("click", function() {
-	myApp.alert("kk");
-	
-	var $form = $('#order-form');
-	var isValid = $('.am-form').data('amui.validator').isFormValid();
-	if (!isValid) {
-		alert("is false");
-		return ;
-	}
+/*	
 	var secId = localStorage['sec_id'];
 	var name = $$("#name").val();
 	var nickName = $$("#nickName").val();
 	var sex = $$("#sex").val();
 	var birthDay = $$("#birthDay").val();
 	var cityId = $$("#city_name").val();
+	
+	var formData = myApp.formToJSON('#mine-form');
 
 	$$.ajax({
 		type : "POST",
 		url : siteAPIPath + "sec/post_secinfo.json",
 		dataType : "json",
 		cache : false,
+		data : formData,
 		data : {
 			"sec_id" : secId,
 			"name" : name,
@@ -119,7 +118,7 @@ $$("#mind_info_submit").on("click", function() {
 			400 : ajaxError,
 			500 : ajaxError
 		}
-	});
-})*/
+	});*/
+})
 
 
