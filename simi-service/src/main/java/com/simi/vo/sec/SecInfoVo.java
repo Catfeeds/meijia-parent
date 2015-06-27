@@ -17,6 +17,8 @@ public class SecInfoVo {
 	private Long cityId;
 	private String cityName;
 	private Long addTime;
+	private String imUserName;
+	private String imPassword;
 
 	public Long getId() {
 		return id;
@@ -100,6 +102,22 @@ public class SecInfoVo {
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+
+	public String getImUserName() {
+		return imUserName;
+	}
+
+	public void setImUserName(String imUserName) {
+		this.imUserName = imUserName;
+	}
+
+	public String getImPassword() {
+		return imPassword;
+	}
+
+	public void setImPassword(String imPassword) {
+		this.imPassword = imPassword;
 	}
 
 	}

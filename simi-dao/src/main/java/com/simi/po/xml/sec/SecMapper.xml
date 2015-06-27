@@ -56,9 +56,9 @@
 		</if>
 		limit 1
 	</select>
-	<select id="selectByMobile" resultMap="SecListMap">
+	<select id="selectByMobile" resultMap="BaseResultMap">
 		select
-		id,name,mobile,nick_name,city_id,head_img
+		<include refid="Base_Column_List" />
 		from sec
 		where mobile = #{mobile,jdbcType=CHAR}
 	</select>

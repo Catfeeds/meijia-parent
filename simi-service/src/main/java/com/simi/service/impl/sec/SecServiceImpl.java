@@ -203,7 +203,7 @@ public class SecServiceImpl implements SecService {
 	}
 
 	@Override
-	public SecList selectByMobile(String mobile) {
+	public Sec selectByMobile(String mobile) {
 
 		return secMapper.selectByMobile(mobile);
 
@@ -259,6 +259,10 @@ public class SecServiceImpl implements SecService {
 					.getCityId());
 			secInfoVo.setCityName(cityNameString);
 		}
+		
+		SecRef3rd secRef3rd = this.selectBySecIdForIm(sec.getId());
+		secInfoVo.setImUserName(secRef3rd.getUsername());
+		secInfoVo.setImPassword(secRef3rd.getPassword());
 
 		return secInfoVo;
 

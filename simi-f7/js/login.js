@@ -94,6 +94,8 @@ myApp.onPageInit('login', function (page) {
     	   	  //登录成功后记录用户有关信息
     	   	  localStorage['sec_mobile'] = result.data.mobile;
     	   	  localStorage['sec_id']= result.data.id;
+    	   	  localStorage['im_username'] = result.data.im_username;
+    	   	  localStorage['im_password'] = result.data.im_password;
     	   	}
     	   	
     	   	mainView.router.loadPage("index.html");

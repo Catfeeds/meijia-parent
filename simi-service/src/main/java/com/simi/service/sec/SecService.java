@@ -27,7 +27,7 @@ public interface SecService {
 
 	Sec selectByUserNameAndOtherId(String name, Long id);
 
-	SecList selectByMobile(String mobile);
+	Sec selectByMobile(String mobile);
 
 	SecRef3rd genImSec(Sec sec);
 

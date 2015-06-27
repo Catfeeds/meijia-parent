@@ -26,7 +26,7 @@ public interface SecMapper {
 
 	Sec selectByNameAndOtherId(HashMap map);
 
-	SecList selectByMobile(String mobile);
+	Sec selectByMobile(String mobile);
 
 	Sec selectVoBySecId(Long secId);
 

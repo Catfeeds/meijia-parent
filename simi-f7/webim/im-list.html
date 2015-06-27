@@ -1,0 +1,47 @@
+
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="left">
+			<a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+		</div>
+		<div class="center sliding">客户列表</div>
+		<div class="right">
+			<!-- Right link contains only icon - additional "icon-only" class-->
+			<a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="pages">
+	<!-- Page, data-page contains page name-->
+	<div data-page="im-list-page" class="page">
+		<div class="page-content">
+
+			<div class="list-block">
+				<ul>		
+					{{#each data}}			
+					<li class="swipeout">
+						
+						<div class="swipeout-content item-content">
+							<div class="item-media">
+							 <a href="#" class="user-info-link " userId="{{id}}" >
+								{{#if head_img}} <img src="{{head_img}}" width='50' height='50'> {{else}} <i class="icon icon-f7"></i>
+								{{/if}}
+								</a>
+							</div>
+							<div class="item-inner">
+								<div class="item-title">{{name}}</div>
+							</div>
+						</div>
+											    
+					</li> 
+					{{/each}}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
