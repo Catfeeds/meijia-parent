@@ -5,7 +5,7 @@ myApp.onPageBeforeInit('user-info', function (page) {
 	if (userId == undefined || userId == '' || userId == 0) {
 		return;
 	}
-	getUserInfo(userId);
+	getUserInfos(userId);
 	
 	$$(".user-info-edit-link").on("click",function(){
 			mainView.router.loadPage("user/user-info-edit.html?user_id="+userId);
@@ -17,7 +17,6 @@ myApp.onPageBeforeInit('user-info', function (page) {
 function formSetInfoSuccess(result) {
 	var data = result.data;
 	$$("#head_img").attr("src",data.head_img);
-console.log(data);
 	$$("#name").text(data.name);
 	var sex = data.sex;
 	if(sex == 0){
@@ -53,7 +52,7 @@ console.log(data);
 }
 
 //获取用户信息接口
-function getUserInfo(userId) {
+function getUserInfos(userId) {
 
 	var onUserInfoSuccess =function(data, textStatus, jqXHR) {
 	 	myApp.hideIndicator();
@@ -70,7 +69,7 @@ function getUserInfo(userId) {
 		type : "GET",
 		url : siteAPIPath + "user/get_userinfo.json",
 		dataType : "json",
-		cache : false,
+		cache : true,
 		data :postdata,
 		statusCode: {
          	200: onUserInfoSuccess,
