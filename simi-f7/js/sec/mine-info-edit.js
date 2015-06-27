@@ -1,11 +1,27 @@
 var secMobile,secId;
 myApp.onPageInit('mine-info-edit', function(page) {
-
-	
 	secMobile = localStorage['sec_mobile'];
 	secId = localStorage['sec_id'];
+	//重新载入页面（不起作用）
+	mainView.router.reloadPage("sec/mine-info.html");
 	// 获取城市信息列表
 	getCityList();
+
+	$$("#mine_info_submit").on("click", function() {
+		var formData = myApp.formToJSON('#mine-form');
+		$$.ajax({
+			type : "POST",
+			url : siteAPIPath + "sec/post_secinfo.json",
+			dataType : "json",
+			cache : false,
+			data : formData,
+			statusCode : {
+				200 : saveSecSuccess,
+				400 : ajaxError,
+				500 : ajaxError
+			}
+		});
+	});
 });
 function cityListSuccess(data, textStatus, jqXHR) {
 	var result = JSON.parse(data.response);
@@ -47,7 +63,7 @@ function secInfoSuccess(data, textStatus, jqXHR) {
 	}
 	$$("#birthDay").val(sec.birth_day);
 	//$$("#city_name option[value="+sec.city_id+"]").attr("selected", true);
-	$$("#secId").val(sec.id);
+	$$("#sec_id").val(sec.id);
 }
 function getSecInfo(secId, mobile) {
 	var postdata = {};
@@ -67,58 +83,17 @@ function getSecInfo(secId, mobile) {
 	});
 }
 //保存秘书信息
-
 function saveSecSuccess(data, textStatus, jqXHR) {
 		myApp.hideIndicator();
 		console.log("submit success");
 		var result = JSON.parse(data.response);
 
-		console.log(result);
 		if (result.status == "999") {
 			myApp.alert(result.msg);
 			return;
 		}
-		
 		if (result.status == "0") {
 			myApp.alert("个人信息修改完成");
-			window.location.href = "mine-info.html";
+			mainView.router.loadPage("sec/mine-info.html");
 		}
 } 
-
-
-$$("#mine_info_submit").on("click", function() {
-	myApp.alert("kk");
-/*	
-	var secId = localStorage['sec_id'];
-	var name = $$("#name").val();
-	var nickName = $$("#nickName").val();
-	var sex = $$("#sex").val();
-	var birthDay = $$("#birthDay").val();
-	var cityId = $$("#city_name").val();
-	
-	var formData = myApp.formToJSON('#mine-form');
-
-	$$.ajax({
-		type : "POST",
-		url : siteAPIPath + "sec/post_secinfo.json",
-		dataType : "json",
-		cache : false,
-		data : formData,
-		data : {
-			"sec_id" : secId,
-			"name" : name,
-			"nick_name" : nickName,
-			"sex" : sex,
-			"birth_day" : birthDay,
-			"city_id" : cityId,
-			"head_img" : "",
-		},
-		statusCode : {
-			200 : saveSecSuccess,
-			400 : ajaxError,
-			500 : ajaxError
-		}
-	});*/
-})
-
-
