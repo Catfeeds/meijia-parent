@@ -47,26 +47,37 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 
 	$$('#order-submit').on('click', function() {
 
+		
+		var orderSubmitSuccess = function(data, textStatus, jqXHR) {
+			// We have received response and can hide activity indicator
+			myApp.hideIndicator();
+			console.log("submit success");
+			var result = JSON.parse(data.response);
+
+			console.log(result);
+			if (result.status == "999") {
+				myApp.alert(result.msg);
+				return;
+			}
+			
+			if (result.status == "0") {
+				myApp.alert("订单推送已完成");
+				
+			}
+
+		};		
+		
 		var formData = myApp.formToJSON('#order-form');
 		$$.ajax({
 			cache : true,
 			type : "POST",
 			url : siteAPIPath + "order/post_add.json",
 			data : formData,
-			async : false,
-			error : function(request) {
-				alert("订单提交失败，请查看你的输入是否正确!");
+			statusCode : {
+				200 : orderSubmitSuccess,
+				400 : ajaxError,
+				500 : ajaxError
 			},
-			success : function(data) {
-				if (data.status == "999") {
-					alert(data.msg);
-					return;
-				}
-
-				if (data.status == "0") {
-					alert("订单已经推送给用户,下一步会跳转到订单详情页面");
-				}
-			}
 		});
 	});
 
