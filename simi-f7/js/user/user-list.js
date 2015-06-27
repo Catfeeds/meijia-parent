@@ -63,7 +63,6 @@ myApp.onPageBeforeInit('user-list', function (page) {
 
 	//订单列表
 	$$('.order-list-link').on('click', function() {
-		myApp.alert('order-list');
 		var userId = $$(this).attr("userId");
 		mainView.router.loadPage("order/order-list.html?user_id="+userId);
 	});
