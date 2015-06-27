@@ -57,7 +57,7 @@ myApp.onPageBeforeInit('user-list', function (page) {
 	//快速下单
 	$$('.order-form-link').on('click', function() {
 		var userId = $$(this).attr("userId");
-		myApp.alert('order-form' + userId);
+//		myApp.alert('order-form' + userId);
 		mainView.router.loadPage("order/order-form.html?user_id="+userId);
 	});
 
@@ -65,6 +65,7 @@ myApp.onPageBeforeInit('user-list', function (page) {
 	$$('.order-list-link').on('click', function() {
 		myApp.alert('order-list');
 		var userId = $$(this).attr("userId");
+		mainView.router.loadPage("order/order-list.html?user_id="+userId);
 	});
 	//客户信息
 	$$('.user-info-link').on('click', function() {

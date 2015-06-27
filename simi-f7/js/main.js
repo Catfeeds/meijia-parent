@@ -10,7 +10,11 @@ var siteApp = "simi-f7";
 var userLoggedIn = false;
 // Initialize your app
 var myApp = new Framework7({
-    // template7Pages: true,
+	
+	precompileTemplates: true,
+	
+    template7Pages: true,
+    
     pushState:true,
     
     cache: false,
