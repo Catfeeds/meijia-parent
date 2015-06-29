@@ -33,6 +33,10 @@
 	padding: 0px;
 	margin-bottom: 10px;
 }
+#r-result{
+	width:100%;
+	height:20px;
+}
 </style>
 </head>
 
@@ -57,23 +61,32 @@
 		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
 			<form>
 				<div class="input-block">
-					<label for="user-cell" style="font-size: 1.6rem"> 小区名:<span
-						style="font-size: 0.8em; color: #aaa; margin-left: 10px">(如果小区不在列表当中，请您输入
-							<span style="color: red">其他小区</span>)
-					</span></label>
-					<div class="am-input-group" style="width: 100%">
-						<select id="city_list" name="city-list"
-							style="width: 25%; float: left; height: 38px">
-							<option value="2">北京</option>
-							<option value="3">天津</option>
-						</select> <span class="am-form-caret"></span>
-						<div>
-							<input type="text" name="user-cell" id="user_cell"
-								style="height: 38px; width: 75%; margin: 0; border: 1px solid #ccc; border-radius: 0; font-size: 1.6rem; color: #555; float: right;"
-								placeholder="输入并选择小区名" autocomplete="off">
-						</div>
-					</div>
-				</div>
+					<label for="user-cell" style="font-size: 1.6rem"> 小区名:
+						<span style="font-size: 0.8em; color: #aaa; margin-left: 10px">(如果小区不在列表当中，请您输入
+								<span style="color: red">其他小区</span>)
+						</span>
+					</label>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td>
+									<div id="r-result"  class="am-input-group">
+										&nbsp;&nbsp;&nbsp;&nbsp;搜索地址： 
+										<input id="suggestId" type="text"  size="100" />
+										<div id="searchResultPanel"
+											style="border: 1px; width: 365px; margin-left: 82px; height: auto; display: none">
+										</div>
+										<input id="areaSearch" type="button" value="搜索" class="btn_b" style="width: 100px; height: 31px;" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div align="center" style="width: 500px; height: 300px; margin: 20px; 20 px; 20 px; 20 px; border: 1px solid gray;"
+										id="map_canvas"></div>
+								</td>
+							</tr>
+						</table>
+				
 				<div class="input-block">
 					<label for="user-address_no" style="font-size: 1.6rem">门牌号:</label>
 					<div class="am-input-group" style="width: 100%">
@@ -84,6 +97,7 @@
 				<div class="input-block">
 					<button type="button" id="address_add"
 						class="am-btn am-btn-primary am-btn-block">添加</button>
+				</div>
 				</div>
 			</form>
 		</div>
@@ -107,8 +121,11 @@
 	<script src="assets/js/amazeui.min.js"></script>
 	<!--<![endif]-->
 	<script src="assets/js/app.js"></script>
+	<script type="text/javascript"
+		src="http://api.map.baidu.com/api?v=1.5&ak=94db56011c206b4857a65b32e1d0f8b5"></script>
 	<script src="assets/js/wx-site.js"></script>
 	<script src="assets/js/check-login.js"></script>
 	<script src="assets/js/wx-add-address.js"></script>
+	<script src="assets/js/addressMap.js"></script>
 </body>
 </html>

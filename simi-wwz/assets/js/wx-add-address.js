@@ -1,6 +1,7 @@
 var userId;
 $(function(){
-	 userId = $.urlParam('user_id');
+	 userId = $.urlParam('user_id')
+	
 
 }());
 
