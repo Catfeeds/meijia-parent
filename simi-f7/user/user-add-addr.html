@@ -1,0 +1,68 @@
+
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="left">
+			<a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a>
+		</div>
+		<div class="center sliding">客户信息</div>
+		<div class="right">
+			<!-- Right link contains only icon - additional "icon-only" class-->
+			<a href="#" class="link icon-only open-panel"> <i
+				class="icon icon-bars"></i></a>
+		</div>
+	</div>
+</div>
+<div class="pages">
+	<!-- Page, data-page contains page name-->
+	<div data-page="user-add-addr" class="page">
+		<div class="page-content">
+			<!-- <div class="contact-header">
+
+				<div class="header-text">
+					<img src="" alt='...' width='70' height='50' id="head_img"
+						class='am-radius'> <i
+						class="icon icon-favorite ion-ios7-star"></i> <span id="name"></span>
+				</div>
+			</div> -->
+			<form class="searchbar searchbar-init"
+				data-search-list=".list-block-search" data-search-in=".item-title"
+				data-searchbar-found=".searchbar-found"
+				data-searchbar-not-found=".searchbar-not-found">
+				<div class="searchbar-input">
+					<input type="search" id="suggestId" placeholder="Search"> <a
+						href="#" class="searchbar-clear"></a>
+					<div id="searchResultPanel"
+							style="border: 1px; width: 365px; margin-left: 82px; height: auto; display: none">
+					</div>
+				</div>
+				<a href="#" class="searchbar-cancel">Cancel</a>
+			</form>
+			<form id="user-form" class="list-block">
+					<div class="list-block">
+						<input type="hidden" id="user_id" name="user_id" />
+						<ul>
+							<li>
+								<div align="left"
+									style="width: 400px; height: 300px; margin-right:100px; border: 3px solid gray;"
+									id="map_canvas"></div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div align="left">
+											<!-- 	<label for="user-address_no" style="font-size: 1.6rem">门牌号:</label> -->
+											<input type="text" id="user_address_no" placeholder="填写具体门牌号"
+												style="height: 30px; width: 60%; margin-left:1px; border: 2px solid #ccc; border-radius: 0; font-size: 1.6rem; color: #555; float: left;">
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<p>
+							<input type="button" id="user_add_addr_submit"
+								class="button button-big button-fill color-green" value="添加地址">
+						</p>
+					</div>
+		</div>

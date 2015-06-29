@@ -49,7 +49,7 @@ var userInfoSuccess =function(data, textStatus, jqXHR) {
 	$$("#head_img").attr("src",user.head_img);
 	console.log(user.sex);
 	if(user.sex !=' ' && user.sex !=null){
-		$$("#sex option[value=" + user.sex + "]").attr("selected", true);
+		$$("#sex").find("option[value='"+user.sex+"']").attr('selected',true);
 	}
 }
 // 获取用户信息

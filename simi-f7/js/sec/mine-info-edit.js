@@ -59,10 +59,10 @@ function secInfoSuccess(data, textStatus, jqXHR) {
 	$$("#name").val(sec.name);
 	$$("#nickName").val(sec.nick_name);
 	if(sec.sex !=' ' && sec.sex !=null){
-		$$("#sex option[value=" + sec.sex + "]").attr("selected", true);
+	$$("#sex").find("option[value='"+sec.sex+"']").attr('selected',true);
 	}
 	$$("#birthDay").val(sec.birth_day);
-	//$$("#city_name option[value="+sec.city_id+"]").attr("selected", true);
+	$$("#city_name").find("option[value='"+sec.city_id+"']").attr('selected',true);
 	$$("#sec_id").val(sec.id);
 }
 function getSecInfo(secId, mobile) {

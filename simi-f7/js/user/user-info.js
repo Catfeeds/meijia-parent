@@ -11,6 +11,10 @@ myApp.onPageBeforeInit('user-info', function (page) {
 			mainView.router.loadPage("user/user-info-edit.html?user_id="+userId);
 		});
 	
+	$$(".user-addr-list-link").on("click",function(){
+		mainView.router.loadPage("user/user-addr-list.html?user_id="+userId);
+	});
+	
 });
 
 
