@@ -12,70 +12,205 @@
   </head>
   <body>
     <!-- Status bar overlay for fullscreen mode-->
-    <!-- <div class="statusbar-overlay"></div> -->
+    <div class="statusbar-overlay"></div>
     <!-- Panels overlay-->
-    <!-- <div class="panel-overlay"></div> -->
+    <div class="panel-overlay"></div>
 
 
 
+    <!-- Views-->
+    <div class="views">
 
-<div class="views">
+
+      
+      <!-- Your main view, should have "view-main" class-->
       <div class="view view-main">
-        
 
 
+        <!-- Top Navbar-->
         <div class="navbar">
-          <div class="navbar-inner">
-            <div class="center sliding">Framework7</div>
-            <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+          
+          <div class="navbar-inner" data-page="index">
+            <!-- We have home navbar without left link-->
+            <div class="center sliding">私秘-秘书版</div>
+            <div class="right">
+              <!-- Right link contains only icon - additional "icon-only" class-->
+              <!-- <a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a> -->
+            </div>
           </div>
+
         </div>
 
 
 
-
-        <div class="toolbar">
-          <div class="toolbar-inner">
-            <a href="webim/im-list.html" class="link">Dummy Link</a>
-            <a href="#" data-popover=".popover-menu" class="open-popover link">Menu</a></div>
-        </div>
-
-
-
-
-
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
         <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          
+
           <div data-page="index" class="page">
+            <!-- Scrollable page content-->
             <div class="page-content">
-             
-              aaaaaa
+
+
+                    <div class="swiper-container">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="img/tmp/1.png"></div>
+                        <div class="swiper-slide"><img src="img/tmp/2.png"></div>
+                        <div class="swiper-slide"><img src="img/tmp/3.png"></div>
+                      </div>
+                      <div class="swiper-pagination"></div>
+                    </div>
+
+
+
+
+
+                    <div class="row">
+                      <div class="col-50">
+                        <div class="content-block-simi-1"><a href="#" class="button button-big">快速下单</a></div>
+                      </div>
+                      <div class="col-50">
+                        <div class="content-block-simi-2"><a href="#" class="button button-big">实时抢单</a></div>
+                      </div>
+                    </div>
+
+
+
+
+                    <ul class="am-avg-sm-3 boxes am-align-center am-text-center">
+                      <li class="box box-3">
+                            <a class="link" href="iframe-1.html"><span class="am-icon-btn  am-icon-plane"></span></br>
+                              机票</a>
+                        </li>
+                      <li class="box box-3"><a class="link" href="iframe-2.html"><span class="am-icon-btn am-icon-h-square"></span></br>
+                              火车票</a></li>
+                      <li class="box box-2"><a class="link" href="iframe-3.html"><span class="am-icon-btn  am-icon-suitcase"></span></br>
+                              酒店</a></li>
+                      <li class="box box-5"><a class="link" href="iframe-4.html"><span class="am-icon-btn am-icon-cutlery"></span></br>
+                              餐饮</a></li>
+                      <li class="box box-4"><a class="link" href="iframe-5.html"><span class="am-icon-btn am-icon-cab"></span></br>
+                              叫车</a></li>
+                      <li class="box box-1"><a class="link" href="iframe-6.html"><span class="am-icon-btn am-icon-money"></span></br>
+                              充值</a></li>
+                      <li class="box box-1"><a class="link" href="iframe-7.html"><span class="am-icon-btn am-icon-truck"></span></br>
+                              快递</a></li>
+                      <li class="box box-2"><a class="link" href="iframe-8.html"><span class="am-icon-btn am-icon-ticket"></span></br>
+                              电影票</a></li>
+                      <li class="box box-2"><a class="link" href="iframe-9.html"><span class="am-icon-btn am-icon-plus"></span></br>
+                              更多服务</a></li>    
+                    </ul>
+
+
+
 
 
             </div>
           </div>
+
+
+
         </div>
+
+
+                    <!-- Bottom Toolbar-->
+                    <div class="toolbar tabbar tabbar-labels layout-dark">
+                      <div class="toolbar-inner">
+                          <a href="#index" class="no-animation link">
+                              <i class="icon demo-icon-1"></i>
+                              <span class="tabbar-label">工作台</span>
+                          </a>
+                          <a id="im-list2" href="webim/im-list.html" class="no-animation link">
+                              <i class="icon demo-icon-2">
+                                  <span id="messageDot" class="badge bg-red hidden" style="font-size: 5px;line-height: 1;top:0;left:105%;">&nbsp;&nbsp;</span>
+                              </i>
+                              <span class="tabbar-label">会话</span>
+                          </a>
+                          <a id="userlist2" href="user/user-list.html" class="no-animation link">
+                              <i class="icon demo-icon-3"></i>
+                              <span class="tabbar-label">客户</span>
+                          </a>
+                          <a href="sec/mine.html" class="no-animation link">
+                              <i class="icon demo-icon-4"></i>
+                              <span class="tabbar-label">我的</span>
+                          </a>
+                      </div>
+                  </div>
+
+
+
+
+
       </div>
+
+
+
+
+
+
+
+
+
+      <!-- <div class="view view-chat">
+              
+              <div class="pages navbar-through toolbar-through">
+
+                <div data-page="chatindex" class="page">
+                  <div class="page-content">
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="toolbar messagebar">
+                <div class="toolbar-inner">
+                  <textarea placeholder="Message"></textarea><a href="#" class="link">Send</a>
+                </div>
+              </div>
+
+
+      </div>
+ -->
+
+
+    
+
+
+
+
+
+
     </div>
-
-
-
-
-      
-
-
-
-
-
-
-
 
   
     <!-- Path to Framework7 Library JS-->
 
     <script type="text/javascript" src="js/framework7.min.js"></script>
+    
+    <script type="text/javascript" src="js/lib/moment-with-locales.min.js"></script>
+    <!-- Path to your app js-->
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
-    <script type="text/javascript" src="webim/im-list.js"></script>
     
+    <script type="text/javascript" src="webim/im-list.js"></script>
+    <!--<script type="text/javascript" src="js/webim/chat.js"></script>-->
+    
+    <script type="text/javascript" src="js/user/user-list.js"></script>
+    <script type="text/javascript" src="js/order/order-form.js"></script>   
+    <script type="text/javascript" src="js/order/order-list.js"></script>   
+    
+    
+    <script type="text/javascript" src="js/sec/mine.js"></script>   
+    
+    <script type="text/javascript" src="js/sec/mine-info.js"></script>   
+    <script type="text/javascript" src="js/sec/mine-info-edit.js"></script>   
+    <script type="text/javascript" src="js/user/user-info.js"></script>   
+    <script type="text/javascript" src="js/user/user-info-edit.js"></script>   
+    <script type="text/javascript" src="js/user/user-addr-list.js"></script>  
+    <script type="text/javascript" src="js/user/user-add-addr.js"></script>  
+    
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=94db56011c206b4857a65b32e1d0f8b5"></script>-->
+	  <!--<script src="js/addressMap.js"></script>-->
   </body>
 </html>
