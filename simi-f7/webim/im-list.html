@@ -24,22 +24,19 @@
 
 <div class="list-block">
 	<ul>		
-		{{#each data}}			
-		<li class="swipeout">
-			
-			<div class="swipeout-content item-content">
-				<div class="item-media">
-				 <a href="webim/chat.html" class="link" userId="{{id}}" >
-					{{#if head_img}} <img src="{{head_img}}" width='50' height='50'> {{else}} <i class="icon icon-f7"></i>
-					{{/if}}
-					</a>
-				</div>
-				<div class="item-inner">
-					<div class="item-title">{{name}}</div>
-				</div>
-			</div>
-								    
-		</li> 
+		{{#each data}}
+
+
+		<li><a href="webim/chat.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-media">{{#if head_img}} <img src="{{head_img}}" width='50' height='50'> {{else}} <i class="icon icon-f7"></i>
+					{{/if}}</div>
+                        <div class="item-inner">
+                          <div class="item-title">{{name}}</div>
+                        </div>
+                      </div></a>
+        </li>			
+		
 		{{/each}}
 	</ul>
 </div>
