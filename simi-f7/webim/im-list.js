@@ -31,6 +31,8 @@ myApp.onPageBeforeInit('im-list-page', function (page) {
                          myApp.hideIndicator();
                          var result = JSON.parse(data.response);
                          var html = compiledTemplate(result);
+                         
+                         console.log(html);
                          //更换方法，加载到当前视图
                          mainView.router.reloadContent(html);  
 
@@ -65,7 +67,6 @@ myApp.onPageBeforeInit('im-list-page', function (page) {
 
                 //客户信息
                 $$('.im-link').on('click', function() {
-                    console.log("im-link");
                     var userId = $$(this).attr("userId");
                     mainView.router.loadPage("webim/chat.html?user_id="+userId);
                 });
