@@ -46,9 +46,21 @@ myApp.template7Data['page:im-list-page'] = function(){
 }
 
 //列表页
-myApp.onPageInit('im-list-page', function (page) {
-
-   
+myApp.onPageInit('im-list-page', function (page) {});
 
 
+
+// Add view
+var chatView = myApp.addView('.view-chat', {
+    // Because we use fixed-through navbar we can enable dynamic navbar
+    dynamicNavbar: true,
+    domCache: true
 });
+
+
+
+
+
+
+
+
