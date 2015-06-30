@@ -1,4 +1,3 @@
-//对话页
 myApp.onPageInit('chat', function (page) {
 
     var im_username = localStorage['im_username'];
