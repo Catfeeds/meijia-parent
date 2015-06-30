@@ -9,7 +9,7 @@ $$('#userlist').on('click', function(){
         	   	myApp.hideIndicator();
         	   	var result = JSON.parse(data.response);
                 var html = compiledTemplate(result);
-                //mainView.router.im-list-page(html);        	   
+                mainView.router.im-list-page(html);        	   
         	};                
             
             var secId = localStorage['sec_id'];
