@@ -19,6 +19,13 @@
 
 // });
 
+
+// console.log();
+myApp.template7Data['page:im-list-page'] = function(){
+    cosole.log('page data for im-list-page');
+    return {};
+}
+
 //列表页
 myApp.onPageInit('im-list-page', function (page) {
 

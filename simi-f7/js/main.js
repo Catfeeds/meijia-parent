@@ -20,6 +20,8 @@ var myApp = new Framework7({
     cache: false,
     
     modalTitle: "提示",
+
+    template7Data: {},
     
     // Hide and show indicator during ajax requests
     onAjaxStart: function (xhr) {
