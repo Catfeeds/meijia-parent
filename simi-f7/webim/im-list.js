@@ -20,137 +20,35 @@
 // });
 
 
-// console.log();
 myApp.template7Data['page:im-list-page'] = function(){
-    console.log('page data for im-list-page');
-    var result;
+        
+        console.log('page data for im-list-page');
+        var result;
 
-    var secId = localStorage['sec_id'];
-    var secMobile = localStorage['sec_mobile'];
-    var postdata = {};
-    postdata.mobile = secMobile;
-    postdata.sec_id = secId;    
+        var secId = localStorage['sec_id'];
+        var secMobile = localStorage['sec_mobile'];
+        var postdata = {};
+        postdata.mobile = secMobile;
+        postdata.sec_id = secId;    
 
-    $$.ajax({
-        type : "POST",
-        url  : siteAPIPath+"sec/get_users.json",
-        dataType: "json",
-        cache : true,
-        async : false,
-        data : postdata,
-        success: function(data){
-            result = data;
-        }
-    })
-    return result;
+        $$.ajax({
+                type : "POST",
+                url  : siteAPIPath+"sec/get_users.json",
+                dataType: "json",
+                cache : true,
+                async : false,
+                data : postdata,
+                success: function(data){
+                    result = data;
+                }
+        })
+        return result;
 }
 
 //列表页
 myApp.onPageInit('im-list-page', function (page) {
 
-        // $$.get('webim/imlist-inner.html', {}, function (data) {
-            
-            
-        //         var compiledTemplate = Template7.compile(data);
-        //         var userListSuccess = function(data, textStatus, jqXHR) {
-                         
-        //                  myApp.hideIndicator();
-        //                  var result = JSON.parse(data.response);
-        //                  var html = compiledTemplate(result);
-                         
-        //                  console.log(html);
-        //                  //更换方法，加载到当前视图
-        //                  mainView.router.reloadContent(html);  
-
-
-        //        };                
-            
-        //         var secId = localStorage['sec_id'];
-        //         var secMobile = localStorage['sec_mobile'];
-        //         var postdata = {};
-        //         postdata.mobile = secMobile;
-        //         postdata.sec_id = secId;    
-
-
-        //         $$.ajax({
-        //             type : "POST",
-        //             url  : siteAPIPath+"sec/get_users.json",
-        //             dataType: "json",
-        //             cache : true,
-        //             async : false,
-        //             data : postdata,
-                    
-        //             statusCode: {
-        //              200: userListSuccess,
-        //              400: ajaxError,
-        //              500: ajaxError
-        //              },
-        //             success:function(){
-
-        //             }
-        //         });
-
-
-        //         //客户信息
-        //         $$('.im-link').on('click', function() {
-        //             var userId = $$(this).attr("userId");
-        //             mainView.router.loadPage("webim/chat.html?user_id="+userId);
-        //         });
-
-        // });
-
+   
 
 
 });
-// //客户动态模版实现
-// $$('#im-list').on('click', function(){
-    
-//     $$.get('webim/im-list.html', {}, function (data) {
-//             var compiledTemplate = Template7.compile(data);
-            
-//             var userListSuccess = function(data, textStatus, jqXHR) {
-//         		// We have received response and can hide activity indicator
-//         	   	myApp.hideIndicator();
-//         	   	var result = JSON.parse(data.response);
-//                 var html = compiledTemplate(result);
-//                 mainView.router.loadContent(html);        	   
-//         	};                
-            
-//             var secId = localStorage['sec_id'];
-//             var secMobile = localStorage['sec_mobile'];
-//             var postdata = {};
-//             postdata.mobile = secMobile;
-//             postdata.sec_id = secId;    
-
-
-//             $$.ajax({
-//                 type : "POST",
-//                 url  : siteAPIPath+"sec/get_users.json",
-//                 dataType: "json",
-//                 cache : true,
-//                 async : false,
-//                 data : postdata,
-                
-//                 statusCode: {
-//                 	200: userListSuccess,
-//         	    	400: ajaxError,
-//         	    	500: ajaxError
-//         	    },
-//                 success:function(){
-
-//                 }
-//             });
-        	
-
-
-
-//             return false;            
-
-//     });
-
-
-//     return false;
-// });
-
-
-
