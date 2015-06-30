@@ -20,7 +20,7 @@
 // });
 
 //列表页
-myApp.onPageBeforeInit('im-list-page', function (page) {
+myApp.onPageInit('im-list-page', function (page) {
 
         $$.get('webim/imlist-inner.html', {}, function (data) {
             
