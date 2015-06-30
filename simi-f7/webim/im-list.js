@@ -22,56 +22,56 @@
 //列表页
 myApp.onPageInit('im-list-page', function (page) {
 
-        $$.get('webim/imlist-inner.html', {}, function (data) {
+        // $$.get('webim/imlist-inner.html', {}, function (data) {
             
             
-                var compiledTemplate = Template7.compile(data);
-                var userListSuccess = function(data, textStatus, jqXHR) {
+        //         var compiledTemplate = Template7.compile(data);
+        //         var userListSuccess = function(data, textStatus, jqXHR) {
                          
-                         myApp.hideIndicator();
-                         var result = JSON.parse(data.response);
-                         var html = compiledTemplate(result);
+        //                  myApp.hideIndicator();
+        //                  var result = JSON.parse(data.response);
+        //                  var html = compiledTemplate(result);
                          
-                         console.log(html);
-                         //更换方法，加载到当前视图
-                         mainView.router.reloadContent(html);  
+        //                  console.log(html);
+        //                  //更换方法，加载到当前视图
+        //                  mainView.router.reloadContent(html);  
 
 
-               };                
+        //        };                
             
-                var secId = localStorage['sec_id'];
-                var secMobile = localStorage['sec_mobile'];
-                var postdata = {};
-                postdata.mobile = secMobile;
-                postdata.sec_id = secId;    
+        //         var secId = localStorage['sec_id'];
+        //         var secMobile = localStorage['sec_mobile'];
+        //         var postdata = {};
+        //         postdata.mobile = secMobile;
+        //         postdata.sec_id = secId;    
 
 
-                $$.ajax({
-                    type : "POST",
-                    url  : siteAPIPath+"sec/get_users.json",
-                    dataType: "json",
-                    cache : true,
-                    async : false,
-                    data : postdata,
+        //         $$.ajax({
+        //             type : "POST",
+        //             url  : siteAPIPath+"sec/get_users.json",
+        //             dataType: "json",
+        //             cache : true,
+        //             async : false,
+        //             data : postdata,
                     
-                    statusCode: {
-                     200: userListSuccess,
-                     400: ajaxError,
-                     500: ajaxError
-                     },
-                    success:function(){
+        //             statusCode: {
+        //              200: userListSuccess,
+        //              400: ajaxError,
+        //              500: ajaxError
+        //              },
+        //             success:function(){
 
-                    }
-                });
+        //             }
+        //         });
 
 
-                //客户信息
-                $$('.im-link').on('click', function() {
-                    var userId = $$(this).attr("userId");
-                    mainView.router.loadPage("webim/chat.html?user_id="+userId);
-                });
+        //         //客户信息
+        //         $$('.im-link').on('click', function() {
+        //             var userId = $$(this).attr("userId");
+        //             mainView.router.loadPage("webim/chat.html?user_id="+userId);
+        //         });
 
-        });
+        // });
 
 
 
