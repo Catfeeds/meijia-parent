@@ -25,23 +25,23 @@ myApp.template7Data['page:im-list-page'] = function(){
     console.log('page data for im-list-page');
     var result;
 
-    var secId = localStorage['sec_id'];
-    var secMobile = localStorage['sec_mobile'];
-    var postdata = {};
-    postdata.mobile = secMobile;
-    postdata.sec_id = secId;    
+    // var secId = localStorage['sec_id'];
+    // var secMobile = localStorage['sec_mobile'];
+    // var postdata = {};
+    // postdata.mobile = secMobile;
+    // postdata.sec_id = secId;    
 
-    $$.ajax({
-        type : "POST",
-        url  : siteAPIPath+"sec/get_users.json",
-        dataType: "json",
-        cache : true,
-        async : false,
-        data : postdata,
-        success: function(data){
-            result = data;
-        }
-    })
+    // $$.ajax({
+    //     type : "POST",
+    //     url  : siteAPIPath+"sec/get_users.json",
+    //     dataType: "json",
+    //     cache : true,
+    //     async : false,
+    //     data : postdata,
+    //     success: function(data){
+    //         result = data;
+    //     }
+    // })
     return result;
 }
 

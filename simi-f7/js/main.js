@@ -10,33 +10,27 @@ var siteApp = "simi-f7";
 var userLoggedIn = false;
 // Initialize your app
 var myApp = new Framework7({
-	
 	precompileTemplates: true,
-	
     template7Pages: true,
-    
-    pushState:true,
-    
+    pushState: true,
     cache: false,
-    
     modalTitle: "提示",
-
     template7Data: {},
     
     // Hide and show indicator during ajax requests
     onAjaxStart: function (xhr) {
-        myApp.showIndicator();
+            myApp.showIndicator();
     },
     onAjaxComplete: function (xhr) {
-        myApp.hideIndicator();
+            myApp.hideIndicator();
     },    
     
     preroute: function (view, options) {
-         if(!isLogin() && options.url!='login.html'){
-             console.log('must login');
-             view.router.loadPage('login.html');
-             return false;
-         }
+             if(!isLogin() && options.url!='login.html'){
+                     console.log('must login');
+                     view.router.loadPage('login.html');
+                     return false;
+             }
     }
         
         
@@ -44,7 +38,6 @@ var myApp = new Framework7({
 
 // Export selectors engine
 var $$ = Dom7;
-
 
 // Add view
 var mainView = myApp.addView('.view-main', {
