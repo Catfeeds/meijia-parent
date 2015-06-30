@@ -13,6 +13,6 @@ myApp.onPageInit('chat', function (page) {
 	console.log(document.body.clientWidth);
 	console.log(document.body.clientHeight);
 	
-	var html = '<iframe src="js/lib/webim/index.html" id="iframe" frameborder="0" scrolling="auto" class="mainiframe"></iframe>';
+	var html = '<iframe src="js/lib/webim/index.html" id="iframe" frameborder="0" scrolling="auto" class="mainiframe" width="100%" height="'+clientHeight+'"></iframe>';
 	$$('.page-content-inner').append(html);
 });
