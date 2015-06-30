@@ -4518,6 +4518,7 @@
         
         app.router.load = function (view, options) {
             if (app.router.preroute(view, options)) {
+                console.log('pre');
                 return false;
             }
             options = options || {};
