@@ -70,6 +70,8 @@ myApp.onPageBeforeInit('im-list-page', function (page) {
                     mainView.router.loadPage("webim/chat.html?user_id="+userId);
                 });
 
+        });
+
 
 
 });
