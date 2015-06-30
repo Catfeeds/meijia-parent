@@ -22,8 +22,27 @@
 
 // console.log();
 myApp.template7Data['page:im-list-page'] = function(){
-    cosole.log('page data for im-list-page');
-    return {};
+    console.log('page data for im-list-page');
+    var result;
+
+    var secId = localStorage['sec_id'];
+    var secMobile = localStorage['sec_mobile'];
+    var postdata = {};
+    postdata.mobile = secMobile;
+    postdata.sec_id = secId;    
+
+    $$.ajax({
+        type : "POST",
+        url  : siteAPIPath+"sec/get_users.json",
+        dataType: "json",
+        cache : true,
+        async : false,
+        data : postdata,
+        success: function(data){
+            result = data;
+        }
+    })
+    return result;
 }
 
 //列表页
