@@ -5,6 +5,8 @@ webim = {
 
     myMessages: null,
 
+    conversationStarted: false,
+
     login: function(user, pass){
         if (user == '' || pass == '') {
             alert("请输入用户名和密码");
@@ -31,10 +33,126 @@ webim = {
         
 
         if (mestype == 'groupchat') {
-            appendMsg(message.from, message.to, messageContent, mestype);
+            // appendMsg(message.from, message.to, messageContent, mestype);
         } else {
-            appendMsg(from, from, messageContent);
+            // appendMsg(from, from, messageContent);
+
+                    var messageType = 'received';
+                    // 接收的消息的头像和名称
+                    var avatar, name;
+                    if(messageType === 'received') {
+                            avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
+                            name = 'Kate';
+                    }
+                    this.myMessages.addMessage({
+                    // Message text
+                    text: messageContent,
+                    // 随机消息类型
+                    type: messageType,
+                    // 头像和名称
+                    avatar: avatar,
+                    name: from,
+                    // 日期
+                    day: !webim.conversationStarted ? '今天' : false,
+                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+                    })
         }
+
+
+    },
+    sendText: function(){
+                if (textSending) {
+                    return;
+                }
+                textSending = true;
+
+                var msgInput = document.getElementById(talkInputId);
+                var msg = msgInput.value;
+
+                if (msg == null || msg.length == 0) {
+                    return;
+                }
+                var to = curChatUserId;
+                if (to == null) {
+                    return;
+                }
+                var options = {
+                    to : to,
+                    msg : msg,
+                    type : "chat"
+                };
+                // 群组消息和个人消息的判断分支
+                if (curChatUserId.indexOf(groupFlagMark) >= 0) {
+                    options.type = 'groupchat';
+                    options.to = curRoomId;
+                }
+                //easemobwebim-sdk发送文本消息的方法 to为发送给谁，meg为文本消息对象
+                conn.sendTextMessage(options);
+
+                //当前登录人发送的信息在聊天窗口中原样显示
+                var msgtext = msg.replace(/\n/g, '<br>');
+                appendMsg(curUserId, to, msgtext);
+                turnoffFaces_box();
+                msgInput.value = "";
+                msgInput.focus();
+
+                setTimeout(function() {
+                    textSending = false;
+                }, 1000);
+    },
+    handleOpen: function(conn){
+            //从连接中获取到当前的登录人注册帐号名
+        curUserId = conn.context.userId;
+        //获取当前登录人的联系人列表
+        conn.getRoster({
+            success : function(roster) {
+                // 页面处理
+                // hiddenWaitLoginedUI();
+                // showChatUI();
+                var curroster;
+                for ( var i in roster) {
+                    var ros = roster[i];
+                    //both为双方互为好友，要显示的联系人,from我是对方的单向好友
+                    if (ros.subscription == 'both'
+                            || ros.subscription == 'from') {
+                        bothRoster.push(ros);
+                    } else if (ros.subscription == 'to') {
+                        //to表明了联系人是我的单向好友
+                        toRoster.push(ros);
+                    }
+                }
+                if (bothRoster.length > 0) {
+                    curroster = bothRoster[0];
+                    // buildContactDiv("contractlist", bothRoster);//联系人列表页面处理
+                    if (curroster){
+                        // setCurrentContact(curroster.name);//页面处理将第一个联系人作为当前聊天div
+                    }
+                        
+                }
+                //获取当前登录人的群组列表
+                // conn.listRooms({
+                //     success : function(rooms) {
+                //         if (rooms && rooms.length > 0) {
+                //             buildListRoomDiv("contracgrouplist", rooms);//群组列表页面处理
+                //             if (curChatUserId == null) {
+                //                 setCurrentContact(groupFlagMark
+                //                         + rooms[0].roomId);
+                //                 $('#accordion2').click();
+                //             }
+                //         }
+                //         conn.setPresence();//设置用户上线状态，必须调用
+                //     },
+                //     error : function(e) {
+
+                //     }
+                // });
+            }
+        });
+
+
+
+
+
 
 
     }
@@ -54,7 +172,7 @@ myApp.template7Data['page:messages'] = function(){
             https : false,
             //当连接成功时的回调方法
             onOpened : function() {
-                handleOpen(conn);
+                webim.handleOpen(conn);
             },
             //当连接关闭时的回调方法
             onClosed : function() {
@@ -62,7 +180,7 @@ myApp.template7Data['page:messages'] = function(){
             },
             //收到文本消息时的回调方法
             onTextMessage : function(message) {
-                handleTextMessage(message);
+                webim.handleTextMessage(message);
             },
             //收到表情消息时的回调方法
             onEmotionMessage : function(message) {
@@ -121,7 +239,7 @@ myApp.onPageBeforeInit('messages', function(page){
 myApp.onPageInit('messages', function (page) {
 
 
-            var conversationStarted = false;
+            // var conversationStarted = false;
             webim.myMessages = myApp.messages('.messages', {
               autoLayout:true
             });
@@ -137,7 +255,8 @@ myApp.onPageInit('messages', function (page) {
                       myMessagebar.clear()
                      
                       // 随机消息类型
-                      var messageType = (['sent', 'received'])[Math.round(Math.random())];
+                      //var messageType = (['sent', 'received'])[Math.round(Math.random())];
+                      var messageType = 'sent';
                      
                       // 接收的消息的头像和名称
                       var avatar, name;
@@ -155,8 +274,8 @@ myApp.onPageInit('messages', function (page) {
                         avatar: avatar,
                         name: name,
                         // 日期
-                        day: !conversationStarted ? '今天' : false,
-                        time: !conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+                        day: !webim.conversationStarted ? '今天' : false,
+                        time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
                       })
                      
                       // 更新会话flag
