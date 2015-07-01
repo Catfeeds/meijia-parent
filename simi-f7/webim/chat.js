@@ -156,6 +156,25 @@ webim = {
 
 
 
+    },
+    handleError: function(e){
+        console.log(e);
+        // if (curUserId == null) {
+        //     hiddenWaitLoginedUI();
+        //     alert(e.msg + ",请重新登录");
+        //     showLoginUI();
+        // } else {
+        //     var msg = e.msg;
+        //     if (e.type == EASEMOB_IM_CONNCTION_SERVER_CLOSE_ERROR) {
+        //         if (msg == "" || msg == 'unknown' ) {
+        //             alert("服务器器断开连接,可能是因为在别处登录");
+        //         } else {
+        //             alert("服务器器断开连接");
+        //         }
+        //     } else {
+        //         alert(msg);
+        //     }
+        // }
     }
 }
 
@@ -177,7 +196,7 @@ myApp.template7Data['page:messages'] = function(){
             },
             //当连接关闭时的回调方法
             onClosed : function() {
-                handleClosed();
+                webim.handleClosed();
             },
             //收到文本消息时的回调方法
             onTextMessage : function(message) {
@@ -185,11 +204,11 @@ myApp.template7Data['page:messages'] = function(){
             },
             //收到表情消息时的回调方法
             onEmotionMessage : function(message) {
-                handleEmotion(message);
+                webim.handleEmotion(message);
             },
             //收到图片消息时的回调方法
             onPictureMessage : function(message) {
-                handlePictureMessage(message);
+                webim.handlePictureMessage(message);
             },
             //收到音频消息的回调方法
             onAudioMessage : function(message) {
@@ -197,31 +216,31 @@ myApp.template7Data['page:messages'] = function(){
             },
             //收到位置消息的回调方法
             onLocationMessage : function(message) {
-                handleLocationMessage(message);
+                webim.handleLocationMessage(message);
             },
             //收到文件消息的回调方法
             onFileMessage : function(message) {
-                handleFileMessage(message);
+                webim.handleFileMessage(message);
             },
             //收到视频消息的回调方法
             onVideoMessage : function(message) {
-                handleVideoMessage(message);
+                webim.handleVideoMessage(message);
             },
             //收到联系人订阅请求的回调方法
             onPresence : function(message) {
-                handlePresence(message);
+                webim.handlePresence(message);
             },
             //收到联系人信息的回调方法
             onRoster : function(message) {
-                handleRoster(message);
+                webim.handleRoster(message);
             },
             //收到群组邀请时的回调方法
             onInviteMessage : function(message) {
-                handleInviteMessage(message);
+                webim.handleInviteMessage(message);
             },
             //异常时的回调方法
             onError : function(message) {
-                handleError(message);
+                webim.handleError(message);
             }
         });
 
