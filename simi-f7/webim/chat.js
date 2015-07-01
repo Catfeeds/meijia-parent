@@ -1,7 +1,7 @@
 
 myApp.template7Data['page:messages'] = function(){
         
-        console.log('message auto login');
+        console.log('message data init');
         var result;
         var secId = localStorage['sec_id'];
         var secMobile = localStorage['sec_mobile'];
@@ -23,7 +23,7 @@ myApp.template7Data['page:messages'] = function(){
         return result;
 }
 
-myApp.onPageBeforeInit('message', function(page){
+myApp.onPageBeforeInit('messages', function(page){
         console.log('message before init');
 });
 
