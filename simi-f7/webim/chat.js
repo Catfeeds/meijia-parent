@@ -11,7 +11,6 @@ webim = {
 
         //根据用户名密码登录系统
         conn.open({
-            apiUrl : apiURL,
             user : user,
             pwd : pass,
             //连接时提供appkey
