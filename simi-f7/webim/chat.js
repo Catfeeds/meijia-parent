@@ -109,26 +109,26 @@ webim = {
                 // 页面处理
                 // hiddenWaitLoginedUI();
                 // showChatUI();
-                var curroster;
-                for ( var i in roster) {
-                    var ros = roster[i];
-                    //both为双方互为好友，要显示的联系人,from我是对方的单向好友
-                    if (ros.subscription == 'both'
-                            || ros.subscription == 'from') {
-                        bothRoster.push(ros);
-                    } else if (ros.subscription == 'to') {
-                        //to表明了联系人是我的单向好友
-                        toRoster.push(ros);
-                    }
-                }
-                if (bothRoster.length > 0) {
-                    curroster = bothRoster[0];
-                    // buildContactDiv("contractlist", bothRoster);//联系人列表页面处理
-                    if (curroster){
-                        // setCurrentContact(curroster.name);//页面处理将第一个联系人作为当前聊天div
-                    }
+                // var curroster;
+                // for ( var i in roster) {
+                //     var ros = roster[i];
+                //     //both为双方互为好友，要显示的联系人,from我是对方的单向好友
+                //     if (ros.subscription == 'both'
+                //             || ros.subscription == 'from') {
+                //         bothRoster.push(ros);
+                //     } else if (ros.subscription == 'to') {
+                //         //to表明了联系人是我的单向好友
+                //         toRoster.push(ros);
+                //     }
+                // }
+                // if (bothRoster.length > 0) {
+                //     curroster = bothRoster[0];
+                //     // buildContactDiv("contractlist", bothRoster);//联系人列表页面处理
+                //     if (curroster){
+                //         // setCurrentContact(curroster.name);//页面处理将第一个联系人作为当前聊天div
+                //     }
                         
-                }
+                // }
                 //获取当前登录人的群组列表
                 // conn.listRooms({
                 //     success : function(rooms) {

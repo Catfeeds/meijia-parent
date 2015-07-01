@@ -1229,7 +1229,7 @@ connection.prototype.open = function(options) {
 			} else {
 				conn.onError({
 					type : EASEMOB_IM_CONNCTION_OPEN_USERGRID_ERROR,
-					msg : "登录失败",
+					msg : "登录失败222",
 					data : res,
 					xhr : xhr
 				});
