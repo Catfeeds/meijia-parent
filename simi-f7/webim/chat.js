@@ -7,12 +7,11 @@ webim = {
 
     conversationStarted: false,
 
-    login: function(user, pass){
+    login: function(user, pass, conn){
         if (user == '' || pass == '') {
             alert("请输入用户名和密码");
             return;
         }
-
 
         //根据用户名密码登录系统
         conn.open({
@@ -244,11 +243,7 @@ myApp.template7Data['page:messages'] = function(){
                 webim.handleError(message);
             }
         });
-
-
-        webim.login(imID, imPWD);
-        
-
+        webim.login(imID, imPWD, conn);
         
         return result;
 }
