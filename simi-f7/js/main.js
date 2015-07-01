@@ -37,7 +37,7 @@ var myApp = new Framework7({
 });
 
 // Export selectors engine
-var $$ = Dom7;
+var $$ = jQuery = Dom7;
 
 // Add view
 var mainView = myApp.addView('.view-main', {
