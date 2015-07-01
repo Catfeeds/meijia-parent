@@ -9,6 +9,7 @@ webim = {
             return;
         }
 
+        
         //根据用户名密码登录系统
         conn.open({
             user : user,
@@ -26,8 +27,8 @@ myApp.template7Data['page:messages'] = function(){
         console.log('message data init');
         var result = {};
         var imID        = localStorage['im_username'];
-        var imPWD       = localStorage['simi-sec-2'];
-
+        var imPWD       = localStorage['im_password'];
+        
 
         conn = new Easemob.im.Connection();
         //初始化连接
