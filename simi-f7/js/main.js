@@ -46,7 +46,6 @@ var mainView = myApp.addView('.view-main', {
     // domCache: true
 });
 
-
 //首页滚动广告
 var mySwiper = myApp.swiper('.swiper-container', {
     pagination:'.swiper-pagination',
@@ -75,7 +74,3 @@ var newMessageDot = function (flag){
         $$('#messageDot').addClass('hidden');
     }
 }    
-
-
-console.log(mainView.activePage);
-
