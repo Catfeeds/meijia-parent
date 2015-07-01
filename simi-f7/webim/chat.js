@@ -1,13 +1,34 @@
 
+webim = {
+    
+    appkey: "yougeguanjia#simi",
+
+    login: function(user, pass){
+        if (user == '' || pass == '') {
+            alert("请输入用户名和密码");
+            return;
+        }
+
+        //根据用户名密码登录系统
+        conn.open({
+            apiUrl : apiURL,
+            user : user,
+            pwd : pass,
+            //连接时提供appkey
+            appKey : this.appkey
+            //accessToken : 'YWMt8bfZfFk5EeSiAzsQ0OXu4QAAAUpoZFOMJ66ic5m2LOZRhYUsRKZWINA06HI'
+        });
+        return false;
+    }
+}
+
 myApp.template7Data['page:messages'] = function(){
         
         console.log('message data init');
         var result;
-        var secId = localStorage['sec_id'];
-        var secMobile = localStorage['sec_mobile'];
-        var postdata = {};
-        postdata.mobile = secMobile;
-        postdata.sec_id = secId;    
+        var imID        = localStorage['im_username'];
+        var imPWD       = localStorage['simi-sec-2'];
+        
 
         $$.ajax({
                 type : "POST",
