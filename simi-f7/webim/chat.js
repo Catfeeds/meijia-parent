@@ -30,16 +30,7 @@ myApp.template7Data['page:messages'] = function(){
         var imPWD       = localStorage['simi-sec-2'];
         
 
-        $$.ajax({
-                type : "POST",
-                url  : siteAPIPath+"sec/get_users.json",
-                dataType: "json",
-                cache : true,
-                async : false,
-                success: function(data){
-                    result = data;
-                }
-        })
+        
         return result;
 }
 
