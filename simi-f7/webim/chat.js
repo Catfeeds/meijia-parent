@@ -87,6 +87,9 @@ myApp.template7Data['page:messages'] = function(){
                 handleError(message);
             }
         });
+
+
+        webim.login(imID, imPWD);
         
 
         
