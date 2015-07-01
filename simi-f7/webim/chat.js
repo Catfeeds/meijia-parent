@@ -158,7 +158,7 @@ webim = {
     },
     handleError: function(e){
         console.log('handleError');
-        console.log(e);
+        // console.log(e);
         // if (curUserId == null) {
         //     hiddenWaitLoginedUI();
         //     alert(e.msg + ",请重新登录");

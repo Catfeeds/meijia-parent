@@ -1219,6 +1219,11 @@ connection.prototype.open = function(options) {
 			dologin2IM(data,conn);
 		};
 		var error = function(res,xhr,msg){
+
+			console.log(res)
+			console.log(xhr)
+			console.log(msg)
+
 			if(res.error && res.error_description){
 				conn.onError({
 					type : EASEMOB_IM_CONNCTION_OPEN_USERGRID_ERROR,
