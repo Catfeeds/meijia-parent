@@ -32,6 +32,7 @@ myApp.template7Data['page:im-list-page'] = function(){
         postdata.sec_id = secId;    
 
         $$.ajax({
+                // type : "POST",
                 type : "POST",
                 url  : siteAPIPath+"sec/get_users.json",
                 dataType: "json",

@@ -109,7 +109,8 @@ myApp.onPageInit('login', function (page) {
         postdata.user_type = 2;
 
         $$.ajax({
-            type : "POST",
+            //type : "POST",
+            type : "GET",
             url  : siteAPIPath+"sec/login.json",
             dataType: "json",
 //            contentType:"application/x-www-form-urlencoded; charset=utf-8",
