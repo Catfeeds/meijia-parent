@@ -15,7 +15,7 @@ webim = {
             user : user,
             pwd : pass,
             //连接时提供appkey
-            appKey : this.appkey
+            appKey : appkey
             //accessToken : 'YWMt8bfZfFk5EeSiAzsQ0OXu4QAAAUpoZFOMJ66ic5m2LOZRhYUsRKZWINA06HI'
         });
         return false;
@@ -25,7 +25,7 @@ webim = {
 myApp.template7Data['page:messages'] = function(){
         
         console.log('message data init');
-        var result;
+        var result = {};
         var imID        = localStorage['im_username'];
         var imPWD       = localStorage['simi-sec-2'];
         
