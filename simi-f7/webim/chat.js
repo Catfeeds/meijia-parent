@@ -4,14 +4,10 @@ myApp.onPageInit('messages', function (page) {
 
 
             var conversationStarted = false;
-
             var myMessages = myApp.messages('.messages', {
               autoLayout:true
             });
-
             var myMessagebar = myApp.messagebar('.messagebar');
-
-
             // Handle message
             $$('.messagebar .link').on('click', function () {
                       // Message text
@@ -41,7 +37,7 @@ myApp.onPageInit('messages', function (page) {
                         avatar: avatar,
                         name: name,
                         // 日期
-                        day: !conversationStarted ? 'Today' : false,
+                        day: !conversationStarted ? '今天' : false,
                         time: !conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
                       })
                      
