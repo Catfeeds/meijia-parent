@@ -158,6 +158,7 @@ webim = {
 
     },
     handleError: function(e){
+        console.log('handleError');
         console.log(e);
         // if (curUserId == null) {
         //     hiddenWaitLoginedUI();
