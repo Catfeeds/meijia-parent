@@ -36,7 +36,6 @@ myApp.template7Data['page:messages'] = function(){
                 dataType: "json",
                 cache : true,
                 async : false,
-                data : postdata,
                 success: function(data){
                     result = data;
                 }
