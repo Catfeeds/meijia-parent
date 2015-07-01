@@ -101,7 +101,8 @@ webim = {
                 }, 1000);
     },
     handleOpen: function(conn){
-            //从连接中获取到当前的登录人注册帐号名
+        console.log('opend');
+        //从连接中获取到当前的登录人注册帐号名
         curUserId = conn.context.userId;
         //获取当前登录人的联系人列表
         conn.getRoster({
