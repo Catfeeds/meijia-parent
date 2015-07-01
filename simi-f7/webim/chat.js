@@ -1,6 +1,33 @@
 
-myApp.onPageInit('messages', function (page) {
+myApp.template7Data['page:messages'] = function(){
+        
+        console.log('message auto login');
+        var result;
+        var secId = localStorage['sec_id'];
+        var secMobile = localStorage['sec_mobile'];
+        var postdata = {};
+        postdata.mobile = secMobile;
+        postdata.sec_id = secId;    
 
+        $$.ajax({
+                type : "POST",
+                url  : siteAPIPath+"sec/get_users.json",
+                dataType: "json",
+                cache : true,
+                async : false,
+                data : postdata,
+                success: function(data){
+                    result = data;
+                }
+        })
+        return result;
+}
+
+myApp.onPageBeforeInit('message', function(page){
+        console.log('message before init');
+});
+
+myApp.onPageInit('messages', function (page) {
 
 
             var conversationStarted = false;
