@@ -319,7 +319,8 @@ var doAjaxRequest = function(options) {
 				}
 				if(dataType=='json'){
 					try{
-						var json = $.parseJSON(xhr.responseText);
+						// var json = JSON.parse(xhr.responseText);
+						var json = JSON.parse(xhr.responseText);
 						suc(json,xhr);
 					} catch(e){
 						error(xhr.responseText,xhr,"错误的数据,无法转换为json");
@@ -339,7 +340,7 @@ var doAjaxRequest = function(options) {
 			} else {
 				if(dataType=='json'){
 					try{
-						var json = $.parseJSON(xhr.responseText);
+						var json = JSON.parse(xhr.responseText);
 						error(json,xhr,"服务器返回错误信息");
 					} catch(e){
 						error(xhr.responseText,xhr,"服务器返回错误信息");
@@ -566,7 +567,7 @@ var uploadFn = function(options) {
 		xhr.addEventListener("abort", options.onFileUploadCanceled, false);
 		xhr.addEventListener("load", function(e) {
 			try{
-				var json = $.parseJSON(xhr.responseText);
+				var json = JSON.parse(xhr.responseText);
 				options.onFileUploadComplete(json);
 			} catch(e){
 				options.onFileUploadError({
@@ -584,7 +585,7 @@ var uploadFn = function(options) {
 			if( xhr.readyState === 4){
 				if (ajax.status == 200) {
 					try{
-						var json = $.parseJSON(xhr.responseText);
+						var json = JSON.parse(xhr.responseText);
 						options.onFileUploadComplete(json);
 					} catch(e){
 						options.onFileUploadError({
