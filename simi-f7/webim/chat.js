@@ -3,13 +3,15 @@ webim = {
     
     appkey: "yougeguanjia#simi",
 
+    myMessages: null,
+
     login: function(user, pass){
         if (user == '' || pass == '') {
             alert("请输入用户名和密码");
             return;
         }
 
-        
+
         //根据用户名密码登录系统
         conn.open({
             user : user,
@@ -19,6 +21,22 @@ webim = {
             //accessToken : 'YWMt8bfZfFk5EeSiAzsQ0OXu4QAAAUpoZFOMJ66ic5m2LOZRhYUsRKZWINA06HI'
         });
         return false;
+    },
+    handleTextMessage : function(message) {
+        var from = message.from;//消息的发送者
+        var mestype = message.type;//消息发送的类型是群组消息还是个人消息
+        var messageContent = message.data;//文本消息体
+        //TODO  根据消息体的to值去定位那个群组的聊天记录
+        var room = message.to;
+        
+
+        if (mestype == 'groupchat') {
+            appendMsg(message.from, message.to, messageContent, mestype);
+        } else {
+            appendMsg(from, from, messageContent);
+        }
+
+
     }
 }
 
@@ -28,7 +46,7 @@ myApp.template7Data['page:messages'] = function(){
         var result = {};
         var imID        = localStorage['im_username'];
         var imPWD       = localStorage['im_password'];
-        
+
 
         conn = new Easemob.im.Connection();
         //初始化连接
@@ -104,7 +122,7 @@ myApp.onPageInit('messages', function (page) {
 
 
             var conversationStarted = false;
-            var myMessages = myApp.messages('.messages', {
+            webim.myMessages = myApp.messages('.messages', {
               autoLayout:true
             });
             var myMessagebar = myApp.messagebar('.messagebar');
@@ -128,7 +146,7 @@ myApp.onPageInit('messages', function (page) {
                         name = 'Kate';
                       }
                       // Add message
-                      myMessages.addMessage({
+                      webim.myMessages.addMessage({
                         // Message text
                         text: messageText,
                         // 随机消息类型
@@ -144,9 +162,6 @@ myApp.onPageInit('messages', function (page) {
                       // 更新会话flag
                       conversationStarted = true;
             });
-
-
-
 
 
 });
