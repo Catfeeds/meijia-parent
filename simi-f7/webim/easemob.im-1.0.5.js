@@ -1386,6 +1386,7 @@ connection.prototype.handleIq = function(e) {
 	return true;
 };
 connection.prototype.handleMessage = function(msginfo){
+
 	if(this.isClosed()){
 		return;
 	}

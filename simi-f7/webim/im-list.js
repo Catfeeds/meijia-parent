@@ -20,6 +20,7 @@
 // });
 
 
+//获取列表页用户列表
 myApp.template7Data['page:im-list-page'] = function(){
         
         console.log('page data for im-list-page');
@@ -33,8 +34,9 @@ myApp.template7Data['page:im-list-page'] = function(){
 
         $$.ajax({
                 // type : "POST",
-                type : "POST",
-                url  : siteAPIPath+"sec/get_users.json",
+                type : "GET",
+                //url  : siteAPIPath+"sec/get_users.json",
+                url  : "data/users.json",
                 dataType: "json",
                 cache : true,
                 async : false,
@@ -46,18 +48,8 @@ myApp.template7Data['page:im-list-page'] = function(){
         return result;
 }
 
-//列表页
+//列表页初始化函数
 myApp.onPageInit('im-list-page', function (page) {});
-
-
-
-// Add view
-// var chatView = myApp.addView('.view-chat', {
-//     // Because we use fixed-through navbar we can enable dynamic navbar
-//     dynamicNavbar: true,
-//     domCache: true
-// });
-
 
 
 
