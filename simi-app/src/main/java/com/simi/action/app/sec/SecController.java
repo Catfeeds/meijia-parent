@@ -88,6 +88,14 @@ public class SecController extends BaseController {
 
 		
 		Sec sec = secService.selectByMobile(mobile);
+		
+		if (sec == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		
 		SecInfoVo secInfoVo = secService.changeSecToVo(sec);
        if (mobile.trim().equals("18610807136") && sms_token.trim().equals("000000")) {
     	    result = new AppResultData<Object>(Constants.SUCCESS_0,

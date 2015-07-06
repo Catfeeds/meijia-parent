@@ -86,7 +86,7 @@ myApp.onPageInit('login', function (page) {
 //    	   	console.log(result.data.id);
 //    	   	console.log(result.data.mobile);
     	   	if (result.status == "999") {
-    	   		myApp.alert(data.msg);
+    	   		myApp.alert(result.msg);
     	   		return;
     	   	}
     	   	
