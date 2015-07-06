@@ -219,7 +219,7 @@ public class OrdersServiceImpl implements OrdersService {
 		ext.put("order_id", orderViewVo.getId());
 		ext.put("order_no", orderViewVo.getOrderNo());
 		ext.put("order_pay_type", orderViewVo.getOrderPayType());
-		ext.put("add_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getAddTime()));
+		ext.put("add_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getAddTime() * 1000));
 		ext.put("service_type_name", orderViewVo.getServiceTypeName());
 		ext.put("service_content", orderViewVo.getServiceContent());
 		ext.put("order_status", orderViewVo.getOrderStatus());

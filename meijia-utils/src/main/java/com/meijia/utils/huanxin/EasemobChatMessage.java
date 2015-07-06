@@ -41,26 +41,37 @@ public class EasemobChatMessage {
     public static void main(String[] args) {
 
         // 聊天消息 获取最新的20条记录
-        ObjectNode queryStrNode = factory.objectNode();
-        queryStrNode.put("limit", "20");
-        ObjectNode messages = getChatMessages(queryStrNode);
+//        ObjectNode queryStrNode = factory.objectNode();
+//        queryStrNode.put("limit", "20");
+//        ObjectNode messages = getChatMessages(queryStrNode);
 
         // 聊天消息 获取7天以内的消息
-        String currentTimestamp = String.valueOf(System.currentTimeMillis());
-        String senvenDayAgo = String.valueOf(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
-        ObjectNode queryStrNode1 = factory.objectNode();
-        queryStrNode1.put("ql", "select * where  timestamp > " + senvenDayAgo + " and timestamp < " + currentTimestamp);
-        ObjectNode messages1 = getChatMessages(queryStrNode1);
+//        String currentTimestamp = String.valueOf(System.currentTimeMillis());
+//        String senvenDayAgo = String.valueOf(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
+//        ObjectNode queryStrNode1 = factory.objectNode();
+//        queryStrNode1.put("ql", "select * where  timestamp > " + senvenDayAgo + " and timestamp < " + currentTimestamp);
+//        ObjectNode messages1 = getChatMessages(queryStrNode1);
 
         // 聊天消息 分页获取
         ObjectNode queryStrNode2 = factory.objectNode();
-        queryStrNode2.put("limit", "20");
+        queryStrNode2.put("limit", "100");
         // 第一页
         ObjectNode messages2 = getChatMessages(queryStrNode2);
         // 第二页
         String cursor = messages2.get("cursor").asText();
-        queryStrNode2.put("cursor", cursor);
-        ObjectNode messages3 = getChatMessages(queryStrNode2);
+        ObjectNode messages3 = null;
+        while (true) {
+        	try {
+	            queryStrNode2.put("cursor", cursor);
+	            messages3 = getChatMessages(queryStrNode2);  
+	            if (messages3.get("cursor") == null ) break;
+	            cursor = messages3.get("cursor").asText();
+        	} catch(Exception e) {
+        		e.printStackTrace();
+        		break;
+        	}
+        }
+
     }
 
     /**

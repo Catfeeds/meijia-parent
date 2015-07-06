@@ -21,9 +21,9 @@
 
 
 //获取列表页用户列表
-myApp.template7Data['page:im-list-page'] = function(){
+myApp.template7Data['page:user-list-page'] = function(){
         
-        console.log('page data for im-list-page');
+        console.log('page data for user-list-page');
         var result;
 
         var secId = localStorage['sec_id'];
@@ -33,10 +33,10 @@ myApp.template7Data['page:im-list-page'] = function(){
         postdata.sec_id = secId;    
 
         $$.ajax({
-                // type : "POST",
-                type : "GET",
-                //url  : siteAPIPath+"sec/get_users.json",
-                url  : "data/users.json",
+
+                type : "POST",
+                url  : siteAPIPath+"sec/get_users.json",
+                //url  : "data/users.json",
                 dataType: "json",
                 cache : true,
                 async : false,

@@ -15,8 +15,9 @@ myApp.onPageInit('messages', function (page) {
         console.log('message page init');
 
         var toUser = page.query.uid;
+        var toUserName = page.query.name;
 
-        $$('#touser').html(toUser);
+        $$('#touser').html(toUserName);
 
         webim.myMessages = myApp.messages('.messages', {
                 autoLayout:true
