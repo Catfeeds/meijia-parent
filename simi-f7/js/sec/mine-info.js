@@ -1,4 +1,4 @@
-myApp.onPageInit('mine-info', function(page) {
+myApp.onPageBeforeInit('mine-info', function(page) {
 
 	var secMobile = localStorage['sec_mobile'];
 	var secId = localStorage['sec_id'];
@@ -35,6 +35,16 @@ myApp.onPageInit('mine-info', function(page) {
 			500 : ajaxError
 		}
     });
+    
+    //秘书退出当前账号
+	$$('.sec-logout').on('click', function() {
+		  localStorage.removeItem("mobile");
+		  localStorage.removeItem('sec_id');
+		  localStorage.removeItem('im_username');
+		  localStorage.removeItem('im_password');
+		  mainView.router.loadPage("index.html");
+	});
+    
 });
 //获取用户消息列表
 

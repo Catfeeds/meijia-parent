@@ -1,5 +1,46 @@
 var secMobile,secId;
-myApp.onPageInit('mine-info-edit', function(page) {
+//获取列表页用户列表
+myApp.template7Data['page:mine-info-edit'] = function(){
+	
+	console.log('page data for user-list-page');
+	var result;
+	
+	/*var secId = localStorage['sec_id'];
+	var secMobile = localStorage['sec_mobile'];
+	var postdata = {};
+	postdata.mobile = secMobile;
+	postdata.sec_id = secId;   */
+	
+	$$.ajax({
+		type : "GET",
+		url : siteAPIPath + "city/get_list.json?",
+		dataType : "json",
+		cache : true,
+		success: function(data){
+			result = data;
+		}
+	});
+	return result;
+	
+	/*$$.ajax({
+		
+		type : "POST",
+		url  : siteAPIPath+"sec/get_users.json",
+		//url  : "data/users.json",
+		dataType: "json",
+		cache : true,
+		async : false,
+		data : postdata,
+		success: function(data){
+			result = data;
+		}
+	})
+	return result;*/
+}
+
+
+/*
+myApp.onPageBeforeInit('mine-info-edit', function(page) {
 	secMobile = localStorage['sec_mobile'];
 	secId = localStorage['sec_id'];
 	//重新载入页面（不起作用）
@@ -22,7 +63,7 @@ myApp.onPageInit('mine-info-edit', function(page) {
 			}
 		});
 	});
-});
+});*/
 function cityListSuccess(data, textStatus, jqXHR) {
 	var result = JSON.parse(data.response);
 	if (result.status == "999") {
