@@ -23,7 +23,7 @@
 					<input type="hidden" id="sec_id" name="sec_id" />
 					<ul>
 						<!-- Text inputs -->
-						<!-- <li>
+						<li>
 							<div class="item-content">
 								<div class="item-media">
 									<i class="icon icon-form-name"></i>
@@ -31,7 +31,7 @@
 								<div class="item-inner">
 									<div class="item-title label">姓名*：</div>
 									<div class="item-input">
-										<input type="text" id="name" name="name" placeholder="姓名">
+										<input type="text" id="name" name="name" value="{{name}}" placeholder="姓名">
 									</div>
 								</div>
 							</div>
@@ -66,7 +66,7 @@
 								</div>
 							</div>
 						</li>
-						Date
+
 						<li>
 							<div class="item-content">
 								<div class="item-media">
@@ -80,7 +80,7 @@
 								</div>
 							</div>
 						</li>
-						<li> -->
+						<li>
 						<!--  <a href="#" class="item-link smart-select"> -->
 							<div class="item-content">
 								<div class="item-media">
@@ -91,7 +91,7 @@
 									<div class="item-input">
 										<select align="center" id="city_name" name="city_id">
 											<option  value="0">--请选择城市--</option>
-											{{#each data}}
+											{{#each citylist}}
 												<option  value="{{city_id}}">{{name}}</option>
 											{{/each}}
 										</select>

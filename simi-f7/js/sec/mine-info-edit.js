@@ -3,23 +3,42 @@ var secMobile,secId;
 myApp.template7Data['page:mine-info-edit'] = function(){
 	
 	console.log('page data for user-list-page');
-	var result;
+	var result =  {};
 	
-	/*var secId = localStorage['sec_id'];
-	var secMobile = localStorage['sec_mobile'];
+    var secId = localStorage['sec_id'];
+    var secMobile = localStorage['sec_mobile'];
 	var postdata = {};
+	postdata.sec_id = secId;
 	postdata.mobile = secMobile;
-	postdata.sec_id = secId;   */
+	$$.ajax({
+		type : "POST",
+		url : siteAPIPath + "sec/get_secinfo.json",
+		dataType : "json",
+		cache : true,
+		data : postdata,
+		async : false,
+		success: function(data){
+			console.log(data.data);
+			result = data.data;
+		}
+	});	
+	
 	
 	$$.ajax({
 		type : "GET",
 		url : siteAPIPath + "city/get_list.json?",
 		dataType : "json",
 		cache : true,
+		async : false,
 		success: function(data){
-			result = data;
+			console.log(data.data);
+			result.citylist = data.data;
 		}
 	});
+	
+	
+	
+	console.log(result);
 	return result;
 	
 	/*$$.ajax({
