@@ -18,11 +18,25 @@
 	<div data-page="mine-info-edit" class="page">
 		<!-- Scrollable page content-->
 		<div class="page-content">
-			<form id="mine-form" class="list-block">
+			<form id="mine-form" class="list-block" enctype="multipart/form-data">
 				<div class="list-block">
 					<input type="hidden" id="sec_id" name="sec_id" />
 					<ul>
 						<!-- Text inputs -->
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-name"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">头像*：</div>
+									<div class="item-input">
+										<input name="head_img" id="head_img" capture=“camera” type="file" />
+									</div>
+								</div>
+							</div>
+						</li>
+						 
 						<li>
 							<div class="item-content">
 								<div class="item-media">
