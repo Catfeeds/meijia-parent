@@ -59,7 +59,7 @@ myApp.onPageBeforeInit('mine-info-edit', function(page) {
 		}
 	});
 	
-	$$('#head_img').on('change', gotPic);
+//	$$('#head_img').on('change', gotPic);
 	
 	$$("#mine_info_submit").on("click", function() {
 		var formData = myApp.formToJSON('#mine-form');
