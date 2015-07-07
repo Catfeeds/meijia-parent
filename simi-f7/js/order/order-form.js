@@ -42,7 +42,7 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			dataType : "json",
 			cache : true,
 			data : postdata,
-	
+			timeout : 100000,
 			statusCode : {
 				200 : userInfoSuccess,
 				400 : ajaxError,
@@ -52,6 +52,8 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 	
 			}
 		});
+				
+		
 	} else {  	
 		//如果为修改订单
 		

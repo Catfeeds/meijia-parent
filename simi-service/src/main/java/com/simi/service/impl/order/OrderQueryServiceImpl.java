@@ -124,7 +124,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		OrderSearchVo orderSearchVo = new OrderSearchVo();
 		orderSearchVo.setUserId(userId);
         List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
-            List<OrderViewVo> result = this.getOrderViewList(list);
+        
+        
+        List<OrderViewVo> result = new ArrayList<OrderViewVo>();
+        if (!list.isEmpty()) {
+        	result = this.getOrderViewList(list);
+        }
             
             return result;
 	}
