@@ -1,4 +1,4 @@
-myApp.onPageBeforeInit('mine-info', function(page) {
+myApp.onPageInit('mine-info', function(page) {
 
 	var secMobile = localStorage['sec_mobile'];
 	var secId = localStorage['sec_id'];
@@ -12,10 +12,10 @@ myApp.onPageBeforeInit('mine-info', function(page) {
 			return;
 		}
 		var sec = result.data;
-
-		  $$("#name").text(sec.name);
+		console.log(sec);
+		  $$("#name-span").text(sec.name);
 		  $$("#nickName").text(sec.nick_name);
-		  $$("#sex").text(sec.sex);
+		  $$("#sex-span").text(sec.sex);
 		  $$("#mobile").text(sec.mobile);
 		  $$("#birthDay").text(sec.birth_day);
 		  $$("#cityName").text(sec.city_name);
