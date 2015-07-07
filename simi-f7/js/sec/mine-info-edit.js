@@ -59,8 +59,11 @@ myApp.onPageBeforeInit('mine-info-edit', function(page) {
 		}
 	});
 	
+	$$('#head_img').on('change', gotPic);
+	
 	$$("#mine_info_submit").on("click", function() {
 		var formData = myApp.formToJSON('#mine-form');
+
 		$$.ajax({
 			type : "POST",
 			url : siteAPIPath + "sec/post_secinfo.json",
@@ -73,6 +76,29 @@ myApp.onPageBeforeInit('mine-info-edit', function(page) {
 				500 : ajaxError
 			}
 		});
+		
+		
+		
+//		var mine_form = $$('#mine-form');
+//		var formData = new FormData();
+//		formData.append('name', "小茶1");
+//		console.log(formData.toString());
+//		return false;
+		
+//		formData.append('name', "小茶1");
+//		formdata.append("nick_name", $$('nick_name').val());
+//		formdata.append("sex", $$('sex').val());
+//		formdata.append("birth_day", $$('birth_day').val());
+//		formdata.append("city_id", $$('city_id').val());
+//		console.log(formData);
+//		return false;
+//		if ($$('#head_img')[0].files[0]) {
+//			formData.append('head_img', $$('#head_img')[0].files[0]);
+//		}		
+		
+		
+		
+		
 	});
 });
 
@@ -90,3 +116,10 @@ function saveSecSuccess(data, textStatus, jqXHR) {
 			mainView.router.loadPage("sec/mine-info.html");
 		}
 } 
+
+function gotPic(event) {
+    if (event.target.files.length === 1 && event.target.files[0].type.indexOf('image/') === 0) {
+        $$('#avatar').attr('src', URL.createObjectURL(event.target.files[0]));
+    }
+}
+
