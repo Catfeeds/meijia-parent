@@ -141,17 +141,22 @@ webim = {
         //     alert(e.msg + ",请重新登录");
         //     showLoginUI();
         // } else {
-        //     var msg = e.msg;
-        //     if (e.type == EASEMOB_IM_CONNCTION_SERVER_CLOSE_ERROR) {
-        //         if (msg == "" || msg == 'unknown' ) {
-        //             alert("服务器器断开连接,可能是因为在别处登录");
-        //         } else {
-        //             alert("服务器器断开连接");
-        //         }
-        //     } else {
-        //         alert(msg);
-        //     }
-        // }
+             var msg = e.msg;
+             if (e.type == EASEMOB_IM_CONNCTION_SERVER_CLOSE_ERROR) {
+                 if (msg == "" || msg == 'unknown' ) {
+                     alert("服务器器断开连接,可能是因为在别处登录");
+                     localStorage.removeItem("mobile");
+	           		  localStorage.removeItem('sec_id');
+	           		  localStorage.removeItem('im_username');
+	           		  localStorage.removeItem('im_password');
+	           		  mainView.router.loadPage("index.html");
+                 } else {
+                     alert("服务器器断开连接");
+                 }
+             } else {
+                 alert(msg);
+             }
+//         }
     },
 
     //控制消息的红点显示与隐藏
