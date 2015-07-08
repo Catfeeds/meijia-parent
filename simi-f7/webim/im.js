@@ -153,9 +153,10 @@ webim = {
                  } else {
                      alert("服务器器断开连接");
                  }
-             } else {
-                 alert(msg);
-             }
+             } 
+//             else {
+//                 alert(msg);
+//             }
 //         }
     },
 

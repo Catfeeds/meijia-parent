@@ -82,7 +82,7 @@ public class OrderAddController extends BaseController {
 			@RequestParam("order_pay_type") Short orderPayType,
 			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks,
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
-			@RequestParam(value = "order_pay", required = false, defaultValue = "0") BigDecimal orderPay,
+			@RequestParam(value = "order_money", required = false, defaultValue = "0") BigDecimal orderMoney,
 			@RequestParam(value = "service_date", required = false, defaultValue = "0") Long serviceDate,
 			@RequestParam(value = "start_time", required = false, defaultValue = "0") Long startTime,
 			@RequestParam(value = "addr_id", required = false, defaultValue = "0") Long addrId,			
@@ -153,8 +153,8 @@ public class OrderAddController extends BaseController {
 		ordersService.insert(order);
 		
 		//保存订单价格信息
-		if (orderPay == null) orderPay = new BigDecimal(0.0);
-		BigDecimal orderMoney = orderPay;
+		if (orderMoney == null) orderMoney = new BigDecimal(0.0);
+
 		
 		OrderPrices orderPrice = orderPricesService.initOrderPrices();
 		orderPrice.setUserId(u.getId());
@@ -162,7 +162,7 @@ public class OrderAddController extends BaseController {
 		orderPrice.setOrderId(order.getId());
 		orderPrice.setOrderNo(order.getOrderNo());
 		orderPrice.setOrderMoney(orderMoney);
-		orderPrice.setOrderPay(orderPay);
+		orderPrice.setOrderPay(orderMoney);
 		orderPricesService.insert(orderPrice);
 		
 		
