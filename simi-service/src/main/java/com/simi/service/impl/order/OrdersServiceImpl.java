@@ -126,8 +126,6 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public Boolean orderSuccessTodo(String orderNo) {
 		
-		
-		
 		Orders order = ordersMapper.selectByOrderNo(orderNo);
 		
 		if (order == null) {

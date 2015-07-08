@@ -53,12 +53,11 @@ public class TestUserController extends JUnitActionBase  {
 		String url = "/app/user/login.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "13520256623");
+	    postRequest = postRequest.param("mobile", "13810002890");
 //	    postRequest = postRequest.param("mobile", "18610807136");
-	    postRequest = postRequest.param("sms_token", "088103");
+	    postRequest = postRequest.param("sms_token", "000000");
 //	    postRequest = postRequest.param("sms_token", "000000");
 	    postRequest = postRequest.param("login_from", "1");
-	    postRequest = postRequest.param("user_typy", "0");
 	    
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -80,7 +79,7 @@ public class TestUserController extends JUnitActionBase  {
     public void testGetUserInfo() throws Exception {
 
 		String url = "/app/user/get_userinfo.json";
-		String params = "?user_id=90";
+		String params = "?user_id=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 

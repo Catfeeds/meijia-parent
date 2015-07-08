@@ -15,9 +15,40 @@ myApp.onPageInit('messages', function (page) {
         console.log('message page init');
 
         var toUser = page.query.uid;
-        var toUserName = page.query.name;
+        var userId = page.query.user_id;
+        
+        var onUserInfoSuccess =function(data, textStatus, jqXHR) {
+           	var result = JSON.parse(data.response);
+        	if (result.status == "999") {
+        		myApp.alert(result.msg);
+        		return;
+        	}
+        	
+        	var user = result.data;
+        	var nickName = user.name;
+        	$$('#touser').html(nickName);
+        	 
+        }
+        
+        
+        var postdata = {};
+        postdata.user_id = userId;    
+    	$$.ajax({
+    		type : "GET",
+    		url : siteAPIPath + "user/get_userinfo.json",
+    		dataType : "json",
+    		cache : true,
+    		data :postdata,
+    		statusCode: {
+             	200: onUserInfoSuccess,
+     	    	400: ajaxError,
+     	    	500: ajaxError
+     	    },
+    	});
+        
+        
 
-        $$('#touser').html(toUserName);
+       
 
         webim.myMessages = myApp.messages('.messages', {
                 autoLayout:true

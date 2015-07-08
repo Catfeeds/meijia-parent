@@ -64,6 +64,7 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			var result = JSON.parse(data.response);
 			var order = result.data;
 			var formData = {
+				'order_id'			: order.id,
 				'sec_id' 			: secId,
 				'user_id' 			: userId,
 				'name' 				: order.name,
