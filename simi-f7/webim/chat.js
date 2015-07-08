@@ -98,6 +98,11 @@ myApp.onPageInit('messages', function (page) {
                   webim.sendText(messageText, toUser);
         });
 
+    	$$('.order-form-link').on('click', function() {
+    		
+//    		myApp.alert('order-form' + userId);
+    		mainView.router.loadPage("order/order-form.html?user_id="+userId);
+    	});        
 
 });
 
