@@ -80,6 +80,7 @@ public class OrderAddController extends BaseController {
 			@RequestParam("service_type") Long serviceType,
 			@RequestParam("service_content") String serviceContent,
 			@RequestParam("order_pay_type") Short orderPayType,
+			@RequestParam(value = "order_id", required = false, defaultValue = "0") Long orderId,
 			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks,
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
 			@RequestParam(value = "order_money", required = false, defaultValue = "0") BigDecimal orderMoney,
@@ -134,12 +135,19 @@ public class OrderAddController extends BaseController {
     	}    	
     	
 		// 调用公共订单号类，生成唯一订单号
-		String orderNo = String.valueOf(OrderNoUtil.genOrderNo());
-
+    	Orders order = null;
+    	String orderNo = "";
+    	if (orderId > 0L) {
+    		order = orderQueryService.selectByPrimaryKey(orderId);
+			orderNo = order.getOrderNo();
+    	} else {
+    		orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+			order = ordersService.initOrders();
+    	}
 		Long now = TimeStampUtil.getNow() / 1000;
 		
 		//保存订单信息
-		Orders order = ordersService.initOrders();
+		
 		order.setSecId(secId);
 		order.setMobile(u.getMobile());
 		order.setUserId(u.getId());
@@ -150,20 +158,38 @@ public class OrderAddController extends BaseController {
 		order.setOrderStatus(orderStatus);
 		order.setRemarks(remarks);
 		
-		ordersService.insert(order);
+		if (orderId > 0L) {
+			order.setUpdateTime(now);
+			ordersService.updateByPrimaryKeySelective(order);
+		} else {
+			ordersService.insert(order);
+		}
+		
 		
 		//保存订单价格信息
 		if (orderMoney == null) orderMoney = new BigDecimal(0.0);
 
+		OrderPrices orderPrice = null;
+		if (orderId > 0L) {
+			orderPrice = orderPricesService.selectByOrderId(orderId);
+		} else {
+			orderPrice = orderPricesService.initOrderPrices();
+		}
 		
-		OrderPrices orderPrice = orderPricesService.initOrderPrices();
 		orderPrice.setUserId(u.getId());
 		orderPrice.setMobile(u.getMobile());
 		orderPrice.setOrderId(order.getId());
 		orderPrice.setOrderNo(order.getOrderNo());
 		orderPrice.setOrderMoney(orderMoney);
 		orderPrice.setOrderPay(orderMoney);
-		orderPricesService.insert(orderPrice);
+		
+		if (orderId > 0L) {
+			orderPrice.setUpdateTime(now);
+			orderPricesService.updateByPrimaryKeySelective(orderPrice);
+		} else {
+			orderPricesService.insert(orderPrice);
+		}
+		
 		
 		
 		//推送给用户.通过环信的透传消息
