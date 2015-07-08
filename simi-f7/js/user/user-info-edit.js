@@ -7,7 +7,6 @@ myApp.onPageBeforeInit('user-info-edit', function (page) {
 		return;
 	}
 	getUserInfo(userId);
-	
 	$$("#user_info_submit").on("click", function() {
 		var formData = myApp.formToJSON('#user-form');
 		$$.ajax({
@@ -25,32 +24,23 @@ myApp.onPageBeforeInit('user-info-edit', function (page) {
 	})
 	
 });
-
-var onUserInfoSuccess =function(data, textStatus, jqXHR) {
- 	myApp.hideIndicator();
-   	var result = JSON.parse(data.response);
-	if (result.status == "999") {
-		myApp.alert(result.msg);
-		return;
-	}
-	formSetInfoSuccess(result);
-}
 var userInfoSuccess =function(data, textStatus, jqXHR) {
-	myApp.hideIndicator();
-   	var result = JSON.parse(data.response);
+ 	var result = JSON.parse(data.response);
 	if (result.status == "999") {
 		myApp.alert(result.msg);
 		return;
 	}
 	var user = result.data;
-	$$("#name").val(user.name);
-	$$("#mobile").val(user.mobile);
-	$$("#user_id").val(user.id);
-	$$("#head_img").attr("src",user.head_img);
-	console.log(user.sex);
-	if(user.sex !=' ' && user.sex !=null){
-		$$("#sex").find("option[value='"+user.sex+"']").attr('selected',true);
+	var head_img = user.head_img;
+    $$("#head_img").attr("src",head_img);
+	var formData = {
+		'name' : user.name,
+		'mobile' : user.mobile,
+		'sex' : user.sex,
+		'user_id' : user.id,
+		
 	}
+	myApp.formFromJSON('#user-form', formData);
 }
 // 获取用户信息
 function getUserInfo(userId) {

@@ -18,23 +18,18 @@ myApp.onPageBeforeInit('user-info', function (page) {
 });
 
 
-function formSetInfoSuccess(result) {
-	var data = result.data;
-	$$("#head_img").attr("src",data.head_img);
-	$$("#name").text(data.name);
-	var sex = data.sex;
-	if(sex == 0){
-		$$("#sex").text("先生");
-	}else{
-		$$("#sex").text("女士");
+var onUserInfoSuccess =function(data, textStatus, jqXHR) {
+   	var result = JSON.parse(data.response);
+	if (result.status == "999") {
+		myApp.alert(result.msg);
+		return;
 	}
-	$$("#mobile").text(data.mobile);
-	$$("#province_name").text(data.province_name);
-	$$("#rest_money").text(data.rest_money);
-	$$("#score").text(data.score);
+	
+	var user = result.data;
+   
 	var userType,userFrom;
-	var user_type = data.user_type;
-	var user_from = data.user_from;
+	var user_type = user.user_type;
+	var user_from = user.user_from;
 	if(user_type==0){
 		userType = "普通用户";
 	}else if(user_type==1){
@@ -51,22 +46,20 @@ function formSetInfoSuccess(result) {
 	}else{
 		userFrom = "";
 	}
-	$$("#user_type").text(userType);
-	$$("#user_from").text(userFrom);
+	 $$("#head_img-span").attr("src",user.head_img);
+	 $$("#name-span").text(user.name);
+	 $$("#mobile-span").text(user.mobile);
+	 $$("#sex-span").text(user.sex);
+	 $$("#user-id").text(user.id);
+	 $$("#province_name").text(user.province_name);
+	 $$("#rest_money").text(user.rest_money);
+	 $$("#score").text(user.score);
+	 $$("#user_from").text(userFrom);	 
+	 $$("#user_type").text(userType);	 
 }
 
 //获取用户信息接口
 function getUserInfos(userId) {
-
-	var onUserInfoSuccess =function(data, textStatus, jqXHR) {
-	 	myApp.hideIndicator();
-	   	var result = JSON.parse(data.response);
-		if (result.status == "999") {
-			myApp.alert(result.msg);
-			return;
-		}
-		formSetInfoSuccess(result);
-	}
 	var postdata = {};
     postdata.user_id = userId;    
 	$$.ajax({
