@@ -17,6 +17,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderViewVo;
+import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
@@ -323,10 +324,42 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			vo.setServiceAddr(userAddr.getName() + userAddr.getAddr());
 		}
 		
+		//订单状态
+		String orderStatusName = getOrderStatusName(order.getOrderStatus());
+		vo.setOrderStatusName(orderStatusName);
+		
         return vo;
 	}
 
-	
+	@Override
+	public String getOrderStatusName(Short status) {
+		
+		String statusName = "";
+		if (status.equals(Constants.ORDER_STATUS_0_CLOSE)) {
+			statusName = "已关闭";
+		}
+		
+		if (status.equals(Constants.ORDER_STATUS_1_CONFIRM)) {
+			statusName = "待确认";
+		}
+		
+		if (status.equals(Constants.ORDER_STATUS_2_CONFIRM_DONE)) {
+			statusName = "已确认";
+		}
+		
+		if (status.equals(Constants.ORDER_STATUS_3_PAY_WAIT)) {
+			statusName = "待支付";
+		}
+		
+		if (status.equals(Constants.ORDER_STATUS_4_PAY_DONE)) {
+			statusName = "已支付";
+		}
+		
+		if (status.equals(Constants.ORDER_STATUS_9_COMPLETE)) {
+			statusName = "已完成";
+		}
+		return statusName;
+	}
 
 
 

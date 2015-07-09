@@ -31,6 +31,8 @@ public interface OrderQueryService {
 
 	List<OrderViewVo> selectByUserIdList(Long userId);
 
+	String getOrderStatusName(Short status);
+
 
 
 

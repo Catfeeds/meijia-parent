@@ -29,32 +29,36 @@ public class UserFeedbackController  extends BaseController {
 
 	@RequestMapping(value = "post_feedback", method = RequestMethod.POST)
 	public AppResultData<String> saveFeedback(
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("content") String content)
 			throws UnsupportedEncodingException {
+
+		AppResultData<String> result = new AppResultData<String>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
 		String contentDecoder = URLDecoder.decode(content,"utf-8");
 		if (contentDecoder != null
 				&& contentDecoder.length() > 200) {
-			AppResultData<String> result = new AppResultData<String>(
-					Constants.ERROR_100, ConstantMsg.FEED_BACK_FALSE, "");
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("意见反馈内容为空或者超长");
 			return result;
 		}
-		Users users = userService.getUserByMobile(mobile);
+		Users users = userService.selectVoByUserId(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (users == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
 		UserFeedback userFeedback = new UserFeedback();
 		userFeedback.setUserId(users.getId());
-		userFeedback.setMobile(mobile);
+		userFeedback.setMobile(users.getMobile());
 		userFeedback.setContent(contentDecoder);
 		userFeedback.setAddTime(TimeStampUtil.getNow() / 1000);
-		int temp = userFeedbackService.insert(userFeedback);
-		if(temp>0) {
-			AppResultData<String> result = new AppResultData<String>(
-					Constants.SUCCESS_0, ConstantMsg.FEED_BACK_SUCCESS, "");
-			return result;
-		}else {
-			AppResultData<String> result = new AppResultData<String>(
-					Constants.ERROR_100, ConstantMsg.FEED_BACK_FALSE, "");
-			return result;
-		}
+		userFeedbackService.insert(userFeedback);
+		
+		return result;
 	}
 
 }

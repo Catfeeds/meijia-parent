@@ -25,6 +25,8 @@ public class OrderViewVo extends Orders {
 	private BigDecimal orderPay;
 
 	private String cardPasswd;
+	
+	private String orderStatusName;
 
 	public Short getPayType() {
 		return payType;
@@ -88,5 +90,13 @@ public class OrderViewVo extends Orders {
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+
+	public String getOrderStatusName() {
+		return orderStatusName;
+	}
+
+	public void setOrderStatusName(String orderStatusName) {
+		this.orderStatusName = orderStatusName;
 	}
 }

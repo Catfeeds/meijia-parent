@@ -78,6 +78,11 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			myApp.formFromJSON('#order-form', formData);
 			
 			orderId = order.id;
+			
+			if (order.order_status == 1 || order.order_status == 3) {
+				$$("#order-submit").css('display','block'); 
+				
+			}			
 	
 		};
 		
