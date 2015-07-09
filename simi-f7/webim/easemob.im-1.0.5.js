@@ -1221,9 +1221,9 @@ connection.prototype.open = function(options) {
 		};
 		var error = function(res,xhr,msg){
 
-			console.log(res)
-			console.log(xhr)
-			console.log(msg)
+//			console.log(res)
+//			console.log(xhr)
+//			console.log(msg)
 
 			if(res.error && res.error_description){
 				conn.onError({

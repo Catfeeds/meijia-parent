@@ -77,7 +77,7 @@ webim = {
     //登录成功处理函数
     handleOpen: function(conn){
 
-	        console.log('handleOpen');
+//	        console.log('handleOpen');
 
 	        //从连接中获取到当前的登录人注册帐号名
 	        curUserId = conn.context.userId;
@@ -85,7 +85,7 @@ webim = {
 	        //获取当前登录人的联系人列表
 	        conn.getRoster({
 		            success : function(roster) {
-		            		console.log('roster');
+//		            		console.log('roster');
 			                //页面处理
 			                //hiddenWaitLoginedUI();
 			                //showChatUI();
@@ -95,11 +95,11 @@ webim = {
 			                    //both为双方互为好友，要显示的联系人,from我是对方的单向好友
 			                    if (ros.subscription == 'both' || ros.subscription == 'from') {
 			                        //bothRoster.push(ros);
-			                        console.log(ros);
+//			                        console.log(ros);
 			                    } else if (ros.subscription == 'to') {
 			                        //to表明了联系人是我的单向好友
 			                        //toRoster.push(ros);
-			                        console.log(ros);
+//			                        console.log(ros);
 			                    }
 			                }
 			                if (bothRoster.length > 0) {
@@ -134,7 +134,7 @@ webim = {
 
     //登录失败处理函数
     handleError: function(e){
-        console.log('handleError');
+//        console.log('handleError');
         // console.log(e);
         // if (curUserId == null) {
         //     hiddenWaitLoginedUI();
@@ -172,7 +172,7 @@ webim = {
 	//处理文本消息
     handleTextMessage : function(message) {
 
-    		console.log(message);
+//    		console.log(message);
 
     		
 	        var webim = this;
@@ -213,52 +213,52 @@ webim = {
 
 
     handleClosed: function(){
-    	console.log('handleClosed');
+//    	console.log('handleClosed');
     },
 
 
     handleEmotion: function(){
-    	console.log('handleEmotion');
+//    	console.log('handleEmotion');
     },
 
 
     handlePictureMessage: function(){
-    	console.log('handlePictureMessage');
+//    	console.log('handlePictureMessage');
     },
 
 
     handleAudioMessage: function(){
-    	console.log('handleAudioMessage');
+//    	console.log('handleAudioMessage');
     },
 
 
     handleLocationMessage: function(){
-    	console.log('handleLocationMessage');
+//    	console.log('handleLocationMessage');
     },
 
 
     handleFileMessage: function(){
-    	console.log('handleFileMessage');
+//    	console.log('handleFileMessage');
     },
 
 
     handleVideoMessage: function(){
-    	console.log('handleVideoMessage');
+//    	console.log('handleVideoMessage');
     },
 
 
     handlePresence: function(){
-    	console.log('handlePresence');
+//    	console.log('handlePresence');
     },
 
 
     handleRoster: function(){
-    	console.log('handleRoster');
+//    	console.log('handleRoster');
     },
 
 
     handleInviteMessage: function(){
-    	console.log('handleInviteMessage');
+//    	console.log('handleInviteMessage');
     }
 
 
@@ -283,7 +283,7 @@ conn.init({
 	    },
 	    //收到文本消息时的回调方法
 	    onTextMessage : function(message) {
-	    	console.log('ceshiceshi!!!');
+//	    	console.log('ceshiceshi!!!');
 	        webim.handleTextMessage(message);
 	    },
 	    //收到表情消息时的回调方法

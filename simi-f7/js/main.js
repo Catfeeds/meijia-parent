@@ -28,7 +28,7 @@ var myApp = new Framework7({
     },    
     preroute: function (view, options) {
              if(!isLogin() && options.url!='login.html'){
-                     console.log('must login');
+//                     console.log('must login');
                      view.router.loadPage('login.html');
                      return false;
              }
@@ -57,7 +57,7 @@ var mySwiper = myApp.swiper('.swiper-container', {
 
 function isLogin(){
     	//return false;
-    	console.log("isLogin");
+//    	console.log("isLogin");
         return typeof localStorage['sec_id']!='undefined' && localStorage['sec_id']!='';
 }
 

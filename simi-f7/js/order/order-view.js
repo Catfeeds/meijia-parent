@@ -18,7 +18,7 @@ myApp.onPageBeforeInit('order-view-page', function(page) {
 		myApp.hideIndicator();
 		var result = JSON.parse(data.response);
 		var order = result.data;
-		console.log(order);
+//		console.log(order);
 		
 		var timestamp = moment.unix(order.add_time);
 		var addTimeStr = timestamp.format('YYYY-MM-DD HH:mm:ss');		
@@ -77,10 +77,10 @@ myApp.onPageBeforeInit('order-view-page', function(page) {
 		var orderPushSuccess = function(data, textStatus, jqXHR) {
 			// We have received response and can hide activity indicator
 			myApp.hideIndicator();
-			console.log("push success");
+//			console.log("push success");
 			var result = JSON.parse(data.response);
 
-			console.log(result);
+//			console.log(result);
 			if (result.status == "999") {
 				myApp.alert(result.msg);
 				return;

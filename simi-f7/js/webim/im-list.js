@@ -54,7 +54,7 @@ myApp.onPageBeforeInit('im-list-page', function (page) {
 
 	//客户信息
 	$$('.im-link').on('click', function() {
-		console.log("im-link");
+//		console.log("im-link");
 		var userId = $$(this).attr("userId");
 		mainView.router.loadPage("webim/chat.html?user_id="+userId);
 	});

@@ -12,7 +12,7 @@ myApp.onPageInit('mine-info', function(page) {
 			return;
 		}
 		var sec = result.data;
-		console.log(sec);
+//		console.log(sec);
 		  $$("#name-span").text(sec.name);
 		  $$("#nickName").text(sec.nick_name);
 		  $$("#sex-span").text(sec.sex);

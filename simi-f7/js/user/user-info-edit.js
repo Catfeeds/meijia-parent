@@ -77,7 +77,7 @@ $$("#mine_info_submit").on("click", function() {
 //保存用户信息
 function saveUserSuccess(data, textStatus, jqXHR) {
 	myApp.hideIndicator();
-	console.log("submit success");
+//	console.log("submit success");
 	var result = JSON.parse(data.response);
 
 	if (result.status == "999") {
