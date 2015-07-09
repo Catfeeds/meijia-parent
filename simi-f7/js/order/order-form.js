@@ -29,6 +29,7 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			}
 	
 			myApp.formFromJSON('#order-form', formData);
+			$$("#order-submit").css('display','block'); 
 //			console.log($$("#sec_id").val());
 	
 		};
@@ -81,7 +82,6 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			
 			if (order.order_status == 1 || order.order_status == 3) {
 				$$("#order-submit").css('display','block'); 
-				
 			}			
 	
 		};
