@@ -128,7 +128,7 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			
 			if (result.status == "0") {
 				myApp.alert("订单推送已完成");
-				
+				mainView.router.loadPage("order/order-view.html?user_id="+userId+"&order_no="+ orderNo);
 			}
 
 		};		
