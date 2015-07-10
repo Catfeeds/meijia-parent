@@ -128,6 +128,7 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 			
 			if (result.status == "0") {
 				var order = result.data;
+				console.log(result.data);
 				orderNo = order.order_no;
 				myApp.alert("订单推送已完成");
 				mainView.router.loadPage("order/order-view.html?user_id="+userId+"&order_no="+ orderNo);
