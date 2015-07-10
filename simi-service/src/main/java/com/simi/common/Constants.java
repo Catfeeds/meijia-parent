@@ -121,7 +121,7 @@ public class Constants {
 	//消费类型
 	public static Short ORDER_TYPE_0 = 0;  //订单支付
 	public static Short ORDER_TYPE_1 = 1; //购买充值卡
-	public static Short ORDER_TYPE_2 = 2; //购买管家卡
+	public static Short ORDER_TYPE_2 = 2; //购买私秘卡
 	public static Short ORDER_TYPE_3 = 3; //订单退款
 
 	//优惠券过期时间

@@ -182,7 +182,9 @@ public class HttpClientUtil {
 					con.getOutputStream());
 			System.out.println("urlStr=" + urlStr);
 			System.out.println("xmlInfo=" + xml);
-			out.write(new String(xml.getBytes("ISO-8859-1")));
+//			xml = new String(xml.getBytes("ISO-8859-1"));
+			
+			out.write(xml);
 			out.flush();
 			out.close();
 			BufferedReader br = new BufferedReader(new InputStreamReader(

@@ -79,7 +79,7 @@ public class UserCardPayController extends BaseController {
 		
 
 		//如果已经付款，则直接返回
-		if (orderCards != null && orderCards.getOrderStatus().equals(Constants.PAY_STATUS_0)) {
+		if (orderCards != null && orderCards.getOrderStatus().equals(Constants.PAY_STATUS_1)) {
 			return result;
 		}
 		

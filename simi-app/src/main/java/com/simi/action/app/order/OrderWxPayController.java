@@ -84,6 +84,8 @@ public class OrderWxPayController extends BaseController {
 		
 		String wxPay = "0";
 		
+		String body = "";
+		
 		if (orderType.equals(Constants.ORDER_TYPE_0)) {
 			Orders order = orderQueryService.selectByOrderNo(orderNo);
 			
@@ -103,6 +105,7 @@ public class OrderWxPayController extends BaseController {
 			
 			BigDecimal orderPayNow  = orderPricesService.getPayByOrder(orderNo, "0");
 			wxPay = orderPayNow.toString();
+			body = "私秘订单号:"+orderNo;
 		}
 		
 		//处理充值卡充值的情况
@@ -129,6 +132,7 @@ public class OrderWxPayController extends BaseController {
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
+			body = "私秘充值卡购买";
 		}		
 		
 		//处理私密卡购买的情况
@@ -155,6 +159,7 @@ public class OrderWxPayController extends BaseController {
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
+			body = "私秘卡购买";
 		}			
 
 		//测试
@@ -172,17 +177,14 @@ public class OrderWxPayController extends BaseController {
 
 		String timeStamp = TimeStampUtil.getNowSecond().toString();
 		String nonceStr = WxUtil.getNonceStr();
-					
 		
-		
-		
-		
-
+//		body = orderNo;
+//		body = new String(body.getBytes("utf-8"),"iso8859-1");
 		// 签名参数
 		String[] s = new String[10];
 		s[0] = "appid=" + appId;
 		s[1] = "nonce_str=" + nonceStr;
-		s[2] = "body=私秘订单号:" + orderNo;
+		s[2] = "body=" + body;
 		s[3] = "out_trade_no=" + orderNo;
 		s[4] = "total_fee=" + wxPay;
 		s[5] = "spbill_create_ip=" + request.getRemoteAddr();
@@ -191,13 +193,14 @@ public class OrderWxPayController extends BaseController {
 		s[8] = "mch_id=" + mchId;
 		//s[9] = "openid=" + openid;
 		s[9] = "attach=" + userId;
+
 		Arrays.sort(s);
 		String sign = "";
 		for (String string : s) {
 			sign += string + "&";
 		}
-		sign = MD5Util.MD5Encode(sign + "key=" + wxKey, "GBK")
-				.toUpperCase();
+		System.out.println(sign);
+		sign = MD5Util.MD5Encode(sign + "key=" + wxKey, "utf-8").toUpperCase();
 
 		String xml = "";
 		xml += "<xml>";
@@ -205,7 +208,7 @@ public class OrderWxPayController extends BaseController {
 		xml += "<mch_id>" + mchId + "</mch_id>";
 		xml += "<nonce_str>" + nonceStr + "</nonce_str>";
 		xml += "<sign>" + sign + "</sign>";
-		xml += "<body><![CDATA[私秘订单号:" + orderNo + "]]></body>";
+		xml += "<body><![CDATA[" + body + "]]></body>";
 		xml += "<out_trade_no>" + orderNo + "</out_trade_no>";
 		xml += "<total_fee>" + wxPay + "</total_fee>";
 		xml += "<spbill_create_ip>" + request.getRemoteAddr()
@@ -216,7 +219,6 @@ public class OrderWxPayController extends BaseController {
 //		xml += "<openid></openid>";
 		xml += "<attach><![CDATA[" + userId + "]]></attach>";
 		xml += "</xml>";
-		
 		
 		String reqResult = HttpClientUtil.post_xml(WxUtil.payUrl, xml);
 		System.out.println("统一支付订单调用");
@@ -256,7 +258,7 @@ public class OrderWxPayController extends BaseController {
 				paySign += string + "&";
 			}
 			String f = paySign + "key=" + wxKey;
-			paySign = MD5Util.MD5Encode(f, "GBK").toUpperCase();
+			paySign = MD5Util.MD5Encode(f, "utf-8").toUpperCase();
 			
 			resultData.put("userId", userId);
 			resultData.put("mobile", mobile);
@@ -377,8 +379,7 @@ public class OrderWxPayController extends BaseController {
 		for (String string : s) {
 			sign += string + "&";
 		}
-		sign = MD5Util.MD5Encode(sign + "key=" + wxKey, "GBK")
-				.toUpperCase();		
+		sign = MD5Util.MD5Encode(sign + "key=" + wxKey, "utf-8").toUpperCase();		
 
 		String xml = "";
 		xml += "<xml>";

@@ -132,6 +132,6 @@ public class WxUtil {
 	
 	public static String getNonceStr() {
 		Random random = new Random();
-		return MD5Util.MD5Encode(String.valueOf(random.nextInt(10000)), "GBK");
+		return MD5Util.MD5Encode(String.valueOf(random.nextInt(10000)), "utf-8");
 	}	
 }

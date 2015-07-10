@@ -94,7 +94,7 @@ public class TenpayUtil {
 			HttpServletResponse response) {
 		
 		if(null == request || null == response) {
-			return "gbk";
+			return "utf-8";
 		}
 		
 		String enc = request.getCharacterEncoding();
@@ -103,7 +103,7 @@ public class TenpayUtil {
 		}
 		
 		if(null == enc || "".equals(enc)) {
-			enc = "gbk";
+			enc = "utf-8";
 		}
 		
 		return enc;
