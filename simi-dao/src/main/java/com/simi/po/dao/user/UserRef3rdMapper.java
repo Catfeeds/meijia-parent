@@ -1,6 +1,5 @@
 package com.simi.po.dao.user;
 
-import java.util.List;
 import java.util.Map;
 
 import com.simi.po.model.user.UserRef3rd;

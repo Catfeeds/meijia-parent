@@ -9,7 +9,6 @@ import com.simi.common.Constants;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.po.dao.user.UserDetailScoreMapper;
 import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.TimeStampUtil;

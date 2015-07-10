@@ -9,11 +9,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.user.UserMsgService;
-import com.simi.vo.promotion.MsgSearchVo;
 import com.simi.po.dao.user.UserMsgMapper;
-import com.simi.po.model.dict.DictServiceTypes;
-import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.promotion.Msg;
 import com.simi.po.model.user.UserMsg;
 @Service
 public class UserMsgServiceImpl implements UserMsgService {

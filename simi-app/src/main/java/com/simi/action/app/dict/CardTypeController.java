@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.simi.vo.AppResultData;
-import com.simi.vo.order.OrderViewVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCardType;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.CardTypeService;
-import com.simi.service.dict.DictService;
 
 @Controller
 @RequestMapping(value="/app/dict")

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.service.dict.CardTypeService;
 import com.simi.service.job.JobImService;
 import com.simi.vo.AppResultData;
 

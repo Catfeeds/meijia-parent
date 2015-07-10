@@ -5,7 +5,6 @@ import com.baidu.yun.push.exception.PushServerException;
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.promotion.MsgSearchVo;
 import com.simi.po.model.promotion.Msg;
-import com.simi.po.model.user.Users;
 
 public interface MsgService {
 

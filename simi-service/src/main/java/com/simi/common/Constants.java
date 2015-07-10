@@ -1,7 +1,5 @@
 package com.simi.common;
 
-import java.math.BigDecimal;
-
 public class Constants {
 
 	public static String URL_ENCODE = "UTF-8";

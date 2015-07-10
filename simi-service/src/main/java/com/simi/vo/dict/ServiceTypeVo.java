@@ -1,7 +1,6 @@
 package com.simi.vo.dict;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class ServiceTypeVo {
     private Long id;

@@ -11,11 +11,9 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserDetailScore;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.user.UserDetailScoreService;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 

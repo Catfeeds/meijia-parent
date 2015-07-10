@@ -1,6 +1,5 @@
 package com.simi.service.dict;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.simi.service.impl.dict.DictServiceImpl;

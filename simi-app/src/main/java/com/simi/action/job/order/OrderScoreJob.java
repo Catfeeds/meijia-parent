@@ -1,23 +1,13 @@
 package com.simi.action.job.order;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.simi.common.Constants;
-import com.simi.po.model.order.OrderPrices;
-import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserDetailScore;
-import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
-import com.meijia.utils.MathBigDeciamlUtil;
-import com.meijia.utils.TimeStampUtil;
 
 /**
  * 已经完成的订单，用户获得积分

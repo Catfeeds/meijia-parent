@@ -1,18 +1,11 @@
 package com.simi.action.job.order;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.simi.action.job.BaseJob;
-import com.simi.common.Constants;
-import com.simi.po.model.order.Orders;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
-import com.meijia.utils.TimeStampUtil;
 
 /**
  * 7天后未评价的订单，自动好评和订单状态改为已完成

@@ -38,7 +38,7 @@ public class UserCardController extends BaseController {
 	 */
 	@RequestMapping(value = "card_buy", method = RequestMethod.POST)
 	public AppResultData<Object> cardBuy(
-			@RequestParam("userId")	Long userId,
+			@RequestParam("user_id")	Long userId,
 			@RequestParam("card_type") Long cardType,
 			@RequestParam("pay_type")  Short payType) {
 //	    操作表 order_cards

@@ -8,13 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meijia.utils.TimeStampUtil;
-import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
-import com.simi.po.dao.user.UserRefSeniorMapper;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
-import com.simi.po.model.user.UserRefSenior;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserRef3rdService;
 

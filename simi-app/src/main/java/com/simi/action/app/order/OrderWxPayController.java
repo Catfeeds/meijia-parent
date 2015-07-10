@@ -157,8 +157,6 @@ public class OrderWxPayController extends BaseController {
 			wxPay = orderPayNow.toString();
 		}			
 
-		
-		
 		//测试
 		wxPay = "1";
 		
@@ -184,7 +182,7 @@ public class OrderWxPayController extends BaseController {
 		String[] s = new String[10];
 		s[0] = "appid=" + appId;
 		s[1] = "nonce_str=" + nonceStr;
-		s[2] = "body=" + userId;
+		s[2] = "body=私秘订单号:" + orderNo;
 		s[3] = "out_trade_no=" + orderNo;
 		s[4] = "total_fee=" + wxPay;
 		s[5] = "spbill_create_ip=" + request.getRemoteAddr();
@@ -207,7 +205,7 @@ public class OrderWxPayController extends BaseController {
 		xml += "<mch_id>" + mchId + "</mch_id>";
 		xml += "<nonce_str>" + nonceStr + "</nonce_str>";
 		xml += "<sign>" + sign + "</sign>";
-		xml += "<body><![CDATA[" + userId + "]]></body>";
+		xml += "<body><![CDATA[私秘订单号:" + orderNo + "]]></body>";
 		xml += "<out_trade_no>" + orderNo + "</out_trade_no>";
 		xml += "<total_fee>" + wxPay + "</total_fee>";
 		xml += "<spbill_create_ip>" + request.getRemoteAddr()

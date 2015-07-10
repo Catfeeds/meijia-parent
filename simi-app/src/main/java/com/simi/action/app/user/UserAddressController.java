@@ -20,7 +20,6 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 
 @Controller
 @RequestMapping(value = "/app/user")

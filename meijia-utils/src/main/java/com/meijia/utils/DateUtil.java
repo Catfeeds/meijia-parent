@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.google.zxing.client.result.ResultParser;
-
 public class DateUtil {
 
 	public static final String DEFAULT_PATTERN = "yyyy-MM-dd";

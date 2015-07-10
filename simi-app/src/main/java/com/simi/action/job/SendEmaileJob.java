@@ -6,11 +6,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.common.Constants;
-import com.simi.po.model.user.UserReminds;
 import com.simi.service.user.UserRemindService;
-import com.meijia.utils.SendMailUtil;
-import com.meijia.utils.TimeStampUtil;
 
 @Service
 public class SendEmaileJob implements Job{

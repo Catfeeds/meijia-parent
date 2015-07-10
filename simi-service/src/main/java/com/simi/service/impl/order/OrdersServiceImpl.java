@@ -23,7 +23,6 @@ import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;

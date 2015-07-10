@@ -1,18 +1,15 @@
 package com.simi.service.impl.dict;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.dict.ServiceTypeService;
-import com.simi.vo.dict.CouponSearchVo;
 import com.simi.po.dao.dict.DictServiceTypesMapper;
 import com.simi.po.model.dict.DictServiceTypes;
 import com.meijia.utils.TimeStampUtil;

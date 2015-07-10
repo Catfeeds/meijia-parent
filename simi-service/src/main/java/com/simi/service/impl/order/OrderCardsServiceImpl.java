@@ -10,7 +10,6 @@ import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.user.UserPayStatusMapper;
-import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.dict.DictCardType;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;

@@ -16,8 +16,6 @@ import com.meijia.utils.huanxin.vo.ClientSecretCredential;
 import com.meijia.utils.huanxin.vo.Credential;
 import com.meijia.utils.huanxin.vo.EndPoints;
 
-import java.io.File;
-
 /**
  * REST API Demo: 发送消息 REST API Jersey2.9实现
  * 

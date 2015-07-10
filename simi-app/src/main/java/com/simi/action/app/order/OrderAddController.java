@@ -23,7 +23,6 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;

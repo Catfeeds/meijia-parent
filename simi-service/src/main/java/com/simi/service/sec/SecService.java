@@ -1,19 +1,9 @@
 package com.simi.service.sec;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.ui.Model;
-
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
-import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.Users;
-import com.simi.vo.SecList;
 import com.simi.vo.sec.SecInfoVo;
-import com.simi.vo.user.UserViewVo;
 
 public interface SecService {
 

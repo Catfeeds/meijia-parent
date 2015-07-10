@@ -3,7 +3,6 @@ package com.simi.service.order;
 import java.util.List;
 
 import com.simi.po.model.order.Orders;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 
 public interface OrdersService {
 	

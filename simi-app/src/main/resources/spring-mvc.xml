@@ -29,13 +29,15 @@
     									 use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-
-	<bean name="/wxpay-notify-order.do" class="com.simi.action.WxNotifyOrder"/>
+    
+   <!--  <bean id="servletHandlerAdapter" class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter"/>
+     -->
+<!-- 	<bean name="/wxpay-notify-order.do" class="com.simi.action.WxNotifyOrder"/>
 	
 	<bean name="/wxpay-notify-ordercard.do" class="com.simi.action.WxNotifyOrderCard"/>
 	
 	<bean name="/wxpay-notify-ordersenior.do" class="com.simi.action.WxNotifyOrderSenior"/>
-
+ -->
 
 
     <!-- bean name view resolver-->
@@ -55,6 +57,7 @@
         <property name="mediaTypes">  <!--favorPathExtension, favorParameter是true时才起作用  -->
             <map>
                <entry key="html" value="text/html" />
+               <entry key="do" value="text/html" />
                <entry key="json" value="application/json" />
             </map>
          </property>

@@ -14,7 +14,6 @@ import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserCoupons;
-import com.simi.po.model.user.Users;
 import com.meijia.utils.MathBigDeciamlUtil;
 import com.meijia.utils.TimeStampUtil;
 
