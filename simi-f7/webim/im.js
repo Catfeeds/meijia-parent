@@ -214,10 +214,10 @@ webim = {
 	                  	//未读数量
 	                  	this.noreadFlag[from] = this.noreadFlag[from] || 0;
 
-	                  	console.log(message);
-	                  	console.log('当前打开用户:'+this.curroster);
-	                  	console.log('消息来源用户:'+from);
-	                  	console.log('本地存储的用户列表:');
+	                  	// console.log(message);
+	                  	// console.log('当前打开用户:'+this.curroster);
+	                  	// console.log('消息来源用户:'+from);
+	                  	// console.log('本地存储的用户列表:');
 	                  	// console.log(webim.userList);
 
 	                  	var messageType = 'received';
@@ -231,7 +231,6 @@ webim = {
 	                        		avatar = null;
 	                        	}
 					    }
-					    console.log('a');
 	                  	var recMsg = {
 			                    text: messageContent,
 			                    type: messageType,
@@ -241,7 +240,6 @@ webim = {
 			                    day: !webim.conversationStarted ? '今天' : false,
 			                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
 	                    };
-	                    console.log('b');
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
 	                  			console.log("打开用户的处理");
@@ -251,7 +249,6 @@ webim = {
 	                    		console.log("未打开任何对话时候的消息处理");
 	                    		this.noreadFlag[from]++;   	//from用户未读数量加1
 	                    }
-	                    console.log('c');
 
 	                    // 将所有聊天记录保存
 	                  	this.msg[from] = this.msg[from] || [];

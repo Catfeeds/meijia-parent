@@ -71,16 +71,22 @@ myApp.onPageInit('messages', function (page) {
 
         webim.curroster = toUser;
 
+        //初始化消息对象
+        webim.myMessagebar = myApp.messagebar('.messagebar');
+
+
+
         //读取聊天记录
         for(var i = 0; i < webim.msg[toUser].length; i++){
-              console.log(webim.msg[toUser][i]);
+              // console.log(webim.msg[toUser][i]);
+              if(webim.msg[toUser][i].avatar===null){
+                    webim.msg[toUser][i].avatar = webim.userList[toUser].head_img;
+              }
+              webim.myMessages.addMessage(webim.msg[toUser][i]);
         }
 
 
-        
-        //初始化消息对象
-        webim.myMessagebar = myApp.messagebar('.messagebar');
-        
+
         // 框架发送消息
         $$('.messagebar .link').on('click', function () {
                   // Message text
