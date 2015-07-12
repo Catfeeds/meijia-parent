@@ -221,7 +221,8 @@ webim = {
 	                  	console.log(message);
 	                  	console.log('当前打开用户:'+this.curroster);
 	                  	console.log('消息来源用户:'+from);
-	                  	console.log('本地存储的用户列表:'+webim.userList);
+	                  	console.log('本地存储的用户列表:');
+	                  	console.log(webim.userList);
 
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
