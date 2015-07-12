@@ -223,13 +223,15 @@ webim = {
 							                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
 					                    })
 	                    }else{
-	                    		console.log("不是当前用户")
+	                    		console.log("未打开任何对话时候的消息处理")
 	                    		// 未读记录数操作
 	                    		if(this.msg[from]['noread']){
 	                    			this.msg[from]['noread']++
 	                    		}else{
 	                    			this.msg[from]['noread']=1;
 	                    		}
+
+	                    		console.log(this.msg);
 	                    }
 	        }
 
