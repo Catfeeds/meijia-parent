@@ -53,6 +53,7 @@ myApp.onPageInit('messages', function (page) {
         webim.myMessages = myApp.messages('.messages', {
                 autoLayout:true
         });
+        webim.curroster = toUser;
         
         //初始化消息对象
         webim.myMessagebar = myApp.messagebar('.messagebar');
@@ -63,14 +64,11 @@ myApp.onPageInit('messages', function (page) {
                   var messageText = webim.myMessagebar.value().trim();
                   // Exit if empy message
                   if (messageText.length === 0) return;
-                 
                   // Empty messagebar
                   webim.myMessagebar.clear()
-                 
                   // 随机消息类型
                   //var messageType = (['sent', 'received'])[Math.round(Math.random())];
                   var messageType = 'sent';
-                 
                   // 接收的消息的头像和名称
                   var avatar, name;
                   if(messageType === 'received') {
@@ -90,11 +88,8 @@ myApp.onPageInit('messages', function (page) {
                     day: !webim.conversationStarted ? '今天' : false,
                     time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
                   })
-                 
                   // 更新会话flag
                   webim.conversationStarted = true;
-
-
                   webim.sendText(messageText, toUser);
         });
 

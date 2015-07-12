@@ -5,6 +5,8 @@ webim = {
     conversationStarted: false, 	//正在发送消息的标记
     myMessagebar: null,				//输入框
     textSending: false,				//正在发送消息标志[用于发送消息]
+    msg: {},						//保存所有消息
+    curroster: null,				//当前打开的用户
 
 
     //登录服务器
@@ -77,15 +79,16 @@ webim = {
     //登录成功处理函数
     handleOpen: function(conn){
 
-//	        console.log('handleOpen');
+	        console.log('handleOpen');
 
 	        //从连接中获取到当前的登录人注册帐号名
 	        curUserId = conn.context.userId;
 	        conn.setPresence();  //设置在线状态，非常重要，否则收不到信息！！！
+
 	        //获取当前登录人的联系人列表
 	        conn.getRoster({
 		            success : function(roster) {
-//		            		console.log('roster');
+		            		console.log('roster');
 			                //页面处理
 			                //hiddenWaitLoginedUI();
 			                //showChatUI();
@@ -95,24 +98,29 @@ webim = {
 			                    //both为双方互为好友，要显示的联系人,from我是对方的单向好友
 			                    if (ros.subscription == 'both' || ros.subscription == 'from') {
 			                        //bothRoster.push(ros);
-//			                        console.log(ros);
+			                        console.log('both or from:'+JSON.stringify(ros));
 			                    } else if (ros.subscription == 'to') {
 			                        //to表明了联系人是我的单向好友
 			                        //toRoster.push(ros);
-//			                        console.log(ros);
+			                        console.log('to:'+ros);
 			                    }
 			                }
-			                if (bothRoster.length > 0) {
-			                    curroster = bothRoster[0];
+			                
+			                //设置当前用户，暂时不需要
+			                // if (bothRoster.length > 0) {
+			                    // curroster = bothRoster[0];
 			                    // buildContactDiv("contractlist", bothRoster);//联系人列表页面处理
-			                    if (curroster){
+			                    // if (curroster){
 			                        // setCurrentContact(curroster.name);//页面处理将第一个联系人作为当前聊天div
-			                    }
+			                    // }
 			                        
-			                }
+			                // }
 			                //获取当前登录人的群组列表
 			                conn.listRooms({
 			                    success : function(rooms) {
+
+			                    	console.log('list rooms');
+
 			                        if (rooms && rooms.length > 0) {
 			                            //buildListRoomDiv("contracgrouplist", rooms);//群组列表页面处理
 			                            if (curChatUserId == null) {
@@ -124,7 +132,7 @@ webim = {
 			                        // conn.setPresence();
 			                    },
 			                    error : function(e) {
-
+			                    	console.log('list rooms error');
 			                    }
 			                });
 		            }
@@ -145,7 +153,7 @@ webim = {
              if (e.type == EASEMOB_IM_CONNCTION_SERVER_CLOSE_ERROR) {
                  if (msg == "" || msg == 'unknown' ) {
                      alert("服务器器断开连接,可能是因为在别处登录");
-                     localStorage.removeItem("mobile");
+                      localStorage.removeItem("mobile");
 	           		  localStorage.removeItem('sec_id');
 	           		  localStorage.removeItem('im_username');
 	           		  localStorage.removeItem('im_password');
@@ -172,9 +180,10 @@ webim = {
 	//处理文本消息
     handleTextMessage : function(message) {
 
-//    		console.log(message);
+    		console.log('接收到文本消息');
 
-    		
+
+
 	        var webim = this;
 	        var from = message.from;//消息的发送者
 	        var mestype = message.type;//消息发送的类型是群组消息还是个人消息
@@ -182,30 +191,48 @@ webim = {
 	        //TODO  根据消息体的to值去定位那个群组的聊天记录
 	        var room = message.to;
 
+
+	        console.log(mestype);
+
 	        if (mestype == 'groupchat') {
 	            // appendMsg(message.from, message.to, messageContent, mestype);
-	        } else {
+	        }else{
 	            // appendMsg(from, from, messageContent);
 
-	                    var messageType = 'received';
-	                    // 接收的消息的头像和名称
-	                    var avatar, name;
-	                    if(messageType === 'received') {
-	                            avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
-	                            name = from;
+	                  	// 将所有聊天记录保存
+	                  	this.msg[from] = this.msg[from] || [];
+	                  	this.msg[from].push(message);
+	                  	console.log(message);
+	                  	console.log(this.curroster);
+	                  	console.log(from);
+
+	                  	// 判断是否为当前打开用户
+	                  	if(this.curroster === from){
+					                    var messageType = 'received';
+					                    // 接收的消息的头像和名称
+					                    var avatar, name;
+					                    if(messageType === 'received') {
+					                            avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
+					                            name = from;
+					                    }
+					                    this.myMessages.addMessage({
+							                    text: messageContent,
+							                    type: messageType,
+							                    avatar: avatar,
+							                    name: from,
+							                    // 日期
+							                    day: !webim.conversationStarted ? '今天' : false,
+							                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+					                    })
+	                    }else{
+	                    		console.log("不是当前用户")
+	                    		// 未读记录数操作
+	                    		if(this.msg[from]['noread']){
+	                    			this.msg[from]['noread']++
+	                    		}else{
+	                    			this.msg[from]['noread']=1;
+	                    		}
 	                    }
-	                    this.myMessages.addMessage({
-			                    // Message text
-			                    text: messageContent,
-			                    // 随机消息类型
-			                    type: messageType,
-			                    // 头像和名称
-			                    avatar: avatar,
-			                    name: from,
-			                    // 日期
-			                    day: !webim.conversationStarted ? '今天' : false,
-			                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
-	                    })
 	        }
 
 

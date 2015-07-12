@@ -33,10 +33,10 @@ myApp.template7Data['page:user-list-page'] = function(){
         postdata.sec_id = secId;    
 
         $$.ajax({
-
-                type : "POST",
-                url  : siteAPIPath+"sec/get_users.json",
-                //url  : "data/users.json",
+                // type : "POST",
+                type : "GET",
+                // url  : siteAPIPath+"sec/get_users.json",
+                url  : "data/users.json",
                 dataType: "json",
                 cache : true,
                 async : false,
@@ -49,7 +49,9 @@ myApp.template7Data['page:user-list-page'] = function(){
 }
 
 //列表页初始化函数
-myApp.onPageInit('im-list-page', function (page) {});
+myApp.onPageInit('im-list-page', function (page) {
+    webim.curroster = null;
+});
 
 
 
