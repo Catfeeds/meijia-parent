@@ -15,11 +15,6 @@ myApp.onPageBack('messages', function(page){
     console.log('back 清除当前用户11')
     webim.curroster = null;
 });
-$$(document).on('pageBack', '.page[data-page="messages"]', function (e) {
-      console.log('back 清除当前用户22')
-      webim.curroster = null;
-})   
-
 
 
 
@@ -30,6 +25,7 @@ myApp.onPageInit('messages', function (page) {
 
         var toUser = page.query.uid;       
         var userId = page.query.user_id;
+        var userface = page.query.userface;
 
 
 
@@ -89,8 +85,8 @@ myApp.onPageInit('messages', function (page) {
                   // 接收的消息的头像和名称
                   var avatar, name;
                   if(messageType === 'received') {
-                        avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
-                        name = 'Kate';
+                        avatar = userface;
+                        name = toUser;
                   }
                   // Add message
                   webim.myMessages.addMessage({
