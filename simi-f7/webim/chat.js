@@ -70,6 +70,13 @@ myApp.onPageInit('messages', function (page) {
 
 
         webim.curroster = toUser;
+
+        //读取聊天记录
+        for(var i = 0; i < webim.msg[toUser].length; i++){
+              console.log(webim.msg[toUser][i]);
+        }
+
+
         
         //初始化消息对象
         webim.myMessagebar = myApp.messagebar('.messagebar');
@@ -110,7 +117,7 @@ myApp.onPageInit('messages', function (page) {
                   webim.myMessages.addMessage(sendmsg);
                   this.msg[from].push(sendmsg);
 
-                  
+
                   // 更新会话flag
                   webim.conversationStarted = true;
                   webim.sendText(messageText, toUser);
