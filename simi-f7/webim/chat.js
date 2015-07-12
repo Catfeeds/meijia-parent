@@ -77,12 +77,14 @@ myApp.onPageInit('messages', function (page) {
 
 
         //读取聊天记录
-        for(var i = 0; i < webim.msg[toUser].length; i++){
-              // console.log(webim.msg[toUser][i]);
-              if(webim.msg[toUser][i].avatar===null){
-                    webim.msg[toUser][i].avatar = webim.userList[toUser].head_img;
+        if(webim.msg[toUser]){
+              for(var i = 0; i < webim.msg[toUser].length; i++){
+                    // console.log(webim.msg[toUser][i]);
+                    if(webim.msg[toUser][i].avatar===null){
+                          webim.msg[toUser][i].avatar = webim.userList[toUser].head_img;
+                    }
+                    webim.myMessages.addMessage(webim.msg[toUser][i]);
               }
-              webim.myMessages.addMessage(webim.msg[toUser][i]);
         }
 
 
