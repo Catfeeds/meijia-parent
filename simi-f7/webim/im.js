@@ -174,6 +174,7 @@ webim = {
  			console.log(this.noreadFlag)
 	        var breakFlag = false;
 	        for(from in this.noreadFlag){
+	        		console.log(this.noreadFlag[from]);
 	        		if(this.noreadFlag[from]>0){
 	        			$$('#messageDot').removeClass('hidden');
 	        			breakFlag = true;
