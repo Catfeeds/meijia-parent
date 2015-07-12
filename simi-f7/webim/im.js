@@ -201,8 +201,8 @@ webim = {
 	                  	this.msg[from] = this.msg[from] || [];
 	                  	this.msg[from].push(message);
 	                  	console.log(message);
-	                  	console.log('curroster:'+this.curroster);
-	                  	console.log('from:'+from);
+	                  	console.log('当前打开用户:'+this.curroster);
+	                  	console.log('消息来源用户:'+from);
 
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
