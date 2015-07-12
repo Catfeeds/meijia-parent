@@ -170,11 +170,19 @@ webim = {
     },
 
     //控制消息的红点显示与隐藏
- 	newMessageDot: function (flag){
-	        if(flag){
-	                $$('#messageDot').removeClass('hidden');
-	        }else{
+ 	newMessageDot: function (){
+	        var breakFlag = false;
+	        for(from in this.noreadFlag){
+	        		if(this.noreadFlag[from]>0){
+	        			$$('#messageDot').removeClass('hidden');
+	        			breakFlag = true;
+	        			break;
+	        		}
+	        }
+	        if(breakFlag){
 	                $$('#messageDot').addClass('hidden');
+	        }else{
+	                
 	        }
 	},
 
@@ -205,7 +213,6 @@ webim = {
 
 	                  	//未读数量
 	                  	this.noreadFlag[from] = this.noreadFlag[from] || 0;
-	                  	// console.log(this.noreadFlag[from]);
 
 
 	                  	console.log(message);
@@ -236,13 +243,15 @@ webim = {
 	                    }else{
 	                    		console.log("未打开任何对话时候的消息处理")
 
-	                    		// 未读记录数操作
-	                    		this.noreadFlag[from]++;   //未读数量设置
-	                    		this.newMessageDot(true);  //打开红点
+	                    		this.noreadFlag[from]++;   	//from用户未读数量加1
+	                    		
 
 	                    		console.log(this.msg);
 	                    		console.log(this.noreadFlag);
 	                    }
+
+
+	                    this.newMessageDot();  	//红点设置
 	        }
 
 
