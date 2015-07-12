@@ -11,11 +11,11 @@ myApp.onPageBeforeInit('messages', function(page){
 });
 
 
-myApp.onPageBack('user-list-page', function(page){
+myApp.onPageBack('messages', function(page){
     console.log('back 清除当前用户11')
     webim.curroster = null;
 });
-$$(document).on('pageBack', '.page[data-page="user-list-page"]', function (e) {
+$$(document).on('pageBack', '.page[data-page="messages"]', function (e) {
       console.log('back 清除当前用户22')
       webim.curroster = null;
 })   
