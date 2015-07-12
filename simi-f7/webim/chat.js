@@ -3,7 +3,7 @@ myApp.template7Data['page:messages'] = function(page){
         console.log('message data init');
         
 
-        console.log(page.query.uid);
+        console.log(page);
         return {
             msg:webim.msg[page.query.uid]
         };
