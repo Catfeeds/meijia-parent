@@ -218,15 +218,18 @@ webim = {
 	                  	console.log('当前打开用户:'+this.curroster);
 	                  	console.log('消息来源用户:'+from);
 	                  	console.log('本地存储的用户列表:');
-	                  	console.log(webim.userList);
+	                  	// console.log(webim.userList);
 
 	                  	var messageType = 'received';
 	                    // 接收的消息的头像和名称
 	                    var avatar, name;
 
 	                  	if(messageType === 'received') {
-	                            avatar = webim.userList[from].head_img;
-	                            // name = from;
+	                  			if(webim.userList[from]){
+	                            	avatar = webim.userList[from].head_img;
+	                        	}else{
+	                        		avatar = null;
+	                        	}
 					    }
 					    console.log('a');
 	                  	var recMsg = {
