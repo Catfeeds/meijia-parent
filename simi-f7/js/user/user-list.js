@@ -69,7 +69,7 @@ myApp.template7Data['page:im-list-page'] = function(){
                 type : "POST",
                 // type : "GET",
                 url  : siteAPIPath+"sec/get_users.json",
-                url  : "data/users.json",
+                // url  : "data/users.json",
                 dataType: "json",
                 cache : true,
                 async : false,
