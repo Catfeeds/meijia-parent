@@ -10,6 +10,14 @@ myApp.onPageBeforeInit('messages', function(page){
         console.log('message before init');
 });
 
+
+myApp.onPageBack('user-list-page', function(page){
+
+    console.log('back 清除当前用户')
+    webim.curroster = null;
+
+});
+
 //页面初始化
 myApp.onPageInit('messages', function (page) {
         
@@ -22,7 +30,7 @@ myApp.onPageInit('messages', function (page) {
 
         webim.noreadFlag[toUser] = 0;  // 未读数量清零
         webim.newMessageDot();
-        
+
         var onUserInfoSuccess =function(data, textStatus, jqXHR) {
            	    var result = JSON.parse(data.response);
               	
