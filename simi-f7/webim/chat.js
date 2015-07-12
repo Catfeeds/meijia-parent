@@ -3,9 +3,9 @@ myApp.template7Data['page:messages'] = function(page){
         console.log('message data init');
         
 
-        console.log(page);
+        console.log(webim.msg);
         return {
-            msg:webim.msg[page.query.uid]
+            msg:webim.msg
         };
 }
 
@@ -16,8 +16,7 @@ myApp.onPageBeforeInit('messages', function(page){
 
 
 myApp.onPageBack('messages', function(page){
-    console.log('back 清除当前用户11')
-    webim.curroster = null;
+    webim.curroster = null;   //清除当前用户
 });
 
 
