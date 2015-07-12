@@ -12,11 +12,16 @@ myApp.onPageBeforeInit('messages', function(page){
 
 
 myApp.onPageBack('user-list-page', function(page){
-
-    console.log('back 清除当前用户')
+    console.log('back 清除当前用户11')
     webim.curroster = null;
-
 });
+$$(document).on('pageBack', '.page[data-page="user-list-page"]', function (e) {
+      console.log('back 清除当前用户22')
+      webim.curroster = null;
+})   
+
+
+
 
 //页面初始化
 myApp.onPageInit('messages', function (page) {
