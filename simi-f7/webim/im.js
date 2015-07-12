@@ -238,7 +238,7 @@ webim = {
 	                    		
 
 	                    		// 未读记录数操作
-	                    		// this.noreadFlag[from]++;   //未读数量设置
+	                    		this.noreadFlag[from]++;   //未读数量设置
 
 	                    		console.log(this.msg);
 	                    		console.log(this.noreadFlag);
