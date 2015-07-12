@@ -204,8 +204,8 @@ webim = {
 
 
 	                  	//未读数量
-	                  	//this.noreadFlag[from] = this.noreadFlag[from] || 0;
-	                  	console.log(this.noreadFlag[from]);
+	                  	this.noreadFlag[from] = this.noreadFlag[from] || 0;
+	                  	// console.log(this.noreadFlag[from]);
 
 
 	                  	console.log(message);
