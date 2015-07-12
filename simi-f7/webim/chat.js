@@ -12,47 +12,51 @@ myApp.onPageBeforeInit('messages', function(page){
 
 //页面初始化
 myApp.onPageInit('messages', function (page) {
+        
         console.log('message page init');
 
-        var toUser = page.query.uid;
+        var toUser = page.query.uid;       
         var userId = page.query.user_id;
+
+
+
+        webim.noreadFlag[toUser] = 0;  // 未读数量清零
+
         
         var onUserInfoSuccess =function(data, textStatus, jqXHR) {
-           	var result = JSON.parse(data.response);
-        	if (result.status == "999") {
-        		myApp.alert(result.msg);
-        		return;
-        	}
-        	
-        	var user = result.data;
-        	var nickName = user.name;
-        	$$('#touser').html(nickName);
-        	 
+           	    var result = JSON.parse(data.response);
+              	
+                if (result.status == "999") {
+              		myApp.alert(result.msg);
+              		return;
+              	}
+              	var user = result.data;
+              	var nickName = user.name;
+              	$$('#touser').html(nickName);
         }
         
         
         var postdata = {};
         postdata.user_id = userId;    
-    	$$.ajax({
-    		type : "GET",
-    		url : siteAPIPath + "user/get_userinfo.json",
-    		dataType : "json",
-    		cache : true,
-    		data :postdata,
-    		statusCode: {
-             	200: onUserInfoSuccess,
-     	    	400: ajaxError,
-     	    	500: ajaxError
-     	    },
-    	});
-        
-        
-
+      	$$.ajax({
+          		type : "GET",
+          		url : siteAPIPath + "user/get_userinfo.json",
+          		dataType : "json",
+          		cache : true,
+          		data :postdata,
+          		statusCode: {
+                   	200: onUserInfoSuccess,
+           	    	400: ajaxError,
+           	    	500: ajaxError
+           	    },
+      	});
        
 
         webim.myMessages = myApp.messages('.messages', {
                 autoLayout:true
         });
+
+
         webim.curroster = toUser;
         
         //初始化消息对象
@@ -72,8 +76,8 @@ myApp.onPageInit('messages', function (page) {
                   // 接收的消息的头像和名称
                   var avatar, name;
                   if(messageType === 'received') {
-                    avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
-                    name = 'Kate';
+                        avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
+                        name = 'Kate';
                   }
                   // Add message
                   webim.myMessages.addMessage({
