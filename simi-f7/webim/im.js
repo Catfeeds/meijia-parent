@@ -6,7 +6,7 @@ webim = {
     myMessagebar: null,				//输入框
     textSending: false,				//正在发送消息标志[用于发送消息]
     msg: {},						//保存所有消息
-    noreadFlag:{} ,					//保存未读消息数量
+    noreadFlag: {},					//保存未读消息数量
     curroster: null,				//当前打开的用户
 
 
