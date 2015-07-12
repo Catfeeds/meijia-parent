@@ -21,7 +21,7 @@ myApp.onPageInit('messages', function (page) {
 
 
         webim.noreadFlag[toUser] = 0;  // 未读数量清零
-
+        webim.newMessageDot();
         
         var onUserInfoSuccess =function(data, textStatus, jqXHR) {
            	    var result = JSON.parse(data.response);
