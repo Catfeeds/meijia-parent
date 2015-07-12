@@ -78,7 +78,7 @@ myApp.template7Data['page:im-list-page'] = function(){
 
                     webim.userList = {}; 
                     for(var i = 0; i<data.data.length; i++){
-                        console.log(data[i]);
+                        console.log(data.data[i]);
                         webim.userList[data[i].im_username] = data.data[i]
                     }
 
