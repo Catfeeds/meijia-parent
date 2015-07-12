@@ -215,7 +215,7 @@ webim = {
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
 					                    
-	                  					// this.noreadFlag[from] ＝ 0;   	//未读数量清空
+	                  					this.noreadFlag[from] = 0;   	//未读数量清空
 
 					                    var messageType = 'received';
 					                    // 接收的消息的头像和名称
@@ -235,10 +235,10 @@ webim = {
 					                    })
 	                    }else{
 	                    		console.log("未打开任何对话时候的消息处理")
-	                    		
 
 	                    		// 未读记录数操作
 	                    		this.noreadFlag[from]++;   //未读数量设置
+	                    		this.newMessageDot(true);  //打开红点
 
 	                    		console.log(this.msg);
 	                    		console.log(this.noreadFlag);
