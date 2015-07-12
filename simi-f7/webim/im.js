@@ -214,11 +214,11 @@ webim = {
 	                  	//未读数量
 	                  	this.noreadFlag[from] = this.noreadFlag[from] || 0;
 
-	                  	// console.log(message);
-	                  	// console.log('当前打开用户:'+this.curroster);
-	                  	// console.log('消息来源用户:'+from);
-	                  	// console.log('本地存储的用户列表:');
-	                  	// console.log(webim.userList);
+	                  	console.log(message);
+	                  	console.log('当前打开用户:'+this.curroster);
+	                  	console.log('消息来源用户:'+from);
+	                  	console.log('本地存储的用户列表:');
+	                  	console.log(webim.userList);
 
 	                  	var messageType = 'received';
 	                    // 接收的消息的头像和名称
