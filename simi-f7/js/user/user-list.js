@@ -76,9 +76,10 @@ myApp.template7Data['page:im-list-page'] = function(){
                 data : postdata,
                 success: function(data){
 
+                    //将列表数据缓存
                     webim.userList = {}; 
                     for(var i = 0; i<data.data.length; i++){
-                        console.log(data.data[i]);
+                        // console.log(data.data[i]);
                         webim.userList[data.data[i].im_username] = data.data[i]
                     }
 

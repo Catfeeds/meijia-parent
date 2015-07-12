@@ -1,8 +1,11 @@
 //获取对话页数据
 myApp.template7Data['page:messages'] = function(page){
         console.log('message data init');
-        // console.log(page);
-        return {};
+        
+        console.log(webim.msg[page.query.uid]);
+        return {
+            msg:webim.msg[page.query.uid]
+        };
 }
 
 //Before初始化
