@@ -51,6 +51,7 @@ myApp.template7Data['page:user-list-page'] = function(){
 //列表页初始化函数
 myApp.onPageInit('im-list-page', function (page) {
         webim.curroster = null;
+        console.log('init im list and 执行红点函数');
         webim.newMessageDot();
 
 });
