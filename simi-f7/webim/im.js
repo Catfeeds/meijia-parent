@@ -182,8 +182,6 @@ webim = {
 
     		console.log('接收到文本消息');
 
-
-
 	        var webim = this;
 	        var from = message.from;//消息的发送者
 	        var mestype = message.type;//消息发送的类型是群组消息还是个人消息
@@ -203,8 +201,8 @@ webim = {
 	                  	this.msg[from] = this.msg[from] || [];
 	                  	this.msg[from].push(message);
 	                  	console.log(message);
-	                  	console.log(this.curroster);
-	                  	console.log(from);
+	                  	console.log('curroster:'+this.curroster);
+	                  	console.log('from:'+from);
 
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
