@@ -107,9 +107,8 @@ myApp.onPageInit('messages', function (page) {
         });
 
     	$$('.order-form-link').on('click', function() {
-    		
 //    		myApp.alert('order-form' + userId);
-    		mainView.router.loadPage("order/order-form.html?user_id="+userId);
+    		  mainView.router.loadPage("order/order-form.html?user_id="+userId);
     	});        
 
 });
