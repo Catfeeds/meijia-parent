@@ -208,53 +208,48 @@ webim = {
 	            // appendMsg(message.from, message.to, messageContent, mestype);
 	        }else{
 	            // appendMsg(from, from, messageContent);
-
-	                  	// 将所有聊天记录保存
-	                  	this.msg[from] = this.msg[from] || [];
-	                  	this.msg[from].push(message);
-
-
+	                  	
 	                  	//未读数量
 	                  	this.noreadFlag[from] = this.noreadFlag[from] || 0;
 
+	                  	// console.log(message);
+	                  	// console.log('当前打开用户:'+this.curroster);
+	                  	// console.log('消息来源用户:'+from);
+	                  	// console.log('本地存储的用户列表:');
+	                  	// console.log(webim.userList);
 
-	                  	console.log(message);
-	                  	console.log('当前打开用户:'+this.curroster);
-	                  	console.log('消息来源用户:'+from);
-	                  	console.log('本地存储的用户列表:');
-	                  	console.log(webim.userList);
+	                  	var messageType = 'received';
+	                    // 接收的消息的头像和名称
+	                    var avatar, name;
+
+	                  	if(messageType === 'received') {
+	                            avatar = webim.userList[from].head_img;
+	                            name = from;
+					    }
+
+	                  	var recMsg = {
+			                    text: messageContent,
+			                    type: messageType,
+			                    avatar: avatar,
+			                    name: from,
+			                    // 日期
+			                    day: !webim.conversationStarted ? '今天' : false,
+			                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+	                    };
 
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
-					                    
-	                  					this.noreadFlag[from] = 0;   	//未读数量清空
-
-					                    var messageType = 'received';
-					                    // 接收的消息的头像和名称
-					                    var avatar, name;
-					                    if(messageType === 'received') {
-					                            avatar = webim.userList[from].head_img;
-					                            name = from;
-					                    }
-					                    this.myMessages.addMessage({
-							                    text: messageContent,
-							                    type: messageType,
-							                    avatar: avatar,
-							                    name: from,
-							                    // 日期
-							                    day: !webim.conversationStarted ? '今天' : false,
-							                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
-					                    })
+	                  			console.log("打开用户的处理");
+              					this.noreadFlag[from] = 0;   	//未读数量清空
+			                    this.myMessages.addMessage(recMsg)
 	                    }else{
-	                    		console.log("未打开任何对话时候的消息处理")
-
+	                    		console.log("未打开任何对话时候的消息处理");
 	                    		this.noreadFlag[from]++;   	//from用户未读数量加1
-	                    		
-
-	                    		console.log(this.msg);
-	                    		console.log(this.noreadFlag);
 	                    }
 
+	                    // 将所有聊天记录保存
+	                  	this.msg[from] = this.msg[from] || [];
+	                  	this.msg[from].push(recMsg);
 
 	                    this.newMessageDot();  	//红点设置
 	        }

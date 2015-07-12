@@ -1,12 +1,7 @@
 //获取对话页数据
 myApp.template7Data['page:messages'] = function(page){
         console.log('message data init');
-        
-
-        console.log(webim.msg);
-        return {
-            msg:webim.msg
-        };
+        return {};
 }
 
 //Before初始化
@@ -33,7 +28,10 @@ myApp.onPageInit('messages', function (page) {
 
 
         webim.noreadFlag[toUser] = 0;  // 未读数量清零
-        webim.newMessageDot();
+        webim.newMessageDot();         // 设置红点
+
+        
+
 
         var onUserInfoSuccess =function(data, textStatus, jqXHR) {
            	    var result = JSON.parse(data.response);
@@ -46,22 +44,24 @@ myApp.onPageInit('messages', function (page) {
               	var nickName = user.name;
               	$$('#touser').html(nickName);
         }
-        
-        
+
         var postdata = {};
         postdata.user_id = userId;    
       	$$.ajax({
-          		type : "GET",
-          		url : siteAPIPath + "user/get_userinfo.json",
-          		dataType : "json",
-          		cache : true,
-          		data :postdata,
-          		statusCode: {
-                   	200: onUserInfoSuccess,
-           	    	400: ajaxError,
-           	    	500: ajaxError
-           	    },
+            		type : "GET",
+            		url : siteAPIPath + "user/get_userinfo.json",
+            		dataType : "json",
+            		cache : true,
+            		data :postdata,
+            		statusCode: {
+                     	200: onUserInfoSuccess,
+             	    	400: ajaxError,
+             	    	500: ajaxError
+             	    },
       	});
+
+
+
        
 
         webim.myMessages = myApp.messages('.messages', {
@@ -91,8 +91,9 @@ myApp.onPageInit('messages', function (page) {
                         avatar = userface;
                         name = toUser;
                   }
-                  // Add message
-                  webim.myMessages.addMessage({
+
+
+                  var sendmsg = {
                     // Message text
                     text: messageText,
                     // 随机消息类型
@@ -103,7 +104,11 @@ myApp.onPageInit('messages', function (page) {
                     // 日期
                     day: !webim.conversationStarted ? '今天' : false,
                     time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
-                  })
+                  };
+
+                  // Add message
+                  webim.myMessages.addMessage(sendmsg);
+
                   // 更新会话flag
                   webim.conversationStarted = true;
                   webim.sendText(messageText, toUser);
