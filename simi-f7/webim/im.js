@@ -172,12 +172,12 @@ webim = {
     //控制消息的红点显示与隐藏
  	newMessageDot: function (){
  			console.log(this.noreadFlag)
-	        var breakFlag = false;
+	        var breakFlag = true;
 	        for(from in this.noreadFlag){
 	        		console.log(this.noreadFlag[from]);
 	        		if(this.noreadFlag[from]>0){
 	        			$$('#messageDot').removeClass('hidden');
-	        			breakFlag = true;
+	        			breakFlag = false;
 	        			break;
 	        		}
 	        }
