@@ -8,6 +8,7 @@ webim = {
     msg: {},						//保存所有消息
     noreadFlag: {},					//保存未读消息数量
     curroster: null,				//当前打开的用户
+    userList: {},					//保存用户列表数据
 
 
     //登录服务器
@@ -220,6 +221,7 @@ webim = {
 	                  	console.log(message);
 	                  	console.log('当前打开用户:'+this.curroster);
 	                  	console.log('消息来源用户:'+from);
+	                  	console.log('本地存储的用户列表:'+webim.userList);
 
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
@@ -230,7 +232,7 @@ webim = {
 					                    // 接收的消息的头像和名称
 					                    var avatar, name;
 					                    if(messageType === 'received') {
-					                            avatar = 'http://lorempixel.com/output/people-q-c-100-100-9.jpg';
+					                            avatar = webim.userList[from].head_img;
 					                            name = from;
 					                    }
 					                    this.myMessages.addMessage({
