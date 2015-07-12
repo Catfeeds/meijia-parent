@@ -108,7 +108,9 @@ myApp.onPageInit('messages', function (page) {
 
                   // Add message
                   webim.myMessages.addMessage(sendmsg);
+                  this.msg[from].push(sendmsg);
 
+                  
                   // 更新会话flag
                   webim.conversationStarted = true;
                   webim.sendText(messageText, toUser);
