@@ -6,6 +6,7 @@ webim = {
     myMessagebar: null,				//输入框
     textSending: false,				//正在发送消息标志[用于发送消息]
     msg: {},						//保存所有消息
+    noreadFlag:{} ,					//保存未读消息数量
     curroster: null,				//当前打开的用户
 
 
@@ -200,12 +201,21 @@ webim = {
 	                  	// 将所有聊天记录保存
 	                  	this.msg[from] = this.msg[from] || [];
 	                  	this.msg[from].push(message);
+
+
+	                  	//未读数量
+	                  	this.noreadFlag[from] = this.noreadFlag[from] || 0;
+
+
 	                  	console.log(message);
 	                  	console.log('当前打开用户:'+this.curroster);
 	                  	console.log('消息来源用户:'+from);
 
 	                  	// 判断是否为当前打开用户
 	                  	if(this.curroster === from){
+					                    
+	                  					this.noreadFlag[from] ＝ 0;   	//未读数量清空
+
 					                    var messageType = 'received';
 					                    // 接收的消息的头像和名称
 					                    var avatar, name;
@@ -224,14 +234,13 @@ webim = {
 					                    })
 	                    }else{
 	                    		console.log("未打开任何对话时候的消息处理")
+	                    		
+
 	                    		// 未读记录数操作
-	                    		if(this.msg[from]['noread']){
-	                    			this.msg[from]['noread']++
-	                    		}else{
-	                    			this.msg[from]['noread']=1;
-	                    		}
+	                    		this.noreadFlag[from]++;   //未读数量设置
 
 	                    		console.log(this.msg);
+	                    		console.log(this.noreadFlag);
 	                    }
 	        }
 
