@@ -49,6 +49,7 @@ public class CardTypeController<T> {
 		
 		AppResultData<List<DictAd>> result = new AppResultData<List<DictAd>>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG,dictAdList);	
+		
 		if (dictAdList != null) {
 			
 			dictAdList = adService.selectByAdType(adType);

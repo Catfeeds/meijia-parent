@@ -39,7 +39,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from user_ref_senior
-		where  senior_id = #{seniorId,jdbcType=NUMERIC}
+		where  sec_id = #{secId,jdbcType=NUMERIC}
 	</select>
 
 	<select id="selectByUserIdAndSenior" resultMap="BaseResultMap"

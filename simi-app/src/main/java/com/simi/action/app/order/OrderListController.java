@@ -38,7 +38,7 @@ public class OrderListController extends BaseController {
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
 	public AppResultData<List<OrderViewVo>> list(
 			@RequestParam("user_id") Long userId, 
-			@RequestParam(value = "page", required = false, defaultValue = "0") int page) {
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		
 		List<OrderViewVo> orderList = new ArrayList<OrderViewVo>();
 		

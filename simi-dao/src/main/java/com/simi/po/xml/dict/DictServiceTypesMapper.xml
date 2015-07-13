@@ -70,7 +70,7 @@
 		</if>
 
 		<if test="id != null" >
-		     and id != #{id,jdbcType=NUMERIC}
+		     and id = #{id,jdbcType=NUMERIC}
 		 </if>
 		 limit 1
 	</select>

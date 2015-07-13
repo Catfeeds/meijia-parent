@@ -24,7 +24,7 @@ public interface UserRefSeniorService {
 
 	List<UserRefSeniorVo> getSeniorViewList(List<UserRefSenior> list);
 	
-	List<UserRefSenior> selectBySeniorId(Long seniorId);
+	List<UserRefSenior> selectBySeniorId(Long secId);
 
 
 }

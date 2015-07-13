@@ -13,11 +13,14 @@ import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.UserSearchVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserDetailPayMapper;
+import com.simi.po.dao.user.UserFeedbackMapper;
 import com.simi.po.dao.user.UsersMapper;
+import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailPay;
+import com.simi.po.model.user.UserFeedback;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.TimeStampUtil;
 
@@ -30,6 +33,8 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	@Autowired
 	private UsersMapper usersMapper;
 
+	@Autowired
+	private UserFeedbackMapper userFeedbackMapper;
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return userDetailPayMapper.deleteByPrimaryKey(id);
@@ -146,7 +151,15 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
+	@Override
+	public PageInfo searchUserFeedbackListPage(int pageNo, int pageSize) {
+		
+			 PageHelper.startPage(pageNo, pageSize);
+	         List<UserFeedback> list = userFeedbackMapper.selectByListPage();
+	        PageInfo result = new PageInfo(list);
+			return result;
 	
+	}
 	/**
 	 * 用户明细- 会员卡充值明细
 	 */
@@ -180,6 +193,8 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		userDetailPayMapper.insert(userDetailPay);
 		return userDetailPay;
 	}
+
+	
 
 
 

@@ -182,8 +182,8 @@ Long userId = user.getId();
 	}
 
 	@Override
-	public List<UserRefSenior> selectBySeniorId(Long seniorId) {
-		return userRefSeniorMapper.selectBySeniorId(seniorId);
+	public List<UserRefSenior> selectBySeniorId(Long secId) {
+		return userRefSeniorMapper.selectBySeniorId(secId);
 	}
 
 }

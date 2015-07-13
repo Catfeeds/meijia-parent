@@ -104,7 +104,7 @@ public class TestSecController extends JUnitActionBase{
      	postRequest = postRequest.param("nick_name", "哈雷2222");
      	postRequest = postRequest.param("sex", "男");
      	postRequest = postRequest.param("birth_day", "1980-07-01");
-     	postRequest = postRequest.param("city_id", "3");
+     	postRequest = postRequest.param("city_id", "5");
      	postRequest = postRequest.param("head_img", "");
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 

@@ -23,7 +23,7 @@ public interface UserRefSeniorMapper {
 
     UserRefSenior selectByUserId(Long id);
 
-    List<UserRefSenior> selectBySeniorId(Long seniorId);
+    List<UserRefSenior> selectBySeniorId(Long secId);
 
     <HashMap> List<HashMap> statBySeniorId();
 

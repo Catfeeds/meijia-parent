@@ -200,6 +200,23 @@ public class UserController extends AdminController {
 	public List<User> selectUserStat(HttpServletRequest request, Model model) {
 		return usersService.selectUserStat();
 	}*/
-	
+	@RequestMapping(value = "/feedback", method = { RequestMethod.GET })
+	public String userFeedbackList(HttpServletRequest request, Model model) {
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+
+		PageInfo result = userDetailPayService.searchUserFeedbackListPage(
+				pageNo, pageSize);
+		model.addAttribute("contentModel", result);
+
+		return "user/userFeedbackList";
+	}
+
 	
 }

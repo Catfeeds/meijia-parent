@@ -1,5 +1,7 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.UserFeedback;
 
 public interface UserFeedbackMapper {
@@ -14,4 +16,6 @@ public interface UserFeedbackMapper {
     int updateByPrimaryKeySelective(UserFeedback record);
 
     int updateByPrimaryKey(UserFeedback record);
+
+	List<UserFeedback> selectByListPage();
 }

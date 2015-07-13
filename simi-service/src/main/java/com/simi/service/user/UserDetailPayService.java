@@ -42,4 +42,6 @@ public interface UserDetailPayService {
 											   String tradeNo, 
 											   String payAccount);
 
+	PageInfo searchUserFeedbackListPage(int pageNo, int pageSize);
+
 }
