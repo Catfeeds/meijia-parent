@@ -21,9 +21,9 @@
 
 
 //获取列表页用户列表
-myApp.template7Data['page:user-list-page'] = function(){
+myApp.template7Data['page:im-list-page'] = function(){
         
-//        console.log('page data for user-list-page');
+        console.log('page data for im-list-page');
         var result;
 
         var secId = localStorage['sec_id'];
@@ -44,7 +44,7 @@ myApp.template7Data['page:user-list-page'] = function(){
                 data : postdata,
                 success: function(data){
                     result = data;
-                    
+                    console.log("success");
                     //将列表数据缓存
                     webim.userList = {}; 
                     for(var i = 0; i<data.data.length; i++){

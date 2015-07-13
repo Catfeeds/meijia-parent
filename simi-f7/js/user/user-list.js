@@ -53,7 +53,7 @@
 
 
 //获取列表页用户列表
-myApp.template7Data['page:im-list-page'] = function(){
+myApp.template7Data['page:user-list-page'] = function(){
         
 //        console.log('page data for im-list-page');
         var result;
