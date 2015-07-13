@@ -79,7 +79,8 @@ myApp.onPageInit('messages', function (page) {
         //读取聊天记录
         if(webim.msg[toUser]){
               for(var i = 0; i < webim.msg[toUser].length; i++){
-                    // console.log(webim.msg[toUser][i]);
+                     console.log(webim.msg[toUser][i]);
+                     console.log(webim.userList);
                     if(webim.msg[toUser][i].avatar===null){
                           webim.msg[toUser][i].avatar = webim.userList[toUser].head_img;
                     }

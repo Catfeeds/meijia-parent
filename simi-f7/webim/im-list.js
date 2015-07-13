@@ -33,15 +33,25 @@ myApp.template7Data['page:user-list-page'] = function(){
         postdata.sec_id = secId;    
 
         $$.ajax({
-                // type : "POST",
-                type : "GET",
-                // url  : siteAPIPath+"sec/get_users.json",
-                url  : "data/users.json",
+                
+                //type : "GET",
+                //url  : "data/users.json",
+                type : "POST",
+                url  : siteAPIPath+"sec/get_users.json",
                 dataType: "json",
                 cache : true,
                 async : false,
                 data : postdata,
                 success: function(data){
+                    result = data;
+                    
+                    //将列表数据缓存
+                    webim.userList = {}; 
+                    for(var i = 0; i<data.data.length; i++){
+                        // console.log(data.data[i]);
+                        webim.userList[data.data[i].im_username] = data.data[i];
+                    }
+
                     result = data;
                 }
         })
