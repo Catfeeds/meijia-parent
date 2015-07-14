@@ -102,10 +102,10 @@ public class OrderAddController extends BaseController {
 		}
 		
 		//如果用户没有手机号，则需要更新用户手机号.
-		if (StringUtil.isEmpty(u.getMobile())) {
-			u.setMobile(mobile);
-			userService.updateByPrimaryKeySelective(u);
-		}
+//		if (StringUtil.isEmpty(u.getMobile())) {
+//			u.setMobile(mobile);
+//			userService.updateByPrimaryKeySelective(u);
+//		}
 		
 		// 服务内容及备注信息需要进行urldecode;
     	try {

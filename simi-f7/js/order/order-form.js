@@ -112,7 +112,12 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 	
 	
 	$$('#order-submit').on('click', function() {
-
+		
+		
+		if (orderFormValidation() == false) {
+			return false;
+		}
+		
 		
 		var orderSubmitSuccess = function(data, textStatus, jqXHR) {
 			// We have received response and can hide activity indicator
@@ -170,3 +175,40 @@ myApp.onPageBeforeInit('order-form-page', function(page) {
 	});
 
 });
+
+
+
+function orderFormValidation() {
+	var formData = myApp.formToJSON('#order-form');
+
+	if (formData.name == "") {
+		myApp.alert("请输入客户昵称");
+		return false;
+	}
+	
+	if (formData.mobile == "") {
+		myApp.alert("请输入手机号");
+		return false;
+	}	
+	
+	if (isPhone(formData.mobile) == false) {
+		myApp.alert("请输入正确的手机号");
+		return false;
+	}	
+	
+	if (formData.service_content == "") {
+		myApp.alert("请输入服务内容");
+		return false;
+	}
+	
+	var orderPayType = $$('input[name="order_pay_type"]:selected').val();
+
+	if (orderPayType == 1) {
+		if (formData.order_money == "" || formData.order_money == 0) {
+			myApp.alert("支付金额必须大于0");
+			return false;
+		}
+	}
+
+	return true;
+}

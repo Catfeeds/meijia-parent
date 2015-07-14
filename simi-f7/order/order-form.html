@@ -98,24 +98,10 @@
 							<div class="item-inner">
 								<div class="item-title label">支付方式:</div>
 								<div class="item-input">
-									<div class="list-block">
-										<ul>
-											<li><label class="label-radio item-content"> <input type="radio" name="order_pay_type" value="0"
-													checked="checked" />
-													<div class="item-inner">
-														<div class="item-title">无需支付</div>
-													</div>
-											</label></li>
-											<li><label class="label-radio item-content"> <input type="radio" name="order_pay_type" value="1" />
-													<div class="item-inner">
-														<div class="item-title">线上支付</div>
-													</div>
-											</label></li>
-
-
-										</ul>
-
-									</div>
+									<select id="order_pay_type" name="order_pay_type">
+										<option value="0">无需支付</option>
+										<option value="1">线上支付</option>
+									</select>
 								</div>
 							</div>
 					</li>
