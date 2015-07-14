@@ -1764,3 +1764,6 @@ i.demo-icon-4 {
   -o-transition: 0ms;
   transition: 0ms;
 }
+#messageDot {
+  background: #fff;
+}
