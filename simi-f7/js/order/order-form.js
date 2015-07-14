@@ -191,17 +191,17 @@ function orderFormValidation() {
 		return false;
 	}	
 	
-	if (isPhone(formData.mobile) == false) {
-		myApp.alert("请输入正确的手机号");
-		return false;
-	}	
+//	if (isPhone(formData.mobile) == false) {
+//		myApp.alert("请输入正确的手机号");
+//		return false;
+//	}	
 	
 	if (formData.service_content == "") {
 		myApp.alert("请输入服务内容");
 		return false;
 	}
 	
-	var orderPayType = $$('input[name="order_pay_type"]:selected').val();
+	var orderPayType = formData.order_pay_type;
 
 	if (orderPayType == 1) {
 		if (formData.order_money == "" || formData.order_money == 0) {
