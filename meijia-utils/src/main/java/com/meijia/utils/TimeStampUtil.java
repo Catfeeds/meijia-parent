@@ -89,6 +89,16 @@ public class TimeStampUtil {
 		Date d = DateUtil.parse(today);
 		return getMillisOfDate(d) / 1000;
 	}
+	
+	/**
+	 * 今天开始时间戳，注意为精确到毫秒
+	 * @return long
+	 */
+	public static Long getBeginOfYesterDay() {
+		String today = DateUtil.getYesterday();
+		Date d = DateUtil.parse(today);
+		return getMillisOfDate(d) / 1000;
+	}	
 
 	/**
 	 *  根据时间戳 -> String yyyy-MM-dd HH:MM:ss
@@ -138,5 +148,7 @@ public class TimeStampUtil {
 		System.out.println(DateUtil.format(startTime, TimeStampUtil.DEFAULT_FULL_PATTERN));
 		System.out.println(TimeStampUtil.timeStampToDateStr(t*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
 		System.out.println(TimeStampUtil.timeStampToDateHour(t*1000));
+		
+		System.out.println(TimeStampUtil.getBeginOfYesterDay());
 	}
 }

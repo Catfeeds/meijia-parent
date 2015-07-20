@@ -5,6 +5,10 @@ import org.glassfish.jersey.client.JerseyWebTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import sun.misc.resources.Messages;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.huanxin.comm.Constants;
@@ -57,6 +61,14 @@ public class EasemobChatMessage {
         queryStrNode2.put("limit", "100");
         // 第一页
         ObjectNode messages2 = getChatMessages(queryStrNode2);
+
+        ArrayNode data =(ArrayNode)messages2.get("entities");
+
+        for (int i=0; i < data.size(); i++) {
+          String uuid=data.get(i).get("uuid").asText();
+          String content = data.get(i).get("payload").toString();
+          System.out.println(content);
+        }
         // 第二页
         String cursor = messages2.get("cursor").asText();
         ObjectNode messages3 = null;

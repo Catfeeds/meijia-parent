@@ -24,7 +24,7 @@ public class TestSyncImMsgController extends JUnitActionBase{
 	@Test
     public void testPostLogin() throws Exception {
 
-		String url = "/app/job/sync_im_all.json";
+		String url = "/app/job/sync_im_yesterday.json";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 //	    postRequest = postRequest.param("mobile", "18610807136");

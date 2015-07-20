@@ -4,7 +4,7 @@
 
 <!-- 	  <classPathEntry location="C:\software\sonatype-work\nexus\storage\central\mysql\mysql-connector-java\5.1.33\mysql-connector-java-5.1.33.jar" />
  -->
-    <classPathEntry location="D:/workspace/jar/mysql-connector-java-5.1.33.jar" />
+	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
 
 	<!-- 数据库链接URL、用户名、密码 -->
 	<context id="jdbc-test">
@@ -382,6 +382,20 @@
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="sec_id" property="secId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>
+
+				<!-- 用户im历史记录表 -->
+		<table schema="simi" tableName="user_im_history"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 
