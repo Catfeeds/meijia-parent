@@ -39,25 +39,5 @@ public class CardTypeController<T> {
 
     	return result;
     }
-	
-	@RequestMapping(value = "get_ads", method = RequestMethod.GET)
-	public AppResultData<List<DictAd>> dictList(
-		
-			@RequestParam(value = "ad_type", required = false, defaultValue = "0") Short adType) {
-
-		List<DictAd> dictAdList = new ArrayList<DictAd>();
-		
-		AppResultData<List<DictAd>> result = new AppResultData<List<DictAd>>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG,dictAdList);	
-		
-		if (dictAdList != null) {
-			
-			dictAdList = adService.selectByAdType(adType);
-			
-	        result.setData(dictAdList);
-		}
-	    		
-		return result;
-}
 
 }
