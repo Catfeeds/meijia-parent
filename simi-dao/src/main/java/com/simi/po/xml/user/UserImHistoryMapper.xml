@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserImHistoryMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserImHistory">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="from_im_user" property="fromImUser" jdbcType="VARCHAR" />
+		<result column="to_im_user" property="toImUser" jdbcType="VARCHAR" />
+		<result column="msg_id" property="msgId" jdbcType="VARCHAR" />
+		<result column="chat_type" property="chatType" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, from_im_user, to_im_user, msg_id, chat_type, content, uuid, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_im_history
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByUuid" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_im_history
+		where uuid = #{uuid,jdbcType=VARCHAR}
+	</select>	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_im_history
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserImHistory">
+		insert into user_im_history (id, from_im_user, to_im_user,
+		msg_id, chat_type, content,
+		uuid, add_time)
+		values (#{id,jdbcType=NUMERIC}, #{fromImUser,jdbcType=VARCHAR}, #{toImUser,jdbcType=VARCHAR},
+		#{msgId,jdbcType=VARCHAR}, #{chatType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+		#{uuid,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserImHistory">
+		insert into user_im_history
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="fromImUser != null">
+				from_im_user,
+			</if>
+			<if test="toImUser != null">
+				to_im_user,
+			</if>
+			<if test="msgId != null">
+				msg_id,
+			</if>
+			<if test="chatType != null">
+				chat_type,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="uuid != null">
+				uuid,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="fromImUser != null">
+				#{fromImUser,jdbcType=VARCHAR},
+			</if>
+			<if test="toImUser != null">
+				#{toImUser,jdbcType=VARCHAR},
+			</if>
+			<if test="msgId != null">
+				#{msgId,jdbcType=VARCHAR},
+			</if>
+			<if test="chatType != null">
+				#{chatType,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="uuid != null">
+				#{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserImHistory">
+		update user_im_history
+		<set>
+			<if test="fromImUser != null">
+				from_im_user = #{fromImUser,jdbcType=VARCHAR},
+			</if>
+			<if test="toImUser != null">
+				to_im_user = #{toImUser,jdbcType=VARCHAR},
+			</if>
+			<if test="msgId != null">
+				msg_id = #{msgId,jdbcType=VARCHAR},
+			</if>
+			<if test="chatType != null">
+				chat_type = #{chatType,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="uuid != null">
+				uuid = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserImHistory">
+		update user_im_history
+		set from_im_user = #{fromImUser,jdbcType=VARCHAR},
+		to_im_user = #{toImUser,jdbcType=VARCHAR},
+		msg_id = #{msgId,jdbcType=VARCHAR},
+		chat_type = #{chatType,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR},
+		uuid = #{uuid,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>
