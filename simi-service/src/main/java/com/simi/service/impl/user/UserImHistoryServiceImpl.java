@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.simi.service.user.UserImHistoryService;
 import com.simi.po.dao.user.UserImHistoryMapper;
 import com.simi.po.model.user.UserImHistory;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.TimeStampUtil;
@@ -23,7 +24,7 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 		record.setFromImUser("");
 		record.setToImUser("");
 		record.setChatType("");
-		record.setContent("");
+		record.setImContent("");
 		record.setMsgId("");
 		record.setUuid("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
@@ -55,7 +56,7 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 	        ArrayNode data =(ArrayNode)messages.get("entities");
 	
 	        for (int i=0; i < data.size(); i++) {
-	          String uuid = data.get(i).get("uuid").asText();
+	          String uuid = getDataItemValue(data.get(i), "uuid");
 	          
 	          if (uuid == null || uuid.length() <=0) continue;
 	          
@@ -63,20 +64,23 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 	          
 	          if (record != null) continue;
 	          
-	          String chatType = data.get(i).get("chat_type").asText();
-	          String addTimeStr = data.get(i).get("timestamp").asText();
-	          String fromImUser = data.get(i).get("from").asText();
-	          String toImUser = data.get(i).get("to").asText();
-	          String msgId = data.get(i).get("msg_id").asText();
-	          String content = data.get(i).get("payload").toString();
-	          
+	          String chatType = getDataItemValue(data.get(i), "chat_type");
+
+	          String addTimeStr =  getDataItemValue(data.get(i), "timestamp");
+
+	          String fromImUser = getDataItemValue(data.get(i), "from");
+
+	          String toImUser = getDataItemValue(data.get(i), "to");
+	          String msgId = getDataItemValue(data.get(i), "msg_id");
+	          String content = getDataItemValue(data.get(i), "payload");
+
 	          record = this.initUserImHistory();
 	          record.setUuid(uuid);
 	          record.setChatType(chatType);
 	          record.setFromImUser(fromImUser);
 	          record.setToImUser(toImUser);
 	          record.setMsgId(msgId);
-	          record.setContent(content);
+	          record.setImContent(content);
 	          
 	          Long addTime = Long.valueOf(addTimeStr) / 1000;
 	          
@@ -92,6 +96,16 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 		}
 		
 		return true;
+	}
+	
+	
+	private String getDataItemValue(JsonNode jsonNode, String itemName) {
+		
+		String itemValue = "";
+		if (jsonNode.get(itemName) != null) {
+			itemValue = jsonNode.get(itemName).asText();
+		}
+		return itemValue;
 	}
 
 }

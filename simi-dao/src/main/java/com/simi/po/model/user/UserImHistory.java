@@ -11,7 +11,7 @@ public class UserImHistory {
 
     private String chatType;
 
-    private String content;
+    private String imContent;
 
     private String uuid;
 
@@ -57,14 +57,6 @@ public class UserImHistory {
         this.chatType = chatType == null ? null : chatType.trim();
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
     public String getUuid() {
         return uuid;
     }
@@ -80,4 +72,12 @@ public class UserImHistory {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public String getImContent() {
+		return imContent;
+	}
+
+	public void setImContent(String imContent) {
+		this.imContent = imContent;
+	}
 }

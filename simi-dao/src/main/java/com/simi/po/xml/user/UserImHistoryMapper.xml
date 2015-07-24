@@ -7,12 +7,12 @@
 		<result column="to_im_user" property="toImUser" jdbcType="VARCHAR" />
 		<result column="msg_id" property="msgId" jdbcType="VARCHAR" />
 		<result column="chat_type" property="chatType" jdbcType="VARCHAR" />
-		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="im_content" property="imContent" jdbcType="VARCHAR" />
 		<result column="uuid" property="uuid" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, from_im_user, to_im_user, msg_id, chat_type, content, uuid, add_time
+		id, from_im_user, to_im_user, msg_id, chat_type, im_content, uuid, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -34,10 +34,10 @@
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.user.UserImHistory">
 		insert into user_im_history (id, from_im_user, to_im_user,
-		msg_id, chat_type, content,
+		msg_id, chat_type, im_content,
 		uuid, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{fromImUser,jdbcType=VARCHAR}, #{toImUser,jdbcType=VARCHAR},
-		#{msgId,jdbcType=VARCHAR}, #{chatType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+		#{msgId,jdbcType=VARCHAR}, #{chatType,jdbcType=VARCHAR}, #{imContent,jdbcType=VARCHAR},
 		#{uuid,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserImHistory">
@@ -58,8 +58,8 @@
 			<if test="chatType != null">
 				chat_type,
 			</if>
-			<if test="content != null">
-				content,
+			<if test="im_content != null">
+				im_content,
 			</if>
 			<if test="uuid != null">
 				uuid,
@@ -84,8 +84,8 @@
 			<if test="chatType != null">
 				#{chatType,jdbcType=VARCHAR},
 			</if>
-			<if test="content != null">
-				#{content,jdbcType=VARCHAR},
+			<if test="imContent != null">
+				#{imContent,jdbcType=VARCHAR},
 			</if>
 			<if test="uuid != null">
 				#{uuid,jdbcType=VARCHAR},
@@ -110,8 +110,8 @@
 			<if test="chatType != null">
 				chat_type = #{chatType,jdbcType=VARCHAR},
 			</if>
-			<if test="content != null">
-				content = #{content,jdbcType=VARCHAR},
+			<if test="imContent != null">
+				content = #{imContent,jdbcType=VARCHAR},
 			</if>
 			<if test="uuid != null">
 				uuid = #{uuid,jdbcType=VARCHAR},
@@ -128,7 +128,7 @@
 		to_im_user = #{toImUser,jdbcType=VARCHAR},
 		msg_id = #{msgId,jdbcType=VARCHAR},
 		chat_type = #{chatType,jdbcType=VARCHAR},
-		content = #{content,jdbcType=VARCHAR},
+		im_content = #{imContent,jdbcType=VARCHAR},
 		uuid = #{uuid,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
