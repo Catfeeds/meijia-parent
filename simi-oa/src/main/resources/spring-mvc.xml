@@ -45,6 +45,7 @@
     									  com.simi.action.admin.**,
     									  com.simi.action.order.**,
     									  com.simi.action.user.**,
+    									  com.simi.action.partners.**,
     									  com.simi.action.app.**"
     									 use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

@@ -14,6 +14,7 @@
     									  com.simi.service.order.**,
     									  com.simi.service.user.**,
     									  com.simi.service.admin.**,
+    									  com.simi.service.partners.**,
     									  com.simi.service.dispatch.**,
     									  com.simi.service.impl.**,
     									  com.simi.service.impl.remind.**,
@@ -21,6 +22,7 @@
     									  com.simi.service.impl.order.**,
     									  com.simi.service.impl.user.**,
     									  com.simi.service.impl.admin.**,
+    									  com.simi.service.impl.partners.**,
     									  com.simi.service.impl.dispatch.**">
     	<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
   		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,13 +25,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.RandomUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictAd;
 import com.simi.service.dict.AdService;
-import com.meijia.utils.RandomUtil;
-import com.meijia.utils.TimeStampUtil;
 
 @Controller
 @RequestMapping(value = "/dict")
