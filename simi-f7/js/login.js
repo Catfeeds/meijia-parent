@@ -91,11 +91,18 @@ myApp.onPageInit('login', function (page) {
     	   	}
     	   	
     	   	if (result.status == "0") {
-    	   	  //登录成功后记录用户有关信息
-    	   	  localStorage['sec_mobile'] = result.data.mobile;
-    	   	  localStorage['sec_id']= result.data.id;
-    	   	  localStorage['im_username'] = result.data.im_user_name;
-    	   	  localStorage['im_password'] = result.data.im_password;
+				//登录成功后记录用户有关信息
+				localStorage['sec_mobile'] = result.data.mobile;
+				localStorage['sec_id']= result.data.id;
+				localStorage['im_username'] = result.data.im_user_name;
+				localStorage['im_password'] = result.data.im_password;
+    	   	  
+				var imID        = localStorage['im_username'];
+				var imPWD       = localStorage['im_password'];
+				
+				//执行im登录
+				webim.login(imID, imPWD, conn);
+    	   	  
     	   	}
     	   	
     	   	mainView.router.loadPage("index.html");

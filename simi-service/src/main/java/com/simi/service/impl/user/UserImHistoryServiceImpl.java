@@ -104,7 +104,14 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 	@Override
 	public List<UserImVo> getAllImUserLastIm(Long secId, String imUserName) {
 		
+		List<UserImVo> result= new ArrayList<UserImVo>();
+		
 		List<UserRefSec> userImList = userRefSecService.selectBySecId(secId);
+		
+		if (userImList.isEmpty()) {
+			return result;
+		}
+		
 		
 		List<UserImHistory> fromImList = userImHistoryMapper.selectMaxByFromImUser(imUserName);
 		
@@ -160,7 +167,7 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		List<Users> u = userService.selectVoByUserId(ids);
-		List<UserImVo> result= new ArrayList<UserImVo>();
+		
 		for (Iterator<Users> iterator = u.iterator(); iterator.hasNext();) {
 
 			Users user = (Users) iterator.next();

@@ -10,41 +10,38 @@
 	</div>
 </div>
 
-
-
-
-
-
 <div class="pages">
 	<!-- Page, data-page contains page name-->
 	<div data-page="im-list-page" class="page">
 		<div class="page-content">
-			
 
-
-<div class="list-block">
-	<ul>		
-		{{#each data}}
-		<li><a href="webim/chat.html?uid={{im_username}}&user_id={{id}}&userface={{head_img}}" class="item-link">
-                      <div class="item-content">
-                        <div class="item-media">{{#if head_img}} <img src="{{head_img}}" width='50' height='50'> {{else}} <i class="icon icon-f7"></i>
-					{{/if}}</div>
-                        <div class="item-inner">
-                          <div class="item-title">{{name}}</div>
-                        </div>
-                      </div></a>
-        </li>			
-		
-		{{/each}}
-	</ul>
-</div>
-
-
-
-
-
-
-
+			<div class="card-content">
+				<div class="list-block media-list">
+					<ul>
+						{{#each data}}
+						<a href="webim/chat.html?uid={{im_username}}&user_id={{id}}&userface={{head_img}}" class="item-link">
+						<li class="item-content">
+							<div class="item-media">
+								<div class="item-media">
+									{{#if head_img}} 
+										<img src="{{head_img}}" width='50' height='50' onerror='../img/i-f7.png'> 
+									{{else}} 
+										<i class="icon icon-headdefault"></i>
+									{{/if}}
+								</div>
+							</div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">{{name}}</div>
+								</div>
+								<div class="item-subtitle">&nbsp;&nbsp;{{last_im_time_str}}&nbsp;&nbsp;{{last_im}} </div>
+							</div>
+						</li>
+						</a>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
 
 		</div>
 	</div>

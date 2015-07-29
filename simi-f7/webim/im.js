@@ -377,9 +377,5 @@ conn.init({
 	    }
 });
 
-var imID        = localStorage['im_username'];
-var imPWD       = localStorage['im_password'];
 
-//执行登录
-webim.login(imID, imPWD, conn);
 

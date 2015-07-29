@@ -37,7 +37,7 @@ myApp.template7Data['page:im-list-page'] = function(){
                 
                 //type : "GET",
                 //url  : "data/users.json",
-                type : "POST",
+                type : "GET",
                 url  : siteAPIPath+"user/get_user_and_im.json",
                 dataType: "json",
                 cache : true,
@@ -52,7 +52,7 @@ myApp.template7Data['page:im-list-page'] = function(){
                         // console.log(data.data[i]);
                         webim.userList[data.data[i].im_username] = data.data[i];
                     }
-                    console.log(webim.userList);
+
                     result = data;
                 }
         })
