@@ -28,8 +28,9 @@ myApp.template7Data['page:im-list-page'] = function(){
 
         var secId = localStorage['sec_id'];
         var secMobile = localStorage['sec_mobile'];
+        var secImUserName = localStorage['im_username'];
         var postdata = {};
-        postdata.mobile = secMobile;
+        postdata.im_user_name = secImUserName;
         postdata.sec_id = secId;    
 
         $$.ajax({
@@ -37,7 +38,7 @@ myApp.template7Data['page:im-list-page'] = function(){
                 //type : "GET",
                 //url  : "data/users.json",
                 type : "POST",
-                url  : siteAPIPath+"sec/get_users.json",
+                url  : siteAPIPath+"user/get_user_and_im.json",
                 dataType: "json",
                 cache : true,
                 async : false,

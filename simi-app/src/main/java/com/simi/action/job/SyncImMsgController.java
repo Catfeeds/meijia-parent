@@ -45,7 +45,7 @@ public class SyncImMsgController extends BaseController {
 	}
 	
 	/**
-	 * 同步所有的IM信息.
+	 * 同步昨天所有的IM信息.
 	 * @return
 	 */
 	@RequestMapping(value = "sync_im_yesterday", method = RequestMethod.GET)
@@ -66,4 +66,28 @@ public class SyncImMsgController extends BaseController {
 		
 		return result;
 	}	
+	
+	/**
+	 * 同步最近5分钟所有的IM信息.
+	 * @return
+	 */
+	@RequestMapping(value = "sync_im_five", method = RequestMethod.GET)
+	public AppResultData<Object> syncImFive( HttpServletRequest request ) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
+				ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		System.out.println("Remote Host: " + request.getRemoteHost());
+		String reqHost = request.getRemoteHost();
+		//限定只有localhost能访问
+		if (!reqHost.equals("localhost")) {
+			return result;
+		}
+		
+		Long beginTime = TimeStampUtil.getNowSecond() - 600;
+		jobImService.syncIm(beginTime * 1000);
+		
+		return result;
+	}		
+	
 }

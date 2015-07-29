@@ -1,5 +1,7 @@
 package com.meijia.utils.huanxin;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.client.JerseyWebTarget;
 import org.slf4j.Logger;
@@ -7,7 +9,11 @@ import org.slf4j.LoggerFactory;
 
 import sun.misc.resources.Messages;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -41,8 +47,11 @@ public class EasemobChatMessage {
      * Main Test
      *
      * @param args
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
 
         // 聊天消息 获取最新的20条记录
 //        ObjectNode queryStrNode = factory.objectNode();
@@ -55,19 +64,32 @@ public class EasemobChatMessage {
 //        ObjectNode queryStrNode1 = factory.objectNode();
 //        queryStrNode1.put("ql", "select * where  timestamp > " + senvenDayAgo + " and timestamp < " + currentTimestamp);
 //        ObjectNode messages1 = getChatMessages(queryStrNode1);
-
+    	
+    	ObjectMapper mapper = new ObjectMapper();
         // 聊天消息 分页获取
         ObjectNode queryStrNode2 = factory.objectNode();
         queryStrNode2.put("limit", "100");
         // 第一页
         ObjectNode messages2 = getChatMessages(queryStrNode2);
-
+        
         ArrayNode data =(ArrayNode)messages2.get("entities");
 
         for (int i=0; i < data.size(); i++) {
           String uuid=data.get(i).get("uuid").asText();
           String content = data.get(i).get("payload").toString();
           System.out.println(content);
+          JsonNode contentJsonNode = mapper.readValue(content, JsonNode.class); 
+          if (contentJsonNode.get("bodies") != null) {
+        	  System.out.println(contentJsonNode.get("bodies").toString());
+        	  
+        	  if (contentJsonNode.get("bodies").get(0) != null) {
+                  System.out.println(contentJsonNode.get("bodies").get(0).get("type").toString());
+                  System.out.println(contentJsonNode.get("bodies").get(0).get("msg").toString());        		  
+        	  }
+          }
+          
+
+          
         }
         // 第二页
         String cursor = messages2.get("cursor").asText();

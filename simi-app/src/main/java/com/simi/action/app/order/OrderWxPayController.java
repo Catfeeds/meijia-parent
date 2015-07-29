@@ -163,7 +163,7 @@ public class OrderWxPayController extends BaseController {
 		}			
 
 		//测试
-		wxPay = "1";
+		//wxPay = "1";
 		
 		//基础信息
 		String appId = WxUtil.appId;

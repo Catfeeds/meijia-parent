@@ -20,6 +20,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MobileUtil;
+import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
@@ -119,7 +120,14 @@ public class UsersServiceImpl implements UsersService {
 
 				userCouponService.insert(userCoupon);
 			}
-
+			
+			
+			//发送给13810002890 ，做一个提醒
+			String code = mobile;
+			String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms("13810002890",
+					Constants.GET_CODE_TEMPLE_ID, content);
+			
 		}
 		return u;
 	}

@@ -41,5 +41,47 @@ public class TestSyncImMsgController extends JUnitActionBase{
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
+	
+	@Test
+    public void testSyncImYesterday() throws Exception {
+
+		String url = "/app/job/sync_im_yesterday.json";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+//	    postRequest = postRequest.param("mobile", "18610807136");
+//	    postRequest = postRequest.param("sms_token", " 000000");
+//	    postRequest = postRequest.param("login_from", "1");
+//	
+	  
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
+	
+	@Test
+    public void testSyncImFive() throws Exception {
+
+		String url = "/app/job/sync_im_five.json";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+//	    postRequest = postRequest.param("mobile", "18610807136");
+//	    postRequest = postRequest.param("sms_token", " 000000");
+//	    postRequest = postRequest.param("login_from", "1");
+//	
+	  
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
 
 }

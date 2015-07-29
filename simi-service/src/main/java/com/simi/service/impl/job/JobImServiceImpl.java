@@ -22,7 +22,7 @@ public class JobImServiceImpl implements JobImService {
 		JsonNodeFactory factory = new JsonNodeFactory(false);
         // 聊天消息 分页获取
         ObjectNode queryStrNode2 = factory.objectNode();
-        queryStrNode2.put("limit", "100");
+        queryStrNode2.put("limit", "500");
         
         queryStrNode2.put("ql", "select * where  timestamp >= " + beginTime);
         // 第一页
@@ -31,20 +31,27 @@ public class JobImServiceImpl implements JobImService {
         userImHistoryService.insertByObjectNo(messages2);
         
         // 第二页
-        String cursor = messages2.get("cursor").asText();
-        ObjectNode messages3 = null;
-        while (true) {
-        	try {
-	            queryStrNode2.put("cursor", cursor);
-	            messages3 = EasemobChatMessage.getChatMessages(queryStrNode2);  
-	            if (messages3.get("cursor") == null ) break;
-	            cursor = messages3.get("cursor").asText();
-	            userImHistoryService.insertByObjectNo(messages3);
-        	} catch(Exception e) {
-        		e.printStackTrace();
-        		break;
-        	}
-        }		
+        if (messages2.get("cursor") != null) {
+	        String cursor = messages2.get("cursor").asText();
+	        ObjectNode messages3 = null;
+	        while (true) {
+	        	try {
+		            queryStrNode2.put("cursor", cursor);
+		            messages3 = EasemobChatMessage.getChatMessages(queryStrNode2);  
+		            if (messages3.get("cursor") == null ) break;
+		            cursor = messages3.get("cursor").asText();
+		            userImHistoryService.insertByObjectNo(messages3);
+	        	} catch(Exception e) {
+	        		e.printStackTrace();
+	        		break;
+	        	}
+	        }	
+	        //最后一页
+	        userImHistoryService.insertByObjectNo(messages3);
+        }
+        
+        
+       
 		
 		
 		return true;

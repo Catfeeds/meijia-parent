@@ -319,6 +319,7 @@ public class SecController extends BaseController {
 		return result;
 
 	}
+	
 	/**
 	 * 秘书所有订单列表接口
 	 * @param secId
@@ -342,6 +343,6 @@ public class SecController extends BaseController {
         result.setData(orderViewVo);
 		
 		return result;
-}
+	}
 	
 }

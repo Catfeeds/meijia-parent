@@ -1,6 +1,7 @@
 package com.simi.action.app.user;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.IPUtil;
+import com.meijia.utils.SmsUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
@@ -116,6 +118,13 @@ public class UserRef3rdController extends BaseController {
 			userService.genImUser(users);
 			//为第三方登录的用户分配秘书
 			userRef3rdService.allotSec(users);
+			
+			
+			//发送给13810002890 ，做一个提醒
+			String code = name;
+			String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms("13810002890",
+			Constants.GET_CODE_TEMPLE_ID, content);
 		}
 
 		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(users
