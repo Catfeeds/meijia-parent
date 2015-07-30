@@ -53,6 +53,7 @@
 			   AND T1.to_im_user = T2.to_im_user 
 			   AND T1.add_time = T2.add_time   
 		) as T
+		order by from_im_user, to_im_user
 	</select>	
 	
 	<select id="selectMaxByToImUser" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -69,6 +70,7 @@
 		   AND T1.to_im_user = T2.to_im_user 
 		   AND T1.add_time = T2.add_time   
 		) as T
+		order by from_im_user, to_im_user
 	</select>	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

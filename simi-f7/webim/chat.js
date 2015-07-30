@@ -25,13 +25,8 @@ myApp.onPageInit('messages', function (page) {
         var userId = page.query.user_id;
         var userface = page.query.userface;
 
-
-
         webim.noreadFlag[toUser] = 0;  // 未读数量清零
         webim.newMessageDot();         // 设置红点
-
-        
-
 
         var onUserInfoSuccess =function(data, textStatus, jqXHR) {
            	    var result = JSON.parse(data.response);
@@ -60,25 +55,67 @@ myApp.onPageInit('messages', function (page) {
              	    },
       	});
 
-
-
-       
-
         webim.myMessages = myApp.messages('.messages', {
                 autoLayout:true
         });
-
 
         webim.curroster = toUser;
 
         //初始化消息对象
         webim.myMessagebar = myApp.messagebar('.messagebar');
 
+        var onGetImHistorySuccess =function(data, textStatus, jqXHR) {
+       	    var result = JSON.parse(data.response);
+          	
+            if (result.status == "999") {
+          		myApp.alert(result.msg);
+          		return;
+          	}
+            var imData = result.data;
+            console.log(imData);
+            for(var i = 0; i < imData.length; i++){
+       	  	 	console.log("读取聊天记录");
+                console.log(imData[i].from_im_user);
+                console.log(imData[i].to_im_user);
+                console.log(imData[i].im_content.bodies);
+                
+              	var recMsg = {
+	                    text: imData[i].im_content,
+	                    type: 'chat',
+	                    name: imData[i].from_im_user,
+	                    // 日期
+	                    day: !webim.conversationStarted ? '今天' : false,
+	                    time: !webim.conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+                };
+                
+                
+                //webim.msg[toUser].push(imData[i].im_content.bodies)
+                webim.myMessages.addMessage(recMsg);
+               
+            }
+        }        
 
+        //读取聊天记录
+        var imdata = {};
+        imdata.from_im_user = localStorage['im_username'];  
+        imdata.to_im_user = toUser;
+      	$$.ajax({
+            		type : "GET",
+            		url : siteAPIPath + "user/get_im_history.json",
+            		dataType : "json",
+            		cache : true,
+            		data :imdata,
+            		statusCode: {
+                     	200: onGetImHistorySuccess,
+             	    	400: ajaxError,
+             	    	500: ajaxError
+             	    },
+      	});        
 
         //读取聊天记录
         if(webim.msg[toUser]){
               for(var i = 0; i < webim.msg[toUser].length; i++){
+            	  	 console.log("读取聊天记录");
                      console.log(webim.msg[toUser][i]);
                      console.log(webim.userList);
                     if(webim.msg[toUser][i].avatar===null){

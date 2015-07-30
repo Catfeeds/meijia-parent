@@ -34,12 +34,12 @@ public class SyncImMsgController extends BaseController {
 		System.out.println("Remote Host: " + request.getRemoteHost());
 		String reqHost = request.getRemoteHost();
 		//限定只有localhost能访问
-		if (!reqHost.equals("localhost")) {
-			return result;
+		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+			Long beginTime = 1420041600000L;
+			jobImService.syncIm(beginTime);
 		}
 		
-		Long beginTime = 1420041600000L;
-		jobImService.syncIm(beginTime);
+		
 		
 		return result;
 	}
@@ -57,12 +57,12 @@ public class SyncImMsgController extends BaseController {
 		System.out.println("Remote Host: " + request.getRemoteHost());
 		String reqHost = request.getRemoteHost();
 		//限定只有localhost能访问
-		if (!reqHost.equals("localhost")) {
-			return result;
+		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+			Long beginTime = TimeStampUtil.getBeginOfYesterDay();
+			jobImService.syncIm(beginTime * 1000);
 		}
 		
-		Long beginTime = TimeStampUtil.getBeginOfYesterDay();
-		jobImService.syncIm(beginTime * 1000);
+
 		
 		return result;
 	}	
@@ -80,13 +80,11 @@ public class SyncImMsgController extends BaseController {
 		System.out.println("Remote Host: " + request.getRemoteHost());
 		String reqHost = request.getRemoteHost();
 		//限定只有localhost能访问
-		if (!reqHost.equals("localhost")) {
-			return result;
+		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+			Long beginTime = TimeStampUtil.getNowSecond() - 600;
+			jobImService.syncIm(beginTime * 1000);
 		}
-		
-		Long beginTime = TimeStampUtil.getNowSecond() - 600;
-		jobImService.syncIm(beginTime * 1000);
-		
+
 		return result;
 	}		
 	

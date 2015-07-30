@@ -51,6 +51,7 @@ myApp.template7Data['page:im-list-page'] = function(){
                     for(var i = 0; i<data.data.length; i++){
                         // console.log(data.data[i]);
                         webim.userList[data.data[i].im_username] = data.data[i];
+                        webim.msg[data.data[i].im_username] = {};
                     }
 
                     result = data;
@@ -64,7 +65,6 @@ myApp.onPageInit('im-list-page', function (page) {
         webim.curroster = null;
         console.log('init im list and 执行红点函数');
         webim.newMessageDot();
-
 });
 
 

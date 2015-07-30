@@ -133,24 +133,28 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 		//       toImlist  有一条为  u2 -> u2  时间为 18：01 ，则取toImList的值
 		for (int i = 0; i < eachList.size(); i++) {
 			item = eachList.get(i);
-			
 			UserImHistory compItem = null;
+			
 			for (int j = 0; j < compList.size(); j++) {
 				compItem = compList.get(j);
+				
+//				System.out.println(item.getFromImUser() +" == " + compItem.getFromImUser() + "-----" + item.getToImUser() +" == " + compItem.getToImUser());
 				if (
 						(item.getFromImUser().equals(compItem.getFromImUser()) && 
 						 item.getToImUser().equals(compItem.getToImUser()) 
 						)
 					     ||
-					    (item.getFromImUser().equals(compItem.getToImUser()) ||
+					    (item.getFromImUser().equals(compItem.getToImUser()) &&
 					     item.getToImUser().equals(compItem.getFromImUser())
 					    )
 					) {
 						if (item.getAddTime() < compItem.getAddTime()) {
 							item = compItem;
+							break;
 						}
 					}
 			}
+			System.out.println(item.getFromImUser() + "---" + item.getToImUser());
 			hasImHistory.add(item);
 			
 		}
@@ -182,6 +186,9 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 			Long lastImTime = 0L;
 			for (Iterator<UserImHistory> itImList = hasImHistory.iterator(); itImList.hasNext();) {
 				UserImHistory im = (UserImHistory)itImList.next();
+				
+				System.out.println(vo.getImSecUsername() +" == " + im.getFromImUser() + "-----" + vo.getImUsername() +" == " + im.getToImUser());
+
 				if ( 
 						(vo.getImSecUsername().equals(im.getFromImUser()) && 
 						 vo.getImUsername().equals(im.getToImUser())

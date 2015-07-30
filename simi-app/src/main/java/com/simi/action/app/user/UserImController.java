@@ -1,5 +1,6 @@
 package com.simi.action.app.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.simi.action.app.BaseController;
 import com.simi.common.Constants;
+import com.simi.po.model.user.UserImHistory;
 import com.simi.service.user.UserImHistoryService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.UserImHistoryVo;
 import com.simi.vo.user.UserImVo;
 
 
@@ -47,7 +52,38 @@ public class UserImController extends BaseController {
 		
 		PageInfo list = userImHistoryService.selectByImUserListPage(fromImUser, toImUser, pageNo, pageSize);
 		
-		result.setData(list.getList());
+		List<UserImHistory> imHistoryList = list.getList();
+		
+//		UserImHistory item = null;
+//		
+//		ObjectMapper mapper = new ObjectMapper();
+//		
+//		List<UserImHistoryVo> resultList = new ArrayList<UserImHistoryVo>();
+//		for (int i = 0; i < imHistoryList.size(); i++) {
+//			item = imHistoryList.get(i);
+//			String imContentStr = item.getImContent();
+//			UserImHistoryVo vo = new UserImHistoryVo();
+//			vo.setImDay("");
+//			vo.setImName("");
+//			vo.setImText("");
+//			vo.setImTime("");
+//			vo.setImType("");
+//			JsonNode contentJsonNode = mapper.readValue(imContentStr, JsonNode.class);
+//			if (contentJsonNode.get("bodies") != null) {
+//				 if (contentJsonNode.get("bodies").get(0) != null &&
+//				     contentJsonNode.get("bodies").get(0).get("type") != null &&
+//				     ) {
+//					 vo.setImText(contentJsonNode.get("bodies").get(0).get("type"));
+//				 }
+//			}
+//			
+//			
+//			resultList.add(vo);
+//			
+//			
+//		}
+		
+		result.setData(imHistoryList);
 		
 		return result;
 	}

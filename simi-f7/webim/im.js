@@ -1,4 +1,4 @@
-webim = {
+var webim = {
     
     appkey: "yougeguanjia#simi",
     myMessages: null,				//用户保存对话对象
@@ -154,14 +154,14 @@ webim = {
              var msg = e.msg;
              if (e.type == EASEMOB_IM_CONNCTION_SERVER_CLOSE_ERROR) {
                  if (msg == "" || msg == 'unknown' ) {
-                     alert("服务器器断开连接,可能是因为在别处登录");
+                      myApp.alert("服务器器断开连接,可能是因为在别处登录");
                       localStorage.removeItem("mobile");
 	           		  localStorage.removeItem('sec_id');
 	           		  localStorage.removeItem('im_username');
 	           		  localStorage.removeItem('im_password');
 	           		  mainView.router.loadPage("index.html");
                  } else {
-                     alert("服务器器断开连接");
+                     myApp.alert("服务器器断开连接");
                  }
              } 
 //             else {
@@ -378,4 +378,11 @@ conn.init({
 });
 
 
+var imID        = localStorage['im_username'];
+var imPWD       = localStorage['im_password'];
+
+//执行im登录
+if (imID != undefined && imPWD !=undefined) {
+	webim.login(imID, imPWD, conn);
+}
 
