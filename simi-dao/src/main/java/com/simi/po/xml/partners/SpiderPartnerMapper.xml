@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.partners.SpiderPartnerMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.SpiderPartner" >
+    <id column="spider_partner_id" property="spiderPartnerId" jdbcType="NUMERIC" />
+    <result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="register_time" property="registerTime" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="company_size" property="companySize" jdbcType="SMALLINT" />
+    <result column="company_logo" property="companyLogo" jdbcType="VARCHAR" />
+    <result column="certification" property="certification" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="NUMERIC" />
+    <result column="status_remark" property="statusRemark" jdbcType="VARCHAR" />
+    <result column="credit_file_url" property="creditFileUrl" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="spider_url" property="spiderUrl" jdbcType="VARCHAR" />
+    <result column="service_area" property="serviceArea" jdbcType="VARCHAR" />
+    <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
+    <result column="service_type_sub" property="serviceTypeSub" jdbcType="VARCHAR" />
+    <result column="link_man" property="linkMan" jdbcType="VARCHAR" />
+    <result column="link_tel" property="linkTel" jdbcType="VARCHAR" />
+    <result column="company_desc_img" property="companyDescImg" jdbcType="VARCHAR" />
+    <result column="total_browse" property="totalBrowse" jdbcType="INTEGER" />
+    <result column="total_order" property="totalOrder" jdbcType="INTEGER" />
+    <result column="total_rate" property="totalRate" jdbcType="REAL" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="last_spider_time" property="lastSpiderTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.simi.po.model.partners.SpiderPartner" extends="BaseResultMap" >
+    <result column="company_desc" property="companyDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    spider_partner_id, service_type_id, company_name, register_time, addr, company_size, 
+    company_logo, certification, status, status_remark, credit_file_url, website, spider_url, 
+    service_area, service_type, service_type_sub, link_man, link_tel, company_desc_img, 
+    total_browse, total_order, total_rate, add_time, last_spider_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    company_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from spider_partner
+    where spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}
+  </select>
+  <!-- 多条件查询采集的服务信息  -->
+  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+  select
+  <include refid="Base_Column_List" />
+	  from spider_partner
+	  where 1=1
+    <if test="companyName != null" >
+      and company_name like CONCAT('%','${companyName}','%' )
+    </if>
+  order by add_time desc
+</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from spider_partner
+    where spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.partners.SpiderPartner" >
+    insert into spider_partner (spider_partner_id, service_type_id, company_name, 
+      register_time, addr, company_size, 
+      company_logo, certification, status, 
+      status_remark, credit_file_url, website, 
+      spider_url, service_area, service_type, 
+      service_type_sub, link_man, link_tel, 
+      company_desc_img, total_browse, total_order, 
+      total_rate, add_time, last_spider_time, 
+      company_desc)
+    values (#{spiderPartnerId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, 
+      #{registerTime,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{companySize,jdbcType=SMALLINT}, 
+      #{companyLogo,jdbcType=VARCHAR}, #{certification,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, 
+      #{statusRemark,jdbcType=VARCHAR}, #{creditFileUrl,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, 
+      #{spiderUrl,jdbcType=VARCHAR}, #{serviceArea,jdbcType=VARCHAR}, #{serviceType,jdbcType=VARCHAR}, 
+      #{serviceTypeSub,jdbcType=VARCHAR}, #{linkMan,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR}, 
+      #{companyDescImg,jdbcType=VARCHAR}, #{totalBrowse,jdbcType=INTEGER}, #{totalOrder,jdbcType=INTEGER}, 
+      #{totalRate,jdbcType=REAL}, #{addTime,jdbcType=NUMERIC}, #{lastSpiderTime,jdbcType=NUMERIC}, 
+      #{companyDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.partners.SpiderPartner" >
+    insert into spider_partner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="spiderPartnerId != null" >
+        spider_partner_id,
+      </if>
+      <if test="serviceTypeId != null" >
+        service_type_id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="companySize != null" >
+        company_size,
+      </if>
+      <if test="companyLogo != null" >
+        company_logo,
+      </if>
+      <if test="certification != null" >
+        certification,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusRemark != null" >
+        status_remark,
+      </if>
+      <if test="creditFileUrl != null" >
+        credit_file_url,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="spiderUrl != null" >
+        spider_url,
+      </if>
+      <if test="serviceArea != null" >
+        service_area,
+      </if>
+      <if test="serviceType != null" >
+        service_type,
+      </if>
+      <if test="serviceTypeSub != null" >
+        service_type_sub,
+      </if>
+      <if test="linkMan != null" >
+        link_man,
+      </if>
+      <if test="linkTel != null" >
+        link_tel,
+      </if>
+      <if test="companyDescImg != null" >
+        company_desc_img,
+      </if>
+      <if test="totalBrowse != null" >
+        total_browse,
+      </if>
+      <if test="totalOrder != null" >
+        total_order,
+      </if>
+      <if test="totalRate != null" >
+        total_rate,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="lastSpiderTime != null" >
+        last_spider_time,
+      </if>
+      <if test="companyDesc != null" >
+        company_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="spiderPartnerId != null" >
+        #{spiderPartnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="serviceTypeId != null" >
+        #{serviceTypeId,jdbcType=NUMERIC},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="companySize != null" >
+        #{companySize,jdbcType=SMALLINT},
+      </if>
+      <if test="companyLogo != null" >
+        #{companyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="certification != null" >
+        #{certification,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="statusRemark != null" >
+        #{statusRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="creditFileUrl != null" >
+        #{creditFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="spiderUrl != null" >
+        #{spiderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceArea != null" >
+        #{serviceArea,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTypeSub != null" >
+        #{serviceTypeSub,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan != null" >
+        #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null" >
+        #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDescImg != null" >
+        #{companyDescImg,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBrowse != null" >
+        #{totalBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="totalOrder != null" >
+        #{totalOrder,jdbcType=INTEGER},
+      </if>
+      <if test="totalRate != null" >
+        #{totalRate,jdbcType=REAL},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="lastSpiderTime != null" >
+        #{lastSpiderTime,jdbcType=NUMERIC},
+      </if>
+      <if test="companyDesc != null" >
+        #{companyDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.SpiderPartner" >
+    update spider_partner
+    <set >
+      <if test="serviceTypeId != null" >
+        service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="companySize != null" >
+        company_size = #{companySize,jdbcType=SMALLINT},
+      </if>
+      <if test="companyLogo != null" >
+        company_logo = #{companyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="certification != null" >
+        certification = #{certification,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="statusRemark != null" >
+        status_remark = #{statusRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="creditFileUrl != null" >
+        credit_file_url = #{creditFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="spiderUrl != null" >
+        spider_url = #{spiderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceArea != null" >
+        service_area = #{serviceArea,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTypeSub != null" >
+        service_type_sub = #{serviceTypeSub,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan != null" >
+        link_man = #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null" >
+        link_tel = #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDescImg != null" >
+        company_desc_img = #{companyDescImg,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBrowse != null" >
+        total_browse = #{totalBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="totalOrder != null" >
+        total_order = #{totalOrder,jdbcType=INTEGER},
+      </if>
+      <if test="totalRate != null" >
+        total_rate = #{totalRate,jdbcType=REAL},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="lastSpiderTime != null" >
+        last_spider_time = #{lastSpiderTime,jdbcType=NUMERIC},
+      </if>
+      <if test="companyDesc != null" >
+        company_desc = #{companyDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simi.po.model.partners.SpiderPartner" >
+    update spider_partner
+    set service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      company_size = #{companySize,jdbcType=SMALLINT},
+      company_logo = #{companyLogo,jdbcType=VARCHAR},
+      certification = #{certification,jdbcType=VARCHAR},
+      status = #{status,jdbcType=NUMERIC},
+      status_remark = #{statusRemark,jdbcType=VARCHAR},
+      credit_file_url = #{creditFileUrl,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      spider_url = #{spiderUrl,jdbcType=VARCHAR},
+      service_area = #{serviceArea,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=VARCHAR},
+      service_type_sub = #{serviceTypeSub,jdbcType=VARCHAR},
+      link_man = #{linkMan,jdbcType=VARCHAR},
+      link_tel = #{linkTel,jdbcType=VARCHAR},
+      company_desc_img = #{companyDescImg,jdbcType=VARCHAR},
+      total_browse = #{totalBrowse,jdbcType=INTEGER},
+      total_order = #{totalOrder,jdbcType=INTEGER},
+      total_rate = #{totalRate,jdbcType=REAL},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      last_spider_time = #{lastSpiderTime,jdbcType=NUMERIC},
+      company_desc = #{companyDesc,jdbcType=LONGVARCHAR}
+    where spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.SpiderPartner" >
+    update spider_partner
+    set service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      company_size = #{companySize,jdbcType=SMALLINT},
+      company_logo = #{companyLogo,jdbcType=VARCHAR},
+      certification = #{certification,jdbcType=VARCHAR},
+      status = #{status,jdbcType=NUMERIC},
+      status_remark = #{statusRemark,jdbcType=VARCHAR},
+      credit_file_url = #{creditFileUrl,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      spider_url = #{spiderUrl,jdbcType=VARCHAR},
+      service_area = #{serviceArea,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=VARCHAR},
+      service_type_sub = #{serviceTypeSub,jdbcType=VARCHAR},
+      link_man = #{linkMan,jdbcType=VARCHAR},
+      link_tel = #{linkTel,jdbcType=VARCHAR},
+      company_desc_img = #{companyDescImg,jdbcType=VARCHAR},
+      total_browse = #{totalBrowse,jdbcType=INTEGER},
+      total_order = #{totalOrder,jdbcType=INTEGER},
+      total_rate = #{totalRate,jdbcType=REAL},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      last_spider_time = #{lastSpiderTime,jdbcType=NUMERIC}
+    where spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}
+  </update>
+</mapper>

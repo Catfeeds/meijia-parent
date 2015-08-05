@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class Partners {
     private Long partnerId;
+    
+    private Long spiderPartnerId;
 
     private String companyName;
 
@@ -57,7 +59,15 @@ public class Partners {
         this.partnerId = partnerId;
     }
 
-    public String getCompanyName() {
+    public Long getSpiderPartnerId() {
+		return spiderPartnerId;
+	}
+
+	public void setSpiderPartnerId(Long spiderPartnerId) {
+		this.spiderPartnerId = spiderPartnerId;
+	}
+
+	public String getCompanyName() {
         return companyName;
     }
 

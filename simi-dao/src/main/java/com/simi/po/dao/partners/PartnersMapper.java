@@ -14,6 +14,8 @@ public interface PartnersMapper {
 
     Partners selectByPrimaryKey(Long partnerId);
 
+    Partners selectBySpiderPartnerId(Long spiderPartnerId);
+
     int updateByPrimaryKeySelective(Partners record);
 
     int updateByPrimaryKeyWithBLOBs(Partners record);

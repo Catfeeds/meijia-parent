@@ -14,6 +14,8 @@ public interface PartnersService {
 
     Partners selectByPrimaryKey(Long partnerId);
 
+    Partners selectBySpiderPartnerId(Long spiderPartnerId);
+
     int updateByPrimaryKeySelective(Partners record);
 
     int updateByPrimaryKeyWithBLOBs(Partners record);
@@ -21,4 +23,6 @@ public interface PartnersService {
     int updateByPrimaryKey(Partners record);
     
     PageInfo searchVoListPage(PartnersSearchVo partnersSearchVo,int pageNo,int pageSize);
+    
+    Partners iniPartners();
 }

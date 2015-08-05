@@ -3,6 +3,7 @@
 <mapper namespace="com.simi.po.dao.partners.PartnersMapper" >
   <resultMap id="BaseResultMap" type="com.simi.po.model.partners.Partners" >
     <id column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+    <id column="spider_partner_id" property="spiderPartnerId" jdbcType="NUMERIC" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="short_name" property="shortName" jdbcType="VARCHAR" />
     <result column="company_size" property="companySize" jdbcType="SMALLINT" />
@@ -11,6 +12,7 @@
     <result column="keywords" property="keywords" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="NUMERIC" />
     <result column="status_remark" property="statusRemark" jdbcType="VARCHAR" />
+    <result column="business_desc" property="businessDesc" jdbcType="VARCHAR" />
     <result column="weixin" property="weixin" jdbcType="VARCHAR" />
     <result column="qq" property="qq" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
@@ -29,7 +31,7 @@
     <result column="business_desc" property="businessDesc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    partner_id, company_name, short_name, company_size, company_logo, is_door, keywords, 
+    partner_id,spider_partner_id, company_name, short_name, company_size, company_logo, is_door, keywords, 
     status, status_remark, weixin, qq, email, province_id, city_id, is_cooperate, fax, 
     pay_type, discout, remark, add_time, admin_id, update_time
   </sql>
@@ -43,6 +45,14 @@
     <include refid="Blob_Column_List" />
     from partners
     where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </select>
+  <select id="selectBySpiderPartnerId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from partners
+    where spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}
   </select>
   <!-- 多条件查询查询服务商 -->
   <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
@@ -64,7 +74,7 @@
     where partner_id = #{partnerId,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.Partners" >
-    insert into partners (partner_id, company_name, short_name, 
+    insert into partners (partner_id, spider_partner_id,company_name, short_name, 
       company_size, company_logo, is_door, 
       keywords, status, status_remark, 
       weixin, qq, email, 
@@ -72,7 +82,7 @@
       fax, pay_type, discout, 
       remark, add_time, admin_id, 
       update_time, business_desc)
-    values (#{partnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
+    values (#{partnerId,jdbcType=NUMERIC},(#{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
       #{companySize,jdbcType=SMALLINT}, #{companyLogo,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC}, 
       #{keywords,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{statusRemark,jdbcType=VARCHAR}, 
       #{weixin,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
@@ -86,6 +96,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="partnerId != null" >
         partner_id,
+      </if>
+      <if test="spiderPartnerId != null" >
+        spider_partner_id,
       </if>
       <if test="companyName != null" >
         company_name,
@@ -158,6 +171,9 @@
       <if test="partnerId != null" >
         #{partnerId,jdbcType=NUMERIC},
       </if>
+      <if test="spiderPartnerId != null" >
+        #{spiderPartnerId,jdbcType=NUMERIC},
+      </if>
       <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
       </if>
@@ -229,6 +245,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.Partners" >
     update partners
     <set >
+      <if test="spiderPartnerId != null" >
+        spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
+      </if>
       <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
@@ -300,7 +319,9 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simi.po.model.partners.Partners" >
     update partners
-    set company_name = #{companyName,jdbcType=VARCHAR},
+    set
+      spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}, 
+      company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
       company_size = #{companySize,jdbcType=SMALLINT},
       company_logo = #{companyLogo,jdbcType=VARCHAR},
@@ -326,7 +347,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.Partners" >
     update partners
-    set company_name = #{companyName,jdbcType=VARCHAR},
+    set 
+      spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
+      company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
       company_size = #{companySize,jdbcType=SMALLINT},
       company_logo = #{companyLogo,jdbcType=VARCHAR},

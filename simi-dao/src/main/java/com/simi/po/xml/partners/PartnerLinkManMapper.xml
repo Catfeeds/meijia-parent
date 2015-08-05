@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.partners.PartnerLinkManMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerLinkMan" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+    <result column="link_man" property="linkMan" jdbcType="VARCHAR" />
+    <result column="link_mobile" property="linkMobile" jdbcType="VARCHAR" />
+    <result column="link_tel" property="linkTel" jdbcType="VARCHAR" />
+    <result column="link_job" property="linkJob" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, partner_id, link_man, link_mobile, link_tel, link_job, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_link_man
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from partner_link_man
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.partners.PartnerLinkMan" >
+    insert into partner_link_man (id, partner_id, link_man, 
+      link_mobile, link_tel, link_job, 
+      add_time)
+    values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, #{linkMan,jdbcType=VARCHAR}, 
+      #{linkMobile,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR}, #{linkJob,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerLinkMan" >
+    insert into partner_link_man
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="linkMan != null" >
+        link_man,
+      </if>
+      <if test="linkMobile != null" >
+        link_mobile,
+      </if>
+      <if test="linkTel != null" >
+        link_tel,
+      </if>
+      <if test="linkJob != null" >
+        link_job,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="linkMan != null" >
+        #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMobile != null" >
+        #{linkMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null" >
+        #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkJob != null" >
+        #{linkJob,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerLinkMan" >
+    update partner_link_man
+    <set >
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="linkMan != null" >
+        link_man = #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMobile != null" >
+        link_mobile = #{linkMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null" >
+        link_tel = #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkJob != null" >
+        link_job = #{linkJob,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerLinkMan" >
+    update partner_link_man
+    set partner_id = #{partnerId,jdbcType=NUMERIC},
+      link_man = #{linkMan,jdbcType=VARCHAR},
+      link_mobile = #{linkMobile,jdbcType=VARCHAR},
+      link_tel = #{linkTel,jdbcType=VARCHAR},
+      link_job = #{linkJob,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

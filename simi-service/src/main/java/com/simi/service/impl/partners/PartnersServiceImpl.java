@@ -1,15 +1,16 @@
 package com.simi.service.impl.partners;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.partners.PartnersMapper;
 import com.simi.po.model.partners.Partners;
 import com.simi.service.partners.PartnersService;
@@ -74,6 +75,45 @@ public class PartnersServiceImpl implements PartnersService {
 		return partnersMapper.updateByPrimaryKeyWithBLOBs(record);
 	}
 
+	@Override
+	public Partners iniPartners() {
+		Partners vo = new Partners();
+		vo.setPartnerId(0L);
+		vo.setSpiderPartnerId(0L);
+		vo.setCompanyName("");
+		vo.setShortName("");
+		vo.setCompanySize((short) 0);
+		vo.setIsCooperate((short) 0);
+		vo.setCompanyLogo("");
+		vo.setIsDoor((short)0);
+		vo.setKeywords("");
+		vo.setStatus((short)0);
+		vo.setStatusRemark("");
+		vo.setBusinessDesc("");
+		vo.setWeixin("");
+		vo.setQq("");
+		vo.setEmail("");
+		vo.setProvinceId(0L);
+		vo.setCityId(0L);
+		vo.setIsCooperate((short)0);
+		vo.setFax("");
+		vo.setPayType((short) 0);
+		vo.setDiscout(new BigDecimal(0));
+		vo.setRemark("");
+		vo.setAdminId(0L);
+		vo.setAddTime(TimeStampUtil.getNow()/1000);
+		vo.setUpdateTime(TimeStampUtil.getNowSecond());
+		return vo;
+	}
+
+	@Override
+	public Partners selectBySpiderPartnerId(Long spiderPartnerId) {
+		return partnersMapper.selectBySpiderPartnerId(spiderPartnerId);
+	}
+	
+	
+
+	
 	
 	
 }
