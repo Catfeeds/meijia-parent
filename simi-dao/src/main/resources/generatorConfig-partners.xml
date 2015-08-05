@@ -54,13 +54,45 @@
 			enableDeleteByExample="false"
 			enableSelectByExample="false"
 			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="region_id" property="regionId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_door" property="isDoor" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="province_id" property="provinceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="is_cooperate" property="isCooperate" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="admin_id" property="adminId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
+		<!-- 提供商服务条目表   -->
+		<table schema="simi" tableName="partner_service_type"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="service_type_id" property="serviceTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			</table>
+		<!-- 提供商和服务条目关联表 -->
+		<table schema="simi" tableName="partner_ref_service_type"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_type_id" property="serviceTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			</table>
 	</context>
 </generatorConfiguration>

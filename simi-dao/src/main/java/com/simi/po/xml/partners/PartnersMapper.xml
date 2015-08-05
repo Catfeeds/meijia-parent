@@ -2,66 +2,90 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simi.po.dao.partners.PartnersMapper" >
   <resultMap id="BaseResultMap" type="com.simi.po.model.partners.Partners" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
-    <result column="region_id" property="regionId" jdbcType="NUMERIC" />
-    <result column="channel_code" property="channelCode" jdbcType="VARCHAR" />
+    <id column="partner_id" property="partnerId" jdbcType="NUMERIC" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="short_name" property="shortName" jdbcType="VARCHAR" />
     <result column="company_size" property="companySize" jdbcType="SMALLINT" />
+    <result column="company_logo" property="companyLogo" jdbcType="VARCHAR" />
+    <result column="is_door" property="isDoor" jdbcType="NUMERIC" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="NUMERIC" />
+    <result column="status_remark" property="statusRemark" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="NUMERIC" />
+    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
     <result column="is_cooperate" property="isCooperate" jdbcType="NUMERIC" />
     <result column="fax" property="fax" jdbcType="VARCHAR" />
-    <result column="addr" property="addr" jdbcType="VARCHAR" />
-    <result column="addr_lng" property="addrLng" jdbcType="VARCHAR" />
-    <result column="addr_lat" property="addrLat" jdbcType="VARCHAR" />
     <result column="pay_type" property="payType" jdbcType="NUMERIC" />
     <result column="discout" property="discout" jdbcType="DECIMAL" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="admin_id" property="adminId" jdbcType="NUMERIC" />
     <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
   </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.simi.po.model.partners.Partners" extends="BaseResultMap" >
+    <result column="business_desc" property="businessDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id, city_id, region_id, channel_code, company_name, short_name, company_size, is_cooperate, 
-    fax, addr, addr_lng, addr_lat, pay_type, discout, remark, add_time, update_time
+    partner_id, company_name, short_name, company_size, company_logo, is_door, keywords, 
+    status, status_remark, weixin, qq, email, province_id, city_id, is_cooperate, fax, 
+    pay_type, discout, remark, add_time, admin_id, update_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <sql id="Blob_Column_List" >
+    business_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from partners
-    where id = #{id,jdbcType=NUMERIC}
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
   </select>
+  <!-- 多条件查询查询服务商 -->
+  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+  select
+  <include refid="Base_Column_List" />
+  from partners
+  where 1=1
+    <if test="shortName != null" >
+      and short_name like CONCAT('%','${shortName}','%' )
+    </if>
+
+    <if test="companyName != null" >
+      and company_name like CONCAT('%','${companyName}','%' )
+    </if>
+  order by add_time desc
+</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from partners
-    where id = #{id,jdbcType=NUMERIC}
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.Partners" >
-    insert into partners (id, city_id, region_id, 
-      channel_code, company_name, short_name, 
-      company_size, is_cooperate, fax, 
-      addr, addr_lng, addr_lat, 
-      pay_type, discout, remark, 
-      add_time, update_time)
-    values (#{id,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{regionId,jdbcType=NUMERIC}, 
-      #{channelCode,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
-      #{companySize,jdbcType=SMALLINT}, #{isCooperate,jdbcType=NUMERIC}, #{fax,jdbcType=VARCHAR}, 
-      #{addr,jdbcType=VARCHAR}, #{addrLng,jdbcType=VARCHAR}, #{addrLat,jdbcType=VARCHAR}, 
-      #{payType,jdbcType=NUMERIC}, #{discout,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+    insert into partners (partner_id, company_name, short_name, 
+      company_size, company_logo, is_door, 
+      keywords, status, status_remark, 
+      weixin, qq, email, 
+      province_id, city_id, is_cooperate, 
+      fax, pay_type, discout, 
+      remark, add_time, admin_id, 
+      update_time, business_desc)
+    values (#{partnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
+      #{companySize,jdbcType=SMALLINT}, #{companyLogo,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC}, 
+      #{keywords,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{statusRemark,jdbcType=VARCHAR}, 
+      #{weixin,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{isCooperate,jdbcType=NUMERIC}, 
+      #{fax,jdbcType=VARCHAR}, #{payType,jdbcType=NUMERIC}, #{discout,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{adminId,jdbcType=NUMERIC}, 
+      #{updateTime,jdbcType=NUMERIC}, #{businessDesc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.partners.Partners" >
     insert into partners
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="cityId != null" >
-        city_id,
-      </if>
-      <if test="regionId != null" >
-        region_id,
-      </if>
-      <if test="channelCode != null" >
-        channel_code,
+      <if test="partnerId != null" >
+        partner_id,
       </if>
       <if test="companyName != null" >
         company_name,
@@ -72,20 +96,41 @@
       <if test="companySize != null" >
         company_size,
       </if>
+      <if test="companyLogo != null" >
+        company_logo,
+      </if>
+      <if test="isDoor != null" >
+        is_door,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusRemark != null" >
+        status_remark,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
       <if test="isCooperate != null" >
         is_cooperate,
       </if>
       <if test="fax != null" >
         fax,
-      </if>
-      <if test="addr != null" >
-        addr,
-      </if>
-      <if test="addrLng != null" >
-        addr_lng,
-      </if>
-      <if test="addrLat != null" >
-        addr_lat,
       </if>
       <if test="payType != null" >
         pay_type,
@@ -99,22 +144,19 @@
       <if test="addTime != null" >
         add_time,
       </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="businessDesc != null" >
+        business_desc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="cityId != null" >
-        #{cityId,jdbcType=NUMERIC},
-      </if>
-      <if test="regionId != null" >
-        #{regionId,jdbcType=NUMERIC},
-      </if>
-      <if test="channelCode != null" >
-        #{channelCode,jdbcType=VARCHAR},
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=NUMERIC},
       </if>
       <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
@@ -125,20 +167,41 @@
       <if test="companySize != null" >
         #{companySize,jdbcType=SMALLINT},
       </if>
+      <if test="companyLogo != null" >
+        #{companyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDoor != null" >
+        #{isDoor,jdbcType=NUMERIC},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="statusRemark != null" >
+        #{statusRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=NUMERIC},
+      </if>
       <if test="isCooperate != null" >
         #{isCooperate,jdbcType=NUMERIC},
       </if>
       <if test="fax != null" >
         #{fax,jdbcType=VARCHAR},
-      </if>
-      <if test="addr != null" >
-        #{addr,jdbcType=VARCHAR},
-      </if>
-      <if test="addrLng != null" >
-        #{addrLng,jdbcType=VARCHAR},
-      </if>
-      <if test="addrLat != null" >
-        #{addrLat,jdbcType=VARCHAR},
       </if>
       <if test="payType != null" >
         #{payType,jdbcType=NUMERIC},
@@ -152,37 +215,20 @@
       <if test="addTime != null" >
         #{addTime,jdbcType=NUMERIC},
       </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=NUMERIC},
+      </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=NUMERIC},
       </if>
+      <if test="businessDesc != null" >
+        #{businessDesc,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
-    select
-    <include refid="Base_Column_List" />
-    from partners
-    where 1=1
-      <if test="shortName != null" >
-        and short_name like CONCAT('%','${shortName}','%' )
-      </if>
-
-      <if test="companyName != null" >
-        and company_name like CONCAT('%','${companyName}','%' )
-      </if>
-    order by add_time desc
-  </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.Partners" >
     update partners
     <set >
-      <if test="cityId != null" >
-        city_id = #{cityId,jdbcType=NUMERIC},
-      </if>
-      <if test="regionId != null" >
-        region_id = #{regionId,jdbcType=NUMERIC},
-      </if>
-      <if test="channelCode != null" >
-        channel_code = #{channelCode,jdbcType=VARCHAR},
-      </if>
       <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
@@ -192,20 +238,41 @@
       <if test="companySize != null" >
         company_size = #{companySize,jdbcType=SMALLINT},
       </if>
+      <if test="companyLogo != null" >
+        company_logo = #{companyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDoor != null" >
+        is_door = #{isDoor,jdbcType=NUMERIC},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="statusRemark != null" >
+        status_remark = #{statusRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=NUMERIC},
+      </if>
       <if test="isCooperate != null" >
         is_cooperate = #{isCooperate,jdbcType=NUMERIC},
       </if>
       <if test="fax != null" >
         fax = #{fax,jdbcType=VARCHAR},
-      </if>
-      <if test="addr != null" >
-        addr = #{addr,jdbcType=VARCHAR},
-      </if>
-      <if test="addrLng != null" >
-        addr_lng = #{addrLng,jdbcType=VARCHAR},
-      </if>
-      <if test="addrLat != null" >
-        addr_lat = #{addrLat,jdbcType=VARCHAR},
       </if>
       <if test="payType != null" >
         pay_type = #{payType,jdbcType=NUMERIC},
@@ -219,30 +286,67 @@
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=NUMERIC},
       </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=NUMERIC},
+      </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=NUMERIC},
       </if>
+      <if test="businessDesc != null" >
+        business_desc = #{businessDesc,jdbcType=LONGVARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=NUMERIC}
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.Partners" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simi.po.model.partners.Partners" >
     update partners
-    set city_id = #{cityId,jdbcType=NUMERIC},
-      region_id = #{regionId,jdbcType=NUMERIC},
-      channel_code = #{channelCode,jdbcType=VARCHAR},
-      company_name = #{companyName,jdbcType=VARCHAR},
+    set company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
       company_size = #{companySize,jdbcType=SMALLINT},
+      company_logo = #{companyLogo,jdbcType=VARCHAR},
+      is_door = #{isDoor,jdbcType=NUMERIC},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      status = #{status,jdbcType=NUMERIC},
+      status_remark = #{statusRemark,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=NUMERIC},
+      city_id = #{cityId,jdbcType=NUMERIC},
       is_cooperate = #{isCooperate,jdbcType=NUMERIC},
       fax = #{fax,jdbcType=VARCHAR},
-      addr = #{addr,jdbcType=VARCHAR},
-      addr_lng = #{addrLng,jdbcType=VARCHAR},
-      addr_lat = #{addrLat,jdbcType=VARCHAR},
       pay_type = #{payType,jdbcType=NUMERIC},
       discout = #{discout,jdbcType=DECIMAL},
       remark = #{remark,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=NUMERIC},
+      admin_id = #{adminId,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC},
+      business_desc = #{businessDesc,jdbcType=LONGVARCHAR}
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.Partners" >
+    update partners
+    set company_name = #{companyName,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      company_size = #{companySize,jdbcType=SMALLINT},
+      company_logo = #{companyLogo,jdbcType=VARCHAR},
+      is_door = #{isDoor,jdbcType=NUMERIC},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      status = #{status,jdbcType=NUMERIC},
+      status_remark = #{statusRemark,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=NUMERIC},
+      city_id = #{cityId,jdbcType=NUMERIC},
+      is_cooperate = #{isCooperate,jdbcType=NUMERIC},
+      fax = #{fax,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=NUMERIC},
+      discout = #{discout,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      admin_id = #{adminId,jdbcType=NUMERIC},
       update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
   </update>
 </mapper>

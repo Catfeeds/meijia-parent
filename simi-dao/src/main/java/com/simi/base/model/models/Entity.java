@@ -16,14 +16,15 @@ public abstract class Entity<PKType extends Number> {
      */
     protected int version;
 
-    public PKType getId(){
-    	return this.id;
-    }
-    public void setId(PKType id){
-    	this.id=id;
-    }
+   
 
-    public int getVersion(){
+	public PKType getId() {
+		return id;
+	}
+	public void setId(PKType id) {
+		this.id = id;
+	}
+	public int getVersion(){
 		return this.version;
 	}
     public void setVersion(int version){

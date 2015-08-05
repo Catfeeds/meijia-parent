@@ -69,5 +69,11 @@ public class PartnersServiceImpl implements PartnersService {
 		
 	}
 
+	@Override
+	public int updateByPrimaryKeyWithBLOBs(Partners record) {
+		return partnersMapper.updateByPrimaryKeyWithBLOBs(record);
+	}
+
+	
 	
 }

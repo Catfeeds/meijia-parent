@@ -3,13 +3,7 @@ package com.simi.po.model.partners;
 import java.math.BigDecimal;
 
 public class Partners {
-    private Long id;
-
-    private Long cityId;
-
-    private Long regionId;
-
-    private String channelCode;
+    private Long partnerId;
 
     private String companyName;
 
@@ -17,15 +11,29 @@ public class Partners {
 
     private Short companySize;
 
+    private String companyLogo;
+
+    private Short isDoor;
+
+    private String keywords;
+
+    private Short status;
+
+    private String statusRemark;
+
+    private String weixin;
+
+    private String qq;
+
+    private String email;
+
+    private Long provinceId;
+
+    private Long cityId;
+
     private Short isCooperate;
 
     private String fax;
-
-    private String addr;
-
-    private String addrLng;
-
-    private String addrLat;
 
     private Short payType;
 
@@ -35,38 +43,18 @@ public class Partners {
 
     private Long addTime;
 
+    private Long adminId;
+
     private Long updateTime;
 
-    public Long getId() {
-        return id;
+    private String businessDesc;
+
+    public Long getPartnerId() {
+        return partnerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public Long getRegionId() {
-        return regionId;
-    }
-
-    public void setRegionId(Long regionId) {
-        this.regionId = regionId;
-    }
-
-    public String getChannelCode() {
-        return channelCode;
-    }
-
-    public void setChannelCode(String channelCode) {
-        this.channelCode = channelCode == null ? null : channelCode.trim();
+    public void setPartnerId(Long partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getCompanyName() {
@@ -93,6 +81,86 @@ public class Partners {
         this.companySize = companySize;
     }
 
+    public String getCompanyLogo() {
+        return companyLogo;
+    }
+
+    public void setCompanyLogo(String companyLogo) {
+        this.companyLogo = companyLogo == null ? null : companyLogo.trim();
+    }
+
+    public Short getIsDoor() {
+        return isDoor;
+    }
+
+    public void setIsDoor(Short isDoor) {
+        this.isDoor = isDoor;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords == null ? null : keywords.trim();
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
+    }
+
+    public String getStatusRemark() {
+        return statusRemark;
+    }
+
+    public void setStatusRemark(String statusRemark) {
+        this.statusRemark = statusRemark == null ? null : statusRemark.trim();
+    }
+
+    public String getWeixin() {
+        return weixin;
+    }
+
+    public void setWeixin(String weixin) {
+        this.weixin = weixin == null ? null : weixin.trim();
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq == null ? null : qq.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
     public Short getIsCooperate() {
         return isCooperate;
     }
@@ -107,30 +175,6 @@ public class Partners {
 
     public void setFax(String fax) {
         this.fax = fax == null ? null : fax.trim();
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public void setAddr(String addr) {
-        this.addr = addr == null ? null : addr.trim();
-    }
-
-    public String getAddrLng() {
-        return addrLng;
-    }
-
-    public void setAddrLng(String addrLng) {
-        this.addrLng = addrLng == null ? null : addrLng.trim();
-    }
-
-    public String getAddrLat() {
-        return addrLat;
-    }
-
-    public void setAddrLat(String addrLat) {
-        this.addrLat = addrLat == null ? null : addrLat.trim();
     }
 
     public Short getPayType() {
@@ -165,11 +209,27 @@ public class Partners {
         this.addTime = addTime;
     }
 
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
+    }
+
     public Long getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getBusinessDesc() {
+        return businessDesc;
+    }
+
+    public void setBusinessDesc(String businessDesc) {
+        this.businessDesc = businessDesc == null ? null : businessDesc.trim();
     }
 }
