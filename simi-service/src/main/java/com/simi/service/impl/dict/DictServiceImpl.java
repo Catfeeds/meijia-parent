@@ -129,6 +129,23 @@ public class DictServiceImpl implements DictService {
 	}
 
 	@Override
+	public List<DictCity> getCityByProvinceId(Long provinceId) {
+		List<DictCity> listCity = LoadCityData();
+		List<DictCity> listCityName = new ArrayList<DictCity>();
+		if(0L==provinceId){
+			return listCity;
+		}else{
+			for (Iterator iterator = listCity.iterator(); iterator.hasNext();) {
+				DictCity dictCity = (DictCity) iterator.next();
+				if (dictCity.getProvinceId() == provinceId) {
+					listCityName.add(dictCity);
+				}
+			}
+			return listCityName;
+		}
+	}
+
+	@Override
 	public List<DictRegion> getRegionByCityId(Long cityId){
 		List<DictRegion> listRegion = LoadRegionData();
 		List<DictRegion> listRegionName = new ArrayList<DictRegion>();

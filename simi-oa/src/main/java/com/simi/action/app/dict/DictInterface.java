@@ -1,6 +1,8 @@
 package com.simi.action.app.dict;
 
+import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.service.dict.AdService;
@@ -51,6 +54,30 @@ public class DictInterface extends BaseController {
     	return result;
     }
 
+	/**
+	 * 根据省份查询城市
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "get-city-by-provinceId", method = RequestMethod.GET)
+	public HashMap getCitys(
+			@RequestParam(value = "provinceId", required = true, defaultValue = "0") Long provinceId) {
+		
+		List<DictCity> listCity =  dictService.getCityByProvinceId(provinceId);
+		
+		if (provinceId > 0) {
+			listCity = dictService.getCityByProvinceId(provinceId);
+		}
+		
+		DictCity cityVo = null;
+		HashMap result = new HashMap();
+		result.put("0", "全部");
+		for (int i = 0; i < listCity.size(); i++) {
+			cityVo = listCity.get(i);
+			result.put(cityVo.getCityId().toString(), cityVo.getName());
+		}
+		return result;
+	}
 	/**
 	 * 检查服务类型名称是否重复
 	 * @param request

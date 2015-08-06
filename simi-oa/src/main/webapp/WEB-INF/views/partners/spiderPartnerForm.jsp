@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
+<%@ taglib prefix="provinceSelectTag" uri="/WEB-INF/tags/provinceSelect.tld"%>
 
 <html>
 <head>
@@ -11,16 +12,16 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-<link href="<c:url value='/assets/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'/>"
-	rel="stylesheet" type="text/css" />
-
-
+<%-- <link href="<c:url value='/assets/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'/>"
+	rel="stylesheet" type="text/css" /> --%>
+<%@ include file="../shared/importJs.jsp"%>
+	
 </head>
 
 <body>
 
-	<section id="container"> <!--header start--> <%@ include
-		file="../shared/pageHeader.jsp"%> <!--header end-->
+	<section id="container"> <!--header start-->
+	 <%@ include file="../shared/pageHeader.jsp"%> <!--header end-->
 
 	<!--sidebar start--> <%@ include file="../shared/sidebarMenu.jsp"%>
 	<!--sidebar end--> <!--main content start--> <section id="main-content">
@@ -30,12 +31,11 @@
 			<section class="panel"> <header class="panel-heading">
 			服务商采集信息 </header>
 
-			<hr
-				style="width: 100%; color: black; height: 1px; background-color: black;" />
+			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 
 			<div class="panel-body">
 				 <form:form modelAttribute="spiderPartner" 	commandName="spiderPartner" 
-					class="form-horizontal" method="POST">
+					class="form-horizontal" method="POST" id="spiderPartnerForm">
 					<div class="form-body">
 						
 						<div class="form-group">
@@ -77,7 +77,7 @@
 							<!-- Text input-->
 							<label class="col-md-2 control-label">信用档案url</label>
 							<div class="col-md-5">
-							${spiderPartner.creditFileUrl }
+							<a href="${spiderPartner.creditFileUrl }">${spiderPartner.creditFileUrl }</a>
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 							<!-- Textarea -->
 							<label class="col-md-2 control-label">企业网站</label>
 							<div class="col-md-5">
-							${spiderPartner.website }
+							<a href="${spiderPartner.website }">${spiderPartner.website }</a>
 							</div>
 						</div>
 						<div class="form-group">
@@ -139,8 +139,9 @@
 
 							<!-- Text input-->
 							<label class="col-md-2 control-label">公司简介</label>
-							<div class="col-md-5">
+							<div class="col-md-7">
 							${spiderPartner.companyDescImg }
+							${spiderPartner.companyDesc }
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -182,14 +183,14 @@
 			<section class="panel"> <header class="panel-heading">
 			服务商人工处理信息 </header>
 
-			<hr
-				style="width: 100%; color: black; height: 1px; background-color: black;" />
+			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 
 			<div class="panel-body">
 				 <form:form modelAttribute="partners" 	commandName="partners" 
-					class="form-horizontal" method="POST" action="">
+					class="form-horizontal" method="POST" action="spiderPartnerForm" id="partner-form">
 					<div class="form-body">
-						
+						<form:hidden path="spiderPartnerId"  />
+						<form:hidden path="partnerId"  />
 						<div class="form-group">
 							<!-- Text input-->
 							<label class="col-md-2 control-label">公司简称</label>
@@ -198,7 +199,44 @@
 									maxSize="10" />
 							</div>
 						</div>
+						<div class="form-group ">
+						<label class="col-md-2 control-label">联系人信息</label>
+						<div class="col-md-8">
 
+							<table id="linkManTable"
+								class="table table-hover table-condensed controls">
+								<thead>
+									<tr>
+										<th>联系人</th>
+										<th>手机号</th>
+										<th>联系电话</th>
+										<th>职务</th>
+										<th>#</th>
+									</tr>
+								</thead>
+								<c:forEach items="${partners.linkMan}" var="item">
+									<tr class="odd gradeX">
+										<td><input type="text" name="linkMan"
+											value="${item.linkMan}" maxLength="32" class="form-control"></td>
+										<td><input type="text" name="linkMobile"
+											value="${item.linkMobile}" maxLength="32"
+											class="form-control"></td>
+										<td><input type="text" name="linkTel"
+											value="${item.linkTel}" maxLength="32" class="form-control"></td>
+										<td><input type="text" name="linkJob"
+											value="${item.linkJob}" maxLength="32" class="form-control"></td>
+
+										<td><span class="input-group-btn">
+												<button class="btn btn-success btn-add" type="button">
+													<span class="glyphicon glyphicon-plus"></span>
+												</button>
+										</span></td>
+									</tr>
+								</c:forEach>
+
+							</table>
+						</div>
+					</div>
 						<div class="form-group">
 
 
@@ -209,6 +247,21 @@
 									maxSize="10" />
 							</div>
 
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">所在省份</label>
+							<div class="col-md-5">
+								<provinceSelectTag:select selectId="${partner.provinceId}"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">所在城市</label>
+							<div class="col-md-5">
+								<select path="cityId" name="cityId" id="cityIds" class="form-control"
+									autocomplete="off">
+									<option value="0">全部</option>
+								</select>
+							</div>
 						</div>
 						<div class="form-group">
 
@@ -347,12 +400,12 @@
 								</div>
 								<div class="col-md-2" align="left">
 									<label class="radio">
-									<form:radiobutton path="isDoor" value="1"/>按次结算
+									<form:radiobutton path="payType" value="1"/>按次结算
 									</label>
 								</div>
 								<div class="col-md-2" align="left">
 									<label class="radio">
-									<form:radiobutton path="isDoor" value="2"/>预付
+									<form:radiobutton path="payType" value="2"/>预付
 									</label>
 								</div>
 							</div>
@@ -369,11 +422,26 @@
 								<p class="help-block"></p>
 							</div>
 						</div>
+						 <div class="form-group">
+                              <label  class="col-md-2 control-label">选择服务类型</label>
+                              <div class="col-md-10">
+                                 <div class="portlet">
+					                  <div class="portlet-body">
+					                  	   <c:import url = "../shared/treeSelector.jsp">
+											 <c:param name="propertyName" value="partnerTypeIds"/>
+											 <c:param name="propertyValue" value="${partners.getPartnerTypeIdsString()}"/>
+											 <c:param name="checkbox" value="true"/>
+											 <c:param name="treeDataSourceName" value="treeDataSource"/>
+										   </c:import>
+					                  </div>
+					             </div>
+                              </div>
+                           </div>    
 					</div>
 					<div class="form-actions">
 						<div class="row">
 							<div class="col-md-4" align="right">
-								<button class="btn btn-success" id="addCoupon_btn" type="button">新增</button>
+								<button class="btn btn-success" id="save_partner_btn" type="button">保存</button>
 							</div>
 							<!-- Button -->
 							<div class="col-md-8">
@@ -388,24 +456,24 @@
 			</section>
 		</div>
 	</div>
-	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> <%@ include
-		file="../shared/pageFooter.jsp"%> <!--footer end-->
+	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> 
+	<%@ include file="../shared/pageFooter.jsp"%> <!--footer end-->
 	</section>
 
 	<!-- js placed at the end of the document so the pages load faster -->
 	<!--common script for all pages-->
-<%-- 	<%@ include file="../shared/importJs.jsp"%> --%>
-
-
+	
+	
 	<!--script for this page-->
-	<%-- <script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
-	<script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script>
-	<script
-		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
-		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/coupon/couponForm.js'/>"
-		type="text/javascript"></script> --%>
+	<!-- 省市联动js -->
+	<script type="text/javascript"	src="<c:url value='/js/jquery.chained.remote.min.js'/>"></script>
+	<!-- form表单验证 -->
+    <script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"></script>
+	<script src="<c:url value='/js/simi/partner/partnerForm.js'/>"></script>
+	
+	<script src="<c:url value='/assets/jquery-multi-select/js/jquery.multi-select.js'/>"></script>
+	<!--绑定服务类别  -->
+	<script type="text/javascript" src="<c:url value='/js/jquery.treeLite.js?ver=10'/>"></script>
+	
 </body>
 </html>

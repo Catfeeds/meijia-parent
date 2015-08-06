@@ -2,6 +2,7 @@ package com.simi.service.partners;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.partners.Partners;
+import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;
 
 public interface PartnersService {
@@ -25,4 +26,9 @@ public interface PartnersService {
     PageInfo searchVoListPage(PartnersSearchVo partnersSearchVo,int pageNo,int pageSize);
     
     Partners iniPartners();
+    
+    PartnerFormVo selectPartnerFormVoByPartnerFormVo(PartnerFormVo partnerFormVo);
+    
+	public void savePartnerToPartnerType(Long partnerId, Long[] partnerTypeIds);
+
 }

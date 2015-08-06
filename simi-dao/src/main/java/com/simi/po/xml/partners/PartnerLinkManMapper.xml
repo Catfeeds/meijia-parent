@@ -19,9 +19,19 @@
     from partner_link_man
     where id = #{id,jdbcType=NUMERIC}
   </select>
+  <select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_link_man
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from partner_link_man
     where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByPartnerId" parameterType="java.lang.Long" >
+    delete from partner_link_man
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.PartnerLinkMan" >
     insert into partner_link_man (id, partner_id, link_man, 

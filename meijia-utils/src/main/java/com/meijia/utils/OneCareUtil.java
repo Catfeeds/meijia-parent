@@ -366,6 +366,29 @@ public class OneCareUtil {
 		}
 		return msgSendGroup;
 	}
+	public static String getSpiderPartnerStatus(Short status) {
+		String statusName = "";
+		switch (status) {
+		case 0:
+			statusName = "已采集";
+			break;
+		case 1:
+			statusName = "考察中";
+			break;
+		case 2:
+			statusName = "已考察";
+			break;
+		case 3:
+			statusName = "待认证";
+			break;
+		case 4:
+			statusName = "已认证";
+			break;
+		default:
+			statusName = "";
+		}
+		return statusName;
+	}
 	public static String getDegreeName(String degreeId) {
 		String DegreeName = "";
 		switch (degreeId) {

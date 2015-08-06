@@ -6,6 +6,8 @@
 
 <!--taglib for this page  -->
 <%@ taglib prefix="timestampTag" uri="/WEB-INF/tags/timestamp.tld"%>
+<%@ taglib prefix="spiderPartnerStatusTag" uri="/WEB-INF/tags/spiderPartnerStatus.tld"%>
+
 <html>
 <head>
 
@@ -61,10 +63,12 @@
 							<td>${ item.companyName }</td>
 							<td>${item.registerTime }</td>
 							<td>${item.certification }</td>
-							<td>${item.website }</td>
-							<td>${item.status }</td>
-							<td><timestampTag:timestamp patten="yyyy-MM-dd"
-									t="${item.addTime * 1000}" /></td>
+							<td><a href="${item.website }">${item.website }</a></td>
+							<td>
+								<spiderPartnerStatusTag:status status="${item.status}"/>
+							</td>
+							<%-- <td><timestampTag:timestamp patten="yyyy-MM-dd"
+									t="${item.addTime * 1000}" /></td> --%>
 							<td>
 								<button id="btn_update"
 									onClick="btn_update('spiderPartner/spiderPartnerForm?id=${ item.spiderPartnerId }')"

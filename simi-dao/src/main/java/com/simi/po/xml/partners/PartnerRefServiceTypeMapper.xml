@@ -18,9 +18,20 @@
     from partner_ref_service_type
     where id = #{id,jdbcType=NUMERIC}
   </select>
+  <!--根据partnerId查询所有对应的服务 -->
+  <select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_service_type
+    where partner_id = #{partneId,jdbcType=NUMERIC}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from partner_ref_service_type
     where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByPartnerId" parameterType="java.lang.Long" >
+    delete from partner_ref_service_type
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.PartnerRefServiceType" >
     insert into partner_ref_service_type (id, partner_id, service_type_id, 

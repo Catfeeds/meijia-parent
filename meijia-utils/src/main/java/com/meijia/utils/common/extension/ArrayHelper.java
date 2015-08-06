@@ -27,6 +27,25 @@ public class ArrayHelper {
 		list.toArray(ret);
 		return ret;
 	}
+	/**
+	 * 去除LongArray中的某一项
+	 * @param array
+	 * @param item
+	 * @return
+	 */
+	public final static Long[] removeArrayLongItem(Long[] array, Integer item){
+		List<Long> list=new ArrayList<Long>();
+		for(Long arrayItem : array){
+			if(!arrayItem.equals(item))
+				list.add(arrayItem);
+		}
+
+		Long[] ret=new Long[list.size()];
+		list.toArray(ret);
+		return ret;
+	}
+	
+	
 
 	/**
 	 * 把IntegerArray转化为String，中间以split分割

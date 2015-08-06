@@ -2,6 +2,7 @@ package com.simi.service.impl.partners;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,14 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
+import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.dao.partners.PartnersMapper;
+import com.simi.po.model.partners.PartnerRefServiceType;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;
 import com.simi.service.partners.PartnersService;
+import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;
 
 @Service
@@ -21,6 +27,12 @@ public class PartnersServiceImpl implements PartnersService {
 
 	@Autowired
 	private PartnersMapper partnersMapper;
+	
+	@Autowired
+	private PartnerRefServiceTypeMapper partnerRefServiceTypeMapper;
+	
+	@Autowired
+	private PartnerServiceTypeMapper partnerServiceTypeMapper;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -111,9 +123,47 @@ public class PartnersServiceImpl implements PartnersService {
 		return partnersMapper.selectBySpiderPartnerId(spiderPartnerId);
 	}
 	
-	
+	/**
+	 * 根据PartnerId查询出所对应的服务类别
+	 * 包装PartnerFormVo提供使用
+	 */
+	@Override
+	public PartnerFormVo selectPartnerFormVoByPartnerFormVo(PartnerFormVo partnerFormVo) {
 
 	
+		List<PartnerServiceType> list = partnerFormVo.getChildList();
+		List<PartnerRefServiceType> partnerServiceTypes =partnerRefServiceTypeMapper.selectByPartnerId(partnerFormVo.getPartnerId());
+		for (Iterator iterator = partnerServiceTypes.iterator(); iterator.hasNext();) {
+			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
+			if(partnerRefServiceType != null){
+				list.add(partnerServiceTypeMapper.selectByPrimaryKey(partnerRefServiceType.getServiceTypeId()));
+			}
+		}
+		return partnerFormVo;
+	}
 	
 	
+	/**
+	 * 将选中的服务类别添加到服务商服务类别关联表
+	 */
+	@Override
+	public void savePartnerToPartnerType(Long partnerId, Long[] partnerTypeIds) {
+		
+		int results = partnerRefServiceTypeMapper.deleteByPartnerId(partnerId);
+		
+		if(results >=0){
+			if(partnerTypeIds.length >0){
+				for (Long serviceTypeId : partnerTypeIds) {
+					PartnerRefServiceType partnerRefServiceType = new PartnerRefServiceType();
+					PartnerServiceType partnerServiceType = partnerServiceTypeMapper.selectByPrimaryKey(serviceTypeId); 
+					partnerRefServiceType.setPartnerId(partnerId);
+					partnerRefServiceType.setServiceTypeId(serviceTypeId);
+					partnerRefServiceType.setParentId(partnerServiceType.getParentId());
+					partnerRefServiceType.setName(partnerServiceType.getName());
+					partnerRefServiceType.setPrice(new BigDecimal(0));
+					partnerRefServiceTypeMapper.insertSelective(partnerRefServiceType);
+				}
+			}
+		}
+	}	
 }

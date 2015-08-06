@@ -1,13 +1,14 @@
-package com.simi.po.dao.partners;
+package com.simi.service.partners;
 
 import java.util.List;
 
 import com.simi.po.model.partners.PartnerLinkMan;
 
-public interface PartnerLinkManMapper {
-    int deleteByPrimaryKey(Long id);
+public interface PartnerLinkManService {
+	
+	int deleteByPrimaryKey(Long id);
 
-    int deleteByPartnerId(Long partnerId);
+	int deleteByPartnerId(Long partnerId);
 
     int insert(PartnerLinkMan record);
 
@@ -15,9 +16,11 @@ public interface PartnerLinkManMapper {
 
     PartnerLinkMan selectByPrimaryKey(Long id);
 
-    List<PartnerLinkMan> selectByPartnerId(Long partnerId);
-
     int updateByPrimaryKeySelective(PartnerLinkMan record);
 
     int updateByPrimaryKey(PartnerLinkMan record);
+
+    PartnerLinkMan initPartnerLinkMan();
+    
+    List<PartnerLinkMan> selectByPartnerId(Long partnerId);
 }
