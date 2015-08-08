@@ -3,6 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
+<%@ taglib prefix="orderStatusSelectTag" uri="/WEB-INF/tags/orderSatusSelect.tld" %>
+<%@ taglib prefix="spiderPartnerStatusSelectTag" uri="/WEB-INF/tags/spiderPartnerStatusSelect.tld" %>
 
 <!--taglib for this page  -->
 <%@ taglib prefix="timestampTag" uri="/WEB-INF/tags/timestamp.tld"%>
@@ -10,7 +12,6 @@
 
 <html>
 <head>
-
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 
@@ -26,17 +27,11 @@
 	<!--sidebar start--> <%@ include file="../shared/sidebarMenu.jsp"%>
 	<!--sidebar end--> <!--main content start--> <section id="main-content">
 	<section class="wrapper"> <!-- page start-->
-
+		 <%@ include file="../common/partner/spiderPartnerSearch.jsp"%>
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
 			服务商列表
-			<div class="pull-right">
-				<button onClick="btn_add('coupon/toAddCoupons')"
-					class="btn btn-primary" type="button">
-					<i class="icon-expand-alt"></i>新增
-				</button>
-			</div>
 			</header>
 
 			<hr
@@ -67,18 +62,11 @@
 							<td>
 								<spiderPartnerStatusTag:status status="${item.status}"/>
 							</td>
-							<%-- <td><timestampTag:timestamp patten="yyyy-MM-dd"
-									t="${item.addTime * 1000}" /></td> --%>
 							<td>
 								<button id="btn_update"
 									onClick="btn_update('spiderPartner/spiderPartnerForm?id=${ item.spiderPartnerId }')"
 									class="btn btn-primary btn-xs" title="修改">
 									<i class="icon-pencil"></i>
-								</button>
-								<button id="btn_del"
-									onClick="btn_del('/spiderPartner/delete/${item.spiderPartnerId}')"
-									class="btn btn-danger btn-xs" title="删除">
-									<i class="icon-trash "></i>
 								</button>
 							</td>
 						</tr>
