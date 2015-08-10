@@ -32,7 +32,15 @@
     from dict_region
     where province_id = #{provinceId,jdbcType=NUMERIC}
   </select>
-  
+  <select id="selectByCityIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+     from dict_region where city_id in
+     <foreach item="item" index="index" collection="list" 
+                    open="(" separator="," close=")">
+                   #{item}
+     </foreach>
+ </select> 
   <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

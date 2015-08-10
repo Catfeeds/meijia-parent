@@ -55,4 +55,11 @@ public class RegionServiceImpl implements RegionService {
 	public List<DictRegion> selectAll() {
 		return regionMapper.selectAll();
 	}
+
+	@Override
+	public List<DictRegion> selectByCityIds(List<Long> cityIds) {
+		return regionMapper.selectByCityIds(cityIds);
+	}
+	
+	
 }

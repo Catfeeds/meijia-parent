@@ -63,7 +63,7 @@ public class SpiderPartnerServiceImpl implements SpiderPartnerService {
 		String companyName = partnersSearchVo.getCompanyName();
 		Short status = partnersSearchVo.getStatus();
 		if(!StringUtil.isEmpty(companyName)){
-			conditions.put("companyName",companyName);
+			conditions.put("companyName",companyName.trim());
 		}
 		if(status !=null && status !=8){
 			conditions.put("status", status);

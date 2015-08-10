@@ -24,7 +24,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-5">公司名称</label>
 									<div class="col-md-5">
-										<form:input path="companyName" id="mobile1"
+										<form:input path="companyName" id="companyName"
 											class="form-control " autocomplete="off"
 											placeholder="公司名称" />
 

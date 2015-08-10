@@ -40,4 +40,10 @@ public class CityServiceImpl implements CityService {
 		
 		return cityMapper.selectByPrimaryKey(cityId);
 	}
+
+	@Override
+	public List<DictCity> selectByCityIds(List<Long> cityIds) {
+		return cityMapper.selectByCityIds(cityIds);
+	}
+	
 }

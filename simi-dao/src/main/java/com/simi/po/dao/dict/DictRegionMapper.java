@@ -22,4 +22,6 @@ public interface DictRegionMapper {
     List<DictRegion> selectByCityId(Long cityId);
     
     List<DictRegion> selectByProvinceId(Long provinceId);
+    
+    List<DictRegion> selectByCityIds(List<Long> cityIds);
 }

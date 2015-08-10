@@ -11,5 +11,7 @@ public interface CityService {
 	List<DictCity> selectAll();
 
 	DictCity selectByCityId(Long secId);
+	
+	List<DictCity> selectByCityIds(List<Long> cityIds);
 
 }

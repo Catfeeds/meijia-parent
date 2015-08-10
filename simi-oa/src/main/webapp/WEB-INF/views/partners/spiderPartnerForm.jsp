@@ -252,6 +252,9 @@
 									data-target="#region">
 							</div>
 						</div>
+						<div class="form-group" id="cityAndRegion" >
+						 	
+						</div>
 						<div class="form-group">
 							<!-- Text input-->
 							<label class="col-md-2 control-label">是否上门</label>
@@ -433,7 +436,7 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel1">服务地区选择</h4>
 				</div>
-				<div class="modal-body" style="overflow:scroll; width:600px; height:500px;”>
+				<div class="modal-body" style="overflow:scroll; width:600px; height:400px;”>
 				<div class="row">
 				<div class="col-lg-12">
 					<form:form>
@@ -443,18 +446,20 @@
 						 <div class="form-group">
 						 		<div class="col-md-4" >
 									<input name="cityId" type="checkbox" value="${item.cityId}">${item.name}
+									<input type="hidden" value="${item.name }"/>
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-8 ">
 											&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:forEach items="${dictReigionList}" var="items">
 										<c:if test="${item.cityId ==items.cityId }">
+											<input type="hidden" value="${items.name}"/>
 											<input name ="regionId" type="checkbox" value="${items.regionId}">${items.name}
-										</c:if>
+										<input type="hidden" value="${items.cityId}"/>
+									</c:if>
 									</c:forEach>
 								</div>
 						</div>
-						<br/>
-						<hr  />
+						<hr />
 					</c:forEach>
 				</div>
 				</form:form>
@@ -477,15 +482,14 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<!-- <button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button> -->
+					 <button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button> 
 					<h4 class="modal-title" id="myModalLabel">服务商服务类型</h4>
 				</div>
-				<div class="modal-body">
-					
+				<div class="modal-body" style="width:400px; height:300px;”>
 					<div class="form-group">
-                              <label  class="col-md-2 control-label">选择服务类型</label>
-                              <div class="col-md-10">
+                              <label  class="col-md-4 control-label">选择服务类型</label>
+                              <div class="col-md-8">
                                  <div class="portlet">
 					                  <div class="portlet-body">
 					                  	   <c:import url = "../shared/treeSelector.jsp">

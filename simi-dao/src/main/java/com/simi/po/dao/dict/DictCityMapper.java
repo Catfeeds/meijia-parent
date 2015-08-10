@@ -18,5 +18,7 @@ public interface DictCityMapper {
 	int updateByPrimaryKey(DictCity record);
 
 	List<DictCity> selectAll();
+	
+	List<DictCity> selectByCityIds(List<Long> cityIds);
 
 }

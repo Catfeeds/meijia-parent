@@ -92,7 +92,10 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-	<script src="<c:url value='/js/simi/account/list.js'/>"></script>
-
+	<script type="text/javascript">
+	function doReset(){
+		$("#companyName").attr('value',' ');
+	}
+	</script>
 </body>
 </html>

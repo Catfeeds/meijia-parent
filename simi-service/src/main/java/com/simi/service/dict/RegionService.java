@@ -14,5 +14,7 @@ public interface RegionService {
 	List<DictRegion> getRegionByProvinceId(Long provinceId);
 
 	List<DictRegion> selectAll();
+	
+	List<DictRegion> selectByCityIds(List<Long> cityIds);
 
 }

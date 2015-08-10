@@ -41,6 +41,8 @@ import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.partners.SpiderPartner;
+import com.simi.service.dict.CityService;
+import com.simi.service.dict.RegionService;
 import com.simi.service.partners.PartnerLinkManService;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
@@ -80,6 +82,11 @@ public class SpiderPartnerController extends BaseController{
 	@Autowired
 	private PartnerRefCityService partnerRefCityService;
 	
+	@Autowired
+	private CityService cityService;
+	
+	@Autowired
+	private RegionService regionService;
 	
 	
 
@@ -216,11 +223,15 @@ public class SpiderPartnerController extends BaseController{
 		partnerFormVo.setPartnerCityId(cityId);;		
 		
 		/**
-		 * 获取城市和地区字典信息
+		 * 获取北,上,广,深等城市和地区字典信息
 		 */
-		List<DictCity> dictCityList = partnersService.selelctDictCities();
-		List<DictRegion> dictReigionList = partnersService.selectDictRegions();
-		
+		List<Long> cityIds = new ArrayList<Long>();
+		cityIds.add(2L);
+		cityIds.add(3L);
+		cityIds.add(74L);
+		cityIds.add(200L);
+		List<DictCity> dictCityList = cityService.selectByCityIds(cityIds);
+		List<DictRegion> dictReigionList = regionService.selectByCityIds(cityIds);		
 	
 		model.addAttribute("dictCityList", dictCityList);
 		model.addAttribute("dictReigionList", dictReigionList);

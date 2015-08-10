@@ -97,4 +97,13 @@
     from dict_city
     order by city_id asc
   </select>
+   <select id="selectByCityIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+     from dict_city where city_id in
+     <foreach item="item" index="index" collection="list" 
+                    open="(" separator="," close=")">
+                   #{item}
+     </foreach>
+ </select> 
 </mapper>
