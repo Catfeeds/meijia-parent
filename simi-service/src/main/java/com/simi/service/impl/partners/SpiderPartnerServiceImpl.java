@@ -61,9 +61,12 @@ public class SpiderPartnerServiceImpl implements SpiderPartnerService {
 	public PageInfo searchVoListPage(PartnersSearchVo partnersSearchVo, int pageNo, int pageSize) {
 		Map<String,Object> conditions = new HashMap<String, Object>();
 		String companyName = partnersSearchVo.getCompanyName();
-		
+		Short status = partnersSearchVo.getStatus();
 		if(!StringUtil.isEmpty(companyName)){
 			conditions.put("companyName",companyName);
+		}
+		if(status !=null && status !=8){
+			conditions.put("status", status);
 		}
 		PageHelper.startPage(pageNo, pageSize);
 		List<SpiderPartner> list = spiderPartnerMapper.selectByListPage(conditions);;

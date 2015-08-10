@@ -11,7 +11,7 @@ public class PartnerFormVo extends Partners {
 
 	List<PartnerLinkMan> linkMan;
 	
-	String cbdIds;
+	String regionIds;
 
 	private  List<PartnerServiceType> childList = new ArrayList<PartnerServiceType>() ;
 
@@ -21,7 +21,16 @@ public class PartnerFormVo extends Partners {
 		
 	private  Long[]  partnerTypeIds;
 	
+	String partnerCityId;
 	
+	
+	
+	public String getPartnerCityId() {
+		return partnerCityId;
+	}
+	public void setPartnerCityId(String partnerCityId) {
+		this.partnerCityId = partnerCityId;
+	}
 	public String getPartnerTypeIdsString(){
 		return ArrayHelper.LongtoString(partnerTypeIds, ",");
 	}
@@ -57,14 +66,12 @@ public class PartnerFormVo extends Partners {
 		this.childList = childList;
 	}
 
-	public String getCbdIds() {
-		return cbdIds;
+	public String getRegionIds() {
+		return regionIds;
 	}
-
-	public void setCbdIds(String cbdIds) {
-		this.cbdIds = cbdIds;
+	public void setRegionIds(String regionIds) {
+		this.regionIds = regionIds;
 	}
-
 	public List<PartnerLinkMan> getLinkMan() {
 		return linkMan;
 	}

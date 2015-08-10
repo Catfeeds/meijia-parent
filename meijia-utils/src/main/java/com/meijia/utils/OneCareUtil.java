@@ -179,6 +179,16 @@ public class OneCareUtil {
 		return list;
 
 	}
+	public static List<String> getSpiderPartnerStatus(){
+		List<String> list = new ArrayList<String>();
+		list.add(0, "已收集");
+		list.add(1, "考察中");
+		list.add(2, "已考察");
+		list.add(3, "待确认");
+		list.add(4, "已认证");
+		return list;
+		
+	}
 
 	public static String getOrderFromName(Short status) {
 		String statusName = "";

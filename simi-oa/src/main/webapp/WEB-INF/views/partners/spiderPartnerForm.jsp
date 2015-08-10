@@ -424,7 +424,7 @@
 		</div>
 	</div>
 <!-- 服务地区子窗口START -->
-	<div class="modal fade" style="height: auto; width: 700px;" id="region" tabindex="-1" role="dialog"
+	<div class="modal fade"  id="region" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">

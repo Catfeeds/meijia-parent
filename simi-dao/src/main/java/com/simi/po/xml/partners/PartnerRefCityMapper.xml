@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.partners.PartnerRefCityMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerRefCity" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, partner_id, city_id, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_city
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_city
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from partner_ref_city
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByPartnerId" parameterType="java.lang.Long" >
+    delete from partner_ref_city
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.partners.PartnerRefCity" >
+    insert into partner_ref_city (id, partner_id, city_id, 
+      add_time)
+    values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, 
+      #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerRefCity" >
+    insert into partner_ref_city
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerRefCity" >
+    update partner_ref_city
+    <set >
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerRefCity" >
+    update partner_ref_city
+    set partner_id = #{partnerId,jdbcType=NUMERIC},
+      city_id = #{cityId,jdbcType=NUMERIC},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

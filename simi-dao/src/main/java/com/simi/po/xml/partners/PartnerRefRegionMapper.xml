@@ -7,6 +7,15 @@
     <result column="region_id" property="regionId" jdbcType="NUMERIC" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
+    <sql id="Base_Column_List" >
+    id, partner_id, region_id, add_time
+  </sql>
+  <select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_region
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </select>
   <insert id="insert" parameterType="com.simi.po.model.partners.PartnerRefRegion" >
     insert into partner_ref_region (id, partner_id, region_id, 
       add_time)
@@ -44,4 +53,9 @@
       </if>
     </trim>
   </insert>
+  <!--根据partnerId删除-->
+  <delete id="deleteByPartnerId"  parameterType="java.lang.Long" >
+    delete from partner_ref_region
+    where partner_id = #{partnerId,jdbcType=NUMERIC}
+  </delete>
 </mapper>

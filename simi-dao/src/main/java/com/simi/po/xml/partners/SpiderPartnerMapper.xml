@@ -56,6 +56,9 @@
     <if test="companyName != null" >
       and company_name like CONCAT('%','${companyName}','%' )
     </if>
+    <if test="status != null" >
+      and status =#{status,jdbcType=NUMERIC}
+    </if>
   order by add_time desc
 </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

@@ -12,9 +12,15 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.simi.po.dao.dict.DictCityMapper;
+import com.simi.po.dao.dict.DictRegionMapper;
+import com.simi.po.dao.partners.PartnerRefRegionMapper;
 import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
 import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.dao.partners.PartnersMapper;
+import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.dict.DictRegion;
+import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;
@@ -33,6 +39,15 @@ public class PartnersServiceImpl implements PartnersService {
 	
 	@Autowired
 	private PartnerServiceTypeMapper partnerServiceTypeMapper;
+	
+	@Autowired
+	private PartnerRefRegionMapper partnerRefRegionMapper;
+	
+	@Autowired
+	private DictCityMapper dictCityMapper;
+	
+	@Autowired
+	private DictRegionMapper dictRegionMapper;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -165,5 +180,32 @@ public class PartnersServiceImpl implements PartnersService {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 根据PartnerId查询出对应的PartnerRefRegion
+	 */
+	@Override
+	public List<PartnerRefRegion> selectByPartnerId(Long partnerId) {
+		return partnerRefRegionMapper.selectByPartnerId(partnerId);
+	}
+
+	@Override
+	public int deleteRegionByPartnerId(Long partnerId) {
+		return partnerRefRegionMapper.deleteByPartnerId(partnerId);
+	}
+
+	@Override
+	public List<DictCity> selelctDictCities() {
+		return dictCityMapper.selectAll();
+	}
+
+	@Override
+	public List<DictRegion> selectDictRegions() {
+		return dictRegionMapper.selectAll();
 	}	
+	
+	
+	
+	
 }

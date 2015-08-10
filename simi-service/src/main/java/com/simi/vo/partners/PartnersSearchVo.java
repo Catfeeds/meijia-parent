@@ -5,6 +5,17 @@ public class PartnersSearchVo {
 	 private String companyName;
 
 	 private String shortName;
+	 
+	 private Short status;
+	 
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
 
 	public String getCompanyName() {
 		return companyName;

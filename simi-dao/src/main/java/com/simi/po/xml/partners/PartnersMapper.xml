@@ -91,7 +91,7 @@
       #{remark,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{adminId,jdbcType=NUMERIC}, 
       #{updateTime,jdbcType=NUMERIC}, #{businessDesc,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.partners.Partners" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="partnerId" parameterType="com.simi.po.model.partners.Partners" >
     insert into partners
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="partnerId != null" >
