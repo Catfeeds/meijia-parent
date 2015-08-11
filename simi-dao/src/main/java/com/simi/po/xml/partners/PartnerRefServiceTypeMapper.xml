@@ -25,6 +25,19 @@
     from partner_ref_service_type
     where partner_id = #{partneId,jdbcType=NUMERIC}
   </select>
+  <!--查询出服务商对应到的服务类型-->
+  <select id="selectServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_service_type
+    where partner_id = #{0} and parent_id = #{1}
+  </select>
+  <select id="selectSubServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_service_type
+    where partner_id = #{0} and parent_id != #{1}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from partner_ref_service_type
     where id = #{id,jdbcType=NUMERIC}

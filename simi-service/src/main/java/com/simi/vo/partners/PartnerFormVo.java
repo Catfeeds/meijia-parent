@@ -11,6 +11,8 @@ public class PartnerFormVo extends Partners {
 
 	List<PartnerLinkMan> linkMan;
 	
+	String addr;
+	
 	String regionIds;
 
 	private  List<PartnerServiceType> childList = new ArrayList<PartnerServiceType>() ;
@@ -23,8 +25,12 @@ public class PartnerFormVo extends Partners {
 	
 	String partnerCityId;
 	
-	
-	
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 	public String getPartnerCityId() {
 		return partnerCityId;
 	}

@@ -20,4 +20,9 @@ public interface PartnerRefServiceTypeMapper {
     int updateByPrimaryKeySelective(PartnerRefServiceType record);
 
     int updateByPrimaryKey(PartnerRefServiceType record);
+    
+    List<PartnerRefServiceType> selectServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
+   
+    List<PartnerRefServiceType> selectSubServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
+    
 }

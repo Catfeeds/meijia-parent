@@ -166,7 +166,7 @@ public class PartnerServiceTypeController extends AdminController {
 		model.addAttribute("treeDataSource",
 				JSONArray.fromObject(treeModels, new JsonConfig()).toString());
 
-		return "partners/authorityForm";
+		return "partners/partnerServiceTypeList";
 	}
 
 	/**

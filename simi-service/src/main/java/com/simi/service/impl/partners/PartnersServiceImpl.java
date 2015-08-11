@@ -115,12 +115,14 @@ public class PartnersServiceImpl implements PartnersService {
 		vo.setIsDoor((short)0);
 		vo.setKeywords("");
 		vo.setStatus((short)0);
+		vo.setCompanySize((short)0);
+		vo.setIsCooperate((short)0);
 		vo.setStatusRemark("");
 		vo.setBusinessDesc("");
 		vo.setWeixin("");
 		vo.setQq("");
-		vo.setEmail("");
 		vo.setProvinceId(0L);
+		vo.setEmail("");
 		vo.setCityId(0L);
 		vo.setIsCooperate((short)0);
 		vo.setFax("");
@@ -203,7 +205,18 @@ public class PartnersServiceImpl implements PartnersService {
 	@Override
 	public List<DictRegion> selectDictRegions() {
 		return dictRegionMapper.selectAll();
-	}	
+	}
+
+	@Override
+	public List<PartnerRefServiceType> selectServiceTypeByPartnerIdAndParentId(Long partnerId, Long parentId) {
+		return partnerRefServiceTypeMapper.selectServiceTypeByPartnerIdAndParentId(partnerId, parentId);
+	}
+
+	@Override
+	public List<PartnerRefServiceType> selectSubServiceTypeByPartnerIdAndParentId(Long partnerId, Long parentId) {
+		return partnerRefServiceTypeMapper.selectSubServiceTypeByPartnerIdAndParentId(partnerId, parentId);
+	}
+	
 	
 	
 	

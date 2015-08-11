@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.partners.PartnerRefRegion;
+import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.Partners;
 import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;
@@ -43,5 +44,9 @@ public interface PartnersService {
 	List<DictCity> selelctDictCities();
 	
 	List<DictRegion> selectDictRegions();
+	
+	List<PartnerRefServiceType> selectServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
+	
+	List<PartnerRefServiceType> selectSubServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
 
 }

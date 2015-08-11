@@ -8,6 +8,26 @@ public class PartnersSearchVo {
 	 
 	 private Short status;
 	 
+	 private Short isCooperate;
+	 
+	 private String serviceType;
+	 
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public Short getIsCooperate() {
+		return isCooperate;
+	}
+
+	public void setIsCooperate(Short isCooperate) {
+		this.isCooperate = isCooperate;
+	}
 
 	public Short getStatus() {
 		return status;

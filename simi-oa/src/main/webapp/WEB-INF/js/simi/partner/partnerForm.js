@@ -38,6 +38,9 @@ $('#partner-form').validate({
 		discout : {
 			range:[0,1]
 		},
+		addr : {
+			required:true
+		},
 	},
 	messages : { 
 		shortName : {
@@ -74,6 +77,9 @@ $('#partner-form').validate({
 		},
 		discout : {
 			range : "请输入折扣价在0到1之间"
+		},
+		addr : {
+			required : "请输入详细地址"
 		},
 	},
 
@@ -213,8 +219,10 @@ $(function(){
 			name="天津市";
 		}else if(id==74){
 			name="上海市";
-		}else{
+		}else if(id=="200"){
 			name="深圳市";
+		}else{
+			name="";
 		}
 		cityHtml = cityHtml+"<div class='col-md-2' align='right' >"+name+"</div>"+"<div class='col-md-10'> "
 		var reg ="";	

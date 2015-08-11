@@ -62,8 +62,12 @@ public class SpiderPartnerServiceImpl implements SpiderPartnerService {
 		Map<String,Object> conditions = new HashMap<String, Object>();
 		String companyName = partnersSearchVo.getCompanyName();
 		Short status = partnersSearchVo.getStatus();
+		String serviceType = partnersSearchVo.getServiceType();
 		if(!StringUtil.isEmpty(companyName)){
 			conditions.put("companyName",companyName.trim());
+		}
+		if(!StringUtil.isEmpty(serviceType) && !serviceType.trim().equals("全部") ){
+			conditions.put("serviceType",serviceType.trim());
 		}
 		if(status !=null && status !=8){
 			conditions.put("status", status);

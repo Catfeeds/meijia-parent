@@ -38,6 +38,7 @@ import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.partners.PartnerLinkMan;
 import com.simi.po.model.partners.PartnerRefCity;
 import com.simi.po.model.partners.PartnerRefRegion;
+import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.partners.SpiderPartner;
@@ -206,7 +207,26 @@ public class SpiderPartnerController extends BaseController{
 		}
 		partnerFormVo.setRegionIds(regionsId);
 		
+		/**
+		 * 获得服务商服务类别大类
+		 */
+		List<PartnerRefServiceType> listBig = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
+		List<String> bigServiceTypeName = new ArrayList<String>();
+		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
+			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
+			bigServiceTypeName.add(partnerRefServiceType.getName());
+		}
 		
+		/**
+		 * 获得服务商服务类别小类
+		 */
+		List<String> subServiceTypeName = new ArrayList<String>();
+		List<PartnerRefServiceType> listSub = partnersService.selectSubServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
+		for (Iterator iterator = listSub.iterator(); iterator.hasNext();) {
+			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
+			subServiceTypeName.add(partnerRefServiceType.getName());
+			
+		}
 		/**
 		 * 获取提供商对应的城市
 		 */
@@ -233,6 +253,8 @@ public class SpiderPartnerController extends BaseController{
 		List<DictCity> dictCityList = cityService.selectByCityIds(cityIds);
 		List<DictRegion> dictReigionList = regionService.selectByCityIds(cityIds);		
 	
+		model.addAttribute("bigServiceTypeName", bigServiceTypeName);
+		model.addAttribute("subServiceTypeName", subServiceTypeName);
 		model.addAttribute("dictCityList", dictCityList);
 		model.addAttribute("dictReigionList", dictReigionList);
 		model.addAttribute("spiderPartner", spiderPartner);
@@ -283,10 +305,12 @@ public class SpiderPartnerController extends BaseController{
 			partnersItem.setFax(partners.getFax());
 			partnersItem.setPayType(partners.getPayType());
 			partnersItem.setDiscout(partners.getDiscout());
+			partnersItem.setIsCooperate(partners.getIsCooperate());
 			partnersService.updateByPrimaryKeySelective(partnersItem);
 			
 			SpiderPartner spiderPartner2 = spiderPartnerService.selectByPrimaryKey(partnersItem.getSpiderPartnerId());
 			spiderPartner2.setStatus(partnersItem.getStatus());
+			spiderPartner2.setAddr(partners.getAddr());
 			spiderPartnerService.updateByPrimaryKey(spiderPartner2);
 		
 		} else {
@@ -308,10 +332,12 @@ public class SpiderPartnerController extends BaseController{
 			partnersItem.setPayType(partners.getPayType());
 			partnersItem.setDiscout(partners.getDiscout());
 			partnersItem.setAdminId(accountAuth.getId());
+			partnersItem.setIsCooperate(partners.getIsCooperate());
 			partnersService.insertSelective(partnersItem);
 			
 			SpiderPartner spiderPartner2 = spiderPartnerService.selectByPrimaryKey(partnersItem.getSpiderPartnerId());
 			spiderPartner2.setStatus(partnersItem.getStatus());
+			spiderPartner2.setAddr(partners.getAddr());
 			spiderPartnerService.updateByPrimaryKey(spiderPartner2);
 		}
 		

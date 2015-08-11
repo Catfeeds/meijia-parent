@@ -189,6 +189,19 @@ public class OneCareUtil {
 		return list;
 		
 	}
+	public static List<String> getSpiderPartnerServiceType(){
+		List<String> list = new ArrayList<String>();
+		list.add(0, "工商注册");
+		list.add(1, "法律咨询");
+		list.add(2, "财务会计");
+		list.add(3, "商标专利");
+		list.add(4, "投资担保");
+		list.add(5, "网站建设与推广");
+		list.add(6, "翻译/速记");
+		list.add(7, "配套办公");
+		return list;
+		
+	}
 
 	public static String getOrderFromName(Short status) {
 		String statusName = "";

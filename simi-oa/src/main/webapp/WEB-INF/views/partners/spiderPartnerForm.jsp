@@ -25,155 +25,8 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
-			服务商采集信息 </header>
-
-			<hr
-				style="width: 100%; color: black; height: 1px; background-color: black;" />
-
-			<div class="panel-body">
-				<form:form modelAttribute="spiderPartner"
-					commandName="spiderPartner" class="form-horizontal" method="POST"
-					id="spiderPartnerForm">
-					<div class="form-body">
-
-						<div class="form-group">
-							<!-- Text input-->
-							<label class="col-md-2 control-label">公司名称</label>
-							<div class=col-md-5>${spiderPartner.companyName }</div>
-						</div>
-
-						<div class="form-group">
-
-
-							<label class="col-md-2 control-label">注册时间 </label>
-
-							<div class=col-md-5>${spiderPartner.registerTime }</div>
-
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">详细地址</label>
-							<div class="col-md-5">${spiderPartner.addr }</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">认证</label>
-							<div class="col-md-5">${spiderPartner.certification }</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">信用档案url</label>
-							<div class="col-md-5">
-								<a href="${spiderPartner.creditFileUrl }">${spiderPartner.creditFileUrl }</a>
-								<p class="help-block"></p>
-							</div>
-						</div>
-
-						<div class="form-group">
-
-							<!-- Textarea -->
-							<label class="col-md-2 control-label">企业网站</label>
-							<div class="col-md-5">
-								<a href="${spiderPartner.website }">${spiderPartner.website }</a>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">服务区域</label>
-							<div class="col-md-5">
-								${spiderPartner.serviceArea }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">服务类别</label>
-							<div class="col-md-5">
-								${spiderPartner.serviceType }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">服务小类</label>
-							<div class="col-md-5">
-								${spiderPartner.serviceTypeSub }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">联系人</label>
-							<div class="col-md-5">
-								${spiderPartner.linkMan }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">联系电话</label>
-							<div class="col-md-5">
-								${spiderPartner.linkTel }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">公司简介</label>
-							<div class="col-md-7">
-								${spiderPartner.companyDescImg } ${spiderPartner.companyDesc }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">浏览次数</label>
-							<div class="col-md-5">
-								${spiderPartner.totalBrowse }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<label class="col-md-2 control-label">预约总数</label>
-							<div class="col-md-5">
-								${spiderPartner.totalOrder }
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">累计评价</label>
-							<div class="col-md-5">
-								${spiderPartner.totalRate }
-								<p class="help-block"></p>
-							</div>
-						</div>
-					</div>
-					<!-- </fieldset> -->
-				</form:form>
-			</div>
-			</section>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel"> <header class="panel-heading">
 			服务商人工处理信息 </header>
-
 			<hr	style="width: 100%; color: black; height: 1px; background-color: black;" />
-
 			<div class="panel-body">
 				<form:form modelAttribute="partners" commandName="partners"
 					class="form-horizontal" method="POST" action="spiderPartnerForm"
@@ -186,13 +39,205 @@
 						<input type="hidden" id="cityIdStr" name="cityIdStr">
 						<input type="hidden" id="partnerCityList" value="${partners.partnerCityId}">
 						<input type="hidden" id="partnerRegionList" value="${partners.regionIds}"/>
-						
+						<h4>企业基本信息</h4>
+						<hr/>
+						<div class="form-group">
+							<label class="col-md-2 control-label">公司名称</label>
+							<div class=col-md-5>${spiderPartner.companyName }</div>
+						</div>
 						<div class="form-group">
 							<!-- Text input-->
 							<label class="col-md-2 control-label">公司简称</label>
 							<div class=col-md-5>
 								<form:input path="shortName" class="form-control"
 									placeholder="公司简称" maxSize="10" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">注册时间 </label>
+							<div class=col-md-5>${spiderPartner.registerTime }</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">详细地址</label>
+							<div class="col-md-5">
+							<form:input path="addr" class="form-control"
+									value="${spiderPartner.addr }" placeholder="详细介绍" /></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">服务区域</label>
+							<div class="col-md-5">
+							<input type="button" value="选择服务区域"  class="btn btn-primary " data-toggle="modal"
+									data-target="#region">
+								采集：&nbsp;${spiderPartner.serviceArea }
+								<p class="help-block"></p>
+							</div>
+						</div>
+					
+						<div class="form-group" id="cityAndRegion" >
+							新增：
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">服务类别</label>
+							<div class="col-md-5">
+							<input type="button" value="选择服务类别" id="partnerType" class="btn btn-primary " data-toggle="modal"
+								data-target="#myModal">
+							采集：&nbsp;${spiderPartner.serviceType }&nbsp;&nbsp;&nbsp;&nbsp;新增：
+							<c:forEach items="${bigServiceTypeName}" var="item">
+								&nbsp;${item}&nbsp;
+							</c:forEach>
+							<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">服务小类</label>
+							<div class="col-md-5">
+							<%-- <c:if test=${not empty $spiderPartner.serviceTypeSub }> --%>
+								采集：&nbsp;${spiderPartner.serviceTypeSub }
+							<%-- </c:if> --%>
+								&nbsp;&nbsp;&nbsp;&nbsp;新增：
+								<c:forEach items="${subServiceTypeName}" var="item">
+									&nbsp;${item}&nbsp;
+								</c:forEach>
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">公司规模 </label>
+							<div class=col-md-8>
+									<div class="row">
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="companySize"
+												value="0" />1~10人
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="companySize"
+												value="1" />11~20人
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="companySize"
+												value="2" />20~50人
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="companySize"
+												value="3" />50~100人
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="companySize"
+												value="4" />100以上
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<!-- Text input-->
+							<label class="col-md-2 control-label">是否上门</label>
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="isDoor"
+												value="0" />不上门
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="isDoor"
+												value="1" />上门
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">关键词</label>
+							<div class="col-md-5">
+								<form:input path="keywords" class="form-control"
+									placeholder="关键词" maxSize="10" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">公司简介</label>
+							<div class="col-md-7">
+								${spiderPartner.companyDescImg }
+								${spiderPartner.companyDesc }
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">业务介绍</label>
+							<div class="col-md-5">
+								<form:textarea path="businessDesc" class="form-control"
+									placeholder="业务介绍" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">认证</label>
+							<div class="col-md-5">${spiderPartner.certification }</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">信用档案url</label>
+							<div class="col-md-5">
+								<a href="${spiderPartner.creditFileUrl }">${spiderPartner.creditFileUrl }</a>
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<h4>联系信息</h4>
+						<hr/>
+						<div class="form-group">
+							<label class="col-md-2 control-label">企业网站</label>
+							<div class="col-md-5">
+								<a href="${spiderPartner.website }">${spiderPartner.website }</a>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<!-- Text input-->
+							<label class="col-md-2 control-label">微信号</label>
+							<div class="col-md-5">
+								<form:input path="weixin" class="form-control" placeholder="微信号" />
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<!-- Text input-->
+							<label class="col-md-2 control-label">QQ</label>
+							<div class="col-md-5">
+								<form:input path="qq" class="form-control" placeholder="QQ" />
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<!-- Text input-->
+							<label class="col-md-2 control-label">邮箱</label>
+							<div class="col-md-5">
+								<form:input path="email" class="form-control" placeholder="邮箱" />
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">传真</label>
+							<div class="col-md-5">
+								<form:input path="fax" class="form-control" placeholder="传真" />
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">联系人</label>
+							<div class="col-md-5">
+								${spiderPartner.linkMan }
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">联系电话</label>
+							<div class="col-md-5">
+								${spiderPartner.linkTel }
+								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group ">
@@ -233,59 +278,99 @@
 								</table>
 							</div>
 						</div>
+						<h4>运营数据</h4>
+						<hr/>
 						<div class="form-group">
-
-
-							<label class="col-md-2 control-label">公司规模 </label>
-
-							<div class=col-md-5>
-								<form:input path="companySize" class="form-control"
-									placeholder="公司规模" maxSize="10" />
-							</div>
-
-						</div>
-						
-						<div class="form-group">
-							<label  class="col-md-2 control-label">服务地区</label>
-							<div class="col-md-4" align="center">
-								<input type="button" value="服务地区"  class="btn btn-primary " data-toggle="modal"
-									data-target="#region">
-							</div>
-						</div>
-						<div class="form-group" id="cityAndRegion" >
-						 	
-						</div>
-						<div class="form-group">
-							<!-- Text input-->
-							<label class="col-md-2 control-label">是否上门</label>
+							<label class="col-md-2 control-label">合作方式</label>
 							<div class="col-md-8">
 								<div class="row">
 									<div class="col-md-2" align="center">
-										<label class="radio"> <form:radiobutton path="isDoor"
-												value="0" />不上门
+										<label class="radio"> <form:radiobutton path="isCooperate"
+												value="0" />未合作
+										</label>
+									</div>
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="isCooperate"
+												value="1" />洽谈中
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="isDoor"
-												value="1" />上门
+										<label class="radio"> <form:radiobutton path="isCooperate"
+												value="2" />已合作
+										</label>
+									</div>
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="isCooperate"
+												value="3" />优先合作
+										</label>
+									</div>
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="isCooperate"
+												value="4" />结束合作
 										</label>
 									</div>
 								</div>
 							</div>
+							<p class="help-block"></p>
 						</div>
 						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">关键词</label>
+							<label class="col-md-2 control-label">支付方式</label>
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="payType"
+												value="3" />无
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="payType"
+												value="0" />月结
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="payType"
+												value="1" />按次结算
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="payType"
+												value="2" />预付
+										</label>
+									</div>
+								</div>
+							</div>
+							<p class="help-block"></p>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">折扣</label>
 							<div class="col-md-5">
-								<form:input path="keywords" class="form-control"
-									placeholder="关键词" maxSize="10" />
-
+								<form:input path="discout" class="form-control" placeholder="折扣" />
+								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
-
-							<!-- Text input-->
+							<label class="col-md-2 control-label">浏览次数</label>
+							<div class="col-md-5">
+								${spiderPartner.totalBrowse }
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">预约总数</label>
+							<div class="col-md-5">
+								${spiderPartner.totalOrder }
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">累计评价</label>
+							<div class="col-md-5">
+								${spiderPartner.totalRate }
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<hr/>
+						<div class="form-group">
 							<label class="col-md-2 control-label">状态</label>
 							<div class="col-md-8">
 								<div class="row">
@@ -318,92 +403,10 @@
 								<p class="help-block"></p>
 							</div>
 						</div>
-
 						<div class="form-group">
-
-							<!-- Textarea -->
-							<label class="col-md-2 control-label">业务介绍</label>
-							<div class="col-md-5">
-								<form:input path="businessDesc" class="form-control"
-									placeholder="业务介绍" />
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">微信号</label>
-							<div class="col-md-5">
-								<form:input path="weixin" class="form-control" placeholder="微信号" />
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">QQ</label>
-							<div class="col-md-5">
-								<form:input path="qq" class="form-control" placeholder="QQ" />
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">邮箱</label>
-							<div class="col-md-5">
-								<form:input path="email" class="form-control" placeholder="邮箱" />
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">传真</label>
-							<div class="col-md-5">
-								<form:input path="fax" class="form-control" placeholder="传真" />
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">支付方式</label>
+							<label class="col-md-2 control-label">采集内容链接</label>
 							<div class="col-md-8">
-								<div class="row">
-									<div class="col-md-2" align="center">
-										<label class="radio"> <form:radiobutton path="payType"
-												value="0" />月结
-										</label>
-									</div>
-									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="payType"
-												value="1" />按次结算
-										</label>
-									</div>
-									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="payType"
-												value="2" />预付
-										</label>
-									</div>
-								</div>
-							</div>
-							<p class="help-block"></p>
-						</div>
-						<div class="form-group">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">折扣</label>
-							<div class="col-md-5">
-								<form:input path="discout" class="form-control" placeholder="折扣" />
-								<p class="help-block"></p>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label  class="col-md-2 control-label">服务类别</label>
-							<div class="col-md-4" align="center">
-							<input type="button" value="服务商服务类别" id="partnerType" class="btn btn-primary " data-toggle="modal"
-								data-target="#myModal">
+								<a href="${spiderPartner.spiderUrl}">${spiderPartner.spiderUrl}</a>
 							</div>
 						</div>
 					</div>
@@ -486,10 +489,10 @@
 						aria-hidden="true">&times;</button> 
 					<h4 class="modal-title" id="myModalLabel">服务商服务类型</h4>
 				</div>
-				<div class="modal-body" style="width:400px; height:300px;”>
+				<div class="modal-body" style="width:400px; height:550px;”>
 					<div class="form-group">
-                              <label  class="col-md-4 control-label">选择服务类型</label>
-                              <div class="col-md-8">
+                              <label  class="col-md-3 control-label">服务类型</label>
+                              <div class="col-md-9">
                                  <div class="portlet">
 					                  <div class="portlet-body">
 					                  	   <c:import url = "../shared/treeSelector.jsp">

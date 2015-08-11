@@ -5,6 +5,7 @@
 <%@ include file="../shared/taglib.jsp"%>
 <%@ taglib prefix="orderStatusSelectTag" uri="/WEB-INF/tags/orderSatusSelect.tld" %>
 <%@ taglib prefix="spiderPartnerStatusSelectTag" uri="/WEB-INF/tags/spiderPartnerStatusSelect.tld" %>
+<%@ taglib prefix="spiderPartnerServiceTypeSelectTag" uri="/WEB-INF/tags/spiderPartnerServiceTypeSelect.tld" %>
 
 <!--taglib for this page  -->
 <%@ taglib prefix="timestampTag" uri="/WEB-INF/tags/timestamp.tld"%>
@@ -20,7 +21,6 @@
 </head>
 
 <body>
-
 	<section id="container"> <!--header start--> <%@ include
 		file="../shared/pageHeader.jsp"%> <!--header end-->
 
@@ -43,7 +43,7 @@
 					<tr>
 						<th>最后采集时间</th>
 						<th>公司名称</th>
-						<th>注册时间</th>
+						<th>服务类别</th>
 						<th>认证</th>
 						<th>采集网站</th>
 						<th>状态</th>
@@ -56,7 +56,7 @@
 							<td><timestampTag:timestamp patten="yyyy-MM-dd"
 									t="${item.lastSpiderTime * 1000}" /></td>
 							<td>${ item.companyName }</td>
-							<td>${item.registerTime }</td>
+							<td>${item.serviceType }</td>
 							<td>${item.certification }</td>
 							<td><a href="${item.website }">${item.website }</a></td>
 							<td>

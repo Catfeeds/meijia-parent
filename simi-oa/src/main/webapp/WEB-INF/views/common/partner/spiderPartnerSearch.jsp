@@ -18,7 +18,6 @@
 					<div class="form-body">
 
 						<div class="row">
-
 							<!--span-->
 							<div class="col-md-5">
 								<div class="form-group">
@@ -42,7 +41,18 @@
 								</div>
 							</div>
 							<!--/span-->
+							<!--span-->
+							<div class="col-md-5">
+								<div class="form-group">
+									<label class="control-label col-md-5">服务类别</label>
+									<div class="col-md-5">
+									<spiderPartnerServiceTypeSelectTag:select/>
+									</div>
+								</div>
+							</div>
+							<!--/span-->
 						</div>
+						
 					</div>
 					<div class="form-actions">
 						<div class="row">
