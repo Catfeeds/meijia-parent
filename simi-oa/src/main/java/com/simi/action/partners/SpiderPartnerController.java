@@ -282,17 +282,21 @@ public class SpiderPartnerController extends BaseController{
 		Long spiderPartnerId = Long.valueOf(request.getParameter("spiderPartnerId"));
 		Long partnerId = partners.getPartnerId();
 		SpiderPartner spiderPartner = spiderPartnerService.selectByPrimaryKey(spiderPartnerId);
+		//根据采集服务商名称进行排重
+		List<Partners> partnersList =  partnersService.selectByCompanyName(spiderPartner.getCompanyName());
 		
 		//获取登录的用户
     	AccountAuth accountAuth=AuthHelper.getSessionAccountAuth(request);
 
-		Partners partnersItem = partnersService.iniPartners();
+    	Partners partnersItem = partnersService.iniPartners();
     	if (partnerId == null) {
     		partnerId = 0L;
     	}
-    	
-		if (partnerId != null && partnerId > 0) {
-			partnersItem = partnersService.selectByPrimaryKey(partnerId);
+    	/**
+    	 * 如果服务商名称已经存在，则进行修改，否则进行新增
+    	 */
+		if (partnersList != null && partnersList.size() > 0) {
+			partnersItem = partnersList.get(0);
 			partnersItem.setShortName(partners.getShortName());
 			partnersItem.setCompanySize(partners.getCompanySize());
 			partnersItem.setIsDoor(partners.getIsDoor());

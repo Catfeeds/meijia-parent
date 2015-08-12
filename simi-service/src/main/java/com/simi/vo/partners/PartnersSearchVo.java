@@ -12,6 +12,16 @@ public class PartnersSearchVo {
 	 
 	 private String serviceType;
 	 
+	 private Short companySize;
+	 
+
+	public Short getCompanySize() {
+		return companySize;
+	}
+
+	public void setCompanySize(Short companySize) {
+		this.companySize = companySize;
+	}
 
 	public String getServiceType() {
 		return serviceType;

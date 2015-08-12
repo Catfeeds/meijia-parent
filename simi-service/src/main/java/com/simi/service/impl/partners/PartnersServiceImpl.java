@@ -1,14 +1,18 @@
 package com.simi.service.impl.partners;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -18,15 +22,18 @@ import com.simi.po.dao.partners.PartnerRefRegionMapper;
 import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
 import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.dao.partners.PartnersMapper;
+import com.simi.po.dao.partners.SpiderPartnerMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;
+import com.simi.po.model.partners.SpiderPartner;
 import com.simi.service.partners.PartnersService;
 import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;
+import com.simi.vo.partners.PartnersVo;
 
 @Service
 public class PartnersServiceImpl implements PartnersService {
@@ -48,6 +55,9 @@ public class PartnersServiceImpl implements PartnersService {
 	
 	@Autowired
 	private DictRegionMapper dictRegionMapper;
+	
+	@Autowired
+	private SpiderPartnerMapper spiderPartnerMapper;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -82,19 +92,97 @@ public class PartnersServiceImpl implements PartnersService {
 	@Override
 	public PageInfo searchVoListPage(PartnersSearchVo partnersSearchVo, int pageNo, int pageSize) {
 		Map<String,Object> conditions = new HashMap<String, Object>();
-		String shortName = partnersSearchVo.getShortName();
 		String companyName = partnersSearchVo.getCompanyName();
+		Short status = partnersSearchVo.getStatus();
+		Short companySize = partnersSearchVo.getCompanySize();
+		Short isCooperate = partnersSearchVo.getIsCooperate();
 		
-		if(!StringUtil.isEmpty(shortName)){
-			conditions.put("shortName", shortName);
-		}
 		if(!StringUtil.isEmpty(companyName)){
-			conditions.put("companyName",companyName);
+			conditions.put("companyName",companyName.trim());
 		}
-		List<Partners> list = partnersMapper.selectByListPage(conditions);;
+		if(status !=null && status !=8){
+			conditions.put("status", status);
+		}
+		if(companySize !=null && companySize !=8){
+			conditions.put("companySize", companySize);
+		}
+		if(isCooperate !=null && isCooperate !=8){
+			conditions.put("isCooperate", isCooperate);
+		}
+		PageHelper.startPage(pageNo, pageSize);
+		List<Partners> list = partnersMapper.selectByListPage(conditions);
+		
+		
+		 if(list!=null && list.size()!=0){
+             List<PartnersVo> orderViewList = this.getPartnersViewList(list);
+
+             for(int i = 0; i < list.size(); i++) {
+            	 if (orderViewList.get(i) != null) {
+            		 list.set(i, orderViewList.get(i));
+            	 }
+             }
+         }
+
+		/*List<PartnersVo> listVo = new ArrayList<PartnersVo>();
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			Partners partners = (Partners) iterator.next();
+			PartnersVo partnersVo = new PartnersVo();
+			SpiderPartner spiderPartner = spiderPartnerMapper.selectByPrimaryKey(partners.getSpiderPartnerId());
+			try {
+				BeanUtils.copyProperties(partnersVo, spiderPartner);
+				partnersVo.setRegisterTime(spiderPartner.getRegisterTime());
+				partnersVo.setSpiderUrl(spiderPartner.getSpiderUrl());
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			listVo.add(partnersVo);
+			
+		}*/
 		PageInfo pageInfo = new PageInfo(list);
 		return pageInfo;
 		
+	}
+	public List<PartnersVo> getPartnersViewList(List<Partners> list) {
+
+	
+		List<Long> spiderPartnerIds = new ArrayList<Long>();
+		
+	     Partners item = null;
+	    //获得所有spiderPartnerId集合
+	     for (int i = 0 ; i < list.size(); i ++) {
+	     	item = list.get(i);
+	     	spiderPartnerIds.add(item.getSpiderPartnerId());
+	     }
+	     //根据集合查询出所有对应的SpiderPartner集合
+	    List<SpiderPartner> spiderPartnersList = spiderPartnerMapper.selectBySpiderIds(spiderPartnerIds);
+	    List<PartnersVo> result = new ArrayList<PartnersVo>();
+	    
+     Long spiderPartnerId = 0L;
+     for (int i = 0 ; i < list.size(); i ++) {
+     	item = list.get(i);
+     	spiderPartnerId = item.getSpiderPartnerId();
+     	PartnersVo vo = new PartnersVo();
+     	try {
+			BeanUtils.copyProperties(vo,item);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+     	String registerTime = "";
+     	String spiderUrl = "";
+     	SpiderPartner spiderPartner = null;
+     	for(int n = 0; n < spiderPartnersList.size(); n++) {
+     		spiderPartner = spiderPartnersList.get(n);
+     		if (spiderPartner.getSpiderPartnerId().equals(spiderPartnerId)) {
+     			registerTime = spiderPartner.getRegisterTime();
+     			spiderUrl = spiderPartner.getSpiderUrl();
+     			break;
+     		}
+     	}
+     	vo.setRegisterTime(registerTime);
+     	vo.setSpiderUrl(spiderUrl);
+     	result.add(vo);
+     }
+     return result;
 	}
 
 	@Override
@@ -216,6 +304,13 @@ public class PartnersServiceImpl implements PartnersService {
 	public List<PartnerRefServiceType> selectSubServiceTypeByPartnerIdAndParentId(Long partnerId, Long parentId) {
 		return partnerRefServiceTypeMapper.selectSubServiceTypeByPartnerIdAndParentId(partnerId, parentId);
 	}
+
+	@Override
+	public List<Partners> selectByCompanyName(String companyName) {
+		return partnersMapper.selectByCompanyName(companyName);
+	}
+	
+	
 	
 	
 	

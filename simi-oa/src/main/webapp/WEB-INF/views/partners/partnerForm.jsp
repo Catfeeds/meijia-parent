@@ -29,7 +29,7 @@
 			<hr	style="width: 100%; color: black; height: 1px; background-color: black;" />
 			<div class="panel-body">
 				<form:form modelAttribute="partners" commandName="partners"
-					class="form-horizontal" method="POST" action="spiderPartnerForm"
+					class="form-horizontal" method="POST" action="partnerForm"
 					id="partner-form">
 					<div class="form-body">
 						<input type="hidden" name="spiderPartnerId" value="${spiderPartner.spiderPartnerId }" />
@@ -180,7 +180,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">信用档案url</label>
 							<div class="col-md-5">
-								<a href="${spiderPartner.creditFileUrl }" target="_blank">信用档案链接</a>
+								<a href="${spiderPartner.creditFileUrl }"target="_blank" >信用档案链接</a>
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -406,7 +406,7 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">采集内容链接</label>
 							<div class="col-md-8">
-								<a href="${spiderPartner.spiderUrl}" target="_blank">采集内容链接</a>
+								<a href="${spiderPartner.spiderUrl}"  target="_blank">采集内容链接</a>
 							</div>
 						</div>
 					</div>

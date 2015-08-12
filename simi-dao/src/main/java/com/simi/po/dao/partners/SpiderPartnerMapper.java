@@ -21,5 +21,7 @@ public interface SpiderPartnerMapper {
     int updateByPrimaryKey(SpiderPartner record);
     
     List<SpiderPartner> selectByListPage(Map<String,Object> conditions);
+    
+    List<SpiderPartner> selectBySpiderIds(List<Long> spiderPartnerIds);
 
 }

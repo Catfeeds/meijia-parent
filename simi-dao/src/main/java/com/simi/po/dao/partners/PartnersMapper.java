@@ -23,4 +23,6 @@ public interface PartnersMapper {
     int updateByPrimaryKey(Partners record);
     
     List<Partners> selectByListPage(Map<String,Object> conditions);
+
+    List<Partners> selectByCompanyName(String companyName);
 }

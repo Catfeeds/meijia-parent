@@ -46,6 +46,14 @@
     from partners
     where partner_id = #{partnerId,jdbcType=NUMERIC}
   </select>
+  <select id="selectByCompanyName" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from partners
+    where company_name = #{companyName,jdbcType=VARCHAR}
+  </select>
   <select id="selectBySpiderPartnerId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -60,12 +68,17 @@
   <include refid="Base_Column_List" />
   from partners
   where 1=1
-    <if test="shortName != null" >
-      and short_name like CONCAT('%','${shortName}','%' )
-    </if>
-
     <if test="companyName != null" >
       and company_name like CONCAT('%','${companyName}','%' )
+    </if>
+    <if test="status != null" >
+      and status = #{companyName,jdbcType=NUMERIC}
+    </if>
+    <if test="companySize != null" >
+     and company_size = #{companySize,jdbcType=NUMERIC}
+    </if>
+    <if test="isCooperate != null" >
+     and is_cooperate = #{isCooperate,jdbcType=NUMERIC}
     </if>
   order by add_time desc
 </select>

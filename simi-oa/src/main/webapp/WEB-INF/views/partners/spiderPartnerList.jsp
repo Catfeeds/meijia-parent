@@ -58,7 +58,7 @@
 							<td>${ item.companyName }</td>
 							<td>${item.serviceType }</td>
 							<td>${item.certification }</td>
-							<td><a href="${item.website }">${item.website }</a></td>
+							<td><a href="${item.website }" target="_blank">采集网站链接</a></td>
 							<td>
 								<spiderPartnerStatusTag:status status="${item.status}"/>
 							</td>

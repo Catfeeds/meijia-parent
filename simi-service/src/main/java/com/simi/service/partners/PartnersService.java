@@ -39,6 +39,8 @@ public interface PartnersService {
 	
 	List<PartnerRefRegion > selectByPartnerId(Long partnerId);
 	
+	List<Partners> selectByCompanyName(String companyName);
+	
 	int deleteRegionByPartnerId(Long partnerId);
 	
 	List<DictCity> selelctDictCities();
