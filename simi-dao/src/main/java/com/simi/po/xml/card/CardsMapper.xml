@@ -44,11 +44,11 @@
 		</if>	
 				
 		<if test="startTime != null">
-			and service_time >= ${startTime}
+		<![CDATA[	and service_time >= ${startTime} ]]>   
 		</if>	
 		
 		<if test="endTime != null">
-			and service_time <= ${endTime}
+		<![CDATA[	and service_time <= ${endTime} ]]>   
 		</if>			
 		
 		order by add_time desc

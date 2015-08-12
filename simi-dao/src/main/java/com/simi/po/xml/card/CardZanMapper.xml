@@ -8,9 +8,6 @@
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		card_id, total
-	</sql>	
-	<sql id="Base_Column_List">
 		id, card_id, user_id, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -33,13 +30,13 @@
 		</if>			
 	</select>
 	
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="getByTop10" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from card_zan
 		where card_id = #{cardId,jdbcType=NUMERIC}
 		order by add_time desc limit 10
-	</select>	
+	</select>
 	
 	<select id="totalByCardId" resultType="java.lang.Integer" parameterType="java.lang.Long">
 		select count(*)
