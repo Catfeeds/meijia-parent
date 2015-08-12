@@ -42,7 +42,7 @@
 						<h4>企业基本信息</h4>
 						<hr/>
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司名称</label>
+							<label class="col-md-2 control-label">公司名称&nbsp;*</label>
 							<div class=col-md-5>${spiderPartner.companyName }</div>
 						</div>
 						<div class="form-group">
@@ -58,13 +58,13 @@
 							<div class=col-md-5>${spiderPartner.registerTime }</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">详细地址</label>
+							<label class="col-md-2 control-label">详细地址&nbsp;*</label>
 							<div class="col-md-5">
 							<form:input path="addr" class="form-control"
 									value="${spiderPartner.addr }" placeholder="详细介绍" /></div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">服务区域</label>
+							<label class="col-md-2 control-label">服务区域 &nbsp;*</label>
 							<div class="col-md-5">
 							<input type="button" value="选择服务区域"  class="btn btn-primary " data-toggle="modal"
 									data-target="#region">
@@ -77,7 +77,7 @@
 							新增：
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">服务类别</label>
+							<label class="col-md-2 control-label">服务类别&nbsp;*</label>
 							<div class="col-md-5">
 							<input type="button" value="选择服务类别" id="partnerType" class="btn btn-primary " data-toggle="modal"
 								data-target="#myModal">
@@ -107,27 +107,32 @@
 									<div class="row">
 									<div class="col-md-2" align="center">
 										<label class="radio"> <form:radiobutton path="companySize"
-												value="0" />1~10人
+												value="0" />未知
+										</label>
+									</div>
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="companySize"
+												value="1" />1~10人
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="companySize"
-												value="1" />11~20人
+												value="2" />11~20人
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="companySize"
-												value="2" />20~50人
+												value="3" />20~50人
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="companySize"
-												value="3" />50~100人
+												value="4" />50~100人
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="companySize"
-												value="4" />100以上
+												value="5" />100以上
 										</label>
 									</div>
 								</div>
@@ -140,12 +145,17 @@
 								<div class="row">
 									<div class="col-md-2" align="center">
 										<label class="radio"> <form:radiobutton path="isDoor"
-												value="0" />不上门
+												value="0" />未知
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="isDoor"
-												value="1" />上门
+												value="1" />不上门
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="isDoor"
+												value="2" />上门
 										</label>
 									</div>
 								</div>
@@ -174,7 +184,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">认证</label>
+							<label class="col-md-2 control-label">认证&nbsp;*</label>
 							<div class="col-md-5">${spiderPartner.certification }</div>
 						</div>
 						<div class="form-group">
@@ -234,14 +244,14 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">联系电话</label>
+							<label class="col-md-2 control-label">联系电话&nbsp;*</label>
 							<div class="col-md-5">
 								${spiderPartner.linkTel }
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group ">
-							<label class="col-md-2 control-label">联系人信息</label>
+							<label class="col-md-2 control-label">联系人信息&nbsp;*</label>
 							<div class="col-md-8">
 
 								<table id="linkManTable"
@@ -309,6 +319,11 @@
 												value="4" />结束合作
 										</label>
 									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="isCooperate"
+												value="5" />黑名单
+										</label>
+									</div>
 								</div>
 							</div>
 							<p class="help-block"></p>
@@ -319,22 +334,22 @@
 								<div class="row">
 									<div class="col-md-2" align="center">
 										<label class="radio"> <form:radiobutton path="payType"
-												value="0" />月结
+												value="0" />无
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="payType"
-												value="1" />按次结算
+												value="1" />月结
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="payType"
-												value="2" />预付
+												value="2" />按次结算
 										</label>
 									</div>
-									<div class="col-md-2" align=left>
+									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton path="payType"
-												value="3" />无
+												value="3" />预付
 										</label>
 									</div>
 								</div>
@@ -371,7 +386,7 @@
 						</div>
 						<hr/>
 						<div class="form-group">
-							<label class="col-md-2 control-label">状态</label>
+							<label class="col-md-2 control-label">状态&nbsp;*</label>
 							<div class="col-md-8">
 								<div class="row">
 									<div class="col-md-2" align="center">

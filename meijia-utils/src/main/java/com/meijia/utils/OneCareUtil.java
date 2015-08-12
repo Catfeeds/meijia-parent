@@ -191,11 +191,12 @@ public class OneCareUtil {
 	}
 	public static List<String> getPartnerCompanySize(){
 		List<String> list = new ArrayList<String>();
-		list.add(0, "1~10人");
-		list.add(1, "11~20人");
-		list.add(2, "20~50人");
-		list.add(3, "50~100人");
-		list.add(4, "100以上");
+		list.add(0, "未知");
+		list.add(1, "1~10人");
+		list.add(2, "11~20人");
+		list.add(3, "20~50人");
+		list.add(4, "50~100人");
+		list.add(5, "100以上");
 		return list;
 		
 	}
@@ -206,6 +207,7 @@ public class OneCareUtil {
 		list.add(2, "已合作");
 		list.add(3, "优先合作");
 		list.add(4, "结束合作");
+		list.add(5, "黑名单");
 		return list;
 		
 	}
@@ -261,9 +263,10 @@ public class OneCareUtil {
 
 	public static List<String> getPayType(){
 		List<String> list = new ArrayList<String>();
-		list.add(0,"月结");
-		list.add(1,"按次结算");
-		list.add(2,"预付");
+		list.add(0,"无");
+		list.add(1,"月结");
+		list.add(2,"按次结算");
+		list.add(3,"预付");
 		return list;
 	}
 
@@ -436,18 +439,21 @@ public class OneCareUtil {
 		String companySizeName = "";
 		switch (companySize) {
 		case 0:
-			companySizeName = "1~10人";
+			companySizeName = "未知";
 			break;
 		case 1:
-			companySizeName = "11~20人";
+			companySizeName = "1~10人";
 			break;
 		case 2:
-			companySizeName = "20~50人";
+			companySizeName = "11~20人";
 			break;
 		case 3:
-			companySizeName = "50~100人";
+			companySizeName = "20~50人";
 			break;
 		case 4:
+			companySizeName = "50~100人";
+			break;
+		case 5:
 			companySizeName = "100以上";
 			break;
 		default:
@@ -472,6 +478,9 @@ public class OneCareUtil {
 			break;
 		case 4:
 			isCooperateName = "结束合作";
+			break;
+		case 5:
+			isCooperateName = "黑名单";
 			break;
 		default:
 			isCooperateName = "";
