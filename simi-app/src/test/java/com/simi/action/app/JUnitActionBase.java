@@ -21,8 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(locations = {
 	    "classpath*:spring.xml",
 	    "classpath*:spring-mvc.xml",
-	    "classpath*:spring-mybatis.xml",
-	    "classpath*:spring-quartz.xml"})
+	    "classpath*:spring-mybatis.xml"})
 
 
 

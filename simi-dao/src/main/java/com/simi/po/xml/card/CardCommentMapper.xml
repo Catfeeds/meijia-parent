@@ -35,11 +35,11 @@
 		parameterType="com.simi.vo.card.CardSearchVo">
 		select
 		<include refid="Base_Column_List" />
-		from cards
+		from card_comment
 		where 1=1
 		
 		<if test="cardId != null">
-			and card_id = #{card_id,jdbcType=NUMERIC}
+			and card_id = #{cardId,jdbcType=NUMERIC}
 		</if>	
 		
 		order by add_time desc

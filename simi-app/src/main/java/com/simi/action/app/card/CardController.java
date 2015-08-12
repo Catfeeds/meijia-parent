@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.JsonUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
@@ -120,6 +122,7 @@ public class CardController extends BaseController {
 		record.setUserId(userId);
 		record.setCardType(cardType);
 		record.setServiceTime(serviceTime);
+		record.setServiceAddr(serviceAddr);
 		record.setServiceContent(serviceContent);
 		record.setSetRemind(setRemind);
 		record.setSetNowSend(setNowSend);
@@ -132,24 +135,26 @@ public class CardController extends BaseController {
 		
 		if (cardId > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
-			cardService.insert(record);
-			cardId = record.getCardId();
-		} else {
-			record.setAddTime(TimeStampUtil.getNowSecond());
-			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.updateByPrimaryKeySelective(record);
+
+		} else {
+			record.setUpdateTime(TimeStampUtil.getNowSecond());
+			cardService.insert(record);
+			cardId = record.getCardId();			
 		}
 		
 		//处理attends 转换为List<LinkManVo>的概念.
 		if (!StringUtil.isEmpty(attends)) {
-			List<LinkManVo> linkManList = JsonUtil.convert(attends);
+			Gson gson = new Gson();
+			List<LinkManVo> linkManList = gson.fromJson(attends, new TypeToken<List<LinkManVo>>(){}.getType() ); 
+			
 			if (linkManList != null) {
 				
 				//先删除掉后再新增
 				cardAttendService.deleteByCardId(cardId);
 				LinkManVo item = null;
 				for (int i = 0; i < linkManList.size(); i++) {
-					item = linkManList.get(0);
+					item = (LinkManVo)linkManList.get(0);
 					String mobile = item.getMobiel();
 					if (StringUtil.isEmpty(mobile)) continue;
 					if (!RegexUtil.isMobile(mobile)) continue;

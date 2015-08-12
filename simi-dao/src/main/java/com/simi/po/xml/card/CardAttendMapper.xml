@@ -23,7 +23,7 @@
 	<select id="selectByCardIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 	    select
 	    <include refid="Base_Column_List" />
-	    from users
+	    from card_attend
 	    where card_id in
 	 	<foreach item="item" index="index" collection="list"
 	             open="(" separator="," close=")">
