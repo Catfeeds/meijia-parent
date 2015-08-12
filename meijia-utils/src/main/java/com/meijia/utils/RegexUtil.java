@@ -513,7 +513,7 @@ public class RegexUtil {
 //		System.out.println("判断合法字符: "+RegexUtil.isRightfulString("abc_-11AAA"));
 //		System.out.println("邮政编码验证: "+RegexUtil.isZipCode("162406"));
 //		System.out.println("身份证号码验证: "+RegexUtil.isIdCardNo("35052419880210133e"));
-		System.out.println("手机号码验证: "+RegexUtil.isMobile(""));
+		System.out.println("手机号码验证: "+RegexUtil.isMobile("177111111111111"));
 //		System.out.println("电话号码验证: "+RegexUtil.isPhone("8889333"));
 //		System.out.println("电话号码验证: "+RegexUtil.isNumeric("888.9333"));
 //		System.out.println("匹配密码: "+RegexUtil.isPwd("d888d_ddddd"));

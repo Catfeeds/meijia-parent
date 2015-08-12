@@ -87,7 +87,7 @@ public class UsersServiceImpl implements UsersService {
 	 * 2. 赠送金额
 	 */
 	@Override
-	public Users genUser(String mobile, Short addFrom) {
+	public Users genUser(String mobile, String name, Short addFrom) {
 		Users u = this.getUserByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers(mobile, addFrom);
@@ -98,7 +98,8 @@ public class UsersServiceImpl implements UsersService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
+			u.setName(name);
 			u.setProvinceName(provinceName);
 			this.saveUser(u);
 

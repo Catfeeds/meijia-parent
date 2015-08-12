@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.card.CardZanMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.card.CardZan">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="card_id" property="cardId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		card_id, total
+	</sql>	
+	<sql id="Base_Column_List">
+		id, card_id, user_id, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from card_zan
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchCardVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from card_zan
+		where 1=1
+		<if test="cardId != null">
+			and card_id = #{cardId,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>			
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from card_zan
+		where card_id = #{cardId,jdbcType=NUMERIC}
+		order by add_time desc limit 10
+	</select>	
+	
+	<select id="totalByCardId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+		select count(*)
+		from card_zan
+		where  card_id = #{cardId,jdbcType=NUMERIC}		
+	</select>
+	
+	<select id="totalByCardIds" resultType="java.util.HashMap" parameterType="java.util.List">
+		select card_id, count(*) as total
+		from card_zan
+	    where card_id in
+	 	<foreach item="item" index="index" collection="list"
+	             open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    group by card_id
+	    order by card_id desc
+	</select>		
+		
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from card_zan
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.card.CardZan">
+		insert into card_zan (id, card_id, user_id,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.card.CardZan">
+		insert into card_zan
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cardId != null">
+				card_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="cardId != null">
+				#{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardZan">
+		update card_zan
+		<set>
+			<if test="cardId != null">
+				card_id = #{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardZan">
+		update card_zan
+		set card_id = #{cardId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

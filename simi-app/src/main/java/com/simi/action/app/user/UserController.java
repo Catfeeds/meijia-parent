@@ -177,7 +177,7 @@ public class UserController extends BaseController {
 			} else {
 				Users u = userService.getUserByMobile(mobile);
 				if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-					u = userService.genUser(mobile, Constants.USER_APP);
+					u = userService.genUser(mobile, "", Constants.USER_APP);
 				}
 				UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(u.getId());
 				//如果第一次登陆未注册时未成功注册环信，则重新注册

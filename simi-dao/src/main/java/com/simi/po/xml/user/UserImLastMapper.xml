@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserImLastMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserImLast" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="im_user_name" property="imUserName" jdbcType="VARCHAR" />
+    <result column="from_user_id" property="fromUserId" jdbcType="NUMERIC" />
+    <result column="from_im_user_name" property="fromImUserName" jdbcType="VARCHAR" />
+    <result column="last_im" property="lastIm" jdbcType="VARCHAR" />
+    <result column="last_im_time" property="lastImTime" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, im_user_name, from_user_id, from_im_user_name, last_im, last_im_time, 
+    add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_im_last
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_im_last
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserImLast" >
+    insert into user_im_last (id, user_id, im_user_name, 
+      from_user_id, from_im_user_name, last_im, 
+      last_im_time, add_time)
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{imUserName,jdbcType=VARCHAR}, 
+      #{fromUserId,jdbcType=NUMERIC}, #{fromImUserName,jdbcType=VARCHAR}, #{lastIm,jdbcType=VARCHAR}, 
+      #{lastImTime,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserImLast" >
+    insert into user_im_last
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="imUserName != null" >
+        im_user_name,
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id,
+      </if>
+      <if test="fromImUserName != null" >
+        from_im_user_name,
+      </if>
+      <if test="lastIm != null" >
+        last_im,
+      </if>
+      <if test="lastImTime != null" >
+        last_im_time,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="imUserName != null" >
+        #{imUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="fromImUserName != null" >
+        #{fromImUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastIm != null" >
+        #{lastIm,jdbcType=VARCHAR},
+      </if>
+      <if test="lastImTime != null" >
+        #{lastImTime,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserImLast" >
+    update user_im_last
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="imUserName != null" >
+        im_user_name = #{imUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="fromImUserName != null" >
+        from_im_user_name = #{fromImUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastIm != null" >
+        last_im = #{lastIm,jdbcType=VARCHAR},
+      </if>
+      <if test="lastImTime != null" >
+        last_im_time = #{lastImTime,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserImLast" >
+    update user_im_last
+    set user_id = #{userId,jdbcType=NUMERIC},
+      im_user_name = #{imUserName,jdbcType=VARCHAR},
+      from_user_id = #{fromUserId,jdbcType=NUMERIC},
+      from_im_user_name = #{fromImUserName,jdbcType=VARCHAR},
+      last_im = #{lastIm,jdbcType=VARCHAR},
+      last_im_time = #{lastImTime,jdbcType=NUMERIC},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

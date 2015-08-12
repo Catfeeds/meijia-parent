@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.card.CardCommentMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.card.CardComment">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="card_id" property="cardId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, card_id, user_id, comment, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from card_comment
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchCardVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from card_comment
+		where 1=1
+		<if test="cardId != null">
+			and card_id = #{cardId,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>			
+	</select>	
+	
+	<select id="selectByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where 1=1
+		
+		<if test="cardId != null">
+			and card_id = #{card_id,jdbcType=NUMERIC}
+		</if>	
+		
+		order by add_time desc
+	</select>	
+	
+	<select id="totalByCardId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+		select count(*)
+		from card_comment
+		where  card_id = #{cardId,jdbcType=NUMERIC}		
+	</select>	
+	
+	<select id="totalByCardIds" resultType="java.util.HashMap" parameterType="java.util.List">
+		select card_id, count(*) as total
+		from card_comment
+	    where card_id in
+	 	<foreach item="item" index="index" collection="list"
+	             open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    group by card_id
+	    order by card_id desc
+	</select>		
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from card_comment
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.card.CardComment">
+		insert into card_comment (id, card_id, user_id,
+		comment, add_time)
+		values (#{id,jdbcType=NUMERIC}, #{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{comment,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.card.CardComment">
+		insert into card_comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cardId != null">
+				card_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="cardId != null">
+				#{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="comment != null">
+				#{comment,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardComment">
+		update card_comment
+		<set>
+			<if test="cardId != null">
+				card_id = #{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="comment != null">
+				comment = #{comment,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardComment">
+		update card_comment
+		set card_id = #{cardId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		comment = #{comment,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

@@ -36,8 +36,6 @@ public interface UsersService {
 
 	UserViewVo getUserInfo(Long userId);
 
-	Users genUser(String mobile, Short addFrom);
-
 	List<Users> selectByAll();
 
 	List<Users> searchVoByAll(UserSearchVo searchVo);
@@ -54,9 +52,6 @@ public interface UsersService {
 
 	Users selectVoByUserId(Long userId);
 
-
-
-
-
+	Users genUser(String mobile, String name, Short addFrom);
 
 }

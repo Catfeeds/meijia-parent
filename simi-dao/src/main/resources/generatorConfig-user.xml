@@ -399,5 +399,90 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 
+		<!-- 用户粉丝表 -->
+		<table schema="simi" tableName="user_fans"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="fans_id" property="fansId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>		
+		</table>	
+		
+		<!-- 用户关注表 -->
+		<table schema="simi" tableName="user_follow"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="follow_id" property="followId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>		
+		</table>
+		
+		<!-- 用户好友表 -->
+		<table schema="simi" tableName="user_friends"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="friend_id" property="friendId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>						
+
+		<!-- 用户好友请求表 -->
+		<table schema="simi" tableName="user_friend_req"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="from_user_id" property="fromUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="to_user_id" property="toUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>	
+		</table>	
+		
+		<!-- 用户最后一条消息表 -->
+		<table schema="simi" tableName="user_im_last"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="from_user_id" property="fromUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="last_im_time" property="lastImTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>		
+		
+
 	</context>
 </generatorConfiguration>

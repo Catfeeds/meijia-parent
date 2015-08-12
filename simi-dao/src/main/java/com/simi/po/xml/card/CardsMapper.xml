@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.card.CardsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.card.Cards">
+		<id column="card_id" property="cardId" jdbcType="NUMERIC" />
+		<result column="create_user_id" property="createUserId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="card_type" property="cardType" jdbcType="NUMERIC" />
+		<result column="service_time" property="serviceTime" jdbcType="NUMERIC" />
+		<result column="service_addr" property="serviceAddr" jdbcType="VARCHAR" />
+		<result column="service_content" property="serviceContent" jdbcType="VARCHAR" />
+		<result column="set_remind" property="setRemind" jdbcType="SMALLINT" />
+		<result column="set_now_send" property="setNowSend" jdbcType="NUMERIC" />
+		<result column="set_sec_do" property="setSecDo" jdbcType="NUMERIC" />
+		<result column="set_sec_remarks" property="setSecRemarks" jdbcType="VARCHAR" />
+		<result column="ticket_type" property="ticketType" jdbcType="NUMERIC" />
+		<result column="ticket_from_city_id" property="ticketFromCityId" jdbcType="NUMERIC" />
+		<result column="ticket_to_city_id" property="ticketToCityId" jdbcType="NUMERIC" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		card_id, create_user_id, user_id, card_type, service_date, service_time, service_addr,
+		service_content, set_remind, set_now_send, set_sec_do, set_sec_remarks, ticket_type,
+		ticket_from_city_id, ticket_to_city_id, status, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where card_id = #{cardId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where 1=1
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>	
+				
+		<if test="startTime != null">
+			and service_time >= ${startTime}
+		</if>	
+		
+		<if test="endTime != null">
+			and service_time <= ${endTime}
+		</if>			
+		
+		order by add_time desc
+	</select>	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from cards
+		where card_id = #{cardId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.card.Cards">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>	
+	
+		insert into cards (card_id, create_user_id, user_id,
+		card_type, service_time,
+		service_addr, service_content, set_remind,
+		set_now_send, set_sec_do, set_sec_remarks,
+		ticket_type, ticket_from_city_id, ticket_to_city_id,
+		status, add_time, update_time
+		)
+		values (#{cardId,jdbcType=NUMERIC}, #{createUserId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{cardType,jdbcType=NUMERIC}, #{serviceTime,jdbcType=NUMERIC},
+		#{serviceAddr,jdbcType=VARCHAR}, #{serviceContent,jdbcType=VARCHAR}, #{setRemind,jdbcType=SMALLINT},
+		#{setNowSend,jdbcType=NUMERIC}, #{setSecDo,jdbcType=NUMERIC}, #{setSecRemarks,jdbcType=VARCHAR},
+		#{ticketType,jdbcType=NUMERIC}, #{ticketFromCityId,jdbcType=NUMERIC}, #{ticketToCityId,jdbcType=NUMERIC},
+		#{status,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.card.Cards">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+
+		insert into cards
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cardId != null">
+				card_id,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="cardType != null">
+				card_type,
+			</if>
+			<if test="serviceTime != null">
+				service_time,
+			</if>
+			<if test="serviceAddr != null">
+				service_addr,
+			</if>
+			<if test="serviceContent != null">
+				service_content,
+			</if>
+			<if test="setRemind != null">
+				set_remind,
+			</if>
+			<if test="setNowSend != null">
+				set_now_send,
+			</if>
+			<if test="setSecDo != null">
+				set_sec_do,
+			</if>
+			<if test="setSecRemarks != null">
+				set_sec_remarks,
+			</if>
+			<if test="ticketType != null">
+				ticket_type,
+			</if>
+			<if test="ticketFromCityId != null">
+				ticket_from_city_id,
+			</if>
+			<if test="ticketToCityId != null">
+				ticket_to_city_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cardId != null">
+				#{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="cardType != null">
+				#{cardType,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTime != null">
+				#{serviceTime,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceAddr != null">
+				#{serviceAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceContent != null">
+				#{serviceContent,jdbcType=VARCHAR},
+			</if>
+			<if test="setRemind != null">
+				#{setRemind,jdbcType=SMALLINT},
+			</if>
+			<if test="setNowSend != null">
+				#{setNowSend,jdbcType=NUMERIC},
+			</if>
+			<if test="setSecDo != null">
+				#{setSecDo,jdbcType=NUMERIC},
+			</if>
+			<if test="setSecRemarks != null">
+				#{setSecRemarks,jdbcType=VARCHAR},
+			</if>
+			<if test="ticketType != null">
+				#{ticketType,jdbcType=NUMERIC},
+			</if>
+			<if test="ticketFromCityId != null">
+				#{ticketFromCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="ticketToCityId != null">
+				#{ticketToCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.Cards">
+		update cards
+		<set>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="cardType != null">
+				card_type = #{cardType,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTime != null">
+				service_time = #{serviceTime,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceAddr != null">
+				service_addr = #{serviceAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceContent != null">
+				service_content = #{serviceContent,jdbcType=VARCHAR},
+			</if>
+			<if test="setRemind != null">
+				set_remind = #{setRemind,jdbcType=SMALLINT},
+			</if>
+			<if test="setNowSend != null">
+				set_now_send = #{setNowSend,jdbcType=NUMERIC},
+			</if>
+			<if test="setSecDo != null">
+				set_sec_do = #{setSecDo,jdbcType=NUMERIC},
+			</if>
+			<if test="setSecRemarks != null">
+				set_sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
+			</if>
+			<if test="ticketType != null">
+				ticket_type = #{ticketType,jdbcType=NUMERIC},
+			</if>
+			<if test="ticketFromCityId != null">
+				ticket_from_city_id = #{ticketFromCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="ticketToCityId != null">
+				ticket_to_city_id = #{ticketToCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where card_id = #{cardId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.Cards">
+		update cards
+		set create_user_id = #{createUserId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		card_type = #{cardType,jdbcType=NUMERIC},
+		service_time = #{serviceTime,jdbcType=NUMERIC},
+		service_addr = #{serviceAddr,jdbcType=VARCHAR},
+		service_content = #{serviceContent,jdbcType=VARCHAR},
+		set_remind = #{setRemind,jdbcType=SMALLINT},
+		set_now_send = #{setNowSend,jdbcType=NUMERIC},
+		set_sec_do = #{setSecDo,jdbcType=NUMERIC},
+		set_sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
+		ticket_type = #{ticketType,jdbcType=NUMERIC},
+		ticket_from_city_id = #{ticketFromCityId,jdbcType=NUMERIC},
+		ticket_to_city_id = #{ticketToCityId,jdbcType=NUMERIC},
+		status = #{status,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where card_id = #{cardId,jdbcType=NUMERIC}
+	</update>
+</mapper>

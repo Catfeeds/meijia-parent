@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserFriendReqMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserFriendReq" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="from_user_id" property="fromUserId" jdbcType="NUMERIC" />
+    <result column="to_user_id" property="toUserId" jdbcType="NUMERIC" />
+    <result column="status" property="status" jdbcType="NUMERIC" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, from_user_id, to_user_id, status, remarks, add_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_friend_req
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_friend_req
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserFriendReq" >
+    insert into user_friend_req (id, from_user_id, to_user_id, 
+      status, remarks, add_time, 
+      update_time)
+    values (#{id,jdbcType=NUMERIC}, #{fromUserId,jdbcType=NUMERIC}, #{toUserId,jdbcType=NUMERIC}, 
+      #{status,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, 
+      #{updateTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserFriendReq" >
+    insert into user_friend_req
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id,
+      </if>
+      <if test="toUserId != null" >
+        to_user_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserFriendReq" >
+    update user_friend_req
+    <set >
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="toUserId != null" >
+        to_user_id = #{toUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserFriendReq" >
+    update user_friend_req
+    set from_user_id = #{fromUserId,jdbcType=NUMERIC},
+      to_user_id = #{toUserId,jdbcType=NUMERIC},
+      status = #{status,jdbcType=NUMERIC},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

@@ -83,4 +83,8 @@ public class JsonUtil {
 		}.getType());
 		return map;
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 }
