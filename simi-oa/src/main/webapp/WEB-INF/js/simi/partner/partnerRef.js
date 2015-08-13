@@ -3,7 +3,9 @@ $(".serviceType-confirm-btn").on("click", function() {
 	$("[type='checkbox'][checked]").each(function() {
 		str = str + $(this).val() + ",";
 	});
+	
 	var s = str.substring(0, str.lastIndexOf(","));
+console.log(s+'----');
 	$("#partnerTypeIds").val(s);
 	$('#myModal').modal('hide');
 });

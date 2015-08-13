@@ -3,9 +3,6 @@ $('#partner-form').validate({
 	errorClass : 'help-block', // default input error message class
 	focusInvalid : false, // do not focus the last invalid input
 	rules : {
-		shortName : {
-			required : true
-		},
 		companySize : {
 			required : true,
 			digits:true 
@@ -15,7 +12,6 @@ $('#partner-form').validate({
 		},
 		keywords : {
 			maxlength:64,
-			required : true
 		},
 		status : {
 			required : true
@@ -43,9 +39,6 @@ $('#partner-form').validate({
 		},
 	},
 	messages : { 
-		shortName : {
-			required : "请输入服务商简称"
-		},
 		companySize : {
 			required : true,
 			digits: "请输入整数" 
@@ -55,7 +48,6 @@ $('#partner-form').validate({
 		},
 		keywords : {
 			maxlength:"最多输入64个汉字",
-			required : "请输入关键词"
 		},
 		status : {
 			required : "请选择状态"

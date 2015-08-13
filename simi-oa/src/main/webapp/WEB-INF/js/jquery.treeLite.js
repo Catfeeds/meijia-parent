@@ -129,10 +129,10 @@
                     var chk = $("<input type='checkbox'></input>").attr(base.nodeId, $this.attr(base.nodeId) != null ? $this.attr(base.nodeId) : "").val($this.attr(base.nodeValue) != null ? $this.attr(base.nodeValue) : $this.attr(base.nodeId))
                     .change(function (event) {
                         event.stopPropagation();
-                        /*if (base.dynamic)
-                            base.dynamicInitial($(this).parent());*/
+                        if (base.dynamic)
+                            base.dynamicInitial($(this).parent());
                         if (cascadeCheck){
-							var childrenChks = $(this).parents("." + base.treeNodeCss).first().find(":checkbox");
+							var childrenChks = $(this).parents("." + base.treeNodeCss).first().find(":checkbox").first();
 							var checked = $(this).is(":checked");
 							$(childrenChks).each(function () {
 								$(this).attr(base.checked, checked);

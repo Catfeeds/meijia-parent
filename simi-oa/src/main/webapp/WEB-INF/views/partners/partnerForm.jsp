@@ -24,9 +24,7 @@
 	<section class="wrapper"> <!-- page start-->
 	<div class="row">
 		<div class="col-lg-12">
-			<section class="panel"> <header class="panel-heading">
-			服务商人工处理信息 </header>
-			<hr	style="width: 100%; color: black; height: 1px; background-color: black;" />
+			<section class="panel">
 			<div class="panel-body">
 				<form:form modelAttribute="partners" commandName="partners"
 					class="form-horizontal" method="POST" action="partnerForm"
@@ -69,12 +67,12 @@
 							<input type="button" value="选择服务区域"  class="btn btn-primary " data-toggle="modal"
 									data-target="#region">
 								采集：&nbsp;${spiderPartner.serviceArea }
+								<br/>
+								新增：
+								<div class="form-group" id="cityAndRegion" >
+								</div>
 								<p class="help-block"></p>
 							</div>
-						</div>
-					
-						<div class="form-group" id="cityAndRegion" >
-							新增：
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">服务类别&nbsp;*</label>
@@ -171,8 +169,8 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">公司简介</label>
 							<div class="col-md-7">
-								${spiderPartner.companyDescImg }
 								${spiderPartner.companyDesc }
+								${spiderPartner.companyDescImg }
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -454,7 +452,7 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel1">服务地区选择</h4>
 				</div>
-				<div class="modal-body" style="overflow:scroll; width:600px; height:400px;”>
+				<div class="modal-body" style="overflow:scroll; width:590px; height:400px;”>
 				<div class="row">
 				<div class="col-lg-12">
 					<form:form>
@@ -504,7 +502,7 @@
 						aria-hidden="true">&times;</button> 
 					<h4 class="modal-title" id="myModalLabel">服务商服务类型</h4>
 				</div>
-				<div class="modal-body" style="width:400px; height:550px;”>
+				<div class="modal-body" style="overflow:scroll;width:590px; height:400px;”>
 					<div class="form-group">
                               <label  class="col-md-3 control-label">服务类型</label>
                               <div class="col-md-9">
@@ -550,6 +548,6 @@
 	<!-- partner依赖的城市，地区js -->
 	<script  type="text/javascript" src="<c:url value='/js/simi/partner/partnerRef.js'/>"></script>
 	<!--绑定服务类别  -->
-	<script src="<c:url value='/js/jquery.treeLite.js?ver=10'/>"></script>
+	<script src="<c:url value='/js/jquery.treeLites.js?ver=10'/>"></script>
 </body>
 </html>
