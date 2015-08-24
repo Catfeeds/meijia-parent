@@ -4633,3 +4633,252 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 .site-min-height {
     min-height: 900px;
 }
+
+/***
+Portlets
+***/
+
+.portlet  {
+  clear: both;
+  margin-top: 0px;
+  margin-bottom: 25px;
+  padding: 0px;
+  -webkit-box-shadow1: 0 1px 4px rgba(0, 0, 0, 0.07);
+          box-shadow1: 0 1px 4px rgba(0, 0, 0, 0.07);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.portlet > .portlet-title {
+  background-color: #eee;
+  border-radius: 4px 4px 0 0;
+  padding:10px 10px 2px 10px;
+  height: 38px;
+}
+
+.portlet > .portlet-title:after,
+.portlet > .portlet-title:before {
+  content: "";
+  display: table;
+  line-height: 0;
+}
+
+.portlet > .portlet-title:after {
+  clear: both;
+}
+
+.portlet > .portlet-title > .caption {
+  color: #333;
+  float: left;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  margin-top: 1px;
+}
+
+.portlet > .portlet-title > .caption > i {
+  float: left;
+  margin-top: 2px;
+  display: inline-block !important;
+  font-size: 13px;
+  margin-right: 5px;
+  color: #666;
+}
+
+.portlet.blue > .portlet-title .caption, .portlet-title.blue .caption,
+.portlet.green > .portlet-title .caption, .portlet-title.green .caption,
+.portlet.yellow > .portlet-title .caption, .portlet-title.yellow .caption,
+.portlet.red > .portlet-title .caption, .portlet-title.red .caption,
+.portlet.purple > .portlet-title .caption, .portlet-title.purple .caption,
+.portlet.grey > .portlet-title .caption, .portlet-title.dark-grey .caption, {
+  color: #fff;
+}
+
+.portlet.box.blue > .portlet-title .caption > i,
+.portlet.box.green > .portlet-title .caption > i,
+.portlet.box.grey > .portlet-title .caption > i,
+.portlet.box.yellow > .portlet-title .caption > i,
+.portlet.box.red > .portlet-title .caption > i,
+.portlet.box.purple > .portlet-title .caption > i,
+.portlet.box.light-grey > .portlet-title .caption > i{
+  color: #fff;
+}
+
+.sortable .portlet > .portlet-title {
+  cursor: move;
+}
+
+.portlet > .portlet-title > .tools,
+.portlet > .portlet-title > .actions
+ {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  margin-top: 3px;
+  float: right;
+}
+
+.portlet > .portlet-title > .tools {
+  margin-top: 0px;
+}
+
+.portlet > .portlet-title > .tools > a {
+  display: inline-block;
+  height: 16px;
+  margin-left:5px;
+}
+
+.portlet > .portlet-title > .actions > .dropdown-menu i {
+  color: #000 !important;
+}
+
+.portlet > .portlet-title > .tools > a.remove {
+  margin-bottom: 2px;
+  background-image:url(/onecare-oa/images/portlet-remove-icon.png);
+  background-repeat: no-repeat;
+  width: 11px;
+}
+
+.portlet > .portlet-title > .tools > a.config {
+  margin-bottom: 2px;
+  background-image:url(/onecare-oa/images/portlet-config-icon.png);
+  background-repeat: no-repeat;
+  width: 12px;
+}
+
+.portlet > .portlet-title > .tools > a.reload {
+  margin-bottom: 2px;
+  background-image:url(/onecare-oa/images/portlet-reload-icon.png);
+  width: 13px;
+}
+
+.portlet > .portlet-title > .tools > a.expand {
+  margin-bottom: 2px;
+  background-image:url(/onecare-oa/images/portlet-expand-icon.png);
+  width: 14px;
+}
+
+.portlet > .portlet-title > .tools > a.collapse {
+  margin-bottom: 2px;
+  background-image:url(/onecare-oa/images/portlet-collapse-icon.png);
+  width: 14px;
+}
+
+.portlet > .portlet-title > .tools > a:hover {
+  text-decoration: none;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+  opacity:.6;
+  filter:'alpha(opacity=60)';
+}
+
+.portlet > .portlet-title > .actions > .btn-group {
+  margin-top: -8px;
+}
+
+.portlet > .portlet-title > .actions > .btn {
+  padding: 4px 10px;
+  margin-top: -10px;
+}
+
+.portlet > .portlet-title > .actions > .btn-group > .btn {
+  padding: 4px 10px;
+  margin-top: -1px;
+}
+
+.portlet > .portlet-title > .actions > .btn.btn-sm {
+  padding: 3px 8px;
+  margin-top: -10px;
+}
+
+.portlet > .portlet-title > .actions > .btn-group > .btn-sm {
+  padding: 3px 8px;
+  margin-top: -1px;
+}
+
+.portlet > .portlet-title > .pagination.pagination-sm {
+  float: right !important;
+  display: inline-block !important;
+  margin: 0px;
+  margin-top: -6px;
+}
+
+.portlet > .portlet-body {
+  clear: both;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 0px 0px 4px 4px;
+}
+
+.portlet-body.light-blue, .portlet.light-blue {
+  background-color: #bfd5fa  !important;
+}
+
+.portlet-body.blue, .portlet.blue {
+  background-color: #4b8df8 !important;
+}
+
+.portlet-body.red, .portlet.red {
+  background-color: #e02222 !important;
+}
+
+.portlet-body.yellow, .portlet.yellow {
+  background-color: #ffb848 !important;
+}
+
+.portlet-body.green, .portlet.green {
+  background-color: #35aa47 !important;
+}
+
+.portlet-body.purple, .portlet.purple {
+  background-color: #852b99 !important;
+}
+
+.portlet-body.light-grey, .portlet.light-grey {
+  background-color: #fafafa !important;
+}
+
+.portlet-body.dark-grey, .portlet.dark-grey {
+  background-color: #555555 !important;
+}
+
+.portlet-body .btn-toolbar {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.portlet-body .btn-group {
+  margin: 0px !important;
+  padding: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+/***
+TREELITE
+***/
+.input_box .treelite_treebox { }
+.input_box .treelite_treenodebox { background: #fff !important; }
+.input_box .treelite_treebox .selected { background: #D0D0D0; }
+.treelite_treebox {background: #fff; }
+.treelite_treebox .selected { background: #D0D0D0; }
+.treelite_treebox .treelite_treenodebox { list-style: none; padding: 5px 0px 5px 30px; margin: 0; background: #fff; }
+.treelite_treerootnodebox { padding-left: 0 !important; }
+.treelite_treenode { cursor: pointer; line-height: 20px; white-space: nowrap;_width:120%; }
+.treelite_treenode a{text-decoration:none;}
+.treelite_treenode a:hover{text-decoration:underline;}
+.treelite-collapse { display: block; float: left;}
+.treelite-collapse:hover { background: #ADADAD; }
+
+
+/***
+ToolBar
+***/
+.toolbar { height: 30px; margin: 0px 0px; overflow: hidden;}
+.toolbar a { color: #333; line-height: 22px; text-decoration: none;}
+.toolbar .tool_box { float: left; height: 22px; margin-right: 15px; padding-left: 0px;}

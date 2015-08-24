@@ -8,14 +8,16 @@ public class PermissionMenu {
 	public String subName;
 	public String curName;
 	public String permission;
+	public String url;
 
-	public PermissionMenu(Long rootId, String rootName, Long subId, String subName, String curName, String permission){
+	public PermissionMenu(Long rootId, String rootName, Long subId, String subName, String curName, String permission,String url){
 		this.rootId=rootId;
 		this.rootName=rootName;
 		this.subId=subId;
 		this.subName=subName;
 		this.curName=curName;
 		this.permission=permission;
+		this.url = url;
 	}
 
 	public void setRootId(Long rootId){
@@ -54,6 +56,14 @@ public class PermissionMenu {
 	}
 	public String getPermission(){
 		return this.permission;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

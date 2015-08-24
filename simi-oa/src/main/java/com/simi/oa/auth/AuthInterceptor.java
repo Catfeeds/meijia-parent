@@ -38,7 +38,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             			Matcher matcher = pattern.matcher(requestServletPath);
             			if(matcher.find()){
             				hasPermission=true;
-            				AuthHelper.setRequestPermissionMenu(request, permissionMenu);
+            				if (permissionMenu.getUrl().equals(requestServletPath))
+            					AuthHelper.setRequestPermissionMenu(request, permissionMenu);
             			}
             		}
             		if(hasPermission)
