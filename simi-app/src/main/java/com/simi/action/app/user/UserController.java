@@ -25,6 +25,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.IPUtil;
 import com.meijia.utils.MobileUtil;
 import com.meijia.utils.RandomUtil;
@@ -93,136 +94,66 @@ public class UserController extends BaseController {
 	public AppResultData<Object> login(
 			HttpServletRequest request,
 			@RequestParam("mobile") String mobile,
-			@RequestParam("sms_token") String sms_token,
-			@RequestParam("login_from") int login_from,
-			@RequestParam(value = "user_type", required = false, defaultValue = "0") int user_type) {
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam("login_from") Short loginFrom,
+			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
+			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		if (mobile.equals("13810002890") && sms_token.equals("000000")) {
-
-			Users u = userService.getUserByMobile(mobile);
-			if(u!=null){
-				// 根据mobile找到user_baidu_bind信息
-				UserBaiduBind userBaiduBind = userBaiduBindService
-						.selectByPrimaryKey(u.getId());
-				UserBaiduBindVo vo = new UserBaiduBindVo();
-				
-				UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(u.getId());
-				//如果第一次登陆未注册时未成功注册环信，则重新注册
-				if(userRef3rd == null){
-					userService.genImUser(u);
-				}
-				UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
-				//如果第一次登录未注册时未成功分配秘书，则重新分配
-				if(userRefSec == null){
-					userRef3rdService.allotSec(u);
-				}
-				try {
-					BeanUtils.copyProperties(vo, u);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				vo.setAppId("");
-				vo.setChannelId("");
-				vo.setAppUserId("");
-
-				if (userBaiduBind != null) {
-					vo.setAppId(userBaiduBind.getAppId());
-					vo.setChannelId(userBaiduBind.getChannelId());
-					vo.setAppUserId(userBaiduBind.getAppUserId());
-				}
-
-				result = new AppResultData<Object>(Constants.SUCCESS_0,
-						ConstantMsg.SUCCESS_0_MSG, vo);
-			}else{
-				result = new AppResultData<Object>(Constants.ERROR_999,"该测试账号已不存在！", "");
-			}
-			return result;
-		}
-		//根据手机号查询出普通用户的验证码sms_type = 0
-		UserSmsToken smsToken = smsTokenService.selectByMobile(mobile);// 1、根据mobile
-		// 从表user_sms_token找出最新一条记录
-		LoginVo loginVo = new LoginVo(0l, mobile);
-		if (smsToken == null || smsToken.getAddTime() == null) {
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_2, "");
-			return result;
-		}
-		loginVo = new LoginVo(smsToken.getUserId(), mobile);
-		// 2、判断是否表记录字段add_time 是否超过十分钟.
-		long expTime = TimeStampUtil.compareTimeStr(smsToken.getAddTime(),
-				System.currentTimeMillis() / 1000);
-		if (expTime > 600) {// 超时
-			// 999
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_4, "");
-			return result;
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		//判断验证码正确与否，测试账号13810002890 000000 不需要验证
+		AppResultData<Object> validateResult = null;
+		if (mobile.equals("13810002890") && smsToken.equals("000000")) {
+			validateResult = result;
 		} else {
-			long ip = IPUtil.getIpAddr(request);
-			UserLogined record = userLoginedService.initUserLogined(smsToken,
-					login_from, ip);
-			userLoginedService.insert(record);
-			
-			if (!smsToken.getSmsToken().equals(sms_token)) {// 验证码错误
-				result = new AppResultData<Object>(Constants.ERROR_999,
-						ConstantMsg.ERROR_999_MSG_2, "");
-				return result;
-			} else {
-				Users u = userService.getUserByMobile(mobile);
-				if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-					u = userService.genUser(mobile, "", Constants.USER_APP);
-				}
-				UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(u.getId());
-				//如果第一次登陆未注册时未成功注册环信，则重新注册
-				if(userRef3rd == null){
-					userService.genImUser(u);
-				}
-				UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
-				//如果第一次登录未注册时未成功分配秘书，则重新分配
-				if(userRefSec == null){
-					userRef3rdService.allotSec(u);
-				}
-				// 根据mobile找到user_baidu_bind信息
-
-				System.out.println(u.getId() + "id==========mobile"
-						+ u.getMobile());
-				UserBaiduBind userBaiduBind = userBaiduBindService
-						.selectByUserId(u.getId());
-
-				UserBaiduBindVo vo = new UserBaiduBindVo();
-
-				try {
-					BeanUtils.copyProperties(vo, u);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				vo.setAppId("");
-				vo.setChannelId("");
-				vo.setAppUserId("");
-
-				if (userBaiduBind != null) {
-					vo.setAppId(userBaiduBind.getAppId());
-					vo.setChannelId(userBaiduBind.getChannelId());
-					vo.setAppUserId(userBaiduBind.getAppUserId());
-				}
-
-				result = new AppResultData<Object>(Constants.SUCCESS_0,
-						ConstantMsg.SUCCESS_0_MSG, vo);
-				return result;
-			}
+			validateResult = smsTokenService.validateSmsToken(mobile, smsToken, smsType);
 		}
+		
+		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+			return validateResult;
+		}
+		
+		Users u = userService.getUserByMobile(mobile);
+		
+		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+			u = userService.genUser(mobile, "", Constants.USER_APP);
+		}
+		
+		//如果第一次登陆未注册时未成功注册环信，则重新注册
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(u.getId());
+		if(userRef3rd == null){
+			userService.genImUser(u);
+		}
+		
+		//如果第一次登录未注册时未成功分配秘书，则重新分配
+		UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
+		if(userRefSec == null){
+			userRef3rdService.allotSec(u);
+		}
+		
+		//记录用户登陆信息
+		long ip = IPUtil.getIpAddr(request);
+		UserLogined record = userLoginedService.initUserLogined(mobile, u.getId(), loginFrom, ip);
+		userLoginedService.insert(record);		
+		
+		// 根据mobile找到user_baidu_bind信息
+		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(u.getId());		
+		UserBaiduBindVo vo = new UserBaiduBindVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(vo, u);
+		
+		vo.setAppId("");
+		vo.setChannelId("");
+		vo.setAppUserId("");
+		
+		if (userBaiduBind != null) {
+			vo.setAppId(userBaiduBind.getAppId());
+			vo.setChannelId(userBaiduBind.getChannelId());
+			vo.setAppUserId(userBaiduBind.getAppUserId());
+		}		
+		
+		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);
+
+		return result;	
 	}
 
 	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
@@ -239,11 +170,9 @@ public class UserController extends BaseController {
 		}
 
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
-				Constants.GET_CODE_TEMPLE_ID, content);
-		UserSmsToken record = smsTokenService.initUserSmsToken(mobile,
-				sms_type, code, sendSmsResult);
-		System.out.println(record);
+		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.GET_CODE_TEMPLE_ID, content);
+		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, sms_type, code, sendSmsResult);
+
 		smsTokenService.insert(record);
 
 		AppResultData<String> result = new AppResultData<String>(
@@ -259,9 +188,6 @@ public class UserController extends BaseController {
 	public AppResultData<Object> getUserInfo(
 			@RequestParam("user_id") Long userId) {
 
-		AppResultData<Object> resultFail = new AppResultData<Object>(
-				Constants.ERROR_999, ConstantMsg.USER_NOT_EXIST_MG, "");
-
 		UserViewVo vo = userService.getUserInfo(userId);
 
 		AppResultData<Object> result = new AppResultData<Object>(
@@ -269,9 +195,9 @@ public class UserController extends BaseController {
 		return result;
 	}
 
-	// 6. 账号信息
+	
 	/**
-	 * mobile:手机号 rest_money 余额 score会员积分
+	 * 发送IM消息
 	 */
 	@RequestMapping(value = "send_im", method = RequestMethod.GET)
 	public AppResultData<Object> sendImToRobot(

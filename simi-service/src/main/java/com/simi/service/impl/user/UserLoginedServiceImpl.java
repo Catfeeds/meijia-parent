@@ -7,6 +7,7 @@ import com.simi.service.user.UserLoginedService;
 import com.simi.po.dao.user.UserLoginedMapper;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserSmsToken;
+import com.simi.po.model.user.Users;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -46,12 +47,12 @@ public class UserLoginedServiceImpl implements UserLoginedService{
 	}
 	
 	@Override
-	public UserLogined initUserLogined(UserSmsToken smsToken, int login_from, long ip) {
+	public UserLogined initUserLogined(String mobile, Long id, Short login_from, long ip) {
 		UserLogined record = new UserLogined();
 		record.setAddTime(TimeStampUtil.getNow()/1000);
-		record.setLoginFrom((short)login_from);//0 = APP 1 = 微网站 2 = 管理后台
-		record.setMobile(smsToken.getMobile());
-		record.setUserId(smsToken.getUserId());
+		record.setLoginFrom(login_from);//0 = APP 1 = 微网站 2 = 管理后台
+		record.setMobile(mobile);
+		record.setUserId(id);
 		record.setLoginIp(ip);
 		return record;
 	}

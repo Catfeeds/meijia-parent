@@ -78,12 +78,12 @@ public class SecController extends BaseController {
 	public AppResultData<Object> login(
 			HttpServletRequest request,
 			@RequestParam("mobile") String mobile,
-			@RequestParam("sms_token") String sms_token,
-			@RequestParam("login_from") int login_from,
-			@RequestParam(value = "user_type", required = false, defaultValue = "1") int user_type) {
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam("login_from") Short loginFrom,
+			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
+			@RequestParam(value = "user_type", required = false, defaultValue = "1") int userType) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 		
 		Sec sec = secService.selectByMobile(mobile);
@@ -94,59 +94,31 @@ public class SecController extends BaseController {
 			return result;
 		}
 		
+		//判断验证码正确与否，测试账号18610807136 13810002890 000000 不需要验证
+		AppResultData<Object> validateResult = null;
+		if ((mobile.trim().equals("18610807136") || mobile.trim().equals("13810002890")) && 
+	        	 smsToken.trim().equals("000000") ) {
+			validateResult = result;
+		} else {
+			validateResult = smsTokenService.validateSmsToken(mobile, smsToken, smsType);
+		}
+		
+		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+			return validateResult;
+		}
 		
 		SecInfoVo secInfoVo = secService.changeSecToVo(sec);
-       if ((mobile.trim().equals("18610807136") || mobile.trim().equals("13810002890"))&& sms_token.trim().equals("000000") ) {
-    	    result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
-			return result;
-			
-		}else {	
-			
 		
-		if (sec == null) {
-			
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_1, "");
-			return result;
-		}
-
-		
-		UserSmsToken smsToken = smsTokenService.selectByMobileAndType(mobile);// 1、根据mobile
-		// 从表user_sms_token找出最新一条记录
-		LoginVo loginVo = new LoginVo(0l, mobile);
-		if (smsToken == null || smsToken.getAddTime() == null) {
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_2, "");
-			return result;
-		}
-		loginVo = new LoginVo(smsToken.getUserId(), mobile);
-		// 2、判断是否表记录字段add_time 是否超过十分钟.
-		long expTime = TimeStampUtil.compareTimeStr(smsToken.getAddTime(),
-				System.currentTimeMillis() / 1000);
-		if (expTime > 600) {// 超时
-			// 999
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_8, "");
-			return result;
-		} /*else {
-
-		}*/
 		long ip = IPUtil.getIpAddr(request);
-		UserLogined record = userLoginedService.initUserLogined(smsToken,
-				login_from, ip);
+		UserLogined record = userLoginedService.initUserLogined(mobile, secInfoVo.getId(), loginFrom, ip);
 		userLoginedService.insert(record);
 
-		if (!smsToken.getSmsToken().equals(sms_token)) {// 验证码错误
-			result = new AppResultData<Object>(Constants.ERROR_999,
-					ConstantMsg.ERROR_999_MSG_2, "");
-			return result;
-		}
+		
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, secInfoVo);
 		
 		return result;
-		}
+		
 	}
 
 	/**

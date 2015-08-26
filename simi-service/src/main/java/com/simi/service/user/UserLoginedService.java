@@ -2,6 +2,7 @@ package com.simi.service.user;
 
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserSmsToken;
+import com.simi.po.model.user.Users;
 
 public interface UserLoginedService {
     int deleteByPrimaryKey(Long id);
@@ -16,5 +17,5 @@ public interface UserLoginedService {
 
     int updateByPrimaryKey(UserLogined record);
     
-    UserLogined initUserLogined(UserSmsToken smsToken, int login_from, long ip);
+	UserLogined initUserLogined(String mobile, Long id, Short login_from, long ip);
 }

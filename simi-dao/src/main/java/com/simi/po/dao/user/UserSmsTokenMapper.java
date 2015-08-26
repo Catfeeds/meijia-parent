@@ -10,8 +10,6 @@ public interface UserSmsTokenMapper {
     int insertSelective(UserSmsToken record);
 
     UserSmsToken selectByPrimaryKey(Long id);
-
-    UserSmsToken selectByMobileAndTypes(String mobile);
     
     UserSmsToken selectByMobile(String mobile);
 
@@ -19,5 +17,5 @@ public interface UserSmsTokenMapper {
 
     int updateByPrimaryKey(UserSmsToken record);
 
-	UserSmsToken selectByMobileAndType(String mobile);
+	UserSmsToken selectByMobileAndType(String mobile, Short smsType);
 }
