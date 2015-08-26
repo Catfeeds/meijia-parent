@@ -154,7 +154,7 @@ public class CardController extends BaseController {
 				cardAttendService.deleteByCardId(cardId);
 				LinkManVo item = null;
 				for (int i = 0; i < linkManList.size(); i++) {
-					item = (LinkManVo)linkManList.get(0);
+					item = (LinkManVo)linkManList.get(i);
 					String mobile = item.getMobiel();
 					if (StringUtil.isEmpty(mobile)) continue;
 					if (!RegexUtil.isMobile(mobile)) continue;
@@ -227,8 +227,9 @@ public class CardController extends BaseController {
 	 */
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
 	public AppResultData<Object> getCardList(
-			@RequestParam("service_date") String serviceDate,
 			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "service_date", required = false, defaultValue = "") String serviceDate,
+			@RequestParam(value = "card_from", required = false, defaultValue = "0") Short cardFrom,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page
 			) {
 		
@@ -244,15 +245,24 @@ public class CardController extends BaseController {
 		}
 		
 		//处理时间的问题
-		String startTimeStr = serviceDate.substring(0, 10) + " 00:00:00";
-		String endTimeStr = serviceDate.substring(0, 10) + " 23:59:59";
-		Long startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
-		Long endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+		Long startTime = 0L;
+		Long endTime = 0L;
+		
+		if (StringUtil.isEmpty(serviceDate)) {
+			String startTimeStr = serviceDate.substring(0, 10) + " 00:00:00";
+			String endTimeStr = serviceDate.substring(0, 10) + " 23:59:59";
+			startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
+			endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+		}
 		
 		CardSearchVo searchVo = new CardSearchVo();
+		searchVo.setCardFrom(cardFrom);
 		searchVo.setUserId(userId);
-		searchVo.setStartTime(startTime);
-		searchVo.setEndTime(endTime);
+		
+		if (startTime > 0L && endTime > 0L) {
+			searchVo.setStartTime(startTime);
+			searchVo.setEndTime(endTime);
+		}
 		
 		List<Cards> cards = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		

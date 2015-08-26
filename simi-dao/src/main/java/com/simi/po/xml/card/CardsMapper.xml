@@ -32,7 +32,32 @@
 		where card_id = #{cardId,jdbcType=NUMERIC}
 	</select>
 	
+	<!-- 卡片列表方法 某个用户所有的卡片 -->
 	<select id="selectByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		
+		select <include refid="Base_Column_List" />
+		from
+		(
+			select <include refid="Base_Column_List" /> from cards 
+			where user_id = #{userId,jdbcType=NUMERIC}
+			union
+			select <include refid="Base_Column_List" /> from cards 
+			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+		) as T
+		where 1 = 1 
+		<if test="startTime != null">
+		<![CDATA[	and service_time >= ${startTime} ]]>   
+		</if>	
+		
+		<if test="endTime != null">
+		<![CDATA[	and service_time <= ${endTime} ]]>   
+		</if>
+		order by add_time desc
+	</select>	
+	
+	<!-- 卡片列表方法 某个用户发布的卡片 -->
+	<select id="selectMineByListPage" resultMap="BaseResultMap"
 		parameterType="com.simi.vo.card.CardSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -40,7 +65,7 @@
 		where 1=1
 		
 		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
+			and create_user_id = #{userId,jdbcType=NUMERIC}
 		</if>	
 				
 		<if test="startTime != null">
@@ -52,7 +77,28 @@
 		</if>			
 		
 		order by add_time desc
-	</select>	
+	</select>
+	
+	<!-- 卡片列表方法 某个用户参与的卡片 -->
+	<select id="selectAttendByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where 1 = 1
+		<if test="userId != null">
+			and card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+		</if>	
+				
+		<if test="startTime != null">
+		<![CDATA[	and service_time >= ${startTime} ]]>   
+		</if>	
+		
+		<if test="endTime != null">
+		<![CDATA[	and service_time <= ${endTime} ]]>   
+		</if>
+		order by add_time desc
+	</select>		
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cards

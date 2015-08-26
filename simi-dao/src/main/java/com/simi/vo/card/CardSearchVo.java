@@ -10,6 +10,8 @@ public class CardSearchVo {
 	
 	private Long endTime;
 	
+	private Short cardFrom;
+	
 	public Long getCardId() {
 		return cardId;
 	}
@@ -40,6 +42,14 @@ public class CardSearchVo {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public Short getCardFrom() {
+		return cardFrom;
+	}
+
+	public void setCardFrom(Short cardFrom) {
+		this.cardFrom = cardFrom;
 	}
 
 

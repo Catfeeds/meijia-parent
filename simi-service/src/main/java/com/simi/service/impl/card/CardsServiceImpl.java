@@ -226,8 +226,24 @@ public class CardsServiceImpl implements CardService {
 	public List<Cards> selectByListPage(CardSearchVo vo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		
-		List<Cards> list = cardsMapper.selectByListPage(vo);
+		List<Cards> list = new ArrayList<Cards>();
 		
+		Short cardFrom = vo.getCardFrom();
+		
+		//某个用户所有的卡片
+		if (cardFrom.equals((short)0)) {
+			list = cardsMapper.selectByListPage(vo);
+		}
+		
+		//某个用户发布的卡片
+		if (cardFrom.equals((short)1)) {
+			list = cardsMapper.selectMineByListPage(vo);
+		}
+		
+		//某个用户参与的卡片
+		if (cardFrom.equals((short)2)) {
+			list = cardsMapper.selectAttendByListPage(vo);
+		}		
 		return list;
 	}	
 

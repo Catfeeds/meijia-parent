@@ -30,8 +30,8 @@ public class TestCardController extends JUnitActionBase  {
      	//新增
      	postRequest = postRequest.param("card_id", "0");
 	    postRequest = postRequest.param("card_type", "1");
-	    postRequest = postRequest.param("create_user_id", "92");
-	    postRequest = postRequest.param("user_id", "92");
+	    postRequest = postRequest.param("create_user_id", "18");
+	    postRequest = postRequest.param("user_id", "18");
 	    
 	    //参会人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
@@ -41,19 +41,25 @@ public class TestCardController extends JUnitActionBase  {
 	    LinkManVo a2 = new LinkManVo();
 	    a2.setMobiel("13810002890");
 	    a2.setName("刘慧男");
+
+	    
+//	    LinkManVo a3 = new LinkManVo();
+//	    a3.setMobiel("18610807136");
+//	    a3.setName("马志");
 	    attendsList.add(a1);
-	    attendsList.add(a2);
+	    attendsList.add(a2);	
+//	    attendsList.add(a3);
 	    
 	    String attends = JsonUtil.listTojson(attendsList);
 	    
 	    postRequest = postRequest.param("attends", attends);
-	    postRequest = postRequest.param("service_time", "1439431200");
+	    postRequest = postRequest.param("service_time", "1440584582");
 	    postRequest = postRequest.param("service_addr", "宇飞大厦612");
-	    postRequest = postRequest.param("service_content", "研究下周去哪玩");
+	    postRequest = postRequest.param("service_content", "研究yuand去哪玩");
 	    postRequest = postRequest.param("set_remind", "2");
 	    postRequest = postRequest.param("set_now_send", "1");
 	    postRequest = postRequest.param("set_sec_do", "1");
-	    postRequest = postRequest.param("set_sec_remarks", "请通知所有人员");
+	    postRequest = postRequest.param("set_sec_remarks", "yuand请通知所有人员,一共2个人");
 	    
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -87,7 +93,7 @@ public class TestCardController extends JUnitActionBase  {
     public void testGetList() throws Exception {
 
 		String url = "/app/card/get_list.json";
-		String params = "?service_date=2015-08-13&user_id=92";
+		String params = "?service_date=2015-08-26&user_id=1&card_from=0";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

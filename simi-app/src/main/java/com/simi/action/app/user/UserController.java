@@ -139,7 +139,7 @@ public class UserController extends BaseController {
 		// 根据mobile找到user_baidu_bind信息
 		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(u.getId());		
 		UserBaiduBindVo vo = new UserBaiduBindVo();
-		BeanUtilsExp.copyPropertiesIgnoreNull(vo, u);
+		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 		
 		vo.setAppId("");
 		vo.setChannelId("");

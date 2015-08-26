@@ -19,4 +19,8 @@ public interface CardsMapper {
     int updateByPrimaryKey(Cards record);
 
 	List<Cards> selectByListPage(CardSearchVo vo);
+	
+	List<Cards> selectMineByListPage(CardSearchVo vo);
+	
+	List<Cards> selectAttendByListPage(CardSearchVo vo);
 }
