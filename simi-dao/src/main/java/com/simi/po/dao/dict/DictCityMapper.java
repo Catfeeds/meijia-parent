@@ -21,4 +21,6 @@ public interface DictCityMapper {
 	
 	List<DictCity> selectByCityIds(List<Long> cityIds);
 
+	List<DictCity> selectByT(Long t);
+
 }

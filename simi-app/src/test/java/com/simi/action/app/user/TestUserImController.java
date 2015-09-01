@@ -43,8 +43,8 @@ public class TestUserImController extends JUnitActionBase  {
 	@Test
     public void testGetUserAndIm() throws Exception {
 
-		String url = "/app/user/get_user_and_im.json";
-		String params = "?sec_id=1&im_user_name=simi-sec-1";
+		String url = "/app/user/get_im_last.json";
+		String params = "?user_id=95";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -54,5 +54,23 @@ public class TestUserImController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }	
+	
+	/**
+	 * 		
+	 *    生成所有好友的最新一条信息
+	 */
+	@Test
+    public void testGenLastImAll() throws Exception {
+
+		String url = "/app/user/gen_last_im.json";
+		MockHttpServletRequestBuilder getRequest = get(url);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
 
 }

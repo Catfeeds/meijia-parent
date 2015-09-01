@@ -1,6 +1,6 @@
 package com.simi.action.app.user;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserImHistory;
+import com.simi.po.model.user.UserImLast;
+import com.simi.po.model.user.UserRef3rd;
 import com.simi.service.user.UserImHistoryService;
+import com.simi.service.user.UserImLastService;
+import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserImHistoryVo;
-import com.simi.vo.user.UserImVo;
+import com.simi.vo.UserImLastSearchVo;
+import com.simi.vo.user.UserImLastVo;
 
 
 @Controller
@@ -31,6 +38,12 @@ public class UserImController extends BaseController {
 	
 	@Autowired
 	private UserImHistoryService userImHistoryService;	
+	
+	@Autowired
+	private UserRef3rdService userRef3rdService;	
+	
+	@Autowired
+	private UserImLastService userImLastService;
 	/**
 	 * 两个用户的聊天记录
 	 * 
@@ -54,59 +67,126 @@ public class UserImController extends BaseController {
 		
 		List<UserImHistory> imHistoryList = list.getList();
 		
-//		UserImHistory item = null;
-//		
-//		ObjectMapper mapper = new ObjectMapper();
-//		
-//		List<UserImHistoryVo> resultList = new ArrayList<UserImHistoryVo>();
-//		for (int i = 0; i < imHistoryList.size(); i++) {
-//			item = imHistoryList.get(i);
-//			String imContentStr = item.getImContent();
-//			UserImHistoryVo vo = new UserImHistoryVo();
-//			vo.setImDay("");
-//			vo.setImName("");
-//			vo.setImText("");
-//			vo.setImTime("");
-//			vo.setImType("");
-//			JsonNode contentJsonNode = mapper.readValue(imContentStr, JsonNode.class);
-//			if (contentJsonNode.get("bodies") != null) {
-//				 if (contentJsonNode.get("bodies").get(0) != null &&
-//				     contentJsonNode.get("bodies").get(0).get("type") != null &&
-//				     ) {
-//					 vo.setImText(contentJsonNode.get("bodies").get(0).get("type"));
-//				 }
-//			}
-//			
-//			
-//			resultList.add(vo);
-//			
-//			
-//		}
-		
 		result.setData(imHistoryList);
 		
 		return result;
 	}
 	
 	/**
-	 * 两个用户的聊天记录
+	 * 获取当前用户与好友的最新一条聊天记录
 	 * 
-	 * @param from_im_user
-	 * @param to_im_user
+	 * @param user_id
 	 * @return
 	 */
 
-	@RequestMapping(value = "get_user_and_im", method = RequestMethod.GET)
+	@RequestMapping(value = "get_im_last", method = RequestMethod.GET)
 	public AppResultData<Object> getUserAndIm(
-			@RequestParam("sec_id") Long secId,
-			@RequestParam("im_user_name") String imUserName) {
+			@RequestParam("user_id") Long userId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 
-		List<UserImVo> list = userImHistoryService.getAllImUserLastIm(secId, imUserName);
+		List<UserImLastVo> list = userImLastService.getLastIm(userId);
 		result.setData(list);
 		
 		return result;
 	}	
+	
+	
+	@RequestMapping(value = "gen_last_im", method = RequestMethod.GET)
+	public AppResultData<Object> genLastIm() throws JsonParseException, JsonMappingException, IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
+
+		List<UserImHistory> list = userImHistoryService.getAllImUserLastIm();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		UserImHistory vo = null;
+		for (int i =0; i < list.size(); i++) {
+			vo  = list.get(i);
+			String fromImUser = vo.getFromImUser();
+			String toImUser = vo.getToImUser();
+			
+			if (StringUtil.isEmpty(fromImUser)) continue;
+			if (StringUtil.isEmpty(toImUser)) continue;
+			
+			
+			UserRef3rd fromUser = 	userRef3rdService.selectByUserNameAnd3rdType(fromImUser, "huanxin");
+	        UserRef3rd toUser = 	userRef3rdService.selectByUserNameAnd3rdType(toImUser, "huanxin");
+	        
+	        if (fromUser == null) continue;
+	        if (toUser == null) continue;
+	        
+	        Long fromUserId = fromUser.getUserId();
+	        Long toUserId = toUser.getUserId();
+	        
+	        String chatType = vo.getChatType();
+	        String msgId = vo.getMsgId();
+	        String content = vo.getImContent();
+	        Long addTime = vo.getAddTime();
+	        String uuid = vo.getUuid();
+	        
+	        JsonNode dataJson = mapper.readValue(content, JsonNode.class);
+	        String imContent = userImHistoryService.getImMsg(dataJson);
+	        //先插入fromUser -> toUser.
+	          UserImLastSearchVo searchVo = new UserImLastSearchVo();
+	          searchVo.setFromUserId(fromUserId);
+	          searchVo.setToUserId(toUserId);
+	          UserImLast fromUserPo = userImLastService.selectBySearchVo(searchVo);
+	          Boolean isNew = false;
+	          if (fromUserPo == null) {
+	        	  fromUserPo = userImLastService.initUserImLast();
+	        	  isNew = true;
+	          }
+	          
+	          fromUserPo.setFromUserId(fromUserId);
+	          fromUserPo.setToUserId(toUserId);
+	          fromUserPo.setChatType(chatType);
+	          fromUserPo.setFromImUser(fromImUser);
+	          fromUserPo.setToImUser(toImUser);
+	          fromUserPo.setMsgId(msgId);
+	          fromUserPo.setImContent(imContent);
+	          fromUserPo.setUuid(uuid);
+	          
+	          fromUserPo.setAddTime(addTime);
+	          
+	          if (isNew) {
+	        	  userImLastService.insert(fromUserPo);
+	          } else {
+	        	  userImLastService.updateByPrimaryKeySelective(fromUserPo);
+	          }
+	          
+	          //再插入 toUser -> fromuser;
+	          searchVo.setFromUserId(toUserId);
+	          searchVo.setToUserId(fromUserId);
+	          UserImLast toUserPo = userImLastService.selectBySearchVo(searchVo);
+	          isNew = false;
+	          if (toUserPo == null) {
+	        	  toUserPo = userImLastService.initUserImLast();
+	        	  isNew = true;
+	          }
+	          
+	          toUserPo.setFromUserId(toUserId);
+	          toUserPo.setToUserId(fromUserId);
+	          toUserPo.setChatType(chatType);
+	          toUserPo.setFromImUser(fromImUser);
+	          toUserPo.setToImUser(toImUser);
+	          toUserPo.setMsgId(msgId);
+	          toUserPo.setImContent(imContent);
+	          toUserPo.setUuid(uuid);
+	          
+	          toUserPo.setAddTime(addTime);
+	          
+	          if (isNew) {
+	        	  userImLastService.insert(toUserPo);
+	          } else {
+	        	  userImLastService.updateByPrimaryKeySelective(toUserPo);
+	          }
+	        
+		}
+		
+		
+		
+		return result;
+	}		
 
 }

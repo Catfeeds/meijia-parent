@@ -2,6 +2,6 @@ package com.simi.service.job;
 
 public interface JobImService {
 
-	Boolean syncIm(Long beginTime);
+	Boolean syncIm(Long beginTime, String syncType);
 
 }

@@ -7,7 +7,7 @@ public class UserFriends {
 
     private Long friendId;
 
-    private Integer addTime;
+    private Long addTime;
 
     private Long updateTime;
 
@@ -35,11 +35,11 @@ public class UserFriends {
         this.friendId = friendId;
     }
 
-    public Integer getAddTime() {
+    public Long getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(Integer addTime) {
+    public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
 

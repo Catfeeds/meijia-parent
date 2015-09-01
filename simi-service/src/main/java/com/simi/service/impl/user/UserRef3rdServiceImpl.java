@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
@@ -63,6 +64,11 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 	public UserRef3rd selectByUserIdForIm(Long userId) {
 		return userRef3rdMapper.selectByUserIdForIm(userId);
 	}
+	
+	@Override
+	public List<UserRef3rd> selectByUserIds(List<Long> userIds) {
+		return userRef3rdMapper.selectByUserIds(userIds);
+	}	
 
 	@Override
 	public UserRef3rd selectByPidAnd3rdType(String pid, String thirdType) {
@@ -74,6 +80,16 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 		return userRef3rdMapper.selectByPidAnd3rdType(conditions);
 	}
 
+	@Override
+	public UserRef3rd selectByUserNameAnd3rdType(String userName, String thirdType) {
+		Map<String,Object> conditions = new HashMap<String, Object>();
+		if(!StringUtil.isEmpty(userName) && !StringUtil.isEmpty(thirdType)){
+			conditions.put("userName",userName);
+			conditions.put("refType",thirdType);
+		}
+		return userRef3rdMapper.selectByUserNameAnd3rdType(conditions);
+	}	
+	
 	@Override
 	public UserRef3rd initUserRef3rd(String mobile) {
 		UserRef3rd userRef3rd = new UserRef3rd();

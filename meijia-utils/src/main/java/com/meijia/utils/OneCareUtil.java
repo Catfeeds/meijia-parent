@@ -574,4 +574,31 @@ public class OneCareUtil {
 
 		return list;
 	}
+	
+	public static String getCardTypeName(Short status) {
+		String statusName = "";
+		switch (status) {
+			case 0:
+				statusName = "通用";
+				break;
+			case 1:
+				statusName = "会议安排";
+				break;
+			case 2:
+				statusName = "秘书叫早";
+				break;
+			case 3:
+				statusName = "事务提醒";
+				break;
+			case 4:
+				statusName = "邀约通知";
+				break;
+			case 5:
+				statusName = "差旅规划";
+				break;
+			default:
+				statusName = "";
+		}
+		return statusName;
+	}	
 }

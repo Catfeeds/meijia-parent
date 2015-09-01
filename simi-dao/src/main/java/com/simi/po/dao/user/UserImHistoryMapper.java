@@ -27,6 +27,9 @@ public interface UserImHistoryMapper {
     
     //获得好友发给我的最新一条聊天记录
     List<UserImHistory> selectMaxByToImUser(String imUserName);
+    
+    //获得对话最新的一条聊天记录
+    List<UserImHistory> selectMaxByFromAll();    
 
 	List<UserImHistory> selectByImUserListPage(String fromImUser, String toImUser);
 }

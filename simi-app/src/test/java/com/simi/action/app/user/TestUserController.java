@@ -151,5 +151,22 @@ public class TestUserController extends JUnitActionBase  {
 
 	}
 
+	
+	@Test
+    public void testGetUserIndex() throws Exception {
+
+		String url = "/app/user/get_user_index.json";
+		String params = "?user_id=18&view_user_id=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
 
 }

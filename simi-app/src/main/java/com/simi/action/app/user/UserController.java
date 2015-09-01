@@ -55,6 +55,7 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.LoginVo;
 import com.simi.vo.user.UserBaiduBindVo;
+import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 
 @Controller
@@ -376,5 +377,29 @@ public class UserController extends BaseController {
 		return result;
 
 	}
+	
+	/**
+	 * 个人主页接口
+	 */
+	@RequestMapping(value = "get_user_index", method = RequestMethod.GET)
+	public AppResultData<Object> getUserIndex(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("view_user_id") Long viewUserId) {
+		
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		Users u = userService.getUserById(userId);
+		Users viewUser = userService.getUserById(viewUserId);
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null || viewUser == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserIndexVo vo = userService.getUserIndexVoByUserId(u, viewUser);
+		result.setData(vo);
+		
+		return result;
+	}	
 
 }

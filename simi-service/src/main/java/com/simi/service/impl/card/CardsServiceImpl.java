@@ -1,6 +1,7 @@
 package com.simi.service.impl.card;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.OneCareUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.card.CardsMapper;
 
@@ -99,6 +102,17 @@ public class CardsServiceImpl implements CardService {
 		//获得点赞前十个用户及头像.
 		List<CardZanViewVo> zanTop10 = cardZanService.getByTop10(cardId);
 		vo.setZanTop10(zanTop10);
+		
+		//卡片类型名称
+		String cardTypeName = OneCareUtil.getCardTypeName(vo.getCardType());
+		vo.setCardTypeName(cardTypeName);
+		
+		//服务时间字符串
+		Date serviceTimeDate = TimeStampUtil.timeStampToDateFull(vo.getServiceTime(), null);
+		String serviceTimeStr = DateUtil.fromToday(serviceTimeDate);
+		vo.setServiceTimeStr(serviceTimeStr);
+		
+		
 		return vo;
 	}
 	
@@ -195,6 +209,15 @@ public class CardsServiceImpl implements CardService {
 			
 			//获得点赞前十个用户及头像.
 			vo.setZanTop10(new ArrayList<CardZanViewVo>());
+			
+			//卡片类型名称
+			String cardTypeName = OneCareUtil.getCardTypeName(vo.getCardType());
+			vo.setCardTypeName(cardTypeName);
+			
+			//服务时间字符串
+			Date serviceTimeDate = TimeStampUtil.timeStampToDateFull(vo.getServiceTime(), null);
+			String serviceTimeStr = DateUtil.fromToday(serviceTimeDate);
+			vo.setServiceTimeStr(serviceTimeStr);
 			
 			result.add(vo);
 		}

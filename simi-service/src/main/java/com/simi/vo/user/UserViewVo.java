@@ -4,7 +4,7 @@ import com.simi.po.model.user.Users;
 
 public class UserViewVo extends Users {
 	
-	private long user_id;
+	private long userId;
 	
 	/**
 	 * 管家卡有效期
@@ -115,12 +115,12 @@ public class UserViewVo extends Users {
 		this.imSecNickname = imSecNickname;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUser_id(long userId) {
+		this.userId = userId;
 	}
 
 }

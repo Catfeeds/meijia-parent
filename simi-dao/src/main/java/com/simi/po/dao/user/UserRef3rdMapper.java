@@ -1,5 +1,6 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
 import java.util.Map;
 
 import com.simi.po.model.user.UserRef3rd;
@@ -24,5 +25,9 @@ public interface UserRef3rdMapper {
     UserRef3rd selectByPidAnd3rdType(Map<String ,Object> conditions );
 
 	int selectBySecId(Long id);
+
+	UserRef3rd selectByUserNameAnd3rdType(Map<String, Object> conditions);
+
+	List<UserRef3rd> selectByUserIds(List<Long> userIds);
     
 }

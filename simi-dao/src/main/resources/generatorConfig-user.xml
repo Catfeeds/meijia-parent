@@ -466,7 +466,7 @@
 			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>	
 		</table>	
 		
-		<!-- 用户最后一条消息表 -->
+		<!-- 用户im历史记录表 -->
 		<table schema="simi" tableName="user_im_last"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -477,10 +477,8 @@
 			enableSelectByExample="false"
 			enableCountByExample="false">
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="from_user_id" property="fromUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="last_im_time" property="lastImTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>		
 		
 

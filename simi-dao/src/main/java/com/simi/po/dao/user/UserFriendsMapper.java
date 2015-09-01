@@ -1,6 +1,9 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.UserFriends;
+import com.simi.vo.UserFriendSearchVo;
 
 public interface UserFriendsMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,10 @@ public interface UserFriendsMapper {
     int updateByPrimaryKeySelective(UserFriends record);
 
     int updateByPrimaryKey(UserFriends record);
+
+	List<UserFriends> selectByListPage(UserFriendSearchVo searchVo);
+
+	List<UserFriends> selectByUserId(Long userId);
+
+	UserFriends selectByIsFirend(UserFriendSearchVo searchVo);
 }

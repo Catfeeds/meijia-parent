@@ -36,7 +36,7 @@ public class SyncImMsgController extends BaseController {
 		//限定只有localhost能访问
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
 			Long beginTime = 1420041600000L;
-			jobImService.syncIm(beginTime);
+			jobImService.syncIm(beginTime, "all");
 		}
 		
 		
@@ -59,7 +59,7 @@ public class SyncImMsgController extends BaseController {
 		//限定只有localhost能访问
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
 			Long beginTime = TimeStampUtil.getBeginOfYesterDay();
-			jobImService.syncIm(beginTime * 1000);
+			jobImService.syncIm(beginTime * 1000, "yesterday");
 		}
 		
 
@@ -82,7 +82,7 @@ public class SyncImMsgController extends BaseController {
 		//限定只有localhost能访问
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
 			Long beginTime = TimeStampUtil.getNowSecond() - 600;
-			jobImService.syncIm(beginTime * 1000);
+			jobImService.syncIm(beginTime * 1000, "five");
 		}
 
 		return result;

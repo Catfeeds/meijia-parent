@@ -46,4 +46,9 @@ public class CityServiceImpl implements CityService {
 		return cityMapper.selectByCityIds(cityIds);
 	}
 	
+	@Override
+	public List<DictCity> selectByT(Long t) {
+		return cityMapper.selectByT(t);
+	}	
+	
 }

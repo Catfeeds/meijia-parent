@@ -448,6 +448,10 @@ public class DateUtil {
     /**
      * 距离今天多久
      * @param date
+     *     1）几分钟前： 创建时间 <=60分钟。
+	 *	   2）几小时前：60分钟 < 创建时间 <= 24小时
+	 *	   3）几天前：1天 < 创建时间 <= 7天
+	 *	   4）2015.8.18：7天<创建时间<= 无限
      * @return
      *
      */
@@ -458,18 +462,16 @@ public class DateUtil {
         long time = date.getTime() / 1000;
         long now = new Date().getTime() / 1000;
         long ago = now - time;
-        if (ago <= ONE_DAY)
-            return DateUtil.format(date, "HH:mm");
-        else if (ago <= ONE_DAY * 2)
-            return "昨天";
-        else if (ago <= ONE_DAY * 3)
-        	return DateUtil.format(date, "MM-dd");
-        else if (ago <= ONE_MONTH) {
-        	return DateUtil.format(date, "MM-dd");
-        } else if (ago <= ONE_YEAR) {
-        	return DateUtil.format(date, "yyyy-MM-dd");
+        if (ago <= ONE_HOUR)
+            return (ago / ONE_MINUTE) + "分钟前";
+        else if ( ago > ONE_HOUR && ago <= ONE_DAY)
+            return (ago/ONE_HOUR) +"小时前";
+        else if (ago > ONE_DAY && ago <= ONE_DAY * 7)
+        	return (ago/ONE_DAY) +"天前";
+        else if (ago > ONE_DAY * 7) {
+        	return DateUtil.format(date, "yyyy.MM.dd");
         } else {
-        	return DateUtil.format(date, "yyyy-MM-dd");
+        	return DateUtil.format(date, "yyyy.MM.dd");
         }
  
     }	

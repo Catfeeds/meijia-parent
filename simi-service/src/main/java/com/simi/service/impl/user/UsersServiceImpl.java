@@ -42,9 +42,11 @@ import com.simi.service.admin.AdminAccountService;
 import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
+import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 
 
@@ -172,6 +174,34 @@ public class UsersServiceImpl implements UsersService {
 
 		return userInfo;
 	}
+	
+	@Override
+	public UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser) {
+
+		UserIndexVo vo = new UserIndexVo();
+		
+		vo.setId(viewUser.getId());
+		vo.setSex(viewUser.getSex());
+		vo.setHeadImg(viewUser.getHeadImg());
+		vo.setProvinceName(viewUser.getProvinceName());
+		vo.setUserType(viewUser.getUserType());
+		
+		vo.setRestMoney(new BigDecimal(0));
+		if (user.getId().equals(viewUser.getId())) {
+			vo.setRestMoney(viewUser.getRestMoney());
+		}
+		
+		
+		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(viewUser.getId());
+		
+		if (userRef3rd != null) {
+			vo.setImUserName(userRef3rd.getUsername());
+		}
+		vo.setPoiDistance("");
+
+
+		return vo;
+	}	
 
 	@Override
 	public int saveUser(Users user) {

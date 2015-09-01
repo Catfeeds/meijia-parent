@@ -39,6 +39,22 @@
 		ORDER BY add_time DESC
 	</select>
 	
+	<select id="selectMaxByFromAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		FROM 
+		(select T2.* FROM
+			(SELECT from_im_user, to_im_user, max(add_time) as add_time FROM user_im_history
+			group by from_im_user, to_im_user 
+			) as T1 
+			LEFT JOIN user_im_history as T2
+			ON T1.from_im_user = T2.from_im_user 
+			   AND T1.to_im_user = T2.to_im_user 
+			   AND T1.add_time = T2.add_time   
+		) as T
+		order by from_im_user, to_im_user
+	</select>	
+	
 	<select id="selectMaxByFromImUser" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />

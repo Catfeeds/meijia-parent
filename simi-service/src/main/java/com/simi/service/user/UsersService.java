@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
@@ -53,5 +54,7 @@ public interface UsersService {
 	Users selectVoByUserId(Long userId);
 
 	Users genUser(String mobile, String name, Short addFrom);
+
+	UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser);
 
 }

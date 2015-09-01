@@ -10,6 +10,8 @@ public class DictCity {
 	private Long provinceId;
 
 	private Short isEnable;
+	
+	private Long addTime;
 
 	public Long getCityId() {
 		return cityId;
@@ -49,5 +51,13 @@ public class DictCity {
 
 	public void setIsEnable(Short isEnable) {
 		this.isEnable = isEnable;
+	}
+
+	public Long getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Long addTime) {
+		this.addTime = addTime;
 	}
 }

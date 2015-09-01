@@ -26,6 +26,7 @@ import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
+import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardCommentViewVo;
@@ -50,6 +51,9 @@ public class CardController extends BaseController {
 	
 	@Autowired
 	private CardCommentService cardCommentService;	
+	
+	@Autowired
+	private UserFriendService userFriendService;	
 
 	// 卡片提交接口
 	/**
@@ -173,6 +177,10 @@ public class CardController extends BaseController {
 					cardAttend.setMobile(mobile);
 					cardAttend.setName(item.getName());
 					cardAttendService.insert(cardAttend);
+					
+					
+					//相互加为好友.
+					userFriendService.addFriends(u, newUser);
 				}
 			}
 		}

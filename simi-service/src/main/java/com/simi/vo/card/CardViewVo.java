@@ -18,6 +18,10 @@ public class CardViewVo extends Cards {
 	private int totalComment;
 	
 	private List<CardZanViewVo> zanTop10;
+	
+	private String cardTypeName;
+	
+	private String serviceTimeStr;
 
 	public List<CardAttend> getAttends() {
 		return attends;
@@ -65,5 +69,21 @@ public class CardViewVo extends Cards {
 
 	public void setZanTop10(List<CardZanViewVo> zanTop10) {
 		this.zanTop10 = zanTop10;
+	}
+
+	public String getCardTypeName() {
+		return cardTypeName;
+	}
+
+	public void setCardTypeName(String cardTypeName) {
+		this.cardTypeName = cardTypeName;
+	}
+
+	public String getServiceTimeStr() {
+		return serviceTimeStr;
+	}
+
+	public void setServiceTimeStr(String serviceTimeStr) {
+		this.serviceTimeStr = serviceTimeStr;
 	}
 }
