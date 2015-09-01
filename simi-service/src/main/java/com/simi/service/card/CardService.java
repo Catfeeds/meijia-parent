@@ -2,6 +2,7 @@ package com.simi.service.card;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.card.Cards;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
@@ -26,7 +27,7 @@ public interface CardService {
 
 	CardViewVo changeToCardViewVo(Cards card);
 
-	List<Cards> selectByListPage(CardSearchVo vo, int pageNo, int pageSize);
+	PageInfo selectByListPage(CardSearchVo vo, int pageNo, int pageSize);
 
 	List<CardViewVo> changeToCardViewVoBat(List<Cards> cards);
 

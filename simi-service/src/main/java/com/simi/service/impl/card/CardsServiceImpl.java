@@ -20,6 +20,7 @@ import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.OneCareUtil;
@@ -246,7 +247,7 @@ public class CardsServiceImpl implements CardService {
 	}
 	
 	@Override
-	public List<Cards> selectByListPage(CardSearchVo vo, int pageNo, int pageSize) {
+	public PageInfo selectByListPage(CardSearchVo vo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		
 		List<Cards> list = new ArrayList<Cards>();
@@ -267,7 +268,9 @@ public class CardsServiceImpl implements CardService {
 		if (cardFrom.equals((short)2)) {
 			list = cardsMapper.selectAttendByListPage(vo);
 		}		
-		return list;
+		
+		PageInfo result = new PageInfo(list);
+		return result;
 	}	
 
 	@Override

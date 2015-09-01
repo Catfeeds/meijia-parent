@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.RegexUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -57,6 +58,13 @@ public class UserFriendController extends BaseController {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
+		}
+		
+		//判断是否为正确手机号:
+		if (!RegexUtil.isMobile(mobile)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.MIBILE_IS_INVALID_MG);
+			return result;			
 		}
 		
 		Users friendUser = userService.getUserByMobile(mobile);

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.JsonUtil;
@@ -160,6 +161,12 @@ public class CardController extends BaseController {
 				for (int i = 0; i < linkManList.size(); i++) {
 					item = (LinkManVo)linkManList.get(i);
 					String mobile = item.getMobiel();
+					
+					if (!RegexUtil.isMobile(mobile)) {
+						continue;		
+					}
+					
+					
 					if (StringUtil.isEmpty(mobile)) continue;
 					if (!RegexUtil.isMobile(mobile)) continue;
 					//根据手机号找出对应的userID, 如果没有则直接新增用户.
@@ -272,8 +279,8 @@ public class CardController extends BaseController {
 			searchVo.setEndTime(endTime);
 		}
 		
-		List<Cards> cards = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
-		
+		PageInfo  pageInfo = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		List<Cards> cards = pageInfo.getList();
 		if (!cards.isEmpty()) {
 			List<CardViewVo> cardViewList = cardService.changeToCardViewVoBat(cards);
 			result.setData(cardViewList);

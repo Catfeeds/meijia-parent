@@ -20,6 +20,13 @@ public class UserIndexVo  {
 	
 	//与当前用户的距离.
 	private String poiDistance;
+	
+	private int	TotalCard;
+	
+	private int TotalCoupon;
+	
+	private int TotalFriends;
+	
 
 	public long getId() {
 		return Id;
@@ -83,5 +90,29 @@ public class UserIndexVo  {
 
 	public void setPoiDistance(String poiDistance) {
 		this.poiDistance = poiDistance;
+	}
+
+	public int getTotalCard() {
+		return TotalCard;
+	}
+
+	public void setTotalCard(int totalCard) {
+		TotalCard = totalCard;
+	}
+
+	public int getTotalCoupon() {
+		return TotalCoupon;
+	}
+
+	public void setTotalCoupon(int totalCoupon) {
+		TotalCoupon = totalCoupon;
+	}
+
+	public int getTotalFriends() {
+		return TotalFriends;
+	}
+
+	public void setTotalFriends(int totalFriends) {
+		TotalFriends = totalFriends;
 	}
 }

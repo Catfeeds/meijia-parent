@@ -34,4 +34,6 @@ public interface UserCouponsMapper {
 	UserCoupons selectByUserIdOrderNo(Long userId, String orderNo);
 
 	List<UserCoupons> selectByListPage(Map<String,Object> conditions);
+
+	List<UserCoupons> selectByUserId(Long userId);
 }

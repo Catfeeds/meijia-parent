@@ -31,6 +31,7 @@ import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.admin.AdminAccount;
+import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
@@ -39,13 +40,17 @@ import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
+import com.simi.service.card.CardService;
 import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
+import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 
@@ -82,7 +87,13 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private SecRef3rdMapper secRef3rdMapper;
-
+	
+	@Autowired
+	private CardService cardService;
+	
+	@Autowired
+	private UserFriendService userFriendService;	
+	
 	/**
 	 * 新用户注册流程
 	 * 1. 注册用户
@@ -198,8 +209,33 @@ public class UsersServiceImpl implements UsersService {
 			vo.setImUserName(userRef3rd.getUsername());
 		}
 		vo.setPoiDistance("");
+		
+		//计算卡片的个数
+		vo.setTotalCard(0);
+		CardSearchVo searchVo = new CardSearchVo();
+		searchVo.setCardFrom((short) 0);
+		searchVo.setUserId(viewUser.getId());
+		
+		PageInfo  pageInfo = cardService.selectByListPage(searchVo, 1, Constants.PAGE_MAX_NUMBER);
+		if (pageInfo != null) {
+			Long totalCard = pageInfo.getTotal();
+			vo.setTotalCard(totalCard.intValue());
+		}
 
-
+		//计算优惠劵个数
+		vo.setTotalCoupon(0);
+		List<UserCoupons> list = userCouponService.selectByUserId(viewUser.getId());
+		if (!list.isEmpty()) vo.setTotalCoupon(list.size());
+		
+		//计算好友个数
+		vo.setTotalFriends(0);
+		UserFriendSearchVo searchVo1 = new UserFriendSearchVo();
+		searchVo1.setUserId(viewUser.getId());
+		PageInfo userFriendPage = userFriendService.selectByListPage(searchVo1, 1, Constants.PAGE_MAX_NUMBER);
+		if (userFriendPage != null) {
+			Long totalFriends = userFriendPage.getTotal();
+			vo.setTotalFriends(totalFriends.intValue());
+		}
 		return vo;
 	}	
 
