@@ -12,12 +12,14 @@ import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
+import com.simi.service.dict.CityService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -43,6 +45,9 @@ public class CardsServiceImpl implements CardService {
 	
 	@Autowired
 	CardCommentService cardCommentService;	
+	
+	@Autowired
+	private CityService cityService;
 	
 	@Override
 	public Cards initCards() {
@@ -114,6 +119,22 @@ public class CardsServiceImpl implements CardService {
 		vo.setAddTimeStr(addTimeStr);
 		
 		
+		vo.setTicketFromCityName("");
+		vo.setTicketToCityName("");
+		if (vo.getTicketFromCityId() > 0L || vo.getTicketToCityId() > 0L) {
+			List<DictCity> cityList  = cityService.selectAll();
+			for (DictCity city : cityList) {
+				if (city.getCityId().equals(vo.getTicketFromCityId())) {
+					vo.setTicketFromCityName(city.getName());
+				}
+				
+				if (city.getCityId().equals(vo.getTicketToCityId())) {
+					vo.setTicketToCityName(city.getName());
+				}
+			}
+		}
+		
+		
 		return vo;
 	}
 	
@@ -157,6 +178,8 @@ public class CardsServiceImpl implements CardService {
 			totalCardZans = cardZanService.totalByCardIds(cardIds);
 			totalCardComments = cardCommentService.totalByCardIds(cardIds);
 		}
+		
+		List<DictCity> cityList  = cityService.selectAll();
 		
 		Cards item = null;
 		for (int i = 0; i < cards.size(); i++) {
@@ -219,6 +242,22 @@ public class CardsServiceImpl implements CardService {
 			Date addTimeDate = TimeStampUtil.timeStampToDateFull(vo.getAddTime() * 1000, null);
 			String addTimeStr = DateUtil.fromToday(addTimeDate);
 			vo.setAddTimeStr(addTimeStr);
+			
+			
+			//城市名称
+			vo.setTicketFromCityName("");
+			vo.setTicketToCityName("");
+			if (vo.getTicketFromCityId() > 0L || vo.getTicketToCityId() > 0L) {
+				for (DictCity city : cityList) {
+					if (city.getCityId().equals(vo.getTicketFromCityId())) {
+						vo.setTicketFromCityName(city.getName());
+					}
+					
+					if (city.getCityId().equals(vo.getTicketToCityId())) {
+						vo.setTicketToCityName(city.getName());
+					}
+				}
+			}
 			
 			result.add(vo);
 		}

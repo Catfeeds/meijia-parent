@@ -22,7 +22,11 @@ public class CardViewVo extends Cards {
 	private String cardTypeName;
 		
 	private String addTimeStr;
-
+	
+	private String ticketFromCityName;
+	
+	private String ticketToCityName;
+	
 	public List<CardAttend> getAttends() {
 		return attends;
 	}
@@ -85,5 +89,21 @@ public class CardViewVo extends Cards {
 
 	public void setAddTimeStr(String addTimeStr) {
 		this.addTimeStr = addTimeStr;
+	}
+
+	public String getTicketFromCityName() {
+		return ticketFromCityName;
+	}
+
+	public void setTicketFromCityName(String ticketFromCityName) {
+		this.ticketFromCityName = ticketFromCityName;
+	}
+
+	public String getTicketToCityName() {
+		return ticketToCityName;
+	}
+
+	public void setTicketToCityName(String ticketToCityName) {
+		this.ticketToCityName = ticketToCityName;
 	}
 }
