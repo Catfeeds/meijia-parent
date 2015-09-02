@@ -20,8 +20,8 @@ public class CardViewVo extends Cards {
 	private List<CardZanViewVo> zanTop10;
 	
 	private String cardTypeName;
-	
-	private String serviceTimeStr;
+		
+	private String addTimeStr;
 
 	public List<CardAttend> getAttends() {
 		return attends;
@@ -79,11 +79,11 @@ public class CardViewVo extends Cards {
 		this.cardTypeName = cardTypeName;
 	}
 
-	public String getServiceTimeStr() {
-		return serviceTimeStr;
+	public String getAddTimeStr() {
+		return addTimeStr;
 	}
 
-	public void setServiceTimeStr(String serviceTimeStr) {
-		this.serviceTimeStr = serviceTimeStr;
+	public void setAddTimeStr(String addTimeStr) {
+		this.addTimeStr = addTimeStr;
 	}
 }

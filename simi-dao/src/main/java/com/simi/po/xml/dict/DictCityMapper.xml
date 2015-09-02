@@ -22,7 +22,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from dict_city
-		where t > #{addTime,jdbcType=NUMERIC}
+		where add_time > #{addTime,jdbcType=NUMERIC}
 	</select>	
 	
 	

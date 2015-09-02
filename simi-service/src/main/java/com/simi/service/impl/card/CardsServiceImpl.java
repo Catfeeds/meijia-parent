@@ -108,10 +108,10 @@ public class CardsServiceImpl implements CardService {
 		String cardTypeName = OneCareUtil.getCardTypeName(vo.getCardType());
 		vo.setCardTypeName(cardTypeName);
 		
-		//服务时间字符串
-		Date serviceTimeDate = TimeStampUtil.timeStampToDateFull(vo.getServiceTime(), null);
-		String serviceTimeStr = DateUtil.fromToday(serviceTimeDate);
-		vo.setServiceTimeStr(serviceTimeStr);
+		//卡片添加时间字符串
+		Date addTimeDate = TimeStampUtil.timeStampToDateFull(vo.getAddTime() * 1000, null);
+		String addTimeStr = DateUtil.fromToday(addTimeDate);
+		vo.setAddTimeStr(addTimeStr);
 		
 		
 		return vo;
@@ -216,9 +216,9 @@ public class CardsServiceImpl implements CardService {
 			vo.setCardTypeName(cardTypeName);
 			
 			//服务时间字符串
-			Date serviceTimeDate = TimeStampUtil.timeStampToDateFull(vo.getServiceTime(), null);
-			String serviceTimeStr = DateUtil.fromToday(serviceTimeDate);
-			vo.setServiceTimeStr(serviceTimeStr);
+			Date addTimeDate = TimeStampUtil.timeStampToDateFull(vo.getAddTime() * 1000, null);
+			String addTimeStr = DateUtil.fromToday(addTimeDate);
+			vo.setAddTimeStr(addTimeStr);
 			
 			result.add(vo);
 		}
