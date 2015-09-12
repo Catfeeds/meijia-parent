@@ -19,7 +19,6 @@ import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
@@ -141,11 +140,13 @@ public class OrdersServiceImpl implements OrdersService {
 		//2. 环信透传功能.
 		//获得发送者的环信账号
 		Long secId = orderViewVo.getSecId();
-		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
-		String fromIm = secRef3rd.getUsername();
+		Users secUser = usersService.getUserById(secId);
+		
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
+		String fromIm = userRef3rd.getUsername();
 		Long userId = u.getId();
 		//获得接收者的环信账号.
-		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
+		userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
 		String toIm = userRef3rd.getUsername();
 		
 		
@@ -181,8 +182,8 @@ public class OrdersServiceImpl implements OrdersService {
 		//2. 环信透传功能.
 		//获得接受者的环信账号
 		Long secId = orderViewVo.getSecId();
-		SecRef3rd secRef3rd = secService.selectBySecIdForIm(secId);
-		String toIm = secRef3rd.getUsername();
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
+		String toIm = userRef3rd.getUsername();
 
 		orderPushNotify(orderViewVo, "", toIm);
 		

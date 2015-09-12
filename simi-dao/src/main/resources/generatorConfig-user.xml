@@ -62,7 +62,7 @@
 			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_from" property="addFrom" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_type" property="userType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-
+			<columnOverride  column="is_approval" property="isApproval" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
 
 		<!-- 用户消费明细记录表 -->

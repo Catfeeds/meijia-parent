@@ -45,7 +45,7 @@
 			(select T1.id as sec_id,
 			(CASE WHEN T2.total_user is null THEN 0 ELSE T2.total_user END) as total_user FROM
 		(
-			SELECT id FROM sec where status = 2) as T1
+			SELECT id FROM users where user_type = 1) as T1
 			left join
 			(select
 				sec_id, count(*) as total_user

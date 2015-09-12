@@ -2,7 +2,7 @@ package com.simi.vo.card;
 
 public class LinkManVo {
 
-	private String mobiel;
+	private String mobile;
 	
 	private String name;
 
@@ -14,12 +14,12 @@ public class LinkManVo {
 		this.name = name;
 	}
 
-	public String getMobiel() {
-		return mobiel;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setMobiel(String mobiel) {
-		this.mobiel = mobiel;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 }

@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.user.UserImLastService;
+import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserImLastSearchVo;
 import com.simi.vo.user.UserImLastVo;
 import com.simi.po.dao.user.UserImLastMapper;
 import com.simi.po.model.user.UserImLast;
+import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -24,6 +27,9 @@ public class UserImLastServiceImpl implements UserImLastService {
 	
 	@Autowired
 	private UsersService userService;	
+	
+	@Autowired
+	private UserRef3rdService userRef3rdService;	
 
 	@Override
 	public UserImLast initUserImLast() {
@@ -93,18 +99,32 @@ public class UserImLastServiceImpl implements UserImLastService {
 		
 		List<Users> users = userService.selectByUserIds(userIds);
 		
+		List<UserRef3rd> userRef3rds = userRef3rdService.selectByUserIds(userIds);
+		
 		UserImLast item = null;
 		for (int i = 0 ; i < userImLists.size(); i++) {
 			item = userImLists.get(i);
 			UserImLastVo vo = new UserImLastVo();
-			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			vo.setImContent(item.getImContent());
+			vo.setAddTime(item.getAddTime());
 			
 			for (Users u : users) {
-				if (u.getId().equals(vo.getToUserId())) {
+				if (u.getId().equals(item.getToUserId())) {
 					vo.setHeadImg(u.getHeadImg());
+					vo.setName(u.getName());
+					if (StringUtil.isEmpty(vo.getName())) {
+						vo.setName(u.getMobile());
+					}
 					break;
 				}
 			}
+			
+			for (UserRef3rd userRef3rd : userRef3rds) {
+				if (userRef3rd.getUserId().equals(item.getToUserId())) {
+					vo.setToImUserName(userRef3rd.getUsername());
+				}
+			}
+			
 			result.add(vo);
 		}
 

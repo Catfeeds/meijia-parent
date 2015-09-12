@@ -13,6 +13,7 @@
     <result column="rest_money" property="restMoney" jdbcType="DECIMAL" />
     <result column="score" property="score" jdbcType="INTEGER" />
     <result column="user_type" property="userType" jdbcType="NUMERIC" />
+    <result column="is_approval" property="isApproval" jdbcType="NUMERIC" />
     <result column="add_from" property="addFrom" jdbcType="NUMERIC" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
     <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
@@ -24,7 +25,7 @@
 	</resultMap>
     
   <sql id="Base_Column_List" >
-    id, mobile, province_name,3rd_type,openid, name,sex,head_img,rest_money,score, user_type, add_from, add_time, update_time
+    id, mobile, province_name,3rd_type,openid, name,sex,head_img,rest_money,score, user_type, is_approval, add_from, add_time, update_time
   </sql>
 
   <select id="selectByAll" resultMap="BaseResultMap" >
@@ -174,11 +175,12 @@
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.user.Users" >
     insert into users (id, province_name, mobile,3rd_type,openid, name,sex,head_img,
-      rest_money, score, user_type, add_from,
+      rest_money, score, user_type, is_approval, add_from,
       add_time, update_time)
     values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},#{thirdType,jdbcType=VARCHAR},
       #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},
-      #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, 
+      #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},
+      #{isApproval,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, 
       #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.simi.po.model.user.Users" >
@@ -216,6 +218,9 @@
       </if>
       <if test="userType != null" >
         user_type,
+      </if>
+      <if test="isApproval != null" >
+        is_approval,
       </if>
       <if test="addFrom != null" >
         add_from,
@@ -261,6 +266,9 @@
       <if test="userType != null" >
         #{userType,jdbcType=NUMERIC},
       </if>
+      <if test="isApproval != null" >
+        #{isApproval,jdbcType=NUMERIC},
+      </if>
       <if test="addFrom != null" >
         #{addFrom,jdbcType=NUMERIC},
       </if>
@@ -305,6 +313,9 @@
       <if test="userType != null" >
         user_type = #{userType,jdbcType=NUMERIC},
       </if>
+      <if test="isApproval != null" >
+        is_approval = #{isApproval,jdbcType=NUMERIC},
+      </if>
       <if test="addFrom != null" >
         add_from = #{addFrom,jdbcType=NUMERIC},
       </if>
@@ -329,6 +340,7 @@
       rest_money = #{restMoney,jdbcType=DECIMAL},
       score = #{score,jdbcType=INTEGER},
       user_type = #{userType,jdbcType=NUMERIC},
+      is_approval = #{isApproval,jdbcType=NUMERIC},
       add_from = #{addFrom,jdbcType=NUMERIC},
       add_time = #{addTime,jdbcType=NUMERIC},
       update_time = #{updateTime,jdbcType=NUMERIC}

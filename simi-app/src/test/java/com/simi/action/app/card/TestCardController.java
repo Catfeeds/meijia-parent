@@ -36,10 +36,10 @@ public class TestCardController extends JUnitActionBase  {
 	    //参会人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
 	    LinkManVo a1 = new LinkManVo();
-	    a1.setMobiel("18612514665");
+	    a1.setMobile("18612514665");
 	    a1.setName("连宁昌");
 	    LinkManVo a2 = new LinkManVo();
-	    a2.setMobiel("13810002890");
+	    a2.setMobile("13810002890");
 	    a2.setName("刘慧男");
 
 	    
@@ -53,7 +53,7 @@ public class TestCardController extends JUnitActionBase  {
 	    String attends = JsonUtil.listTojson(attendsList);
 	    
 	    postRequest = postRequest.param("attends", attends);
-	    postRequest = postRequest.param("service_time", "1440584582");
+	    postRequest = postRequest.param("service_time", "1441342713");
 	    postRequest = postRequest.param("service_addr", "宇飞大厦612");
 	    postRequest = postRequest.param("service_content", "研究yuand去哪玩");
 	    postRequest = postRequest.param("set_remind", "2");
@@ -77,7 +77,7 @@ public class TestCardController extends JUnitActionBase  {
     public void testGetDetail() throws Exception {
 
 		String url = "/app/card/get_detail.json";
-		String params = "?card_id=1&user_id=92";
+		String params = "?card_id=14&user_id=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -93,7 +93,7 @@ public class TestCardController extends JUnitActionBase  {
     public void testGetList() throws Exception {
 
 		String url = "/app/card/get_list.json";
-		String params = "?service_date=2015-08-26&user_id=1&card_from=0";
+		String params = "?user_id=1&card_from=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -154,7 +154,7 @@ public class TestCardController extends JUnitActionBase  {
     public void testGetComment() throws Exception {
 
 		String url = "/app/card/get_comment_list.json";
-		String params = "?card_id=2&user_id=92";
+		String params = "?card_id=14&user_id=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

@@ -17,8 +17,12 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserFriends;
+import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserFriendService;
+import com.simi.service.user.UserRef3rdService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserFriendSearchVo;
@@ -33,6 +37,12 @@ public class UserFriendController extends BaseController {
 	
 	@Autowired
 	private UserFriendService userFriendService;
+	
+	@Autowired
+	private UserRef3rdService userRef3rdService;	
+	
+	@Autowired
+	private UserRefSecService userRefSecService;
 	/**
 	 * 添加好友功能
 	 * @param userId  用户ID
@@ -73,6 +83,11 @@ public class UserFriendController extends BaseController {
 			//1. 注册为用户
 			friendUser = userService.genUser(mobile, name, (short) 2);
 			
+			//如果第一次登陆未注册时未成功注册环信，则重新注册
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(friendUser.getId());
+			if(userRef3rd == null){
+				userService.genImUser(friendUser);
+			}
 			//2. 发出邀请短信.
 		}
 
@@ -121,6 +136,37 @@ public class UserFriendController extends BaseController {
 		return result;
 	}
 
-
+	/**
+	 * 获取秘书接口
+	 * @param userId  用户ID
+	 * @return
+	 */
+	@RequestMapping(value = "get_sec", method = RequestMethod.GET)
+	public AppResultData<Object> getSecs(@RequestParam("user_id") Long userId) {
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		List<UserFriendViewVo> list = new ArrayList<UserFriendViewVo>();
+		
+		List<UserFriends> userFriends = new ArrayList<UserFriends>();
+		
+		UserRefSec userRefSec = userRefSecService.selectByUserId(userId);
+		
+		if (userRefSec == null) return result;
+		
+		UserFriends vo = userFriendService.initUserFriend();
+		vo.setUserId(userId);
+		vo.setFriendId(userRefSec.getSecId());
+		vo.setAddTime(userRefSec.getAddTime());
+		vo.setUpdateTime(userRefSec.getAddTime());
+		
+		userFriends.add(vo);
+		
+		list = userFriendService.changeToUserFriendViewVos(userFriends);
+		
+		result.setData(list);
+		
+		
+		return result;
+	}
 
 }

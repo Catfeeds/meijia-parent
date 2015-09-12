@@ -109,7 +109,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 			
 			for (Users u : list) {
 				if (u.getId().equals(item.getFriendId())) {
-					vo.setId(item.getUserId());
+					vo.setFriendId(item.getFriendId());
 					vo.setName(u.getName());
 					vo.setSex(u.getSex());
 					vo.setHeadImg(u.getHeadImg());

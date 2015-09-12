@@ -68,6 +68,7 @@ public class CardCommentServiceImpl implements CardCommentService {
 		
 		List<Long> userIds = new ArrayList<Long>();
 		for(CardComment item : cardComments) {
+			if (!userIds.contains(item.getUserId()))
 			userIds.add(item.getUserId());
 		}
 		
@@ -83,7 +84,7 @@ public class CardCommentServiceImpl implements CardCommentService {
 			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
 			Users u = null;
 			for (int j = 0; j < users.size(); j++) {
-				u = users.get(i);
+				u = users.get(j);
 				if (u.getId().equals(vo.getUserId())) {
 					vo.setName(u.getName());
 					vo.setHeadImg(u.getHeadImg());

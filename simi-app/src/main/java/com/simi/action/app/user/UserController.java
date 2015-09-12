@@ -237,41 +237,6 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 用户的手机号所在地批量更新,仅提供某个特定参数下使用
-	 */
-	@RequestMapping(value = "gen_user_province", method = RequestMethod.GET)
-	public AppResultData<Object> genUserProvince(
-			@RequestParam("mobile") String mobile
-
-	) {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-		if (StringUtil.isEmpty(mobile) || !mobile.equals("18612514665")) {
-			return result;
-		}
-
-		List<Users> userList = userService.selectByAll();
-		Users record = null;
-
-		for (int i = 0; i < userList.size(); i++) {
-			record = userList.get(i);
-			mobile = record.getMobile();
-			String provinceName = "";
-
-			try {
-				provinceName = MobileUtil.calcMobileCity(mobile);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			record.setProvinceName(provinceName);
-			userService.updateByPrimaryKeySelective(record);
-		}
-		return result;
-	}
-
-	/**
 	 * 用户信息修改接口
 	 * 
 	 * @throws IOException

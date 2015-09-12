@@ -25,16 +25,11 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
-import com.simi.po.dao.sec.SecMapper;
-import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.admin.AdminAccount;
-import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCoupons;
-import com.simi.po.model.sec.Sec;
-import com.simi.po.model.sec.SecRef3rd;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
@@ -45,7 +40,6 @@ import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
-import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserFriendSearchVo;
@@ -61,9 +55,6 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UsersMapper usersMapper;
 	
-	@Autowired
-	private SecMapper secMapper;
-
 	@Autowired
 	private UserCouponService userCouponService;
 
@@ -84,9 +75,6 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UserRefSecMapper userRefSecMapper;
-	
-	@Autowired
-	private SecRef3rdMapper secRef3rdMapper;
 	
 	@Autowired
 	private CardService cardService;
@@ -196,8 +184,9 @@ public class UsersServiceImpl implements UsersService {
 		vo.setHeadImg(viewUser.getHeadImg());
 		vo.setProvinceName(viewUser.getProvinceName());
 		vo.setUserType(viewUser.getUserType());
-		
+		vo.setName(viewUser.getName());		
 		vo.setRestMoney(new BigDecimal(0));
+		vo.setMobile(viewUser.getMobile());
 		if (user.getId().equals(viewUser.getId())) {
 			vo.setRestMoney(viewUser.getRestMoney());
 		}
@@ -264,6 +253,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));
 		u.setUserType((short) 0);
+		u.setIsApproval((short) 0);
 		u.setAddFrom((short) 0);
 		u.setScore(0);
 		u.setAddTime(TimeStampUtil.getNow()/1000);
@@ -358,10 +348,11 @@ public class UsersServiceImpl implements UsersService {
 		vo.setImRobotUsername(imRobot.get("username").toString());
 		vo.setImRobotNickname(imRobot.get("nickname").toString());
 		if(userRefSec!=null){
-			Sec sec = secMapper.selectByPrimaryKey(userRefSec.getSecId());
-			SecRef3rd secRef3rd  = secRef3rdMapper.selectBySecIdForIm(userRefSec.getSecId());
-			vo.setImSecUsername(secRef3rd.getUsername());
-			vo.setImSecNickname(sec.getNickName());
+
+			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
+			UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userRefSec.getSecId());
+			vo.setImSecUsername(userRef3rd.getUsername());
+			vo.setImSecNickname(secUser.getName());
 		}else{
 			vo.setImSecUsername("");
 			vo.setImSecNickname("");

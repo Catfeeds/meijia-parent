@@ -24,6 +24,8 @@ public class Users {
     private Integer score;
 
     private Short userType;
+    
+    private Short isApproval;
 
     private Short addFrom;
 
@@ -149,6 +151,14 @@ public class Users {
 
 	public void setOpenId(String openId) {
 		this.openId = openId;
+	}
+
+	public Short getIsApproval() {
+		return isApproval;
+	}
+
+	public void setIsApproval(Short isApproval) {
+		this.isApproval = isApproval;
 	}
 	
 	

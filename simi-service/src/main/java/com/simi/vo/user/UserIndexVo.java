@@ -6,7 +6,11 @@ public class UserIndexVo  {
 	
 	private long Id;
 	
+	private String mobile;
+	
 	private	String headImg;
+	
+	private String name;
 	
 	private String sex;
 	
@@ -114,5 +118,21 @@ public class UserIndexVo  {
 
 	public void setTotalFriends(int totalFriends) {
 		TotalFriends = totalFriends;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }

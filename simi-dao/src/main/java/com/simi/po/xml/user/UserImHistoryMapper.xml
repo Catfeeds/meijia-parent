@@ -52,8 +52,11 @@
 			   AND T1.to_im_user = T2.to_im_user 
 			   AND T1.add_time = T2.add_time   
 		) as T
+		WHERE 
+		from_im_user like CONCAT('%','user','%' ) and 
+		to_im_user like CONCAT('%','user','%' )
 		order by from_im_user, to_im_user
-	</select>	
+	</select>
 	
 	<select id="selectMaxByFromImUser" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select

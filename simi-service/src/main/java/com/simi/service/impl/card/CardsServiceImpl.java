@@ -81,7 +81,7 @@ public class CardsServiceImpl implements CardService {
 	public CardViewVo changeToCardViewVo(Cards card) {
 		CardViewVo vo = new CardViewVo();
 		if (card == null) return vo;
-		Long cardId = vo.getCardId();
+		Long cardId = card.getCardId();
 		
 		//进行对象复制.
 		BeanUtilsExp.copyPropertiesIgnoreNull(card, vo);
@@ -214,16 +214,16 @@ public class CardsServiceImpl implements CardService {
 			}			
 			
 			//统计评论的数量
-			vo.setTotalZan(0);
+			vo.setTotalComment(0);
 			for (HashMap totalCardComment : totalCardComments) {
 				Long tmpCardId = Long.valueOf(totalCardComment.get("card_id").toString());
 				if (tmpCardId.equals(vo.getCardId())) {
-					vo.setTotalZan(Integer.parseInt(totalCardComment.get("total").toString()));
+					vo.setTotalComment(Integer.parseInt(totalCardComment.get("total").toString()));
 				}
 			}
 			
 			//统计赞的数量
-			vo.setTotalComment(0);
+			vo.setTotalZan(0);
 			for (HashMap totalCardZan : totalCardZans) {
 				Long tmpCardId = Long.valueOf(totalCardZan.get("card_id").toString());
 				if (tmpCardId.equals(vo.getCardId())) {

@@ -123,9 +123,21 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 		if (statBySenior == null || statBySenior.size() <= 0) {
 			return false;
 		}
-		String secId = statBySenior.get(0).get("sec_id").toString();
-	
-		adminId = Long.valueOf(secId);
+		String secId = "";
+		for (int i =0; i < statBySenior.size(); i++) {
+			secId = statBySenior.get(i).get("sec_id").toString();
+			if (StringUtil.isEmpty(secId)) continue;
+			
+			adminId = Long.valueOf(secId);
+			
+			//注意分配秘书不能给自己分配.
+			if (adminId.equals(userId)) {
+				continue;
+			} else {
+				break;
+			}
+		}
+		
 		record = this.initUserRefSec();
 		record.setUserId(userId);
 		record.setSecId(adminId);

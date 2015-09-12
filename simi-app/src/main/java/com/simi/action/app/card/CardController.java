@@ -1,5 +1,6 @@
 package com.simi.action.app.card;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.JsonUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
@@ -22,12 +24,15 @@ import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardComment;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.user.UserFriendService;
+import com.simi.service.user.UserRef3rdService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardCommentViewVo;
@@ -55,6 +60,9 @@ public class CardController extends BaseController {
 	
 	@Autowired
 	private UserFriendService userFriendService;	
+	
+	@Autowired
+	private UserRef3rdService userRef3rdService;
 
 	// 卡片提交接口
 	/**
@@ -147,20 +155,21 @@ public class CardController extends BaseController {
 			cardService.insert(record);
 			cardId = record.getCardId();			
 		}
-		
+		System.out.println(attends);
 		//处理attends 转换为List<LinkManVo>的概念.
 		if (!StringUtil.isEmpty(attends)) {
 			Gson gson = new Gson();
 			List<LinkManVo> linkManList = gson.fromJson(attends, new TypeToken<List<LinkManVo>>(){}.getType() ); 
-			
+			System.out.println(linkManList.toString());
 			if (linkManList != null) {
 				
 				//先删除掉后再新增
 				cardAttendService.deleteByCardId(cardId);
 				LinkManVo item = null;
 				for (int i = 0; i < linkManList.size(); i++) {
+					System.out.println(linkManList.get(i).toString());
 					item = (LinkManVo)linkManList.get(i);
-					String mobile = item.getMobiel();
+					String mobile = item.getMobile();
 					
 					if (!RegexUtil.isMobile(mobile)) {
 						continue;		
@@ -174,6 +183,11 @@ public class CardController extends BaseController {
 					Users newUser = userService.getUserByMobile(mobile);
 					if (newUser == null) {
 						newUser = userService.genUser(mobile, item.getName(), (short) 2);
+						
+						UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(newUser.getId());
+						if(userRef3rd == null){
+							userService.genImUser(newUser);
+						}						
 					}
 					newUserId = newUser.getId();
 					
@@ -263,9 +277,11 @@ public class CardController extends BaseController {
 		Long startTime = 0L;
 		Long endTime = 0L;
 		
-		if (StringUtil.isEmpty(serviceDate)) {
-			String startTimeStr = serviceDate.substring(0, 10) + " 00:00:00";
-			String endTimeStr = serviceDate.substring(0, 10) + " 23:59:59";
+		if (!StringUtil.isEmpty(serviceDate) ) {
+			Date serviceDateObj = DateUtil.parse(serviceDate);
+			
+			String startTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 00:00:00");
+			String endTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 23:59:59");
 			startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
 			endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
 		}
