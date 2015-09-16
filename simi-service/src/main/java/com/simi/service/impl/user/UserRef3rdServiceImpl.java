@@ -15,6 +15,7 @@ import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserRef3rdService;
+import com.simi.service.user.UserRefSecService;
 
 @Service
 public class UserRef3rdServiceImpl implements UserRef3rdService {
@@ -23,7 +24,7 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 	private UserRef3rdMapper userRef3rdMapper;
 	
 	@Autowired
-	private UserRefSecMapper userRefSecMapper;
+	private UserRefSecService userRefSecService;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -111,14 +112,14 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 		
 		Long userId = user.getId();
 		//如果之前用户已经分配过秘书，则不需要再分配
-		UserRefSec record = userRefSecMapper.selectByUserId(userId);
+		UserRefSec record = userRefSecService.selectByUserId(userId);
 		if (record != null) {
 			return true;
 		}
 
 		Long adminId = 0L;
 
-		List<HashMap> statBySenior = userRefSecMapper.statBySecId();
+		List<HashMap> statBySenior = userRefSecService.statBySecId();
 
 		if (statBySenior == null || statBySenior.size() <= 0) {
 			return false;
@@ -138,24 +139,12 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 			}
 		}
 		
-		record = this.initUserRefSec();
+		record = userRefSecService.initUserRefSec();
 		record.setUserId(userId);
 		record.setSecId(adminId);
 
-		userRefSecMapper.insertSelective(record);
+		userRefSecService.insertSelective(record);
 		return true;
 	}
 
-	/*
-	 * 初始化用户对象
-	 */
-	@Override
-	public UserRefSec initUserRefSec() {
-		UserRefSec record = new UserRefSec();
-		record.setId(0L);
-		record.setUserId(0L);
-		record.setSecId(0L);
-		record.setAddTime(TimeStampUtil.getNow() / 1000);
-		return record;
-	}
 }

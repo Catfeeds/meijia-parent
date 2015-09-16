@@ -18,6 +18,8 @@ public class UserDetailPay {
     private BigDecimal orderMoney;
 
     private BigDecimal orderPay;
+    
+    private BigDecimal restMoney;
 
     private String payAccount;
 
@@ -131,5 +133,13 @@ public class UserDetailPay {
 
 	public void setPayAccount(String payAccount) {
 		this.payAccount = payAccount;
+	}
+
+	public BigDecimal getRestMoney() {
+		return restMoney;
+	}
+
+	public void setRestMoney(BigDecimal restMoney) {
+		this.restMoney = restMoney;
 	}
 }

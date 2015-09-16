@@ -127,10 +127,10 @@ public class UserController extends BaseController {
 		}
 		
 		//如果第一次登录未注册时未成功分配秘书，则重新分配
-		UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
-		if(userRefSec == null){
-			userRef3rdService.allotSec(u);
-		}
+//		UserRefSec userRefSec  = userRefSecService.selectByUserId(u.getId());
+//		if(userRefSec == null){
+//			userRef3rdService.allotSec(u);
+//		}
 		
 		//记录用户登陆信息
 		long ip = IPUtil.getIpAddr(request);

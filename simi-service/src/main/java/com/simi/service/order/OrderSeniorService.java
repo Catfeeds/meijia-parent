@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.order.OrderSenior;
 
 public interface OrderSeniorService {
@@ -23,7 +24,9 @@ public interface OrderSeniorService {
 
 	List<OrderSenior> selectByMobileAndPay(String mobile);
 
-	Date getSeniorStartDate(String mobile);
-
 	HashMap<String, Date> getSeniorRangeDate(Long userId);
+
+	OrderSenior initOrderSenior();
+
+	Date getSeniorStartDate(DictSeniorType dictSeniorType);
 }

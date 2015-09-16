@@ -29,8 +29,6 @@ public interface UserRef3rdService {
 	    
 		Boolean allotSec(Users user);
 
-		UserRefSec initUserRefSec();
-
 		UserRef3rd selectByUserIdForIm(Long userId);
 
 		UserRef3rd selectByUserNameAnd3rdType(String userName, String thirdType);

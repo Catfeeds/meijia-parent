@@ -83,7 +83,7 @@ public class OrderCardsServiceImpl implements OrderCardsService {
 		OrderPrices orderPrices = new OrderPrices();
 		orderPrices.setOrderMoney(cardMoney);
 		orderPrices.setOrderPay(cardMoney);
-		UserDetailPay userDetailPay = userDetailPayService.addUserDetailPayForOrderCard(
+		UserDetailPay userDetailPay = userDetailPayService.userDetailPayForOrderCard(
 				users, orderCards, tradeStatus, tradeNo, payAccount);
 		return 1;
 

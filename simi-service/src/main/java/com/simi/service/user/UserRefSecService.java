@@ -1,5 +1,6 @@
 package com.simi.service.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.simi.po.model.user.UserRefSec;
@@ -12,5 +13,15 @@ public interface UserRefSecService {
 	List<UserRefSec> selectBySecId(Long secId);
 	
 	UserRefSec selectByUserId(Long userId);
+
+	UserRefSec initUserRefSec();
+
+	List<HashMap> statBySecId();
+
+	int insert(UserRefSec record);
+
+	int insertSelective(UserRefSec record);
+
+	int updateByPrimaryKeySelective(UserRefSec record);
 
 }

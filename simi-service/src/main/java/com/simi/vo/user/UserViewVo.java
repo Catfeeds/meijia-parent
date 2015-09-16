@@ -7,12 +7,12 @@ public class UserViewVo extends Users {
 	private long userId;
 	
 	/**
-	 * 管家卡有效期
+	 * 私秘卡有效期
 	 */
     private String seniorRange;
     
     /**
-     * 是否可以使用真人管家服务 1=是 0=否
+     * 是否可以使用真人秘书服务 1=是 0=否
      */
     private Short isSenior;
     /**

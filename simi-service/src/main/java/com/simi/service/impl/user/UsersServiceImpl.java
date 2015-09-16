@@ -306,10 +306,14 @@ public class UsersServiceImpl implements UsersService {
 		if(userIdList!=null  && userIdList.size()>0){
 			conditions.put("userIdList",userIdList);
 		}
+		
+		if(searchVo.getUserType() != null) {
+			conditions.put("userType",searchVo.getUserType());
+		}
 
 		PageHelper.startPage(pageNo, pageSize);
 		List<Users> list = usersMapper.selectByListPage(conditions);
-       PageInfo result = new PageInfo(list);
+		PageInfo result = new PageInfo(list);
 		return result;
 	}
 	@Override
@@ -498,6 +502,13 @@ public class UsersServiceImpl implements UsersService {
 		 
 		return usersMapper.selectVoByUserId(ids);
 	}
+	
+	@Override
+	public List<Users> selectByUserType(Short userType) {
+		 
+		return usersMapper.selectByUserType(userType);
+	}
+	
 
 
 }

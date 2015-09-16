@@ -47,10 +47,7 @@ public interface UsersMapper {
     List<Users> selectVoByUserId(List<Long> ids);
 
 	Users selectByUserId(Long userId);
-    
-    
-    
-    
-    
 
+	List<Users> selectByUserType(Short userType);
+    
 }

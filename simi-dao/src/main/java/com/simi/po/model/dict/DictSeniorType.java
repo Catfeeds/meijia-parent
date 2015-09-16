@@ -9,7 +9,7 @@ public class DictSeniorType {
 
     private BigDecimal seniorPay;
 
-    private Short validMonth;
+    private Short validDay;
 
     private String description;
 
@@ -55,11 +55,12 @@ public class DictSeniorType {
 		this.description = description;
 	}
 
-	public Short getValidMonth() {
-		return validMonth;
+	public Short getValidDay() {
+		return validDay;
 	}
 
-	public void setValidMonth(Short validMonth) {
-		this.validMonth = validMonth;
+	public void setValidDay(Short validDay) {
+		this.validDay = validDay;
 	}
+
 }

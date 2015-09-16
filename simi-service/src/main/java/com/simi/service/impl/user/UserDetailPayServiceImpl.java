@@ -18,6 +18,7 @@ import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
+import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.UserFeedback;
@@ -81,6 +82,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		userDetailPay.setOrderNo("");
 		userDetailPay.setOrderMoney(new BigDecimal(0.0));
 		userDetailPay.setOrderPay(new BigDecimal(0.0));
+		userDetailPay.setRestMoney(new BigDecimal(0.0));
 		userDetailPay.setTradeNo("");
 		userDetailPay.setTradeStatus("");
 		userDetailPay.setPayType((short) 0);
@@ -92,7 +94,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	 * 用户明细- 订单支付.
 	 */
 	@Override
-	public UserDetailPay addUserDetailPayForOrder(
+	public UserDetailPay userDetailPayForOrder(
 			Users user, 
 			Orders order, 
 			OrderPrices orderPrice, 
@@ -111,7 +113,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		userDetailPay.setPayType(orderPrice.getPayType());
 		userDetailPay.setOrderMoney(orderPrice.getOrderMoney());
 		userDetailPay.setOrderPay(orderPrice.getOrderPay());
-		
+		userDetailPay.setRestMoney(user.getRestMoney());
 		//trade_no
 		userDetailPay.setPayAccount(payAccount);
 		userDetailPay.setTradeNo(tradeNo);
@@ -122,6 +124,39 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		userDetailPayMapper.insert(userDetailPay);
 		return userDetailPay;
 	}
+	
+	
+	/**
+	 * 用户明细- 私秘卡支付.
+	 */
+	@Override
+	public UserDetailPay userDetailPayForOrderSenior(
+			Users user, 
+			OrderSenior orderSenior, 
+			String tradeStatus,
+			String tradeNo, 
+			String payAccount) {
+		
+		UserDetailPay userDetailPay = initUserDetail();
+		
+		userDetailPay.setUserId(user.getId());
+		userDetailPay.setMobile(user.getMobile());
+		userDetailPay.setOrderId(orderSenior.getId());
+		userDetailPay.setOrderNo(orderSenior.getSeniorOrderNo());
+
+		userDetailPay.setOrderType(Constants.ORDER_TYPE_2);
+		userDetailPay.setPayType(orderSenior.getPayType());
+		userDetailPay.setOrderMoney(orderSenior.getOrderMoney());
+		userDetailPay.setOrderPay(orderSenior.getOrderPay());
+		userDetailPay.setRestMoney(user.getRestMoney());
+		//trade_no
+		userDetailPay.setPayAccount(payAccount);
+		userDetailPay.setTradeNo(tradeNo);
+		userDetailPay.setTradeStatus(tradeStatus);
+		
+		userDetailPayMapper.insert(userDetailPay);
+		return userDetailPay;
+	}	
 
 	/*
 	 * 更新订单明细信息
@@ -164,7 +199,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	 * 用户明细- 会员卡充值明细
 	 */
 	@Override
-	public UserDetailPay addUserDetailPayForOrderCard(
+	public UserDetailPay userDetailPayForOrderCard(
 			Users user, 
 			OrderCards orderCard, 
 			String tradeStatus,
@@ -182,7 +217,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		userDetailPay.setPayType(orderCard.getPayType());
 		userDetailPay.setOrderMoney(orderCard.getCardMoney());
 		userDetailPay.setOrderPay(orderCard.getCardPay());
-		
+		userDetailPay.setRestMoney(user.getRestMoney());
 		//trade_no
 		userDetailPay.setPayAccount(payAccount);
 		userDetailPay.setTradeNo(tradeNo);

@@ -1,5 +1,6 @@
 package com.simi.service.impl.order;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,13 +11,35 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.order.OrderSeniorService;
 import com.simi.po.dao.order.OrderSeniorMapper;
+import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.order.OrderSenior;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.TimeStampUtil;
 @Service
 public class OrderSeniorServiceImpl implements OrderSeniorService {
 	@Autowired
 	private OrderSeniorMapper orderSeniorMapper;
-
+	
+	@Override
+	public OrderSenior initOrderSenior() {
+		OrderSenior orderSenior = new OrderSenior();
+		orderSenior.setUserId(0L);
+		orderSenior.setSecId(0L);
+		orderSenior.setMobile("");
+		orderSenior.setSeniorOrderNo("");
+		orderSenior.setSeniorType(0L);
+		orderSenior.setOrderMoney(new BigDecimal(0));
+		orderSenior.setOrderPay(new BigDecimal(0));
+		orderSenior.setValidDay((short) 0);
+		orderSenior.setStartDate(DateUtil.getNowOfDate());
+		orderSenior.setEndDate(DateUtil.getNowOfDate());
+		orderSenior.setPayType((short) 0);
+		orderSenior.setOrderStatus((short) 0);
+		orderSenior.setAddTime(TimeStampUtil.getNowSecond());
+		orderSenior.setUpdateTime(TimeStampUtil.getNowSecond());
+		return orderSenior;
+	}
+	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return orderSeniorMapper.deleteByPrimaryKey(id);
@@ -58,38 +81,25 @@ public class OrderSeniorServiceImpl implements OrderSeniorService {
 	}
 
 	/*
-	 * 根据历史管家卡订单获得当前的开始日期.
+	 * 根据私密卡类型获得结束日期
 	 */
 	@Override
-	public Date getSeniorStartDate(String mobile) {
+	public Date getSeniorStartDate(DictSeniorType dictSeniorType) {
+		
+		Short validDay = dictSeniorType.getValidDay();
+		Date startDate = DateUtil.getNowOfDate();
+		String endDateStr = "";
+		if (validDay < 30) 
+			endDateStr = DateUtil.addDay(startDate, validDay, Calendar.DATE, DateUtil.getDefaultPattern());
+		
+		if (validDay.equals((short)30)) 
+			endDateStr = DateUtil.addDay(startDate, 1, Calendar.MONTH, DateUtil.getDefaultPattern());
 
-		//找出最新一个的历史订单.已支付状态.
-		List<OrderSenior> list = orderSeniorMapper.selectByMobileAndPay(mobile);
-		Date today = DateUtil.getNowOfDate();
-		String todayStr = DateUtil.getToday();
-
-		//如果没有历史订单，则用当前日期作为开始日期
-		if (list.isEmpty()) {
-			return today;
-		}
-
-		OrderSenior item = list.get(0);
-
-		//兼容性检验
-		if (item == null || item.getEndDate() == null) {
-			return today;
-		}
-
-		Date endDate = item.getEndDate();
-		String endDateStr = DateUtil.format(endDate, DateUtil.getDefaultPattern());
-
-		//如果当前时间大于endDate ,则用当前日期作为开始日期
-		if (DateUtil.compare(endDateStr, todayStr)) {
-			return today;
-		}
-
-		String startDateStr =  DateUtil.addDay(endDate, 1, Calendar.DATE, DateUtil.getDefaultPattern());
-		return DateUtil.parse(startDateStr);
+		if (validDay.equals((short)90)) 
+			endDateStr = DateUtil.addDay(startDate, 3, Calendar.MONTH, DateUtil.getDefaultPattern());
+		
+		Date endDate = DateUtil.parse(endDateStr);
+		return endDate;
 	}
 
 	/*
@@ -105,7 +115,6 @@ public class OrderSeniorServiceImpl implements OrderSeniorService {
 		if (list.isEmpty()) {
 			return result;
 		}
-
 
 		OrderSenior item = null;
 		Date startDate = null;

@@ -57,4 +57,6 @@ public interface UsersService {
 
 	UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser);
 
+	List<Users> selectByUserType(Short userType);
+
 }

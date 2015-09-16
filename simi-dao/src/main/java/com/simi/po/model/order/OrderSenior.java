@@ -7,16 +7,20 @@ public class OrderSenior {
     private Long id;
 
     private Long userId;
+    
+    private Long secId;
 
     private String mobile;
 
     private String seniorOrderNo;
 
     private Long seniorType;
+    
+    private BigDecimal orderMoney;
 
-    private BigDecimal seniorPay;
+    private BigDecimal orderPay;
 
-    private Short validMonth;
+    private Short validDay;
 
     private Date startDate;
 
@@ -70,14 +74,6 @@ public class OrderSenior {
         this.seniorType = seniorType;
     }
 
-    public BigDecimal getSeniorPay() {
-        return seniorPay;
-    }
-
-    public void setSeniorPay(BigDecimal seniorPay) {
-        this.seniorPay = seniorPay;
-    }
-
     public Short getOrderStatus() {
         return orderStatus;
     }
@@ -110,14 +106,6 @@ public class OrderSenior {
 		this.payType = payType;
 	}
 
-	public Short getValidMonth() {
-		return validMonth;
-	}
-
-	public void setValidMonth(Short validMonth) {
-		this.validMonth = validMonth;
-	}
-
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -132,5 +120,37 @@ public class OrderSenior {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public Short getValidDay() {
+		return validDay;
+	}
+
+	public void setValidDay(Short validDay) {
+		this.validDay = validDay;
+	}
+
+	public Long getSecId() {
+		return secId;
+	}
+
+	public void setSecId(Long secId) {
+		this.secId = secId;
+	}
+
+	public BigDecimal getOrderMoney() {
+		return orderMoney;
+	}
+
+	public void setOrderMoney(BigDecimal orderMoney) {
+		this.orderMoney = orderMoney;
+	}
+
+	public BigDecimal getOrderPay() {
+		return orderPay;
+	}
+
+	public void setOrderPay(BigDecimal orderPay) {
+		this.orderPay = orderPay;
 	}
 }

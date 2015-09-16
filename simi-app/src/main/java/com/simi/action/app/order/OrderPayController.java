@@ -125,7 +125,7 @@ public class OrderPayController extends BaseController {
 			orderLogService.insert(orderLog);
 			
 			//记录用户消费明细
-			userDetailPayService.addUserDetailPayForOrder(u, order, orderPrice, "", "", "");
+			userDetailPayService.userDetailPayForOrder(u, order, orderPrice, "", "", "");
 			
 			//订单支付成功后
 			orderPayService.orderPaySuccessToDo(order);

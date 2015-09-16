@@ -5,12 +5,12 @@
     <id column="id" property="id" jdbcType="NUMERIC" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="senior_pay" property="seniorPay" jdbcType="DECIMAL" />
-    <result column="valid_month" property="validMonth" jdbcType="SMALLINT" />
+    <result column="valid_day" property="validDay" jdbcType="SMALLINT" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, senior_pay, valid_month, description, add_time
+    id, name, senior_pay, valid_day, description, add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
@@ -24,10 +24,10 @@
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.dict.DictSeniorType" >
     insert into dict_senior_type (id, name, senior_pay,
-      valid_month, description, add_time
+      valid_day, description, add_time
       )
     values (#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{seniorPay,jdbcType=DECIMAL},
-      #{validMonth,jdbcType=NUMERIC}, #{description,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
+      #{validDay,jdbcType=NUMERIC}, #{description,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.dict.DictSeniorType" >
@@ -42,8 +42,8 @@
       <if test="seniorPay != null" >
         senior_pay,
       </if>
-      <if test="validMonth != null" >
-        valid_month,
+      <if test="validDay != null" >
+        valid_day,
       </if>
       <if test="description != null" >
         description,
@@ -62,8 +62,8 @@
       <if test="seniorPay != null" >
         #{seniorPay,jdbcType=DECIMAL},
       </if>
-      <if test="validMonth != null" >
-        #{valid_month,jdbcType=SMALLINT},
+      <if test="validDay != null" >
+        #{valid_day,jdbcType=SMALLINT},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
@@ -82,8 +82,8 @@
       <if test="seniorPay != null" >
         senior_pay = #{seniorPay,jdbcType=DECIMAL},
       </if>
-      <if test="validMonth != null" >
-        valid_month = #{validMonth,jdbcType=SMALLINT},
+      <if test="validDay != null" >
+        valid_day = #{validDay,jdbcType=SMALLINT},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
@@ -98,7 +98,7 @@
     update dict_senior_type
     set name = #{name,jdbcType=VARCHAR},
       senior_pay = #{seniorPay,jdbcType=DECIMAL},
-      valid_month = #{validMonth,jdbcType=SMALLINT},
+      valid_day = #{validDay,jdbcType=SMALLINT},
       description = #{description,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=NUMERIC}
     where id = #{id,jdbcType=NUMERIC}

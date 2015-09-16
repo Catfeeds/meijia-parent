@@ -134,4 +134,23 @@ public class TestSecController extends JUnitActionBase{
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	}
 
+	
+	/**
+	 * 获取秘书列表
+	 * @throws Exception
+	 */
+	@Test
+    public void testSecList() throws Exception {
+		String url = "/app/sec/get_list.json";
+		
+		String params = "?user_id=1&page=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+		
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+	}	
 }

@@ -10,6 +10,7 @@
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
     <result column="order_money" property="orderMoney" jdbcType="DECIMAL" />
     <result column="order_pay" property="orderPay" jdbcType="DECIMAL" />
+     <result column="rest_money" property="restMoney" jdbcType="DECIMAL" />
     <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
     <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
     <result column="trade_status" property="tradeStatus" jdbcType="VARCHAR" />
@@ -17,7 +18,7 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, mobile, order_type, order_id, order_no, order_money, order_pay, pay_account, trade_no, trade_status, pay_type,
+    id, user_id, mobile, order_type, order_id, order_no, order_money, order_pay, rest_money, pay_account, trade_no, trade_status, pay_type,
     add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -41,12 +42,13 @@
   <insert id="insert" parameterType="com.simi.po.model.user.UserDetailPay" >
     insert into user_detail_pay (id, user_id, mobile,
       order_type, order_id, order_no,
-      order_money,order_pay, pay_account,
+      order_money,order_pay, rest_money, pay_account,
       trade_no, trade_status, pay_type,
       add_time)
     values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
       #{orderType,jdbcType=BIT}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR},
-      #{orderMoney,jdbcType=DECIMAL}, #{orderPay,jdbcType=DECIMAL}, #{payAccount,jdbcType=VARCHAR},
+      #{orderMoney,jdbcType=DECIMAL}, #{orderPay,jdbcType=DECIMAL}, #{restMoney,jdbcType=DECIMAL},
+      #{payAccount,jdbcType=VARCHAR},
       #{tradeNo,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, #{payType,jdbcType=NUMERIC},
       #{addTime,jdbcType=NUMERIC})
   </insert>
@@ -76,6 +78,9 @@
       </if>
       <if test="orderPay != null" >
         order_pay,
+      </if>
+      <if test="restMoney != null" >
+        rest_money,
       </if>
       <if test="payAccount != null" >
         pay_account,
@@ -118,6 +123,9 @@
       <if test="orderPay != null" >
         #{orderPay,jdbcType=DECIMAL},
       </if>
+      <if test="restMoney != null" >
+        #{restMoney,jdbcType=DECIMAL},
+      </if>
       <if test="payAccount != null" >
         #{payAccount,jdbcType=VARCHAR},
       </if>
@@ -159,6 +167,9 @@
       <if test="orderPay != null" >
         order_pay = #{orderPay,jdbcType=DECIMAL},
       </if>
+      <if test="restMoney != null" >
+        rest_money = #{restMoney,jdbcType=DECIMAL},
+      </if>
       <if test="payAccount != null" >
         pay_account = #{payAccount,jdbcType=VARCHAR},
       </if>
@@ -198,6 +209,7 @@
       order_no = #{orderNo,jdbcType=VARCHAR},
       order_money = #{orderMoney,jdbcType=DECIMAL},
       order_pay = #{orderPay,jdbcType=DECIMAL},
+      rest_money = #{restMoney,jdbcType=DECIMAL},
       pay_account = #{payAccount,jdbcType=VARCHAR},
       trade_no = #{tradeNo,jdbcType=VARCHAR},
       trade_status = #{tradeStatus,jdbcType=VARCHAR},
