@@ -107,9 +107,11 @@ public class UserImLastServiceImpl implements UserImLastService {
 			vo.setImContent(item.getImContent());
 			vo.setAddTime(item.getAddTime());
 			
+			vo.setHeadImg("");
 			for (Users u : users) {
 				if (u.getId().equals(item.getToUserId())) {
-					vo.setHeadImg(u.getHeadImg());
+					
+					if (u.getHeadImg() != null && u.getHeadImg() != "" ) vo.setHeadImg(u.getHeadImg());
 					vo.setName(u.getName());
 					if (StringUtil.isEmpty(vo.getName())) {
 						vo.setName(u.getMobile());

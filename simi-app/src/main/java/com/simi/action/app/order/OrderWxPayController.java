@@ -19,11 +19,13 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.order.OrderCards;
+import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderCardsService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
+import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.HttpClientUtil;
 import com.meijia.utils.MathBigDeciamlUtil;
@@ -47,6 +49,9 @@ public class OrderWxPayController extends BaseController {
 	
 	@Autowired
 	private OrderCardsService orderCardService;
+	
+	@Autowired
+	private OrderSeniorService orderSeniorService;	
 
 	/**
 	 * 下单微信预支付接口
@@ -56,7 +61,7 @@ public class OrderWxPayController extends BaseController {
 	 * @param response
 	 * @param mobile   
 	 * @param orderNo
-	 * @param orderType  // 订单类型 0 = 订单支付 1= 充值卡充值 2 = 管家卡购买
+	 * @param orderType  // 订单类型 0 = 订单支付 1= 充值卡充值 2 = 私秘服务购买
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 * 
@@ -137,29 +142,28 @@ public class OrderWxPayController extends BaseController {
 		
 		//处理私密卡购买的情况
 		if (orderType.equals(Constants.ORDER_TYPE_2)) {
-			OrderCards orderCard = orderCardService.selectByOrderCardsNo(orderNo);
-			
-			if (orderCard == null || orderCard.getId().equals(0)) {
+			OrderSenior orderSenior = orderSeniorService.selectByOrderSeniorNo(orderNo);
+			if (orderSenior == null || orderSenior.getId().equals(0)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg(ConstantMsg.ORDER_NO_NOT_EXIST_MG);
 				return result;
 			}
 
 			// 订单已经支付过，不需要重复支付
-			if (orderCard.getOrderStatus()
+			if (orderSenior.getOrderStatus()
 					.equals(Constants.PAY_STATUS_1)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("订单已经支付过！");
 				return result;
 			}
 			
-			BigDecimal cardPay = orderCard.getCardPay();
+			BigDecimal cardPay = orderSenior.getOrderPay();
 			BigDecimal p1 = new BigDecimal(100);
 			BigDecimal p2 = MathBigDeciamlUtil.mul(cardPay, p1);
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
-			body = "私秘卡购买";
+			body = "私秘服务购买";
 		}			
 
 		//测试

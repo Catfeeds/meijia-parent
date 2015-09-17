@@ -113,7 +113,7 @@ public class UserSeniorController extends BaseController {
 		orderSenior.setSecId(secId);
 		orderSenior.setMobile(u.getMobile());
 		orderSenior.setSeniorOrderNo(seniorOrderNo);
-		orderSenior.setSeniorType(seniorTypeId);
+		orderSenior.setSeniorTypeId(seniorTypeId);
 		orderSenior.setOrderMoney(dictSeniorType.getSeniorPay());
 		orderSenior.setOrderPay(dictSeniorType.getSeniorPay());
 		orderSenior.setValidDay(dictSeniorType.getValidDay());

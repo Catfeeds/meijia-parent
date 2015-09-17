@@ -7,7 +7,7 @@
     <result column="sec_id" property="secId" jdbcType="NUMERIC" />
     <result column="mobile" property="mobile" jdbcType="CHAR" />
     <result column="senior_order_no" property="seniorOrderNo" jdbcType="VARCHAR" />
-    <result column="senior_type" property="seniorType" jdbcType="NUMERIC" />
+    <result column="senior_type_id" property="seniorTypeId" jdbcType="NUMERIC" />
     <result column="order_money" property="orderMoney" jdbcType="DECIMAL" />
     <result column="order_pay" property="orderPay" jdbcType="DECIMAL" />
     <result column="valid_day" property="validDay" jdbcType="SMALLINT" />
@@ -19,7 +19,7 @@
     <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, sec_id, mobile, senior_order_no, senior_type, order_money, order_pay,
+    id, user_id, sec_id, mobile, senior_order_no, senior_type_id, order_money, order_pay,
     valid_day, start_date, end_date, pay_type, order_status,
     add_time, update_time
   </sql>
@@ -63,13 +63,13 @@
 	SELECT LAST_INSERT_ID() AS id
 	</selectKey>
     insert into order_senior (id, user_id, sec_id, mobile,
-      senior_order_no, senior_type, order_money, order_pay,
+      senior_order_no, senior_type_id, order_money, order_pay,
       valid_day, start_date, end_date,
       pay_type, order_status, add_time,
       update_time)
     values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{secId,jdbcType=NUMERIC},
       #{mobile,jdbcType=CHAR},
-      #{seniorOrderNo,jdbcType=VARCHAR}, #{seniorType,jdbcType=NUMERIC}, 
+      #{seniorOrderNo,jdbcType=VARCHAR}, #{seniorTypeId,jdbcType=NUMERIC}, 
       #{orderMoney,jdbcType=DECIMAL}, #{orderPay,jdbcType=DECIMAL},
       #{validDay,jdbcType=SMALLINT},  #{startDate,jdbcType=DATE},
       #{endDate,jdbcType=DATE}, #{payType,jdbcType=NUMERIC},
@@ -94,8 +94,8 @@
       <if test="seniorOrderNo != null" >
         senior_order_no,
       </if>
-      <if test="seniorType != null" >
-        senior_type,
+      <if test="seniorTypeId != null" >
+        senior_type_id,
       </if>
       <if test="orderMoney != null" >
         order_money,
@@ -144,8 +144,8 @@
       <if test="seniorOrderNo != null" >
         #{seniorOrderNo,jdbcType=VARCHAR},
       </if>
-      <if test="seniorType != null" >
-        #{seniorType,jdbcType=NUMERIC},
+      <if test="seniorTypeId != null" >
+        #{seniorTypeId,jdbcType=NUMERIC},
       </if>
       <if test="orderMoney != null" >
         #{orderMoney,jdbcType=DECIMAL},
@@ -191,8 +191,8 @@
       <if test="seniorOrderNo != null" >
         senior_order_no = #{seniorOrderNo,jdbcType=VARCHAR},
       </if>
-      <if test="seniorType != null" >
-        senior_type = #{seniorType,jdbcType=NUMERIC},
+      <if test="seniorTypeId != null" >
+        senior_type_id = #{seniorTypeId,jdbcType=NUMERIC},
       </if>
       <if test="orderMoney != null" >
         order_money = #{orderMoney,jdbcType=DECIMAL},
@@ -230,7 +230,7 @@
       sec_id = #{secId,jdbcType=NUMERIC},
       mobile = #{mobile,jdbcType=CHAR},
       senior_order_no = #{seniorOrderNo,jdbcType=VARCHAR},
-      senior_type = #{seniorType,jdbcType=NUMERIC},
+      senior_type_id = #{seniorTypeId,jdbcType=NUMERIC},
       order_money = #{orderMoney,jdbcType=DECIMAL},
       order_pay = #{orderPay,jdbcType=DECIMAL},
       valid_day = #{validDay,jdbcType=SMALLINT},

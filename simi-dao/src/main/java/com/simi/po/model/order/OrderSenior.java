@@ -14,7 +14,7 @@ public class OrderSenior {
 
     private String seniorOrderNo;
 
-    private Long seniorType;
+    private Long seniorTypeId;
     
     private BigDecimal orderMoney;
 
@@ -64,14 +64,6 @@ public class OrderSenior {
 
     public void setSeniorOrderNo(String seniorOrderNo) {
         this.seniorOrderNo = seniorOrderNo == null ? null : seniorOrderNo.trim();
-    }
-
-    public Long getSeniorType() {
-        return seniorType;
-    }
-
-    public void setSeniorType(Long seniorType) {
-        this.seniorType = seniorType;
     }
 
     public Short getOrderStatus() {
@@ -152,5 +144,13 @@ public class OrderSenior {
 
 	public void setOrderPay(BigDecimal orderPay) {
 		this.orderPay = orderPay;
+	}
+
+	public Long getSeniorTypeId() {
+		return seniorTypeId;
+	}
+
+	public void setSeniorTypeId(Long seniorTypeId) {
+		this.seniorTypeId = seniorTypeId;
 	}
 }

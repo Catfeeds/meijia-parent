@@ -27,7 +27,7 @@ public class OrderSeniorServiceImpl implements OrderSeniorService {
 		orderSenior.setSecId(0L);
 		orderSenior.setMobile("");
 		orderSenior.setSeniorOrderNo("");
-		orderSenior.setSeniorType(0L);
+		orderSenior.setSeniorTypeId(0L);
 		orderSenior.setOrderMoney(new BigDecimal(0));
 		orderSenior.setOrderPay(new BigDecimal(0));
 		orderSenior.setValidDay((short) 0);
