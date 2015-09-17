@@ -10,7 +10,7 @@ public class RandomUtil {
      */
     public static String randomNumber()
     {
-        return RandomStringUtils.randomNumeric(6);
+        return RandomStringUtils.randomNumeric(4);
     }
     /**
      * @param parm
