@@ -25,7 +25,6 @@ import com.simi.po.dao.sec.SecRef3rdMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
-import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictService;
@@ -36,7 +35,6 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.sec.SecViewVo;
 import com.simi.vo.sec.SecVo;
-import com.simi.vo.user.UserFriendViewVo;
 
 @Service
 public class SecServiceImpl implements SecService {

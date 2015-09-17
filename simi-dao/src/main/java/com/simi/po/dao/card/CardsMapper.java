@@ -2,7 +2,6 @@ package com.simi.po.dao.card;
 
 import java.util.List;
 
-import com.github.pagehelper.PageInfo;
 import com.simi.po.model.card.Cards;
 import com.simi.vo.card.CardSearchVo;
 

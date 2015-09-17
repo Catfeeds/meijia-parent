@@ -1,17 +1,12 @@
 package com.simi.action.app.job;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.simi.action.app.JUnitActionBase;
 
 public class TestSyncImMsgController extends JUnitActionBase{

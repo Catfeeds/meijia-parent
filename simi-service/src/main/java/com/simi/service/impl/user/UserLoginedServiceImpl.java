@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import com.simi.service.user.UserLoginedService;
 import com.simi.po.dao.user.UserLoginedMapper;
 import com.simi.po.model.user.UserLogined;
-import com.simi.po.model.user.UserSmsToken;
-import com.simi.po.model.user.Users;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

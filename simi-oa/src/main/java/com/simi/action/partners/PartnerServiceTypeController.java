@@ -26,11 +26,9 @@ import com.simi.models.AuthorityEditModel;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
 import com.simi.oa.auth.AuthPassport;
-import com.simi.po.model.admin.AdminAuthority;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.admin.AdminAuthorityService;
 import com.simi.service.partners.PartnerServiceTypeService;
-import com.simi.vo.admin.AdminAuthorityVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
 
 @Controller

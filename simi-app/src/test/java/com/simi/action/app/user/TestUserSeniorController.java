@@ -1,16 +1,11 @@
 package com.simi.action.app.user;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.eclipse.jetty.util.UrlEncoded;
 import org.junit.Test;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
 import com.simi.action.app.JUnitActionBase;
 
 
@@ -27,8 +22,9 @@ public class TestUserSeniorController extends JUnitActionBase  {
 		String url = "/app/user/senior_buy.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "18612514665");
-	    postRequest = postRequest.param("senior_type", "1");
+	    postRequest = postRequest.param("user_id", "95");
+	    postRequest = postRequest.param("sec_id", "1");
+	    postRequest = postRequest.param("senior_type_id", "1");
 	    postRequest = postRequest.param("pay_type", "0");
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);

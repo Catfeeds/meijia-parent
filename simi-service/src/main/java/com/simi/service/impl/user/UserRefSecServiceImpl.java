@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.user.UserRefSecMapper;
-import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
-import com.simi.po.model.user.UserRefSenior;
 import com.simi.service.user.UserRefSecService;
 import com.simi.vo.user.UserViewVo;
 

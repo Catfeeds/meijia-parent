@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserImHistory;
-import com.simi.vo.user.UserImLastVo;
 
 public interface UserImHistoryService {
 

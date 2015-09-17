@@ -15,7 +15,6 @@ import com.simi.common.Constants;
 import com.simi.po.dao.user.UserDetailPayMapper;
 import com.simi.po.dao.user.UserFeedbackMapper;
 import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;

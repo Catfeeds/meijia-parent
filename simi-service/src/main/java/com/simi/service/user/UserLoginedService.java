@@ -1,8 +1,6 @@
 package com.simi.service.user;
 
 import com.simi.po.model.user.UserLogined;
-import com.simi.po.model.user.UserSmsToken;
-import com.simi.po.model.user.Users;
 
 public interface UserLoginedService {
     int deleteByPrimaryKey(Long id);

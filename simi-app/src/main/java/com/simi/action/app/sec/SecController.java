@@ -18,14 +18,12 @@ import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.IPUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRefSec;
-import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
@@ -41,7 +39,6 @@ import com.simi.vo.UserSearchVo;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.sec.SecViewVo;
-import com.simi.vo.user.LoginVo;
 import com.simi.vo.user.UserViewVo;
 
 

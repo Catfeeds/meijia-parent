@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
-import com.simi.service.job.JobImService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 

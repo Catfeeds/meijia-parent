@@ -13,7 +13,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.JsonUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -32,7 +31,6 @@ import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardCommentViewVo;
@@ -168,7 +166,7 @@ public class CardController extends BaseController {
 				LinkManVo item = null;
 				for (int i = 0; i < linkManList.size(); i++) {
 					System.out.println(linkManList.get(i).toString());
-					item = (LinkManVo)linkManList.get(i);
+					item = linkManList.get(i);
 					String mobile = item.getMobile();
 					
 					if (!RegexUtil.isMobile(mobile)) {

@@ -1,13 +1,8 @@
 package com.simi.service.impl.order;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.common.Constants;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
@@ -19,16 +14,9 @@ import com.simi.service.user.UsersService;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
-import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.UserRefSec;
-import com.simi.po.model.user.Users;
-import com.meijia.utils.DateUtil;
-import com.meijia.utils.OrderNoUtil;
-import com.meijia.utils.TimeStampUtil;
 
 @Service
 public class OrderPayServiceImpl implements OrderPayService {

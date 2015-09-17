@@ -1,5 +1,7 @@
 package com.simi.service.dict;
 
+import java.util.List;
+
 import com.simi.po.model.dict.DictSeniorType;
 
 public interface DictSeniorTypeService {
@@ -14,4 +16,6 @@ public interface DictSeniorTypeService {
     int updateByPrimaryKeySelective(DictSeniorType record);
 
     int updateByPrimaryKey(DictSeniorType record);
+
+	List<DictSeniorType> getSeniorTypes();
 }

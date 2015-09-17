@@ -1,17 +1,11 @@
 package com.simi.action.app.user;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.eclipse.jetty.util.UrlEncoded;
 import org.junit.Test;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.simi.action.app.JUnitActionBase;
 
 

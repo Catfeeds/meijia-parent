@@ -1,7 +1,5 @@
 package com.simi.po.model.card;
 
-import java.util.Date;
-
 public class Cards {
     private Long cardId;
 

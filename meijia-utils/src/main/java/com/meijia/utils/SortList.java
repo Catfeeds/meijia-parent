@@ -14,6 +14,7 @@ public class SortList<E> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void Sort(List<E> list, final String method, final String sort) {
 		Collections.sort(list, new Comparator() {
+			@Override
 			public int compare(Object a, Object b) {
 				int ret = 0;
 				try {

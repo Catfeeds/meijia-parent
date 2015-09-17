@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,7 +40,6 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.sec.Sec;
 import com.simi.po.model.sec.SecRef3rd;
-import com.simi.po.model.user.Users;
 import com.simi.service.order.OrdersService;
 import com.simi.service.sec.SecService;
 

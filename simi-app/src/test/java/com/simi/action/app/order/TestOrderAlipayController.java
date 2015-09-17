@@ -9,7 +9,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.simi.action.app.JUnitActionBase;
-import com.meijia.utils.TimeStampUtil;
 
 public class TestOrderAlipayController extends JUnitActionBase  {
 

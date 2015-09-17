@@ -12,7 +12,6 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.partners.SpiderPartnerMapper;
-import com.simi.po.model.partners.Partners;
 import com.simi.po.model.partners.SpiderPartner;
 import com.simi.service.partners.SpiderPartnerService;
 import com.simi.vo.partners.PartnersSearchVo;

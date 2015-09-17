@@ -1,7 +1,5 @@
 package com.simi.vo.user;
 
-import com.simi.po.model.user.UserImLast;
-
 public class UserImLastVo {
 	
 	private String headImg;

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
 import com.simi.vo.UserSearchVo;

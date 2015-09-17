@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.po.dao.partners.PartnerServiceTypeMapper;
-import com.simi.po.model.admin.AdminAuthority;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.partners.PartnerServiceTypeService;
-import com.simi.vo.admin.AdminAuthorityVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
 
 @Service

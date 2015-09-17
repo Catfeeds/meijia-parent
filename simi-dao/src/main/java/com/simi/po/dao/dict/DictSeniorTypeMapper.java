@@ -1,5 +1,7 @@
 package com.simi.po.dao.dict;
 
+import java.util.List;
+
 import com.simi.po.model.dict.DictSeniorType;
 
 public interface DictSeniorTypeMapper {
@@ -14,4 +16,6 @@ public interface DictSeniorTypeMapper {
     int updateByPrimaryKeySelective(DictSeniorType record);
 
     int updateByPrimaryKey(DictSeniorType record);
+
+	List<DictSeniorType> selectAll();
 }

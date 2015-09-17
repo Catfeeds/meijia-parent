@@ -1,8 +1,6 @@
 package com.simi.action.app.user;
 
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +97,7 @@ public class UserSeniorController extends BaseController {
 	    //如果当前已经有秘书，且还未过期，则提示不可购买
 		Map<String, Date> validSecDate = orderSeniorService.getSeniorRangeDate(userId);
 		if (validSecDate != null && validSecDate.size() > 1) {
-			Date endDate = (Date)validSecDate.get("endDate");
+			Date endDate = validSecDate.get("endDate");
 			Date nowDate = DateUtil.getNowOfDate();
 			if (endDate.after(nowDate)) {
 				result.setStatus(Constants.ERROR_999);

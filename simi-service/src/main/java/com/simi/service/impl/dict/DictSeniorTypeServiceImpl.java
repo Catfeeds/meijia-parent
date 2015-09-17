@@ -1,5 +1,7 @@
 package com.simi.service.impl.dict;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,12 @@ public class DictSeniorTypeServiceImpl implements DictSeniorTypeService{
     @Autowired
     private DictSeniorTypeMapper dictSeniorTypeMapper;
 
+
+	@Override
+	public List<DictSeniorType> getSeniorTypes() {
+		return dictSeniorTypeMapper.selectAll();
+	}    
+    
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return dictSeniorTypeMapper.deleteByPrimaryKey(id);

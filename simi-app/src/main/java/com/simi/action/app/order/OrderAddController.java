@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.OrderNoUtil;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;

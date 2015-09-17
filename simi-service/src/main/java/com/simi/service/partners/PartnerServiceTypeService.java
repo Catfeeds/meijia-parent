@@ -2,9 +2,7 @@ package com.simi.service.partners;
 
 import java.util.List;
 
-import com.simi.po.model.admin.AdminAuthority;
 import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.vo.admin.AdminAuthorityVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
 
 public interface PartnerServiceTypeService {

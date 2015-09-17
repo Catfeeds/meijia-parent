@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.partners.PartnerRefCityMapper;
 import com.simi.po.model.partners.PartnerRefCity;
-import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.service.partners.PartnerRefCityService;
 @Service
 public class PartnerRefCityServiceImpl implements PartnerRefCityService {

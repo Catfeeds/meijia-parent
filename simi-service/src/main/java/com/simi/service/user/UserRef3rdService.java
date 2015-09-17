@@ -4,7 +4,6 @@ package com.simi.service.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 
 public interface UserRef3rdService {
