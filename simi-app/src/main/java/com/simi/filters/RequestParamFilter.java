@@ -38,13 +38,18 @@ public class RequestParamFilter implements HandlerInterceptor{
 		//设置请求开始时间，便于返回值时，打印运行时间
 		long beginTime = TimeStampUtil.getNow();
 		startTimeThreadLocal.set(beginTime);//线程绑定变量（该数据只有当前请求的线程可见）
-
-		logger.info("============== 1. preHandle ===================");
-
-
-		logger.info("request begin_time: "+ TimeStampUtil.timeStampToDateStr(beginTime));
-		logger.info(request.getMethod() + " " + request.getRequestURL());
-
+		
+		String requestUrl = request.getRequestURL().toString();
+		
+		//一些定时任务的日志不需要打印
+		if (requestUrl.indexOf("/app/job") < 0) {
+		
+			logger.info("============== 1. preHandle ===================");
+	
+	
+			logger.info("request begin_time: "+ TimeStampUtil.timeStampToDateStr(beginTime));
+			logger.info(request.getMethod() + " " + request.getRequestURL());
+		}
 
 		Map<String,String> params = new HashMap<String,String>();
 		Map requestParams = request.getParameterMap();
@@ -61,7 +66,10 @@ public class RequestParamFilter implements HandlerInterceptor{
 			params.put(name, valueStr);
 		}
 		logger.info(params.toString());
-		System.out.println(params.toString());
+		
+		if (requestUrl.indexOf("/app/job") < 0) {
+			System.out.println(params.toString());
+		}
 		return true;
 	}
 

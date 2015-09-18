@@ -61,11 +61,11 @@ public class UserSeniorController extends BaseController {
 			@RequestParam("pay_type") Short payType) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
+		
 		DictSeniorType dictSeniorType = dictSeniorTypeService.selectByPrimaryKey(seniorTypeId);
 
 		Users u = usersService.getUserById(userId);
-
+		
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
 			result.setStatus(Constants.ERROR_999);
