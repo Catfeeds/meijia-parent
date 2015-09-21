@@ -449,7 +449,10 @@ public class UsersServiceImpl implements UsersService {
 	
 	
 			}
-
+			
+			//去掉已经到期的用户
+			if (vo.getIsSenior().equals((short)0)) continue;
+			
 			vo.setSeniorRange(seniorRange);
 			
 			
