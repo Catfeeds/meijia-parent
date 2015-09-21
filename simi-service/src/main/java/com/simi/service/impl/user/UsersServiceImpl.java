@@ -362,9 +362,24 @@ public class UsersServiceImpl implements UsersService {
 			vo.setImSecNickname("");
 		}
 		
-		vo.setIsSenior((short) 1);
+		vo.setIsSenior((short) 0);
 		String seniorRange = "";
 		
+		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(userId);
+
+		if (!seniorRangeResult.isEmpty()) {
+			Date startDate = seniorRangeResult.get("startDate");
+			Date endDate = seniorRangeResult.get("endDate");
+			String endDateStr = DateUtil.formatDate(endDate);
+			String nowStr = DateUtil.getToday();
+			if(DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+				vo.setIsSenior((short) 1);
+			}
+
+			seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至" + DateUtil.formatDate(endDate);
+
+
+		}
 
 		vo.setSeniorRange(seniorRange);
 
