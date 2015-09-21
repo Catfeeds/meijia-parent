@@ -15,6 +15,9 @@ public class UserViewVo extends Users {
      * 是否可以使用真人秘书服务 1=是 0=否
      */
     private Short isSenior;
+    
+    private Long secId;
+    
     /**
      * 秘书IM账号
      */
@@ -121,6 +124,14 @@ public class UserViewVo extends Users {
 
 	public void setUser_id(long userId) {
 		this.userId = userId;
+	}
+
+	public Long getSecId() {
+		return secId;
+	}
+
+	public void setSecId(Long secId) {
+		this.secId = secId;
 	}
 
 }

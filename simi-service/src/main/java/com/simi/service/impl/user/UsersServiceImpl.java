@@ -351,12 +351,14 @@ public class UsersServiceImpl implements UsersService {
 		Map imRobot = this.getImRobot(u);
 		vo.setImRobotUsername(imRobot.get("username").toString());
 		vo.setImRobotNickname(imRobot.get("nickname").toString());
+		vo.setSecId(0L);
 		if(userRefSec!=null){
 
 			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
 			UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userRefSec.getSecId());
 			vo.setImSecUsername(userRef3rd.getUsername());
 			vo.setImSecNickname(secUser.getName());
+			vo.setSecId(userRefSec.getSecId());
 		}else{
 			vo.setImSecUsername("");
 			vo.setImSecNickname("");
