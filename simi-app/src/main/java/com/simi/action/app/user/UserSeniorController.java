@@ -81,6 +81,12 @@ public class UserSeniorController extends BaseController {
 			result.setMsg("无效的购买");
 			return result;
 		}
+		
+		if (userId.equals(secId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("无效的购买");
+			return result;			
+		}
 
 		//如果是余额支付，先判断余额是否足够
 		if (payType == Constants.PAY_TYPE_0 &&

@@ -142,6 +142,11 @@ public class CardController extends BaseController {
 		record.setTicketType(ticketType);
 		record.setTicketFromCityId(ticketFromCityId);
 		record.setTicketToCityId(ticketToCityId);
+		
+		
+		if (setSecDo.equals((short)1)) {
+			status = 2;
+		}
 		record.setStatus(status);
 		
 		if (cardId > 0L) {

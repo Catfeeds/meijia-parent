@@ -84,8 +84,20 @@ public class SecController extends BaseController {
 			List<SecViewVo> secList = new ArrayList<SecViewVo>();
 			if (!users.isEmpty()) {
 				secList = secService.changeToSecViewVos(users);
+				
+				//排除本身
+				SecViewVo item = null;
+				for (int i =0; i < secList.size(); i++) {
+					item = secList.get(i);
+					if (userId.equals(item.getSecId())) {
+						secList.remove(i);
+					}
+				}				
+				
 				result.setData(secList);
 			}
+			
+
 			return result;
 	}
 }
