@@ -153,7 +153,7 @@ public class UserSeniorController extends BaseController {
 	 */
 	@RequestMapping(value = "senior_online_pay", method = RequestMethod.POST)
 	public AppResultData<Object> seniorPay(
-			@RequestParam("mobile") String mobile,
+			@RequestParam(value = "mobile", required = false, defaultValue="") String mobile,
 			@RequestParam("senior_order_no") String seniorOrderNo,
 			@RequestParam("pay_type") Short payType,
 			@RequestParam("notify_id") String notifyId,
