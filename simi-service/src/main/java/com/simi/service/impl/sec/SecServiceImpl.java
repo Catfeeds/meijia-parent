@@ -1,25 +1,12 @@
 package com.simi.service.impl.sec;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.DateUtil;
-import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.huanxin.EasemobIMUsers;
-import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
@@ -28,9 +15,7 @@ import com.simi.service.sec.SecService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.sec.SecInfoVo;
 import com.simi.vo.sec.SecViewVo;
-import com.simi.vo.sec.SecVo;
 
 @Service
 public class SecServiceImpl implements SecService {
