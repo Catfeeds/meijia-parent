@@ -98,7 +98,7 @@ public class WxNotifyOrderCardController extends BaseController {
 			//通知参数
 			//params.put("notify_params", notify_params.toString());
 			System.out.println(params.toString());
-			String url = "http://localhost/simi/app/user/card_online_pay.json";
+			String url = "http://localhost:8080/simi/app/user/card_online_pay.json";
 			
 			System.out.println(url);
 			AppSubmit.appAliay(url, params);		
