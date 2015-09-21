@@ -13,6 +13,8 @@ import com.github.pagehelper.PageInfo;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
@@ -20,12 +22,14 @@ import com.simi.service.order.OrderQueryService;
 import com.simi.service.sec.SecService;
 import com.simi.service.user.UserBaiduBindService;
 import com.simi.service.user.UserLoginedService;
+import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.sec.SecViewVo;
+import com.simi.vo.user.UserViewVo;
 
 
 @Controller
@@ -40,13 +44,6 @@ public class SecController extends BaseController {
 	
 	@Autowired
 	private UsersService userService;
-	
-	
-	@Autowired
-	private CityService cityService;
-	
-	@Autowired
-	private DictService dictService;
 
 	@Autowired
 	private SecService secService;
@@ -55,11 +52,14 @@ public class SecController extends BaseController {
 	private UserRefSecService userRefSecService;
 
 	@Autowired
-	private UserBaiduBindService userBaiduBindService;
+	private UserRef3rdService userRef3rdService;
 
-	@Autowired
-	private UserSmsTokenService smsTokenService;
-
+	/**
+	 * 获取可用的秘书列表
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
 	public AppResultData<Object> secList(
 			@RequestParam("user_id") Long userId,
@@ -100,4 +100,42 @@ public class SecController extends BaseController {
 
 			return result;
 	}
+	
+	/**
+	 * 秘书获取绑定客户信息
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "get_users", method = RequestMethod.GET)
+	public AppResultData<Object> getSecUsers(@RequestParam("sec_id") Long secId) {
+			
+			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
+
+			Users u = userService.getUserById(secId);
+
+			// 判断是否为注册用户，非注册用户返回 999
+			if (u == null) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+				return result;
+			}
+			
+			//获取用户列表
+			List<UserRefSec> userRefSecs = userRefSecService.selectBySecId(secId);
+			List<Long> userIds = new ArrayList<Long>();
+			
+			for (UserRefSec item : userRefSecs) {
+				if (!userIds.contains(item.getUserId())) {
+					userIds.add(item.getUserId());
+				}
+			}
+			
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
+			
+			List<UserViewVo> users = userService.getUserInfos(userIds, u, userRef3rd);
+			
+			result.setData(users);
+			return result;
+	}	
 }

@@ -394,6 +394,77 @@ public class UsersServiceImpl implements UsersService {
 
 		return vo;
 	}
+	
+	
+	/**
+	 * 获取用户账号详情接口
+	 */
+	@Override
+	public List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd) {
+		List<UserViewVo> result = new ArrayList<UserViewVo>();
+		List<Users> userList = usersMapper.selectByUserIds(userIds);
+		
+		List<UserRef3rd> userRef3rds = userRef3rdMapper.selectByUserIds(userIds);
+		
+		Users u = null;
+		for (int i = 0; i < userList.size(); i++) {
+			
+			UserViewVo vo = new UserViewVo();
+			u = userList.get(i);
+			BeanUtils.copyProperties(u, vo);
+			vo.setUser_id(u.getId());
+		
+		
+			if (StringUtil.isEmpty(vo.getName())) {
+				vo.setName(vo.getMobile());
+			}
+		
+		
+			//获取用户与绑定的秘书的环信IM账号
+			Map imRobot = this.getImRobot(u);
+			vo.setImRobotUsername(imRobot.get("username").toString());
+			vo.setImRobotNickname(imRobot.get("nickname").toString());
+
+		
+			vo.setImSecUsername(userRef3rd.getUsername());
+			vo.setImSecNickname(secUser.getName());
+			vo.setSecId(secUser.getId());
+
+		
+			vo.setIsSenior((short) 0);
+			String seniorRange = "";
+		
+			HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(u.getId());
+
+			if (!seniorRangeResult.isEmpty()) {
+				Date startDate = seniorRangeResult.get("startDate");
+				Date endDate = seniorRangeResult.get("endDate");
+				String endDateStr = DateUtil.formatDate(endDate);
+				String nowStr = DateUtil.getToday();
+				if(DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+					vo.setIsSenior((short) 1);
+				}
+	
+				seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至" + DateUtil.formatDate(endDate);
+	
+	
+			}
+
+			vo.setSeniorRange(seniorRange);
+			
+			
+			for (UserRef3rd item : userRef3rds) {
+				if (item.getUserId().equals(u.getId())) {
+					vo.setImUsername(item.getUsername());
+					vo.setImPassword(item.getPassword());
+				}
+			}
+			result.add(vo);
+			
+		}
+
+		return result;
+	}	
 
 	/**
 	 * 查询用户与管家绑定的环信账号

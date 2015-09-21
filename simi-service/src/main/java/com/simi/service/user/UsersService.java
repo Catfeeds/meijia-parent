@@ -59,4 +59,6 @@ public interface UsersService {
 
 	List<Users> selectByUserType(Short userType);
 
+	List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd);
+
 }
