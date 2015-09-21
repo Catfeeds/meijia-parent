@@ -40,7 +40,6 @@ import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserBaiduBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
-import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
@@ -71,9 +70,6 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserBaiduBindService userBaiduBindService;
-
-	@Autowired
-	private UserMsgService userMsgService;
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;

@@ -15,7 +15,6 @@
     									  com.simi.service.user.**,
     									  com.simi.service.admin.**,
     									  com.simi.service.partners.**,
-    									  com.simi.service.dispatch.**,
     									  com.simi.service.card.**,
     									  com.simi.service.impl.**,
     									  com.simi.service.impl.remind.**,

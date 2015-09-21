@@ -11,14 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.vo.AppResultData;
 import com.simi.po.model.dict.DictAd;
 import com.simi.service.dict.AdService;
-import com.simi.service.dict.ServiceTypeService;
 
 @Controller
 @RequestMapping(value="/app/dict")
 public class AdController<T> {
-
-	@Autowired
-	private ServiceTypeService serviceTypeService;
 
 	@Autowired
 	private AdService adService;

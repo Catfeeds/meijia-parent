@@ -6,7 +6,6 @@ import com.simi.service.impl.dict.DictServiceImpl;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictProvince;
 import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.dict.DictServiceTypes;
 
 public class DictUtil {
 	
@@ -37,15 +36,6 @@ public class DictUtil {
 		return listRegion;
 	}
 	
-	/**
-	 * 获取内存服务类型数据
-	 * @return
-	 */
-	public static List<DictServiceTypes> getServiceTypes() {
-		List<DictServiceTypes>  listServiceTypes = DictServiceImpl.memDictMap.get("listServiceTypes");
-		return listServiceTypes;
-	}
-
 	/**
 	 * 通过省份id获取省份名称
 	 * @return
@@ -112,20 +102,20 @@ public class DictUtil {
 		return regionName;
 	}
 
-	public static String getServiceTypeName(Long serviceTypeId) {
-		String serviceTypeName = "";
-		if (serviceTypeId <=0) return serviceTypeName;
-
-		List<DictServiceTypes>  listServiceTypes = DictServiceImpl.memDictMap.get("listServiceTypes");
-
-		DictServiceTypes item = null;
-		for (int i = 0 ; i < listServiceTypes.size(); i++) {
-			item = listServiceTypes.get(i);
-			if (item.getId().equals(serviceTypeId)) {
-				serviceTypeName = item.getName();
-				break;
-			}
-		}
-		return serviceTypeName;
-	}
+//	public static String getServiceTypeName(Long serviceTypeId) {
+//		String serviceTypeName = "";
+//		if (serviceTypeId <=0) return serviceTypeName;
+//
+//		List<DictServiceTypes>  listServiceTypes = DictServiceImpl.memDictMap.get("listServiceTypes");
+//
+//		DictServiceTypes item = null;
+//		for (int i = 0 ; i < listServiceTypes.size(); i++) {
+//			item = listServiceTypes.get(i);
+//			if (item.getId().equals(serviceTypeId)) {
+//				serviceTypeName = item.getName();
+//				break;
+//			}
+//		}
+//		return serviceTypeName;
+//	}
 }

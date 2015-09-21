@@ -230,11 +230,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
     		
     		//服务类型名称
     		vo.setServiceTypeName("");
-    		if (vo.getServiceType() > 0L) {
-    			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
-    			vo.setServiceTypeName(serviceTypeName);
-    		}
-    		
+//    		if (vo.getServiceType() > 0L) {
+//    			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
+//    			vo.setServiceTypeName(serviceTypeName);
+//    		}
+//    		
     		//用户姓名
     		String name = "";
     		Users u = null;
@@ -305,11 +305,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		//服务类型名称
 		vo.setServiceTypeName("");
-		if (vo.getServiceType() > 0L) {
-			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
-			vo.setServiceTypeName(serviceTypeName);
-		}
-		
+//		if (vo.getServiceType() > 0L) {
+//			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
+//			vo.setServiceTypeName(serviceTypeName);
+//		}
+//		
 		//用户称呼
 		vo.setName("");
 		if (vo.getUserId() > 0L) {

@@ -11,8 +11,6 @@ public interface DictService {
 
 	String getCityName(Long cityId);
 
-	String getServiceTypeName(Long serviceTypeId);
-
 	List<DictRegion> getRegionByCityId(Long cityId);
 	
 	List<DictCity> getCityByProvinceId(Long provinceId);

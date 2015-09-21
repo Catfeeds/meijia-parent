@@ -14,10 +14,8 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.dict.DictServiceTypes;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.DictService;
-import com.simi.service.dict.ServiceTypeService;
 import com.simi.vo.AppResultData;
 
 @Controller
@@ -26,9 +24,6 @@ public class DictInterface extends BaseController {
 
 	@Autowired
 	private DictService dictService;
-
-	@Autowired
-	private ServiceTypeService serviceTypeService;
 
     @Autowired
     private AdService adService;
@@ -78,33 +73,6 @@ public class DictInterface extends BaseController {
 		}
 		return result;
 	}
-	/**
-	 * 检查服务类型名称是否重复
-	 * @param request
-	 * @param model
-	 * @param
-	 * @return
-	 */
-	// @AuthPassport Map<String, Object>
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "check-name-dumplicate", method = RequestMethod.POST)
-	public  AppResultData<Boolean> checkName(
-			@RequestParam(value = "name", required = true, defaultValue = "") String name,
-			@RequestParam(value = "serviceType", required = true, defaultValue = "0") Long serviceType
 
-			) {
-
-		AppResultData<Boolean> result = new AppResultData<Boolean>(
-		Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, false);
-		DictServiceTypes record = serviceTypeService.selectByNameAndOtherId(name, serviceType);
-
-		if(record != null && record.getId() > 0){
-			result.setMsg("名称已经存在");
-			result.setData(true);
-		}else{
-			result.setData(false);
-		}
-		return result;
-	}
 
 }

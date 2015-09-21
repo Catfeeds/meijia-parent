@@ -1,8 +1,6 @@
 package com.simi.vo.sec;
 
-import com.simi.po.model.sec.Sec;
-
-public class SecVo extends Sec{
+public class SecVo {
 	private String imgUrlNew;
 
     private String username;

@@ -13,22 +13,16 @@ import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
 import com.simi.service.dict.ProvinceService;
 import com.simi.service.dict.RegionService;
-import com.simi.service.dict.ServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.po.dao.dict.DictCityMapper;
-import com.simi.po.dao.dict.DictServiceTypesMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictProvince;
 import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.dict.DictServiceTypes;
 
 @Service
 public class DictServiceImpl implements DictService {
 
 	public static Map<String, List> memDictMap = new HashMap<String, List>();
-
-	@Autowired
-	private DictServiceTypesMapper dictServiceTypesMapper;
 	
 	@Autowired
 	private DictCityMapper dictCityMapper;
@@ -41,9 +35,6 @@ public class DictServiceImpl implements DictService {
 
 	@Autowired
 	private RegionService regionService;
-
-	@Autowired
-	private ServiceTypeService serviceTypeService;
 
 	@Autowired
 	private UserAddrsService userAddrsService;
@@ -62,9 +53,6 @@ public class DictServiceImpl implements DictService {
 
 		// 区县信息
 		this.LoadRegionData();
-
-		// 服务类型
-		this.LoadServiceTypeData();
 
 	}
 
@@ -85,25 +73,6 @@ public class DictServiceImpl implements DictService {
 			}
 		}
 		return cityName;
-	}
-
-	@Override
-	public String getServiceTypeName(Long serviceTypeId) {
-		String serviceTypeName = "";
-		if (serviceTypeId <= 0)
-			return serviceTypeName;
-
-		List<DictServiceTypes> listServiceTypes = this.LoadServiceTypeData();
-
-		DictServiceTypes item = null;
-		for (int i = 0; i < listServiceTypes.size(); i++) {
-			item = listServiceTypes.get(i);
-			if (item.getId().equals(serviceTypeId)) {
-				serviceTypeName = item.getName();
-				break;
-			}
-		}
-		return serviceTypeName;
 	}
 
 	private List<DictProvince> LoadProvinceData() {
@@ -172,18 +141,4 @@ public class DictServiceImpl implements DictService {
 
 		return listRegion;
 	}
-
-	private List<DictServiceTypes> LoadServiceTypeData() {
-		// 服务类型
-		List<DictServiceTypes> listServiceTypes = memDictMap
-				.get("listServiceTypes");
-		if (listServiceTypes == null || listServiceTypes.isEmpty()) {
-			listServiceTypes = serviceTypeService.getServiceTypes();
-			memDictMap.put("listServiceTypes", listServiceTypes);
-		}
-		return listServiceTypes;
-	}
-
-
-
 }

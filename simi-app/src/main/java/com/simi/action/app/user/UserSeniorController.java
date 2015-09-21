@@ -19,7 +19,6 @@ import com.simi.service.dict.DictSeniorTypeService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserDetailPayService;
-import com.simi.service.user.UserRefSeniorService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.OneCareUtil;
@@ -41,10 +40,7 @@ public class UserSeniorController extends BaseController {
 
 	@Autowired
 	private UsersService usersService;
-	
-	@Autowired
-	private UserRefSeniorService userRefSeniorService;
-	
+		
 	@Autowired
 	private UserDetailPayService userDetailPayService;	
 
