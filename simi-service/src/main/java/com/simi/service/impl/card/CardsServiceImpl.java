@@ -66,6 +66,7 @@ public class CardsServiceImpl implements CardService {
 		record.setTicketFromCityId(0L);
 		record.setTicketToCityId(0L);
 		record.setStatus((short) 1);
+		record.setSecRemarks("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 

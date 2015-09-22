@@ -17,13 +17,14 @@
 		<result column="ticket_from_city_id" property="ticketFromCityId" jdbcType="NUMERIC" />
 		<result column="ticket_to_city_id" property="ticketToCityId" jdbcType="NUMERIC" />
 		<result column="status" property="status" jdbcType="NUMERIC" />
+		<result column="sec_remarks" property="secRemarks" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		card_id, create_user_id, user_id, card_type, service_time, service_addr,
 		service_content, set_remind, set_now_send, set_sec_do, set_sec_remarks, ticket_type,
-		ticket_from_city_id, ticket_to_city_id, status, add_time, update_time
+		ticket_from_city_id, ticket_to_city_id, status, sec_remarks, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -114,14 +115,14 @@
 		service_addr, service_content, set_remind,
 		set_now_send, set_sec_do, set_sec_remarks,
 		ticket_type, ticket_from_city_id, ticket_to_city_id,
-		status, add_time, update_time
+		status, sec_remarks, add_time, update_time
 		)
 		values (#{cardId,jdbcType=NUMERIC}, #{createUserId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
 		#{cardType,jdbcType=NUMERIC}, #{serviceTime,jdbcType=NUMERIC},
 		#{serviceAddr,jdbcType=VARCHAR}, #{serviceContent,jdbcType=VARCHAR}, #{setRemind,jdbcType=SMALLINT},
 		#{setNowSend,jdbcType=NUMERIC}, #{setSecDo,jdbcType=NUMERIC}, #{setSecRemarks,jdbcType=VARCHAR},
 		#{ticketType,jdbcType=NUMERIC}, #{ticketFromCityId,jdbcType=NUMERIC}, #{ticketToCityId,jdbcType=NUMERIC},
-		#{status,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		#{status,jdbcType=NUMERIC}, #{secRemarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.card.Cards">
@@ -229,6 +230,9 @@
 			<if test="status != null">
 				#{status,jdbcType=NUMERIC},
 			</if>
+			<if test="secRemarks != null">
+				#{secRemarks,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
@@ -282,6 +286,9 @@
 			<if test="status != null">
 				status = #{status,jdbcType=NUMERIC},
 			</if>
+			<if test="secRemarks != null">
+				sec_remakrs = #{secRemarks,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -307,6 +314,7 @@
 		ticket_from_city_id = #{ticketFromCityId,jdbcType=NUMERIC},
 		ticket_to_city_id = #{ticketToCityId,jdbcType=NUMERIC},
 		status = #{status,jdbcType=NUMERIC},
+		sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where card_id = #{cardId,jdbcType=NUMERIC}

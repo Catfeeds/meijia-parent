@@ -144,21 +144,20 @@ public class CardController extends BaseController {
 		record.setTicketToCityId(ticketToCityId);
 		
 		
-		if (setSecDo.equals((short)1)) {
-			status = 2;
-		}
+//		if (setSecDo.equals((short)1)) {
+//			status = 2;
+//		}
 		record.setStatus(status);
 		
 		if (cardId > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.updateByPrimaryKeySelective(record);
-
 		} else {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.insert(record);
 			cardId = record.getCardId();			
 		}
-		System.out.println(attends);
+//		System.out.println(attends);
 		//处理attends 转换为List<LinkManVo>的概念.
 		if (!StringUtil.isEmpty(attends)) {
 			Gson gson = new Gson();
@@ -417,6 +416,42 @@ public class CardController extends BaseController {
 		
 		return result;
 	}		
+	
+	
+	// 卡片列表接口
+	/**
+	 *  @param card_id				卡片ID,  0 表示新增
+	 *  @param user_id  			用户ID
+	 *
+	 *  @return  CardViewVo
+	 */
+	@RequestMapping(value = "sec_do", method = RequestMethod.POST)
+	public AppResultData<Object> secDo(
+			@RequestParam("card_id") Long cardId,
+			@RequestParam("sec_id") Long secId,
+			@RequestParam("status") Short status,
+			@RequestParam(value = "sec_remarks", required = false, defaultValue = "") String secRemarks
+			) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = userService.getUserById(secId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		Cards record = cardService.selectByPrimaryKey(cardId);
+		if (record == null) return result;
+		
+		record.setStatus(status);
+		record.setSecRemarks(secRemarks);
+		cardService.updateByPrimaryKeySelective(record);
+		return result;
+	}	
 	
 	
 }

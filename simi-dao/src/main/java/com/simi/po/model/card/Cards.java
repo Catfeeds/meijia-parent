@@ -30,6 +30,8 @@ public class Cards {
     private Long ticketToCityId;
 
     private Short status;
+    
+    private String secRemarks;
 
     private Long addTime;
 
@@ -170,4 +172,12 @@ public class Cards {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getSecRemarks() {
+		return secRemarks;
+	}
+
+	public void setSecRemarks(String secRemarks) {
+		this.secRemarks = secRemarks;
+	}
 }
