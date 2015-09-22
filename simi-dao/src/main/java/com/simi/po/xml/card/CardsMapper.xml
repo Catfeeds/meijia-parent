@@ -40,7 +40,7 @@
 		from
 		(
 			select <include refid="Base_Column_List" /> from cards 
-			where user_id = #{userId,jdbcType=NUMERIC}
+			where user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC}
 			union
 			select <include refid="Base_Column_List" /> from cards 
 			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})

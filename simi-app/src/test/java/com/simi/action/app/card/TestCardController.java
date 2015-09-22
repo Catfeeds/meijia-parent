@@ -31,7 +31,7 @@ public class TestCardController extends JUnitActionBase  {
      	postRequest = postRequest.param("card_id", "0");
 	    postRequest = postRequest.param("card_type", "1");
 	    postRequest = postRequest.param("create_user_id", "18");
-	    postRequest = postRequest.param("user_id", "18");
+	    postRequest = postRequest.param("user_id", "1");
 	    
 	    //参会人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
@@ -93,7 +93,7 @@ public class TestCardController extends JUnitActionBase  {
     public void testGetList() throws Exception {
 
 		String url = "/app/card/get_list.json";
-		String params = "?user_id=1&card_from=1";
+		String params = "?user_id=1&card_from=0&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
