@@ -376,11 +376,10 @@ public class UsersServiceImpl implements UsersService {
 			String nowStr = DateUtil.getToday();
 			if(DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
 				vo.setIsSenior((short) 1);
+				seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至" + DateUtil.formatDate(endDate);
+			} else {
+				seniorRange = "已过期";
 			}
-
-			seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至" + DateUtil.formatDate(endDate);
-
-
 		}
 
 		vo.setSeniorRange(seniorRange);
@@ -599,7 +598,4 @@ public class UsersServiceImpl implements UsersService {
 		 
 		return usersMapper.selectByUserType(userType);
 	}
-	
-
-
 }
