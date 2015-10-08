@@ -26,3 +26,22 @@ var Script = function () {
 
 
 }();
+
+var host = window.location.host;
+var appName = "simi";
+var localUrl = "http://" + host;
+var appRootUrl = localUrl + "/" + appName + "/app/";
+//通用生成行业二级下拉框
+function getDictTrade() {
+	var result;
+	$.ajax({
+	    type: "GET",
+	    url: appRootUrl + "/dict/get_trades.json", //发送给服务器的url
+	    dataType:"json",
+	    async:false,
+	    success: function(data) {
+		  result = data.data
+	    }
+	});
+	return result;
+}

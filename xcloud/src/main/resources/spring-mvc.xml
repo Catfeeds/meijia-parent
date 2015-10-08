@@ -40,10 +40,8 @@
 
 	<!-- 开启controller注解支持 -->
 	<!-- use-default-filters="false" 只扫描指定的注解 -->
-	<context:component-scan
-		base-package="com.xcloud.action.**,
-					  com.xcloud.action.company.**"
-		use-default-filters="false">
+	<context:component-scan base-package="com.xcloud.action.**,
+					  com.xcloud.action.company.**" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
@@ -109,6 +107,27 @@
 		</property>
 		<property name="defaultEncoding">
 			<value>UTF-8</value>
+		</property>
+	</bean>
+
+
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">yes</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.color">blue</prop>
+						<prop key="kaptcha.image.width">114</prop>
+						<prop key="kaptcha.image.height">33</prop>
+						<prop key="kaptcha.textproducer.font.size">25</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+					</props>
+				</constructor-arg>
+			</bean>
 		</property>
 	</bean>
 </beans>

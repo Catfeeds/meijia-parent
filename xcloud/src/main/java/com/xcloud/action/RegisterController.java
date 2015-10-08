@@ -12,7 +12,7 @@ import com.xcloud.vo.LoginVo;
 public class RegisterController extends BaseController {
 
 	
-	@RequestMapping(value="/register-step-1", method = {RequestMethod.GET})
+	@RequestMapping(value="/register", method = {RequestMethod.GET})
     public String registerStep1(Model model) {
         return "/home/register";
     }	

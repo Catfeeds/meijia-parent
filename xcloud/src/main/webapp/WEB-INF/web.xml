@@ -83,6 +83,16 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
+    <!-- 图形验证码配置 -->
+    <servlet>
+ 		<servlet-name>kaptcha</servlet-name>
+ 		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+ 	</servlet>
+  	<servlet-mapping>
+  		<servlet-name>kaptcha</servlet-name>
+  		<url-pattern>/kaptcha.jpg</url-pattern>
+  	</servlet-mapping>
+    
     <error-page> 
 	    <error-code>403</error-code> 
 	    <location>/WEB-INF/views/404.jsp</location> 

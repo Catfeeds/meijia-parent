@@ -23,7 +23,7 @@
 		<h1>企业登录</h1>
 
 		
-		<form class="form-horizontal" role="form">
+		<form class="form-horizontal list-inline" role="form">
 			<div class="form-group">
 				<div class="col-lg-12">
 					<input type="text" placeholder="用户名/手机号" class="form-control">
@@ -35,6 +35,21 @@
 					<input type="password" placeholder="密码" class="form-control">
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-lg-7">
+							<input type="text" placeholder="验证码" class="form-control" style="width: 100%">
+						</div>
+						
+						<div class="col-lg-3">
+							<img id="kaptchaImage" src="/xcloud/captcha" maxlength="4"  style="margin-bottom: -10px"/>  
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<div class="col-lg-12">
 					<button class="btn btn-danger" type="button" style="width:120px">登录</button>
@@ -52,7 +67,7 @@
 		<footer id="footer">
 		<ul class="copyright">
 			<li>&copy; 美家生活科技有限公司</li>
-			<li><a href="#">企业注册</a></li>
+			<li><a href="register">企业注册</a></li>
 		</ul>
 		</footer>
 
@@ -64,6 +79,11 @@
 
 	<!--script for this page-->
 
-
+	<script type="text/javascript">  
+    $('#kaptchaImage').click(function () {//生成验证码    
+          $(this).hide().attr('src', '/xcloud/captcha?' + Math.floor(Math.random()*100) ).fadeIn();    
+          event.cancelBubble=true;    
+    });  
+</script>  
 </body>
 </html>
