@@ -51,13 +51,13 @@ public class UserCouponController extends BaseController {
 	 */
 	@RequestMapping(value = "get_coupons", method = RequestMethod.GET)
 	public AppResultData<List> getCoupons(
-			@RequestParam("mobile") String mobile) {
+			@RequestParam("user_id") Long userId) {
 
 		AppResultData<List> result = new AppResultData<List>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new ArrayList());
 
 		// 先获取用户的基本优惠券
-		List<UserCoupons> listUserCoupons = userCouponService.selectByMobile(mobile);
+		List<UserCoupons> listUserCoupons = userCouponService.selectByUserId(userId);
 
 		if (listUserCoupons.isEmpty()) {
 			return result;
@@ -120,21 +120,21 @@ public class UserCouponController extends BaseController {
 	 */
 	@RequestMapping(value = "post_coupon", method = RequestMethod.POST)
 	public AppResultData<Object> postCoupons (
-			@RequestParam("mobile") String mobile,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("card_passwd") String cardPasswd) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
 		//验证优惠券是否有效
-		AppResultData<Object> resultValidation = userCouponService.validateCoupon(mobile, cardPasswd);
+		AppResultData<Object> resultValidation = userCouponService.validateCoupon(userId, cardPasswd);
 		//不正确直接返回
 		if (resultValidation.getStatus() != Constants.SUCCESS_0) {
 			return resultValidation;
 		}
 
 		//判定该优惠卷是已经兑换过，如果兑换过则不需要再添加
-		UserCoupons item = userCouponService.selectByMobileCardPwd(mobile, cardPasswd);
+		UserCoupons item = userCouponService.selectByUserIdCardPwd(userId, cardPasswd);
 		if (item != null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.COUPON_IS_USED_MSG);
@@ -146,9 +146,9 @@ public class UserCouponController extends BaseController {
 		//获得优惠券实体类
 		DictCoupons dictCoupon = couponService.selectByCardPasswd(cardPasswd);
 		//获取用户实体类
-		Users u = userService.getUserByMobile(mobile);
+		Users u = userService.getUserById(userId);
 		record.setUserId(u.getId());
-		record.setMobile(mobile);
+		record.setMobile(u.getMobile());
 		record.setCardPasswd(cardPasswd);
 		record.setCouponId(dictCoupon.getId());
 		record.setValue(dictCoupon.getValue());
@@ -159,7 +159,7 @@ public class UserCouponController extends BaseController {
 		if (dictCoupon.getCouponType().equals(Constants.COUPON_TYPE_1)) {
 			//先进行用户的账号明细记录
 			UserDetailPay userDetailPay = userDetailPayService.initUserDetail();
-			userDetailPay.setMobile(mobile);
+			userDetailPay.setMobile(u.getMobile());
 			userDetailPay.setUserId(u.getId());
 			userDetailPay.setOrderType((short) 3);
 			userDetailPay.setOrderId(dictCoupon.getId());
@@ -177,7 +177,7 @@ public class UserCouponController extends BaseController {
 			userService.updateByPrimaryKeySelective(u);
 
 			//优惠卷变成已使用状态
-			UserCoupons newItem = userCouponService.selectByMobileCardPwd(mobile, cardPasswd);
+			UserCoupons newItem = userCouponService.selectByUserIdCardPwd(userId, cardPasswd);
 
 			newItem.setIsUsed((short) 1);
 			userCouponService.updateByPrimaryKeySelective(newItem);

@@ -61,12 +61,17 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public UserCoupons selectByMobileCardPwd(String mobile, String card_passwd) {
 		return userCouponsMapper.selectByMobileCardPwd(mobile, card_passwd);
 	}
+	
+	@Override
+	public UserCoupons selectByUserIdCardPwd(Long userId, String card_passwd) {
+		return userCouponsMapper.selectByUserIdCardPwd(userId, card_passwd);
+	}	
 
 	/*
 	 * 整体验证优惠券是否有效的方法
 	 */
 	@Override
-	public AppResultData<Object> validateCouponAll(String mobile, 
+	public AppResultData<Object> validateCouponAll(Long userId, 
 												   String cardPasswd,
 										  		   String orderNo, 
 										  		   Short orderFrom,
@@ -75,7 +80,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		result = this.validateCoupon(mobile, cardPasswd);
+		result = this.validateCoupon(userId, cardPasswd);
 
 		if (result.getStatus() != Constants.SUCCESS_0) {
 			return result;
@@ -86,7 +91,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 			return result;
 		}
 
-		result = this.validateByOrderNo(mobile, cardPasswd, orderNo);
+		result = this.validateByOrderNo(userId, cardPasswd, orderNo);
 		if (result.getStatus() != Constants.SUCCESS_0) {
 			return result;
 		}
@@ -101,7 +106,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 		cardPasswd  优惠券  require = true
 	 */
 	@Override
-	public AppResultData<Object> validateCoupon(String mobile,
+	public AppResultData<Object> validateCoupon(Long userId,
 			String cardPasswd) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
@@ -135,7 +140,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 			UserCoupons temp = null;
 			for(int i = 0; i < listUsed.size(); i++) {
 				temp = listUsed.get(i);
-				if (!temp.getMobile().equals(mobile)) {
+				if (!temp.getUserId().equals(userId)) {
 					result.setStatus(Constants.ERROR_999);
 					result.setMsg(ConstantMsg.COUPON_IS_USED_MSG);
 					return result;
@@ -145,7 +150,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 
 		//查找此用户和优惠券的使用情况
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("mobile", mobile);
+		conditions.put("userId", userId);
 		conditions.put("cardPasswd", cardPasswd);
 		conditions.put("isUsed", 0);
 		List<UserCoupons> list = userCouponsMapper.selectByConditions(conditions);
@@ -181,7 +186,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 		orderNo		订单号，默认为""  require = false;
 	 */
 	@Override
-	public AppResultData<Object> validateByOrderNo(String mobile,
+	public AppResultData<Object> validateByOrderNo(Long userId,
 			String cardPasswd, String orderNo) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
@@ -199,7 +204,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 
 		//查找此用户和优惠券的使用情况
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("mobile", mobile);
+		conditions.put("userId", userId);
 		conditions.put("cardPasswd", cardPasswd);
 		conditions.put("isUsed", 0);
 		List<UserCoupons> list = userCouponsMapper.selectByConditions(conditions);

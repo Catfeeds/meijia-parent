@@ -88,6 +88,14 @@
 		where mobile = #{0} and card_passwd = #{1} and is_used = 0
 		order by add_time asc limit 1
 	</select>
+	
+	<select id="selectByUserIdCardPwd" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_coupons
+		where user_id = #{0} and card_passwd = #{1} and is_used = 0
+		order by add_time asc limit 1
+	</select>	
 
 	<select id="selectByMobileOrderNo" resultMap="BaseResultMap">
 		select

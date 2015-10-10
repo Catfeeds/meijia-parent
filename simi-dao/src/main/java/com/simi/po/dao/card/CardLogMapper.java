@@ -1,11 +1,13 @@
 package com.simi.po.dao.card;
 
+import java.util.List;
+
 import com.simi.po.model.card.CardLog;
 
 public interface CardLogMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(CardLog record);
+    Long insert(CardLog record);
 
     int insertSelective(CardLog record);
 
@@ -14,4 +16,6 @@ public interface CardLogMapper {
     int updateByPrimaryKeySelective(CardLog record);
 
     int updateByPrimaryKey(CardLog record);
+
+	List<CardLog> selectByCardId(Long cardId);
 }

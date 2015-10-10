@@ -43,7 +43,7 @@
                                       </li>
                                   </ul>
                               </div>
-                              <form class="form-horizontal" id="register">
+                              <form class="form-horizontal" id="register-form">
                                   <fieldset title="1. 验证信息" class="step" id="default-step-0">
                                       <legend> </legend>
                                       <div class="form-group">
@@ -57,14 +57,14 @@
                                           <div class="col-lg-10">
                                               	<div class="row">
 													<div class="col-lg-4">
-														<input type="text" placeholder="验证码" class="form-control" style="width: 100%">
+														<input type="text" id="img_token" placeholder="验证码" class="form-control" maxLength="4" style="width: 100%">
 													</div>
 													
 													<div class="col-lg-3">
 														<img id="kaptchaImage" src="/xcloud/captcha" maxlength="4"  />  
 													</div>
 													<div class="col-lg-3">
-														<button class="btn btn-primary" type="button">
+														<button class="btn btn-primary" id="btn_sms_token" type="button">
 														<i class="icon-refresh"></i>
 															获取短信验证码
 														</button>
@@ -75,7 +75,7 @@
                                       <div class="form-group">
                                           <label class="col-lg-2 control-label">手机验证码</label>
                                           <div class="col-lg-10">
-                                              <input type="text" placeholder="手机验证码" class="form-control" style="width: 100%">
+                                              <input type="text" id="sms_token" placeholder="手机验证码" class="form-control" style="width: 100%">
                                           </div>
                                       </div>
 
@@ -85,20 +85,20 @@
                                       <div class="form-group">
                                           <label class="col-lg-2 control-label">公司名称</label>
                                           <div class="col-lg-10">
-                                              <input type="text" class="form-control" placeholder="Phone">
+                                              <input type="text" id="company_name" class="form-control" placeholder="">
                                           </div>
                                       </div>
+                                      
                                       <div class="form-group">
                                           <label class="col-lg-2 control-label">公司规模</label>
                                           <div class="col-lg-10">
                                               <select id="company_size" class="selectpicker" data-style="btn-danger">
-											    <option value="0">20人以下</option>
-											    <option value="1">20-99人</option>
-											    <option value="2">100-499人</option>
-											    <option value="3">500-999人</option>
-											    <option value="4">1000-9999人</option>
-											    <option value="5">10000人</option>
-											    
+											    <option value="1">20人以下</option>
+											    <option value="2">20-99人</option>
+											    <option value="3">100-499人</option>
+											    <option value="4">500-999人</option>
+											    <option value="5">1000-9999人</option>
+											    <option value="6">10000人</option>
 											  </select>
                                           </div>
                                       </div>
@@ -106,17 +106,38 @@
                                           <label class="col-lg-2 control-label">所在行业</label>
                                           <div class="col-lg-10">
                                                <select id="company_trade" class="selectpicker" data-style="btn-danger">
-                                               
+                                               		
                                                </select>
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                          <label class="col-lg-2 control-label">地理位置</label>
+                                          <div class="col-lg-10">
+                                          	   <div id="l-map"></div>
+                                               <div id="r-result"><input type="text" id="suggestId" size="20" value="百度" class="form-control" /></div>
+											   <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
                                           </div>
                                       </div>
                                       
                                       <div class="form-group">
                                           <label class="col-lg-2 control-label">详细地址</label>
                                           <div class="col-lg-10">
-                                          	   <div id="l-map"></div>
-                                               <div id="r-result"><input type="text" id="suggestId" size="20" value="百度" class="form-control" /></div>
-											   <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+                                              <input type="text" class="form-control" placeholder="">
+                                          </div>
+                                      </div>
+                                      
+									  <div class="form-group">
+                                          <label class="col-lg-2 control-label">管理员账户</label>
+                                          <div class="col-lg-10">
+                                              <input type="text" id="user_name" class="form-control" placeholder="B座612">
+                                          </div>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                          <label class="col-lg-2 control-label">管理员密码</label>
+                                          <div class="col-lg-10">
+                                              <input type="password" id ="password" class="form-control" placeholder="">
                                           </div>
                                       </div>
 
@@ -198,6 +219,7 @@
 	
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2sshjv8D4AOoOzozoutVb6WT"></script>
 	
+	<script src="<c:url value='/js/xcloud/home/validate-methods.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/js/xcloud/home/register.js'/>" type="text/javascript"></script>
 	<script>
 

@@ -10,4 +10,4 @@
 	
 	<script src="<c:url value='/js/link-hover.js'/>" type="text/javascript"></script>
 
-    <script src="<c:url value='/js/common-scripts.js'/>"></script>    
+    <script src="<c:url value='/js/common-scripts.js'/>"></script>

@@ -31,4 +31,6 @@ public interface CardService {
 
 	List<CardViewVo> changeToCardViewVoBat(List<Cards> cards);
 
+	String getStatusName(Short status);
+
 }

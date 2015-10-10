@@ -1,117 +1,126 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.card.CardLogMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.card.CardLog" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="card_id" property="cardId" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="NUMERIC" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, card_id, user_id, user_name, status, remarks, add_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from card_log
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from card_log
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.card.CardLog" >
-    insert into card_log (id, card_id, user_id, 
-      user_name, status, remarks, 
-      add_time)
-    values (#{id,jdbcType=NUMERIC}, #{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, 
-      #{userName,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.card.CardLog" >
-    insert into card_log
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="cardId != null" >
-        card_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="remarks != null" >
-        remarks,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="cardId != null" >
-        #{cardId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=NUMERIC},
-      </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardLog" >
-    update card_log
-    <set >
-      <if test="cardId != null" >
-        card_id = #{cardId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=NUMERIC},
-      </if>
-      <if test="remarks != null" >
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardLog" >
-    update card_log
-    set card_id = #{cardId,jdbcType=NUMERIC},
-      user_id = #{userId,jdbcType=NUMERIC},
-      user_name = #{userName,jdbcType=VARCHAR},
-      status = #{status,jdbcType=NUMERIC},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+<mapper namespace="com.simi.po.dao.card.CardLogMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.card.CardLog">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="card_id" property="cardId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, card_id, user_id, user_name, status, remarks, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from card_log
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByCardId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from card_log
+		where card_id = #{cardId,jdbcType=NUMERIC}
+		order by add_time asc		
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from card_log
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.card.CardLog">
+		insert into card_log (id, card_id, user_id,
+		user_name, status, remarks,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{userName,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.card.CardLog">
+		insert into card_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cardId != null">
+				card_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="cardId != null">
+				#{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardLog">
+		update card_log
+		<set>
+			<if test="cardId != null">
+				card_id = #{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardLog">
+		update card_log
+		set card_id = #{cardId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		user_name = #{userName,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

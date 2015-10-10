@@ -23,18 +23,10 @@ public interface UserCouponService {
 
 	int updateByPrimaryKeySelective(UserCoupons userCoupons);
 
-	AppResultData<Object> validateByOrderNo(String mobile, String cardPasswd,
-			String orderNo);
-
-	AppResultData<Object> validateCoupon(String mobile, String cardPasswd);
-
 	AppResultData<Object> validateByCouponsSuitType(String cardPasswd,
 			String serviceType, Short rangFrom);
 	
 	UserCoupons initUserCoupon();
-
-	AppResultData<Object> validateCouponAll(String mobile, String cardPasswd,
-			String orderNo, Short orderFrom, Short serviceType);
 
 	PageInfo searchVoListPage(UserCouponSearchVo searchVo,int pageNo,int pageSize);
 
@@ -43,5 +35,13 @@ public interface UserCouponService {
 	UserCoupons selectByUserIdOrderNo(Long userId, String orderNo);
 
 	List<UserCoupons> selectByUserId(Long id);
+
+	AppResultData<Object> validateCoupon(Long userId, String cardPasswd);
+
+	AppResultData<Object> validateCouponAll(Long userId, String cardPasswd, String orderNo, Short orderFrom, Short serviceType);
+
+	AppResultData<Object> validateByOrderNo(Long userId, String cardPasswd, String orderNo);
+
+	UserCoupons selectByUserIdCardPwd(Long userId, String card_passwd);
 
 }

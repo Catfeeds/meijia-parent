@@ -21,12 +21,14 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardComment;
+import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
+import com.simi.service.card.CardLogService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.user.UserFriendService;
@@ -52,6 +54,9 @@ public class CardController extends BaseController {
 	
 	@Autowired
 	private CardZanService cardZanService;	
+	
+	@Autowired
+	private CardLogService cardLogService;
 	
 	@Autowired
 	private CardCommentService cardCommentService;	
@@ -149,14 +154,33 @@ public class CardController extends BaseController {
 //		}
 		record.setStatus(status);
 		
+		//添加卡片日志
+		Users createUser = userService.getUserById(createUserId);
+		
+		CardLog cardLog = cardLogService.initCardLog();
+		cardLog.setCardId(cardId);
+		cardLog.setUserId(createUserId);
+		
+		String userName = createUser.getName().equals("") ? createUser.getMobile() : createUser.getName();
+		cardLog.setUserName(userName);
+		cardLog.setStatus(status);		
+		
 		if (cardId > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.updateByPrimaryKeySelective(record);
+			
+			cardLog.setRemarks(userName + "修改了卡片信息.");
 		} else {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.insert(record);
-			cardId = record.getCardId();			
+			cardId = record.getCardId();		
+			
+			cardLog.setRemarks(userName + "创建了卡片信息.");
 		}
+		
+		cardLogService.insert(cardLog);
+		
+		
 //		System.out.println(attends);
 		//处理attends 转换为List<LinkManVo>的概念.
 		if (!StringUtil.isEmpty(attends)) {
@@ -450,8 +474,49 @@ public class CardController extends BaseController {
 		record.setStatus(status);
 		record.setSecRemarks(secRemarks);
 		cardService.updateByPrimaryKeySelective(record);
+		
+		//添加卡片log
+		//添加卡片日志
+		Users secUser = userService.getUserById(secId);
+		
+		CardLog cardLog = cardLogService.initCardLog();
+		cardLog.setCardId(cardId);
+		cardLog.setUserId(secId);
+		
+		String userName = secUser.getName().equals("") ? secUser.getMobile() : secUser.getName();
+		cardLog.setUserName(userName);
+		cardLog.setStatus(status);	
+		
+		cardLog.setRemarks(cardService.getStatusName(status));
+		cardLogService.insert(cardLog);
 		return result;
 	}	
 	
-	
+	// 卡片日志列表
+	/**
+	 *  @param card_id				卡片ID,  0 表示新增
+	 *  @param user_id  			用户ID
+	 *
+	 *  @return  CardViewVo
+	 */
+	@RequestMapping(value = "get_logs", method = RequestMethod.GET)	
+	public AppResultData<Object> getLogs(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("card_id") Long cardId
+			) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = userService.getUserById(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		List<CardLog> list = cardLogService.selectByCardId(cardId);
+		result.setData(list);
+		return result;
+	}
 }
