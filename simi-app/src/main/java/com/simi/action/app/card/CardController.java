@@ -315,6 +315,7 @@ public class CardController extends BaseController {
 		CardSearchVo searchVo = new CardSearchVo();
 		searchVo.setCardFrom(cardFrom);
 		searchVo.setUserId(userId);
+		searchVo.setUserType(u.getUserType());
 		
 		if (startTime > 0L && endTime > 0L) {
 			searchVo.setStartTime(startTime);

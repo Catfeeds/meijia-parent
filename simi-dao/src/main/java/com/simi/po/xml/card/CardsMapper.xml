@@ -45,6 +45,13 @@
 			union
 			select <include refid="Base_Column_List" /> from cards 
 			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+			
+			<if test="userType == 1">
+			union
+			select <include refid="Base_Column_List" /> from cards 
+			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			and set_sec_do = 1
+			</if>	
 		) as T
 		where 1 = 1 
 		<if test="startTime != null">
@@ -83,14 +90,21 @@
 	<!-- 卡片列表方法 某个用户参与的卡片 -->
 	<select id="selectAttendByListPage" resultMap="BaseResultMap"
 		parameterType="com.simi.vo.card.CardSearchVo">
-		select
-		<include refid="Base_Column_List" />
-		from cards
-		where 1 = 1
-		<if test="userId != null">
-			and card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
-		</if>	
-				
+		select <include refid="Base_Column_List" />
+		from
+		(
+
+			select <include refid="Base_Column_List" /> from cards 
+			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+			
+			<if test="userType == 1">
+			union
+			select <include refid="Base_Column_List" /> from cards 
+			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			and set_sec_do = 1
+			</if>	
+		) as T
+		where 1 = 1 
 		<if test="startTime != null">
 		<![CDATA[	and service_time >= ${startTime} ]]>   
 		</if>	
@@ -99,8 +113,8 @@
 		<![CDATA[	and service_time <= ${endTime} ]]>   
 		</if>
 		order by add_time desc
-	</select>		
-	
+	</select>	
+		
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cards
 		where card_id = #{cardId,jdbcType=NUMERIC}

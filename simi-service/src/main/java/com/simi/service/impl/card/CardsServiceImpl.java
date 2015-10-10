@@ -307,7 +307,7 @@ public class CardsServiceImpl implements CardService {
 		//某个用户参与的卡片
 		if (cardFrom.equals((short)2)) {
 			list = cardsMapper.selectAttendByListPage(vo);
-		}		
+		}
 		
 		PageInfo result = new PageInfo(list);
 		return result;
