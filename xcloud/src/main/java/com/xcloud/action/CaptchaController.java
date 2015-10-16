@@ -1,7 +1,6 @@
 package com.xcloud.action;
 
 import java.awt.image.BufferedImage;
-
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +10,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.google.code.kaptcha.Producer;
-import com.xcloud.auth.AuthPassport;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.vo.AppResultData;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
 
 
 @Controller
@@ -48,4 +50,30 @@ public class CaptchaController extends BaseController {
         }  
         return null;  
     }
+    
+    
+	@RequestMapping(value = "check_captcha", method = RequestMethod.GET)
+    public AppResultData<Object> checkCaptcha (
+    		HttpServletRequest request,
+    		@RequestParam("token") String token) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (StringUtil.isEmpty(token)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("验证码不正确");
+			return result;
+		}
+		
+		
+		String captchaServer = (String) request.getSession().getAttribute("session-captcha");  
+		
+		if (!token.equals(captchaServer)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("验证码不正确");
+			return result;			
+		}
+		
+    	return result;
+    }    
 }

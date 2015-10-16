@@ -18,19 +18,19 @@ var Script = function () {
 //        slideWidth: 276,
 //        slideMargin: 20
 //    });
-
-
-
-
-
-
-
 }();
 
 var host = window.location.host;
 var appName = "simi";
 var localUrl = "http://" + host;
 var appRootUrl = localUrl + "/" + appName + "/app/";
+
+
+//通用ajax设置
+$.ajaxSetup({
+	timeout :30000
+});
+
 //通用生成行业二级下拉框
 function getDictTrade() {
 	var result;
@@ -44,4 +44,11 @@ function getDictTrade() {
 	    }
 	});
 	return result;
+}
+
+
+//通用刷新验证码
+function changeCaptcha() {  
+    $('#kaptchaImage').hide().attr('src', '/xcloud/captcha?' + Math.floor(Math.random()*100) ).fadeIn();  
+//    event.cancelBubble=true;  
 }
