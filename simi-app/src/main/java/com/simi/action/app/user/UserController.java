@@ -168,6 +168,19 @@ public class UserController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		return result;
 	}
+	
+	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
+	@RequestMapping(value = "val_sms_token", method = RequestMethod.GET)
+	public AppResultData<Object> valSmsToken(
+			@RequestParam("mobile") String mobile,
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam("sms_type") Short smsType) {
+
+		
+		AppResultData<Object> result = smsTokenService.validateSmsToken(mobile, smsToken, smsType);
+		
+		return result;
+	}	
 
 	// 6. 账号信息
 	/**

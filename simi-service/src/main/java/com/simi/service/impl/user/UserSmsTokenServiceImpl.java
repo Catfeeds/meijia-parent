@@ -89,7 +89,7 @@ public class UserSmsTokenServiceImpl implements UserSmsTokenService{
 
 		// 2、判断是否表记录字段add_time 是否超过十分钟.
 		long expTime = TimeStampUtil.compareTimeStr(smsToken.getAddTime(), System.currentTimeMillis() / 1000);
-		if (expTime > 600) {// 超时
+		if (expTime > 1800) {// 超时
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.ERROR_999_MSG_4);
 			return result;
