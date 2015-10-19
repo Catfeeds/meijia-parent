@@ -1,6 +1,8 @@
 package com.simi.service.card;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.card.Cards;
@@ -32,5 +34,7 @@ public interface CardService {
 	List<CardViewVo> changeToCardViewVoBat(List<Cards> cards);
 
 	String getStatusName(Short status);
+
+	List<HashMap> totalByMonth(CardSearchVo vo);
 
 }

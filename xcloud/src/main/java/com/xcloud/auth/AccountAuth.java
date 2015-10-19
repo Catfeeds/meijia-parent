@@ -2,38 +2,32 @@ package com.xcloud.auth;
 
 public class AccountAuth {
 
-	private Long id;
-	private String name;
-	private String username;
+	private Long userId;
+	private Long companyId;
 
-	public AccountAuth(Long id, String name, String username) {
-		this.id = id;
-		this.name = name;
-		this.username = username;
+
+
+	public AccountAuth(Long userId, Long companyId) {
+		this.userId = userId;
+		this.companyId = companyId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	
+	public Long getCompanyId() {
+		return companyId;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public String getUsername() {
-		return this.username;
-	}
 
 }

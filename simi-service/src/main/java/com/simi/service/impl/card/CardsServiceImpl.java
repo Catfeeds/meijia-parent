@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -321,6 +322,11 @@ public class CardsServiceImpl implements CardService {
 	@Override
 	public int updateByPrimaryKeySelective(Cards record) {
 		return cardsMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	@Override
+	public List<HashMap> totalByMonth(CardSearchVo vo) {
+		return cardsMapper.totalByMonth(vo);
 	}
 	
 	@Override

@@ -41,7 +41,7 @@
 		from
 		(
 			select <include refid="Base_Column_List" /> from cards 
-			where user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC}
+			where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC})
 			<if test="startTime != null">
 				<![CDATA[	and service_time >= ${startTime} ]]>   
 			</if>	
@@ -133,6 +133,52 @@
 			</if>	
 		) as T
 		order by add_time desc
+	</select>	
+	
+	<!-- 统计某个时间点有卡片的日期和个数 -->
+	<select id="totalByMonth" resultType="java.util.HashMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		select FROM_UNIXTIME(service_time ,'%Y-%m-%d') as service_date , count(distinct card_id) as total
+		from
+		(
+			select <include refid="Base_Column_List" /> from cards 
+			where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC} )
+			<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>   
+			</if>
+				
+			<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>   
+			</if>
+			union
+			
+			select <include refid="Base_Column_List" /> from cards 
+			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+			<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>   
+			</if>	
+				
+			<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>   
+			</if>
+						
+			<if test="userType == 1">
+				union
+				select <include refid="Base_Column_List" /> from cards 
+				where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+				and set_sec_do = 1
+				<if test="startTime != null">
+					<![CDATA[	and service_time >= ${startTime} ]]>   
+				</if>	
+					
+				<if test="endTime != null">
+					<![CDATA[	and service_time <= ${endTime} ]]>   
+				</if>			
+			
+			</if>	
+		) as T
+		GROUP BY service_date
+		order by service_date asc
 	</select>	
 		
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

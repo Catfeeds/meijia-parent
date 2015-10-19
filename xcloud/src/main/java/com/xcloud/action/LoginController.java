@@ -38,29 +38,20 @@ public class LoginController extends BaseController {
         return "/home/login";
     }
 
-	@RequestMapping(value="/login-by-username", method = {RequestMethod.POST})
-	public String login(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") LoginVo accountLoginVo, BindingResult result) throws ValidationException, NoSuchAlgorithmException{
+	@RequestMapping(value="/login", method = {RequestMethod.POST})
+	public String login(HttpServletRequest request, Model model, BindingResult result){
 		//如果有验证错误 返回到form页面
         if (result.hasErrors())
             return login(model);
 
-        String userName = accountLoginVo.getUsername().trim();
-        String password = accountLoginVo.getPassword().trim();
-        String passMd5 = MD5Util.MD5Encode(password+"xcloud", "utf-8");
-        Xcompany xcompany = xCompanyService.selectByUserNameAndPass(userName, passMd5);
+        String mobile = request.getParameter("mobile").trim();
+        String smsToken = request.getParameter("sms_token").trim();
+        
+		
 
-    	if ( xcompany == null ) {
-        	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
-        	result.addError(new FieldError("contentModel","password","用户名或密码错误。"));
-        	return login(model);
-    	}
-
-		Long companyId = xcompany.getCompanyId();
-		String companyName = xcompany.getCompanyName();
-
-        AccountAuth accountAuth= new AccountAuth(companyId, companyName, userName);
-
-    	AuthHelper.setSessionAccountAuth(request, accountAuth);
+//        AccountAuth accountAuth= new AccountAuth(companyId, companyName, userName);
+//
+//    	AuthHelper.setSessionAccountAuth(request, accountAuth);
 
 
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);

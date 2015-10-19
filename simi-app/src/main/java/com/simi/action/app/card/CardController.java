@@ -148,10 +148,13 @@ public class CardController extends BaseController {
 		record.setTicketFromCityId(ticketFromCityId);
 		record.setTicketToCityId(ticketToCityId);
 		
+		if (!createUserId.equals(userId)) {
+			Users createUser = userService.getUserById(createUserId);
+			if (createUser.getUserType().equals((short)1)) {
+				if (status.equals(1)) status = 2;
+			}
+		}
 		
-//		if (setSecDo.equals((short)1)) {
-//			status = 2;
-//		}
 		record.setStatus(status);
 		
 		//添加卡片日志
@@ -242,97 +245,6 @@ public class CardController extends BaseController {
 		return result;
 	}		
 	
-	
-	// 卡片详情接口
-	/**
-	 *  @param card_id				卡片ID,  0 表示新增
-	 *  @param user_id  			用户ID
-	 *
-	 *  @return  CardViewVo
-	 */
-	@RequestMapping(value = "get_detail", method = RequestMethod.GET)
-	public AppResultData<Object> getDetail(
-			@RequestParam("card_id") Long cardId,
-			@RequestParam("user_id") Long userId
-			) {
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
-		Users u = userService.getUserById(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-		
-		Cards record = cardService.selectByPrimaryKey(cardId);
-		if (record == null) return result;
-		CardViewVo vo = cardService.changeToCardViewVo(record);
-		result.setData(vo);		
-		return result;
-	}
-	
-	// 卡片列表接口
-	/**
-	 *  @param card_id				卡片ID,  0 表示新增
-	 *  @param user_id  			用户ID
-	 *
-	 *  @return  CardViewVo
-	 */
-	@RequestMapping(value = "get_list", method = RequestMethod.GET)
-	public AppResultData<Object> getCardList(
-			@RequestParam("user_id") Long userId,
-			@RequestParam(value = "service_date", required = false, defaultValue = "") String serviceDate,
-			@RequestParam(value = "card_from", required = false, defaultValue = "0") Short cardFrom,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page
-			) {
-		
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
-		Users u = userService.getUserById(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-		
-		//处理时间的问题
-		Long startTime = 0L;
-		Long endTime = 0L;
-		
-		if (!StringUtil.isEmpty(serviceDate) ) {
-			Date serviceDateObj = DateUtil.parse(serviceDate);
-			
-			String startTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 00:00:00");
-			String endTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 23:59:59");
-			startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
-			endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
-		}
-		
-		CardSearchVo searchVo = new CardSearchVo();
-		searchVo.setCardFrom(cardFrom);
-		searchVo.setUserId(userId);
-		searchVo.setUserType(u.getUserType());
-		
-		if (startTime > 0L && endTime > 0L) {
-			searchVo.setStartTime(startTime);
-			searchVo.setEndTime(endTime);
-		}
-		
-		PageInfo  pageInfo = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
-		List<Cards> cards = pageInfo.getList();
-		if (!cards.isEmpty()) {
-			List<CardViewVo> cardViewList = cardService.changeToCardViewVoBat(cards);
-			result.setData(cardViewList);
-		}
-		
-		return result;
-	}	
-	
-	
 	// 卡片点赞接口
 	/**
 	 *  @param card_id				卡片ID,  0 表示新增
@@ -405,18 +317,19 @@ public class CardController extends BaseController {
 		return result;
 	}	
 	
-	// 卡片列表接口
+	// 卡片取消接口
 	/**
 	 *  @param card_id				卡片ID,  0 表示新增
 	 *  @param user_id  			用户ID
 	 *
 	 *  @return  CardViewVo
 	 */
-	@RequestMapping(value = "get_comment_list", method = RequestMethod.GET)
-	public AppResultData<Object> getCommentList(
+	@RequestMapping(value = "card_cancel", method = RequestMethod.POST)
+	public AppResultData<Object> cardCancel(
 			@RequestParam("card_id") Long cardId,
 			@RequestParam("user_id") Long userId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			@RequestParam("status") Short status,
+			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks
 			) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -430,20 +343,37 @@ public class CardController extends BaseController {
 			return result;
 		}
 		
-		CardSearchVo searchVo = new CardSearchVo();
-		searchVo.setCardId(cardId);
+		Cards record = cardService.selectByPrimaryKey(cardId);
+		if (record == null) return result;
 		
-		List<CardComment> cardComments = cardCommentService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
-		if (!cardComments.isEmpty()) {
-			List<CardCommentViewVo> list = cardCommentService.changeToCardComments(cardComments);
-			result.setData(list);
+		if (!record.getCreateUserId().equals(userId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("只有创建卡片才能取消卡片。");
+			return result;			
 		}
 		
+		record.setStatus(status);
+		record.setUpdateTime(TimeStampUtil.getNowSecond());
+		cardService.updateByPrimaryKeySelective(record);
+		
+		//添加卡片log
+		//添加卡片日志
+		
+		
+		CardLog cardLog = cardLogService.initCardLog();
+		cardLog.setCardId(cardId);
+		cardLog.setUserId(userId);
+		
+		String userName = u.getName().equals("") ? u.getMobile() : u.getName();
+		cardLog.setUserName(userName);
+		cardLog.setStatus(status);	
+		
+		cardLog.setRemarks(cardService.getStatusName(status));
+		cardLogService.insert(cardLog);
 		return result;
-	}		
+	}	
 	
-	
-	// 卡片列表接口
+	// 秘书处理卡片接口
 	/**
 	 *  @param card_id				卡片ID,  0 表示新增
 	 *  @param user_id  			用户ID
@@ -493,31 +423,4 @@ public class CardController extends BaseController {
 		return result;
 	}	
 	
-	// 卡片日志列表
-	/**
-	 *  @param card_id				卡片ID,  0 表示新增
-	 *  @param user_id  			用户ID
-	 *
-	 *  @return  CardViewVo
-	 */
-	@RequestMapping(value = "get_logs", method = RequestMethod.GET)	
-	public AppResultData<Object> getLogs(
-			@RequestParam("user_id") Long userId,
-			@RequestParam("card_id") Long cardId
-			) {
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
-		Users u = userService.getUserById(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-		
-		List<CardLog> list = cardLogService.selectByCardId(cardId);
-		result.setData(list);
-		return result;
-	}
 }
