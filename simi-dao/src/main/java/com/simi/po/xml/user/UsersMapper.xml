@@ -400,16 +400,4 @@
 		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
 	</select>
 
-
-	<insert id="insert" parameterType="com.simi.po.model.user.Users">
-		insert into users (id, province_name, mobile,3rd_type,openid, name,sex,head_img,
-		rest_money, score, user_type, is_approval, add_from,
-		add_time, update_time)
-		values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},#{thirdType,jdbcType=VARCHAR},
-		#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},
-		#{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},
-		#{isApproval,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC},
-		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
-	</insert>
-
 </mapper>
