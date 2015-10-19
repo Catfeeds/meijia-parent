@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class IsReadTag extends SimpleTagSupport {
 
@@ -18,7 +18,7 @@ public class IsReadTag extends SimpleTagSupport {
         try {
         	String isReadName = "";
         	if (isRead != null) {
-        		isReadName = OneCareUtil.getIsRead( isRead  );
+        		isReadName = MeijiaUtil.getIsRead( isRead  );
         	}
             getJspContext().getOut().write(isReadName);
         } catch (Exception e) {

@@ -3,7 +3,7 @@ package com.simi.oa.customtags;
 import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 /**
  * @description：获取spiderPartner的状态
@@ -21,7 +21,7 @@ public class SpiderPartnerStatusTag extends SimpleTagSupport {
         try {
         	String statusName = "";
         	if (status != null) {
-        		statusName = OneCareUtil.getSpiderPartnerStatus(status);
+        		statusName = MeijiaUtil.getSpiderPartnerStatus(status);
         	}
             getJspContext().getOut().write(statusName);
         } catch (Exception e) {

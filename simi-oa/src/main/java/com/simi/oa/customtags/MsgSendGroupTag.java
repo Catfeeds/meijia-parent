@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class MsgSendGroupTag extends SimpleTagSupport {
 
@@ -19,7 +19,7 @@ public class MsgSendGroupTag extends SimpleTagSupport {
         try {
         	String sendGroupName = "";
         	if (sendGroupId != null) {
-        		sendGroupName = OneCareUtil.getMsgSendGroup(sendGroupId);
+        		sendGroupName = MeijiaUtil.getMsgSendGroup(sendGroupId);
         	}
             getJspContext().getOut().write(sendGroupName);
         } catch (Exception e) {

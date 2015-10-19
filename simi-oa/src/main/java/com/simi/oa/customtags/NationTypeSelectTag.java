@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class NationTypeSelectTag extends SimpleTagSupport {
 
@@ -19,7 +19,7 @@ public class NationTypeSelectTag extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         try {
 
-        		List<String> optionList = OneCareUtil.getNationType();
+        		List<String> optionList = MeijiaUtil.getNationType();
 
             StringBuffer serviceTypeSelect = new StringBuffer();
             serviceTypeSelect.append("<select id = \"nationId\" name=\"nation\" class=\"form-control\">");

@@ -46,7 +46,7 @@
 		</javaClientGenerator>
 
 		
-					<!-- 用户表 -->
+							<!-- 用户表 -->
 
 		<table schema="simi" tableName="users"
 			enableInsert="true"
@@ -63,7 +63,25 @@
 			<columnOverride  column="add_from" property="addFrom" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_type" property="userType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="is_approval" property="isApproval" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="degree_id" property="degreeId" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
+
+		<!-- 用户标签表 -->
+		<table schema="simi" tableName="tag_users"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="tag_id" property="tagId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>
+
 
 		<!-- 用户消费明细记录表 -->
 		<table schema="simi" tableName="user_detail_pay"

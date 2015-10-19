@@ -3,7 +3,7 @@ package com.simi.oa.customtags;
 import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 
 /**
@@ -22,7 +22,7 @@ public class PartnerIsCooperateTag extends SimpleTagSupport {
         try {
         	String isCooperateName = "";
         	if (isCooperate != null) {
-        		isCooperateName = OneCareUtil.getPartnerIsCooperate(isCooperate);
+        		isCooperateName = MeijiaUtil.getPartnerIsCooperate(isCooperate);
         	}
             getJspContext().getOut().write(isCooperateName);
         } catch (Exception e) {

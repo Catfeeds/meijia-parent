@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class MsgSendGroupSelectTag extends SimpleTagSupport {
 
@@ -23,7 +23,7 @@ public class MsgSendGroupSelectTag extends SimpleTagSupport {
         try {
 
 
-        	List<String> optionList =OneCareUtil.getMsgSendGroupName();
+        	List<String> optionList =MeijiaUtil.getMsgSendGroupName();
 
             StringBuffer serviceTypeSelect = new StringBuffer();
             serviceTypeSelect.append("<select id = \"msgSendGroupSelect\" name=\"sendGroup\" class=\"form-control\">");

@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class OrderStatusNameTag extends SimpleTagSupport {
 
@@ -18,7 +18,7 @@ public class OrderStatusNameTag extends SimpleTagSupport {
         try {
         	String orderStatusName = "";
         	if (orderStatus != null) {
-        		orderStatusName = OneCareUtil.getOrderStausName( orderStatus  );
+        		orderStatusName = MeijiaUtil.getOrderStausName( orderStatus  );
         	}
             getJspContext().getOut().write(orderStatusName);
         } catch (Exception e) {

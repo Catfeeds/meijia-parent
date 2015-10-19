@@ -26,7 +26,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.card.CardsMapper;
 
@@ -112,7 +112,7 @@ public class CardsServiceImpl implements CardService {
 		vo.setZanTop10(zanTop10);
 		
 		//卡片类型名称
-		String cardTypeName = OneCareUtil.getCardTypeName(vo.getCardType());
+		String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());
 		vo.setCardTypeName(cardTypeName);
 		
 		//卡片添加时间字符串
@@ -237,7 +237,7 @@ public class CardsServiceImpl implements CardService {
 			vo.setZanTop10(new ArrayList<CardZanViewVo>());
 			
 			//卡片类型名称
-			String cardTypeName = OneCareUtil.getCardTypeName(vo.getCardType());
+			String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());
 			vo.setCardTypeName(cardTypeName);
 			
 			//服务时间字符串

@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class RangTypeNameTag extends SimpleTagSupport {
 
@@ -18,7 +18,7 @@ public class RangTypeNameTag extends SimpleTagSupport {
         try {
         	String rangTypeName = "";
         	if (rangType != null) {
-        		rangTypeName = OneCareUtil.getRangTypeName( rangType  );
+        		rangTypeName = MeijiaUtil.getRangTypeName( rangType  );
         	}
             getJspContext().getOut().write(rangTypeName);
         } catch (Exception e) {

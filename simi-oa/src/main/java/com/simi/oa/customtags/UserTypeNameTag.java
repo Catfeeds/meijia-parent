@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class UserTypeNameTag extends SimpleTagSupport {
 
@@ -18,7 +18,7 @@ public class UserTypeNameTag extends SimpleTagSupport {
         try {
         	String userTypeName = "";
         	if (userTypeId != null) {
-        		userTypeName = OneCareUtil.getUserTypeName(userTypeId);
+        		userTypeName = MeijiaUtil.getUserTypeName(userTypeId);
         	}
             getJspContext().getOut().write(userTypeName);
         } catch (Exception e) {

@@ -11,7 +11,8 @@ import com.simi.vo.UserSearchVo;
 
 
 public interface UsersMapper {
-    int deleteByPrimaryKey(Long id);
+
+	int deleteByPrimaryKey(Long id);
 
     int insert(Users record);
 

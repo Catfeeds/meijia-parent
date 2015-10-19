@@ -1,363 +1,415 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.user.UsersMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.user.Users" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="mobile" property="mobile" jdbcType="CHAR" />
-    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
-    <result column="3rd_type" property="thirdType" jdbcType="VARCHAR" />
-    <result column="openid" property="openId" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="VARCHAR" />
-    <result column="head_img" property="headImg" jdbcType="VARCHAR" />
-    <result column="rest_money" property="restMoney" jdbcType="DECIMAL" />
-    <result column="score" property="score" jdbcType="INTEGER" />
-    <result column="user_type" property="userType" jdbcType="NUMERIC" />
-    <result column="is_approval" property="isApproval" jdbcType="NUMERIC" />
-    <result column="add_from" property="addFrom" jdbcType="NUMERIC" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-  </resultMap>
-  
-	<resultMap id="statResultMap" type="java.util.HashMap">
-		<result column="names" property="names" jdbcType="VARCHAR" />
-		<result column="value" property="value" jdbcType="NUMERIC" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simi.po.dao.user.UsersMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.Users">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="province_name" jdbcType="VARCHAR" property="provinceName" />
+		<result column="mobile" jdbcType="CHAR" property="mobile" />
+		<result column="3rd_type" jdbcType="VARCHAR" property="thirdType" />
+		<result column="openid" jdbcType="VARCHAR" property="openid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="birth_day" jdbcType="DATE" property="birthDay" />
+		<result column="degree_id" jdbcType="NUMERIC" property="degreeId" />
+		<result column="major" jdbcType="VARCHAR" property="major" />
+		<result column="head_img" jdbcType="VARCHAR" property="headImg" />
+		<result column="rest_money" jdbcType="DECIMAL" property="restMoney" />
+		<result column="score" jdbcType="INTEGER" property="score" />
+		<result column="user_type" jdbcType="NUMERIC" property="userType" />
+		<result column="is_approval" jdbcType="NUMERIC" property="isApproval" />
+		<result column="add_from" jdbcType="NUMERIC" property="addFrom" />
+		<result column="add_time" jdbcType="NUMERIC" property="addTime" />
+		<result column="update_time" jdbcType="NUMERIC" property="updateTime" />
 	</resultMap>
-    
-  <sql id="Base_Column_List" >
-    id, mobile, province_name,3rd_type,openid, name,sex,head_img,rest_money,score, user_type, is_approval, add_from, add_time, update_time
-  </sql>
+	<sql id="Base_Column_List">
+		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex, birth_day,
+		degree_id, major, head_img, rest_money, score, user_type, is_approval, add_from,
+		add_time, update_time
+	</sql>
+	<resultMap id="statResultMap" type="java.util.HashMap">
+		<result column="names" jdbcType="VARCHAR" property="names" />
+		<result column="value" jdbcType="NUMERIC" property="value" />
+	</resultMap>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from users
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.Users">
+		insert into users (id, province_name, mobile,
+		3rd_type, openid, name,
+		real_name, id_card, sex,
+		birth_day, degree_id, major,
+		head_img, rest_money, score,
+		user_type, is_approval, add_from,
+		add_time, update_time)
+		values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},
+		#{thirdType,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{realName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+		#{birthDay,jdbcType=DATE}, #{degreeId,jdbcType=NUMERIC}, #{major,jdbcType=VARCHAR},
+		#{headImg,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
+		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC}, #{addFrom,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.Users">
+		insert into users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="provinceName != null">
+				province_name,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="thirdType != null">
+				3rd_type,
+			</if>
+			<if test="openid != null">
+				openid,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="realName != null">
+				real_name,
+			</if>
+			<if test="idCard != null">
+				id_card,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="birthDay != null">
+				birth_day,
+			</if>
+			<if test="degreeId != null">
+				degree_id,
+			</if>
+			<if test="major != null">
+				major,
+			</if>
+			<if test="headImg != null">
+				head_img,
+			</if>
+			<if test="restMoney != null">
+				rest_money,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="isApproval != null">
+				is_approval,
+			</if>
+			<if test="addFrom != null">
+				add_from,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="provinceName != null">
+				#{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="thirdType != null">
+				#{thirdType,jdbcType=VARCHAR},
+			</if>
+			<if test="openid != null">
+				#{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="idCard != null">
+				#{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="birthDay != null">
+				#{birthDay,jdbcType=DATE},
+			</if>
+			<if test="degreeId != null">
+				#{degreeId,jdbcType=NUMERIC},
+			</if>
+			<if test="major != null">
+				#{major,jdbcType=VARCHAR},
+			</if>
+			<if test="headImg != null">
+				#{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="restMoney != null">
+				#{restMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=INTEGER},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=NUMERIC},
+			</if>
+			<if test="isApproval != null">
+				#{isApproval,jdbcType=NUMERIC},
+			</if>
+			<if test="addFrom != null">
+				#{addFrom,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.Users">
+		update users
+		<set>
+			<if test="provinceName != null">
+				province_name = #{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="thirdType != null">
+				3rd_type = #{thirdType,jdbcType=VARCHAR},
+			</if>
+			<if test="openid != null">
+				openid = #{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="idCard != null">
+				id_card = #{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="birthDay != null">
+				birth_day = #{birthDay,jdbcType=DATE},
+			</if>
+			<if test="degreeId != null">
+				degree_id = #{degreeId,jdbcType=NUMERIC},
+			</if>
+			<if test="major != null">
+				major = #{major,jdbcType=VARCHAR},
+			</if>
+			<if test="headImg != null">
+				head_img = #{headImg,jdbcType=VARCHAR},
+			</if>
+			<if test="restMoney != null">
+				rest_money = #{restMoney,jdbcType=DECIMAL},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="userType != null">
+				user_type = #{userType,jdbcType=NUMERIC},
+			</if>
+			<if test="isApproval != null">
+				is_approval = #{isApproval,jdbcType=NUMERIC},
+			</if>
+			<if test="addFrom != null">
+				add_from = #{addFrom,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.Users">
+		update users
+		set province_name = #{provinceName,jdbcType=VARCHAR},
+		mobile = #{mobile,jdbcType=CHAR},
+		3rd_type = #{thirdType,jdbcType=VARCHAR},
+		openid = #{openid,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		real_name = #{realName,jdbcType=VARCHAR},
+		id_card = #{idCard,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		birth_day = #{birthDay,jdbcType=DATE},
+		degree_id = #{degreeId,jdbcType=NUMERIC},
+		major = #{major,jdbcType=VARCHAR},
+		head_img = #{headImg,jdbcType=VARCHAR},
+		rest_money = #{restMoney,jdbcType=DECIMAL},
+		score = #{score,jdbcType=INTEGER},
+		user_type = #{userType,jdbcType=NUMERIC},
+		is_approval = #{isApproval,jdbcType=NUMERIC},
+		add_from = #{addFrom,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 
-  <select id="selectByAll" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-  </select>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
 
-  <!-- add By SunWenbao@2014-11-19 -->
-  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where mobile = #{mobile,jdbcType=VARCHAR}
-  </select>
-  
-  <!--根据秘书Id查询用户信息  -->
-  <select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where mobile = #{mobile,jdbcType=VARCHAR}
-  </select>
-  <!--根据手机号查询用户信息  -->
- <select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where 1=1
-      <if test="mobile != null" >
-       and mobile like CONCAT('%','${mobile}','%' )
-      </if>
-   	  <if test="userType != null" >
-       	and user_type = #{userType,jdbcType=NUMERIC}
-      </if>      
-      <if test="userIdList != null">
-      and id in
-      <foreach item="item" index="index" collection="userIdList"
-             open="(" separator="," close=")">
-        #{item}
-   	  </foreach>
-   	  
-   	  and is_approval = 1;
-    </if>
-    order by add_time desc
-  </select>
-  <!--根据openid和登录类型查询用户信息  -->
- <select id="selectByOpenidAnd3rdType" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where 1=1
-      <if test="openId != null" >
-       and openid = #{openId,jdbcType=VARCHAR}
-      </if>
-      <if test="thirdType != null">
-      and 3rd_type = #{thirdType,jdbcType=VARCHAR}
-    </if>
-    order by add_time desc
-  </select>
-  
-  <select id="selectVoByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from users 
-    where id in
-    <foreach item="item" index="index" collection="list"
-             open="(" separator="," close=")">
-        #{item}
-    </foreach>
-   order by add_time asc
-  </select>
-  
-  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from users 
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  
-  <select id="selectByUserType" resultMap="BaseResultMap" parameterType="java.lang.Short" >
-    select 
-    <include refid="Base_Column_List" />
-    from users 
-    where user_type = #{userType,jdbcType=NUMERIC}
-    and is_approval = 1
-   order by add_time asc
-  </select>  
-  
- <!--   <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_addrs
-    where id in
- 	<foreach item="item" index="index" collection="list"
-             open="(" separator="," close=")">
-        #{item}
-    </foreach>
+	<select id="selectByAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+	</select>
 
-    order by add_time asc
-  </select> -->
+	<!-- add By SunWenbao@2014-11-19 -->
+	<select id="selectByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile = #{mobile,jdbcType=VARCHAR}
+	</select>
 
-  <!--根据Ids查询Users -->
+	<!--根据手机号查询用户信息 -->
+	<select id="selectByListPage" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+		<if test="userType != null">
+			and user_type = #{userType,jdbcType=NUMERIC}
+		</if>
+		<if test="userIdList != null">
+			and id in
+			<foreach close=")" collection="userIdList" index="index" item="item" open="(" separator=",">
+				#{item}
+			</foreach>
+
+			and is_approval = 1;
+		</if>
+		order by add_time desc
+	</select>
+	<!--根据openid和登录类型查询用户信息 -->
+	<select id="selectByOpenidAnd3rdType" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1
+		<if test="openId != null">
+			and openid = #{openId,jdbcType=VARCHAR}
+		</if>
+		<if test="thirdType != null">
+			and 3rd_type = #{thirdType,jdbcType=VARCHAR}
+		</if>
+		order by add_time desc
+	</select>
+
+	<select id="selectVoByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id in
+		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>
+
+	<select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByUserType" parameterType="java.lang.Short" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where user_type = #{userType,jdbcType=NUMERIC}
+		and is_approval = 1
+		order by add_time asc
+	</select>
+
+	<!-- <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap"> select <include refid="Base_Column_List" /> from user_addrs where id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")"> #{item} </foreach> order by add_time asc </select> -->
+
+	<!--根据Ids查询Users -->
 	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
-	    select
-	    <include refid="Base_Column_List" />
-	    from users
-	    where id in
-	 	<foreach item="item" index="index" collection="list"
-	             open="(" separator="," close=")">
-	        #{item}
-	    </foreach>
-	    order by add_time asc
-	  </select>
-	  <!-- 根据手机号查询用户list -->
-	<select id="selectByMobiles"  resultMap="BaseResultMap">
-	    select
-	    <include refid="Base_Column_List" />
-	    from users
-	    where mobile in
-	 	<foreach item="item" index="index" collection= "list"
-	             open="(" separator="," close=")">
-	        #{item}
-	    </foreach>
-	  </select>
-	  <!-- 根据手机号查询用户list -->
-	<select id="selectNotInMobiles"  resultMap="BaseResultMap">
-	    select
-	    <include refid="Base_Column_List" />
-	    from users
-	    where mobile not in
-	 	<foreach item="item" index="index" collection="list"
-	             open="(" separator="," close=")">
-	        #{item}
-	    </foreach>
-	  </select>
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id in
+		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>
+	<!-- 根据手机号查询用户list -->
+	<select id="selectByMobiles" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile in
+		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+			#{item}
+		</foreach>
+	</select>
+	<!-- 根据手机号查询用户list -->
+	<select id="selectNotInMobiles" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile not in
+		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+			#{item}
+		</foreach>
+	</select>
 
- <select id="searchVoByAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    where 1=1 group by add_time asc
-  </select>
-  
-   <select id="selectUserStat" resultMap="statResultMap" parameterType="java.lang.Long" >
-    select FROM_UNIXTIME(add_time,'%Y-%m') as names, count(name) as value
-    from users
-    where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by  names
-  </select>
+	<select id="searchVoByAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1 group by add_time asc
+	</select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from users
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.user.Users" >
-    insert into users (id, province_name, mobile,3rd_type,openid, name,sex,head_img,
-      rest_money, score, user_type, is_approval, add_from,
-      add_time, update_time)
-    values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},#{thirdType,jdbcType=VARCHAR},
-      #{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},
-      #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},
-      #{isApproval,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC}, 
-      #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.simi.po.model.user.Users" >
-    insert into users
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="provinceName != null" >
-        province_name,
-      </if>
-      <if test="thirdType != null" >
-        3rd_type,
-      </if>
-      <if test="openId != null" >
-        openid,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="sex != null" >
-        sex,
-      </if>
-      <if test="headImg != null" >
-        head_img,
-      </if>
-      <if test="restMoney != null" >
-        rest_money,
-      </if>
-      <if test="score != null" >
-        score,
-      </if>
-      <if test="userType != null" >
-        user_type,
-      </if>
-      <if test="isApproval != null" >
-        is_approval,
-      </if>
-      <if test="addFrom != null" >
-        add_from,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="provinceName != null" >
-        #{provinceName,jdbcType=VARCHAR},
-      </if>
-       <if test="thirdType != null" >
-        #{thirdType,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null" >
-        #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=VARCHAR},
-      </if>
-      <if test="headImg != null" >
-        #{headImg,jdbcType=VARCHAR},
-      </if>
-      <if test="restMoney != null" >
-        #{restMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="score != null" >
-        #{score,jdbcType=INTEGER},
-      </if>
-      <if test="userType != null" >
-        #{userType,jdbcType=NUMERIC},
-      </if>
-      <if test="isApproval != null" >
-        #{isApproval,jdbcType=NUMERIC},
-      </if>
-      <if test="addFrom != null" >
-        #{addFrom,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.Users" >
-    update users
-    <set >
-      <if test="mobile != null" >
-        mobile = #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="provinceName != null" >
-        province_name = #{provinceName,jdbcType=VARCHAR},
-      </if>
-      <if test="thirdType != null" >
-        3rd_type = #{thirdType,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null" >
-        openid = #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=VARCHAR},
-      </if>
-      <if test="headImg != null" >
-        head_img = #{headImg,jdbcType=VARCHAR},
-      </if>
-      <if test="restMoney != null" >
-        rest_money = #{restMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="score != null" >
-        score = #{score,jdbcType=INTEGER},
-      </if>
-      <if test="userType != null" >
-        user_type = #{userType,jdbcType=NUMERIC},
-      </if>
-      <if test="isApproval != null" >
-        is_approval = #{isApproval,jdbcType=NUMERIC},
-      </if>
-      <if test="addFrom != null" >
-        add_from = #{addFrom,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.Users" >
-    update users
-    set mobile = #{mobile,jdbcType=CHAR},
-      3rd_type = #{thirdType,jdbcType=VARCHAR},
-      openid = #{openId,jdbcType=VARCHAR},
-      province_name = #{provinceName,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      head_img = #{headImg,jdbcType=VARCHAR},
-      rest_money = #{restMoney,jdbcType=DECIMAL},
-      score = #{score,jdbcType=INTEGER},
-      user_type = #{userType,jdbcType=NUMERIC},
-      is_approval = #{isApproval,jdbcType=NUMERIC},
-      add_from = #{addFrom,jdbcType=NUMERIC},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+	<select id="selectUserStat" parameterType="java.lang.Long" resultMap="statResultMap">
+		select FROM_UNIXTIME(add_time,'%Y-%m') as names, count(name) as value
+		from users
+		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
+	</select>
+
+
+	<insert id="insert" parameterType="com.simi.po.model.user.Users">
+		insert into users (id, province_name, mobile,3rd_type,openid, name,sex,head_img,
+		rest_money, score, user_type, is_approval, add_from,
+		add_time, update_time)
+		values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},#{thirdType,jdbcType=VARCHAR},
+		#{openId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{headImg,jdbcType=VARCHAR},
+		#{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},#{userType,jdbcType=NUMERIC},
+		#{isApproval,jdbcType=NUMERIC},#{addFrom,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+	</insert>
+
 </mapper>

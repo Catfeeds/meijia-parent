@@ -13,7 +13,7 @@ import com.simi.po.model.order.OrderCards;
 import com.simi.service.dict.CardTypeService;
 import com.simi.service.order.OrderCardsService;
 import com.simi.service.user.UsersService;
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 
@@ -67,7 +67,7 @@ public class UserCardPayController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,"");
 
 		//判断如果不是正确支付状态，则直接返回.
-		Boolean paySuccess = OneCareUtil.isPaySuccess(tradeStatus);
+		Boolean paySuccess = MeijiaUtil.isPaySuccess(tradeStatus);
 		if (paySuccess == false )  {
 			return result;
 		}

@@ -7,7 +7,7 @@ import java.util.List;
  * 有个管家的常用方法
  *
  */
-public class OneCareUtil {
+public class MeijiaUtil {
 
 	/**
 	 * 判断支付是否正确
@@ -487,28 +487,28 @@ public class OneCareUtil {
 		}
 		return isCooperateName;
 	}
-	public static String getDegreeName(String degreeId) {
+	public static String getDegreeName(Short degreeId) {
 		String DegreeName = "";
 		switch (degreeId) {
-			case "0":
+			case 0:
 				DegreeName = "小学";
 				break;
-			case "1":
+			case 1:
 				DegreeName = "初中";
 				break;
-			case "2":
+			case 2:
 				DegreeName = "高中";
 				break;
-			case "3":
+			case 3:
 				DegreeName = "专科";
 				break;
-			case "4":
+			case 4:
 				DegreeName = "本科";
 				break;
-			case "5":
+			case 5:
 				DegreeName = "硕士研究生";
 				break;
-			case "6":
+			case 6:
 				DegreeName = "博士研究生";
 				break;
 			default:

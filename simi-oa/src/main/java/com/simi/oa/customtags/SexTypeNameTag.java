@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class SexTypeNameTag extends SimpleTagSupport {
 
@@ -20,7 +20,7 @@ public class SexTypeNameTag extends SimpleTagSupport {
         	String sexTypeName = new String();
 
         		if (sexType != null) {
-        			sexTypeName = OneCareUtil.getSexTypeName(sexType);
+        			sexTypeName = MeijiaUtil.getSexTypeName(sexType);
             	}
             getJspContext().getOut().write(sexTypeName);
         } catch (Exception e) {

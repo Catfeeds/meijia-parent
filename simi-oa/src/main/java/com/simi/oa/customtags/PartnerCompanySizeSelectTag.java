@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class PartnerCompanySizeSelectTag extends SimpleTagSupport {
 
@@ -23,7 +23,7 @@ public class PartnerCompanySizeSelectTag extends SimpleTagSupport {
         try {
 
 
-        	List<String> optionList = OneCareUtil.getPartnerCompanySize();
+        	List<String> optionList = MeijiaUtil.getPartnerCompanySize();
 
 
             StringBuffer serviceTypeSelect = new StringBuffer();

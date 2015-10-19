@@ -3,7 +3,7 @@ package com.simi.oa.customtags;
 import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 /**
  * @description：获取spiderPartner的状态
@@ -21,7 +21,7 @@ public class PartnerCompanySizeTag extends SimpleTagSupport {
         try {
         	String companySizeName = "";
         	if (companySize != null) {
-        		companySizeName = OneCareUtil.getPartnerCompanySize(companySize);
+        		companySizeName = MeijiaUtil.getPartnerCompanySize(companySize);
         	}
             getJspContext().getOut().write(companySizeName);
         } catch (Exception e) {

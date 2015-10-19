@@ -20,7 +20,7 @@ import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 @Controller
@@ -78,7 +78,7 @@ public class OrderOnlinePayController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		// 判断如果不是正确支付状态，则直接返回.
-		Boolean paySuccess = OneCareUtil.isPaySuccess(tradeStatus);
+		Boolean paySuccess = MeijiaUtil.isPaySuccess(tradeStatus);
 		if (paySuccess == false) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.ORDER_PAY_NOT_SUCCESS_MSG);

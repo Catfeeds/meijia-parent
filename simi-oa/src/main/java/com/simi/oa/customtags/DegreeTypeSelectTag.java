@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class DegreeTypeSelectTag extends SimpleTagSupport {
 
@@ -19,7 +19,7 @@ public class DegreeTypeSelectTag extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         try {
 
-        		List<String> optionList = OneCareUtil.getDegreeType();
+        		List<String> optionList = MeijiaUtil.getDegreeType();
 
             StringBuffer serviceTypeSelect = new StringBuffer();
             serviceTypeSelect.append("<select id = \"eduId\" name=\"edu\" class=\"form-control\">");

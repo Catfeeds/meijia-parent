@@ -4,7 +4,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import com.meijia.utils.OneCareUtil;
+import com.meijia.utils.MeijiaUtil;
 
 public class IsUsedNameTag extends SimpleTagSupport {
 
@@ -18,7 +18,7 @@ public class IsUsedNameTag extends SimpleTagSupport {
         try {
         	String isUsedName = "";
         	if (isUsed != null) {
-        		isUsedName = OneCareUtil.getIsUsedName( isUsed  );
+        		isUsedName = MeijiaUtil.getIsUsedName( isUsed  );
         	}
             getJspContext().getOut().write(isUsedName);
         } catch (Exception e) {
