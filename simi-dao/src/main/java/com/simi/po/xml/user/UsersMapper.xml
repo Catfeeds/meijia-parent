@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simi.po.dao.user.UsersMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.user.Users">
 		<id column="id" jdbcType="NUMERIC" property="id" />
@@ -23,21 +23,159 @@
 		<result column="add_time" jdbcType="NUMERIC" property="addTime" />
 		<result column="update_time" jdbcType="NUMERIC" property="updateTime" />
 	</resultMap>
+
+	<resultMap id="statResultMap" type="java.util.HashMap">
+		<result column="names" property="names" jdbcType="VARCHAR" />
+		<result column="value" property="value" jdbcType="NUMERIC" />
+	</resultMap>
+
 	<sql id="Base_Column_List">
 		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex, birth_day,
-		degree_id, major, head_img, rest_money, score, user_type, is_approval, add_from,
+		degree_id, major, head_img, rest_money, score, user_type, is_approval,
+		add_from,
 		add_time, update_time
 	</sql>
-	<resultMap id="statResultMap" type="java.util.HashMap">
-		<result column="names" jdbcType="VARCHAR" property="names" />
-		<result column="value" jdbcType="NUMERIC" property="value" />
-	</resultMap>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+	<select id="selectByAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from users
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
+
+	<!-- add By SunWenbao@2014-11-19 -->
+	<select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile = #{mobile,jdbcType=VARCHAR}
+	</select>
+
+	<!--根据秘书Id查询用户信息 -->
+	<select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile = #{mobile,jdbcType=VARCHAR}
+	</select>
+	<!--根据手机号查询用户信息 -->
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+		<if test="userType != null">
+			and user_type = #{userType,jdbcType=NUMERIC}
+		</if>
+		<if test="userIdList != null">
+			and id in
+			<foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+
+			and is_approval = 1;
+		</if>
+		order by add_time desc
+	</select>
+	<!--根据openid和登录类型查询用户信息 -->
+	<select id="selectByOpenidAnd3rdType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1
+		<if test="openId != null">
+			and openid = #{openId,jdbcType=VARCHAR}
+		</if>
+		<if test="thirdType != null">
+			and 3rd_type = #{thirdType,jdbcType=VARCHAR}
+		</if>
+		order by add_time desc
+	</select>
+
+	<select id="selectVoByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>
+
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByUserType" resultMap="BaseResultMap" parameterType="java.lang.Short">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where user_type = #{userType,jdbcType=NUMERIC}
+		and is_approval = 1
+		order by add_time asc
+	</select>
+
+	<!-- <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap"> select <include refid="Base_Column_List" /> from user_addrs where id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")"> #{item} </foreach> order by add_time asc </select> -->
+
+	<!--根据Ids查询Users -->
+	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>
+	<!-- 根据手机号查询用户list -->
+	<select id="selectByMobiles" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<!-- 根据手机号查询用户list -->
+	<select id="selectNotInMobiles" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where mobile not in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="searchVoByAll" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1 group by add_time asc
+	</select>
+
+	<select id="selectUserStat" resultMap="statResultMap" parameterType="java.lang.Long">
+		select FROM_UNIXTIME(add_time,'%Y-%m') as names, count(name) as value
+		from users
+		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from users
 		where id = #{id,jdbcType=NUMERIC}
@@ -271,133 +409,4 @@
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
-
-
-
-	<select id="selectByAll" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-	</select>
-
-	<!-- add By SunWenbao@2014-11-19 -->
-	<select id="selectByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where mobile = #{mobile,jdbcType=VARCHAR}
-	</select>
-
-	<!--根据手机号查询用户信息 -->
-	<select id="selectByListPage" parameterType="java.util.HashMap" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where 1=1
-		<if test="mobile != null">
-			and mobile like CONCAT('%','${mobile}','%' )
-		</if>
-		<if test="userType != null">
-			and user_type = #{userType,jdbcType=NUMERIC}
-		</if>
-		<if test="userIdList != null">
-			and id in
-			<foreach close=")" collection="userIdList" index="index" item="item" open="(" separator=",">
-				#{item}
-			</foreach>
-
-			and is_approval = 1;
-		</if>
-		order by add_time desc
-	</select>
-	<!--根据openid和登录类型查询用户信息 -->
-	<select id="selectByOpenidAnd3rdType" parameterType="java.util.HashMap" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where 1=1
-		<if test="openId != null">
-			and openid = #{openId,jdbcType=VARCHAR}
-		</if>
-		<if test="thirdType != null">
-			and 3rd_type = #{thirdType,jdbcType=VARCHAR}
-		</if>
-		order by add_time desc
-	</select>
-
-	<select id="selectVoByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id in
-		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
-			#{item}
-		</foreach>
-		order by add_time asc
-	</select>
-
-	<select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id = #{id,jdbcType=NUMERIC}
-	</select>
-
-	<select id="selectByUserType" parameterType="java.lang.Short" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where user_type = #{userType,jdbcType=NUMERIC}
-		and is_approval = 1
-		order by add_time asc
-	</select>
-
-	<!-- <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap"> select <include refid="Base_Column_List" /> from user_addrs where id in 
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")"> #{item} </foreach> order by add_time asc </select> -->
-
-	<!--根据Ids查询Users -->
-	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id in
-		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
-			#{item}
-		</foreach>
-		order by add_time asc
-	</select>
-	<!-- 根据手机号查询用户list -->
-	<select id="selectByMobiles" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where mobile in
-		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
-			#{item}
-		</foreach>
-	</select>
-	<!-- 根据手机号查询用户list -->
-	<select id="selectNotInMobiles" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where mobile not in
-		<foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
-			#{item}
-		</foreach>
-	</select>
-
-	<select id="searchVoByAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where 1=1 group by add_time asc
-	</select>
-
-	<select id="selectUserStat" parameterType="java.lang.Long" resultMap="statResultMap">
-		select FROM_UNIXTIME(add_time,'%Y-%m') as names, count(name) as value
-		from users
-		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
-	</select>
-
 </mapper>
