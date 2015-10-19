@@ -243,12 +243,18 @@ public class UsersServiceImpl implements UsersService {
 	 */
 	@Override
 	public Users initUsers(String mobile, Short addFrom) {
-		Users u =  new Users(mobile);
+		Users u =  new Users();
 		u.setId(0L);
+		u.setMobile(mobile);
 		u.setProvinceName("");
 		u.setThirdType(" ");
 		u.setOpenId(" ");
 		u.setName(" ");
+		u.setRealName("");
+		u.setBirthDay(new Date());
+		u.setIdCard("");
+		u.setDegreeId((short) 0);
+		u.setMajor("");
 		u.setSex(" ");
 		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));
@@ -273,6 +279,11 @@ public class UsersServiceImpl implements UsersService {
 		u.setOpenId(openid);
 		u.setSex(" ");
 		u.setName(" ");
+		u.setRealName("");
+		u.setBirthDay(new Date());
+		u.setIdCard("");
+		u.setDegreeId((short) 0);
+		u.setMajor("");
 		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));
 		u.setUserType((short) 0);
