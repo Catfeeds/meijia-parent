@@ -1,6 +1,6 @@
 //参数设置
 var host = window.location.host;
-var appName = "jhj-app";
+var appName = "simi-app";
 var localUrl = "http://" + host;
 var siteAPIPath = localUrl + "/" + appName + "/app/";
 var siteApp = "u";
