@@ -66,5 +66,19 @@ public class TestUserImController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }		
+	
+	@Test
+    public void testGetImProfile() throws Exception {
+
+		String url = "/app/user/get_im_profile.json?im_username=simi-user-1";
+		MockHttpServletRequestBuilder getRequest = get(url);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }			
 
 }
