@@ -33,8 +33,8 @@ public interface CardService {
 
 	List<CardViewVo> changeToCardViewVoBat(List<Cards> cards);
 
-	String getStatusName(Short status);
-
 	List<HashMap> totalByMonth(CardSearchVo vo);
+
+	List<Cards> selectByReminds(CardSearchVo vo);
 
 }

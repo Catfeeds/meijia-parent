@@ -330,27 +330,13 @@ public class CardsServiceImpl implements CardService {
 	}
 	
 	@Override
-	public String getStatusName(Short status) {
+	public List<Cards> selectByReminds(CardSearchVo vo) {
 		
-		String statusName = "";
-		
-		switch (status) {
-		case 0:
-			statusName = "已取消";
-			break;
-		case 1:
-			statusName = "处理中";
-			break;
-		case 2:
-			statusName = "秘书处理中";
-		case 3:
-			statusName = "完成";	
-			break;
-		default:
-			statusName = "";
-		}
-	
-		return statusName;
+		List<Cards> result = new ArrayList<Cards>();
+		result = cardsMapper.selectByReminds(vo);
+		return result;
 	}
+	
+
 
 }

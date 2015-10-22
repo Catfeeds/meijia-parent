@@ -78,4 +78,19 @@ public class TestCardQueryController extends JUnitActionBase  {
 
     }	
 	
+	@Test
+    public void testGetReminds() throws Exception {
+
+		String url = "/app/card/get_reminds.json";
+		String params = "?user_id=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
+	
 }

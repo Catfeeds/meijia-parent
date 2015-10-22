@@ -180,6 +180,34 @@
 		GROUP BY service_date
 		order by service_date asc
 	</select>	
+	
+	
+	<!-- 获得即将闹钟提醒的卡片列表 -->
+	<select id="selectByReminds" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		select <include refid="Base_Column_List" />
+		from
+		(
+			select <include refid="Base_Column_List" /> from cards 
+			where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC} )
+				<![CDATA[	and service_time > unix_timestamp(now()) ]]>   
+				and set_remind > 0 
+			union	
+			select <include refid="Base_Column_List" /> from cards 
+			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+				<![CDATA[	and service_time > unix_timestamp(now()) ]]>   
+				and set_remind > 0 	
+			<if test="userType == 1">
+				union
+				select <include refid="Base_Column_List" /> from cards 
+				where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+				and set_sec_do = 1
+				<![CDATA[	and service_time > unix_timestamp(now()) ]]>   			
+				and set_remind > 0 
+			</if>	
+		) as T
+		order by service_time asc
+	</select>
 		
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cards

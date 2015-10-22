@@ -34,6 +34,7 @@ import com.simi.service.card.CardZanService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardCommentViewVo;
 import com.simi.vo.card.CardSearchVo;
@@ -368,7 +369,7 @@ public class CardController extends BaseController {
 		cardLog.setUserName(userName);
 		cardLog.setStatus(status);	
 		
-		cardLog.setRemarks(cardService.getStatusName(status));
+		cardLog.setRemarks(CardUtil.getStatusName(status));
 		cardLogService.insert(cardLog);
 		return result;
 	}	
@@ -418,7 +419,7 @@ public class CardController extends BaseController {
 		cardLog.setUserName(userName);
 		cardLog.setStatus(status);	
 		
-		cardLog.setRemarks(cardService.getStatusName(status));
+		cardLog.setRemarks(CardUtil.getStatusName(status));
 		cardLogService.insert(cardLog);
 		return result;
 	}	

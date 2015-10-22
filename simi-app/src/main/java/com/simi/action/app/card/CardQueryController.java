@@ -1,5 +1,6 @@
 package com.simi.action.app.card;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +36,10 @@ import com.simi.service.card.CardZanService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardCommentViewVo;
+import com.simi.vo.card.CardRemindVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.LinkManVo;
@@ -264,7 +267,57 @@ public class CardQueryController extends BaseController {
 		return result;
 	}
 	
-	
-	
 	//获取该用户所有需要提醒的卡片列表详情.考虑到性能，只传递最基础的信息，并不包括全部的卡片详情.
+	@RequestMapping(value = "get_reminds", method = RequestMethod.GET)	
+	public AppResultData<Object> getReminds(
+			@RequestParam("user_id") Long userId
+			) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = userService.getUserById(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		CardSearchVo searchVo = new CardSearchVo();
+		searchVo.setCardFrom((short) 0);
+		searchVo.setUserId(userId);
+		searchVo.setUserType(u.getUserType());
+				
+		List<Cards> cards = cardService.selectByReminds(searchVo);
+		
+		List<CardRemindVo> remindCards = new ArrayList<CardRemindVo>();
+		Cards vo = null;
+		
+		Long nowSecond = TimeStampUtil.getNowSecond();
+		for (int i =0; i <cards.size(); i++) {
+			vo = cards.get(i);
+			Short setRemind = vo.getSetRemind();
+			int remindMin = CardUtil.getRemindMin(setRemind);
+			
+			Long serviceTime = vo.getServiceTime();
+			Short cardType = vo.getCardType();
+			Long remindTime = serviceTime - remindMin * 60;
+			
+			if (remindTime > nowSecond) {
+				CardRemindVo item = new CardRemindVo();
+				item.setCardId(vo.getCardId());
+				
+				item.setCardType(cardType);
+				item.setCardTypeName(CardUtil.getCardTypeName(cardType));
+				item.setServiceTime(serviceTime);
+				item.setRemindTime(remindTime);
+				item.setRemindContent(CardUtil.getRemindContent(cardType, serviceTime));
+				remindCards.add(item);
+			}
+		}
+		
+		result.setData(remindCards);
+		
+		return result;
+	}
 }

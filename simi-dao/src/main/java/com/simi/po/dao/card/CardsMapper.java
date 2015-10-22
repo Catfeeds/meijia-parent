@@ -27,4 +27,6 @@ public interface CardsMapper {
 	List<Cards> selectAttendByListPage(CardSearchVo vo);
 
 	List<HashMap> totalByMonth(CardSearchVo vo);
+
+	List<Cards> selectByReminds(CardSearchVo vo);
 }
