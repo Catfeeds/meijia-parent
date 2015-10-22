@@ -3,14 +3,22 @@ package com.simi.action.app.user;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +39,16 @@ import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.TagUsers;
+import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.UserBaiduBind;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
+import com.simi.service.user.TagsService;
+import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserBaiduBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
@@ -45,9 +57,11 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.TagNameListVo;
 import com.simi.vo.user.UserBaiduBindVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
+import com.sun.javadoc.Tag;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -55,6 +69,12 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private TagsUsersService tagsUsersService;
+	
+	@Autowired
+	private TagsService tagsService;
 
 	@Autowired
 	private UserSmsTokenService smsTokenService;
@@ -168,7 +188,145 @@ public class UserController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		return result;
 	}
+
+	//判断验证码是否正确，进入注册页面践行注册
+	@RequestMapping(value = "register", method = RequestMethod.POST)
+	public AppResultData<Object> register(
+			HttpServletRequest request,
+			@RequestParam("mobile") String mobile,
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam("name") String name,
+			//@RequestParam("login_from") Short loginFrom,
+			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
+			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType) {
+		
+			AppResultData<Object> result = new AppResultData<Object>( 
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 	
+		//判断验证码正确与否，测试账号13810002890 000000 不需要验证
+		AppResultData<Object> validateResult = null;
+		if (mobile.equals("15712917308") && smsToken.equals("000000")) {
+			validateResult = result;
+		} else {
+			validateResult = smsTokenService.validateSmsToken(mobile, smsToken, smsType);
+		}
+		
+		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+			return validateResult;
+		}
+
+		Users u =userService.initUsers(mobile, name);
+		
+		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, u);
+		
+		return result;
+	}
+	/**
+	 * 获得标签的集合
+	 * @return
+	 */
+	@RequestMapping(value = "get_tag_list", method = RequestMethod.GET)
+	public AppResultData<Object> getTagsList() {
+		
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		TagNameListVo vo = new TagNameListVo();
+		
+		List<Tags> tagList = tagsService.selectAll();
+		vo.setList(tagList);
+		
+		List<Long> tagIdList = new ArrayList<Long>();
+		for (Tags item : tagList) {
+			tagIdList.add(item.getTagId());
+		}
+	
+		
+		vo.setTagList(tagIdList);
+		result.setData(vo);
+		
+		return result;
+	}
+	//用户信息提交
+	@RequestMapping(value = "post_user_register", method = RequestMethod.POST)
+	public AppResultData<Object> register2(
+			HttpServletRequest request,
+			@RequestParam("mobile") String mobile,
+			@RequestParam("name") String name,
+			@RequestParam("realName") String realName,
+			@RequestParam("sex") String sex,
+			@RequestParam("degreeId") Short degreeId,
+			@RequestParam("major") String major,
+			//@RequestParam("birthDay") Date birthDay,
+			//@RequestParam("tagId") Long tagId,
+			@RequestParam("idCard") String idCard,
+			//@RequestParam("login_from") Short loginFrom,
+			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
+			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType,
+			@RequestParam(value = "tag_ids", required = false, defaultValue = "") String tagIds) {
+		
+			AppResultData<Object> result = new AppResultData<Object>( 
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+			
+			Users users = userService.selectUserByIdCard(idCard);
+				if (users != null) {
+					result.setStatus(Constants.ERROR_999);
+					result.setMsg(ConstantMsg.USER_EXIST_MG);
+					return result;
+				}
+		
+			//记录用户注册信息
+			//long ip = IPUtil.getIpAddr(request);
+			Users record = new Users();
+			record.setId(0L);
+			record.setMobile(mobile);
+			record.setProvinceName("");
+			record.setThirdType(" ");
+			record.setOpenid("");
+			record.setName(name);
+			record.setRealName(realName);
+			record.setIdCard(idCard);
+			record.setSex(sex);
+			record.setBirthDay(new Date());
+			record.setDegreeId(degreeId);
+			record.setMajor(major);
+			record.setHeadImg(" ");
+			record.setRestMoney(new BigDecimal(0));
+			record.setUserType((short) 0);
+			record.setIsApproval((short)0);
+			record.setAddFrom((short) 1);
+			record.setScore(0);
+			
+			record.setAddTime(TimeStampUtil.getNow() / 1000);
+			record.setUpdateTime(TimeStampUtil.getNow() / 1000);
+			//UserLogined record = new UserLogined();
+			userService.insert(record);	
+			//userService.updateByPrimaryKeySelective(record);
+			
+			Users least = userService.selectUserByIdCard(idCard);
+			//想Users表中插入用户的标签记录
+			if (!StringUtil.isEmpty(tagIds)) {
+
+				String[] tagIdsAry = StringUtil.convertStrToArray(tagIds);
+				
+				for (int i = 0; i < tagIdsAry.length; i++) {
+					TagUsers tagUsers = new TagUsers();
+
+					tagUsers.setUserId(least.getId());
+					tagUsers.setAddTime(TimeStampUtil.getNow() / 1000);
+					
+					if (StringUtil.isEmpty(tagIdsAry[i])) {
+						continue;
+					} else {
+						tagUsers.setTagId(Long.valueOf(tagIdsAry[i]));
+						
+						tagsUsersService.insertByTagUsers(tagUsers);
+
+					}
+				}
+			} 
+			
+			return result;
+	}
 	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
 	@RequestMapping(value = "val_sms_token", method = RequestMethod.GET)
 	public AppResultData<Object> valSmsToken(

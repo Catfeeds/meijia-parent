@@ -61,4 +61,10 @@ public interface UsersService {
 
 	List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd);
 
+	int insert(Users record);
+
+	Users initUsers(String mobile, String name);
+
+	Users selectUserByIdCard(String idCard);
+
 }

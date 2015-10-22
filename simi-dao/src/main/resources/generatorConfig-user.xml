@@ -4,8 +4,8 @@
 
 <!-- 	  <classPathEntry location="C:\software\sonatype-work\nexus\storage\central\mysql\mysql-connector-java\5.1.33\mysql-connector-java-5.1.33.jar" />
  -->
-	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
-
+<!-- 	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" /> -->
+        <classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" />
 	<!-- 数据库链接URL、用户名、密码 -->
 	<context id="jdbc-test">
 
@@ -45,8 +45,7 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		
-							<!-- 用户表 -->
+<!-- 用户表 -->
 
 		<table schema="simi" tableName="users"
 			enableInsert="true"
@@ -497,6 +496,24 @@
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>		
+		
+				<!-- 标签表 -->
+		<table schema="simi" tableName="tags"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			
+			<columnOverride  column="tag_id" property="tagId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="tag_type" property="tagType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_enable" property="isEnable" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>		
 		
 

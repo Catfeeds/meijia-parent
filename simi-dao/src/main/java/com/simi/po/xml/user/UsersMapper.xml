@@ -56,6 +56,13 @@
 		from users
 		where mobile = #{mobile,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectUserByIdCard" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id_card = #{idCard,jdbcType=VARCHAR}
+	</select>
 
 	<!--根据秘书Id查询用户信息 -->
 	<select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String">

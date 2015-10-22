@@ -609,4 +609,46 @@ public class UsersServiceImpl implements UsersService {
 		 
 		return usersMapper.selectByUserType(userType);
 	}
+
+	@Override
+	public int insert(Users record) {
+		
+		return usersMapper.insert(record);
+	}
+
+	@Override
+	public Users initUsers(String mobile, String name) {
+		Users u =  new Users();
+		u.setId(0L);
+		u.setMobile(mobile);
+		u.setProvinceName("");
+		u.setThirdType(" ");
+		u.setOpenId(" ");
+		u.setName(name);
+		u.setRealName("");
+		u.setBirthDay(new Date());
+		u.setIdCard("");
+		u.setDegreeId((short) 0);
+		u.setMajor("");
+		u.setSex(" ");
+		u.setHeadImg(" ");
+		u.setRestMoney(new BigDecimal(0));
+		u.setUserType((short) 0);
+		u.setIsApproval((short) 0);
+		u.setAddFrom((short) 0);
+		u.setScore(0);
+		u.setAddTime(TimeStampUtil.getNow()/1000);
+		u.setUpdateTime(TimeStampUtil.getNow()/1000);
+		return u;
+	}
+
+	@Override
+	public Users selectUserByIdCard(String idCard) {
+		
+		return usersMapper.selectUserByIdCard(idCard);
+	}
+	
+
+
+	
 }

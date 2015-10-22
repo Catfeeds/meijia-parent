@@ -150,4 +150,10 @@ public class StringUtil {
 	    list.removeAll(Collections.singleton(""));
 	    return list.toArray(new String[list.size()]);
 	}
+	//逗号分割
+    public static String[] convertStrToArray(String str){
+        String[] strArray = null;
+        strArray = str.split(","); //拆分字符为"," ,然后把结果交给数组strArray
+        return strArray;
+    }
 }

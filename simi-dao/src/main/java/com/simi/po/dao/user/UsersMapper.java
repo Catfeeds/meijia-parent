@@ -49,5 +49,7 @@ public interface UsersMapper {
 	Users selectByUserId(Long userId);
 
 	List<Users> selectByUserType(Short userType);
+
+	Users selectUserByIdCard(String idCard);
     
 }
