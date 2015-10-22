@@ -23,7 +23,10 @@ import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
  *
  */
 public class BaiduUtil {
-
+	
+	// 百度推送 apiKey
+	public static String appId = BaiduConfigUtil.getInstance().getRb().getString("appId");
+	
 	// 百度推送 apiKey
 	public static String apiKey = BaiduConfigUtil.getInstance().getRb().getString("apiKey");
 
@@ -39,7 +42,11 @@ public class BaiduUtil {
 	 * @throws PushClientException 
 	 * @throws PushServerException 
 	 */
-	public static boolean IOSPushNotificationToMultiDevice(String[] channelIds, String msgContent, Map<String, String> params) throws PushClientException, PushServerException {
+	public static boolean IOSPushNotificationToMultiDevice(
+			String[] channelIds,
+			String msgContent, 
+			Map<String, String> params) 
+			throws PushClientException, PushServerException {
 //		String apiKey = "Y31eOZA3t0OH8YfTQg9rKefl";
 //		String secretKey = "nUaYDsXIc2sNRxS01R3svQ3kCKSvXgXU";		
 		PushKeyPair pair = new PushKeyPair(apiKey, secretKey);

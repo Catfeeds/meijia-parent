@@ -1,6 +1,7 @@
 package com.simi.action.app.user;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.UserImHistory;
 import com.simi.po.model.user.UserImLast;
 import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.Users;
 import com.simi.service.user.UserImHistoryService;
 import com.simi.service.user.UserImLastService;
 import com.simi.service.user.UserRef3rdService;
@@ -90,6 +92,45 @@ public class UserImController extends BaseController {
 		
 		return result;
 	}	
+	
+	/**
+	 * 获取当前用户与好友的最新一条聊天记录
+	 * 
+	 * @param user_id
+	 * @return
+	 */
+
+	@RequestMapping(value = "get_im_profile", method = RequestMethod.GET)
+	public AppResultData<Object> getImProfile(
+			@RequestParam("im_username") String imUserName) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
+
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserNameAnd3rdType(imUserName, "huanxin");
+		
+		if (userRef3rd == null) {
+			return result;
+		}
+		
+		
+		Long userId = userRef3rd.getUserId();
+		
+		Users u = userService.getUserById(userId);
+		
+		if (u == null) return result;
+		
+		HashMap<String, String> imProfile = new HashMap<String, String>();
+		imProfile.put("user_id", u.getId().toString());
+		imProfile.put("mobile", u.getMobile());
+		imProfile.put("sex", u.getSex());
+		imProfile.put("im_username", imUserName);
+		imProfile.put("name", StringUtil.isEmpty(u.getName()) ? u.getMobile() : u.getName());
+		imProfile.put("head_img", u.getHeadImg());
+		imProfile.put("user_type", u.getUserType().toString());
+		result.setData(imProfile);
+		
+		return result;
+	}		
 	
 	
 	@RequestMapping(value = "gen_last_im", method = RequestMethod.GET)
