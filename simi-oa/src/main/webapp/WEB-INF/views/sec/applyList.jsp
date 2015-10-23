@@ -47,7 +47,7 @@
 						<th>手机号</th>
 						<th>昵称</th>
 						<!-- <th>性别</th> -->
-						<th>出生日期</th>
+						<!-- <th>出生日期</th> -->
 						<!-- <th>学历</th>
 						<th>头像</th>
 						<th>所在城市</th> -->
@@ -76,8 +76,8 @@
 												</c:when>
 										</c:choose>	
 		                                </td> --%>
-							<td><fmt:formatDate value="${ item.birthDay}"
-									pattern="yyyy-MM-dd" /></td>
+							<%-- <td><fmt:formatDate value="${ item.birthDay}"
+									pattern="yyyy-MM-dd" /></td> --%>
 							<%-- <td>${ item.degreeId}"</td>
 							<td><img src="${ item.headImg}" /></td>
 							<td>${ item.provinceName}"</td> --%>

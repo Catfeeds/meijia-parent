@@ -146,12 +146,15 @@
 								<form:errors path="isApprovalName" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<div class="form-actions fluid">
+						<c:if test="${contentModel.isApproval == 0}">
+							<div class="form-actions fluid">
 							<div class="col-md-offset-6 col-md-6">
 								<button type="submit" id="applyForm_btn" class="btn btn-success">审批</button>
 							</div>
 							
 						</div>
+						</c:if>
+						
 						<%-- <c:if
 							test="${contentModel.headImg != null && scontentModel.headImg != '' }">
 							<div class="form-group ">

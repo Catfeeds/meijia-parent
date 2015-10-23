@@ -1,5 +1,8 @@
 package com.simi.vo.user;
 
+import java.util.List;
+
+import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
 
 public class UserApplyVo extends Users{
@@ -12,6 +15,9 @@ public class UserApplyVo extends Users{
 	
 	private String sexName;
 
+	//用户标签列表
+	//private List<Tags> list;
+	
 	public String getIsApprovalName() {
 		return isApprovalName;
 	}
@@ -35,6 +41,14 @@ public class UserApplyVo extends Users{
 	public void setSexName(String sexName) {
 		this.sexName = sexName;
 	}
-	
+/*
+	public List<Tags> getList() {
+		return list;
+	}
+
+	public void setList(List<Tags> list) {
+		this.list = list;
+	}
+	*/
 	
 }

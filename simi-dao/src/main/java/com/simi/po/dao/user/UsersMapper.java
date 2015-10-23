@@ -53,5 +53,7 @@ public interface UsersMapper {
 	Users selectUserByIdCard(String idCard);
 
 	List<Users> selectByIsAppRoval();
+
+	List<Users> selectByIsAppRovalYes();
     
 }

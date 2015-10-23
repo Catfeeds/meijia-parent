@@ -73,4 +73,6 @@ public interface UsersService {
 
 	int insertSelective(Users u);
 
+	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
+
 }

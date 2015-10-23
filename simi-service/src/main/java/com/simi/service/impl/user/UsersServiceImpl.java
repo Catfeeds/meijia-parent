@@ -656,6 +656,14 @@ public class UsersServiceImpl implements UsersService {
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
+	@Override
+	public PageInfo selectByIsAppRovalYes(int pageNo, int pageSize) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+		List<Users> list = usersMapper.selectByIsAppRovalYes();
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
 
 	@Override
 	public Users selectByPrimaryKey(Long id) {

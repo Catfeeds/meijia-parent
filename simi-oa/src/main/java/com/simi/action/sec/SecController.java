@@ -3,6 +3,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +24,10 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.user.TagUsers;
+import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
+import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
@@ -36,6 +40,8 @@ public class SecController extends AdminController {
 	@Autowired
 	private UsersService usersService;
 
+	@Autowired
+	private TagsUsersService tagsUsersService;
 	
 	@Autowired
 	private UserAddrsService userAddrsService;
@@ -43,6 +49,39 @@ public class SecController extends AdminController {
 	@Autowired
 	private UserDetailPayService userDetailPayService;
 
+	
+	/**
+	 *  秘书申请列表
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+    @AuthPassport
+	@RequestMapping(value = "/list", method = { RequestMethod.GET })
+	public String secList(HttpServletRequest request, Model model) {
+    	
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+	
+		PageInfo result = usersService.selectByIsAppRovalYes(pageNo,
+				pageSize);
+		
+		model.addAttribute("contentModel", result);
+
+		return "sec/list";
+	}
+	
+	/**
+	 *  秘书申请列表
+	 * @param request
+	 * @param model
+	 * @return
+	 */
     @AuthPassport
 	@RequestMapping(value = "/applyList", method = { RequestMethod.GET })
 	public String applyList(HttpServletRequest request, Model model) {
@@ -62,6 +101,12 @@ public class SecController extends AdminController {
 
 		return "sec/applyList";
 	}
+    /**
+     * 秘书详细信息列表展示
+     * @param id
+     * @param model
+     * @return
+     */
     @AuthPassport
 	@RequestMapping(value = "/applyForm",method = RequestMethod.GET)
 	public String  orderDetail(Long id ,Model model){
@@ -143,12 +188,23 @@ public class SecController extends AdminController {
 			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
 		}
 		
+		/*//用户标签列表
+		List<TagUsers> list = tagsUsersService.select*/
+		
+		
+		
 		model.addAttribute("contentModel", vo);
 		
 		return "sec/applyListForm";
 	}
     
-    
+    /**
+     * 审批结果保存
+     * @param model
+     * @param id
+     * @param request
+     * @return
+     */
     @AuthPassport
 	@RequestMapping(value = "/saveApplyListForm", method = { RequestMethod.POST})
 	public String adForm(Model model,
