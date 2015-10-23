@@ -1,0 +1,145 @@
+package com.simi.action.sec;
+import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.github.pagehelper.PageInfo;
+import com.mchange.v2.beans.BeansUtils;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.MeijiaUtil;
+import com.simi.action.admin.AdminController;
+import com.simi.oa.auth.AuthPassport;
+import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.user.Users;
+import com.simi.service.user.UserAddrsService;
+import com.simi.service.user.UserDetailPayService;
+import com.simi.service.user.UsersService;
+import com.simi.vo.user.UserApplyVo;
+import com.sun.tools.classfile.Annotation.element_value;
+@Controller
+@RequestMapping(value = "/sec")
+public class SecController extends AdminController {
+
+	@Autowired
+	private UsersService usersService;
+
+	
+	@Autowired
+	private UserAddrsService userAddrsService;
+
+	@Autowired
+	private UserDetailPayService userDetailPayService;
+
+    @AuthPassport
+	@RequestMapping(value = "/applyList", method = { RequestMethod.GET })
+	public String applyList(HttpServletRequest request, Model model) {
+    	
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+	
+		PageInfo result = usersService.selectByIsAppRoval(pageNo,
+				pageSize);
+		
+		model.addAttribute("contentModel", result);
+
+		return "sec/applyList";
+	}
+    @AuthPassport
+	@RequestMapping(value = "/applyForm",method = RequestMethod.GET)
+	public String  orderDetail(Long id ,Model model){
+		
+		Users u = usersService.selectVoByUserId(id);
+		UserApplyVo vo = new UserApplyVo();
+		try {
+			BeanUtils.copyProperties(vo, u);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//出生日期
+        /*Date birthday = u.getBirthDay();
+       
+        String dateStr = new SimpleDateFormat("yyyy-MM-dd").format(birthday);
+		vo.setBirthDay(DateUtil.parse(dateStr));*/
+		//性别
+		String sex = u.getSex();
+		if (sex == "0") {
+			vo.setSexName("男");
+		}else {
+			vo.setSexName("女");
+		}
+		
+		//是否审批名称
+		short isApproval = u.getIsApproval();
+		if (isApproval == 0) {
+			vo.setIsApprovalName("未审批");
+		}else {
+			vo.setIsApprovalName("已审批");
+		}
+		
+		//学历名称
+		short degreeId = u.getDegreeId();
+		if (degreeId == 0) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}if (degreeId == 1) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}if (degreeId == 2) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}if (degreeId == 3) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}if (degreeId == 4) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}
+		if (degreeId == 5) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}
+		if (degreeId == 6) {
+			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
+		}
+		
+		model.addAttribute("contentModel", vo);
+		
+		return "sec/applyListForm";
+	}
+    
+    
+    @AuthPassport
+	@RequestMapping(value = "/saveApplyListForm", method = { RequestMethod.POST})
+	public String adForm(Model model,
+			@RequestParam(value = "id") Long id,
+			HttpServletRequest request) {
+    	
+    	if (id == null) {
+			id = 0L; 
+		}
+    	Users u= usersService.selectByPrimaryKey(id);
+    	
+    	u.setIsApproval((short)1);
+    
+    	usersService.updateByPrimaryKeySelective(u);
+    	
+    	model.addAttribute("contentModel", u);
+    	
+    	return "redirect:/sec/applyList";
+    	
+    }
+}

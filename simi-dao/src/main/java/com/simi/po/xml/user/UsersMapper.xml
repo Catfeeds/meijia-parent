@@ -63,6 +63,16 @@
 		from users
 		where id_card = #{idCard,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectByIsAppRoval" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from users
+    
+    where is_approval = 0
+    
+    order by id asc
+  </select>
 
 	<!--根据秘书Id查询用户信息 -->
 	<select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String">

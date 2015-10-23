@@ -102,6 +102,8 @@ var tagsListSuccess= function(data, textStatus, jqXHR) {
 		
 	}}
 	$$("#tagNames").append(tagHtml);
+	 //$$("#degreeId").text(tags.degree_type_list);
+	
 	console.log(tags);
 };
 function tagClick(tagId, obj) {

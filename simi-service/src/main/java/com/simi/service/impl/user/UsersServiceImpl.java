@@ -647,7 +647,28 @@ public class UsersServiceImpl implements UsersService {
 		
 		return usersMapper.selectUserByIdCard(idCard);
 	}
-	
+
+	@Override
+	public PageInfo selectByIsAppRoval(int pageNo, int pageSize) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+		List<Users> list = usersMapper.selectByIsAppRoval();
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
+
+	@Override
+	public Users selectByPrimaryKey(Long id) {
+		
+		return usersMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int insertSelective(Users u) {
+		// TODO Auto-generated method stub
+		return usersMapper.insertSelective(u);
+	}
+
 
 
 	

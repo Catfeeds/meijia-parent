@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.IPUtil;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
@@ -222,7 +223,7 @@ public class UserController extends BaseController {
 		return result;
 	}
 	/**
-	 * 获得标签的集合
+	 * 获得标签和学历的集合
 	 * @return
 	 */
 	@RequestMapping(value = "get_tag_list", method = RequestMethod.GET)
@@ -242,6 +243,11 @@ public class UserController extends BaseController {
 	
 		
 		vo.setTagList(tagIdList);
+		
+		List<String> degreeTypeList = MeijiaUtil.getDegreeType();
+		
+		vo.setDegreeTypeList(degreeTypeList);
+		
 		result.setData(vo);
 		
 		return result;

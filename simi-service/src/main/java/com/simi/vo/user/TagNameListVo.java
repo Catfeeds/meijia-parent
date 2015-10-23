@@ -9,6 +9,9 @@ public class TagNameListVo {
 	private List<Tags> list;
 	//标签idList
 	private List<Long> tagList;
+	//学历类型集合
+	private List<String> DegreeTypeList;
+	
 	public List<Tags> getList() {
 		return list;
 	}
@@ -20,6 +23,12 @@ public class TagNameListVo {
 	}
 	public void setTagList(List<Long> tagList) {
 		this.tagList = tagList;
+	}
+	public List<String> getDegreeTypeList() {
+		return DegreeTypeList;
+	}
+	public void setDegreeTypeList(List<String> degreeTypeList) {
+		DegreeTypeList = degreeTypeList;
 	}
 
 

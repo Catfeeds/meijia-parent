@@ -51,5 +51,7 @@ public interface UsersMapper {
 	List<Users> selectByUserType(Short userType);
 
 	Users selectUserByIdCard(String idCard);
+
+	List<Users> selectByIsAppRoval();
     
 }

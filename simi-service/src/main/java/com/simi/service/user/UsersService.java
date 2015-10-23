@@ -67,4 +67,10 @@ public interface UsersService {
 
 	Users selectUserByIdCard(String idCard);
 
+	PageInfo selectByIsAppRoval(int pageNo, int pageSize);
+
+	Users selectByPrimaryKey(Long id);
+
+	int insertSelective(Users u);
+
 }
