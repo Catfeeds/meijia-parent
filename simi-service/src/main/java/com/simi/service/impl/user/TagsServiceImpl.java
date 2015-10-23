@@ -12,15 +12,18 @@ import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.sun.javadoc.Tag;
 @Service
-public class TagsServiceImpl implements TagsUsersService {
+public class TagsServiceImpl implements TagsService {
 
+	
 	@Autowired
-	private TagUsersMapper tagUsersMapper;
-
+	private TagsMapper TagsMapper;
+	
+	
 	@Override
-	public int insertByTagUsers(TagUsers tagUsers) {
+	public List<Tags> selectAll() {
 		
-		return tagUsersMapper.insertSelective(tagUsers);
+		return TagsMapper.selectAll();
 	}
+
 	
 }
