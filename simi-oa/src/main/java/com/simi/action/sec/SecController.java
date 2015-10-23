@@ -1,5 +1,6 @@
 package com.simi.action.sec;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import com.github.pagehelper.PageInfo;
 import com.mchange.v2.beans.BeansUtils;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
@@ -66,6 +68,29 @@ public class SecController extends AdminController {
 		
 		Users u = usersService.selectVoByUserId(id);
 		UserApplyVo vo = new UserApplyVo();
+		
+		vo.setId(u.getId());
+		vo.setMobile(u.getMobile());
+		vo.setProvinceName(u.getProvinceName());
+		vo.setThirdType(u.getThirdType());
+		vo.setOpenId(u.getOpenId());
+		vo.setName(u.getName());
+		vo.setRealName(u.getRealName());
+		vo.setBirthDay(u.getBirthDay());
+		vo.setIdCard(u.getIdCard());
+		vo.setDegreeId(u.getDegreeId());
+		vo.setMajor(u.getMajor());
+		vo.setSex(u.getSex());
+		vo.setHeadImg(u.getHeadImg());
+		vo.setRestMoney(u.getRestMoney());
+		vo.setUserType(u.getUserType());
+		vo.setIsApproval(u.getIsApproval());
+		vo.setAddFrom(u.getAddFrom());
+		vo.setScore(u.getScore());
+		vo.setAddTime(u.getAddTime());
+		vo.setUpdateTime(u.getUpdateTime());
+	
+		/*
 		try {
 			BeanUtils.copyProperties(vo, u);
 		} catch (IllegalAccessException e) {
@@ -75,6 +100,8 @@ public class SecController extends AdminController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+		
 		//出生日期
         /*Date birthday = u.getBirthDay();
        
