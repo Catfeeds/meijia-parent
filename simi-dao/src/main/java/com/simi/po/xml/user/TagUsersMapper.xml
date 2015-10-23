@@ -16,6 +16,19 @@
 		from tag_users
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tag_users
+		where user_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+
+		order by user_id asc
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from tag_users
 		where id = #{id,jdbcType=NUMERIC}
@@ -23,7 +36,8 @@
 	<insert id="insert" parameterType="com.simi.po.model.user.TagUsers">
 		insert into tag_users (id, user_id, tag_id,
 		add_time)
-		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{tagId,jdbcType=NUMERIC},
+		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{tagId,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.TagUsers">
@@ -76,7 +90,8 @@
 		update tag_users
 		set user_id = #{userId,jdbcType=NUMERIC},
 		tag_id = #{tagId,jdbcType=NUMERIC},
-		add_time = #{addTime,jdbcType=NUMERIC}
+		add_time =
+		#{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 </mapper>

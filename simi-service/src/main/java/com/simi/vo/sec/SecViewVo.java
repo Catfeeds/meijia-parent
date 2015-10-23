@@ -1,5 +1,9 @@
 package com.simi.vo.sec;
 
+import java.util.List;
+
+import com.simi.po.model.user.Tags;
+
 public class SecViewVo {
 	
 
@@ -20,6 +24,8 @@ public class SecViewVo {
     private String imUserName;
     
     private String description;
+    
+    private List<Tags> tags;
 
 	public String getMobile() {
 		return mobile;
@@ -91,6 +97,14 @@ public class SecViewVo {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Tags> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tags> tags) {
+		this.tags = tags;
 	}
 
 }

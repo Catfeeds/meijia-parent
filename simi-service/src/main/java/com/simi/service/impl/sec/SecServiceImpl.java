@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.meijia.utils.BeanUtilsExp;
 import com.simi.po.dao.user.UserRef3rdMapper;
+import com.simi.po.model.user.TagUsers;
+import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictService;
 import com.simi.service.sec.SecService;
+import com.simi.service.user.TagsService;
+import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
@@ -37,6 +41,12 @@ public class SecServiceImpl implements SecService {
 
 	@Autowired
 	private UserRef3rdMapper userRef3rdMapper;
+	
+	@Autowired
+	private TagsService tagsService;
+	
+	@Autowired
+	private TagsUsersService tagsUsersService;	
 
 	@Override
 	public List<SecViewVo> changeToSecViewVos(List<Users> userList) {
@@ -51,6 +61,8 @@ public class SecServiceImpl implements SecService {
 		}
 		
 		List<UserRef3rd> userRef3Rds = userRef3rdService.selectByUserIds(userIds);
+		List<Tags> tagsAll = tagsService.selectAll();
+		List<TagUsers> tagUsers = tagsUsersService.selectByUserIds(userIds);
 				
 		Users item = null;
 		for (int i =0; i < userList.size(); i++) {
@@ -66,6 +78,19 @@ public class SecServiceImpl implements SecService {
 					break;
 				}
 			}
+			
+			//设置tags
+			List<Tags> tags = new ArrayList<Tags>();
+			for (TagUsers tu : tagUsers) {
+				for (Tags t : tagsAll) {
+					if (tu.getTagId().equals(t.getTagId())) {
+						tags.add(t);
+						break;
+					}
+				}
+			}
+			
+			
 			result.add(vo);
 		}
 		

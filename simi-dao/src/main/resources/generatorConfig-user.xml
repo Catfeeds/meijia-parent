@@ -514,7 +514,22 @@
 			
 			<columnOverride  column="tag_type" property="tagType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="is_enable" property="isEnable" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-		</table>		
+		</table>	
+
+		<!-- 推送绑定信息表 -->
+		<table schema="simi" tableName="user_push_bind"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>	
 		
 
 	</context>

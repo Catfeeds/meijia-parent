@@ -20,7 +20,7 @@ import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.sec.SecService;
-import com.simi.service.user.UserBaiduBindService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;

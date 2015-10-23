@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MobileUtil;
 import com.meijia.utils.SmsUtil;
@@ -157,9 +157,9 @@ public class UsersServiceImpl implements UsersService {
 		if (user == null) {
 			return userInfo;
 		}
-
-		BeanUtils.copyProperties(user, userInfo);
-
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(user, userInfo);
+		
 		String seniorRange = "";
 		HashMap<String, Date> seniorRangeResult = orderSeniorService.getSeniorRangeDate(userId);
 
@@ -346,8 +346,8 @@ public class UsersServiceImpl implements UsersService {
 		if (u == null) {
 			return vo;
 		}
-
-		BeanUtils.copyProperties(u, vo);
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 		vo.setUser_id(u.getId());
 		
 		
@@ -421,7 +421,9 @@ public class UsersServiceImpl implements UsersService {
 			
 			UserViewVo vo = new UserViewVo();
 			u = userList.get(i);
-			BeanUtils.copyProperties(u, vo);
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+			
 			vo.setUser_id(u.getId());
 		
 		

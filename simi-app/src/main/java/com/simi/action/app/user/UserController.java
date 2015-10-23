@@ -42,7 +42,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
-import com.simi.po.model.user.UserBaiduBind;
+import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserSmsToken;
@@ -50,7 +50,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
-import com.simi.service.user.UserBaiduBindService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
@@ -59,7 +59,7 @@ import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.TagNameListVo;
-import com.simi.vo.user.UserBaiduBindVo;
+import com.simi.vo.user.UserPushBindVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 import com.sun.javadoc.Tag;
@@ -90,7 +90,7 @@ public class UserController extends BaseController {
 	private UserCouponService userCouponService;
 
 	@Autowired
-	private UserBaiduBindService userBaiduBindService;
+	private UserPushBindService userPushBindService;
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;
@@ -107,7 +107,9 @@ public class UserController extends BaseController {
 			@RequestParam("sms_token") String smsToken,
 			@RequestParam("login_from") Short loginFrom,
 			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
-			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType) {
+			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType,
+			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType
+			) {
 
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
@@ -147,18 +149,18 @@ public class UserController extends BaseController {
 		userLoginedService.insert(record);		
 		
 		// 根据mobile找到user_baidu_bind信息
-		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(u.getId());		
-		UserBaiduBindVo vo = new UserBaiduBindVo();
+		UserPushBind userPushBind = userPushBindService.selectByUserIdAndDeviceType(u.getId(), deviceType);
+
+		UserPushBindVo vo = new UserPushBindVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 		
 		vo.setAppId("");
 		vo.setChannelId("");
 		vo.setAppUserId("");
+		vo.setClientId("");
 		
-		if (userBaiduBind != null) {
-			vo.setAppId(userBaiduBind.getAppId());
-			vo.setChannelId(userBaiduBind.getChannelId());
-			vo.setAppUserId(userBaiduBind.getAppUserId());
+		if (userPushBind != null) {
+			vo.setClientId(userPushBind.getClientId());
 		}		
 		
 		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);

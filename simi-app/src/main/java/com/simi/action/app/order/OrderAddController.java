@@ -27,7 +27,7 @@ import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserAddrsService;
-import com.simi.service.user.UserBaiduBindService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 
@@ -38,7 +38,7 @@ public class OrderAddController extends BaseController {
 	private UsersService userService;
 	
 	@Autowired
-	private UserBaiduBindService userBaiduBindService;	
+	private UserPushBindService userBaiduBindService;	
 	
 	@Autowired
 	private OrdersService ordersService;

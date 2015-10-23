@@ -1,29 +1,25 @@
 package com.simi.action.app.user;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.IPUtil;
-import com.meijia.utils.SmsUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.user.UserBaiduBind;
+import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
-import com.simi.service.user.UserBaiduBindService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
@@ -31,7 +27,7 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserBaiduBindVo;
+import com.simi.vo.user.UserPushBindVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -50,7 +46,7 @@ public class UserRef3rdController extends BaseController {
 	private UserRef3rdService userRef3rdService;
 
 	@Autowired
-	private UserBaiduBindService userBaiduBindService;
+	private UserPushBindService userPushBindService;
 
 	@Autowired
 	private UserSmsTokenService userSmsTokenService;
@@ -66,7 +62,8 @@ public class UserRef3rdController extends BaseController {
 			@RequestParam("3rd_type") String thirdType,
 			@RequestParam("name") String name,
 			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg,
-			@RequestParam("login_from") int loginFrom) {
+			@RequestParam("login_from") int loginFrom,
+			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
@@ -121,33 +118,22 @@ public class UserRef3rdController extends BaseController {
 			
 			
 			//发送给13810002890 ，做一个提醒
-			String code = name;
-			String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
-			HashMap<String, String> sendSmsResult = SmsUtil.SendSms("13810002890",
-			Constants.GET_CODE_TEMPLE_ID, content);
+//			String code = name;
+//			String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
+//			HashMap<String, String> sendSmsResult = SmsUtil.SendSms("13810002890",
+//			Constants.GET_CODE_TEMPLE_ID, content);
 		}
 
-		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(users
-				.getId());
-
-		UserBaiduBindVo vo = new UserBaiduBindVo();
-
-		try {
-			BeanUtils.copyProperties(vo, users);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		UserPushBind userPushBind = userPushBindService.selectByUserIdAndDeviceType(users.getId(), deviceType);
+		UserPushBindVo vo = new UserPushBindVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
 
 		vo.setAppId("");
 		vo.setChannelId("");
 		vo.setAppUserId("");
-
-		if (userBaiduBind != null) {
-			vo.setAppId(userBaiduBind.getAppId());
-			vo.setChannelId(userBaiduBind.getChannelId());
-			vo.setAppUserId(userBaiduBind.getAppUserId());
+		vo.setClientId("");
+		if (userPushBind != null) {
+			vo.setClientId(userPushBind.getClientId());
 		}
 		result.setData(vo);
 

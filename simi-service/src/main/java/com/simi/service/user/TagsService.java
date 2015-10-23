@@ -10,6 +10,8 @@ public interface TagsService {
 
 	List<Tags> selectAll();
 
+	List<Tags> selectByTagIds(List<Long> tagIds);
+
 	
 
 }

@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.po.dao.user.TagUsersMapper;
-import com.simi.po.dao.user.TagsMapper;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
-import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
-import com.sun.javadoc.Tag;
 @Service
 public class TagsUsersServiceImpl implements TagsUsersService {
 
@@ -22,6 +19,11 @@ public class TagsUsersServiceImpl implements TagsUsersService {
 	public int insertByTagUsers(TagUsers tagUsers) {
 		
 		return tagUsersMapper.insertSelective(tagUsers);
+	}
+	
+	@Override
+	public List<TagUsers> selectByUserIds(List<Long> userIds) {
+		return tagUsersMapper.selectByUserIds(userIds);
 	}
 
 
