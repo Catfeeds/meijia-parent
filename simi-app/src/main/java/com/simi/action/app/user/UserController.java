@@ -184,7 +184,7 @@ public class UserController extends BaseController {
 		if (mobile.equals("18610807136")) {
 			code = "000000";
 		}
-		
+
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.GET_CODE_TEMPLE_ID, content);
 		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, sms_type, code, sendSmsResult);
@@ -194,7 +194,42 @@ public class UserController extends BaseController {
 		
 		return result;
 	}
+	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
+	@RequestMapping(value = "get_register_sms_token", method = RequestMethod.GET)
+	public AppResultData<String> getRegisterSmsToken(
+			@RequestParam("mobile") String mobile,
+			@RequestParam("sms_type") int sms_type) {
 
+		
+		/*AppResultData<String> result = new AppResultData<String>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");*/
+		AppResultData<String> result = new AppResultData<String>( 
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
+		String code = RandomUtil.randomNumber();
+
+		if (mobile.equals("15712917308")) {
+			code = "000000";
+		}
+		
+		Users user = userService.selectUserByMobile(mobile);
+		if (user != null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.MOBILE_EXIST_MG);
+			return result;
+		}
+
+		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
+		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.GET_CODE_TEMPLE_ID, content);
+		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, sms_type, code, sendSmsResult);
+
+		smsTokenService.insert(record);
+
+		
+		return result;
+	}
+	
+	
 	//判断验证码是否正确，进入注册页面践行注册
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	public AppResultData<Object> register(
@@ -204,7 +239,7 @@ public class UserController extends BaseController {
 			@RequestParam("name") String name,
 			//@RequestParam("login_from") Short loginFrom,
 			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
-			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType) {
+			@RequestParam(value = "user_type", required = false, defaultValue = "1") int userType) {
 		
 			AppResultData<Object> result = new AppResultData<Object>( 
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
