@@ -14,21 +14,34 @@ myApp.onPageInit('register', function (page) {
         	return false;
         }
 
-        var count = 60;
-        var countdown = setInterval(CountDown, 1000);
-        function CountDown(){
-        	$$("#get_code").attr("disabled", true);
-            $$("#get_code").css("background","#999");
-            $$("#get_code").text(count + "秒");
-            if (count == 0) {
-                $$("#get_code").removeAttr("disabled");
-                $$("#get_code").css("background","#f37b1d");
-                $$("#get_code").text("获取验证码");
-                clearInterval(countdown);
-            }
-            count--;
-        }
-
+      
+    	var smsTokenSuccess = function(data, textStatus, jqXHR) {
+    		var result = JSON.parse(data.response);
+    		
+    		if (result.status == "999") {
+    			myApp.alert(result.msg);
+    			return;
+    		}
+    		if (result.status == "0") {
+    			myApp.alert("验证码已发送到您的手机，请注意查收。");
+    			  var count = 60;
+    		        var countdown = setInterval(CountDown, 1000);
+    		        function CountDown(){
+    		        	$$("#get_code").attr("disabled", true);
+    		            $$("#get_code").css("background","#999");
+    		            $$("#get_code").text(count + "秒");
+    		            if (count == 0) {
+    		                $$("#get_code").removeAttr("disabled");
+    		                $$("#get_code").css("background","#f37b1d");
+    		                $$("#get_code").text("获取验证码");
+    		                clearInterval(countdown);
+    		            }
+    		            count--;
+    		        }
+    		}
+    	   	
+    	   	
+    	};
         var postdata = {};
         postdata.mobile = moblieStr;
         postdata.sms_type = 0;
@@ -43,17 +56,13 @@ myApp.onPageInit('register', function (page) {
     	    data: postdata,
 
     	    statusCode: {
-    	    	201: smsTokenSuccess,
+    	    	200: smsTokenSuccess,
     	    	400: ajaxError,
     	    	500: ajaxError
     	    }
     	});
         
-    	var smsTokenSuccess = function(data, textStatus, jqXHR) {
-    		
-    	   	myApp.hideIndicator();    			
-    	   	myApp.alert("验证码已发送到您的手机，请注意查收。");
-    	};
+    
         
         return false;
 	});

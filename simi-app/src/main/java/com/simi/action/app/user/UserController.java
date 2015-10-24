@@ -190,6 +190,7 @@ public class UserController extends BaseController {
 		
 		return result;
 	}
+
 	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
 	@RequestMapping(value = "get_register_sms_token", method = RequestMethod.GET)
 	public AppResultData<String> getRegisterSmsToken(
