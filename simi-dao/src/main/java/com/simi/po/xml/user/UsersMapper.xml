@@ -71,7 +71,7 @@
     
     where is_approval = 0
     
-    order by id asc
+    order by id desc
   </select>
   <select id="selectByIsAppRovalYes" resultMap="BaseResultMap" >
     select
@@ -80,7 +80,7 @@
     
     where is_approval = 1
     
-    order by id asc
+    order by id desc
   </select>
 
 	<!--根据秘书Id查询用户信息 -->

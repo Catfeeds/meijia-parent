@@ -63,6 +63,7 @@ import com.simi.vo.user.UserBaiduBindVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 import com.sun.javadoc.Tag;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -172,11 +173,23 @@ public class UserController extends BaseController {
 			@RequestParam("mobile") String mobile,
 			@RequestParam("sms_type") int sms_type) {
 
+		
+		/*AppResultData<String> result = new AppResultData<String>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");*/
+		AppResultData<String> result = new AppResultData<String>( 
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("18610807136")) {
+		if (mobile.equals("15712917308")) {
 			code = "000000";
+		}
+		
+		Users user = userService.selectUserByMobile(mobile);
+		if (user != null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.MOBILE_EXIST_MG);
+			return result;
 		}
 
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
@@ -185,8 +198,7 @@ public class UserController extends BaseController {
 
 		smsTokenService.insert(record);
 
-		AppResultData<String> result = new AppResultData<String>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
 		return result;
 	}
 
@@ -204,11 +216,14 @@ public class UserController extends BaseController {
 			AppResultData<Object> result = new AppResultData<Object>( 
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 	
+	    
+			
 		//判断验证码正确与否，测试账号13810002890 000000 不需要验证
 		AppResultData<Object> validateResult = null;
 		if (mobile.equals("15712917308") && smsToken.equals("000000")) {
 			validateResult = result;
 		} else {
+			
 			validateResult = smsTokenService.validateSmsToken(mobile, smsToken, smsType);
 		}
 		

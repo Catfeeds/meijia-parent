@@ -46,6 +46,9 @@ public class ConstantMsg {
 	
 	//用户已存在
 	public static String USER_EXIST_MG = "用户已存在";
+	
+	//手机号已存在
+	public static String MOBILE_EXIST_MG = "手机号已存在";
 
 	//用户地址不存在
 	public static String USER_ADDR_NOT_EXIST_MG = "用户地址不存在";

@@ -679,6 +679,12 @@ public class UsersServiceImpl implements UsersService {
 		return usersMapper.insertSelective(u);
 	}
 
+	@Override
+	public Users selectUserByMobile(String mobile) {
+		
+		return usersMapper.selectByMobile(mobile);
+	}
+
 
 
 	

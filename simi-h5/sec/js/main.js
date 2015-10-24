@@ -58,3 +58,6 @@ var ajaxError = function(data, textStatus, jqXHR) {
         myApp.hideIndicator();		
     	myApp.alert('网络繁忙,请稍后再试.');
 };
+myApp.onPageInit('index', function (page) {
+	mainView.router.loadPage("register.html");
+}).trigger(); //And trigger it right away

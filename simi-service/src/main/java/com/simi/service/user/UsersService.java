@@ -75,4 +75,6 @@ public interface UsersService {
 
 	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
 
+	Users selectUserByMobile(String mobile);
+
 }
