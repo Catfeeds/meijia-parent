@@ -84,9 +84,9 @@ public class PushUtil {
 		
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
-		NotificationTemplate template = NotificationTemplatePush();
-		template.setTitle(title);
-		template.setText(msgContent);
+		TransmissionTemplate template = IosTransmissionTemplatePush();
+//		template.setTitle(title);
+//		template.setText(msgContent);
 		template.setTransmissionType(transmissonType);
 		template.setTransmissionContent(transmissionContent);
 		
@@ -117,27 +117,89 @@ public class PushUtil {
 		return true;
 	}	
 	
-	public static NotificationTemplate NotificationTemplatePush()
+	
+	/**
+	 * 推送IOS 单个设备推送
+	 * @Param map<String, String> Params
+	 *     key = cid 
+	 *     key = title
+	 *     key = msgContent
+	 *     key = transmissionType
+	 *     key = transmissionContent
+	 * 
+	 */
+	public static boolean AndroidPushTransmissionToSingle(HashMap<String, String> params) throws Exception {
+		
+		String cid = "";
+		String title = "";
+		String msgContent = "";
+		int transmissonType = 2;
+		String transmissionContent = "";
+		
+		if (params.containsKey("cid")) 
+			cid = params.get("cid").toString();
+		
+		if (params.containsKey("title")) 
+			title = params.get("title").toString();
+		
+		if (params.containsKey("msgContent")) 
+			msgContent = params.get("msgContent").toString();
+		
+		if (params.containsKey("transmissonType")) 
+			transmissonType = Integer.parseInt(params.get("transmissonType").toString());
+		 
+		if (params.containsKey("transmissionContent")) 
+			transmissionContent = params.get("transmissionContent").toString();
+		
+		
+		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+		
+		TransmissionTemplate template = TransmissionTemplateDefault();
+
+		template.setTransmissionType(transmissonType);
+		template.setTransmissionContent(transmissionContent);
+		
+		SingleMessage message = new SingleMessage();
+		message.setOffline(true);
+		message.setOfflineExpireTime(2 * 1000 * 3600);
+		message.setData(template);
+			
+		Target target1 = new Target();
+		target1.setAppId(appId);
+		target1.setClientId(cid);
+
+		try {
+			IPushResult ret = push.pushMessageToSingle(message, target1);
+			System.out.println("正常：" + ret.getResponse().toString());
+			
+		} catch (RequestException e) {
+			String requstId = e.getRequestId();
+			IPushResult ret = push.pushMessageToSingle(message, target1,
+					requstId);
+
+			System.out.println("异常：" + ret.getResponse().toString());
+		}
+
+		Thread.sleep(3);
+		
+		
+		return true;
+	}		
+	
+	
+	public static TransmissionTemplate TransmissionTemplateDefault()
 			throws Exception {
-		NotificationTemplate template = new NotificationTemplate();
+		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(appId);
 		template.setAppkey(appKey);
-		template.setTitle("");
-		template.setText("");
-		template.setLogo("");
-		// template.setLogoUrl("");
-		template.setIsRing(true);
-		template.setIsVibrate(false);
-		// template.setIsClearable(true);
 		template.setTransmissionType(2);
 		template.setTransmissionContent("");
-		// template.setPushInfo("actionLocKey", 2, "message", "sound",
-		// "payload", "locKey", "locArgs", "launchImage");
+//		template.setPushInfo("actionLocKey", 3, "message", "sound", "payload",
+//				"locKey", "locArgs", "launchImage");
 		return template;
 	}	
 	
-	
-	public static TransmissionTemplate TransmissionTemplatePush()
+	public static TransmissionTemplate IosTransmissionTemplatePush()
 			throws Exception {
 		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(appId);

@@ -90,6 +90,14 @@ public class SecServiceImpl implements SecService {
 				}
 			}
 			
+			String description = "";
+			if (tags.size() > 0) {
+				for (Tags tt : tags) {
+					description += tt.getTagName() + " ";
+				}
+			}
+			vo.setDescription(description);
+			
 			
 			result.add(vo);
 		}
