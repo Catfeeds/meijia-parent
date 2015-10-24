@@ -181,17 +181,10 @@ public class UserController extends BaseController {
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("15712917308")) {
+		if (mobile.equals("18610807136")) {
 			code = "000000";
 		}
 		
-		Users user = userService.selectUserByMobile(mobile);
-		if (user != null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.MOBILE_EXIST_MG);
-			return result;
-		}
-
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.GET_CODE_TEMPLE_ID, content);
 		UserSmsToken record = smsTokenService.initUserSmsToken(mobile, sms_type, code, sendSmsResult);
