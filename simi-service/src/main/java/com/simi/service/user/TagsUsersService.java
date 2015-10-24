@@ -12,6 +12,12 @@ public interface TagsUsersService {
 
 	List<TagUsers> selectByUserIds(List<Long> userIds);
 
+	List<TagUsers> selectByUserId(Long id);
+	
+	int deleteByPrimaryKey(Long id);
+	
+	
+
 	
 
 }

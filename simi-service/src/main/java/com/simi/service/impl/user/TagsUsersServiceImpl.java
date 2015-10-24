@@ -26,6 +26,18 @@ public class TagsUsersServiceImpl implements TagsUsersService {
 		return tagUsersMapper.selectByUserIds(userIds);
 	}
 
+	@Override
+	public List<TagUsers> selectByUserId(Long id) {
+
+		return tagUsersMapper.selectByUserId(id);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		
+		return tagUsersMapper.deleteByPrimaryKey(id);
+	}
+
 
 	
 }

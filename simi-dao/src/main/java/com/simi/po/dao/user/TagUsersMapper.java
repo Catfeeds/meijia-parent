@@ -19,4 +19,6 @@ public interface TagUsersMapper {
     int updateByPrimaryKey(TagUsers record);
 
 	List<TagUsers> selectByUserIds(List<Long> userIds);
+
+	List<TagUsers> selectByUserId(Long userId);
 }

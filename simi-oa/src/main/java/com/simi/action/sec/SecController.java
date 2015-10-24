@@ -1,13 +1,9 @@
 package com.simi.action.sec;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,28 +13,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
-import com.mchange.v2.beans.BeansUtils;
-import com.meijia.utils.DateUtil;
+import com.google.zxing.Result;
 import com.meijia.utils.MeijiaUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
+import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.user.UserApplyVo;
-import com.sun.tools.classfile.Annotation.element_value;
 @Controller
 @RequestMapping(value = "/sec")
 public class SecController extends AdminController {
 
 	@Autowired
 	private UsersService usersService;
+	
+
+	@Autowired
+	private TagsService tagsService;
 
 	@Autowired
 	private TagsUsersService tagsUsersService;
@@ -188,12 +186,33 @@ public class SecController extends AdminController {
 			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
 		}
 		
-		/*//用户标签列表
-		List<TagUsers> list = tagsUsersService.select*/
+		//用户对应的标签列表
+		List<TagUsers> tagUserslist = tagsUsersService.selectByUserId(id);
+		List<Long> tagIds = new ArrayList<Long>();
+		for (TagUsers item : tagUserslist) {
+			tagIds.add(item.getTagId());
+		}
+		//用户对应的标签名列表
+		
+		
+		if (tagIds!=null) {
+			List<Tags> tagList =tagsService.selectByTagIds(tagIds);
+			//vo.setTagList(tagList);
+			List<String> tagNameList = new ArrayList<String>();
+			for (Tags item : tagList) {
+				tagNameList.add(item.getTagName());
+			}
+			vo.setTagNamelist(tagNameList);
+			
+			
+			model.addAttribute("tagList", tagNameList);
+		}
 		
 		
 		
 		model.addAttribute("contentModel", vo);
+		//model.addAttribute("tagList", "");
+		
 		
 		return "sec/applyListForm";
 	}

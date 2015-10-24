@@ -126,7 +126,16 @@
 								<form:errors path="degreeName" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						<%-- <c:forEach items="${tagList}" var="item"> --%>
+						<div class="form-group required">
 
+							<label class="col-md-2 control-label">标签</label>
+							<div class="col-md-5">
+								${tagList}
+							</div>
+						
+						</div>
+						<%-- </c:forEach> --%>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">所在城市</label>
