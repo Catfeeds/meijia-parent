@@ -195,7 +195,7 @@ public class SecController extends AdminController {
 		//用户对应的标签名列表
 		
 		
-		if (tagIds!=null) {
+		if (tagIds != null && ! tagIds.isEmpty()) {
 			List<Tags> tagList =tagsService.selectByTagIds(tagIds);
 			//vo.setTagList(tagList);
 			List<String> tagNameList = new ArrayList<String>();
@@ -207,7 +207,6 @@ public class SecController extends AdminController {
 			
 			model.addAttribute("tagList", tagNameList);
 		}
-		
 		
 		
 		model.addAttribute("contentModel", vo);
