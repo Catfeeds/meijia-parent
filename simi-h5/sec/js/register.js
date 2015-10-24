@@ -35,7 +35,7 @@ myApp.onPageInit('register', function (page) {
 
         $$.ajax({
         	
-        	url:siteAPIPath+"user/get_sms_token.json",
+        	url:siteAPIPath+"user/get_register_sms_token.json",
         	contentType:"application/x-www-form-urlencoded; charset=utf-8",
         	type: "GET",
     	    dataType:"json",
@@ -78,7 +78,7 @@ myApp.onPageInit('register', function (page) {
 	        postdata.mobile = mobile;
 	        postdata.name = name;
 	        postdata.sms_token = verifyCode;        
-	        postdata.user_type = 2;
+	        postdata.user_type = 1;
 
 	        $$.ajax({
 	            type : "POST",
