@@ -51,9 +51,9 @@ public class TestUserController extends JUnitActionBase  {
 		String url = "/app/user/login.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "15727372986");
+	    postRequest = postRequest.param("mobile", "18610807136");
 //	    postRequest = postRequest.param("mobile", "18610807136");
-	    postRequest = postRequest.param("sms_token", "892902");
+	    postRequest = postRequest.param("sms_token", "000000");
 //	    postRequest = postRequest.param("sms_token", "000000");
 	    postRequest = postRequest.param("login_from", "1");
 	    

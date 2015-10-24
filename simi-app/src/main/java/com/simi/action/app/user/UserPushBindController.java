@@ -25,45 +25,6 @@ public class UserPushBindController extends BaseController {
 
 	@Autowired
 	private UsersService usersService;
-
-	@RequestMapping(value = "post_baidu_bind", method = RequestMethod.POST)
-	public AppResultData<String> saveUserBaiduBind(
-			@RequestParam("user_id") Long userId,
-			@RequestParam("app_id") String appId,
-			@RequestParam("channel_id") String channelId,
-			@RequestParam("app_user_id") String appUserId,
-			@RequestParam("device_type") String deviceType){
-
-		Users user = usersService.getUserById(userId);
-		AppResultData<String> result = new AppResultData<String>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
-//		if (user == null) {
-//			return result;
-//		}
-//		UserBaiduBind userBaiduBind = userBaiduBindService.selectByUserId(user.getId());
-//		if (userBaiduBind == null) {
-//			userBaiduBind = new UserBaiduBind();
-//			userBaiduBind.setId(0L);
-//		}
-//		userBaiduBind.setUserId(user.getId());
-//		userBaiduBind.setAppId(appId);
-//		userBaiduBind.setAppUserId(appUserId);
-//		userBaiduBind.setChannelId(channelId);
-//		userBaiduBind.setMobile(user.getMobile());
-//		userBaiduBind.setDeviceType(deviceType);
-//
-//		// 更新或者新增
-//		if (userBaiduBind != null && userBaiduBind.getId() > 0L) {
-//
-//			userBaiduBindService.updateByPrimaryKeySelective(userBaiduBind);
-//
-//		} else {
-//			userBaiduBind.setAddTime(TimeStampUtil.getNow() / 1000);
-//			userBaiduBindService.insertSelective(userBaiduBind);
-//		}
-		return result;
-	}
 	
 	@RequestMapping(value = "post_push_bind", method = RequestMethod.POST)
 	public AppResultData<String> pushBind(
