@@ -138,45 +138,8 @@
 											<form:radiobutton path="isApproval" value="2" label="审批通过" />
 										</div>
 									</div>
-						<%-- <div class="form-group required">
-
-							<label class="col-md-2 control-label">是否审批通过</label>
-							<div class="col-md-5">
-							<c:choose>
-
-								<c:when test="${contentModel.isApproval==0}">
-
-									<select>
-										<option value="0" selected="selected">审核未通过</option>
-										<option value="1">审核通过</option>
-										<option value="2">信息不符</option>
-									</select>
-
-								</c:when>
-
-								<c:when test="${contentModel.isApproval==1}">
-
-									<select>
-										<option value="0">审核未通过</option>
-										<option value="1" selected="selected">审核通过</option>
-										<option value="2">信息不符</option>
-									</select>
-
-								</c:when>
-
-								<c:otherwise>
-
-									<select>
-										<option value="0">审核未通过</option>
-										<option value="1">审核通过</option>
-										<option value="2" selected="selected">信息不符</option>
-									</select>
-
-								</c:otherwise>
-							</c:choose>
-							</div>
-						</div> --%>
-						<c:if test="${contentModel.isApproval == 0}">
+						
+						<c:if test="${contentModel.isApproval == 0 ||contentModel.isApproval == 1}">
 							<div class="form-actions fluid">
 								<div class="col-md-offset-6 col-md-6">
 									<button type="submit" id="applyForm_btn"
