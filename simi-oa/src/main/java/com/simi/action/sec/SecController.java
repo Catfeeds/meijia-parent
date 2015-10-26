@@ -116,7 +116,7 @@ public class SecController extends AdminController {
 		vo.setMobile(u.getMobile());
 		vo.setProvinceName(u.getProvinceName());
 		vo.setThirdType(u.getThirdType());
-		vo.setOpenId(u.getOpenId());
+		vo.setOpenid(u.getOpenid());
 		vo.setName(u.getName());
 		vo.setRealName(u.getRealName());
 		vo.setBirthDay(u.getBirthDay());
