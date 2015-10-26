@@ -393,9 +393,12 @@ public class UsersServiceImpl implements UsersService {
 
 			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
 			UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userRefSec.getSecId());
-			vo.setImSecUsername(userRef3rd.getUsername());
-			vo.setImSecNickname(secUser.getName());
-			vo.setSecId(userRefSec.getSecId());
+			
+			if (userRef3rd != null) {
+				vo.setImSecUsername(userRef3rd.getUsername());
+				vo.setImSecNickname(secUser.getName());
+				vo.setSecId(userRefSec.getSecId());
+			}
 		}else{
 			vo.setImSecUsername("");
 			vo.setImSecNickname("");

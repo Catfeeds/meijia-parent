@@ -87,11 +87,11 @@ public class UserRef3rdController extends BaseController {
 			if(userRef3rd == null){
 				userService.genImUser(users);
 			}
-			UserRefSec userRefSec  = userRefSecService.selectByUserId(users.getId());
-			//如果第一次登录未注册时未成功分配秘书，则重新分配
-			if(userRefSec == null){
-				userRef3rdService.allotSec(users);
-			}
+//			UserRefSec userRefSec  = userRefSecService.selectByUserId(users.getId());
+//			//如果第一次登录未注册时未成功分配秘书，则重新分配
+//			if(userRefSec == null){
+//				userRef3rdService.allotSec(users);
+//			}
 			users.setName(name);
 			if(headImg!=null && !headImg.isEmpty()){
 				users.setHeadImg(headImg);
@@ -114,7 +114,7 @@ public class UserRef3rdController extends BaseController {
 			// 第三方账号注册绑定环信账号
 			userService.genImUser(users);
 			//为第三方登录的用户分配秘书
-			userRef3rdService.allotSec(users);
+//			userRef3rdService.allotSec(users);
 			
 			
 			//发送给13810002890 ，做一个提醒
