@@ -18,7 +18,7 @@ public interface UsersService {
 
 	Users getUserByMobile(String mobile);
 
-	int saveUser(Users user);
+	Long saveUser(Users user);
 
 	int updateByPrimaryKeySelective(Users user) ;
 
@@ -62,7 +62,7 @@ public interface UsersService {
 
 	List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd);
 
-	int insert(Users record);
+	Long insert(Users record);
 
 	Users initUsers(String mobile, String name);
 
@@ -72,7 +72,7 @@ public interface UsersService {
 
 	Users selectByPrimaryKey(Long id);
 
-	int insertSelective(Users u);
+	Long insertSelective(Users u);
 
 	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
 

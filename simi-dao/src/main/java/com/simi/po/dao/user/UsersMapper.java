@@ -15,9 +15,9 @@ public interface UsersMapper {
 
 	int deleteByPrimaryKey(Long id);
 
-    int insert(Users record);
+    Long insert(Users record);
 
-    int insertSelective(Users record);
+    Long insertSelective(Users record);
 
     List<Users> selectByAll();
 

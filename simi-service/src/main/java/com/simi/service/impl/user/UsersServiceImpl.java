@@ -230,7 +230,7 @@ public class UsersServiceImpl implements UsersService {
 	}	
 
 	@Override
-	public int saveUser(Users user) {
+	public Long saveUser(Users user) {
 		return usersMapper.insertSelective(user);
 	}
 
@@ -642,7 +642,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public int insert(Users record) {
+	public Long insert(Users record) {
 		
 		return usersMapper.insert(record);
 	}
@@ -703,7 +703,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public int insertSelective(Users u) {
+	public Long insertSelective(Users u) {
 		// TODO Auto-generated method stub
 		return usersMapper.insertSelective(u);
 	}
