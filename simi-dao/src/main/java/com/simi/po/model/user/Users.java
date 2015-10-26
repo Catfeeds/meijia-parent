@@ -35,8 +35,6 @@ public class Users {
 
     private Long updateTime;
     
-	private String openid;
-
 	private String realName;
 
 	private String idCard;
@@ -80,17 +78,6 @@ public class Users {
 	public void setThirdType(String thirdType) {
 		this.thirdType = thirdType;
 	}
-
-
-	public String getOpenId() {
-		return openId;
-	}
-
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-
 
 	public String getProvinceName() {
 		return provinceName;
@@ -202,13 +189,13 @@ public class Users {
 	}
 
 
-	public String getOpenid() {
-		return openid;
+	public String getOpenId() {
+		return openId;
 	}
 
 
-	public void setOpenid(String openid) {
-		this.openid = openid;
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 

@@ -237,7 +237,7 @@
 			<if test="thirdType != null">
 				3rd_type,
 			</if>
-			<if test="openid != null">
+			<if test="openId != null">
 				openid,
 			</if>
 			<if test="name != null">

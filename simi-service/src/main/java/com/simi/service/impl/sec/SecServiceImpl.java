@@ -82,6 +82,7 @@ public class SecServiceImpl implements SecService {
 			//设置tags
 			List<Tags> tags = new ArrayList<Tags>();
 			for (TagUsers tu : tagUsers) {
+				if (!tu.getUserId().equals(item.getId())) continue;
 				for (Tags t : tagsAll) {
 					if (tu.getTagId().equals(t.getTagId())) {
 						tags.add(t);

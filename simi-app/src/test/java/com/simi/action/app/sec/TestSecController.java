@@ -45,7 +45,7 @@ public class TestSecController extends JUnitActionBase{
     public void testSecList() throws Exception {
 		String url = "/app/sec/get_list.json";
 		
-		String params = "?user_id=1&page=1";
+		String params = "?user_id=100&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
