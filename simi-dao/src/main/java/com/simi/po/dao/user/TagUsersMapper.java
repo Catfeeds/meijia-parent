@@ -21,4 +21,6 @@ public interface TagUsersMapper {
 	List<TagUsers> selectByUserIds(List<Long> userIds);
 
 	List<TagUsers> selectByUserId(Long userId);
+
+	int deletByUserId(Long userId);
 }

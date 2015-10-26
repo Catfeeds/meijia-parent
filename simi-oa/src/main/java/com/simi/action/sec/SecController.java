@@ -1,4 +1,6 @@
 package com.simi.action.sec;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,14 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.zxing.Result;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
@@ -26,6 +32,7 @@ import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.UsersSearchVo;
 import com.simi.vo.user.UserApplyVo;
 @Controller
 @RequestMapping(value = "/sec")
@@ -49,14 +56,15 @@ public class SecController extends AdminController {
 
 	
 	/**
-	 *  秘书申请列表
+	 *  秘书列表
 	 * @param request
 	 * @param model
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
     @AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
-	public String secList(HttpServletRequest request, Model model) {
+	public String secList(HttpServletRequest request, UsersSearchVo usersSearchVo,Model model) throws UnsupportedEncodingException {
     	
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
@@ -66,8 +74,30 @@ public class SecController extends AdminController {
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 	
-		PageInfo result = usersService.selectByIsAppRovalYes(pageNo,
+		/*PageInfo result = usersService.selectByIsAppRovalYes(pageNo,
+				pageSize);*/
+		
+		/*PageInfo result = usersService.selectByIsAppRoval(pageNo,
 				pageSize);
+		*/
+		//分页
+		PageHelper.startPage(pageNo, pageSize);
+		//若搜索条件为空，则展示全部
+		if (usersSearchVo == null) {
+			usersSearchVo = new UsersSearchVo();
+		}
+		//助理人员的默认id为1
+		usersSearchVo.setUserType((short)1);
+		
+		//设置中文 参数 编码，解决 中文 乱码
+	    usersSearchVo.setName(new String(usersSearchVo.getName().getBytes("iso-8859-1"),"utf-8"));
+	
+		
+		List<Users> list = usersService.selectByListPage(usersSearchVo, pageNo, pageSize);
+		
+		
+		PageInfo result = new PageInfo(list);
+		model.addAttribute("userSearchVoModel",usersSearchVo);
 		
 		model.addAttribute("contentModel", result);
 
@@ -79,10 +109,11 @@ public class SecController extends AdminController {
 	 * @param request
 	 * @param model
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
     @AuthPassport
 	@RequestMapping(value = "/applyList", method = { RequestMethod.GET })
-	public String applyList(HttpServletRequest request, Model model) {
+	public String applyList(HttpServletRequest request,UsersSearchVo usersSearchVo, Model model) throws UnsupportedEncodingException {
     	
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
@@ -92,9 +123,26 @@ public class SecController extends AdminController {
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 	
-		PageInfo result = usersService.selectByIsAppRoval(pageNo,
+		/*PageInfo result = usersService.selectByIsAppRoval(pageNo,
 				pageSize);
+		*/
+		//分页
+		PageHelper.startPage(pageNo, pageSize);
+		//若搜索条件为空，则展示全部
+		if (usersSearchVo == null) {
+			usersSearchVo = new UsersSearchVo();
+		}
+		//助理人员的默认id为1
+		usersSearchVo.setUserType((short)1);
 		
+		//设置中文 参数 编码，解决 中文 乱码
+		usersSearchVo.setName(new String(usersSearchVo.getName().getBytes("iso-8859-1"),"utf-8"));
+		
+		List<Users> list = usersService.selectByListPageNo(usersSearchVo, pageNo, pageSize);
+		
+		
+		PageInfo result = new PageInfo(list);
+		model.addAttribute("userSearchVoModel",usersSearchVo);
 		model.addAttribute("contentModel", result);
 
 		return "sec/applyList";
@@ -150,14 +198,6 @@ public class SecController extends AdminController {
        
         String dateStr = new SimpleDateFormat("yyyy-MM-dd").format(birthday);
 		vo.setBirthDay(DateUtil.parse(dateStr));*/
-		//性别
-		String sex = u.getSex();
-		if (sex == "0") {
-			vo.setSexName("男");
-		}else {
-			vo.setSexName("女");
-		}
-		
 		//是否审批名称
 		short isApproval = u.getIsApproval();
 		if (isApproval == 0) {
@@ -186,32 +226,36 @@ public class SecController extends AdminController {
 			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
 		}
 		
+		//1表示秘书
+		Short tagType = 1;
+		//标签列表 
+		List<Tags> tagList = tagsService.selectByTagType(tagType);
+
 		//用户对应的标签列表
+		String tagNames = "";
+		String tagIds = "";
+		List<Tags> tags = new ArrayList<Tags>();
 		List<TagUsers> tagUserslist = tagsUsersService.selectByUserId(id);
-		List<Long> tagIds = new ArrayList<Long>();
+		// 处理 form中 标签的 显示 和传值
+		List<Long> tagIdList = new ArrayList<Long>();
 		for (TagUsers item : tagUserslist) {
-			tagIds.add(item.getTagId());
+			tagIdList.add(item.getTagId());
+			tagIds += item.getTagId().toString() + ",";
 		}
-		//用户对应的标签名列表
-		
-		
-		if (tagIds != null && ! tagIds.isEmpty()) {
-			List<Tags> tagList =tagsService.selectByTagIds(tagIds);
-			//vo.setTagList(tagList);
-			List<String> tagNameList = new ArrayList<String>();
-			for (Tags item : tagList) {
-				tagNameList.add(item.getTagName());
+		//处理 列表中 标签字段的 展示
+		if (tagIdList.size() > 0) {
+			tags = tagsService.selectByTagIds(tagIdList);
+			for (Tags item : tags) {
+				// 查找 tagId对应的 tagName
+				tagNames += item.getTagName() + "" ;
 			}
-			vo.setTagNamelist(tagNameList);
-			
-			
-			model.addAttribute("tagList", tagNameList);
 		}
+		vo.setTagNames(tagNames);
+		vo.setTagIds(tagIds);
+		vo.setTagList(tags);
 		
-		
+		model.addAttribute("tagList", tagList);
 		model.addAttribute("contentModel", vo);
-		//model.addAttribute("tagList", "");
-		
 		
 		return "sec/applyListForm";
 	}
@@ -226,19 +270,48 @@ public class SecController extends AdminController {
     @AuthPassport
 	@RequestMapping(value = "/saveApplyListForm", method = { RequestMethod.POST})
 	public String adForm(Model model,
-			@RequestParam(value = "id") Long id,
-			HttpServletRequest request) {
+			/*@RequestParam(value = "id") Long id,
+			@RequestParam(value = "isApproval") short isApproval,*/
+			@ModelAttribute("contentModel") UserApplyVo userApplyVo,
+			BindingResult result,HttpServletRequest request)throws IOException {
     	
-    	if (id == null) {
-			id = 0L; 
-		}
-    	Users u= usersService.selectByPrimaryKey(id);
+    	Long userId = Long.valueOf(request.getParameter("id"));
+
+    	Users users = usersService.initUserForm();
     	
-    	u.setIsApproval((short)1);
+    	BeanUtilsExp.copyPropertiesIgnoreNull(userApplyVo, users);
     
+    	if (userId > 0L ) {
+			users.setUpdateTime(TimeStampUtil.getNow()/1000);
+			usersService.updateByPrimaryKeySelective(users);
+		}else {
+			usersService.insertSelective(users);
+		}
+    	//存储标签
+    	String tagListStr = request.getParameter("tagIds");
+    	
+    	if (!StringUtil.isEmpty(tagListStr)) {
+			tagsUsersService.deleteByUserId(userId);
+			String[] tagList = StringUtil.convertStrToArray(tagListStr);
+			for (int i = 0; i < tagList.length; i++) {
+				if (StringUtil.isEmpty(tagList[i])) continue;
+				
+				TagUsers record = new TagUsers();
+				
+				record.setId(0L);
+				record.setUserId(users.getId());
+				record.setTagId(Long.valueOf(tagList[i]));
+				record.setAddTime(TimeStampUtil.getNowSecond());
+				tagsUsersService.insert(record);
+			}
+		}
+    	/*Users u= usersService.selectByPrimaryKey(id);
+    	
+    	//u.setIsApproval((short)1);
+    	u.setIsApproval(isApproval);
     	usersService.updateByPrimaryKeySelective(u);
     	
-    	model.addAttribute("contentModel", u);
+    	model.addAttribute("contentModel", u);*/
     	
     	return "redirect:/sec/applyList";
     	

@@ -22,6 +22,12 @@ public class TagsUsersServiceImpl implements TagsUsersService {
 	}
 	
 	@Override
+	public int insert(TagUsers record) {
+		
+		return tagUsersMapper.insert(record);
+	}
+	
+	@Override
 	public List<TagUsers> selectByUserIds(List<Long> userIds) {
 		return tagUsersMapper.selectByUserIds(userIds);
 	}
@@ -38,6 +44,10 @@ public class TagsUsersServiceImpl implements TagsUsersService {
 		return tagUsersMapper.deleteByPrimaryKey(id);
 	}
 
-
+	@Override
+	public int deleteByUserId(Long userId) {
+		
+		return tagUsersMapper.deletByUserId(userId);
+	}
 	
 }

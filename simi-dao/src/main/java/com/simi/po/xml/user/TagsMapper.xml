@@ -23,7 +23,15 @@
 		from tags
 
 	</select>
-
+<select id="selectByTagType" resultMap="BaseResultMap" parameterType="java.lang.Short">
+		select
+		<include refid="Base_Column_List" />
+		from tags
+		where tag_type = #{tagType,jdbcType=NUMERIC}
+		<!-- <if test="tagType == 0 or tagType == 1 or tagType == 2 ">
+			and tag_type = #{tagType,jdbcType=NUMERIC}
+		</if> -->
+	</select>
 	<select id="selectByTagIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />

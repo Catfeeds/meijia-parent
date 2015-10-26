@@ -12,6 +12,8 @@ public interface TagsService {
 
 	List<Tags> selectByTagIds(List<Long> tagIds);
 
+	List<Tags> selectByTagType(Short tagType);
+
 	
 
 }

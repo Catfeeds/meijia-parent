@@ -28,6 +28,18 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
+			<form:form modelAttribute="userSearchVoModel" action="applyList" method="GET">
+                          <header class="panel-heading">
+                          	<h4>数据搜索</h4>
+                          		<div>
+                          					用户昵称：<form:input path="name" />
+                          					手机号：<form:input path="mobile"/>
+									<input type="submit"  value="搜索"  >
+								</div>   
+                          </header>
+                           </form:form>   
+                          <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+                          <header class="panel-heading">  
 			秘书申请列表
 <!-- 
 			<div class="pull-right">
@@ -46,12 +58,12 @@
 						<th>姓名</th>
 						<th>手机号</th>
 						<th>昵称</th>
-						<!-- <th>性别</th> -->
+						<th>身份证号</th>
 						<!-- <th>出生日期</th> -->
 						<!-- <th>学历</th>
 						<th>头像</th>
 						<th>所在城市</th> -->
-						<th>是否审批</th>
+						<th>审批情况</th>
 						<th>添加时间</th>
 						<th>操作</th>
 
@@ -63,6 +75,7 @@
 							<td>${ item.realName}</td>
 							<td>${ item.mobile}</td>
 							<td>${ item.name}</td>
+							<td>${ item.idCard}</td>
 							<%-- <c:if test="${ item.orderStatus < 3 }">
 							            		<orderStatusTag:orderstatus orderStatus="${ item.orderStatus }"/>
 							            	</c:if> --%>
@@ -82,20 +95,23 @@
 							<td><img src="${ item.headImg}" /></td>
 							<td>${ item.provinceName}"</td> --%>
 							<td>
-		                                <c:choose>
+		                                 <c:choose>
 												<c:when test="${item.isApproval  == 0}">
-														未审批
+														审核未通过
 												</c:when>
 												<c:when test="${item.isApproval  == 1}">
-														已审批
+														信息不符
 												</c:when>
+												<c:when test="${item.isApproval  == 2}">
+														审核已通过
+												</c:when>
+												
 										</c:choose>	
 		                                </td>
 							<td><timestampTag:timestamp patten="yyyy-MM-dd"
 									t="${item.addTime * 1000}" /></td>
 							<td>
-								<button id="btn_update"
-									onClick="btn_update('/sec/applyForm?id=${item.id}')"
+								<button onClick="btn_update('/sec/applyForm?id=${item.id}')"
 									class="btn btn-primary btn-xs" title="查看">
 									<i class=" icon-ambulance"></i>
 								</button>

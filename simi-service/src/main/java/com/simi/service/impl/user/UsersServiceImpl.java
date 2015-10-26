@@ -44,6 +44,7 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.UsersSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
@@ -259,6 +260,31 @@ public class UsersServiceImpl implements UsersService {
 		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));
 		u.setUserType((short) 0);
+		u.setIsApproval((short) 0);
+		u.setAddFrom((short) 0);
+		u.setScore(0);
+		u.setAddTime(TimeStampUtil.getNow()/1000);
+		u.setUpdateTime(TimeStampUtil.getNow()/1000);
+		return u;
+	}
+	@Override
+	public Users initUserForm() {
+		Users u =  new Users();
+		u.setId(0L);
+		u.setMobile("");
+		u.setProvinceName("");
+		u.setThirdType(" ");
+		u.setOpenid(" ");
+		u.setName(" ");
+		u.setRealName("");
+		u.setBirthDay(new Date());
+		u.setIdCard("");
+		u.setDegreeId((short) 0);
+		u.setMajor("");
+		u.setSex(" ");
+		u.setHeadImg(" ");
+		u.setRestMoney(new BigDecimal(0));
+		u.setUserType((short) 1);
 		u.setIsApproval((short) 0);
 		u.setAddFrom((short) 0);
 		u.setScore(0);
@@ -685,7 +711,19 @@ public class UsersServiceImpl implements UsersService {
 		return usersMapper.selectByMobile(mobile);
 	}
 
-
-
+	@Override
+	public List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo,
+			int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<Users> lists = usersMapper.selectVoByListPage(usersSearchVo);
+		return lists;
+	}
+	@Override
+	public List<Users> selectByListPageNo(UsersSearchVo usersSearchVo, int pageNo,
+			int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<Users> lists = usersMapper.selectVoByListPageNo(usersSearchVo);
+		return lists;
+	}
 	
 }

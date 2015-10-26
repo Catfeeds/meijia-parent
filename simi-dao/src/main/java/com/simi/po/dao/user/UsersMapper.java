@@ -7,6 +7,7 @@ import java.util.Map;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.UsersSearchVo;
 
 
 
@@ -55,5 +56,9 @@ public interface UsersMapper {
 	List<Users> selectByIsAppRoval();
 
 	List<Users> selectByIsAppRovalYes();
+
+	List<Users> selectVoByListPage(UsersSearchVo userSearchVo);
+	
+	List<Users> selectVoByListPageNo(UsersSearchVo userSearchVo);
     
 }

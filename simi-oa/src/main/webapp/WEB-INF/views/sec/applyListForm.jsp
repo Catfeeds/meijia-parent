@@ -4,6 +4,8 @@
 
 <%@ include file="../shared/taglib.jsp"%>
 <%@ taglib prefix="citySelectTag" uri="/WEB-INF/tags/citySelect.tld"%>
+<!-- 学历选择标签 -->
+<%@ taglib prefix="degreeSelectTag" uri="/WEB-INF/tags/degreeTypeSelect.tld" %>
 <html>
 <head>
 
@@ -41,15 +43,25 @@
 					enctype="multipart/form-data">
 
 					<form:hidden path="id" />
+					<input type="hidden" name="tagIds" id="tagIds" value="${contentModel.tagIds}"/>
 					<div class="form-body">
-					
-						<div class="form-group ">
-						
-							<label class="col-md-2 control-label">姓名</label>
+
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">姓名*</label>
 							<div class="col-md-5">
 								<form:input path="realName" class="form-control"
-									maxLength="32" readonly="true"/>
+									placeholder="员工姓名" maxLength="32" />
 								<form:errors path="realName" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<label class="col-md-2 control-label">昵称</label>
+							<div class="col-md-5">
+								<form:input path="name" class="form-control" placeholder="昵称"
+									maxLength="32" />
+								<form:errors path="name" class="field-has-error"></form:errors>
 							</div>
 						</div>
 						<div class="form-group required">
@@ -57,113 +69,123 @@
 							<label class="col-md-2 control-label">手机号</label>
 							<div class="col-md-5">
 								<form:input path="mobile" class="form-control" placeholder="手机号"
-									maxLength="32" readonly="true"/>
+									maxLength="32"/>
 								<form:errors path="mobile" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<div class="form-group">
+						<%-- <div class="form-group required">
 
-							<label class="col-md-2 control-label">昵称</label>
+							<label class="col-md-2 control-label">身份证号</label>
 							<div class="col-md-5">
-								<form:input path="name" class="form-control"
-									placeholder="昵称" maxLength="32" readonly="true"/>
-								<form:errors path="name" class="field-has-error"></form:errors>
+								<form:input path="idCard" class="form-control" placeholder="身份证号"
+									maxLength="32"/>
+								<form:errors path="idCard" class="field-has-error"></form:errors>
 							</div>
-						</div>
+						</div> --%>
 						
-						<div class="form-group">
+						
+
+			<%-- 			<div class="form-group">
 
 							<label class="col-md-2 control-label">性别</label>
 							<div class="col-md-5">
-								<form:input path="sexName" class="form-control"
-								 maxLength="32" readonly="true"/>
+								<form:input path="sexName" class="form-control" maxLength="32"
+									readonly="true" />
 								<form:errors path="sexName" class="field-has-error"></form:errors>
 							</div>
+						</div> --%>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">性别</label>
+							<div class="col-md-5">
+								<form:radiobutton path="sex" value="0" label=" 男" />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<form:radiobutton path="sex" value="1" label=" 女" />
+							</div>
 						</div>
+						<%-- <div class="form-group required">
+							<label class="col-md-2 control-label">学历*</label>
+							<div class="col-md-5">
+								<degreeSelectTag:select degreeId="${ contentModel.edu}"/>
+							</div>
+						</div> --%>
+						<div class="form-group required">
+								<label class="col-md-2 control-label">标签</label>
+								<div class="col-md-5" id="allTag" >
+									<c:forEach items="${tagList }" var="tag">
+										<input type="button" name="tagName" value="${tag.tagName }" id="${tag.tagId }" onclick="setTagButton()" class="btn btn-default">
+									</c:forEach>
+
+								</div> 
+						</div> 
 						
 						<%-- <div class="form-group required">
-						<label class="col-md-2 control-label">性别</label>
-										<div class="col-md-10" >
-
-											<div class="row">
-												<div class="col-md-2" align="right">
-													<label class="radio">
-														<form:radiobutton path="sex" value="0"/>男
-													</label>
-												</div>
-												<div class="col-md-2" align="left">
-													<label class="radio">
-													<form:radiobutton path="sex" value="1"/>女
-													</label>
-												</div>
-											</div>
-                                      </div>
-                                      </div> --%>
-                   <%--  <div class="form-group">
-
-							<label class="col-md-2 control-label">出生日期</label>
-							<div class="col-md-5">
-								<form:input path="birthDay" class="form-control" maxLength="32" readonly="true"/>
-								<form:errors path="birthDay" class="field-has-error"></form:errors>
-								
-							</div>
-						</div> --%>
-						<%-- <div class="form-group">
-
-							<label class="col-md-2 control-label">出生日期</label>
-							<div class="col-md-5">
-								<form:input path="birthDay" class="form-control"
-									maxLength="32" readonly="true"/>
-								<form:errors path="birthDay" class="field-has-error"></form:errors>
-							</div>
-						</div> --%>
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">学历</label>
-							<div class="col-md-5">
-								<form:input path="degreeName" class="form-control" placeholder="学历"
-									maxLength="32" readonly="true"/>
-								<form:errors path="degreeName" class="field-has-error"></form:errors>
-							</div>
-						</div>
-						<%-- <c:forEach items="${tagList}" var="item"> --%>
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">标签</label>
-							<div class="col-md-5">
-								${tagList}
-							</div>
-						
-						</div>
-						<%-- </c:forEach> --%>
-						<div class="form-group required">
 
 							<label class="col-md-2 control-label">所在城市</label>
 							<div class="col-md-5">
-								<form:input path="provinceName" class="form-control" 
-									maxLength="32" readonly="true"/>
+								<form:input path="provinceName" class="form-control"
+									maxLength="32" readonly="true" />
 								<form:errors path="provinceName" class="field-has-error"></form:errors>
 							</div>
-						</div>
-						
+						</div> --%>
 						<div class="form-group required">
+										<label class="col-md-2 control-label">审批情况</label>
+										<div class="col-md-5">
+											 <form:radiobutton path="isApproval" value="0" label="审核未通过" />
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<form:radiobutton path="isApproval" value="1" label="信息不符" />
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<form:radiobutton path="isApproval" value="2" label="审批通过" />
+										</div>
+									</div>
+						<%-- <div class="form-group required">
 
 							<label class="col-md-2 control-label">是否审批通过</label>
 							<div class="col-md-5">
-								<form:input path="isApprovalName" class="form-control" placeholder="是否审批通过"
-									maxLength="32" readonly="true"/>
-								<form:errors path="isApprovalName" class="field-has-error"></form:errors>
+							<c:choose>
+
+								<c:when test="${contentModel.isApproval==0}">
+
+									<select>
+										<option value="0" selected="selected">审核未通过</option>
+										<option value="1">审核通过</option>
+										<option value="2">信息不符</option>
+									</select>
+
+								</c:when>
+
+								<c:when test="${contentModel.isApproval==1}">
+
+									<select>
+										<option value="0">审核未通过</option>
+										<option value="1" selected="selected">审核通过</option>
+										<option value="2">信息不符</option>
+									</select>
+
+								</c:when>
+
+								<c:otherwise>
+
+									<select>
+										<option value="0">审核未通过</option>
+										<option value="1">审核通过</option>
+										<option value="2" selected="selected">信息不符</option>
+									</select>
+
+								</c:otherwise>
+							</c:choose>
 							</div>
-						</div>
+						</div> --%>
 						<c:if test="${contentModel.isApproval == 0}">
 							<div class="form-actions fluid">
-							<div class="col-md-offset-6 col-md-6">
-								<button type="submit" id="applyForm_btn" class="btn btn-success">审批</button>
+								<div class="col-md-offset-6 col-md-6">
+									<button type="submit" id="applyForm_btn"
+										class="btn btn-success">审批</button>
+								</div>
+
 							</div>
-							
-						</div>
 						</c:if>
-						
+
 						<%-- <c:if
 							test="${contentModel.headImg != null && scontentModel.headImg != '' }">
 							<div class="form-group ">
@@ -175,7 +197,7 @@
 							</div>
 						</c:if> --%>
 
-                           <%--  <c:if
+						<%--  <c:if
 							test="${secModel.headImg != null && secModel.headImg != '' }">
 							<div class="form-group ">
 
@@ -216,6 +238,10 @@
 		type="text/javascript"></script>
 
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
-
+<script type="text/javascript">
+	
+	//处理
+	setTagButton();
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.UsersSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.po.model.user.UserRef3rd;
@@ -23,7 +24,7 @@ public interface UsersService {
 
 	Users initUsers(String mobile, Short addFrom);
 	
-	Users initUser(String openid, Short addFrom);
+	Users initUser(String openid,Short addFrom);
 
 	UserViewVo getUserViewByUserId(Long userId);
 
@@ -76,5 +77,13 @@ public interface UsersService {
 	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
 
 	Users selectUserByMobile(String mobile);
+
+	Users initUserForm();
+
+	List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo,
+			int pageSize);
+
+	List<Users> selectByListPageNo(UsersSearchVo usersSearchVo, int pageNo,
+			int pageSize);
 
 }
