@@ -248,7 +248,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setMobile(mobile);
 		u.setProvinceName("");
 		u.setThirdType(" ");
-		u.setOpenId(" ");
+		u.setOpenid(" ");
 		u.setName(" ");
 		u.setRealName("");
 		u.setBirthDay(new Date());
@@ -276,7 +276,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setProvinceName("");
 		u.setMobile(" ");
 		u.setThirdType(" ");
-		u.setOpenId(openid);
+		u.setOpenid(openid);
 		u.setSex(" ");
 		u.setName(" ");
 		u.setRealName("");
@@ -625,7 +625,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setMobile(mobile);
 		u.setProvinceName("");
 		u.setThirdType(" ");
-		u.setOpenId(" ");
+		u.setOpenid(" ");
 		u.setName(name);
 		u.setRealName("");
 		u.setBirthDay(new Date());

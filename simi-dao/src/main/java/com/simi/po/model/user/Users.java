@@ -11,7 +11,7 @@ public class Users {
     
     private String thirdType;
     
-    private String openId;
+    private String openid;
     
     private String provinceName;
 
@@ -188,17 +188,6 @@ public class Users {
 		this.updateTime = updateTime;
 	}
 
-
-	public String getOpenId() {
-		return openId;
-	}
-
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-
-
 	public String getRealName() {
 		return realName;
 	}
@@ -246,6 +235,16 @@ public class Users {
 
 	public void setMajor(String major) {
 		this.major = major;
+	}
+
+
+	public String getOpenid() {
+		return openid;
+	}
+
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	

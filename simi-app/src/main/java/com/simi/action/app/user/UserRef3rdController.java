@@ -102,7 +102,7 @@ public class UserRef3rdController extends BaseController {
 		} else {
 			users = userService.initUser(openid, (short) loginFrom);
 
-			users.setOpenId(openid);
+			users.setOpenid(openid);
 			users.setThirdType(thirdType);
 			users.setName(name);
 			if(headImg!=null && !headImg.isEmpty()){

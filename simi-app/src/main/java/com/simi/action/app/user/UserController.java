@@ -327,7 +327,7 @@ public class UserController extends BaseController {
 			record.setMobile(mobile);
 			record.setProvinceName("");
 			record.setThirdType(" ");
-			record.setOpenId("");
+			record.setOpenid("");
 			record.setName(name);
 			record.setRealName(realName);
 			record.setIdCard(idCard);

@@ -6,7 +6,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -23,23 +26,14 @@ public class MobileUtil {
         JSONArray array = null;
         JSONObject jsonObject = null;
         String urlString = "http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + mobile;
-        StringBuffer sb = new StringBuffer();
-        BufferedReader buffer;
-        URL url = new URL(urlString);
-        String province = "";
-        try{
-            InputStream in = url.openStream();
 
-            // 解决乱码问题
-            buffer = new BufferedReader(new InputStreamReader(in,"gb2312"));
-            String line = null;
-            while((line = buffer.readLine()) != null){
-                sb.append(line);
-            }
-            in.close();
-            buffer.close();
-            // System.out.println(sb.toString());
-            jsonString = sb.toString();
+        String province = "";
+        
+        Map<String, String> params = new HashMap<String, String>();
+
+        try{
+            
+        	jsonString = HttpClientUtil.get(urlString, params);
             // 替换掉“__GetZoneResult_ = ”，让它能转换为JSONArray对象
             jsonString = jsonString.replaceAll("^[__]\\w{14}+[_ = ]+", "[");
             // System.out.println(jsonString+"]");
@@ -74,7 +68,7 @@ public class MobileUtil {
     }
 
     public static void main(String[] args) throws Exception{
-        String testMobileNumber = "13832522226";
+        String testMobileNumber = "18519188816";
         System.out.println(calcMobileCity(testMobileNumber));
         List<String> mobileList = new ArrayList<String>();
 //        for(int i = 1350345; i < 1350388; i++){
