@@ -277,10 +277,10 @@ public class UserController extends BaseController {
 		vo.setList(tagList);
 		
 		List<Long> tagIdList = new ArrayList<Long>();
-		for (Tags item : tagList) {
+		/*for (Tags item : tagList) {
 			tagIdList.add(item.getTagId());
 		}
-	
+	*/
 		
 		vo.setTagList(tagIdList);
 		
