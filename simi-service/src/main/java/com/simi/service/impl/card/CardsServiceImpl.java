@@ -16,6 +16,7 @@ import com.simi.service.card.CardZanService;
 import com.simi.service.dict.CityService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
@@ -24,12 +25,15 @@ import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.push.PushUtil;
 import com.simi.po.dao.card.CardsMapper;
 
 @Service
@@ -346,7 +350,7 @@ public class CardsServiceImpl implements CardService {
 	@Override
 	public boolean cardNotification(Cards card) {
 		
-		//1找出所有需要通知的用户集合 A
+		//1找出所有需要通知的用户集合 users
 		Long cardId = card.getCardId();
 		List<CardAttend> attends = cardAttendService.selectByCardId(cardId);
 		
@@ -356,21 +360,101 @@ public class CardsServiceImpl implements CardService {
 		for (CardAttend item : attends) {
 			if (!userIds.equals(item.getUserId())) userIds.add(item.getUserId());
 		}
-		
-		List<Users> users = new ArrayList<Users>();
-		if (!userIds.isEmpty()) {
-			users = usersService.selectByUserIds(userIds);
+				
+		//2.找出可以发推送消息的用户集合 userPushBinds
+		List<UserPushBind> userPushBinds = userPushBindService.selectByUserIds(userIds);
+		List<Long> userPushIds = new ArrayList<Long>();
+		if (!userPushBinds.isEmpty()) {
+			for (UserPushBind p : userPushBinds) {
+				if (!userPushIds.contains(p.getUserId())) {
+					userPushIds.add(p.getUserId());
+				}
+			}
+			
+			//进行消息推送.
+			pushToApp(card, userPushBinds);
 		}
 		
 		
-		//2.找出可以发推送消息的用户集合 B
-		List<UserPushBind> userPushBinds = userPushBindService.selectByUserIds(userIds);
 		
+		
+		//3.根据集合users 和集合userPushBinds，找出不能推送，只能发短信的用户集合C
+		List<Long> userSmsIds = new ArrayList<Long>();
+		userSmsIds  = userIds;
+		if (!userPushBinds.isEmpty()) {
+			userSmsIds.removeAll(userPushIds);
+		} 
+		
+		if (!userSmsIds.isEmpty()) {
+			//进行短信发送
+			pushToSms(card, userSmsIds);
+		}
 		
 		return true;
 	}
 	
+	private boolean pushToApp(Cards card, List<UserPushBind> userPushBinds) {
+		
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		
+		HashMap<String, String> tranParams = new HashMap<String, String>();
+
+		Short cardType = card.getCardType();
+		Long serviceTime = card.getServiceTime();
+		String cardTypeName = CardUtil.getCardTypeName(cardType);
+		String pushContent = CardUtil.getRemindContent(cardType, serviceTime);
+
+		tranParams.put("title", cardTypeName);
+		tranParams.put("text", pushContent);
+		tranParams.put("todo", "get_reminds");
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		for (UserPushBind p : userPushBinds) {
+			if (tranParams.containsKey("user_id")) {
+				tranParams.remove("user_id");
+			}
+
+			tranParams.put("user_id", p.getUserId().toString());
+			String jsonParams = "";
+			try {
+				jsonParams = objectMapper.writeValueAsString(tranParams);
+			} catch (JsonProcessingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			params.put("transmissionContent", jsonParams);
+			params.put("cid", p.getClientId());
+			
+			if (p.getDeviceType().equals("ios")) {
+				try {
+					PushUtil.IOSPushToSingle(params);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if (p.getDeviceType().equals("android")) {
+				try {
+					PushUtil.AndroidPushToSingle(tranParams);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return true;
+	}
 	
+	
+	private boolean pushToSms(Cards card, List<Long> userSmsIds) {
+		
+		return true;
+	}
 
 
 }

@@ -1,14 +1,18 @@
 package com.meijia.utils.push;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.baidu.yun.push.exception.PushClientException;
 import com.baidu.yun.push.exception.PushServerException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gexin.rp.sdk.base.IBatch;
 import com.gexin.rp.sdk.base.IPushResult;
+import com.gexin.rp.sdk.base.impl.ListMessage;
 import com.gexin.rp.sdk.base.impl.SingleMessage;
 import com.gexin.rp.sdk.base.impl.Target;
 import com.gexin.rp.sdk.base.payload.APNPayload;
@@ -63,26 +67,14 @@ public class PushUtil {
 	 *     key = transmissionContent
 	 * 
 	 */
-	public static boolean IOSPushNotificationToSingle(HashMap<String, String> params) throws Exception {
+	public static boolean IOSPushToSingle(HashMap<String, String> params) throws Exception {
 		
 		String cid = "";
-		String title = "";
-		String msgContent = "";
-		int transmissonType = 2;
 		String transmissionContent = "";
 		
 		if (params.containsKey("cid")) 
 			cid = params.get("cid").toString();
 		
-		if (params.containsKey("title")) 
-			title = params.get("title").toString();
-		
-		if (params.containsKey("msgContent")) 
-			msgContent = params.get("msgContent").toString();
-		
-		if (params.containsKey("transmissonType")) 
-			transmissonType = Integer.parseInt(params.get("transmissonType").toString());
-		 
 		if (params.containsKey("transmissionContent")) 
 			transmissionContent = params.get("transmissionContent").toString();
 		
@@ -90,9 +82,6 @@ public class PushUtil {
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
 		TransmissionTemplate template = TransmissionTemplateIos();
-//		template.setTitle(title);
-//		template.setText(msgContent);
-		template.setTransmissionType(transmissonType);
 		template.setTransmissionContent(transmissionContent);
 		
 		SingleMessage message = new SingleMessage();
@@ -116,11 +105,49 @@ public class PushUtil {
 			System.out.println("异常：" + ret.getResponse().toString());
 		}
 
-		Thread.sleep(3);
-		
-		
 		return true;
 	}	
+	
+	/**
+	 * 推送android 多个设备透传消息推送
+	 * @Param map<String, String> Params
+	 *     key = transmissionContent
+	 * 
+	 */
+	public static boolean IosPushToMulti(List<String> clientIds, HashMap<String, String> params) throws Exception {
+		
+		String transmissionContent = "";
+
+		if (params.containsKey("transmissionContent")) 
+			transmissionContent = params.get("transmissionContent").toString();
+		
+		
+		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+		
+		TransmissionTemplate template = TransmissionTemplateIos();
+
+		template.setTransmissionContent(transmissionContent);
+		
+		ListMessage message = new ListMessage();
+		message.setOffline(true);
+		message.setOfflineExpireTime(2 * 1000 * 3600);
+		message.setData(template);
+		
+		List<Target> targets = new ArrayList<Target>();
+		
+		for (String cid : clientIds) {
+			Target target1 = new Target();
+			target1.setAppId(appId);
+			target1.setClientId(cid);
+			targets.add(target1);
+		}
+		
+		String taskId = push.getContentId(message);
+		IPushResult ret = push.pushMessageToList(taskId, targets);
+		System.out.println("正常：" + ret.getResponse().toString());
+				
+		return true;
+	}				
 	
 	/**
 	 * 推送android 单个设备透传消息推送
@@ -128,30 +155,17 @@ public class PushUtil {
 	 *     key = cid 
 	 *     key = title
 	 *     key = msgContent
-	 *     key = transmissionType
 	 *     key = transmissionContent
 	 * 
 	 */
-	public static boolean AndroidPushTransmissionToSingle(HashMap<String, String> params) throws Exception {
+	public static boolean AndroidPushToSingle(HashMap<String, String> params) throws Exception {
 		
 		String cid = "";
-		String title = "";
-		String msgContent = "";
-		int transmissonType = 2;
 		String transmissionContent = "";
 		
 		if (params.containsKey("cid")) 
 			cid = params.get("cid").toString();
-		
-		if (params.containsKey("title")) 
-			title = params.get("title").toString();
-		
-		if (params.containsKey("msgContent")) 
-			msgContent = params.get("msgContent").toString();
-		
-		if (params.containsKey("transmissonType")) 
-			transmissonType = Integer.parseInt(params.get("transmissonType").toString());
-		 
+
 		if (params.containsKey("transmissionContent")) 
 			transmissionContent = params.get("transmissionContent").toString();
 		
@@ -160,7 +174,6 @@ public class PushUtil {
 		
 		TransmissionTemplate template = TransmissionTemplateDefault();
 
-		template.setTransmissionType(transmissonType);
 		template.setTransmissionContent(transmissionContent);
 		
 		SingleMessage message = new SingleMessage();
@@ -183,15 +196,12 @@ public class PushUtil {
 
 			System.out.println("异常：" + ret.getResponse().toString());
 		}
-
-		Thread.sleep(3);
-		
-		
 		return true;
 	}			
 	
+
 	/**
-	 * 推送android 单个设备透传消息推送
+	 * 推送android 多个设备透传消息推送
 	 * @Param map<String, String> Params
 	 *     key = cid 
 	 *     key = title
@@ -200,87 +210,41 @@ public class PushUtil {
 	 *     key = transmissionContent
 	 * 
 	 */
-	public static boolean AndroidPushNotificationToSingle(HashMap<String, String> params) throws Exception {
+	public static boolean AndroidToMulti(List<String> clientIds, HashMap<String, String> params) throws Exception {
 		
-		String cid = "";
-		String title = "";
-		String msgContent = "";
-		int transmissonType = 2;
 		String transmissionContent = "";
-		
-		if (params.containsKey("cid")) 
-			cid = params.get("cid").toString();
-		
-		if (params.containsKey("title")) 
-			title = params.get("title").toString();
-		
-		if (params.containsKey("msgContent")) 
-			msgContent = params.get("msgContent").toString();
-		
-		if (params.containsKey("transmissonType")) 
-			transmissonType = Integer.parseInt(params.get("transmissonType").toString());
-		 
+
 		if (params.containsKey("transmissionContent")) 
 			transmissionContent = params.get("transmissionContent").toString();
 		
 		
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
-		NotificationTemplate template =  NotificationTemplateDefault();
-		
-		template.setTitle(title);
-		template.setText(msgContent);
-		template.setTransmissionType(transmissonType);
+		TransmissionTemplate template = TransmissionTemplateDefault();
+
 		template.setTransmissionContent(transmissionContent);
 		
-		SingleMessage message = new SingleMessage();
+		ListMessage message = new ListMessage();
 		message.setOffline(true);
 		message.setOfflineExpireTime(2 * 1000 * 3600);
 		message.setData(template);
-			
-		Target target1 = new Target();
-		target1.setAppId(appId);
-		target1.setClientId(cid);
-
-		try {
-			IPushResult ret = push.pushMessageToSingle(message, target1);
-			System.out.println("正常：" + ret.getResponse().toString());
-			
-		} catch (RequestException e) {
-			String requstId = e.getRequestId();
-			IPushResult ret = push.pushMessageToSingle(message, target1,
-					requstId);
-
-			System.out.println("异常：" + ret.getResponse().toString());
+		
+		List<Target> targets = new ArrayList<Target>();
+		
+		for (String cid : clientIds) {
+			Target target1 = new Target();
+			target1.setAppId(appId);
+			target1.setClientId(cid);
+			targets.add(target1);
 		}
-
-		Thread.sleep(3);
 		
-		
+		String taskId = push.getContentId(message);
+		IPushResult ret = push.pushMessageToList(taskId, targets);
+		System.out.println("正常：" + ret.getResponse().toString());
+				
 		return true;
-	}		
-	
-	
-	public static NotificationTemplate NotificationTemplateDefault()
-			throws Exception {
-		NotificationTemplate template = new NotificationTemplate();
-		template.setAppId(appId);
-		template.setAppkey(appKey);
-		template.setTitle("");
-		template.setText("");
-//		template.setLogo("icon.png");
-		// template.setLogoUrl("");
-		// template.setIsRing(true);
-		// template.setIsVibrate(true);
-		// template.setIsClearable(true);
-		template.setTransmissionType(1);
-		template.setTransmissionContent("");
-		// template.setPushInfo("actionLocKey", 2, "message", "sound",
-		// "payload", "locKey", "locArgs", "launchImage");
-		return template;
-	}
-	
-	
+	}			
+		
 	public static TransmissionTemplate TransmissionTemplateDefault()
 			throws Exception {
 		TransmissionTemplate template = new TransmissionTemplate();
@@ -372,7 +336,7 @@ public class PushUtil {
 		params.put("transmissionContent", jsonParams);
 //		PushUtil.AndroidPushTransmissionToSingle(params);
 		
-		PushUtil.IOSPushNotificationToSingle(params);
+		PushUtil.IOSPushToSingle(params);
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);

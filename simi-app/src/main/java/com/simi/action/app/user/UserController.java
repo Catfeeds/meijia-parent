@@ -155,7 +155,7 @@ public class UserController extends BaseController {
 		vo.setAppUserId("");
 		vo.setClientId("");
 		if (userPushBind != null) {
-			vo.setClientId("");
+			vo.setClientId(userPushBind.getClientId());
 		}		
 		
 		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);
