@@ -239,7 +239,9 @@ public class CardController extends BaseController {
 		CardViewVo vo = cardService.changeToCardViewVo(record);
 		
 		//todo 1. 如果是立即给相关人员发送消息，则需要短信模板的通知.
-		
+		if (cardId.equals(0L) && setNowSend.equals((short)1)) {
+			cardService.cardNotification(record);
+		}
 		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
 		
 		result.setData(vo);
@@ -350,6 +352,12 @@ public class CardController extends BaseController {
 		if (!record.getCreateUserId().equals(userId)) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("只有创建任务卡片才能取消卡片。");
+			return result;			
+		}
+		
+		if (record.getStatus().equals((short)0)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("卡片已经取消过了.");
 			return result;			
 		}
 		
