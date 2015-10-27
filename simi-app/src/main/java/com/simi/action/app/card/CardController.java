@@ -349,9 +349,17 @@ public class CardController extends BaseController {
 		
 		if (!record.getCreateUserId().equals(userId)) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("只有创建卡片才能取消卡片。");
+			result.setMsg("只有创建任务卡片才能取消卡片。");
 			return result;			
 		}
+		
+		Long serviceTime = record.getServiceTime();
+		if (serviceTime < TimeStampUtil.getNowSecond()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("卡片服务时间已到,不能取消.");
+			return result;		
+		}
+		
 		
 		record.setStatus(status);
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
