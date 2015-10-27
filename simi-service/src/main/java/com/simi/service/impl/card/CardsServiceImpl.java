@@ -14,6 +14,7 @@ import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.dict.CityService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
@@ -21,6 +22,7 @@ import com.simi.vo.card.CardZanViewVo;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -49,6 +51,9 @@ public class CardsServiceImpl implements CardService {
 	
 	@Autowired
 	private CityService cityService;
+	
+	@Autowired
+	private UserPushBindService userPushBindService;
 	
 	@Override
 	public Cards initCards() {
@@ -336,6 +341,35 @@ public class CardsServiceImpl implements CardService {
 		result = cardsMapper.selectByReminds(vo);
 		return result;
 	}
+	
+	
+	@Override
+	public boolean cardNotification(Cards card) {
+		
+		//1找出所有需要通知的用户集合 A
+		Long cardId = card.getCardId();
+		List<CardAttend> attends = cardAttendService.selectByCardId(cardId);
+		
+		if (attends.isEmpty()) return true;
+		
+		List<Long> userIds = new ArrayList<Long>();
+		for (CardAttend item : attends) {
+			if (!userIds.equals(item.getUserId())) userIds.add(item.getUserId());
+		}
+		
+		List<Users> users = new ArrayList<Users>();
+		if (!userIds.isEmpty()) {
+			users = usersService.selectByUserIds(userIds);
+		}
+		
+		
+		//2.找出可以发推送消息的用户集合 B
+		List<UserPushBind> userPushBinds = userPushBindService.selectByUserIds(userIds);
+		
+		
+		return true;
+	}
+	
 	
 
 

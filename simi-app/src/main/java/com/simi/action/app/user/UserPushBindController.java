@@ -42,7 +42,7 @@ public class UserPushBindController extends BaseController {
 			return result;
 		}
 		
-		UserPushBind userPushBind = userPushBindService.selectByUserIdAndDeviceType(userId, deviceType);
+		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
 
 		if (userPushBind == null) {
 			userPushBind = new UserPushBind();

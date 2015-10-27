@@ -21,8 +21,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectByUserId" resultMap="BaseResultMap"
-		parameterType="java.lang.Long">
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from user_push_bind
@@ -36,14 +35,18 @@
 		from user_push_bind
 		where user_id = #{1,jdbcType=NUMERIC}
 	</select>
-	
-	<select id="selectByUserIdAndDeviceType" resultMap="BaseResultMap"
-		>
+		
+	<!--根据Ids查询Users -->
+	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from user_push_bind
-		where user_id = #{0} and device_type = #{1}
-	</select>
+		where user_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from user_push_bind

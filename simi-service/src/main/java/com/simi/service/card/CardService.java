@@ -37,4 +37,6 @@ public interface CardService {
 
 	List<Cards> selectByReminds(CardSearchVo vo);
 
+	boolean cardNotification(Cards card);
+
 }

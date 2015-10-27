@@ -27,17 +27,18 @@ public class UserPushBindServiceImpl implements UserPushBindService{
 		return userPushBindMapper.insert(record);
 	}
 	@Override
-	public List<UserPushBind> selectByUserId(Long userId) {
+	public UserPushBind selectByUserId(Long userId) {
 		return userPushBindMapper.selectByUserId(userId);
 	}
+	
+	@Override
+	public List<UserPushBind> selectByUserIds(List<Long> userIds) {
+		return userPushBindMapper.selectByUserIds(userIds);
+	}	
 	
 	@Override
 	public UserPushBind selectByClientId(String clientId) {
 		return userPushBindMapper.selectByClientId(clientId);
 	}
 	
-	@Override
-	public UserPushBind selectByUserIdAndDeviceType(Long userId, String deviceType) {
-		return userPushBindMapper.selectByUserIdAndDeviceType(userId, deviceType);
-	}	
 }

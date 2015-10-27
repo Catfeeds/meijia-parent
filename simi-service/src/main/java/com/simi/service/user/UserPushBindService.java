@@ -13,11 +13,11 @@ public interface UserPushBindService {
 	
 	UserPushBind selectByPrimaryKey(Long id);
 
-	List<UserPushBind> selectByUserId(Long userId);
+	UserPushBind selectByUserId(Long userId);
 	
 	UserPushBind selectByClientId(String clientId);
 
-	UserPushBind selectByUserIdAndDeviceType(Long userId, String deviceType);
+	List<UserPushBind> selectByUserIds(List<Long> userIds);
 
 
 }
