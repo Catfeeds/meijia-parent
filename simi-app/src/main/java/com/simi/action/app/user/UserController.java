@@ -145,7 +145,7 @@ public class UserController extends BaseController {
 		userLoginedService.insert(record);		
 		
 		// 根据mobile找到user_baidu_bind信息
-		UserPushBind userPushBind = userPushBindService.selectByUserIdAndDeviceType(u.getId(), deviceType);
+		UserPushBind userPushBind = userPushBindService.selectByUserId(u.getId());
 		
 		UserPushBindVo vo = new UserPushBindVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);

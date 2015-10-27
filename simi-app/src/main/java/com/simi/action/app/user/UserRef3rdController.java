@@ -124,7 +124,7 @@ public class UserRef3rdController extends BaseController {
 //			Constants.GET_CODE_TEMPLE_ID, content);
 		}
 
-		UserPushBind userPushBind = userPushBindService.selectByUserIdAndDeviceType(users.getId(), deviceType);
+		UserPushBind userPushBind = userPushBindService.selectByUserId(users.getId());
 		UserPushBindVo vo = new UserPushBindVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
 
