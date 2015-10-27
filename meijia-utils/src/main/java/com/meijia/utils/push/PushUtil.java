@@ -1,10 +1,13 @@
 package com.meijia.utils.push;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.baidu.yun.push.exception.PushClientException;
 import com.baidu.yun.push.exception.PushServerException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gexin.rp.sdk.base.IPushResult;
 import com.gexin.rp.sdk.base.impl.SingleMessage;
 import com.gexin.rp.sdk.base.impl.Target;
@@ -13,6 +16,8 @@ import com.gexin.rp.sdk.exceptions.RequestException;
 import com.gexin.rp.sdk.http.IGtPush;
 import com.gexin.rp.sdk.template.NotificationTemplate;
 import com.gexin.rp.sdk.template.TransmissionTemplate;
+import com.google.gson.JsonObject;
+import com.meijia.utils.JsonUtil;
 
 /**
  * 百度配置文件
@@ -84,7 +89,7 @@ public class PushUtil {
 		
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
-		TransmissionTemplate template = IosTransmissionTemplatePush();
+		TransmissionTemplate template = TransmissionTemplateIos();
 //		template.setTitle(title);
 //		template.setText(msgContent);
 		template.setTransmissionType(transmissonType);
@@ -117,9 +122,8 @@ public class PushUtil {
 		return true;
 	}	
 	
-	
 	/**
-	 * 推送IOS 单个设备推送
+	 * 推送android 单个设备透传消息推送
 	 * @Param map<String, String> Params
 	 *     key = cid 
 	 *     key = title
@@ -184,7 +188,97 @@ public class PushUtil {
 		
 		
 		return true;
+	}			
+	
+	/**
+	 * 推送android 单个设备透传消息推送
+	 * @Param map<String, String> Params
+	 *     key = cid 
+	 *     key = title
+	 *     key = msgContent
+	 *     key = transmissionType
+	 *     key = transmissionContent
+	 * 
+	 */
+	public static boolean AndroidPushNotificationToSingle(HashMap<String, String> params) throws Exception {
+		
+		String cid = "";
+		String title = "";
+		String msgContent = "";
+		int transmissonType = 2;
+		String transmissionContent = "";
+		
+		if (params.containsKey("cid")) 
+			cid = params.get("cid").toString();
+		
+		if (params.containsKey("title")) 
+			title = params.get("title").toString();
+		
+		if (params.containsKey("msgContent")) 
+			msgContent = params.get("msgContent").toString();
+		
+		if (params.containsKey("transmissonType")) 
+			transmissonType = Integer.parseInt(params.get("transmissonType").toString());
+		 
+		if (params.containsKey("transmissionContent")) 
+			transmissionContent = params.get("transmissionContent").toString();
+		
+		
+		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+		
+		NotificationTemplate template =  NotificationTemplateDefault();
+		
+		template.setTitle(title);
+		template.setText(msgContent);
+		template.setTransmissionType(transmissonType);
+		template.setTransmissionContent(transmissionContent);
+		
+		SingleMessage message = new SingleMessage();
+		message.setOffline(true);
+		message.setOfflineExpireTime(2 * 1000 * 3600);
+		message.setData(template);
+			
+		Target target1 = new Target();
+		target1.setAppId(appId);
+		target1.setClientId(cid);
+
+		try {
+			IPushResult ret = push.pushMessageToSingle(message, target1);
+			System.out.println("正常：" + ret.getResponse().toString());
+			
+		} catch (RequestException e) {
+			String requstId = e.getRequestId();
+			IPushResult ret = push.pushMessageToSingle(message, target1,
+					requstId);
+
+			System.out.println("异常：" + ret.getResponse().toString());
+		}
+
+		Thread.sleep(3);
+		
+		
+		return true;
 	}		
+	
+	
+	public static NotificationTemplate NotificationTemplateDefault()
+			throws Exception {
+		NotificationTemplate template = new NotificationTemplate();
+		template.setAppId(appId);
+		template.setAppkey(appKey);
+		template.setTitle("");
+		template.setText("");
+//		template.setLogo("icon.png");
+		// template.setLogoUrl("");
+		// template.setIsRing(true);
+		// template.setIsVibrate(true);
+		// template.setIsClearable(true);
+		template.setTransmissionType(1);
+		template.setTransmissionContent("");
+		// template.setPushInfo("actionLocKey", 2, "message", "sound",
+		// "payload", "locKey", "locArgs", "launchImage");
+		return template;
+	}
 	
 	
 	public static TransmissionTemplate TransmissionTemplateDefault()
@@ -199,7 +293,7 @@ public class PushUtil {
 		return template;
 	}	
 	
-	public static TransmissionTemplate IosTransmissionTemplatePush()
+	public static TransmissionTemplate TransmissionTemplateIos()
 			throws Exception {
 		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(appId);
@@ -210,34 +304,34 @@ public class PushUtil {
 //		template.setPushInfo("", 1, "", "", "", "", "", "");
 		
 		//**********APN简单推送********//
-		APNPayload apnpayload = new APNPayload();
+//		APNPayload apnpayload = new APNPayload();
 //		com.gexin.rp.sdk.base.payload.APNPayload.SimpleAlertMsg alertMsg = new com.gexin.rp.sdk.base.payload.APNPayload.SimpleAlertMsg(
 //				"hahahaha");
 //		apnpayload.setAlertMsg(alertMsg);
-		apnpayload.setBadge(5);
+//		apnpayload.setBadge(5);
 //		apnpayload.setContentAvailable(1);
 //		apnpayload.setCategory("ACTIONABLE");
-		template.setAPNInfo(apnpayload);
+//		template.setAPNInfo(apnpayload);
 		
 			//************APN高级推送*******************//
-//			APNPayload apnpayload = new APNPayload();
-//			apnpayload.setBadge(4);
-//			apnpayload.setSound("test2.wav");
-//			apnpayload.setContentAvailable(1);
-//			apnpayload.setCategory("ACTIONABLE");
-//			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
-//			alertMsg.setBody("body");
-//			alertMsg.setActionLocKey("ActionLockey");
-//			alertMsg.setLocKey("LocKey");
-//			alertMsg.addLocArg("loc-args");
-//			alertMsg.setLaunchImage("launch-image");
+			APNPayload apnpayload = new APNPayload();
+			apnpayload.setBadge(4);
+//			apnpayload.setSound("");
+			apnpayload.setContentAvailable(1);
+			apnpayload.setCategory("ACTIONABLE");
+			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
+			alertMsg.setBody("body");
+			alertMsg.setActionLocKey("ActionLockey");
+			alertMsg.setLocKey("LocKey");
+			alertMsg.addLocArg("loc-args");
+			alertMsg.setLaunchImage("launch-image");
 //			// IOS8.2以上版本支持
-//			alertMsg.setTitle("Title");
-//			alertMsg.setTitleLocKey("TitleLocKey");
-//			alertMsg.addTitleLocArg("TitleLocArg");
-//
-//			apnpayload.setAlertMsg(alertMsg);
-//			template.setAPNInfo(apnpayload);
+			alertMsg.setTitle("Title");
+			alertMsg.setTitleLocKey("TitleLocKey");
+			alertMsg.addTitleLocArg("TitleLocArg");
+
+			apnpayload.setAlertMsg(alertMsg);
+			template.setAPNInfo(apnpayload);
 		
 		
 		return template;
@@ -247,17 +341,45 @@ public class PushUtil {
 	
 	
 	public static void main(String[] args) 
-			throws PushClientException,PushServerException {
+			throws Exception {
 		
-		Map<String, String> params = new HashMap<String, String>();
-//		params.put("url", "http://www/yougeguanjia.com/onecare-oa/upload/html/2.html");
-		params.put("msgid", "2");
-//		String[] channelIds = {"5411241166191134005", "4880573112432126390"};
-		String[] channelIds = {"4880573112432126390"};
-		String msgContent = "仅售180元，价值158元首席设计师洗剪吹，长短发不限！（另有其他套餐可选）";
-		PushUtil.IOSPushNotificationToMultiDevice(channelIds, msgContent, params);
+		String clientId = "ef4b845994b46404468b0b87afe74d24";
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("cid", clientId);
+		
+		/*透传消息格式
+		 *  title : 标题   :  通知栏标题
+		 *  text  : 内容   :  通知栏内容
+		 *  
+		 *  说明： title 和 text 应该是成对出现，如果没有 title,text ,则只会有 todo操作的功能，只有
+		 *  title和text都有值的情况下，才会弹出提示框信息
+		 *  
+		 *  todo  : 后续操作   get_reminds  = 需要获取闹钟信息列表.
+		 *   
+		 *  
+		 */
+		 HashMap<String, String> tranParams = new HashMap<String, String>();
+		 tranParams.put("title", "会议安排");
+		 tranParams.put("text", "明天早上9点参加华北区电话会议,请提前10分钟进入会议室B11");
+		 tranParams.put("todo", "get_reminds");
+		 tranParams.put("user_id", "1");
+//		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
+		 
+		 ObjectMapper objectMapper = new ObjectMapper();
+		 String jsonParams = objectMapper.writeValueAsString(tranParams);
+		 System.out.println(jsonParams);
+		 
+		params.put("transmissionContent", jsonParams);
+//		PushUtil.AndroidPushTransmissionToSingle(params);
+		
+		PushUtil.IOSPushNotificationToSingle(params);
+		
+//		params = new HashMap<String, String>();
+//		params.put("cid", clientId);
+//		params.put("title", "测试推送消息");
+//		params.put("msgContent", "会议安排安排");
+//		PushUtil.AndroidPushNotificationToSingle(params);
 
-//		BaiduUtil.IOSPushNotificationToAll("测试url2", params);
 	}	
 
 }

@@ -40,6 +40,7 @@ import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
+import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserFriendSearchVo;
