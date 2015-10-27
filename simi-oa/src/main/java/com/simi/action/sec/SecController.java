@@ -26,13 +26,16 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
+import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
+import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UsersSearchVo;
+import com.simi.vo.UsersSmsTokenVo;
 import com.simi.vo.user.UserApplyVo;
 @Controller
 @RequestMapping(value = "/sec")
@@ -40,6 +43,9 @@ public class SecController extends AdminController {
 
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private UserSmsTokenService userSmsTokenService;
 	
 
 	@Autowired
@@ -55,6 +61,38 @@ public class SecController extends AdminController {
 	private UserDetailPayService userDetailPayService;
 
 	
+	   /**
+     * 验证码列表
+     * @param request
+     * @param model
+     * @param usersSmsTokenVo
+     * @return
+     */
+    @AuthPassport
+	@RequestMapping(value = "/token_list", method = { RequestMethod.GET })
+	public String userTokenList(HttpServletRequest request, Model model,
+			UsersSmsTokenVo usersSmsTokenVo) {
+
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+
+		// 分页
+		PageHelper.startPage(pageNo, pageSize);
+
+		List<UserSmsToken> lists = userSmsTokenService.selectByListPage(
+				usersSmsTokenVo, pageNo, pageSize);
+
+		PageInfo result = new PageInfo(lists);
+		model.addAttribute("usersSmsTokenVo", usersSmsTokenVo);
+		model.addAttribute("userSmsTokenModel", result);
+
+		return "user/userTokenList";
+	}
 	/**
 	 *  秘书列表
 	 * @param request
@@ -316,4 +354,5 @@ public class SecController extends AdminController {
     	return "redirect:/sec/applyList";
     	
     }
+ 
 }

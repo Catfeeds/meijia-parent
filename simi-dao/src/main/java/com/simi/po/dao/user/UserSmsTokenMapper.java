@@ -1,6 +1,9 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.UserSmsToken;
+import com.simi.vo.UsersSmsTokenVo;
 
 public interface UserSmsTokenMapper {
     int deleteByPrimaryKey(Long id);
@@ -18,4 +21,7 @@ public interface UserSmsTokenMapper {
     int updateByPrimaryKey(UserSmsToken record);
 
 	UserSmsToken selectByMobileAndType(String mobile, Short smsType);
+
+	List<UserSmsToken> selectUserSmsTokenByMobile(
+			UsersSmsTokenVo usersSmsTokenVo);
 }

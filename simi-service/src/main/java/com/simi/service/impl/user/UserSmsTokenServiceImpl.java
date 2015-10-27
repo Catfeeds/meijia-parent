@@ -1,6 +1,7 @@
 package com.simi.service.impl.user;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import com.simi.service.user.UserSmsTokenService;
 import com.simi.vo.AppResultData;
 import com.simi.po.dao.user.UserSmsTokenMapper;
 import com.simi.po.model.user.UserSmsToken;
+import com.github.pagehelper.PageHelper;
+import com.simi.vo.UsersSmsTokenVo;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -103,5 +106,11 @@ public class UserSmsTokenServiceImpl implements UserSmsTokenService{
 		return result;
 	}
 	
-
+	@Override
+	public List<UserSmsToken> selectByListPage(UsersSmsTokenVo usersSmsTokenVo,
+			int pageNo, int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<UserSmsToken> lists = userSmsTokenMapper.selectUserSmsTokenByMobile(usersSmsTokenVo);
+		return lists;
+	}
 }

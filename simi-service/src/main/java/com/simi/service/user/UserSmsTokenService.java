@@ -1,9 +1,11 @@
 package com.simi.service.user;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.vo.AppResultData;
+import com.simi.vo.UsersSmsTokenVo;
 
 public interface UserSmsTokenService {
 
@@ -25,6 +27,9 @@ public interface UserSmsTokenService {
 	UserSmsToken selectByMobileAndType(String mobile, Short smsType);
 
 	AppResultData<Object> validateSmsToken(String mobile, String token, Short smsType);
+
+	List<UserSmsToken> selectByListPage(UsersSmsTokenVo usersSmsTokenVo,
+			int pageNo, int pageSize);
 	
 
 }

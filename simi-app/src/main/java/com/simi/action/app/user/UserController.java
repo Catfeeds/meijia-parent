@@ -227,7 +227,7 @@ public class UserController extends BaseController {
 	}
 	
 	
-	//判断验证码是否正确，进入注册页面践行注册
+	//判断验证码是否正确，进入注册页面进行注册
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	public AppResultData<Object> register(
 			HttpServletRequest request,
@@ -306,8 +306,7 @@ public class UserController extends BaseController {
 			//@RequestParam("tagId") Long tagId,
 			@RequestParam("idCard") String idCard,
 			//@RequestParam("login_from") Short loginFrom,
-			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
-			@RequestParam(value = "user_type", required = false, defaultValue = "0") int userType,
+			@RequestParam(value = "user_type", required = false, defaultValue = "1") short userType,
 			@RequestParam(value = "tag_ids", required = false, defaultValue = "") String tagIds) {
 		
 			AppResultData<Object> result = new AppResultData<Object>( 
@@ -319,7 +318,7 @@ public class UserController extends BaseController {
 					result.setMsg(ConstantMsg.USER_EXIST_MG);
 					return result;
 				}
-		
+				
 			//记录用户注册信息
 			//long ip = IPUtil.getIpAddr(request);
 			Users record = new Users();
@@ -337,7 +336,7 @@ public class UserController extends BaseController {
 			record.setMajor(major);
 			record.setHeadImg(" ");
 			record.setRestMoney(new BigDecimal(0));
-			record.setUserType((short) 0);
+			record.setUserType(userType);
 			record.setIsApproval((short)0);
 			record.setAddFrom((short) 1);
 			record.setScore(0);
@@ -346,8 +345,12 @@ public class UserController extends BaseController {
 			record.setUpdateTime(TimeStampUtil.getNow() / 1000);
 			//UserLogined record = new UserLogined();
 			userService.insert(record);	
-			//userService.updateByPrimaryKeySelective(record);
-			
+			userService.updateByPrimaryKeySelective(record);
+			//如果第一次登陆未注册时未成功注册环信，则重新注册
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(record.getId());
+			if(userRef3rd == null){
+				userService.genImUser(record);
+			}
 			Users least = userService.selectUserByIdCard(idCard);
 			//想Users表中插入用户的标签记录
 			if (!StringUtil.isEmpty(tagIds)) {
@@ -370,6 +373,7 @@ public class UserController extends BaseController {
 					}
 				}
 			} 
+			
 			
 			return result;
 	}
