@@ -15,6 +15,7 @@ import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UsersService;
 
 @Service
 public class UserRef3rdServiceImpl implements UserRef3rdService {
@@ -24,6 +25,9 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 	
 	@Autowired
 	private UserRefSecService userRefSecService;
+	
+	@Autowired
+	private UsersService usersService;	
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -62,7 +66,17 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 
 	@Override
 	public UserRef3rd selectByUserIdForIm(Long userId) {
-		return userRef3rdMapper.selectByUserIdForIm(userId);
+		
+		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
+		
+		if (userRef3rd == null) {
+			Users u =  usersService.getUserById(userId);
+			usersService.genImUser(u);
+		}
+		
+		userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
+		
+		return userRef3rd;
 	}
 	
 	@Override

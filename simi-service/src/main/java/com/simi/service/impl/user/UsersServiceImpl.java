@@ -66,6 +66,9 @@ public class UsersServiceImpl implements UsersService {
 	private UserRef3rdMapper userRef3rdMapper;
 
 	@Autowired
+	private UserRef3rdService userRef3rdService;	
+	
+	@Autowired
 	private UserRefSecService userRefSecService;
 
 	@Autowired
@@ -193,7 +196,7 @@ public class UsersServiceImpl implements UsersService {
 		}
 		
 		
-		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(viewUser.getId());
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(viewUser.getId());
 		
 		if (userRef3rd != null) {
 			vo.setImUserName(userRef3rd.getUsername());
@@ -392,7 +395,11 @@ public class UsersServiceImpl implements UsersService {
 		if(userRefSec!=null){
 
 			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
-			UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userRefSec.getSecId());
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userRefSec.getSecId());
+			
+			if (userRef3rd == null) {
+				
+			}
 			
 			if (userRef3rd != null) {
 				vo.setImSecUsername(userRef3rd.getUsername());
