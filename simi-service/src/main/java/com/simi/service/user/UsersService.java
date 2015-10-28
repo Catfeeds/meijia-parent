@@ -13,77 +13,59 @@ import com.simi.po.model.user.Users;
 
 
 public interface UsersService {
-
-	Users getUserById(Long id);
-
-	Users getUserByMobile(String mobile);
-
-	Long saveUser(Users user);
-
-	int updateByPrimaryKeySelective(Users user) ;
-
-	Users initUsers(String mobile, Short addFrom);
 	
-	Users initUser(String openid,Short addFrom);
-
+	Users initUsers();
+	
+	Long insert(Users record);
+	
+	Long insertSelective(Users u);
+	
+	int updateByPrimaryKeySelective(Users user) ;
+	
+	Users initUserForm();
+	
+	Users genUser(String mobile, String name, Short addFrom);
+	
+	Users selectByPrimaryKey(Long id);
+	
+	Users selectByOpenidAndThirdType(String openid,String thirdType);
+	
+	Users selectByMobile(String mobile);
+	
+	Users selectUserByIdCard(String idCard);
+	
+	UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser);
+	
 	UserViewVo getUserViewByUserId(Long userId);
-
+	
+	UserViewVo getUserInfo(Long userId);
+	
+	List<Users> selectByAll();
+	
+	List<Users> selectByUserIds(List<Long> ids);
+	
+	List<Users> selectUsersHaveOrdered(List<String> mobiles);
+	
 	PageInfo searchVoListPage(UserSearchVo searchVo,int pageNo,int pageSize);
 
-	UserRef3rd genImUser(Users user);
+	List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo, int pageSize);
+	
+	List<Users> selectUsersNoOrdered(List<String> mobiles);
+	
+	List<Users> selectByUserType(Short userType);
+	
+	List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd);
 
 	Map<String, String> getImRobot(Users user);
 
 	Map<String, String> getSeniorImUsername(Users user);
 
-	UserViewVo getUserInfo(Long userId);
-
-	List<Users> selectByAll();
-
-	List<Users> searchVoByAll(UserSearchVo searchVo);
-
-	List<Users> selectUsersHaveOrdered(List<String> mobiles);
-
-	List<Users> selectUsersNoOrdered(List<String> mobiles);
-	
-	Users selectByOpenidAndThirdType(String openid,String thirdType);
-
-	List<Users> selectVoByUserId(List<Long> ids);
-
-	List<Users> selectByUserIds(List<Long> ids);
-
-	Users selectVoByUserId(Long userId);
-
-	Users genUser(String mobile, String name, Short addFrom);
-
-	UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser);
-
-	List<Users> selectByUserType(Short userType);
-
-	List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd);
-
-	Long insert(Users record);
-
-	Users initUsers(String mobile, String name);
-
-	Users selectUserByIdCard(String idCard);
-
+	@SuppressWarnings("rawtypes")
 	PageInfo selectByIsAppRoval(int pageNo, int pageSize);
 
-	Users selectByPrimaryKey(Long id);
-
-	Long insertSelective(Users u);
-
+	@SuppressWarnings("rawtypes")
 	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
 
-	Users selectUserByMobile(String mobile);
-
-	Users initUserForm();
-
-	List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo,
-			int pageSize);
-
-	List<Users> selectByListPageNo(UsersSearchVo usersSearchVo, int pageNo,
-			int pageSize);
+	UserRef3rd genImUser(Users user);
 
 }

@@ -1,20 +1,20 @@
 package com.simi.po.model.user;
 
-public class UserFollow {
-    private Long id;
+public class UserImgs {
+    private Long imgId;
 
     private Long userId;
 
-    private Long followId;
+    private String imgUrl;
 
     private Long addTime;
 
-    public Long getId() {
-        return id;
+    public Long getImgId() {
+        return imgId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setImgId(Long imgId) {
+        this.imgId = imgId;
     }
 
     public Long getUserId() {
@@ -25,12 +25,12 @@ public class UserFollow {
         this.userId = userId;
     }
 
-    public Long getFollowId() {
-        return followId;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setFollowId(Long followId) {
-        this.followId = followId;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
     public Long getAddTime() {

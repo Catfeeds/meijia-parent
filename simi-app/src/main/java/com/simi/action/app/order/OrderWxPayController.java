@@ -78,7 +78,7 @@ public class OrderWxPayController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		
 		if (u == null) {// 判断是否为注册用户，非注册用户返回 999
 			result.setStatus(Constants.ERROR_999);
@@ -313,7 +313,7 @@ public class OrderWxPayController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "SUCCESS");
 
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		
 		if (u == null) {// 判断是否为注册用户，非注册用户返回 999
 			result.setStatus(Constants.ERROR_999);

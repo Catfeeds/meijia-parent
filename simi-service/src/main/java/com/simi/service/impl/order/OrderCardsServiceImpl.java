@@ -55,7 +55,7 @@ public class OrderCardsServiceImpl implements OrderCardsService {
 		// 注意以上4个步骤必须为同一个事务。
 		Long userId = orderCards.getUserId();
 		Long nowTime = TimeStampUtil.getNowSecond();
-		Users users = usersService.getUserById(userId);
+		Users users = usersService.selectByPrimaryKey(userId);
 
 		UserPayStatus userPayStatus = new UserPayStatus();
 		userPayStatus.setMobile(users.getMobile());

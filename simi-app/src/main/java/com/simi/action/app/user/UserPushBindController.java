@@ -32,7 +32,7 @@ public class UserPushBindController extends BaseController {
 			@RequestParam("client_id") String clientId,
 			@RequestParam("device_type") String deviceType){
 
-		Users u = usersService.getUserById(userId);
+		Users u = usersService.selectByPrimaryKey(userId);
 		AppResultData<String> result = new AppResultData<String>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		

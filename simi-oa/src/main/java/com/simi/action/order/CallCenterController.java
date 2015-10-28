@@ -46,7 +46,7 @@ public class CallCenterController extends AdminController {
 		model.addAttribute("callTime", DateUtil.getNow());
 
 		//用户信息
-		Users u = usersService.getUserByMobile(customerNumber);
+		Users u = usersService.selectByMobile(customerNumber);
 		UserViewVo users = usersService.getUserViewByUserId(u.getId());
 		model.addAttribute("userModel", users);
 

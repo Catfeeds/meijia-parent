@@ -42,7 +42,7 @@ public class UserFeedbackController  extends BaseController {
 			result.setMsg("意见反馈内容为空或者超长");
 			return result;
 		}
-		Users users = userService.selectVoByUserId(userId);
+		Users users = userService.selectByPrimaryKey(userId);
 		
 		// 判断是否为注册用户，非注册用户返回 999
 		if (users == null) {

@@ -146,7 +146,7 @@ public class UserCouponController extends BaseController {
 		//获得优惠券实体类
 		DictCoupons dictCoupon = couponService.selectByCardPasswd(cardPasswd);
 		//获取用户实体类
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		record.setUserId(u.getId());
 		record.setMobile(u.getMobile());
 		record.setCardPasswd(cardPasswd);

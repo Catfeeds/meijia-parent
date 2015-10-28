@@ -70,7 +70,7 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
 		
 		if (userRef3rd == null) {
-			Users u =  usersService.getUserById(userId);
+			Users u =  usersService.selectByPrimaryKey(userId);
 			usersService.genImUser(u);
 		}
 		

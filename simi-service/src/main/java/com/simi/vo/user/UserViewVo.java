@@ -47,8 +47,7 @@ public class UserViewVo extends Users {
      * 机器人管家昵称
      */
     private String ImRobotNickname;
-
-
+    
 	public String getImUsername() {
 		return ImUsername;
 	}
@@ -122,16 +121,16 @@ public class UserViewVo extends Users {
 		return userId;
 	}
 
-	public void setUser_id(long userId) {
-		this.userId = userId;
-	}
-
 	public Long getSecId() {
 		return secId;
 	}
 
 	public void setSecId(Long secId) {
 		this.secId = secId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }

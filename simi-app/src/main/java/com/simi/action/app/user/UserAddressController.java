@@ -75,7 +75,7 @@ public class UserAddressController extends BaseController {
 		}
 
 		//Users u = usersService.getUserByMobile(mobile);
-		Users u  = usersService.getUserById(userId);
+		Users u  = usersService.selectByPrimaryKey(userId);
 		userAddrs.setId(addrId);
 		userAddrs.setUserId(u.getId());
 		userAddrs.setMobile(u.getMobile());

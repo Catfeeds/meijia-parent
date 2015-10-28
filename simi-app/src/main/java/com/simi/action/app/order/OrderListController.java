@@ -45,7 +45,7 @@ public class OrderListController extends BaseController {
 		AppResultData<List<OrderViewVo>> result = new AppResultData<List<OrderViewVo>>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, orderList);
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		
 		if (u == null) {
 			return result;

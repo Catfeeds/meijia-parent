@@ -39,15 +39,9 @@ public interface UsersMapper {
 
 	List<UserDetailPay> selectByCount(int addTime);
 
-	List<Users> searchVoByAll(UserSearchVo searchVo);
-
 	List<HashMap> selectUserStat(HashMap map);
 	
     Users selectByOpenidAnd3rdType(Map<String ,Object> conditions );
-
-    List<Users> selectVoByUserId(List<Long> ids);
-
-	Users selectByUserId(Long userId);
 
 	List<Users> selectByUserType(Short userType);
 
@@ -59,6 +53,4 @@ public interface UsersMapper {
 
 	List<Users> selectVoByListPage(UsersSearchVo userSearchVo);
 	
-	List<Users> selectVoByListPageNo(UsersSearchVo userSearchVo);
-    
 }

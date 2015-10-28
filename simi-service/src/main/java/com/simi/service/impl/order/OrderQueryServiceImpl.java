@@ -313,7 +313,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		//用户称呼
 		vo.setName("");
 		if (vo.getUserId() > 0L) {
-			Users user = usersService.getUserById(vo.getUserId());
+			Users user = usersService.selectByPrimaryKey(vo.getUserId());
 			vo.setName(user.getName());
 		}
 		

@@ -136,11 +136,11 @@ public class OrdersServiceImpl implements OrdersService {
 		
 		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
 
-		Users u = usersService.selectVoByUserId(order.getUserId());
+		Users u = usersService.selectByPrimaryKey(order.getUserId());
 		//2. 环信透传功能.
 		//获得发送者的环信账号
 		Long secId = orderViewVo.getSecId();
-		Users secUser = usersService.getUserById(secId);
+		Users secUser = usersService.selectByPrimaryKey(secId);
 		
 		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
 		String fromIm = userRef3rd.getUsername();
@@ -244,7 +244,7 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public void orderRatedTodo(Orders orders) {
 		
-		Users users = usersService.getUserById(orders.getUserId());
+		Users users = usersService.selectByPrimaryKey(orders.getUserId());
 		
 		UserDetailScore userDetailScore = userDetailScoreService.initUserDetailScore();
 		userDetailScore.setUserId(users.getId());

@@ -49,7 +49,7 @@ public class UserExchangeController extends BaseController {
 		AppResultData<Object> result_success = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
 		AppResultData<Object> result_fail = new AppResultData<Object>(Constants.ERROR_999, ConstantMsg.USER_SOCRE_NOT_ENOUGH_MSG, "");
-		Users users = usersService.getUserByMobile(mobile);
+		Users users = usersService.selectByMobile(mobile);
 		DictCoupons dictCoupons = couponService.selectByCardPasswd(Constants.SCORE_CONVERT_COUPON_CARD_PASSWORD);
 		if (users != null && dictCoupons != null) {
 			int score = users.getScore();

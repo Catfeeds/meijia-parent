@@ -115,7 +115,7 @@ public class UserImController extends BaseController {
 		
 		Long userId = userRef3rd.getUserId();
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		
 		if (u == null) return result;
 		

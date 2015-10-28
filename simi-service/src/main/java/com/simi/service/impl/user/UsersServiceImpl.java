@@ -94,9 +94,11 @@ public class UsersServiceImpl implements UsersService {
 	 */
 	@Override
 	public Users genUser(String mobile, String name, Short addFrom) {
-		Users u = this.getUserByMobile(mobile);
+		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = this.initUsers(mobile, addFrom);
+			u = this.initUsers();
+			u.setMobile(mobile);
+			u.setAddFrom(addFrom);
 			String provinceName = "";
 			try {
 				provinceName = MobileUtil.calcMobileCity(mobile);
@@ -107,7 +109,7 @@ public class UsersServiceImpl implements UsersService {
 			
 			u.setName(name);
 			u.setProvinceName(provinceName);
-			this.saveUser(u);
+			this.insertSelective(u);
 
 
 			//先看看是否已经有赠送
@@ -130,10 +132,10 @@ public class UsersServiceImpl implements UsersService {
 			
 			
 			//发送给13810002890 ，做一个提醒
-			String code = mobile;
-			String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
-			HashMap<String, String> sendSmsResult = SmsUtil.SendSms("13810002890",
-					Constants.GET_CODE_TEMPLE_ID, content);
+//			String code = mobile;
+//			String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
+//			HashMap<String, String> sendSmsResult = SmsUtil.SendSms("13810002890",
+//					Constants.GET_CODE_TEMPLE_ID, content);
 			
 		}
 		return u;
@@ -142,16 +144,6 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public List<Users> selectByAll() {
 		return usersMapper.selectByAll();
-	}
-
-	@Override
-	public Users getUserById(Long id) {
-		return usersMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public Users getUserByMobile(String mobile) {
-		return usersMapper.selectByMobile(mobile);
 	}
 
 	@Override
@@ -234,43 +226,10 @@ public class UsersServiceImpl implements UsersService {
 	}	
 
 	@Override
-	public Long saveUser(Users user) {
-		return usersMapper.insertSelective(user);
-	}
-
-	@Override
 	public int updateByPrimaryKeySelective(Users user) {
 		return usersMapper.updateByPrimaryKeySelective(user);
 	}
 
-	/*
-	 * 初始化用户对象
-	 */
-	@Override
-	public Users initUsers(String mobile, Short addFrom) {
-		Users u =  new Users();
-		u.setId(0L);
-		u.setMobile(mobile);
-		u.setProvinceName("");
-		u.setThirdType(" ");
-		u.setOpenid(" ");
-		u.setName(" ");
-		u.setRealName("");
-		u.setBirthDay(new Date());
-		u.setIdCard("");
-		u.setDegreeId((short) 0);
-		u.setMajor("");
-		u.setSex(" ");
-		u.setHeadImg(" ");
-		u.setRestMoney(new BigDecimal(0));
-		u.setUserType((short) 0);
-		u.setIsApproval((short) 0);
-		u.setAddFrom((short) 0);
-		u.setScore(0);
-		u.setAddTime(TimeStampUtil.getNow()/1000);
-		u.setUpdateTime(TimeStampUtil.getNow()/1000);
-		return u;
-	}
 	@Override
 	public Users initUserForm() {
 		Users u =  new Users();
@@ -292,34 +251,6 @@ public class UsersServiceImpl implements UsersService {
 		u.setIsApproval((short) 0);
 		u.setAddFrom((short) 0);
 		u.setScore(0);
-		u.setAddTime(TimeStampUtil.getNow()/1000);
-		u.setUpdateTime(TimeStampUtil.getNow()/1000);
-		return u;
-	}
-	/*
-	 * 初始化用户对象
-	 */
-	@Override
-	public Users initUser(String openid,Short addFrom) {
-		Users u =  new Users();
-		u.setId(0L);
-		u.setProvinceName("");
-		u.setMobile(" ");
-		u.setThirdType(" ");
-		u.setOpenid(openid);
-		u.setSex(" ");
-		u.setName(" ");
-		u.setRealName("");
-		u.setBirthDay(new Date());
-		u.setIdCard("");
-		u.setDegreeId((short) 0);
-		u.setMajor("");
-		u.setHeadImg(" ");
-		u.setRestMoney(new BigDecimal(0));
-		u.setUserType((short) 0);
-		u.setAddFrom(addFrom);
-		u.setScore(0);
-		u.setRestMoney(new BigDecimal(0.00));
 		u.setAddTime(TimeStampUtil.getNow()/1000);
 		u.setUpdateTime(TimeStampUtil.getNow()/1000);
 		return u;
@@ -357,13 +288,6 @@ public class UsersServiceImpl implements UsersService {
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
-	@Override
-	public List<Users> searchVoByAll(UserSearchVo searchVo) {
-
-	List<Users> list = usersMapper.searchVoByAll(searchVo);
-
-	return list;
-	}
 	
 	/**
 	 * 获取用户账号详情接口
@@ -378,8 +302,8 @@ public class UsersServiceImpl implements UsersService {
 		}
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
-		vo.setUser_id(u.getId());
-		
+		vo.setUserId(u.getId());
+
 		
 		if (StringUtil.isEmpty(vo.getName())) {
 			vo.setName(vo.getMobile());
@@ -461,7 +385,7 @@ public class UsersServiceImpl implements UsersService {
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 			
-			vo.setUser_id(u.getId());
+			vo.setUserId(u.getId());
 		
 		
 			if (StringUtil.isEmpty(vo.getName())) {
@@ -630,22 +554,9 @@ public class UsersServiceImpl implements UsersService {
 	public List<Users> selectByUserIds(List<Long> ids) {
 		return usersMapper.selectByUserIds(ids);
 	}	
-
-	@Override
-	public Users selectVoByUserId(Long userId) {
-		
-		return usersMapper.selectByUserId(userId);
-	}
-
-	@Override
-	public List<Users> selectVoByUserId(List<Long> ids) {
-		 
-		return usersMapper.selectVoByUserId(ids);
-	}
 	
 	@Override
 	public List<Users> selectByUserType(Short userType) {
-		 
 		return usersMapper.selectByUserType(userType);
 	}
 
@@ -656,34 +567,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public Users initUsers(String mobile, String name) {
-		Users u =  new Users();
-		u.setId(0L);
-		u.setMobile(mobile);
-		u.setProvinceName("");
-		u.setThirdType(" ");
-		u.setOpenid(" ");
-		u.setName(name);
-		u.setRealName("");
-		u.setBirthDay(new Date());
-		u.setIdCard("");
-		u.setDegreeId((short) 0);
-		u.setMajor("");
-		u.setSex(" ");
-		u.setHeadImg(" ");
-		u.setRestMoney(new BigDecimal(0));
-		u.setUserType((short) 0);
-		u.setIsApproval((short) 0);
-		u.setAddFrom((short) 0);
-		u.setScore(0);
-		u.setAddTime(TimeStampUtil.getNow()/1000);
-		u.setUpdateTime(TimeStampUtil.getNow()/1000);
-		return u;
-	}
-
-	@Override
 	public Users selectUserByIdCard(String idCard) {
-		
 		return usersMapper.selectUserByIdCard(idCard);
 	}
 
@@ -706,7 +590,6 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public Users selectByPrimaryKey(Long id) {
-		
 		return usersMapper.selectByPrimaryKey(id);
 	}
 
@@ -717,8 +600,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public Users selectUserByMobile(String mobile) {
-		
+	public Users selectByMobile(String mobile) {
 		return usersMapper.selectByMobile(mobile);
 	}
 
@@ -729,12 +611,31 @@ public class UsersServiceImpl implements UsersService {
 		List<Users> lists = usersMapper.selectVoByListPage(usersSearchVo);
 		return lists;
 	}
+
 	@Override
-	public List<Users> selectByListPageNo(UsersSearchVo usersSearchVo, int pageNo,
-			int pageSize) {
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> lists = usersMapper.selectVoByListPageNo(usersSearchVo);
-		return lists;
+	public Users initUsers() {
+		Users u =  new Users();
+		u.setId(0L);
+		u.setMobile("");
+		u.setProvinceName("");
+		u.setThirdType(" ");
+		u.setOpenid(" ");
+		u.setName(" ");
+		u.setRealName("");
+		u.setBirthDay(new Date());
+		u.setIdCard("");
+		u.setDegreeId((short) 0);
+		u.setMajor("");
+		u.setSex(" ");
+		u.setHeadImg(" ");
+		u.setRestMoney(new BigDecimal(0));
+		u.setUserType((short) 0);
+		u.setIsApproval((short) 0);
+		u.setAddFrom((short) 0);
+		u.setScore(0);
+		u.setAddTime(TimeStampUtil.getNow()/1000);
+		u.setUpdateTime(TimeStampUtil.getNow()/1000);
+		return u;
 	}
 	
 }

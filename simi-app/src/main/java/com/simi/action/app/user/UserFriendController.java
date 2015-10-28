@@ -61,7 +61,7 @@ public class UserFriendController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
 		//1. 判断当前好友的情况，如果已经是好友，则直接返回。 
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -77,7 +77,7 @@ public class UserFriendController extends BaseController {
 			return result;			
 		}
 		
-		Users friendUser = userService.getUserByMobile(mobile);
+		Users friendUser = userService.selectByMobile(mobile);
 		
 		if (friendUser == null) {
 			//1. 注册为用户
@@ -111,7 +111,7 @@ public class UserFriendController extends BaseController {
 		List<UserFriendViewVo> list = new ArrayList<UserFriendViewVo>();
 		
 		//1. 判断当前好友的情况，如果已经是好友，则直接返回。 
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {

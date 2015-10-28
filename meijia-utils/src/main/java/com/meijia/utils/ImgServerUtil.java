@@ -147,22 +147,11 @@ public class ImgServerUtil {
         return contentType;
     }    
     
-    //小图
-    public static String getImgSmall(String imgUrl) {
-    	return imgUrl + "?w=60&h=60";
+
+    public static String getImgSize(String imgUrl, String w, String h) {
+    	return imgUrl + "?w="+ w + "&h=" + h;
     }
     
-    //中图
-    public static String getImgMiddle(String imgUrl) {
-    	return imgUrl + "?w=120&h=120";
-    }    
-    
-    //大图
-    public static String getImgLarge(String imgUrl) {
-    	return imgUrl + "?w=300&h=300";
-    }    
-    
-
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
 
 		String jsonStr = "{\"ret\":true,\"info\":{\"md5\":\"d2a771e58a0f93b92758260bc46c311a\",\"size\":17728}}";

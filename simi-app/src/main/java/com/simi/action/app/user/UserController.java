@@ -43,6 +43,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
+import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
@@ -51,6 +52,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
+import com.simi.service.user.UserImgService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
@@ -60,6 +62,7 @@ import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.TagNameListVo;
+import com.simi.vo.user.UserImgVo;
 import com.simi.vo.user.UserPushBindVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
@@ -98,6 +101,9 @@ public class UserController extends BaseController {
 	
 	@Autowired
 	private UserRefSecService userRefSecService;
+	
+	@Autowired
+	private UserImgService userImgService;
 
 	// 5. 会员登陆接口
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -125,7 +131,7 @@ public class UserController extends BaseController {
 			return validateResult;
 		}
 		
-		Users u = userService.getUserByMobile(mobile);
+		Users u = userService.selectByMobile(mobile);
 		
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = userService.genUser(mobile, "", Constants.USER_APP);
@@ -213,7 +219,7 @@ public class UserController extends BaseController {
 			code = "000000";
 		}
 		
-		Users user = userService.selectUserByMobile(mobile);
+		Users user = userService.selectByMobile(mobile);
 		if (user != null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.MOBILE_EXIST_MG);
@@ -260,7 +266,9 @@ public class UserController extends BaseController {
 			return validateResult;
 		}
 
-		Users u =userService.initUsers(mobile, name);
+		Users u =userService.initUsers();
+		u.setMobile(mobile);
+		u.setName(name);
 		
 		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, u);
 		
@@ -423,7 +431,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		if (u == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
@@ -467,7 +475,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -478,10 +486,10 @@ public class UserController extends BaseController {
 		
 		//要判断mobile不为空，并且手机号在其他用户上没有使用过;
 		if (!StringUtil.isEmpty(mobile)) {
-			Users user = userService.getUserByMobile(mobile);
+			Users user = userService.selectByMobile(mobile);
 			if (user != null && !user.getId().equals(userId)) {
 				result.setStatus(Constants.ERROR_999);
-				result.setMsg("该手机号已经在其他地方用过");
+				result.setMsg("该手机号已经在由其他用户注册.");
 				return result;				
 			} else {
 				 u.setMobile(mobile);
@@ -493,9 +501,9 @@ public class UserController extends BaseController {
 			u.setName(name);
 		}		
 
-		if (!StringUtil.isEmpty(headImg)) {
-			u.setHeadImg(headImg);
-		}		
+//		if (!StringUtil.isEmpty(headImg)) {
+//			u.setHeadImg(headImg);
+//		}		
 		
 		if (!StringUtil.isEmpty(sex)) {
 			u.setSex(sex);
@@ -514,42 +522,6 @@ public class UserController extends BaseController {
 				EasemobIMUsers.modifyIMUserNickName(username, json2);
 			}
 		}
-		
-		
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-				request.getSession().getServletContext());
-		if (multipartResolver.isMultipart(request)) {
-			String paths = request.getSession().getServletContext()
-					.getRealPath("/");
-			System.out.println("paths---" + paths);
-			String p = paths.substring(0, paths.lastIndexOf("\\"));
-			String path = p + File.separator + "upload" + File.separator
-					+ "users";
-			// 判断 request 是否有文件上传,即多部分请求...
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-					
-					String fileName = file.getOriginalFilename();
-					String extensionName = fileName.substring(fileName
-							.lastIndexOf(".") + 1);
-					// 新的图片文件名 = 获取时间戳+随机六位数+"."图片扩展名
-					String before = TimeStampUtil.getNow()
-							+ String.valueOf(RandomUtil.randomNumber());
-					String newFileName = String.valueOf(before + "."
-							+ extensionName);
-					// 获取系统发布后upload路径
-					FileUtils.copyInputStreamToFile(file.getInputStream(),
-							new File(path, newFileName));
-					String headImgs = "/simi-app/upload/users/" + newFileName;
-					u.setHeadImg(headImgs);
-					userService.updateByPrimaryKeySelective(u);
-				}
-			}
-		}
-
 
 		result.setData(u);
 		return result;
@@ -565,8 +537,8 @@ public class UserController extends BaseController {
 			@RequestParam("view_user_id") Long viewUserId) {
 		
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		Users u = userService.getUserById(userId);
-		Users viewUser = userService.getUserById(viewUserId);
+		Users u = userService.selectByPrimaryKey(userId);
+		Users viewUser = userService.selectByPrimaryKey(viewUserId);
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null || viewUser == null) {
 			result.setStatus(Constants.ERROR_999);
@@ -580,14 +552,13 @@ public class UserController extends BaseController {
 		return result;
 	}	
 	
-	
 	/**
-	 * 用户信息修改接口
+	 * 用户头像上传接口
 	 * 
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
-	public AppResultData<Object> userImg(
+	@RequestMapping(value = "post_user_head_img", method = RequestMethod.POST)
+	public AppResultData<Object> userHeadImg(
 			HttpServletRequest request,
 			@RequestParam("user_id") Long userId)
 			throws IOException {
@@ -595,7 +566,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 		
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -634,11 +605,16 @@ public class UserController extends BaseController {
 					
 					
 					HashMap<String, String> img = new HashMap<String, String>();
+					
+					u.setHeadImg(imgUrl);
+					
+					userService.updateByPrimaryKeySelective(u);
+					
 					img.put("user_id", userId.toString());
 					img.put("img", imgUrl);
-					img.put("img_small", ImgServerUtil.getImgSmall(imgUrl));
-					img.put("img_middle", ImgServerUtil.getImgMiddle(imgUrl));
-					img.put("img_large", ImgServerUtil.getImgLarge(imgUrl));
+					img.put("img_100x100", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
+					img.put("img_200x200", ImgServerUtil.getImgSize(imgUrl, "200", "200"));
+
 					
 					imgs.add(img);
 					
@@ -650,6 +626,159 @@ public class UserController extends BaseController {
 		result.setData(imgs);
 		return result;
 
+	}		
+	
+	/**
+	 * 用户图片上传
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
+	public AppResultData<Object> userImg(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId)
+			throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.selectByPrimaryKey(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		List<HashMap<String, String>> imgs = new ArrayList<HashMap<String, String>>();
+		
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					
+					String url = Constants.IMG_SERVER_HOST + "/upload/";
+					String fileName = file.getOriginalFilename();
+					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+					fileType = fileType.toLowerCase();
+					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+					String ret = o.get("ret").toString();
+
+					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+					
+					
+					UserImgs userImg = new UserImgs();
+					userImg.setImgId(0L);
+					userImg.setImgUrl(imgUrl);
+					userImg.setUserId(userId);
+					userImg.setAddTime(TimeStampUtil.getNowSecond());
+					userImgService.insert(userImg);
+					
+					
+					HashMap<String, String> img = new HashMap<String, String>();
+					img.put("user_id", userId.toString());
+					img.put("img", imgUrl);
+					img.put("img_100x100", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
+					img.put("img_200x200", ImgServerUtil.getImgSize(imgUrl, "200", "200"));
+					
+					imgs.add(img);
+					
+				}
+			}
+		}
+
+		result.setData(imgs);
+		return result;
 	}	
+	
+	
+	/**
+	 * 用户图片删除
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "get_user_imgs", method = RequestMethod.POST)
+	public AppResultData<Object> getUserImgs(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId)
+			throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.selectByPrimaryKey(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		List<UserImgs> userImgs = userImgService.selectByUserId(userId);
+		
+		List<UserImgVo> userImgVos = new ArrayList<UserImgVo>();
+		
+		for (UserImgs item : userImgs) {
+			UserImgVo vo = new UserImgVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			vo.setImg_100x100(ImgServerUtil.getImgSize(item.getImgUrl(), "100", "100"));
+			vo.setImg_200x200(ImgServerUtil.getImgSize(item.getImgUrl(), "200", "200"));
+			userImgVos.add(vo);
+		}
+		result.setData(userImgVos);
+
+
+		return result;
+	}		
+	
+	/**
+	 * 用户图片删除
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "del_user_img", method = RequestMethod.POST)
+	public AppResultData<Object> delUserImg(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId,
+			@RequestParam("img_id") Long imgId
+			)
+			throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.selectByPrimaryKey(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserImgs userImg = userImgService.selectByPrimaryKey(imgId);
+		
+		if (userImg !=null) {
+			userImgService.deleteByPrimaryKey(imgId);
+		}
+
+
+		return result;
+	}		
 
 }

@@ -61,7 +61,7 @@ public class UserController extends AdminController {
 		if (userId == null || userName == null) {
 			return result;
 		}
-		Users user = usersService.getUserById(userId);
+		Users user = usersService.selectByPrimaryKey(userId);
 		if (user == null) {
 			return result;
 		}
@@ -110,7 +110,7 @@ public class UserController extends AdminController {
 
 
         //填充projects数据
-        List<Users> userses= usersService.searchVoByAll(searchVo);
+        List<Users> userses= usersService.selectByAll();
 
         List<Map<String,Object>> list= createExcelRecord(userses);
 

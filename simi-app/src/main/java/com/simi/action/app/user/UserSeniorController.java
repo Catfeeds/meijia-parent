@@ -60,7 +60,7 @@ public class UserSeniorController extends BaseController {
 		
 		DictSeniorType dictSeniorType = dictSeniorTypeService.selectByPrimaryKey(seniorTypeId);
 
-		Users u = usersService.getUserById(userId);
+		Users u = usersService.selectByPrimaryKey(userId);
 		
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -69,7 +69,7 @@ public class UserSeniorController extends BaseController {
 			return result;
 		}
 		
-		Users sec = usersService.getUserById(secId);
+		Users sec = usersService.selectByPrimaryKey(secId);
 		if (sec == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
@@ -179,7 +179,7 @@ public class UserSeniorController extends BaseController {
 		}
 		
 		OrderSenior orderSenior = orderSeniorService.selectByOrderSeniorNo(seniorOrderNo);
-		Users users = usersService.selectVoByUserId(orderSenior.getUserId());
+		Users users = usersService.selectByPrimaryKey(orderSenior.getUserId());
 
 		//记录用户明细
 		userDetailPayService.userDetailPayForOrderSenior(users, orderSenior, "", "", "");

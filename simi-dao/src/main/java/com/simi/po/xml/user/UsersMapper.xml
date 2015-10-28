@@ -128,30 +128,11 @@
 		and mobile like '%${mobile}%' 
 	</if>
 	<if test="id !=null and id !='' ">
-		and id like '%${id}%' 
+		and id = ${id} 
 	</if>	
     order by add_time desc    
   </select>
-  	<!-- 根据查询条件查询秘书列表 -->
-	  <select id="selectVoByListPageNo" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
-  	select
-    <include refid="Base_Column_List" />
-    from users
- 	where 1=1 and is_approval &lt; 2
-    <if test="userType == 0 or userType == 1 ">
-		and user_type = #{userType}
-	</if>
-     <if test="name != null and name !='' ">
-		and name like '%${name}%'
-	</if>
-	<if test="mobile !=null and mobile !='' ">
-		and mobile like '%${mobile}%' 
-	</if>
-	<if test="id !=null and id !='' ">
-		and id like '%${id}%' 
-	</if>	
-    order by add_time desc    
-  </select>
+ 
 	<!--根据openid和登录类型查询用户信息 -->
 	<select id="selectByOpenidAnd3rdType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
 		select
@@ -165,24 +146,6 @@
 			and 3rd_type = #{thirdType,jdbcType=VARCHAR}
 		</if>
 		order by add_time desc
-	</select>
-
-	<select id="selectVoByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id in
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		order by add_time asc
-	</select>
-
-	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id = #{id,jdbcType=NUMERIC}
 	</select>
 
 	<select id="selectByUserType" resultMap="BaseResultMap" parameterType="java.lang.Short">
@@ -227,13 +190,6 @@
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 			#{item}
 		</foreach>
-	</select>
-
-	<select id="searchVoByAll" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where 1=1 group by add_time asc
 	</select>
 
 	<select id="selectUserStat" resultMap="statResultMap" parameterType="java.lang.Long">

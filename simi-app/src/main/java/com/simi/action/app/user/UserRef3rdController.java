@@ -100,16 +100,17 @@ public class UserRef3rdController extends BaseController {
 			userService.updateByPrimaryKeySelective(users);
 
 		} else {
-			users = userService.initUser(openid, (short) loginFrom);
-
+			users = userService.initUsers();
+			
 			users.setOpenid(openid);
+			users.setAddFrom((short) loginFrom);
 			users.setThirdType(thirdType);
 			users.setName(name);
 			if(headImg!=null && !headImg.isEmpty()){
 				users.setHeadImg(headImg);
 			}
 			users.setAddFrom((short) loginFrom);
-			userService.saveUser(users);
+			userService.insertSelective(users);
 
 			// 第三方账号注册绑定环信账号
 			userService.genImUser(users);

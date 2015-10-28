@@ -67,7 +67,7 @@ public class SecController extends BaseController {
 			
 			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 
-			Users u = userService.getUserById(userId);
+			Users u = userService.selectByPrimaryKey(userId);
 
 			// 判断是否为注册用户，非注册用户返回 999
 			if (u == null) {
@@ -112,7 +112,7 @@ public class SecController extends BaseController {
 			
 			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 
-			Users u = userService.getUserById(secId);
+			Users u = userService.selectByPrimaryKey(secId);
 
 			// 判断是否为注册用户，非注册用户返回 999
 			if (u == null) {

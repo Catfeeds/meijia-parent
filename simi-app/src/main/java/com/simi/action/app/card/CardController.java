@@ -120,7 +120,7 @@ public class CardController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -150,7 +150,7 @@ public class CardController extends BaseController {
 		record.setTicketToCityId(ticketToCityId);
 		
 		if (!createUserId.equals(userId)) {
-			Users createUser = userService.getUserById(createUserId);
+			Users createUser = userService.selectByPrimaryKey(createUserId);
 			if (createUser.getUserType().equals((short)1)) {
 				if (status.equals(1)) status = 2;
 			}
@@ -159,7 +159,7 @@ public class CardController extends BaseController {
 		record.setStatus(status);
 		
 		//添加卡片日志
-		Users createUser = userService.getUserById(createUserId);
+		Users createUser = userService.selectByPrimaryKey(createUserId);
 		
 		CardLog cardLog = cardLogService.initCardLog();
 		cardLog.setCardId(cardId);
@@ -210,7 +210,7 @@ public class CardController extends BaseController {
 					if (!RegexUtil.isMobile(mobile)) continue;
 					//根据手机号找出对应的userID, 如果没有则直接新增用户.
 					Long newUserId = 0L;
-					Users newUser = userService.getUserByMobile(mobile);
+					Users newUser = userService.selectByMobile(mobile);
 					if (newUser == null) {
 						newUser = userService.genUser(mobile, item.getName(), (short) 2);
 						
@@ -262,7 +262,7 @@ public class CardController extends BaseController {
 			) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -300,7 +300,7 @@ public class CardController extends BaseController {
 			) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -337,7 +337,7 @@ public class CardController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -407,7 +407,7 @@ public class CardController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users u = userService.getUserById(secId);
+		Users u = userService.selectByPrimaryKey(secId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {
@@ -425,7 +425,7 @@ public class CardController extends BaseController {
 		
 		//添加卡片log
 		//添加卡片日志
-		Users secUser = userService.getUserById(secId);
+		Users secUser = userService.selectByPrimaryKey(secId);
 		
 		CardLog cardLog = cardLogService.initCardLog();
 		cardLog.setCardId(cardId);

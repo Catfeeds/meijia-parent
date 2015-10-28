@@ -176,7 +176,7 @@ public class SecController extends AdminController {
 		//设置中文 参数 编码，解决 中文 乱码
 		usersSearchVo.setName(new String(usersSearchVo.getName().getBytes("iso-8859-1"),"utf-8"));
 		
-		List<Users> list = usersService.selectByListPageNo(usersSearchVo, pageNo, pageSize);
+		List<Users> list = usersService.selectByListPage(usersSearchVo, pageNo, pageSize);
 		
 		
 		PageInfo result = new PageInfo(list);
@@ -195,7 +195,7 @@ public class SecController extends AdminController {
 	@RequestMapping(value = "/applyForm",method = RequestMethod.GET)
 	public String  orderDetail(Long id ,Model model){
 		
-		Users u = usersService.selectVoByUserId(id);
+		Users u = usersService.selectByPrimaryKey(id);
 		UserApplyVo vo = new UserApplyVo();
 		
 		vo.setId(u.getId());

@@ -35,7 +35,7 @@ public class UserTrailController extends BaseController{
 
 			) {
 		UserTrail userTrail=new UserTrail();
-		Users u = userService.getUserById(userId);
+		Users u = userService.selectByPrimaryKey(userId);
 
 		userTrail.setUserId(u.getId());
 		userTrail.setMobile(u.getMobile());
