@@ -28,6 +28,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.HttpClientUtil;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
@@ -103,7 +104,7 @@ public class DictAdController extends BaseController {
 					String fileName = file.getOriginalFilename();
 					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
 					fileType = fileType.toLowerCase();
-					String sendResult = HttpClientUtil.sendPostBytes(url, file.getBytes(), fileType);
+					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
 
 					ObjectMapper mapper = new ObjectMapper();
 
