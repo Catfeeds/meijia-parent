@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-<%@ taglib prefix="ServiceTypeSelectTag" uri="/WEB-INF/tags/serviceTypeSelect.tld"%>
+
 <html>
   <head>
 	
@@ -82,7 +82,7 @@
 										<label class="col-md-2 control-label">跳转地址</label>
 										<div class="col-md-5">
 											<form:input path="gotoUrl" class="form-control"
-												placeholder="跳转地址" maxLength="32" />
+												placeholder="跳转地址" maxLength="255" />
 											<form:errors path="gotoUrl" class="field-has-error"></form:errors>
 										</div>
 									</div>
@@ -91,7 +91,7 @@
 
 										<label class="col-md-2 control-label">广告类型</label>
 										<div class="col-md-5">
-											<ServiceTypeSelectTag:select />
+											
 										</div>
 									</div>
 

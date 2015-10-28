@@ -38,22 +38,22 @@ public class AdServiceImpl implements AdService {
 		return result;*/
 		PageHelper.startPage(pageNo, pageSize);
         List<DictAd> list = adMapper.selectByListPage();
-        List<DictAd> listNew = new ArrayList<DictAd>();
-        for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			DictAd dictAd = (DictAd) iterator.next();
-			DictAdVo dicAdNew = new DictAdVo();
-			 String imgUrl = dictAd.getImgUrl();
-             String extensionName = imgUrl.substring(imgUrl.lastIndexOf("."));
-             String beforName = imgUrl.substring(0,(imgUrl.lastIndexOf(".")));
-             String newImgUrl = beforName+"_small"+extensionName;
-             dictAd.setImgUrl(newImgUrl);
-             listNew.add(dictAd);
-		}
-        for(int i = 0; i < list.size(); i++) {
-       	 if (listNew.get(i) != null) {
-       		 list.set(i, listNew.get(i));
-       	 }
-        }
+//        List<DictAd> listNew = new ArrayList<DictAd>();
+//        for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+//			DictAd dictAd = (DictAd) iterator.next();
+//			DictAdVo dicAdNew = new DictAdVo();
+//			 String imgUrl = dictAd.getImgUrl();
+//             String extensionName = imgUrl.substring(imgUrl.lastIndexOf("."));
+//             String beforName = imgUrl.substring(0,(imgUrl.lastIndexOf(".")));
+//             String newImgUrl = beforName+"_small"+extensionName;
+//             dictAd.setImgUrl(newImgUrl);
+//             listNew.add(dictAd);
+//		}
+//        for(int i = 0; i < list.size(); i++) {
+//       	 if (listNew.get(i) != null) {
+//       		 list.set(i, listNew.get(i));
+//       	 }
+//        }
 
 
        PageInfo result = new PageInfo(list);

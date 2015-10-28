@@ -61,7 +61,7 @@
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
                                   	        <td>${ item.no}</td>
-											<td><img src="${ item.imgUrl }"/></td>
+											<td><img src="${ item.imgUrl }?w=60&h=60"/></td>
 											<td>${ item.gotoUrl }</td>
 											<td>${ item.adType }</td>
 											<td>${ item.addTime }</td>

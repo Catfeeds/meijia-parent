@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -24,10 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.HttpClientUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
+import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictAd;
@@ -37,36 +41,30 @@ import com.simi.service.dict.AdService;
 @RequestMapping(value = "/dict")
 public class DictAdController extends BaseController {
 
-    @Autowired
-    private AdService adService;
+	@Autowired
+	private AdService adService;
 
 	@AuthPassport
 	@RequestMapping(value = "/ad", method = { RequestMethod.GET })
-	public String list(HttpServletRequest request, Model model
-			) {
+	public String list(HttpServletRequest request, Model model) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
 		model.addAttribute("searchModel");
-		int pageNo = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 
-		PageInfo result=adService.searchVoListPage( pageNo, pageSize);
+		PageInfo result = adService.searchVoListPage(pageNo, pageSize);
 
-		model.addAttribute("contentModel",result);
+		model.addAttribute("contentModel", result);
 
 		return "dict/ad";
 	}
 
-
 	@AuthPassport
 	@RequestMapping(value = "/adForm", method = { RequestMethod.GET })
-	public String adForm(Model model,
-			@RequestParam(value = "id") Long id,
-			HttpServletRequest request) {
+	public String adForm(Model model, @RequestParam(value = "id") Long id, HttpServletRequest request) {
 
 		if (id == null) {
 			id = 0L;
@@ -76,7 +74,6 @@ public class DictAdController extends BaseController {
 		if (id != null && id > 0) {
 			dictAd = adService.selectByPrimaryKey(id);
 
-
 		}
 
 		model.addAttribute("adModel", dictAd);
@@ -84,86 +81,72 @@ public class DictAdController extends BaseController {
 		return "dict/adForm";
 	}
 
-
 	@AuthPassport
 	@RequestMapping(value = "/adForm", method = { RequestMethod.POST })
-	public String doAdForm(HttpServletRequest request, Model model,
-			@ModelAttribute("dictAd") DictAd dictAd,
-			BindingResult result) throws IOException {
+	public String doAdForm(HttpServletRequest request, Model model, @ModelAttribute("dictAd") DictAd dictAd, BindingResult result) throws IOException {
 
 		Long id = Long.valueOf(request.getParameter("id"));
 
-		 //创建一个通用的多部分解析器.
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
-        String addr = request.getRemoteAddr();
-        int port = request.getServerPort();
-		 if(multipartResolver.isMultipart(request))
-	        {
-	             //判断 request 是否有文件上传,即多部分请求...
-	            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)(request);
-	            Iterator<String> iter = multiRequest.getFileNames();
-	            while(iter.hasNext()){
-	                MultipartFile file = multiRequest.getFile(iter.next());
-	                if(file!=null && !file.isEmpty()){
+		// 创建一个通用的多部分解析器.
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
+		String addr = request.getRemoteAddr();
+		int port = request.getServerPort();
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					String url = Constants.IMG_SERVER_HOST + "/upload/";
+					String fileName = file.getOriginalFilename();
+					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+					fileType = fileType.toLowerCase();
+					String sendResult = HttpClientUtil.sendPostBytes(url, file.getBytes(), fileType);
 
-	                	  String fileName = file.getOriginalFilename();
-	                      String extensionName = fileName.substring(fileName.lastIndexOf(".") + 1);
-	                      // 新的图片文件名 = 获取时间戳+随机六位数+"."图片扩展名
-	                      String before = TimeStampUtil.getNow()+String.valueOf(RandomUtil.randomNumber());
-	                      String newFileName = String.valueOf(before+"."+extensionName);
-	                     //获取系统发布后upload路径
-	                     FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path,newFileName));
-	                     String imgUrl =  "/simi-oa/upload/ad/"+newFileName;
-	                     dictAd.setImgUrl(imgUrl);
+					ObjectMapper mapper = new ObjectMapper();
 
-	                     //生成缩略图
-	                     BufferedImage bufferedImage1 = new BufferedImage(60,60,BufferedImage.TYPE_INT_BGR);
-	                     BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-	                     Image image = bufferedImage.getScaledInstance(60,60,Image.SCALE_DEFAULT);
-	                     bufferedImage1.getGraphics().drawImage(image, 0, 0, null);
-	                     String newFileName1 = String.valueOf(before+"_small."+extensionName);
+					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
 
-	                     FileOutputStream out = new FileOutputStream(path + "/" + newFileName1);
-	                     ImageIO.write(bufferedImage1, "jpg",out);//把图片输出
-	                }
-	            }
-	        }
+					String ret = o.get("ret").toString();
 
-		//更新或者新增
+					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+
+					dictAd.setImgUrl(imgUrl);
+
+				}
+			}
+		}
+
+		// 更新或者新增
 		if (id != null && id > 0) {
 			dictAd.setUpdateTime(TimeStampUtil.getNow() / 1000);
 			adService.updateByPrimaryKeySelective(dictAd);
 		} else {
 			dictAd.setId(Long.valueOf(request.getParameter("id")));
-			//dictAd.setImgUrl("");
-			dictAd.setAddTime(TimeStampUtil.getNow()/1000);
+			// dictAd.setImgUrl("");
+			dictAd.setAddTime(TimeStampUtil.getNow() / 1000);
 			dictAd.setUpdateTime(0L);
-			dictAd.setEnable((short)0);
-			//dictAd.setEnable((short)0);
+			dictAd.setEnable((short) 0);
+			// dictAd.setEnable((short)0);
 
 			adService.insertSelective(dictAd);
 		}
 
-
-
 		return "redirect:ad";
 	}
 
-	//删除
-/*	@RequestMapping(value ="/delete/{id}", method = {RequestMethod.GET})
-	public String deleterAdminRole(Model model,@PathVariable(value="id") String id,HttpServletRequest response)  {
-		Long ids = 0L;
-		if (id != null && NumberUtils.isNumber(id)) {
-			ids = Long.valueOf(id.trim());
-		}
-		String path = "redirect:/dict/ad";
-		int result = adService.deleteByPrimaryKey(ids);
-		if(result>0){
-			return path;
-		}else{
-			return "error";
-		}
-	}*/
+	// 删除
+	/*
+	 * @RequestMapping(value ="/delete/{id}", method = {RequestMethod.GET})
+	 * public String deleterAdminRole(Model model,@PathVariable(value="id")
+	 * String id,HttpServletRequest response) { Long ids = 0L; if (id != null &&
+	 * NumberUtils.isNumber(id)) { ids = Long.valueOf(id.trim()); } String path
+	 * = "redirect:/dict/ad"; int result = adService.deleteByPrimaryKey(ids);
+	 * if(result>0){ return path; }else{ return "error"; } }
+	 */
 
 }

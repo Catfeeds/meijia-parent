@@ -149,5 +149,8 @@ public class Constants {
 	public static String NEW_USER_COUPON_CARD_PASSWORD = "I0RBCOJL";
 	//积分兑换优惠券密码
 	public static String SCORE_CONVERT_COUPON_CARD_PASSWORD="CSNINL8B";
+	
+	//图片服务器地址
+	public static String IMG_SERVER_HOST = "http://img.51xingzheng.cn";
 
 }

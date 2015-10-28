@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,10 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.HttpClientUtil;
 import com.meijia.utils.IPUtil;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.SmsUtil;
@@ -574,6 +578,78 @@ public class UserController extends BaseController {
 		result.setData(vo);
 		
 		return result;
+	}	
+	
+	
+	/**
+	 * 用户信息修改接口
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
+	public AppResultData<Object> userImg(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId)
+			throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.getUserById(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		List<HashMap<String, String>> imgs = new ArrayList<HashMap<String, String>>();
+		
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					
+					String url = Constants.IMG_SERVER_HOST + "/upload/";
+					String fileName = file.getOriginalFilename();
+					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+					fileType = fileType.toLowerCase();
+					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+					String ret = o.get("ret").toString();
+
+					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+					
+					
+					HashMap<String, String> img = new HashMap<String, String>();
+					img.put("user_id", userId.toString());
+					img.put("img", imgUrl);
+					img.put("img_small", ImgServerUtil.getImgSmall(imgUrl));
+					img.put("img_middle", ImgServerUtil.getImgMiddle(imgUrl));
+					img.put("img_large", ImgServerUtil.getImgLarge(imgUrl));
+					
+					imgs.add(img);
+					
+				}
+			}
+		}
+
+
+		result.setData(imgs);
+		return result;
+
 	}	
 
 }
