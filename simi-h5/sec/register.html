@@ -1,34 +1,31 @@
+
 <div class="pages">
 	<!-- Page, data-page contains page name-->
 	<div data-page="register" class="page">
 		<!-- Scrollable page content-->
 		<div class="page-content">
-
-				<center>
-		<p>欢迎秘书加入我们</p>
-		<hr>
-     
-        <b style="color:#EF7B00;font-size:14px;">第一步：填写登录账号信息。</b><br>
-		
-		<form style = "padding-bottom:200;">
-		           
-				          <div class="item-xx">
-				          	昵       称:<input type="text"  id="name" name="name" style = "padding-bottom:0;">
-				          </div>
-				      
-				          <div class="item-xx">
-				          	手机号:<input type="text"  id="mobile" name="mobile"  style = "padding-bottom:0;">
-				          </div>
-				       
-				          <div class="item-xx">
-				          	验证码:<input type="text"  id="verify_code" name="verify_code"  style = "padding-bottom:0;">
-				          </div>
-				          <div class="yanzheng1">没有收到验证码？</div>
-				      <a href="#" id="get_code" class="yanzheng">获取验证码</a><br><br><br><br>
-				      <a href="#" id="submit_btn" class="button active kehuzl-submit">下一步</a>
-				      <div class="login-tishi">点击-下一步,即表示您同意<a href="user/agreement.html"><b style="color:#EF7B00;font-size:14px;">《服务条款   保密协议》</b></a></div>
-				      <!-- <b style="font-size:14px;">我已阅读并接受 服务条款 保密协议</b> -->
-				      </form>
+			<center>
+				<p>欢迎秘书加入我们</p>
+				<hr>
+				<b style="color: #EF7B00; font-size: 14px;">第一步：填写登录账号信息。</b><br>
+			</center>
+			<form>
+				<div class="neirong1">
+					<input type="tel" id="name" name="name"
+						placeholder="输入昵称" class="jieshao1">
+				</div>
+				<hr>
+				<div class="neirong1" style="border-bottom: 2px solid #F1F1F1">
+					<input type="tel" id="mobile" name="mobile" placeholder="输入手机号"
+						class="jieshao1">
+					<div id="get_code" class="yanzheng">获取验证码</div>
+				</div>
+				<div class="neirong1">
+					<input type="tel" id="verify_code" name="verify_code"
+						placeholder="输入验证码" class="jieshao1">
+				</div>
+				 <a href="#" id="submit_btn" class="button active my-submit" style="border:1px solid #007aff">下一步</a>
+			</form>
 		</div>
 	</div>
 </div>

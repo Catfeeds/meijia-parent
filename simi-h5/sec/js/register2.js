@@ -6,7 +6,7 @@ myApp.onPageInit('register2', function (page) {
 	//页面加载时获得标签列表
 	 $$.ajax({
          type : "GET",
-         url  : siteAPIPath+"user/get_tag_list.json",
+         url  : siteAPIPath+"user/get_tag_list.json?mobile="+mobile +"&name="+name,
          dataType: "json",
          cache : true,
          async : false,
@@ -55,8 +55,9 @@ var tagsListSuccess= function(data, textStatus, jqXHR) {
 		myApp.alert(result.msg);
 		return;
 	}
+	//所有标签的集合
 	var aaa = tags.list;
-	
+	//已经选中标签的集合
 	var bbb = tags.tag_list;
 	
 	var selectedTagIds = "";
@@ -138,6 +139,7 @@ function tagClick(tagId, obj) {
 	 function orderFormValidation() {
 			var formData = myApp.formToJSON('#user-form-register');
 
+			console.log(formData);
 			if (formData.realName == "") {
 				myApp.alert("请输入真实姓名");
 				return false;

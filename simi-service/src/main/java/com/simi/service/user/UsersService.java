@@ -16,6 +16,8 @@ public interface UsersService {
 	
 	Users initUsers();
 	
+	Users initUsersByMobileAndName(String mobile, String name);
+	
 	Long insert(Users record);
 	
 	Long insertSelective(Users u);
@@ -67,5 +69,7 @@ public interface UsersService {
 	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
 
 	UserRef3rd genImUser(Users user);
+
+	
 
 }

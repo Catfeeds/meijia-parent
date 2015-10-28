@@ -88,6 +88,7 @@ public class Constants {
 
 	public static int SUCCESS_0 = 0;
 	public static int ERROR_999 = 999;
+	public static int ERROR_998 = 998;
 	public static int ERROR_100 = 100;
 	public static int ERROR_101 = 101;
 	public static int ERROR_102 = 102;

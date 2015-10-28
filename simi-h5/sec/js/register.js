@@ -22,6 +22,9 @@ myApp.onPageInit('register', function (page) {
     			myApp.alert(result.msg);
     			return;
     		}
+    		
+    		
+    		
     		if (result.status == "0") {
     			myApp.alert("验证码已发送到您的手机，请注意查收。");
     			  var count = 60;
@@ -87,8 +90,7 @@ myApp.onPageInit('register', function (page) {
 	        postdata.mobile = mobile;
 	        postdata.name = name;
 	        postdata.sms_token = verifyCode;        
-	        postdata.user_type = 1;
-
+	      
 	        $$.ajax({
 	            type : "POST",
 	            url  : siteAPIPath+"user/register.json",
@@ -104,17 +106,28 @@ myApp.onPageInit('register', function (page) {
 	        });
 	    });	
 	 function registerSuccess(data, textStatus, jqXHR) {
-		/* $$("#mine-addr-save").removeAttr('disabled');
-		myApp.hideIndicator();*/
+		 $$("#mine-addr-save").removeAttr('disabled');
+		myApp.hideIndicator();
 		var results = JSON.parse(data.response);
 		var user = results.data;
 		mobile = user.mobile;
 		name = user.name;
+		//user_type = user.user_type;
 		
 		if (results.status == "999") {
 			myApp.alert(results.msg);
 			return;
 		}
+		
+		if (results.status == "998") {
+			console.log(mobile+"-------mobile-----")
+			console.log(name+"-------name-----")
+    		    myApp.confirm('你已注册过云行政，确定要进行秘书注册吗？', function () {
+    		    	mainView.router.loadPage("register2.html?mobile="+mobile +"&name="+name);
+    		    });
+    		 
+    		}
+		
 		if (results.status == "0") {
 		//	myApp.alert("信息修改成功");
 			//?mobile=15712917308&name=yy

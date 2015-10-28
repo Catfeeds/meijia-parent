@@ -3,8 +3,9 @@ package com.simi.vo.user;
 import java.util.List;
 
 import com.simi.po.model.user.Tags;
+import com.simi.po.model.user.Users;
 
-public class TagNameListVo {
+public class TagNameListVo extends Users{
 	//标签集合List
 	private List<Tags> list;
 	//标签idList
