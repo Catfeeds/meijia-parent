@@ -80,10 +80,13 @@ public class RequestParamFilter implements HandlerInterceptor{
 										  Object handler,
 										  ModelAndView modelAndView)
 		throws Exception {
-
-		logger.info("============== 2. postHandle ==================");
-
-		logger.info(handler.toString());
+		
+		String requestUrl = request.getRequestURL().toString();
+		if (requestUrl.indexOf("/app/job") < 0) {
+			logger.info("============== 2. postHandle ==================");
+	
+			logger.info(handler.toString());
+		}
 
 		if (modelAndView != null) {
 			logger.info(modelAndView.getViewName());
@@ -113,7 +116,11 @@ public class RequestParamFilter implements HandlerInterceptor{
 
         //3、消耗的时间
         long consumeTime = endTime - beginTime;
-        logger.info("execute consume_time: " + consumeTime + "ms" );
+        
+        String requestUrl = request.getRequestURL().toString();
+		if (requestUrl.indexOf("/app/job") < 0) {
+			logger.info("execute consume_time: " + consumeTime + "ms" );
+		}
         //此处认为处理时间超过500毫秒的请求为慢请求
 //        if(consumeTime > 500) {
 //            //TODO 记录到日志文件
@@ -123,7 +130,9 @@ public class RequestParamFilter implements HandlerInterceptor{
         if (ex !=null) {
         	logger.info(ex.getMessage());
         }
-        logger.info("============== 3. afterCompletion ===============");
+        if (requestUrl.indexOf("/app/job") < 0) {
+        	logger.info("============== 3. afterCompletion ===============");
+        }
 	}
 
 }
