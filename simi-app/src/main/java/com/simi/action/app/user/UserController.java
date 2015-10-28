@@ -418,44 +418,6 @@ public class UserController extends BaseController {
 	}
 
 	
-	/**
-	 * 发送IM消息
-	 */
-	@RequestMapping(value = "send_im", method = RequestMethod.GET)
-	public AppResultData<Object> sendImToRobot(
-			@RequestParam("user_id") Long userId,
-			@RequestParam("im_username_from") String imUsernameFrom,
-			@RequestParam("im_username_to") String imUsernameTo,
-			@RequestParam("msg") String msg) {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users u = userService.selectByPrimaryKey(userId);
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		if (StringUtil.isEmpty(imUsernameFrom)
-				|| StringUtil.isEmpty(imUsernameTo)) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.IM_USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		try {
-			msg = URLDecoder.decode(msg, Constants.URL_ENCODE);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// 给用户发一条文本消息
-		EasemobMessages.sendMessageTxt(imUsernameFrom, imUsernameTo, msg);
-		return result;
-	}
 
 	/**
 	 * 用户信息修改接口
@@ -606,16 +568,12 @@ public class UserController extends BaseController {
 					
 					HashMap<String, String> img = new HashMap<String, String>();
 					
-					u.setHeadImg(imgUrl);
+					u.setHeadImg(ImgServerUtil.getImgSize(imgUrl, "100", "100"));
 					
 					userService.updateByPrimaryKeySelective(u);
 					
 					img.put("user_id", userId.toString());
-					img.put("img", imgUrl);
-					img.put("img_100x100", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
-					img.put("img_200x200", ImgServerUtil.getImgSize(imgUrl, "200", "200"));
-
-					
+					img.put("head_img", ImgServerUtil.getImgSize(imgUrl, "100", "100"));					
 					imgs.add(img);
 					
 				}
@@ -706,7 +664,7 @@ public class UserController extends BaseController {
 	
 	
 	/**
-	 * 用户图片删除
+	 * 获取用户图片
 	 * 
 	 * @throws IOException
 	 */
@@ -776,8 +734,6 @@ public class UserController extends BaseController {
 		if (userImg !=null) {
 			userImgService.deleteByPrimaryKey(imgId);
 		}
-
-
 		return result;
 	}		
 

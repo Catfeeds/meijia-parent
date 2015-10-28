@@ -1,6 +1,8 @@
 package com.simi.action.app.user;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +18,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
+import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserImHistory;
 import com.simi.po.model.user.UserImLast;
@@ -46,6 +50,48 @@ public class UserImController extends BaseController {
 	
 	@Autowired
 	private UserImLastService userImLastService;
+	
+	/**
+	 * 发送IM消息
+	 */
+	@RequestMapping(value = "send_im", method = RequestMethod.GET)
+	public AppResultData<Object> sendImToRobot(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("im_username_from") String imUsernameFrom,
+			@RequestParam("im_username_to") String imUsernameTo,
+			@RequestParam("msg") String msg) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.selectByPrimaryKey(userId);
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		if (StringUtil.isEmpty(imUsernameFrom)
+				|| StringUtil.isEmpty(imUsernameTo)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.IM_USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		try {
+			msg = URLDecoder.decode(msg, Constants.URL_ENCODE);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// 给用户发一条文本消息
+		EasemobMessages.sendMessageTxt(imUsernameFrom, imUsernameTo, msg);
+		return result;
+	}
+	
+	
+	
 	/**
 	 * 两个用户的聊天记录
 	 * 
