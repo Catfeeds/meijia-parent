@@ -32,7 +32,7 @@ public class JobImServiceImpl implements JobImService {
         queryStrNode2.put("ql", "select * where  timestamp >= " + beginTime);
         // 第一页
         ObjectNode messages2 = EasemobChatMessage.getChatMessages(queryStrNode2);
-        System.out.println(messages2.toString());
+//        System.out.println(messages2.toString());
         userImHistoryService.insertByObjectNo(messages2, syncType);
         
         // 第二页

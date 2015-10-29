@@ -32,6 +32,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
 import com.simi.po.dao.card.CardsMapper;
@@ -106,7 +107,10 @@ public class CardsServiceImpl implements CardService {
 		if (createUser != null) vo.setCreateUserName(createUser.getName());
 		
 		Users u = usersService.getUserInfo(vo.getUserId());
-		if (u != null) vo.setCreateUserName(u.getName());
+		if (u != null) {
+			vo.setUserName(u.getName());
+			vo.setUserHeadImg(u.getHeadImg());
+		}
 		
 		//统计赞的数量
 		int totalZan = cardZanService.totalByCardId(cardId);
@@ -346,6 +350,16 @@ public class CardsServiceImpl implements CardService {
 		return result;
 	}
 	
+	/**
+	 * 查找服务时间超过当前时间的卡片,并更新状态 = 3
+	 * @return
+	 */
+	@Override
+	public boolean updateFinishByOvertime() {
+		cardsMapper.updateFinishByOvertime();
+		return true;
+	}
+	
 	
 	@Override
 	public boolean cardNotification(Cards card) {
@@ -452,6 +466,23 @@ public class CardsServiceImpl implements CardService {
 	
 	
 	private boolean pushToSms(Cards card, List<Long> userSmsIds) {
+		
+		List<Users> userSms = new ArrayList<Users>();
+		
+		userSms = usersService.selectByUserIds(userSmsIds);
+		
+		Users createUsers = usersService.selectByPrimaryKey(card.getCreateUserId());
+		
+		Users user = usersService.selectByPrimaryKey(card.getUserId());
+		
+		String createUserName = createUsers.getName();
+		
+		String careteUserMobile = createUsers.getMobile();
+		
+		for (Users item : userSms) {
+			if (StringUtil.isEmpty(item.getMobile())) continue;
+			
+		}
 		
 		return true;
 	}

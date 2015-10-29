@@ -29,4 +29,8 @@ public interface CardsMapper {
 	List<HashMap> totalByMonth(CardSearchVo vo);
 
 	List<Cards> selectByReminds(CardSearchVo vo);
+
+	List<Cards> selectByOverTime(Object v);
+
+	int updateFinishByOvertime();
 }

@@ -42,7 +42,7 @@ public class RequestParamFilter implements HandlerInterceptor{
 		String requestUrl = request.getRequestURL().toString();
 		
 		//一些定时任务的日志不需要打印
-		if (requestUrl.indexOf("/app/job") < 0) {
+		if (requestUrl.indexOf("app/job") < 0) {
 		
 			logger.info("============== 1. preHandle ===================");
 	
@@ -65,9 +65,10 @@ public class RequestParamFilter implements HandlerInterceptor{
 			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
 			params.put(name, valueStr);
 		}
-		logger.info(params.toString());
 		
-		if (requestUrl.indexOf("/app/job") < 0) {
+		
+		if (requestUrl.indexOf("app/job") < 0) {
+			logger.info(params.toString());
 			System.out.println(params.toString());
 		}
 		return true;
@@ -82,7 +83,7 @@ public class RequestParamFilter implements HandlerInterceptor{
 		throws Exception {
 		
 		String requestUrl = request.getRequestURL().toString();
-		if (requestUrl.indexOf("/app/job") < 0) {
+		if (requestUrl.indexOf("app/job") < 0) {
 			logger.info("============== 2. postHandle ==================");
 	
 			logger.info(handler.toString());
@@ -95,7 +96,10 @@ public class RequestParamFilter implements HandlerInterceptor{
 			if (result != null) {
 				ObjectMapper objectMapper = new ObjectMapper();
 				String str = objectMapper.writeValueAsString(result);
-				logger.info(str);
+				
+				if (requestUrl.indexOf("app/job") < 0) {
+					logger.info(str);
+				}
 			}
 		}
 
@@ -118,7 +122,7 @@ public class RequestParamFilter implements HandlerInterceptor{
         long consumeTime = endTime - beginTime;
         
         String requestUrl = request.getRequestURL().toString();
-		if (requestUrl.indexOf("/app/job") < 0) {
+		if (requestUrl.indexOf("app/job") < 0) {
 			logger.info("execute consume_time: " + consumeTime + "ms" );
 		}
         //此处认为处理时间超过500毫秒的请求为慢请求
@@ -130,7 +134,7 @@ public class RequestParamFilter implements HandlerInterceptor{
         if (ex !=null) {
         	logger.info(ex.getMessage());
         }
-        if (requestUrl.indexOf("/app/job") < 0) {
+        if (requestUrl.indexOf("app/job") < 0) {
         	logger.info("============== 3. afterCompletion ===============");
         }
 	}

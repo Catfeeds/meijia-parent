@@ -427,4 +427,10 @@
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where card_id = #{cardId,jdbcType=NUMERIC}
 	</update>
+	
+	<update id="updateFinishByOvertime" parameterType="com.simi.po.model.card.Cards">
+		update cards
+		set status = 3
+		where <![CDATA[ service_time < unix_timestamp(now()) ]]>   		
+	</update>
 </mapper>

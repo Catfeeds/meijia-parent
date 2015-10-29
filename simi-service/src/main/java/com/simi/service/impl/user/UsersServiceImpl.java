@@ -499,7 +499,7 @@ public class UsersServiceImpl implements UsersService {
 	public Users selectByOpenidAndThirdType(String openid, String thirdType) {
 		Map<String,Object> conditions = new HashMap<String, Object>();
 		if(openid!=null && !openid.isEmpty()){
-			conditions.put("openId",openid);
+			conditions.put("openid",openid);
 		}
 		if(thirdType!=null && !thirdType.isEmpty()){
 			conditions.put("thirdType",thirdType);

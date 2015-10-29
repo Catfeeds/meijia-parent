@@ -11,7 +11,9 @@ public class CardViewVo extends Cards {
 	
 	private String createUserName;
 	
-	private String name;
+	private String userName;
+	
+	private String userHeadImg;
 	
 	private int totalZan;
 	
@@ -41,14 +43,6 @@ public class CardViewVo extends Cards {
 
 	public void setCreateUserName(String createUserName) {
 		this.createUserName = createUserName;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getTotalZan() {
@@ -105,5 +99,21 @@ public class CardViewVo extends Cards {
 
 	public void setTicketToCityName(String ticketToCityName) {
 		this.ticketToCityName = ticketToCityName;
+	}
+
+	public String getUserHeadImg() {
+		return userHeadImg;
+	}
+
+	public void setUserHeadImg(String userHeadImg) {
+		this.userHeadImg = userHeadImg;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

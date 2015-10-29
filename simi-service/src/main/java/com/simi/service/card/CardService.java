@@ -39,4 +39,6 @@ public interface CardService {
 
 	boolean cardNotification(Cards card);
 
+	boolean updateFinishByOvertime();
+
 }
