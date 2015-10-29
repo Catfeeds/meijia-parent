@@ -46,7 +46,7 @@ public class AdminAccountController extends AdminController {
 		if (ids == null) {
 			ids = 0L;
 		}
-		AdminAccount account = null;
+		AdminAccount account = adminAccountService.initAccount();
 		
 		AccountRegisterVo accountRegisterVo = new AccountRegisterVo();
 		if (ids != null && ids > 0L) {
@@ -54,11 +54,11 @@ public class AdminAccountController extends AdminController {
 			BeanUtils.copyProperties(account, accountRegisterVo);
 			
 		}		
-		
+		accountRegisterVo.setId(account.getId());
 		model.addAttribute("contentModel", accountRegisterVo);
 		model.addAttribute(selectDataSourceName,
 				adminRoleService.getSelectSource());	
-		return "account/register";
+		return "account/adminForm";
 	}
 
 	@RequestMapping(value = "/register", method = { RequestMethod.POST })
@@ -72,7 +72,7 @@ public class AdminAccountController extends AdminController {
 		
 		AdminAccount account = null;
 		if (ids == null||ids == 0) {
-			account = new AdminAccount();
+			account = adminAccountService.initAccount();
 		} else {
 			account = adminAccountService.selectByPrimaryKey(ids);
 		}				
@@ -100,7 +100,8 @@ public class AdminAccountController extends AdminController {
 
 		AdminAccount account1 = adminAccountService.selectByUsername(username);
 //&& username!=accountRegisterVo.getUsername()&&username==account.getUsername()
-		if (account1 != null && account1.getId() > 0 ) {
+		if (account1 != null && account1.getId() > 0 
+				&& account1.getId() != accountRegisterVo.getId()) {
 			result.addError(new FieldError("contentModel", "username",
 					"该用户名已被注册。"));
 			return register(request, model);

@@ -7,10 +7,12 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class AccountRegisterVo {
+	
+	private Long id;
 	@NotEmpty(message = "{name.not.empty}")
 	private String name;
-	/*@NotEmpty(message = "{mobile.not.empty}")
-	private String mobile;*/
+	@NotEmpty(message = "{mobile.not.empty}")
+	private String mobile;
 	@NotEmpty(message = "{email.not.empty}")
 	
 	@Email(message = "{email.not.correct}")
@@ -37,9 +39,9 @@ public class AccountRegisterVo {
 		this.name = name;
 	}
 
-	/*public void setMobile(String mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}*/
+	}
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -65,10 +67,10 @@ public class AccountRegisterVo {
 		return this.name;
 	}
 
-/*
+
 	public String getMobile() {
 		return mobile;
-	}*/
+	}
 	
 	public String getEmail() {
 		return this.email;
@@ -112,6 +114,14 @@ public class AccountRegisterVo {
 
 	public void setImUsername(String imUsername) {
 		this.imUsername = imUsername;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
