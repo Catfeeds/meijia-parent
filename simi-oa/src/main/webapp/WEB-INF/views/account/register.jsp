@@ -54,7 +54,13 @@
 											<form:errors path="nickname" class="field-has-error"></form:errors>
                                       </div>
                                   </div>
-
+								  <%-- <div class="form-group">
+                                      <label class="col-sm-2 col-sm-2 control-label">手机号</label>
+                                      <div class="col-sm-10">
+                                      		<form:input path="mobile" class="form-control placeholder-no-fix" autocomplete="off" placeholder="手机号"/><br/>
+											<form:errors path="mobile" class="field-has-error"></form:errors>
+                                      </div>
+                                  </div> --%>
                                   <div class="form-group">
                                       <label class="col-sm-2 col-sm-2 control-label">邮箱</label>
                                       <div class="col-sm-10">

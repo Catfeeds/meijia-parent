@@ -49,6 +49,7 @@
                               <tr>
                                   <th>用户名</th>
                                   <th>姓名</th>
+                                  <th>手机号</th>
                                   <th>邮箱</th>
                                   <th>角色</th>
                                   <th>是否可用</th>
@@ -61,6 +62,7 @@
                               <tr>
                                   	<td>${ item.username }</td>
 						            <td>${ item.name }</td>
+						            <td>${ item.mobile }</td>
 						            <td>${ item.email }</td>
 						            <td>${ item.roleName }</td>
 						            <td>${ item.enable }</td>

@@ -11,6 +11,8 @@ public class AdminAccount {
 
     private String name;
 
+    private String mobile;
+    
     private String email;
 
     private String username;
@@ -59,7 +61,16 @@ public class AdminAccount {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getEmail() {
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getEmail() {
         return email;
     }
 

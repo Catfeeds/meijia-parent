@@ -6,6 +6,7 @@
     <result column="version" property="version" jdbcType="NUMERIC" />
     <result column="enable" property="enable" jdbcType="NUMERIC" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, version, enable, name, email, username, password, register_time, role_id, organization_id,im_username,nickname
+    id, version, enable, name,mobile, email, username, password, register_time, role_id, organization_id,im_username,nickname
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
@@ -90,11 +91,11 @@
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.admin.AdminAccount" >
     insert into admin_account (id, version, enable,
-      name, email, username,
+      name,mobile, email, username,
       password, register_time, role_id,
       organization_id,im_username,nickname)
     values (#{id,jdbcType=NUMERIC}, #{version,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC},
-      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{roleId,jdbcType=NUMERIC},
       #{organizationId,jdbcType=NUMERIC},#{imUsername,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR})
   </insert>
@@ -112,6 +113,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+       <if test="mobile != null" >
+        mobile,
       </if>
       <if test="email != null" >
         email,
@@ -151,6 +155,9 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+        <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
@@ -189,6 +196,9 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
@@ -221,6 +231,7 @@
     set version = #{version,jdbcType=NUMERIC},
       enable = #{enable,jdbcType=NUMERIC},
       name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
