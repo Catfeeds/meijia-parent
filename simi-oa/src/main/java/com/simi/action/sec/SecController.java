@@ -131,7 +131,7 @@ public class SecController extends AdminController {
 	    usersSearchVo.setName(new String(usersSearchVo.getName().getBytes("iso-8859-1"),"utf-8"));
 	
 		
-		List<Users> list = usersService.selectByListPage(usersSearchVo, pageNo, pageSize);
+		List<Users> list = usersService.selectByListPageYes(usersSearchVo, pageNo, pageSize);
 		
 		
 		PageInfo result = new PageInfo(list);
@@ -350,6 +350,12 @@ public class SecController extends AdminController {
     	usersService.updateByPrimaryKeySelective(u);
     	
     	model.addAttribute("contentModel", u);*/
+    	
+    	
+    	//秘书审核通过(IsApproval==2)后通知助理
+    	if (users.getIsApproval()==2) {
+    		usersService.userSecToUserPushSms(users);
+		}
     	
     	return "redirect:/sec/applyList";
     	

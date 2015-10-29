@@ -49,6 +49,7 @@ public interface UsersService {
 	List<Users> selectUsersHaveOrdered(List<String> mobiles);
 	
 	PageInfo searchVoListPage(UserSearchVo searchVo,int pageNo,int pageSize);
+	List<Users> selectByListPageYes(UsersSearchVo usersSearchVo, int pageNo,int pageSize);
 
 	List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo, int pageSize);
 	
@@ -69,6 +70,12 @@ public interface UsersService {
 	PageInfo selectByIsAppRovalYes(int pageNo, int pageSize);
 
 	UserRef3rd genImUser(Users user);
+
+	Boolean userOrderAmPushSms(Users users);
+
+	Boolean userSecToUserPushSms(Users users);
+
+	
 
 	
 

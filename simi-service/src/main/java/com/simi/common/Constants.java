@@ -77,6 +77,12 @@ public class Constants {
 
 	public static String CANCEL_ORDER_SATUS= "cancel";
 
+	
+	//短信模板定义
+	public static String SEC_REGISTER_ID= "44654";//用户注册秘书后给运营人员发短信
+	
+	
+	
 	//支付方式： 0 = 余额支付 1 = 支付宝 2 = 微信支付 3 = 智慧支付(保留,暂不开发)
 	//4 = 上门刷卡（保留，暂不开发） 5 = 优惠券兑换
 	public static Short PAY_TYPE_0 = 0;

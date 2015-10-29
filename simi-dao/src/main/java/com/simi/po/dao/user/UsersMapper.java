@@ -52,5 +52,7 @@ public interface UsersMapper {
 	List<Users> selectByIsAppRovalYes();
 
 	List<Users> selectVoByListPage(UsersSearchVo userSearchVo);
+
+	List<Users> selectVoByListPageYes(UsersSearchVo usersSearchVo);
 	
 }

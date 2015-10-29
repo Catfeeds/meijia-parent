@@ -112,8 +112,28 @@
 		</if>
 		order by add_time desc
 	</select>
-	<!-- 根据查询条件查询秘书列表 -->
+	<!-- 秘书申请列表列表 -->
 	  <select id="selectVoByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
+  	select
+    <include refid="Base_Column_List" />
+    from users
+ 	where 1=1 and is_approval &lt; 2 
+    <if test="userType == 0 or userType == 1 ">
+		and user_type = #{userType}
+	</if>
+     <if test="name != null and name !='' ">
+		and name like '%${name}%'
+	</if>
+	<if test="mobile !=null and mobile !='' ">
+		and mobile like '%${mobile}%' 
+	</if>
+	<if test="id !=null and id !='' ">
+		and id = ${id} 
+	</if>	
+    order by add_time desc    
+  </select>
+ <!--  秘书列表 -->
+  	  <select id="selectVoByListPageYes" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
   	select
     <include refid="Base_Column_List" />
     from users
@@ -128,7 +148,7 @@
 		and mobile like '%${mobile}%' 
 	</if>
 	<if test="id !=null and id !='' ">
-		and id = ${id} 
+		and id = #{id,jdbcType=NUMERIC} 
 	</if>	
     order by add_time desc    
   </select>
