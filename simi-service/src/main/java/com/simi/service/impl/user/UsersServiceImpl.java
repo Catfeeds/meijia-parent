@@ -698,7 +698,7 @@ public class UsersServiceImpl implements UsersService {
 		
 		String [] content = new String[] {name,url};
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
-				Constants.SEC_REGISTER_ID, content);
+				Constants.SEC_REGISTER_USER_ID, content);
 		System.out.println(sendSmsResult + "00000000000000");
 		
 		return true;
