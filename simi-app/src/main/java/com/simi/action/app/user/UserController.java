@@ -621,6 +621,11 @@ public class UserController extends BaseController {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+			
+			
+			System.out.println("fileName = " + fileName);
+			System.out.println("fileType = " + fileType);
+			
 			fileType = fileType.toLowerCase();
 			String sendResult = ImgServerUtil.sendPostBytes(url,
 					file.getBytes(), fileType);
@@ -629,9 +634,9 @@ public class UserController extends BaseController {
 
 			HashMap<String, Object> o = mapper.readValue(sendResult,
 					HashMap.class);
-
+			System.out.println(o.toString());
 			String ret = o.get("ret").toString();
-
+			
 			HashMap<String, String> info = (HashMap<String, String>) o
 					.get("info");
 
