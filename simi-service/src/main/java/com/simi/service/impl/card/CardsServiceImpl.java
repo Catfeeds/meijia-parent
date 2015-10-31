@@ -389,7 +389,8 @@ public class CardsServiceImpl implements CardService {
 			pushToApp(card, userPushBinds);
 		}
 		
-		
+		//如果不需要立即推送，则不需要发送短信了
+		if (card.getSetNowSend().equals((short)0)) return true;
 		
 		
 		//3.根据集合users 和集合userPushBinds，找出不能推送，只能发短信的用户集合C
@@ -418,27 +419,42 @@ public class CardsServiceImpl implements CardService {
 		Long serviceTime = card.getServiceTime();
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String pushContent = CardUtil.getRemindContent(cardType, serviceTime);
+		
+		//获得提醒时间
+		Short setRemind = card.getSetRemind();
+		int remindMin = CardUtil.getRemindMin(setRemind);
+		
+		Long remindTime = serviceTime - remindMin * 60;
+		
+		serviceTime = serviceTime * 1000;
+		remindTime = remindTime * 1000;
+		
+		String isShow = "true";
+		
+		if (card.getSetNowSend().equals((short)0)) isShow = "false";
+		if (card.getSetNowSend().equals((short)1)) isShow = "true";
+		
+		tranParams.put("is_show", isShow);
+		tranParams.put("card_id", card.getCardId().toString());
+		tranParams.put("card_type", card.getCardType().toString());
+		tranParams.put("service_time", serviceTime.toString());
+		tranParams.put("remind_time", remindTime.toString());
+		tranParams.put("remind_title", cardTypeName);
+		tranParams.put("remind_content", pushContent);
 
-		tranParams.put("title", cardTypeName);
-		tranParams.put("text", pushContent);
-		tranParams.put("todo", "get_reminds");
 
 		ObjectMapper objectMapper = new ObjectMapper();
-
+		
+		String jsonParams = "";
+		try {
+			jsonParams = objectMapper.writeValueAsString(tranParams);
+		} catch (JsonProcessingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		
 		for (UserPushBind p : userPushBinds) {
-			if (tranParams.containsKey("user_id")) {
-				tranParams.remove("user_id");
-			}
-
-			tranParams.put("user_id", p.getUserId().toString());
-			String jsonParams = "";
-			try {
-				jsonParams = objectMapper.writeValueAsString(tranParams);
-			} catch (JsonProcessingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
+						
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", p.getClientId());
 			
@@ -453,7 +469,7 @@ public class CardsServiceImpl implements CardService {
 			
 			if (p.getDeviceType().equals("android")) {
 				try {
-					PushUtil.AndroidPushToSingle(tranParams);
+					PushUtil.AndroidPushToSingle(params);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

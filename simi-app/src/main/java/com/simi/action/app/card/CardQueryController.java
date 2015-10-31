@@ -309,8 +309,8 @@ public class CardQueryController extends BaseController {
 				
 				item.setCardType(cardType);
 				item.setCardTypeName(CardUtil.getCardTypeName(cardType));
-				item.setServiceTime(serviceTime);
-				item.setRemindTime(remindTime);
+				item.setServiceTime(serviceTime * 1000);
+				item.setRemindTime(remindTime * 1000);
 				item.setRemindContent(CardUtil.getRemindContent(cardType, serviceTime));
 				remindCards.add(item);
 			}

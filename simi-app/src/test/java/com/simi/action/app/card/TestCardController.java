@@ -29,18 +29,18 @@ public class TestCardController extends JUnitActionBase  {
      	
      	//新增
      	postRequest = postRequest.param("card_id", "0");
-	    postRequest = postRequest.param("card_type", "1");
+	    postRequest = postRequest.param("card_type", "3");
 	    postRequest = postRequest.param("create_user_id", "18");
 	    postRequest = postRequest.param("user_id", "1");
 	    
 	    //参会人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
 	    LinkManVo a1 = new LinkManVo();
-	    a1.setMobile("18612514665");
-	    a1.setName("连宁昌");
+	    a1.setMobile("186 1251 4665");
+	    a1.setName("a连工");
 	    LinkManVo a2 = new LinkManVo();
-	    a2.setMobile("13810002890");
-	    a2.setName("刘慧男");
+	    a2.setMobile("18037338893");
+	    a2.setName("A");
 
 	    
 //	    LinkManVo a3 = new LinkManVo();
@@ -53,13 +53,13 @@ public class TestCardController extends JUnitActionBase  {
 	    String attends = JsonUtil.listTojson(attendsList);
 	    
 	    postRequest = postRequest.param("attends", attends);
-	    postRequest = postRequest.param("service_time", "1441342713");
-	    postRequest = postRequest.param("service_addr", "宇飞大厦612");
-	    postRequest = postRequest.param("service_content", "研究yuand去哪玩");
-	    postRequest = postRequest.param("set_remind", "2");
+	    postRequest = postRequest.param("service_time", "1446285000");
+//	    postRequest = postRequest.param("service_addr", "宇飞大厦612");
+	    postRequest = postRequest.param("service_content", "明天开会东直门");
+	    postRequest = postRequest.param("set_remind", "1");
 	    postRequest = postRequest.param("set_now_send", "1");
 	    postRequest = postRequest.param("set_sec_do", "1");
-	    postRequest = postRequest.param("set_sec_remarks", "yuand请通知所有人员,一共2个人");
+//	    postRequest = postRequest.param("set_sec_remarks", "yuand请通知所有人员,一共2个人");
 	    
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);

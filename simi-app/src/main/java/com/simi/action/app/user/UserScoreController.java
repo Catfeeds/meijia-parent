@@ -57,6 +57,10 @@ public class UserScoreController extends BaseController {
 		return "redirect:"+url;
 		
 	}
+	
+	//兑吧积分消费的兑换接口
+	
+	//兑吧处理结果通知接口.
 
 	// 7. 我的积分明细接口
 	/**

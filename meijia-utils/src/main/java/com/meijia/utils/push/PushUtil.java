@@ -16,6 +16,7 @@ import com.gexin.rp.sdk.base.payload.APNPayload;
 import com.gexin.rp.sdk.exceptions.RequestException;
 import com.gexin.rp.sdk.http.IGtPush;
 import com.gexin.rp.sdk.template.TransmissionTemplate;
+import com.meijia.utils.TimeStampUtil;
 
 /**
  * 百度配置文件
@@ -301,7 +302,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "ef4b845994b46404468b0b87afe74d24";
+		String clientId = "b10510a6a8d000fb024af47271f8a49f";
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);
 		
@@ -317,10 +318,17 @@ public class PushUtil {
 		 *  
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
-		 tranParams.put("title", "会议安排");
-		 tranParams.put("text", "明天早上9点参加华北区电话会议,请提前10分钟进入会议室B11");
-		 tranParams.put("todo", "get_reminds");
-		 tranParams.put("user_id", "1");
+		 
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-10-31 17:36:00");
+		 String timeStr = time1.toString();
+		 tranParams.put("is_show", "true");		 
+		 tranParams.put("card_id", "1");
+		 tranParams.put("card_type", "1");
+		 tranParams.put("service_time", timeStr);
+		 tranParams.put("remind_time", timeStr);
+		 tranParams.put("remind_title", "会议安排");
+		 tranParams.put("remind_content", "17点34分参加华北区电话会议,请提前10分钟进入会议室B11");
+
 //		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 		 
 		 ObjectMapper objectMapper = new ObjectMapper();
@@ -328,7 +336,7 @@ public class PushUtil {
 		 System.out.println(jsonParams);
 		 
 		params.put("transmissionContent", jsonParams);
-//		PushUtil.AndroidPushTransmissionToSingle(params);
+//		PushUtil.AndroidPushToSingle(params);
 		
 		PushUtil.IOSPushToSingle(params);
 		
