@@ -48,6 +48,11 @@ public class UserViewVo extends Users {
      */
     private String ImRobotNickname;
     
+    /**
+     * 绑定推送设备clientID
+     */
+    private String clientId;
+    
 	public String getImUsername() {
 		return ImUsername;
 	}
@@ -131,6 +136,14 @@ public class UserViewVo extends Users {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 
 }

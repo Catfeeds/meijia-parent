@@ -32,6 +32,7 @@ import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.user.UserCoupons;
+import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
@@ -41,6 +42,7 @@ import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
@@ -87,6 +89,9 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UserFriendService userFriendService;
 
+	@Autowired
+	private UserPushBindService userPushBindService;
+	
 	/**
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
@@ -370,7 +375,11 @@ public class UsersServiceImpl implements UsersService {
 			vo.setImUsername(userRef3rd.getUsername());
 			vo.setImPassword(userRef3rd.getPassword());
 		}
-
+		
+		//用户绑定推送设备信息
+		vo.setClientId("");
+		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
+		if (userPushBind != null) vo.setClientId(userPushBind.getClientId());
 		return vo;
 	}
 
@@ -523,25 +532,36 @@ public class UsersServiceImpl implements UsersService {
 		if (userRef3rd != null) {
 			return userRef3rd;
 		}
-
+		
+		String uuid = "";
 		// 如果不存在则新增.并且存入数据库
 		String username = "simi-user-" + user.getId().toString();
 		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
-		ObjectNode datanode = JsonNodeFactory.instance.objectNode();
-		datanode.put("username", username);
-		datanode.put("password", defaultPassword);
-		if (user.getName() != null && user.getName().length() > 0) {
-			datanode.put("nickname", user.getName());
-		}
-		ObjectNode createNewIMUserSingleNode = EasemobIMUsers
-				.createNewIMUserSingle(datanode);
+		
+		//1. 先去环信查找是否有用户:
+	    ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
+		
+	    JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
+	    if (statusCode.toString().equals("404")) {
+			ObjectNode datanode = JsonNodeFactory.instance.objectNode();
+			datanode.put("username", username);
+			datanode.put("password", defaultPassword);
+			if (user.getName() != null && user.getName().length() > 0) {
+				datanode.put("nickname", user.getName());
+			}
+			ObjectNode createNewIMUserSingleNode = EasemobIMUsers
+					.createNewIMUserSingle(datanode);
+			
+			JsonNode entity = createNewIMUserSingleNode.get("entities");
+			uuid = entity.get(0).get("uuid").toString();
+	    } else {
+	    	JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
+	    	uuid = entity.get(0).get("uuid").toString();
+	    }
+		
+			
 
-		JsonNode statusCode = createNewIMUserSingleNode.get("statusCode");
-		if (!statusCode.toString().equals("200"))
-			return record;
-
-		JsonNode entity = createNewIMUserSingleNode.get("entities");
-		String uuid = entity.get(0).get("uuid").toString();
+		
 		// username = entity.get(0).get("username").toString();
 
 		record.setId(0L);

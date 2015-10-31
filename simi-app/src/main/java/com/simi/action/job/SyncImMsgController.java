@@ -31,7 +31,7 @@ public class SyncImMsgController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, new String());
 		
-		System.out.println("Remote Host: " + request.getRemoteHost());
+//		System.out.println("Remote Host: " + request.getRemoteHost());
 		String reqHost = request.getRemoteHost();
 		//限定只有localhost能访问
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {

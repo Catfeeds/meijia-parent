@@ -97,11 +97,11 @@ public class EasemobIMUsers {
         /**
          * 获取IM用户[主键查询]
          */
-//        String userPrimaryKey = "simi-sec-1";
-//        ObjectNode getIMUsersByPrimaryKeyNode = getIMUsersByPrimaryKey(userPrimaryKey);
-//        if (null != getIMUsersByPrimaryKeyNode) {
-//            LOGGER.info("获取IM用户[主键查询]: " + getIMUsersByPrimaryKeyNode.toString());
-//        }
+        String userPrimaryKey = "simi-user-1";
+        ObjectNode getIMUsersByPrimaryKeyNode = getIMUsersByPrimaryKey(userPrimaryKey);
+        if (null != getIMUsersByPrimaryKeyNode) {
+            LOGGER.info("获取IM用户[主键查询]: " + getIMUsersByPrimaryKeyNode.toString());
+        }
 
         /**
          * 重置IM用户密码 提供管理员token

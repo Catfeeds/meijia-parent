@@ -90,7 +90,7 @@ public class RequestParamFilter implements HandlerInterceptor{
 		}
 
 		if (modelAndView != null) {
-			logger.info(modelAndView.getViewName());
+//			logger.info(modelAndView.getViewName());
 			AppResultData<Object> result = (AppResultData<Object>) modelAndView.getModel().get("appResultData");
 
 			if (result != null) {
