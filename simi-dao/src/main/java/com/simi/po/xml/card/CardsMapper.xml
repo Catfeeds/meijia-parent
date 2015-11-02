@@ -13,6 +13,13 @@
 		<result column="set_now_send" property="setNowSend" jdbcType="NUMERIC" />
 		<result column="set_sec_do" property="setSecDo" jdbcType="NUMERIC" />
 		<result column="set_sec_remarks" property="setSecRemarks" jdbcType="VARCHAR" />
+		
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="set_friend_view" property="setFriendView" jdbcType="VARCHAR" />
+		<result column="poi_lng" property="poiLng" jdbcType="VARCHAR" />
+		<result column="poi_lat" property="poiLat" jdbcType="VARCHAR" />
+		<result column="poi_name" property="poiName" jdbcType="VARCHAR" />
+		
 		<result column="ticket_type" property="ticketType" jdbcType="NUMERIC" />
 		<result column="ticket_from_city_id" property="ticketFromCityId" jdbcType="NUMERIC" />
 		<result column="ticket_to_city_id" property="ticketToCityId" jdbcType="NUMERIC" />
@@ -23,8 +30,9 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		card_id, create_user_id, user_id, card_type, service_time, service_addr,
-		service_content, set_remind, set_now_send, set_sec_do, set_sec_remarks, ticket_type,
-		ticket_from_city_id, ticket_to_city_id, status, sec_remarks, add_time, update_time
+		service_content, set_remind, set_now_send, set_sec_do, set_sec_remarks, 
+		title,set_friend_view,poi_lng,poi_lat,poi_name,
+		ticket_type,ticket_from_city_id, ticket_to_city_id, status, sec_remarks, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -222,6 +230,7 @@
 		card_type, service_time,
 		service_addr, service_content, set_remind,
 		set_now_send, set_sec_do, set_sec_remarks,
+		title,set_friend_view,poi_lng,poi_lat,poi_name,
 		ticket_type, ticket_from_city_id, ticket_to_city_id,
 		status, sec_remarks, add_time, update_time
 		)
@@ -229,6 +238,8 @@
 		#{cardType,jdbcType=NUMERIC}, #{serviceTime,jdbcType=NUMERIC},
 		#{serviceAddr,jdbcType=VARCHAR}, #{serviceContent,jdbcType=VARCHAR}, #{setRemind,jdbcType=SMALLINT},
 		#{setNowSend,jdbcType=NUMERIC}, #{setSecDo,jdbcType=NUMERIC}, #{setSecRemarks,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},#{setFriendView,jdbcType=NUMERIC},
+		#{poiLng,jdbcType=VARCHAR},#{poiLat,jdbcType=VARCHAR},#{poiName,jdbcType=VARCHAR},
 		#{ticketType,jdbcType=NUMERIC}, #{ticketFromCityId,jdbcType=NUMERIC}, #{ticketToCityId,jdbcType=NUMERIC},
 		#{status,jdbcType=NUMERIC}, #{secRemarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
 		)
@@ -272,6 +283,21 @@
 			</if>
 			<if test="setSecRemarks != null">
 				set_sec_remarks,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="setFriendView != null">
+				set_friend_view,
+			</if>
+			<if test="poiLng != null">
+				poi_lng,
+			</if>
+			<if test="poiLat != null">
+				poi_lat,
+			</if>
+			<if test="poiName != null">
+				poi_name,
 			</if>
 			<if test="ticketType != null">
 				ticket_type,
@@ -325,6 +351,21 @@
 			</if>
 			<if test="setSecRemarks != null">
 				#{setSecRemarks,jdbcType=VARCHAR},
+			</if>
+		<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="setFriendView != null">
+				#{setFriendView,jdbcType=NUMERIC},
+			</if>
+			<if test="poiLng != null">
+				#{poiLng,jdbcType=VARCHAR},
+			</if>
+			<if test="poiLat != null">
+				#{poiLat,jdbcType=VARCHAR},
+			</if>
+			<if test="poiName != null">
+				#{poiName,jdbcType=VARCHAR},
 			</if>
 			<if test="ticketType != null">
 				#{ticketType,jdbcType=NUMERIC},
@@ -382,6 +423,21 @@
 			<if test="setSecRemarks != null">
 				set_sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
 			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="setFriendView != null">
+				set_friend_view = #{setFriendView,jdbcType=NUMERIC},
+			</if>
+			<if test="poiLng != null">
+				poi_lng = #{poiLng,jdbcType=VARCHAR},
+			</if>
+			<if test="poiLat != null">
+				poi_lat = #{poiLat,jdbcType=VARCHAR},
+			</if>
+			<if test="poiName != null">
+				poi_name = #{poiName,jdbcType=VARCHAR},
+			</if>
 			<if test="ticketType != null">
 				ticket_type = #{ticketType,jdbcType=NUMERIC},
 			</if>
@@ -418,6 +474,11 @@
 		set_now_send = #{setNowSend,jdbcType=NUMERIC},
 		set_sec_do = #{setSecDo,jdbcType=NUMERIC},
 		set_sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		set_friend_view = #{setFriendView,jdbcType=NUMERIC},
+		poi_lng = #{poiLng,jdbcType=VARCHAR},
+		poi_lat = #{poiLat,jdbcType=VARCHAR},
+		poi_name = #{poiName,jdbcType=VARCHAR},
 		ticket_type = #{ticketType,jdbcType=NUMERIC},
 		ticket_from_city_id = #{ticketFromCityId,jdbcType=NUMERIC},
 		ticket_to_city_id = #{ticketToCityId,jdbcType=NUMERIC},

@@ -695,17 +695,22 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Boolean userOrderAmPushSms(Users users) {
 		String name = users.getName();
-		String mobile = "15712917308";
 		String nameMobile = users.getMobile();
 		Long addTime = users.getAddTime();
 		String addTimeStr = TimeStampUtil
 				.timeStampToDateStr(addTime*1000);
-
+		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+		List<String> mobileList = new ArrayList<String>();
+		for (AdminAccount item: adminAccounts) {
+			mobileList.add(item.getMobile());
+		}
 		String[] content = new String[] { name,nameMobile,addTimeStr };
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
+		for (int i = 0; i < mobileList.size(); i++) {
+			
+		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
 				Constants.SEC_REGISTER_ID, content);
 		System.out.println(sendSmsResult + "00000000000000");
-
+		}
 		return true;
 	}
 	//秘书审核通过后给助理发送短信提醒

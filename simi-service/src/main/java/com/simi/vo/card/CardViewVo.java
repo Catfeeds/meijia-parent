@@ -7,6 +7,14 @@ import com.simi.po.model.card.Cards;
 
 public class CardViewVo extends Cards {
 
+
+	
+	//用户姓名
+	private String name ;
+	
+	private String cartTypeName;
+	
+	
 	private List<CardAttend> attends;
 	
 	private String createUserName;
@@ -116,4 +124,21 @@ public class CardViewVo extends Cards {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCartTypeName() {
+		return cartTypeName;
+	}
+
+	public void setCartTypeName(String cartTypeName) {
+		this.cartTypeName = cartTypeName;
+	}
+	
 }

@@ -32,7 +32,17 @@ public class Cards {
     private Short status;
     
     private String secRemarks;
-
+    
+    private String title;
+    
+    private Short setFriendView;
+    
+    private String poiLng;
+    
+    private String poiLat;
+    
+    private String poiName;
+    
     private Long addTime;
 
     private Long updateTime;
@@ -153,7 +163,47 @@ public class Cards {
         return status;
     }
 
-    public void setStatus(Short status) {
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Short getSetFriendView() {
+		return setFriendView;
+	}
+
+	public void setSetFriendView(Short setFriendView) {
+		this.setFriendView = setFriendView;
+	}
+
+	public String getPoiLng() {
+		return poiLng;
+	}
+
+	public void setPoiLng(String poiLng) {
+		this.poiLng = poiLng;
+	}
+
+	public String getPoiLat() {
+		return poiLat;
+	}
+
+	public void setPoiLat(String poiLat) {
+		this.poiLat = poiLat;
+	}
+
+	public String getPoiName() {
+		return poiName;
+	}
+
+	public void setPoiName(String poiName) {
+		this.poiName = poiName;
+	}
+
+	public void setStatus(Short status) {
         this.status = status;
     }
 
