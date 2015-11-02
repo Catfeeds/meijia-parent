@@ -61,7 +61,7 @@ public class OrderWxPayController extends BaseController {
 	 * @param response
 	 * @param mobile   
 	 * @param orderNo
-	 * @param orderType  // 订单类型 0 = 订单支付 1= 充值卡充值 2 = 私秘服务购买
+	 * @param orderType  // 订单类型 0 = 订单支付 1= 充值卡充值 2 = 云行政服务购买
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 * 
@@ -110,7 +110,7 @@ public class OrderWxPayController extends BaseController {
 			
 			BigDecimal orderPayNow  = orderPricesService.getPayByOrder(orderNo, "0");
 			wxPay = orderPayNow.toString();
-			body = "私秘订单号:"+orderNo;
+			body = "订单号:"+orderNo;
 		}
 		
 		//处理充值卡充值的情况
@@ -137,10 +137,10 @@ public class OrderWxPayController extends BaseController {
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
-			body = "私秘充值卡购买";
+			body = "云行政充值购买";
 		}		
 		
-		//处理私密卡购买的情况
+		//处理云行政卡购买的情况
 		if (orderType.equals(Constants.ORDER_TYPE_2)) {
 			OrderSenior orderSenior = orderSeniorService.selectByOrderSeniorNo(orderNo);
 			if (orderSenior == null || orderSenior.getId().equals(0)) {
@@ -163,7 +163,7 @@ public class OrderWxPayController extends BaseController {
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
-			body = "私秘服务购买";
+			body = "云行政服务购买";
 		}			
 
 		//测试

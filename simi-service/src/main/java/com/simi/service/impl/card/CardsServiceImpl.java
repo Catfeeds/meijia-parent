@@ -499,9 +499,15 @@ public class CardsServiceImpl implements CardService {
 		
 		Users user = usersService.selectByPrimaryKey(card.getUserId());
 		
-		String createUserName = createUsers.getName() + " ";
+		String createUserName = createUsers.getName();
 		
-		String careteUserMobile = createUsers.getMobile();
+		String createUserMobile = createUsers.getMobile();
+		
+		if (createUserName.equals(createUserMobile)) {
+			createUserName = "";
+		} else {
+			createUserName = createUserName + " ";
+		}
 		
 		Long serviceTime = card.getServiceTime();
 		String serviceTimeStr = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "yyyy-MM-dd HH:mm");
@@ -533,28 +539,28 @@ public class CardsServiceImpl implements CardService {
 				break;
 			case 1:
 //				statusName = "会议安排";
-				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceAddr, serviceContent};
+				content = new String[] { createUserName, createUserMobile,  serviceTimeStr, serviceAddr, serviceContent};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44665", content);
 				
 				break;
 			case 2:
 //				statusName = "秘书叫早";
-				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceContent};
+				content = new String[] { createUserName, createUserMobile,  serviceTimeStr, serviceContent};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44668", content);				
 				break;
 			case 3:
 //				statusName = "事务提醒";
-				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceContent};
+				content = new String[] { createUserName, createUserMobile,  serviceTimeStr, serviceContent};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44666", content);						
 				break;
 			case 4:
 //				statusName = "邀约通知";
-				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceContent};
+				content = new String[] { createUserName, createUserMobile,  serviceTimeStr, serviceContent};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44667", content);		
 				break;
 			case 5:
 //				statusName = "差旅规划";
-				content = new String[] { createUserName, careteUserMobile,  fromCityName, toCityName, serviceTimeStr};
+				content = new String[] { createUserName, createUserMobile,  fromCityName, toCityName, serviceTimeStr};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44664", content);		
 				break;
 			default:
