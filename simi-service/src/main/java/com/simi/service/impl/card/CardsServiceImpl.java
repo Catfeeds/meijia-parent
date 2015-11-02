@@ -20,6 +20,7 @@ import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
+import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCity;
@@ -32,6 +33,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
@@ -78,6 +80,12 @@ public class CardsServiceImpl implements CardService {
 		record.setTicketToCityId(0L);
 		record.setStatus((short) 1);
 		record.setSecRemarks("");
+		record.setTitle("");
+		record.setPoiLat("");
+		record.setPoiLng("");
+		record.setPoiName("");
+		record.setSetFriendView((short) 0);
+		
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 
@@ -491,12 +499,68 @@ public class CardsServiceImpl implements CardService {
 		
 		Users user = usersService.selectByPrimaryKey(card.getUserId());
 		
-		String createUserName = createUsers.getName();
+		String createUserName = createUsers.getName() + " ";
 		
 		String careteUserMobile = createUsers.getMobile();
 		
+		Long serviceTime = card.getServiceTime();
+		String serviceTimeStr = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "yyyy-MM-dd HH:mm");
+		String serviceAddr = card.getServiceAddr();
+		String serviceContent = card.getServiceContent();
+		
+		if (serviceContent.length() > 20) {
+			serviceContent = StringUtil.subStringByByte(serviceContent, 20) + "...";
+		}
+		
+		String fromCityName = "";
+		String toCityName = "";
+		
+		if (card.getCardType().equals((short)5)) {
+			fromCityName = cityService.selectByCityId(card.getTicketFromCityId()).getName();
+			toCityName = cityService.selectByCityId(card.getTicketToCityId()).getName();
+		}
+		
+		String[] content;
+		String mobile = "";
+		HashMap<String, String> sendSmsResult;
+		//开始发送短信
 		for (Users item : userSms) {
 			if (StringUtil.isEmpty(item.getMobile())) continue;
+			mobile = item.getMobile();
+			switch (card.getCardType()) {
+			case 0:
+//				statusName = "通用";
+				break;
+			case 1:
+//				statusName = "会议安排";
+				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceAddr, serviceContent};
+				sendSmsResult = SmsUtil.SendSms(mobile, "44665", content);
+				
+				break;
+			case 2:
+//				statusName = "秘书叫早";
+				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceContent};
+				sendSmsResult = SmsUtil.SendSms(mobile, "44668", content);				
+				break;
+			case 3:
+//				statusName = "事务提醒";
+				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceContent};
+				sendSmsResult = SmsUtil.SendSms(mobile, "44666", content);						
+				break;
+			case 4:
+//				statusName = "邀约通知";
+				content = new String[] { createUserName, careteUserMobile,  serviceTimeStr, serviceContent};
+				sendSmsResult = SmsUtil.SendSms(mobile, "44667", content);		
+				break;
+			case 5:
+//				statusName = "差旅规划";
+				content = new String[] { createUserName, careteUserMobile,  fromCityName, toCityName, serviceTimeStr};
+				sendSmsResult = SmsUtil.SendSms(mobile, "44664", content);		
+				break;
+			default:
+//				statusName = "";
+			}					
+			
 			
 		}
 		

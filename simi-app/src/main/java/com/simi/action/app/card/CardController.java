@@ -1,6 +1,7 @@
 package com.simi.action.app.card;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.RegexUtil;
+import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -25,6 +27,7 @@ import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
@@ -33,6 +36,7 @@ import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
+import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
@@ -67,6 +71,9 @@ public class CardController extends BaseController {
 	
 	@Autowired
 	private UserRef3rdService userRef3rdService;
+	
+	@Autowired
+	private UserRefSecService userRefSecService;
 
 	// 卡片提交接口
 	/**
@@ -242,7 +249,23 @@ public class CardController extends BaseController {
 //		if (cardId.equals(0L) && setNowSend.equals((short)1)) {
 			cardService.cardNotification(record);
 //		}
+		
 		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
+		
+		if (record.getSetSecDo().equals((short)1)) {
+			//找出对应的秘书信息
+			UserRefSec userRefSec = userRefSecService.selectByUserId(userId);
+			if (userRefSec != null) {
+				Users secUser = userService.selectByPrimaryKey(userRefSec.getSecId());
+				String secMobile = secUser.getMobile();
+				if (RegexUtil.isMobile(secMobile)) {
+					String[] content = new String[] { userName, CardUtil.getCardTypeName(record.getCardType()),  ""};
+					HashMap<String, String> sendSmsResult = SmsUtil.SendSms(secMobile, "44658", content);
+				}
+			}
+		}
+			
+			
 		
 		result.setData(vo);
 		return result;
