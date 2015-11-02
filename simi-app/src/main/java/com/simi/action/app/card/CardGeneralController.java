@@ -108,6 +108,12 @@ AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, Co
 		record.setTicketFromCityId(ticketFromCityId);
 		record.setTicketToCityId(ticketToCityId);
 		
+		record.setTitle(title);
+		record.setSetFriendView(setFriendView);
+		record.setPoiLng(poiLng);
+		record.setPoiLat(poiLat);
+		record.setPoiName(poiName);
+		
 		if (!createUserId.equals(userId)) {
 			Users createUser = userService.selectByPrimaryKey(createUserId);
 			if (createUser.getUserType().equals((short)1)) {
@@ -203,10 +209,18 @@ AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, Co
 		if (cardId.equals(0L) && setNowSend.equals((short)1)) {
 			cardService.cardNotification(record);
 		}
+		/**
+		 * setSecDo.equals((short)1);
+		 * 给对应的助理发消息~
+		 * 
+		 */
 		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
+		if (cardId.equals(0L) && setSecDo.equals((short)1)) {
+			//找出卡片对应的秘书，给秘书发送推送信息
+			
+		}
 		
 		result.setData(vo);
 		return result;
-		
 	}
 }
