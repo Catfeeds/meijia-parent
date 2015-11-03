@@ -493,6 +493,7 @@ public class CardsServiceImpl implements CardService {
 		
 		List<Users> userSms = new ArrayList<Users>();
 		
+		if (userSmsIds.isEmpty()) return true;
 		userSms = usersService.selectByUserIds(userSmsIds);
 		
 		Users createUsers = usersService.selectByPrimaryKey(card.getCreateUserId());
