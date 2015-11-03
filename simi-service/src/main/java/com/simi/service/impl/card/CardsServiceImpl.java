@@ -408,7 +408,7 @@ public class CardsServiceImpl implements CardService {
 			userSmsIds.removeAll(userPushIds);
 		} 
 		
-		if (!userSmsIds.isEmpty() || card.getSetNowSend().equals((short)1)) {
+		if (!userSmsIds.isEmpty() && card.getSetNowSend().equals((short)1)) {
 			//进行短信发送
 			pushToSms(card, userSmsIds);
 		}

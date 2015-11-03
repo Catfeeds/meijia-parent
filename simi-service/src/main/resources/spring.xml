@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
 	<!-- 引入jdbc配置文件 -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+	<context:property-placeholder location="classpath:jdbc.properties" />
 
-    <!-- 扫描文件（自动将service层注入） -->
-    <context:component-scan base-package="com.simi.service.**,
+	<!-- 扫描文件（自动将service层注入） -->
+	<context:component-scan
+		base-package="com.simi.service.**,
     									  com.simi.service.dict.**,
     									  com.simi.service.order.**,
     									  com.simi.service.user.**,
     									  com.simi.service.admin.**,
     									  com.simi.service.partners.**,
     									  com.simi.service.card.**,
+    									  com.simi.service.async.**,
     									  com.simi.service.impl.**,
     									  com.simi.service.impl.remind.**,
     									  com.simi.service.impl.dict.**,
@@ -24,12 +26,21 @@
     									  com.simi.service.impl.admin.**,
     									  com.simi.service.impl.partners.**,
     									  com.simi.service.impl.card.**,
-    									  com.simi.service.impl.dispatch.**">
-    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
-  		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
-    </context:component-scan>
+    									  com.simi.service.impl.dispatch.**,
+    									  com.simi.service.impl.async.**">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
 
-	 <!-- 自动加载基础字典信息到 内存 -->
-	<bean id="StartOnLoadPostProcessor" class="com.simi.common.StartOnLoadPostProcessor"/>
+	<task:annotation-driven executor="defaultTaskExecutor" scheduler="defaultTaskScheduler" />
+	<bean id="exceptionHandlingTaskExecutor" class="com.simi.service.async.ExceptionHandlingAsyncTaskExecutor">
+		<constructor-arg ref="defaultTaskExecutor" />
+	</bean>
+	<task:executor id="defaultTaskExecutor" pool-size="5" />
+	<task:scheduler id="defaultTaskScheduler" pool-size="1000" />
+
+
+	<!-- 自动加载基础字典信息到 内存 -->
+	<bean id="StartOnLoadPostProcessor" class="com.simi.common.StartOnLoadPostProcessor" />
 
 </beans>
