@@ -40,6 +40,20 @@
 		from cards
 		where card_id = #{cardId,jdbcType=NUMERIC}
 	</select>
+	<select id="selectListByAddtimeTwo" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+	where set_sec_do = 1 and status = 1 and add_time + 120 &lt; unix_timestamp(now())
+		
+	</select>
+	<select id="selectListByAddtimeThirty" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where set_sec_do = 1 and status = 1 and add_time + 1800 &lt; unix_timestamp(now())
+		
+	</select>
 	
 	<!-- 卡片列表方法 某个用户所有的卡片 -->
 	<select id="selectByListPage" resultMap="BaseResultMap"

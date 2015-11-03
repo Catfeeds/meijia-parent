@@ -133,7 +133,23 @@ public class UsersServiceImpl implements UsersService {
 
 				userCouponService.insert(userCoupon);
 			}
-
+           //新用户注册通知运营人员
+			long addTime = u.getAddTime();
+			String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime*1000);
+			
+			List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+			List<String> mobileList = new ArrayList<String>();
+			for (AdminAccount item: adminAccounts) {
+				mobileList.add(item.getMobile());
+			}
+			String[] content = new String[] { name,addTimeStr };
+			for (int i = 0; i < mobileList.size(); i++) {
+				
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
+					Constants.SEC_REGISTER_ID, content);
+			System.out.println(sendSmsResult + "00000000000000");
+			}
+			
 			// 发送给13810002890 ，做一个提醒
 			// String code = mobile;
 			// String[] content = new String[] { code,
@@ -719,7 +735,7 @@ public class UsersServiceImpl implements UsersService {
 
 		String name = users.getName();
 		String mobile = users.getMobile();
-		String url = "www.Baidu.com";
+		String url = "";
 		
 		String [] content = new String[] {name,url};
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,

@@ -33,4 +33,8 @@ public interface CardsMapper {
 	List<Cards> selectByOverTime(Object v);
 
 	int updateFinishByOvertime();
+
+	List<Cards> selectListByAddtimeTwo();
+
+	List<Cards> selectListByAddtimeThirty();
 }

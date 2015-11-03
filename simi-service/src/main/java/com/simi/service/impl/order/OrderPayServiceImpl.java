@@ -1,8 +1,18 @@
 package com.simi.service.impl.order;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.meijia.utils.SmsUtil;
+import com.simi.common.Constants;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.simi.service.admin.AdminAccountService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
@@ -14,14 +24,19 @@ import com.simi.service.user.UsersService;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
+import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserRefSec;
+import com.simi.po.model.user.Users;
 
 @Service
 public class OrderPayServiceImpl implements OrderPayService {
 	@Autowired
 	private OrdersService ordersService;
+	
+	@Autowired
+	private AdminAccountService adminAccountService;
 	
 	@Autowired
 	private OrderPricesService orderPricesService;
@@ -84,8 +99,30 @@ public class OrderPayServiceImpl implements OrderPayService {
 			userRefSecService.updateByPrimaryKeySelective(userRefSec);
 		}
 		
-		//给秘书发送信息.
+		//购买秘书成功后给同事给运营人员和秘书发送信息.
+		Users sec = usersService.selectByPrimaryKey(secId);
+		String name = sec.getName();
+		short validDay = orderSenior.getValidDay();
+		BigDecimal orderPay = orderSenior.getOrderPay();
 		
+		String orderPStr = orderPay.toString();
+		String secMobile = sec.getMobile();
+		String validDayStr = String.valueOf(validDay);
+		
+		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+		List<String> mobileList = new ArrayList<String>();
+		for (AdminAccount item: adminAccounts) {
+			mobileList.add(item.getMobile());
+			mobileList.add(secMobile);
+		}
+		String[] content = new String[] { name,orderPStr,validDayStr };
+		for (int i = 0; i < mobileList.size(); i++) {
+			
+		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
+				Constants.SEC_REGISTER_ID, content);
+		
+		System.out.println(sendSmsResult + "00000000000000");
+		}
 		return true;
 	}
 	

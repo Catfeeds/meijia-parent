@@ -81,6 +81,8 @@ public class Constants {
 	//短信模板定义
 	public static String SEC_REGISTER_ID= "44654";//用户注册秘书后给运营人员发短信
 	public static String SEC_REGISTER_USER_ID= "44655";//秘书审批后给用户发短信
+	public static String SEC_TWO_MINUTE= "44659";//秘书2分钟未接受卡片--给秘书发短信提醒
+	public static String SEC_THIRTY_MINUTE= "44660";//秘书30分钟未接受卡片--给运营人员发短信提醒
 	
 	
 	//支付方式： 0 = 余额支付 1 = 支付宝 2 = 微信支付 3 = 智慧支付(保留,暂不开发)

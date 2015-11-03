@@ -215,10 +215,10 @@ AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, Co
 		 * 
 		 */
 		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
-		if (cardId.equals(0L) && setSecDo.equals((short)1)) {
+		/*if (cardId.equals(0L) && setSecDo.equals((short)1)) {
 			//找出卡片对应的秘书，给秘书发送推送信息
 			
-		}
+		}*/
 		
 		result.setData(vo);
 		return result;

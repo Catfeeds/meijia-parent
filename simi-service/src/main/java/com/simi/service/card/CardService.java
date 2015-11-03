@@ -41,4 +41,8 @@ public interface CardService {
 
 	boolean updateFinishByOvertime();
 
+	List<Cards> selectListByAddtimeTwo();
+
+	List<Cards> selectListByAddtimeThirty();
+
 }

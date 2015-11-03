@@ -573,5 +573,17 @@ public class CardsServiceImpl implements CardService {
 		return true;
 	}
 
+	@Override
+	public List<Cards> selectListByAddtimeTwo() {
+		
+		return cardsMapper.selectListByAddtimeTwo();
+	}
+
+	@Override
+	public List<Cards> selectListByAddtimeThirty() {
+		
+		return cardsMapper.selectListByAddtimeThirty();
+	}
+
 
 }
