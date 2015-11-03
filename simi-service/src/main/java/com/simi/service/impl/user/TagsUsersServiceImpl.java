@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.simi.po.dao.user.TagUsersMapper;
 import com.simi.po.model.user.TagUsers;
-import com.simi.po.model.user.Tags;
 import com.simi.service.user.TagsUsersService;
 @Service
 public class TagsUsersServiceImpl implements TagsUsersService {

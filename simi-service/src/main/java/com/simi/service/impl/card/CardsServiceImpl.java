@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +18,6 @@ import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
-import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCity;

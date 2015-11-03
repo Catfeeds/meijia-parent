@@ -1,7 +1,6 @@
 package com.simi.service.impl.user;
 
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,8 +18,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.MobileUtil;
-import com.meijia.utils.RandomUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -30,13 +27,13 @@ import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.admin.AdminAccount;
-import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.CouponService;
 import com.simi.service.order.OrderSeniorService;
@@ -92,6 +89,10 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UserPushBindService userPushBindService;
 	
+	@Autowired
+	private UsersAsyncService userAsyncService;
+	
+	
 	/**
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
@@ -102,62 +103,14 @@ public class UsersServiceImpl implements UsersService {
 			u = this.initUsers();
 			u.setMobile(mobile);
 			u.setAddFrom(addFrom);
-			String provinceName = "";
-			try {
-				provinceName = MobileUtil.calcMobileCity(mobile);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
 			u.setName(name);
-			u.setProvinceName(provinceName);
 			this.insertSelective(u);
 
-			// 先看看是否已经有赠送
-			UserCoupons userCoupon = userCouponService.selectByMobileCardPwd(
-					mobile, Constants.NEW_USER_COUPON_CARD_PASSWORD);
-
-			if (userCoupon == null) {
-				// 新用户注册赠送相应的优惠劵.
-				DictCoupons coupon = couponService
-						.selectByCardPasswd(Constants.NEW_USER_COUPON_CARD_PASSWORD);
-
-				userCoupon = userCouponService.initUserCoupon();
-				userCoupon.setUserId(u.getId());
-				userCoupon.setMobile(u.getMobile());
-				userCoupon.setCouponId(coupon.getId());
-				userCoupon.setCardPasswd(coupon.getCardPasswd());
-				userCoupon.setValue(coupon.getValue());
-				userCoupon.setExpTime(coupon.getExpTime());
-
-				userCouponService.insert(userCoupon);
-			}
-           //新用户注册通知运营人员
-			long addTime = u.getAddTime();
-			String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime*1000);
+			//检测用户所在地，异步操作
+			userAsyncService.userMobileCity(u.getId());
 			
-			List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
-			List<String> mobileList = new ArrayList<String>();
-			for (AdminAccount item: adminAccounts) {
-				mobileList.add(item.getMobile());
-			}
-			String[] content = new String[] { name,addTimeStr };
-			for (int i = 0; i < mobileList.size(); i++) {
-				
-			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
-					Constants.SEC_REGISTER_ID, content);
-			System.out.println(sendSmsResult + "00000000000000");
-			}
-			
-			// 发送给13810002890 ，做一个提醒
-			// String code = mobile;
-			// String[] content = new String[] { code,
-			// Constants.GET_CODE_MAX_VALID };
-			// HashMap<String, String> sendSmsResult =
-			// SmsUtil.SendSms("13810002890",
-			// Constants.GET_CODE_TEMPLE_ID, content);
-
+			//新用户注册通知运营人员
+			userAsyncService.newUserNotice(u.getId());
 		}
 		return u;
 	}

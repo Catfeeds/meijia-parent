@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -33,17 +35,16 @@ import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.UserPushBind;
-import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserImgService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
-import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
@@ -72,9 +73,6 @@ public class UserController extends BaseController {
 	private UserSmsTokenService smsTokenService;
 
 	@Autowired
-	private UserLoginedService userLoginedService;
-
-	@Autowired
 	private OrderSeniorService orderSeniorService;
 
 	@Autowired
@@ -91,6 +89,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserImgService userImgService;
+	
+	@Autowired
+	private UsersAsyncService usersAsyncService;
 
 	// 5. 会员登陆接口
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -124,29 +125,9 @@ public class UserController extends BaseController {
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = userService.genUser(mobile, "", Constants.USER_APP);
 		}
-
-		// 如果第一次登陆未注册时未成功注册环信，则重新注册
-		UserRef3rd userRef3rd = userRef3rdService
-				.selectByUserIdForIm(u.getId());
-		if (userRef3rd == null) {
-			userService.genImUser(u);
-		}
-
-		// 如果第一次登录未注册时未成功分配秘书，则重新分配
-		// UserRefSec userRefSec = userRefSecService.selectByUserId(u.getId());
-		// if(userRefSec == null){
-		// userRef3rdService.allotSec(u);
-		// }
-
-		// 记录用户登陆信息
-		long ip = IPUtil.getIpAddr(request);
-		UserLogined record = userLoginedService.initUserLogined(mobile,
-				u.getId(), loginFrom, ip);
-		userLoginedService.insert(record);
-
+		
 		// 根据mobile找到user_baidu_bind信息
-		UserPushBind userPushBind = userPushBindService.selectByUserId(u
-				.getId());
+		UserPushBind userPushBind = userPushBindService.selectByUserId(u.getId());
 
 		UserPushBindVo vo = new UserPushBindVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
@@ -161,7 +142,15 @@ public class UserController extends BaseController {
 
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, vo);
-
+		
+		//异步操作
+		// 如果第一次登陆未注册时未成功注册环信，则重新注册
+		usersAsyncService.genImUser(u.getId());
+		
+		// 记录用户登陆信息
+		long ip = IPUtil.getIpAddr(request);
+		usersAsyncService.userLogined(u.getId(), loginFrom, ip);
+		
 		return result;
 	}
 
@@ -537,8 +526,7 @@ public class UserController extends BaseController {
 
 		if (!StringUtil.isEmpty(name)) {
 			String username = "";
-			UserRef3rd userRef3rd = userRef3rdService
-					.selectByUserIdForIm(userId);
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
 			// 如果该账号未绑定环信账号
 			if (userRef3rd != null) {
 				username = userRef3rd.getUsername();

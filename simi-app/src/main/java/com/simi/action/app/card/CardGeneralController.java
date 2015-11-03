@@ -29,7 +29,6 @@ import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.card.CardGrneralViewVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.LinkManVo;
 

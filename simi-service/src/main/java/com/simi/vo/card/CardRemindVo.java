@@ -1,7 +1,5 @@
 package com.simi.vo.card;
 
-import com.simi.po.model.card.Cards;
-
 public class CardRemindVo {
 	
 	private Long cardId;

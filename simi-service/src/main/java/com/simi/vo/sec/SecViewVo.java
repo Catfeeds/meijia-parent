@@ -1,9 +1,5 @@
 package com.simi.vo.sec;
 
-import java.util.List;
-
-import com.simi.po.model.user.Tags;
-
 public class SecViewVo {
 	
 

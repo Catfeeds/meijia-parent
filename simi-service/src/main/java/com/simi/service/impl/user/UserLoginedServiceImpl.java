@@ -45,13 +45,13 @@ public class UserLoginedServiceImpl implements UserLoginedService{
 	}
 	
 	@Override
-	public UserLogined initUserLogined(String mobile, Long id, Short login_from, long ip) {
+	public UserLogined initUserLogined() {
 		UserLogined record = new UserLogined();
 		record.setAddTime(TimeStampUtil.getNow()/1000);
-		record.setLoginFrom(login_from);//0 = APP 1 = 微网站 2 = 管理后台
-		record.setMobile(mobile);
-		record.setUserId(id);
-		record.setLoginIp(ip);
+		record.setLoginFrom((short) 0);//0 = APP 1 = 微网站 2 = 管理后台
+		record.setMobile("");
+		record.setUserId(0L);
+		record.setLoginIp(0L);
 		return record;
 	}
 

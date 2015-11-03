@@ -14,20 +14,24 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor {
 	}
 
 	// //用独立的线程来包装，@Async其本质就是如此
+	@Override
 	public void execute(Runnable task) {
 		executor.execute(createWrappedRunnable(task));
 	}
 
+	@Override
 	public void execute(Runnable task, long startTimeout) {
 		// 用独立的线程来包装，@Async其本质就是如此
 		executor.execute(createWrappedRunnable(task), startTimeout);
 	}
 
+	@Override
 	public Future submit(Runnable task) {
 		return executor.submit(createWrappedRunnable(task));
 		// 用独立的线程来包装，@Async其本质就是如此。
 	}
 
+	@Override
 	public Future submit(final Callable task) {
 		// 用独立的线程来包装，@Async其本质就是如此。
 		return executor.submit(createCallable(task));
@@ -35,6 +39,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor {
 
 	private Callable createCallable(final Callable task) {
 		return new Callable() {
+			@Override
 			public T call() throws Exception {
 				try {
 					return (T) task.call();
@@ -48,6 +53,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor {
 
 	private Runnable createWrappedRunnable(final Runnable task) {
 		return new Runnable() {
+			@Override
 			public void run() {
 				try {
 					task.run();

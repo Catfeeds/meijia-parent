@@ -1,7 +1,5 @@
 package com.simi.service.impl.dict;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.dict.AdService;
-import com.simi.vo.dict.DictAdVo;
 import com.simi.po.dao.dict.DictAdMapper;
 import com.simi.po.model.dict.DictAd;
 import com.meijia.utils.TimeStampUtil;

@@ -2,7 +2,6 @@ package com.simi.vo.user;
 
 import java.util.List;
 
-import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
 

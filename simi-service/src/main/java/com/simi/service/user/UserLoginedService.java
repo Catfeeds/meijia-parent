@@ -15,5 +15,5 @@ public interface UserLoginedService {
 
     int updateByPrimaryKey(UserLogined record);
     
-	UserLogined initUserLogined(String mobile, Long id, Short login_from, long ip);
+	UserLogined initUserLogined();
 }

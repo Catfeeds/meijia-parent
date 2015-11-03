@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.service.dict.CardTypeService;
 import com.simi.service.dict.TradeService;
-import com.simi.po.dao.dict.DictCardTypeMapper;
 import com.simi.po.dao.dict.DictTradeMapper;
-import com.simi.po.model.dict.DictCardType;
 import com.simi.po.model.dict.DictTrade;
 
 @Service

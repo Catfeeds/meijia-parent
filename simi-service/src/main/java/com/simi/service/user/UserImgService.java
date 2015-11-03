@@ -1,6 +1,5 @@
 package com.simi.service.user;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.simi.po.model.user.UserImgs;
