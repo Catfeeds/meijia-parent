@@ -3,12 +3,11 @@ package com.simi.vo.card;
 import java.util.List;
 
 import com.simi.po.model.card.CardAttend;
+import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
 
 public class CardViewVo extends Cards {
 
-
-	
 	//用户姓名
 	private String name ;
 	
@@ -17,6 +16,8 @@ public class CardViewVo extends Cards {
 	
 	private List<CardAttend> attends;
 	
+	private  List<CardImgs> cardImgsList;
+ 
 	private String createUserName;
 	
 	private String userName;
@@ -139,6 +140,14 @@ public class CardViewVo extends Cards {
 
 	public void setCartTypeName(String cartTypeName) {
 		this.cartTypeName = cartTypeName;
+	}
+
+	public List<CardImgs> getCardImgsList() {
+		return cardImgsList;
+	}
+
+	public void setCardImgsList(List<CardImgs> cardImgsList) {
+		this.cardImgsList = cardImgsList;
 	}
 	
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.card.CardImgsMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.card.CardImgs" >
+    <id column="img_id" property="imgId" jdbcType="NUMERIC" />
+    <result column="card_id" property="cardId" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    img_id,card_id, user_id, img_url, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from card_imgs
+    where img_id = #{imgId,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByCardId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from card_imgs
+    where card_id = #{cardId,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from card_imgs
+    where img_id = #{imgId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.card.CardImgs" >
+    insert into card_imgs (img_id,card_id, user_id, img_url, 
+      add_time)
+    values (#{imgId,jdbcType=NUMERIC},#{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.card.CardImgs" >
+    insert into card_imgs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="imgId != null" >
+        img_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="imgId != null" >
+        #{imgId,jdbcType=NUMERIC},
+      </if>
+       <if test="userId != null" >
+        #{cardId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardImgs" >
+    update card_imgs
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        card_id = #{cardId,jdbcType=NUMERIC},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where img_id = #{imgId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardImgs" >
+    update card_imgs
+    set user_id = #{userId,jdbcType=NUMERIC},
+    card_id = #{cardId,jdbcType=NUMERIC},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where img_id = #{imgId,jdbcType=NUMERIC}
+  </update>
+</mapper>
