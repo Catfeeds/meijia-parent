@@ -1,16 +1,26 @@
 package com.simi.action.app.card;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
@@ -20,14 +30,17 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardComment;
+import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
+import com.simi.service.card.CardImgsService;
 import com.simi.service.card.CardLogService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
@@ -37,6 +50,7 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.card.CardCommentViewVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.LinkManVo;
@@ -46,6 +60,9 @@ import com.simi.vo.card.LinkManVo;
 public class CardController extends BaseController {
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private CardImgsService cardImgsService;
 	
 	@Autowired
 	private CardService cardService;
@@ -458,5 +475,86 @@ public class CardController extends BaseController {
 		cardLogService.insert(cardLog);
 		return result;
 	}	
-	
+	/**
+	 * 卡片图片上传接口
+	 * @param request
+	 * @param userId
+	 * @param cardId
+	 * @param files
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
+	public AppResultData<Object> userImg(HttpServletRequest request,
+			@RequestParam("user_id") Long userId,
+			@RequestParam("card_id")Long cardId,
+			@RequestParam("file") MultipartFile[] files) throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		Cards cards = cardService.selectByPrimaryKey(cardId);
+        //是否有对应的卡片，没有则返回999
+		if (cards == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.CADR_NOT_EXIST_MG);
+			return result;
+		}
+		List<HashMap<String, String>> imgs = new ArrayList<HashMap<String, String>>();
+
+		if (files != null && files.length > 0) {
+
+			for (int i = 0; i < files.length; i++) {
+				String url = Constants.IMG_SERVER_HOST + "/upload/";
+				String fileName = files[i].getOriginalFilename();
+				String fileType = fileName
+						.substring(fileName.lastIndexOf(".") + 1);
+				fileType = fileType.toLowerCase();
+				String sendResult = ImgServerUtil.sendPostBytes(url,
+						files[i].getBytes(), fileType);
+
+				ObjectMapper mapper = new ObjectMapper();
+
+				HashMap<String, Object> o = mapper.readValue(sendResult,
+						HashMap.class);
+
+				String ret = o.get("ret").toString();
+
+				HashMap<String, String> info = (HashMap<String, String>) o
+						.get("info");
+
+				String imgUrl = Constants.IMG_SERVER_HOST + "/"
+						+ info.get("md5").toString();
+
+				CardImgs cardImg = new CardImgs();
+				cardImg.setImgId(0L);
+				cardImg.setImgUrl(imgUrl);
+				cardImg.setUserId(userId);
+				cardImg.setAddTime(TimeStampUtil.getNowSecond());
+				cardImgsService.insert(cardImg);
+
+				HashMap<String, String> img = new HashMap<String, String>();
+				img.put("user_id", userId.toString());
+				img.put("img", imgUrl);
+				img.put("img_100x100",
+						ImgServerUtil.getImgSize(imgUrl, "100", "100"));
+				img.put("img_200x200",
+						ImgServerUtil.getImgSize(imgUrl, "200", "200"));
+
+				imgs.add(img);
+			}
+		}
+
+		result.setData(imgs);
+		return result;
+	}
+
 }

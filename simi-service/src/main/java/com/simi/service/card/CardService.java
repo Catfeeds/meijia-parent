@@ -3,6 +3,7 @@ package com.simi.service.card;
 import java.util.HashMap;
 import java.util.List;
 import com.github.pagehelper.PageInfo;
+import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
@@ -42,5 +43,7 @@ public interface CardService {
 	List<Cards> selectListByAddtimeTwo();
 
 	List<Cards> selectListByAddtimeThirty();
+
+	
 
 }

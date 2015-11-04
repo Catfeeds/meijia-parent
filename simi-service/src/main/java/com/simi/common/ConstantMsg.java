@@ -43,7 +43,8 @@ public class ConstantMsg {
 
 	//用户地址不存在
 	public static String USER_NOT_EXIST_MG = "用户不存在";
-	
+	//卡片不存在
+	public static String CADR_NOT_EXIST_MG = "卡片不存在";
 	//用户已存在
 	public static String USER_EXIST_MG = "用户已存在";
 	

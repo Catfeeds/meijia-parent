@@ -19,6 +19,7 @@ import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
 import com.simi.po.model.card.CardAttend;
+import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.user.UserPushBind;
@@ -34,12 +35,16 @@ import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
+import com.simi.po.dao.card.CardImgsMapper;
 import com.simi.po.dao.card.CardsMapper;
 
 @Service
 public class CardsServiceImpl implements CardService {
 	@Autowired
 	CardsMapper cardsMapper;
+	
+	@Autowired
+	CardImgsMapper cardImgsMapper;
 	
 	@Autowired
 	UsersService usersService;
@@ -153,7 +158,12 @@ public class CardsServiceImpl implements CardService {
 				}
 			}
 		}
-		
+		//卡片图片
+		List<CardImgs> list = cardImgsMapper.selectByCardId(vo.getCardId());
+		System.out.println(list);
+		if (list != null) {
+			vo.setCardImgsList(list);
+		}
 		
 		return vo;
 	}
