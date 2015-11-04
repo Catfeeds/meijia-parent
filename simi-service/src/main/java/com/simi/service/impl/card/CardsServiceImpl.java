@@ -354,6 +354,14 @@ public class CardsServiceImpl implements CardService {
 		return result;
 	}
 	
+	@Override
+	public List<Cards> selectByRemindAll(CardSearchVo vo) {
+		
+		List<Cards> result = new ArrayList<Cards>();
+		result = cardsMapper.selectByRemindAll(vo);
+		return result;
+	}	
+	
 	/**
 	 * 查找服务时间超过当前时间的卡片,并更新状态 = 3
 	 * @return

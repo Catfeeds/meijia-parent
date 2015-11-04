@@ -230,6 +230,24 @@
 		) as T
 		order by service_time asc
 	</select>
+	
+<!-- 获得即将闹钟提醒的卡片列表 -->
+	<select id="selectByRemindAll" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		select <include refid="Base_Column_List" />
+		from cards
+		WHERE 1 = 1
+		<if test="startTime != null">
+			<![CDATA[	and service_time >= ${startTime} ]]>   
+		</if>	
+			
+		<if test="endTime != null">
+			<![CDATA[	and service_time <= ${endTime} ]]>   
+		</if>
+		
+		and status in ( 1, 2)
+		order by service_time asc
+	</select>	
 		
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cards

@@ -135,7 +135,7 @@ public class TimeStampUtil {
 	}
 	
 	public static Long timeStampToDateHour(Long t) {
-		String format = "yyyy-MM-dd HH:mm";
+		String format = "yyyy-MM-dd HH:mm:00";
 		SimpleDateFormat df = new SimpleDateFormat(format);
 		String str = df.format(t);
 		Date pDate = DateUtil.parse(str, format);

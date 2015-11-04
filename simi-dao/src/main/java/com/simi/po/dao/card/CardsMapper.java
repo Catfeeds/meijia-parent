@@ -30,6 +30,8 @@ public interface CardsMapper {
 
 	List<Cards> selectByReminds(CardSearchVo vo);
 
+	List<Cards> selectByRemindAll(CardSearchVo vo);	
+	
 	List<Cards> selectByOverTime(Object v);
 
 	int updateFinishByOvertime();

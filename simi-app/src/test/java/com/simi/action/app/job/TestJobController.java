@@ -15,7 +15,7 @@ public class TestJobController extends JUnitActionBase{
 	@Test
     public void testSetCardFinish() throws Exception {
 
-		String url = "/app/job/set_card_finish.json";
+		String url = "/app/job/card/set_card_finish.json";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 
@@ -29,4 +29,22 @@ public class TestJobController extends JUnitActionBase{
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
+	
+	@Test
+    public void testCardNotify() throws Exception {
+
+		String url = "/app/job/card/card_notify.json";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+
+	  
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
 }

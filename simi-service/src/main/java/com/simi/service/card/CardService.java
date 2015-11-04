@@ -42,6 +42,8 @@ public interface CardService {
 
 	List<Cards> selectListByAddtimeThirty();
 
+	List<Cards> selectByRemindAll(CardSearchVo vo);
+
 	
 
 }
