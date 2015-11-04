@@ -52,7 +52,7 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 	
 	@Autowired
 	public AdminAccountService adminAccountService;
-	
+		
 	/**
 	 * 第三方登录，注册绑定环信账号,异步操作
 	 */
@@ -192,5 +192,18 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		
 		return new AsyncResult<Boolean>(true);
 	}
+	
+	/**
+	 *  用户相互加为好友
+	 */	
+	@Async
+	@Override
+	public Future<Boolean> addFriends(Users u, Users friendUser) {
+		
+		userFriendService.addFriends(u, friendUser);
+		
+		return new AsyncResult<Boolean>(true);
+	}
+	
 	
 }

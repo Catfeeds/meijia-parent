@@ -22,6 +22,8 @@ import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.CardAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardLogService;
 import com.simi.service.card.CardService;
@@ -43,8 +45,8 @@ public class CardGeneralController extends BaseController{
 	private UsersService userService;
 	
 	@Autowired
-	private CardLogService cardLogService;
-	
+	private UsersAsyncService usersAsyncService;		
+		
 	@Autowired
 	private CardAttendService cardAttendService;
 	
@@ -52,7 +54,11 @@ public class CardGeneralController extends BaseController{
 	private UserRef3rdService userRef3rdService;
 	
 	@Autowired
+	private CardAsyncService cardAsyncService;		
+	
+	@Autowired
 	private UserFriendService userFriendService;
+	
 	@RequestMapping(value = "post_card_default", method = RequestMethod.POST)
 	public AppResultData<Object> postCard (
 			@RequestParam(value = "card_id", required = false, defaultValue = "0") Long cardId,
@@ -76,7 +82,8 @@ public class CardGeneralController extends BaseController{
 			@RequestParam(value = "ticket_from_city_id", required = false, defaultValue = "0") Long ticketFromCityId,
 			@RequestParam(value = "ticket_to_city_id", required = false, defaultValue = "0") Long ticketToCityId,
 			@RequestParam(value = "status", required = false, defaultValue = "1") Short status){
-AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		Users u = userService.selectByPrimaryKey(userId);
 
@@ -125,28 +132,26 @@ AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, Co
 		//添加卡片日志
 		Users createUser = userService.selectByPrimaryKey(createUserId);
 		
-		CardLog cardLog = cardLogService.initCardLog();
-		cardLog.setCardId(cardId);
-		cardLog.setUserId(createUserId);
+		
 		
 		String userName = createUser.getName().equals("") ? createUser.getMobile() : createUser.getName();
-		cardLog.setUserName(userName);
-		cardLog.setStatus(status);		
+		String remarks = "";
 		
 		if (cardId > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.updateByPrimaryKeySelective(record);
 			
-			cardLog.setRemarks(userName + "修改了卡片信息.");
+			remarks = userName + "修改了卡片信息.";
 		} else {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.insert(record);
 			cardId = record.getCardId();		
 			
-			cardLog.setRemarks(userName + "创建了卡片信息.");
+			remarks = userName + "创建了卡片信息.";
 		}
 		
-		cardLogService.insert(cardLog);
+		//添加卡片日志
+		cardAsyncService.cardLog(userId, cardId, remarks);
 		
 		
 //		System.out.println(attends);
@@ -178,10 +183,7 @@ AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, Co
 					if (newUser == null) {
 						newUser = userService.genUser(mobile, item.getName(), (short) 2);
 						
-						UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(newUser.getId());
-						if(userRef3rd == null){
-							userService.genImUser(newUser);
-						}						
+						usersAsyncService.genImUser(newUser.getId());					
 					}
 					newUserId = newUser.getId();
 					
@@ -194,31 +196,18 @@ AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, Co
 					cardAttendService.insert(cardAttend);
 					
 					
-					//相互加为好友.
-					userFriendService.addFriends(u, newUser);
+					//相互加为好友. 异步操作
+					usersAsyncService.addFriends(u, newUser);
 				}
 			}
 		}
 		
 		CardViewVo vo = cardService.changeToCardViewVo(record);
 		
-	//	CardGrneralViewVo vo = cardService.changeToCardGrneralViewVo(record);
+		//发送推送消息和短信，异步.
+		cardAsyncService.cardNotification(record, true, true);
 		
-		//todo 1. 如果是立即给相关人员发送消息，则需要短信模板的通知.
-		if (cardId.equals(0L) && setNowSend.equals((short)1)) {
-			cardService.cardNotification(record);
-		}
-		/**
-		 * setSecDo.equals((short)1);
-		 * 给对应的助理发消息~
-		 * 
-		 */
-		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
-		/*if (cardId.equals(0L) && setSecDo.equals((short)1)) {
-			//找出卡片对应的秘书，给秘书发送推送信息
 			
-		}*/
-		
 		result.setData(vo);
 		return result;
 	}

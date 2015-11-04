@@ -159,6 +159,7 @@ public class UsersServiceImpl implements UsersService {
 		vo.setName(viewUser.getName());
 		vo.setRestMoney(new BigDecimal(0));
 		vo.setMobile(viewUser.getMobile());
+		vo.setScore(viewUser.getScore());
 		if (user.getId().equals(viewUser.getId())) {
 			vo.setRestMoney(viewUser.getRestMoney());
 		}

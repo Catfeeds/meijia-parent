@@ -2,6 +2,8 @@ package com.simi.service.async;
 
 import java.util.concurrent.Future;
 
+import com.simi.po.model.user.Users;
+
 public interface UsersAsyncService {
 
 	Future<Boolean> genImUser(Long userId);
@@ -11,5 +13,7 @@ public interface UsersAsyncService {
 	Future<Boolean> userMobileCity(Long userId);
 
 	Future<Boolean> newUserNotice(Long userId);
+
+	Future<Boolean> addFriends(Users u, Users friendUser);
 	
 }

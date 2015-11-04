@@ -31,6 +31,8 @@ public class UserIndexVo  {
 	
 	private int TotalFriends;
 	
+	private Integer score;
+	
 
 	public long getId() {
 		return Id;
@@ -134,5 +136,13 @@ public class UserIndexVo  {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 }
