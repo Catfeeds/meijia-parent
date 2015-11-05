@@ -139,15 +139,15 @@
 										</div>
 									</div>
 						
-						<c:if test="${contentModel.isApproval == 0 || contentModel.isApproval ==1}">
+						<%-- <c:if test="${contentModel.isApproval == 0 || contentModel.isApproval ==1}"> --%>
 							<div class="form-actions fluid">
 								<div class="col-md-offset-6 col-md-6">
 									<button type="submit" id="applyForm_btn"
-										class="btn btn-success">审批</button>
+										class="btn btn-success">审批并保存 </button>
 								</div>
 
 							</div>
-						</c:if>
+						<%-- </c:if> --%>
 
 						<%-- <c:if
 							test="${contentModel.headImg != null && scontentModel.headImg != '' }">
