@@ -35,7 +35,7 @@
   padding-left:15px!important;
 }
 .item-inner{
-  padding-left:0!important;
+  padding-left:15!important;
 }
 .card-content:after{
   content: none;
