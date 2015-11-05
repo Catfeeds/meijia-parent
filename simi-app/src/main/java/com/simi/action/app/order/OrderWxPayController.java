@@ -137,7 +137,7 @@ public class OrderWxPayController extends BaseController {
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
-			body = "云行政充值购买";
+			body = "充值";
 		}		
 		
 		//处理云行政卡购买的情况
@@ -163,7 +163,7 @@ public class OrderWxPayController extends BaseController {
 			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
-			body = "云行政服务购买";
+			body = "服务费";
 		}			
 
 		//测试
