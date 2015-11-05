@@ -75,6 +75,7 @@ public class SecController extends BaseController {
 			//获取秘书列表
 			UserSearchVo searchVo = new UserSearchVo();
 			searchVo.setUserType((short) 1);
+			searchVo.setIsApproval((short) 2);
 			PageInfo userList = userService.searchVoListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 			List<Users> users = userList.getList();
 			List<SecViewVo> secList = new ArrayList<SecViewVo>();

@@ -262,6 +262,10 @@ public class UsersServiceImpl implements UsersService {
 		if (searchVo.getUserType() != null) {
 			conditions.put("userType", searchVo.getUserType());
 		}
+		
+		if (searchVo.getIsApproval() != null) {
+			conditions.put("isApproval", searchVo.getIsApproval());
+		}
 
 		PageHelper.startPage(pageNo, pageSize);
 		List<Users> list = usersMapper.selectByListPage(conditions);

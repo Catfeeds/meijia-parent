@@ -8,6 +8,8 @@ public class UserSearchVo {
 	  private Long secId;
 	  
 	  private Short userType;
+	  
+	  private Short isApproval;
 
 	public String getMobile() {
 		return mobile;
@@ -31,5 +33,13 @@ public class UserSearchVo {
 
 	public void setUserType(Short userType) {
 		this.userType = userType;
+	}
+
+	public Short getIsApproval() {
+		return isApproval;
+	}
+
+	public void setIsApproval(Short isApproval) {
+		this.isApproval = isApproval;
 	}
 }

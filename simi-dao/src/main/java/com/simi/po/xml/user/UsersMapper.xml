@@ -107,9 +107,12 @@
 			<foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
 				#{item}
 			</foreach>
-
-			and is_approval = 1;
 		</if>
+		
+		<if test="isApproval != null">
+			and is_approval = #{isApproval,jdbcType=NUMERIC};
+		</if>
+		
 		order by add_time desc
 	</select>
 	<!-- 秘书申请列表列表 -->
