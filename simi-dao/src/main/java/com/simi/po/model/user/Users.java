@@ -23,9 +23,9 @@ public class Users {
     
     private short level;
     
-    private Long workStart;
+    private String workStart;
     
-    private Long workEnd;
+    private String workEnd;
     
     private short isDoor;
     
@@ -138,23 +138,22 @@ public class Users {
 		this.level = level;
 	}
 
-
-	public Long getWorkStart() {
+	public String getWorkStart() {
 		return workStart;
 	}
 
 
-	public void setWorkStart(Long workStart) {
+	public void setWorkStart(String workStart) {
 		this.workStart = workStart;
 	}
 
 
-	public Long getWorkEnd() {
+	public String getWorkEnd() {
 		return workEnd;
 	}
 
 
-	public void setWorkEnd(Long workEnd) {
+	public void setWorkEnd(String workEnd) {
 		this.workEnd = workEnd;
 	}
 

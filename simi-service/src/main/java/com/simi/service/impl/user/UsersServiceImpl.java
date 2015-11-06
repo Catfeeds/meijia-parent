@@ -227,8 +227,8 @@ public class UsersServiceImpl implements UsersService {
 		u.setSex(" ");
 		u.setIntroduction("");
 		u.setLevel((short) 0);
-		u.setWorkStart(0L);
-		u.setWorkEnd(0L);
+		u.setWorkStart("");
+		u.setWorkEnd("");
 		u.setIsDoor((short) 0);
 		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));

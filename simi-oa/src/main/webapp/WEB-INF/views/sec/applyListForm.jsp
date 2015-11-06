@@ -5,8 +5,8 @@
 <%@ include file="../shared/taglib.jsp"%>
 <%@ taglib prefix="citySelectTag" uri="/WEB-INF/tags/citySelect.tld"%>
 <!-- 学历选择标签 -->
-<%@ taglib prefix="degreeSelectTag"
-	uri="/WEB-INF/tags/degreeTypeSelect.tld"%>
+<%@ taglib prefix="degreeSelectTag" uri="/WEB-INF/tags/degreeTypeSelect.tld"%>
+
 <html>
 <head>
 
@@ -50,7 +50,7 @@
 
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">姓名*</label>
+							<label class="col-md-2 control-label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label>
 							<div class="col-md-5">
 								<form:input path="realName" class="form-control"
 									placeholder="员工姓名" maxLength="32" />
@@ -59,7 +59,7 @@
 						</div>
 						<div class="form-group">
 
-							<label class="col-md-2 control-label">昵称</label>
+							<label class="col-md-2 control-label">昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</label>
 							<div class="col-md-5">
 								<form:input path="name" class="form-control" placeholder="昵称"
 									maxLength="32" />
@@ -67,7 +67,7 @@
 							</div>
 						</div>
 						<div class="form-group required">
-							<label class="col-md-2 control-label">性别</label>
+							<label class="col-md-2 control-label">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
 							<div class="col-md-5">
 								<form:radiobutton path="sex" value="0" label=" 男" />
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -76,7 +76,7 @@
 						</div>
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">手机号</label>
+							<label class="col-md-2 control-label">手&nbsp;&nbsp;机&nbsp;&nbsp;号</label>
 							<div class="col-md-5">
 								<form:input path="mobile" class="form-control" placeholder="手机号"
 									maxLength="32" />
@@ -92,7 +92,22 @@
 								<form:errors path="idCard" class="field-has-error"></form:errors>
 							</div>
 						</div>
-
+						<div class="form-group">
+							<label class="col-md-2 control-label required" >工作时间</label>
+							<div class="col-md-5">
+								<div class="col-md-5">
+								<form:input path="workStart" placeholder="00:00" class="form-control" maxLength="32" />
+								<form:errors path="workStart"  class="field-has-error"></form:errors>
+								</div>
+						
+								<div class="col-md-5">
+								<form:input path="workEnd" placeholder="00:00" class="form-control" maxLength="32" />
+								<form:errors path="workEnd" class="field-has-error"></form:errors>
+								</div>
+							</div>
+						</div>
+						
+                        
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">个人简介</label>
@@ -106,7 +121,7 @@
 							test="${contentModel.headImg != null && contentModel.headImg != '' }">
 							<div class="form-group ">
 
-								<label class="col-md-2 control-label">图片</label>
+								<label class="col-md-2 control-label">图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片</label>
 								<div class="col-md-5">
 									<img src="${ contentModel.headImg }" />
 								</div>
@@ -123,7 +138,7 @@
 						</div>
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">专业</label>
+							<label class="col-md-2 control-label">专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业</label>
 							<div class="col-md-5">
 								<form:input path="major" class="form-control" placeholder="专业"
 									maxLength="32" />
@@ -132,7 +147,7 @@
 						</div>
 
 						<div class="form-group required">
-							<label class="col-md-2 control-label">级别</label>
+							<label class="col-md-2 control-label">级&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</label>
 							<div class="col-md-5">
 								<form:radiobutton path="level" value="0" label="初级" />
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -155,8 +170,9 @@
 								<degreeSelectTag:select degreeId="${ contentModel.edu}"/>
 							</div>
 						</div> --%>
+						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">标签</label>
+							<label class="col-md-2 control-label">标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;签</label>
 							<div class="col-md-5" id="allTag">
 								<c:forEach items="${tagList }" var="tag">
 									<input type="button" name="tagName" value="${tag.tagName }"
