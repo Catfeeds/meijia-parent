@@ -27,7 +27,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
-			权限管理 </header>
+			服务商报价列表</header>
 
 			<hr	style="width: 100%; color: black; height: 1px; background-color: black;" />
 
@@ -72,7 +72,7 @@
 		                    var parentId = $('#treeData-list').treeLite('parentId');
 		                    var expanded = $('#treeData-list').treeLite('expandedIds');
 		                    if(parentId != undefined)
-		                        location.href = "<%=UrlHelper.resolveWithReturnUrl("/authority/add/{0}",
+		                        location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/add/{0}",
 						request.getAttribute("requestUrl"),
 						request.getAttribute("requestQuery"), "expanded={1}",
 						pageContext)%>".replace("{0}", parentId).replace(escape("{1}"), expanded);
@@ -87,7 +87,7 @@
 		                    var selectedId = $('#treeData-list').treeLite('selectedId');
 		                    var expanded = $('#treeData-list').treeLite('expandedIds');
 		                    if(selectedId != undefined)
-		                    	location.href = "<%=UrlHelper.resolveWithReturnUrl("/authority/add/{0}",
+		                    	location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/add/{0}",
 						request.getAttribute("requestUrl"),
 						request.getAttribute("requestQuery"), "expanded={1}",
 						pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
@@ -102,7 +102,7 @@
 		                    var selectedId = $('#treeData-list').treeLite('selectedId');
 		                    var expanded = $('#treeData-list').treeLite('expandedIds');
 		                    if(selectedId != undefined)
-								location.href = "<%=UrlHelper.resolveWithReturnUrl("/authority/edit/{0}",request.getAttribute("requestUrl"),request.getAttribute("requestQuery"), "expanded={1}",pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
+								location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/edit/{0}",request.getAttribute("requestUrl"),request.getAttribute("requestQuery"), "expanded={1}",pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
 		                    else
 		                        alert("必须选择择一个节点！");
 		                    return false;
@@ -116,7 +116,7 @@
 		                    if(selectedId && selectedId != undefined)
 		                    {
 		                        if(confirm("确认删除所选节点？"))
-		                        	location.href = "<%= UrlHelper.resolveWithReturnUrl("/authority/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), "expanded={1}", pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
+		                        	location.href = "<%= UrlHelper.resolveWithReturnUrl("/partnerServicePrice/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), "expanded={1}", pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
 		                    }
 		                    else
 		                        alert("必须选择择一个节点！");

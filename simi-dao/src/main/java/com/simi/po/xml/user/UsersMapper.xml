@@ -117,7 +117,7 @@
 		</if>
 		
 		<if test="isApproval != null">
-			and is_approval = #{isApproval,jdbcType=NUMERIC};
+			and is_approval = #{isApproval,jdbcType=NUMERIC}
 		</if>
 		
 		order by add_time desc

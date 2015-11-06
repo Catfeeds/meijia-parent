@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +30,12 @@ import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.admin.AdminAuthority;
 import com.simi.po.model.admin.AdminRole;
 import com.simi.service.admin.AdminAuthorityService;
+import com.simi.service.admin.AdminRoleAuthorityService;
 import com.simi.service.admin.AdminRoleService;
-import com.meijia.utils.common.extension.StringHelper;
 import com.simi.vo.admin.AdminRoleSearchVo;
 import com.simi.vo.admin.AdminRoleVo;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.common.extension.StringHelper;
 
 
 @Controller
@@ -45,7 +47,10 @@ public class AdminRoleController extends AdminController {
 
 	@Autowired
 	private AdminAuthorityService adminAuthorityService;
-
+	
+	@Autowired
+	private AdminRoleAuthorityService adminRoleAuthorityService;
+	
 	//@AuthPassport
 	@RequestMapping(value="/list", method = {RequestMethod.GET})
     public String list1(HttpServletRequest request, Model model, AdminRoleSearchVo searchModel){
@@ -57,74 +62,84 @@ public class AdminRoleController extends AdminController {
 		int pageSize = ServletRequestUtils.getIntParameter(request,ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		PageInfo result = adminRoleService.searchVoListPage(searchModel, pageNo, pageSize);
 		model.addAttribute("contentModel",result);
-        return "role/list";
+        return "role/roleList";
     }
 
 
 	//@AuthPassport
-	@RequestMapping(value = "/add", method = {RequestMethod.GET})
-	public String toAddAdminRole(@ModelAttribute("adminRole") AdminRole adminRole){
+	@RequestMapping(value = "/toRoleForm", method = {RequestMethod.GET})
+	public String toAddAdminRole(HttpServletRequest request,Model model){
+		Long ids = Long.valueOf(request.getParameter("id"));
+		if (ids == null) {
+			ids = 0L;
+		}
+		AdminRole adminRole  = adminRoleService.initAdminRole();
 
-        return "role/addAdminRole";
+		if (ids != null && ids > 0L) {
+			adminRole = adminRoleService.selectByPrimaryKey(ids);
+		}		
+		
+		AdminRoleVo adminRoleVo = (AdminRoleVo)adminRoleService.selectAdminRoleVoByPrimaryKey(ids);
+		BeanUtils.copyProperties(adminRole,adminRoleVo);
+		
+		List<Long> checkedAuthorityIds = new ArrayList<Long>();
+		List<Integer> checkedAuthorityIntegers = new ArrayList<Integer>();
+
+		if(adminRoleVo.getChildList()!=null){
+			List<AdminAuthority> roleAuthorities=adminRoleVo.getChildList();
+			for (Iterator iterator  = roleAuthorities.iterator(); iterator.hasNext();) {
+				AdminAuthority adminAuthority = (AdminAuthority) iterator.next();
+				if(adminAuthority!=null){
+					checkedAuthorityIds.add(adminAuthority.getId());
+					checkedAuthorityIntegers.add(adminAuthority.getId().intValue());
+				}
+			}
+		}
+		if(!model.containsAttribute("adminRole")){
+			Long[] checkedAuthorityIdsArray=new Long[checkedAuthorityIds.size()];
+			checkedAuthorityIds.toArray(checkedAuthorityIdsArray);
+			adminRoleVo.setAuthorityIds(checkedAuthorityIdsArray);
+			model.addAttribute("adminRole", adminRoleVo);
+		}
+
+		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
+		List<TreeModel> children=TreeModelExtension.ToTreeModels(adminAuthorityService.listChain(), null, checkedAuthorityIntegers, StringHelper.toIntegerList( expanded, ","));
+		List<TreeModel> treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel(null,null,"根节点",false,false,false,children)));
+		model.addAttribute(treeDataSourceName, JSONArray .fromObject(treeModels, new JsonConfig()).toString());
+		
+		model.addAttribute(selectDataSourceName,
+				adminAuthorityService.getSelectSource());
+        return "role/roleForm";
 	}
-
 	//@AuthPassport
-	@RequestMapping(value ="/addAdminRole", method = {RequestMethod.POST})
+	@RequestMapping(value ="/roleForm", method = {RequestMethod.POST})
     public String addAdminRole(HttpServletRequest request, Model model,
-    		@ModelAttribute("adminRole") AdminRole adminRole, BindingResult result)  {
+    		@ModelAttribute("adminRole") AdminRoleVo adminRoleVo, BindingResult result)  {
+		String id = request.getParameter("id");
+		if (StringUtil.isEmpty(id)) {
+			id = "0";
+		}
+		//保存角色
+		AdminRole adminRole = adminRoleService.initAdminRole();
+		if(id !=null && Long.valueOf(id) >0){
+			adminRoleService.updateByPrimaryKeySelective(adminRole);
+		}else {
+			adminRole.setName(adminRoleVo.getName());
+			adminRoleService.insertSelective(adminRole);
+			adminRoleVo.setId(adminRole.getId());
+			id = adminRole.getId().toString();
+		}
+		//将角色和选中的权限绑定
+		  if(result.hasErrors())
+	            return bind(request, model, id);
 
-		adminRole.setVersion(0L);
-		adminRole.setEnable((short)0);
-		adminRoleService.insertSelective(adminRole);
-
+	        adminRoleService.saveRoleToAuthorize(Long.valueOf(id), ArrayHelper.removeArrayLongItem(adminRoleVo.getAuthorityIds(), new Integer(0)));
+	        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+	        if(returnUrl==null)
+	        	returnUrl="role/list";
     	return "redirect:list";
     }
 
-	//@AuthPassport
-	@RequestMapping(value ="/edit/{id}", method = {RequestMethod.GET})
-	public String editAdminRoleById(Model model,@PathVariable(value="id") String id,HttpServletRequest response)  {
-		Long ids = 0L;
-		if (id != null && NumberUtils.isNumber(id)) {
-			ids = Long.valueOf(id.trim());
-		}
-		AdminRole  adminRole=  adminRoleService.selectByPrimaryKey(ids);
-		model.addAttribute("adminRole",adminRole);
-
-		return "role/editAdminRole";
-	}
-
-	//@AuthPassport
-	@RequestMapping(value ="/saveAdminRole", method = {RequestMethod.POST})
-	 public String saveAdminRole(HttpServletRequest request, Model model,
-	    		@ModelAttribute("adminRole") AdminRole adminRole, BindingResult result)  {
-			adminRole.setId(Long.valueOf(request.getParameter("id")));
-			adminRoleService.updateByPrimaryKeySelective(adminRole);
-	    	return "redirect:list";
-	    }
-	//@AuthPassport
-	@RequestMapping(value ="/enable/{id}", method = {RequestMethod.GET})
-	public String enableAdminRole(Model model,@PathVariable(value="id") String id,HttpServletRequest response)  {
-		Long ids = 0L;
-		if (id != null && NumberUtils.isNumber(id)) {
-			ids = Long.valueOf(id.trim());
-		}
-		AdminRole adminRole = adminRoleService.selectByPrimaryKey(ids);
-		adminRole.setEnable(ConstantOa.ROLE_ENABLE);
-		adminRoleService.updateByPrimaryKeySelective(adminRole);
-		return "redirect:/role/list";
-	}
-	//@AuthPassport
-	@RequestMapping(value ="/disable/{id}", method = {RequestMethod.GET})
-	public String disableAdminRole(Model model,@PathVariable(value="id") String id,HttpServletRequest response)  {
-		Long ids = 0L;
-		if (id != null && NumberUtils.isNumber(id)) {
-			ids = Long.valueOf(id.trim());
-		}
-		AdminRole adminRole = adminRoleService.selectByPrimaryKey(ids);
-		adminRole.setEnable(ConstantOa.ROLE_DISABLE);
-		adminRoleService.updateByPrimaryKeySelective(adminRole);
-		return "redirect:/role/list";
-	}
 	//@AuthPassport
 	@RequestMapping(value ="/delete/{id}", method = {RequestMethod.GET})
 	public String deleterAdminRole(Model model,@PathVariable(value="id") String id,HttpServletRequest response)  {
@@ -133,8 +148,11 @@ public class AdminRoleController extends AdminController {
 			ids = Long.valueOf(id.trim());
 		}
 		String path = "redirect:/role/list";
+		//删除角色
 		int result = adminRoleService.deleteByPrimaryKey(ids);
-		if(result>0){
+		//删除该角色对应的权限
+		int results = adminRoleAuthorityService.deleteByRoleId(ids);
+		if(result>0 && results >0){
 			return path;
 		}else{
 			return "error";
@@ -148,8 +166,8 @@ public class AdminRoleController extends AdminController {
 	 * @return 跳转到绑定权限的页面
 	 */
 	//@AuthPassport
-	@RequestMapping(value="/bind/{id}", method = {RequestMethod.GET})
-	public String bind(HttpServletRequest request, Model model, @PathVariable(value="id") String id) {
+	/*@RequestMapping(value="/bind/{id}", method = {RequestMethod.GET})*/
+	public String bind(HttpServletRequest request, Model model,  String id) {
 		
 		Long ids = 0L;
 		if (id != null && NumberUtils.isNumber(id)) {
@@ -183,27 +201,5 @@ public class AdminRoleController extends AdminController {
 		model.addAttribute(treeDataSourceName, JSONArray .fromObject(treeModels, new JsonConfig()).toString());
 
 		return "role/bind";
-	}
-	/**
-	 * 将权限和角色的对应关系，保存
-	 * @param request
-	 * @param model
-	 * @param adminRoleVo
-	 * @param id
-	 * @param result
-	 * @return 跳转到角色列表页面
-	 */
-	//@AuthPassport
-	@RequestMapping(value="/bind/{id}", method = {RequestMethod.POST})
-	public String bind(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") AdminRoleVo adminRoleVo,
-			@PathVariable(value="id") String id, BindingResult result) {
-        if(result.hasErrors())
-            return bind(request, model, id);
-
-        adminRoleService.saveRoleToAuthorize(Long.valueOf(id), ArrayHelper.removeArrayLongItem(adminRoleVo.getAuthorityIds(), new Integer(0)));
-        String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
-        if(returnUrl==null)
-        	returnUrl="role/list";
-    	return "redirect:"+returnUrl;
 	}
 }

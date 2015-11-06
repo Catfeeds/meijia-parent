@@ -21,7 +21,7 @@ public class TestSecController extends JUnitActionBase{
 	@Test
     public void testGetUsers() throws Exception {
 		String url = "/app/sec/get_users.json";
-		String params = "?sec_id=1";
+		String params = "?sec_id=275";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

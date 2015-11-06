@@ -4,7 +4,7 @@
 
 <!-- 	  <classPathEntry location="C:\software\sonatype-work\nexus\storage\central\mysql\mysql-connector-java\5.1.33\mysql-connector-java-5.1.33.jar" />
  -->
-	<classPathEntry location="/workspace/jar/mysql-connector-java-5.1.33.jar" />
+	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
 
 	<!-- 数据库链接URL、用户名、密码 -->
 	<context id="jdbc-test">
@@ -44,8 +44,10 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-		<!-- 服务提供商表-->
-		<table schema="simi" tableName="partners"
+
+
+		<!-- 服务价格表   -->
+		<table schema="simi" tableName="partner_service_prices"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -54,33 +56,27 @@
 			enableDeleteByExample="false"
 			enableSelectByExample="false"
 			enableCountByExample="false">
-			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="is_door" property="isDoor" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="province_id" property="provinceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="is_cooperate" property="isCooperate" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="admin_id" property="adminId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_price_id" property="servicePriceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			</table>
+		<!-- 服务价格说明表 -->
+		<table schema="simi" tableName="partner_service_price_detail"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_price_id" property="servicePriceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
-		<!-- 服务类别表   -->
-		<table schema="simi" tableName="partner_service_type"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="service_type_id" property="serviceTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			</table>
-		<!-- 提供商和服务类别关联表 -->
-		<table schema="simi" tableName="partner_ref_service_type"
+		
+		<!-- 服务商业务员表 -->
+		<table schema="simi" tableName="parent_users"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -90,28 +86,15 @@
 			enableSelectByExample="false"
 			enableCountByExample="false">
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="service_type_id" property="serviceTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			</table>
-		<!-- 采集的提供商表 -->
-		<table schema="simi" tableName="spider_partner"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="spider_partner_id" property="spiderPartnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="service_type_id" property="serviceTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="last_spider_time" property="lastSpiderTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			</table>
+			
+		</table>
+		
+		
 		<!-- 提供商联系人信息表 -->
-		<table schema="simi" tableName="partner_link_man"
+		<table schema="simi" tableName="parent_user_prices"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -122,38 +105,11 @@
 			enableCountByExample="false">
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			</table>
-		<!-- 提供商与地区关联表 -->
-		<table schema="simi" tableName="partner_ref_region"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="region_id" property="regionId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			</table>
-		<!-- 提供商与城市关联表 -->
-		<table schema="simi" tableName="partner_ref_city"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			</table>
+			<columnOverride  column="service_price_id" property="servicePriceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>
+
 
 	</context>
 </generatorConfiguration>

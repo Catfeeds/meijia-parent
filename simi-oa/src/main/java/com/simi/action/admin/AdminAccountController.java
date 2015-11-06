@@ -1,6 +1,7 @@
 package com.simi.action.admin;
 
 import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.simi.oa.common.ConstantOa;
 import com.simi.oa.common.ValidatException;
 import com.simi.oa.vo.account.AccountRegisterVo;
@@ -22,9 +24,8 @@ import com.simi.po.model.admin.AdminAccount;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.admin.AdminAuthorityService;
 import com.simi.service.admin.AdminRoleService;
-import com.meijia.utils.DateUtil;
-import com.meijia.utils.StringUtil;
 import com.simi.vo.admin.AccountSearchVo;
+import com.meijia.utils.StringUtil;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -38,7 +39,7 @@ public class AdminAccountController extends AdminController {
 
 	@Autowired
 	private AdminAuthorityService adminAuthorityService;
-
+		
 	@RequestMapping(value = "/register", method = { RequestMethod.GET })
 	public String register(HttpServletRequest request, Model model) {
 		Long ids = Long.valueOf(request.getParameter("id"));
@@ -55,37 +56,42 @@ public class AdminAccountController extends AdminController {
 			
 		}		
 		accountRegisterVo.setId(account.getId());
-		model.addAttribute("contentModel", accountRegisterVo);
+				
+		model.addAttribute("adminAccount", accountRegisterVo);
 		model.addAttribute(selectDataSourceName,
-				adminRoleService.getSelectSource());	
+				adminRoleService.getSelectSource());
+		
 		return "account/adminForm";
 	}
 
-	@RequestMapping(value = "/register", method = { RequestMethod.POST })
+	@RequestMapping(value = "/adminForm", method = { RequestMethod.POST })
 	public String register(
 			HttpServletRequest request,
 			Model model,
-			@Valid @ModelAttribute("contentModel") AccountRegisterVo accountRegisterVo,
+			@Valid @ModelAttribute("adminAccount") AccountRegisterVo accountRegisterVo,
 			BindingResult result) throws ValidatException,
-			NoSuchAlgorithmException {
-		Long ids = Long.valueOf(request.getParameter("id"));
+			NoSuchAlgorithmException {  
+		Long ids = Long.valueOf(request.getParameter("id"));	 // 主键id
+		
+		Long roleId = Long.valueOf(request.getParameter("roleId"));//选择的角色
+		
 		
 		AdminAccount account = null;
+		
+		//新增
 		if (ids == null||ids == 0) {
 			account = adminAccountService.initAccount();
+			
 		} else {
+			
 			account = adminAccountService.selectByPrimaryKey(ids);
-		}				
+		}
+		
+		
 		BeanUtils.copyProperties(accountRegisterVo, account);
 		
-		String passwordMd5 = StringUtil.md5(account.getPassword().trim());
+			String passwordMd5 = StringUtil.md5(account.getPassword().trim());
 		account.setPassword(passwordMd5);
-		
-		account.setEnable((short)1);
-		account.setOrganizationId(0L);
-		account.setRegisterTime(DateUtil.getNowOfDate());
-		account.setRoleId(accountRegisterVo.getRoleId());
-		account.setVersion(0L);
 		if (accountRegisterVo == null) {
 			return register(request, model);
 		}
@@ -93,35 +99,35 @@ public class AdminAccountController extends AdminController {
 		String password = accountRegisterVo.getPassword();
 		String confirmPassword = accountRegisterVo.getConfirmPassword();
 		if (!password.equals(confirmPassword)) {
-			result.addError(new FieldError("contentModel", "confirmPassword",
+			result.addError(new FieldError("adminAccount", "confirmPassword",
 					"确认密码与密码输入不一致。"));
 			return register(request, model);
 		}
 
-		AdminAccount account1 = adminAccountService.selectByUsername(username);
-//&& username!=accountRegisterVo.getUsername()&&username==account.getUsername()
-		if (account1 != null && account1.getId() > 0 
-				&& account1.getId() != accountRegisterVo.getId()) {
-			result.addError(new FieldError("contentModel", "username",
+		AdminAccount adminAccount = adminAccountService.selectByUsername(username);
+
+		if (adminAccount != null && adminAccount.getId() > 0 
+				&& adminAccount.getId() != accountRegisterVo.getId()) {
+			result.addError(new FieldError("adminAccount", "username",
 					"该用户名已被注册。"));
 			return register(request, model);
 		}
 		if (ids == null||ids == 0) {
 			account.setId(0L);
 			adminAccountService.insertSelective(account);
-					
 		} else {
-			
 			adminAccountService.updateByPrimaryKeySelective(account);				
 		}		
 		
-		model.addAttribute("contentModel", account);
+		AdminAccount account2 = adminAccountService.selectByUsername(account.getUsername());
+						
+		model.addAttribute("adminAccount", account);
 		
 		String returnUrl = ServletRequestUtils.getStringParameter(request,
 				"returnUrl", null);
 		if (returnUrl == null)
 			returnUrl = "/account/list";
-		return "redirect:" + "/account/list";
+		return "redirect:/account/list";
 	}
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
@@ -138,7 +144,7 @@ public class AdminAccountController extends AdminController {
 		model.addAttribute("contentModel",
 				adminAccountService.listPage(searchVo, pageNo, pageSize));
 
-		return "account/list";
+		return "account/adminList";
 	}
 
 	/**

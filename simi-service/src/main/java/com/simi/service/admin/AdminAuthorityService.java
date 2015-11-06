@@ -1,6 +1,7 @@
 package com.simi.service.admin;
 
 import java.util.List;
+import java.util.Map;
 
 import com.simi.vo.admin.AdminAuthorityVo;
 import com.simi.po.model.admin.AdminAuthority;
@@ -36,5 +37,7 @@ public interface AdminAuthorityService {
 	int deleteAuthorityByRecurision(AdminAuthority adminAuthority);
 
 	int selectMaxId();
+	
+	Map<Long,String> getSelectSource();
 
 }

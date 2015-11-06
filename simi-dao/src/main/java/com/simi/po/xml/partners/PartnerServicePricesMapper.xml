@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.partners.PartnerServicePricesMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerServicePrices">
+		<id column="service_price_id" property="servicePriceId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		service_price_id, name, parent_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_prices
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
+	</select>
+
+	<!--根据parentId查询孩子节点 -->
+	<select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_prices
+		where parent_id = #{parentId,jdbcType=NUMERIC}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from partner_service_prices
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePrices">
+		insert into partner_service_prices (service_price_id, name, parent_id
+		)
+		values (#{servicePriceId,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR}, #{parentId,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePrices">
+		insert into partner_service_prices
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="servicePriceId != null">
+				service_price_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="servicePriceId != null">
+				#{servicePriceId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerServicePrices">
+		update partner_service_prices
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerServicePrices">
+		update partner_service_prices
+		set name = #{name,jdbcType=VARCHAR},
+		parent_id = #{parentId,jdbcType=NUMERIC}
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
+	</update>
+</mapper>

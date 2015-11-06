@@ -59,6 +59,10 @@
       #{enable,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.admin.AdminRole" >
+	<selectKey resultType="java.lang.Long" order="AFTER"
+		keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+	</selectKey>   
     insert into admin_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

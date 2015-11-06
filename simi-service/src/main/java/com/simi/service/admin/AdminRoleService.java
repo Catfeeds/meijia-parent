@@ -12,10 +12,12 @@ public interface AdminRoleService {
 	AdminRole selectByPrimaryKey(Long id);
 
 	AdminRole selectByName(String name);
+	
+	AdminRole initAdminRole();
 
 	int insert(AdminRole record);
 
-    int insertSelective(AdminRole record);
+    Long insertSelective(AdminRole record);
 
     int deleteByPrimaryKey(Long id);
 

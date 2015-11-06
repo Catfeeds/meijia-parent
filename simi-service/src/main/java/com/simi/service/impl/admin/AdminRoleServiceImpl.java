@@ -33,6 +33,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 
 	@Autowired
 	private AdminAuthorityMapper adminAuthorityMapper;
+	
 
 	@Override
 	public AdminRole selectByPrimaryKey(Long id) {
@@ -42,6 +43,16 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	@Override
 	public AdminRole selectByName(String name) {
 		return adminRoleMapper.selectByName(name);
+	}
+
+	@Override
+	public AdminRole initAdminRole() {
+		AdminRole adminRole = new AdminRole();
+		adminRole.setId((long)0);
+		adminRole.setEnable((short)1);
+		adminRole.setName("");
+		adminRole.setVersion((long)1);
+		return adminRole;
 	}
 
 	@Override
@@ -67,7 +78,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	}
 
 	@Override
-	public int insertSelective(AdminRole record) {
+	public Long insertSelective(AdminRole record) {
 		return adminRoleMapper.insertSelective(record);
 	}
 
@@ -90,7 +101,12 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 	public AdminRole selectAdminRoleVoByPrimaryKey(Long id) {
 
 		//查找出主键为id的角色
-		AdminRole adminRole = adminRoleMapper.selectByPrimaryKey(id);
+		
+		AdminRole adminRole  = initAdminRole();
+
+		if (id != null && id > 0L) {
+			adminRole = adminRoleMapper.selectByPrimaryKey(id);
+		}	
 		AdminRoleVo adminRoleVo = new AdminRoleVo();
 		try {
 			BeanUtils.copyProperties(adminRoleVo, adminRole);

@@ -215,13 +215,12 @@ public class CardController extends BaseController {
 					item = linkManList.get(i);
 					String mobile = item.getMobile();
 					mobile = mobile.replaceAll(" ", "");  
-					if (!RegexUtil.isMobile(mobile)) {
-						continue;		
-					}
-					
 					
 					if (StringUtil.isEmpty(mobile)) continue;
 					if (!RegexUtil.isMobile(mobile)) continue;
+
+					mobile = RegexUtil.checkMobile(mobile);
+					
 					//根据手机号找出对应的userID, 如果没有则直接新增用户.
 					Long newUserId = 0L;
 					Users newUser = userService.selectByMobile(mobile);

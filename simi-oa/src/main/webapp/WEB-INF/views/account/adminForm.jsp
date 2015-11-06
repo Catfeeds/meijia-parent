@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" %>
+	pageEncoding="UTF-8" import="com.simi.oa.common.UrlHelper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-
 
 <html>
 <head>
@@ -28,10 +27,11 @@
 			<section class="panel"> <header class="panel-heading">
 			用户管理 </header>
 
-			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
+			<hr
+				style="width: 100%; color: black; height: 1px; background-color: black;" />
 
 			<div class="panel-body">
-				<form:form modelAttribute="contentModel" action="register"
+				<form:form modelAttribute="adminAccount" action="adminForm"
 					id="admin-form" class="form-horizontal " method="POST">
 					<form:hidden path="id" />
 					<div class="form-group">
@@ -43,7 +43,6 @@
 							<form:errors path="name" class="field-has-error"></form:errors>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label class="col-sm-2 col-sm-2 control-label">昵称</label>
 						<div class="col-sm-5">
@@ -54,15 +53,7 @@
 							<form:errors path="nickname" class="field-has-error"></form:errors>
 						</div>
 					</div>
-					<div class="form-group">
-                        <label class="col-sm-2 col-sm-2 control-label">手机号</label>
-                               <div class="col-sm-5">
-                                    <form:input path="mobile"
-                                     class="form-control placeholder-no-fix" autocomplete="off" 
-                                     placeholder="手机号"/><br/>
-									<form:errors path="mobile" class="field-has-error"></form:errors>
-                               </div>
-                    </div>
+
 					<div class="form-group">
 						<label class="col-sm-2 col-sm-2 control-label">邮箱</label>
 						<div class="col-sm-5">
@@ -117,13 +108,6 @@
 						</div>
 					</div>
 					
-					<%-- <div class="form-group"  id="orgSelect">
-						<label class="col-sm-2 col-sm-2 control-label">绑定门店</label>
-						<div class="col-sm-5">
-							<orgSelectTag:select selectId="${orgId }" />
-						</div>
-					</div>
-					 --%>
 					<div class="form-actions fluid">
 
 						<div class="col-md-offset-3">
@@ -152,7 +136,7 @@
 	<script
 		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/account/adminForm.js'/>"
+	<script src="<c:url value='/js/simi/admin/adminForm.js'/>"
 		type="text/javascript"></script>
 </body>
 </html>

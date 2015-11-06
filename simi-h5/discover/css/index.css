@@ -1,0 +1,45 @@
+/* ::::: http://m.lvzheng.com/css/style.css ::::: */
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td { margin: 0px; padding: 0px; }
+a:link, a:visited { text-decoration: none; }
+ul li { list-style: outside none none; }
+.f-clear::after { visibility: hidden; display: block; font-size: 0px; content: " "; clear: both; height: 0px; }
+.r_t2 { margin-top: 15px; border-top: 1px solid rgb(213, 213, 213); }
+body { margin: 0px; padding: 0px; font-family: "微软雅黑"; background: rgb(241, 245, 248) none repeat scroll 0% 0%; }
+.wrapper { width: 640px; background: rgb(241, 245, 248) none repeat scroll 0% 0%; margin: 0px auto; }
+.bott_box { padding-bottom: 94px; }
+.clear { clear: both; }
+ul { overflow: hidden; }
+.book_banner { background: rgb(255, 255, 255) url('../images/book.jpg') no-repeat scroll center center; height: 370px; }
+.banner_box { background: transparent url('../images/b_box.png') repeat-x scroll center bottom; height: 115px; padding: 255px 30px 0px; }
+.banner_box .banner_t1 { font-size: 36px; color: rgb(255, 255, 255); height: 70px; line-height: 70px; }
+.banner_box .banner_t2 { font-size: 23px; color: rgb(255, 255, 255); }
+.price_info { min-height: 180px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border-bottom: 1px solid rgb(225, 229, 231); box-shadow: 0px 2px 0px rgb(232, 232, 232); }
+.price_info .price_b1 .p1 { padding: 0px 30px; height: 100px; line-height: 100px; font-size: 22px; color: rgb(255, 68, 68); }
+.price_info .price_b1 .p1 span { font-size: 48px; }
+.price_info .price_b1 p { float: left; }
+.price_info .price_b1 .p2 { padding: 0px 80px 0px 0px; text-decoration: line-through; margin-top: 10px; height: 90px; line-height: 90px; font-size: 26px; color: rgb(153, 153, 153); }
+.price_info .price_b2 { padding: 10px 30px; color: rgb(153, 153, 153); font-size: 22px; line-height: 26px; }
+.price_info .price_b2 ul li { float: left; padding: 0px 25px 0px 30px; background: transparent url('../images/hook_ico.png') no-repeat scroll left center; }
+.dotted { height: 30px; background: transparent url('../images/dotted.png') no-repeat scroll center center; }
+.book_con_t { height: 35px; line-height: 35px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(229, 229, 229); margin-top: 20px; padding: 15px 30px; }
+.book_con_t p { font-size: 26px; height: 35px; line-height: 35px; color: rgb(51, 51, 51); padding-left: 15px; border-left: 6px solid rgb(108, 209, 229); }
+.book_con_more { height: 55px; line-height: 55px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 1px solid rgb(229, 229, 229); margin-top: 20px; padding: 15px 20px; }
+.book_con_more p.more { font-size: 26px; height: 55px; line-height: 55px; color: rgb(51, 51, 51); cursor: pointer; background: transparent url('../images/p_arrow.png') no-repeat scroll right center; }
+.book_con { padding: 10px 30px 30px 40px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border-bottom: 1px solid rgb(229, 229, 229); font-size: 26px; color: rgb(102, 102, 102); }
+.book_con ul { overflow: hidden; }
+.book_con ul li { margin: 20px 0px; padding-left: 35px; background: transparent url('../images/p_ico1.png') no-repeat scroll left top; }
+.book_re { font-size: 26px; margin: 10px 0px; color: rgb(255, 90, 90); padding-left: 40px; background: transparent url('../images/p_ico2.png') no-repeat scroll left top; }
+.book_flow { padding: 50px 70px; font-size: 26px; color: rgb(102, 102, 102); background: rgb(255, 255, 255) none repeat scroll 0% 0%; }
+.fole_b1 { padding-left: 40px; background: transparent url('../images/p_ico3.png') no-repeat scroll left top; }
+.flow_line { height: 50px; border-left: 3px solid rgb(204, 204, 204); margin: -12px 0px -10px 10px; }
+.bookorder_btn ul li { overflow: hidden; height: 95px; line-height: 95px; border-bottom: 1px solid rgb(229, 229, 229); font-size: 24px; }
+.bookorder_btn ul li.m3 a { float: left; display: block; }
+.bookorder_btn ul li.m3 a.t2 { width: 260px; display: block; background: rgb(255, 90, 90) none repeat scroll 0% 0%; text-align: center; color: rgb(231, 231, 231); cursor: pointer; }
+.bookorder_btn ul li.m3 a.t2:hover { background: rgb(252, 52, 52) none repeat scroll 0% 0%; }
+.bookorder_btn ul li.m3 a.t3 { width: 380px; display: block; background: rgb(48, 49, 50) none repeat scroll 0% 0%; color: rgb(231, 231, 231); cursor: pointer; }
+.bookorder_btn ul li.m3 a.t3:hover { background: rgb(3, 4, 6) none repeat scroll 0% 0%; }
+.bookorder_btn ul li.m3 a.t3 span { display: block; padding-left: 50px; width: 270px; margin: 0px auto; background: transparent url('../images/zx_ico.png') no-repeat scroll left center; }
+.bookorder_btn { position: fixed; bottom: -3px; z-index: 998; }
+:-moz-placeholder { color: rgb(204, 204, 204); }
+*::-moz-placeholder { color: rgb(204, 204, 204); }

@@ -31,50 +31,17 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
-			用户管理 </header>
+			服务商服务条目管理 </header>
 
 			<hr
 				style="width: 100%; color: black; height: 1px; background-color: black;" />
- 				<form:form modelAttribute="contentModel" class="form-horizontal" method="POST" id="authority-form">
+ 				<form:form modelAttribute="contentModel" class="form-horizontal" method="POST" id="partner-service-type-form">
                         <div class="form-body">
                            <div class="form-group">
                               <label  class="col-md-2 control-label">名称&nbsp;*</label>
                               <div class="col-md-5">
                                  <form:input path="name" class="form-control" placeholder="名称"/><br/>
                                  <form:errors path="name" class="field-has-error"></form:errors>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">位置</label>
-                              <div class="col-md-5">
-                                 <form:input path="position" class="form-control" placeholder="位置"/><br/>
-                                 <form:errors path="position" class="field-has-error"></form:errors>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">值</label>
-                              <div class="col-md-5">
-                                 <form:input path="theValue" class="form-control" placeholder="值"/>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">Url&nbsp;*</label>
-                              <div class="col-md-5">
-                                 <form:input path="url" class="form-control" placeholder="Url"/><br/>
-                                 <form:errors path="url" class="field-has-error"></form:errors>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">MatchUrl&nbsp;&nbsp;*</label>
-                              <div class="col-md-5">
-                                 <form:input path="matchUrl" class="form-control" placeholder="MatchUrl"/><br/>
-                                 <form:errors path="matchUrl" class="field-has-error"></form:errors>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label  class="col-md-2 control-label">图标</label>
-                              <div class="col-md-5">
-                                 <form:input path="itemIcon" class="form-control" placeholder="图标"/>
                               </div>
                            </div>
                            <div class="form-group">
@@ -106,7 +73,7 @@
 	</section>
 	<!--script for this page-->
     <script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"></script>
-	<script src="<c:url value='/js/simi/account/authorityForm.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/js/simi/partner/partnerServiceTypeForm.js'/>" type="text/javascript"></script>
   
 	
 </body>

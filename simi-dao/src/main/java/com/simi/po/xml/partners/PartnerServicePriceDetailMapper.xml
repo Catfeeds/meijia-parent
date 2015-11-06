@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.partners.PartnerServicePriceDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerServicePriceDetail" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="service_price_id" property="servicePriceId" jdbcType="NUMERIC" />
+    <result column="service_title" property="serviceTitle" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="dis_price" property="disPrice" jdbcType="DECIMAL" />
+    <result column="content_standard" property="contentStandard" jdbcType="VARCHAR" />
+    <result column="content_desc" property="contentDesc" jdbcType="VARCHAR" />
+    <result column="content_flow" property="contentFlow" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, service_price_id, service_title, user_id, img_url, price, dis_price, content_standard, 
+    content_desc, content_flow, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_service_price_detail
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from partner_service_price_detail
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail" >
+    insert into partner_service_price_detail (id, service_price_id, service_title, 
+      user_id, img_url, price, 
+      dis_price, content_standard, content_desc, 
+      content_flow, add_time)
+    values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{disPrice,jdbcType=DECIMAL}, #{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR}, 
+      #{contentFlow,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail" >
+    insert into partner_service_price_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="servicePriceId != null" >
+        service_price_id,
+      </if>
+      <if test="serviceTitle != null" >
+        service_title,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="disPrice != null" >
+        dis_price,
+      </if>
+      <if test="contentStandard != null" >
+        content_standard,
+      </if>
+      <if test="contentDesc != null" >
+        content_desc,
+      </if>
+      <if test="contentFlow != null" >
+        content_flow,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="servicePriceId != null" >
+        #{servicePriceId,jdbcType=NUMERIC},
+      </if>
+      <if test="serviceTitle != null" >
+        #{serviceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="disPrice != null" >
+        #{disPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="contentStandard != null" >
+        #{contentStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="contentDesc != null" >
+        #{contentDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="contentFlow != null" >
+        #{contentFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail" >
+    update partner_service_price_detail
+    <set >
+      <if test="servicePriceId != null" >
+        service_price_id = #{servicePriceId,jdbcType=NUMERIC},
+      </if>
+      <if test="serviceTitle != null" >
+        service_title = #{serviceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="disPrice != null" >
+        dis_price = #{disPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="contentStandard != null" >
+        content_standard = #{contentStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="contentDesc != null" >
+        content_desc = #{contentDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="contentFlow != null" >
+        content_flow = #{contentFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail" >
+    update partner_service_price_detail
+    set service_price_id = #{servicePriceId,jdbcType=NUMERIC},
+      service_title = #{serviceTitle,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=NUMERIC},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      dis_price = #{disPrice,jdbcType=DECIMAL},
+      content_standard = #{contentStandard,jdbcType=VARCHAR},
+      content_desc = #{contentDesc,jdbcType=VARCHAR},
+      content_flow = #{contentFlow,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

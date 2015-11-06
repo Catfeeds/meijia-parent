@@ -1,4 +1,4 @@
-package com.simi.action.admin;
+package com.simi.action.partners;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,20 +20,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.simi.po.model.admin.AdminAuthority;
-import com.simi.service.admin.AdminAuthorityService;
+import com.meijia.utils.common.extension.StringHelper;
+import com.simi.action.admin.AdminController;
 import com.simi.models.AuthorityEditModel;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
-import com.meijia.utils.common.extension.StringHelper;
-import com.simi.vo.admin.AdminAuthorityVo;
+import com.simi.oa.auth.AuthPassport;
+import com.simi.po.model.partners.PartnerServicePrices;
+import com.simi.service.admin.AdminAuthorityService;
+import com.simi.service.partners.PartnerServicePriceService;
+import com.simi.vo.partners.PartnerServicePriceVo;
+
 
 @Controller
-@RequestMapping(value = "/authority")
-public class AdminAuthorityController extends AdminController {
+@RequestMapping(value = "/partnerServicePrice")
+public class PartnerServicePriceController extends AdminController {
 
 	@Autowired
 	private AdminAuthorityService adminAuthorityService;
+	
+	@Autowired
+	private PartnerServicePriceService partnerServicePriceService;
 
 	/**
 	 * 树形展示权限列表
@@ -41,12 +48,12 @@ public class AdminAuthorityController extends AdminController {
 	 * @param model
 	 * @return
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/chain", method = { RequestMethod.GET })
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
 			String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(adminAuthorityService.listChain(), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServicePriceService.listChain(), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false,
 							false, children)));
@@ -56,7 +63,7 @@ public class AdminAuthorityController extends AdminController {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		return "authority/authorityList";
+		return "partners/partnerServicePriceList";
 	}
 	/**
 	 * 根据id添加同级或者子级节点
@@ -65,7 +72,7 @@ public class AdminAuthorityController extends AdminController {
 	 * @param id
 	 * @return 编辑页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.GET })
 	public String add(HttpServletRequest request, Model model,
 			@PathVariable(value = "id") Integer id) {
@@ -77,18 +84,18 @@ public class AdminAuthorityController extends AdminController {
 		List<TreeModel> treeModels;
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (id != null && id > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(	adminAuthorityService.listChain(), id, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServicePriceService.listChain(), id, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					adminAuthorityService.listChain(), null, null,
+				partnerServicePriceService.listChain(), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, true, false, children)));
 		}
 		model.addAttribute(treeDataSourceName,JSONArray.fromObject(treeModels, new JsonConfig()).toString());
-		return "authority/authorityForm";
+		return "partners/partnerServicePriceForm";
 	}
 	/**
 	 * 根据页面选择的id,增加新节点
@@ -99,30 +106,28 @@ public class AdminAuthorityController extends AdminController {
 	 * @param result
 	 * @return 权限的树形展示页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.POST })
 	public String add(HttpServletRequest request,Model model,
-			@Valid @ModelAttribute("contentModel") AdminAuthorityVo adminAuthorityVo,
+			@Valid @ModelAttribute("contentModel") PartnerServicePriceVo partnerServicePriceVo,
 			@PathVariable(value = "id") String id, BindingResult result) {
 		if (result.hasErrors()) return add(request, model, Integer.valueOf(id));
 		String returnUrl = ServletRequestUtils.getStringParameter(request,
 				"returnUrl", null);
 
-		AdminAuthority adminAuthority = adminAuthorityService.initAdminAuthority(adminAuthorityVo);
-		String levelCode = "";
+		PartnerServicePrices partnerServicePrice = partnerServicePriceService.initPartnerServicePrices(partnerServicePriceVo);
+		/*String levelCode = "";
 		int count = adminAuthorityService.selectMaxId()+1;
-		if (adminAuthorityVo.getParentId() != null 	&& adminAuthorityVo.getParentId() > 0) {
-			adminAuthority.setParentId(adminAuthorityVo.getParentId());
-			String parentLevelCode = adminAuthorityService.selectByPrimaryKey(adminAuthorityVo.getParentId()).getLevelCode();
+		if (partnerServicePriceVo.getParentId() != null 	&& partnerServicePriceVo.getParentId() > 0) {
+			partnerServicePrice.setParentId(partnerServicePrice.getParentId());
+			String parentLevelCode = adminAuthorityService.selectByPrimaryKey(partnerServicePriceVo.getParentId()).getLevelCode();
 			levelCode = count+ "," + parentLevelCode;
 
 		}else{
 			levelCode = count + levelCode  ;
-		}
-		adminAuthority.setLevelCode(levelCode);
-		adminAuthorityService.insertSelective(adminAuthority);
-		adminAuthority.setLevelCode(adminAuthority.getLevelCode()+adminAuthority.getId());
-		if (returnUrl == null)	returnUrl = "authority/authorityList";
+		}*/
+		partnerServicePriceService.insertSelective(partnerServicePrice);
+		if (returnUrl == null)	returnUrl = "partners/partnerServicePriceList";
 		return "redirect:" + returnUrl;
 	}
 	/**
@@ -132,28 +137,27 @@ public class AdminAuthorityController extends AdminController {
 	 * @param id
 	 * @return 跳转到编辑页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.GET })
 	public String edit(HttpServletRequest request, Model model,
 			@PathVariable(value = "id") Long id) {
-		//Long ids = Long.valueOf(id.trim());
 		if (!model.containsAttribute("contentModel")) {
-			AdminAuthority adminAuthority = adminAuthorityService.selectByPrimaryKey(id);
-			model.addAttribute("contentModel", adminAuthority);
+			PartnerServicePrices partnerServicePrice = partnerServicePriceService.selectByPrimaryKey(id);
+			model.addAttribute("contentModel", partnerServicePrice);
 		}
 		List<TreeModel> treeModels;
-		AdminAuthority editModel = (AdminAuthority) model.asMap().get("contentModel");
+		PartnerServicePrices editModel = (PartnerServicePrices) model.asMap().get("contentModel");
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					adminAuthorityService.listChain(), editModel.getParentId()
+					partnerServicePriceService.listChain(), editModel.getParentId()
 							.intValue(), null, StringHelper.toIntegerList(
 							expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, false, false, children)));
 		} else {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					adminAuthorityService.listChain(), null, null,
+				partnerServicePriceService.listChain(), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, true, false, children)));
@@ -161,7 +165,7 @@ public class AdminAuthorityController extends AdminController {
 		model.addAttribute("treeDataSource",
 				JSONArray.fromObject(treeModels, new JsonConfig()).toString());
 
-		return "authority/authorityForm";
+		return "partners/partnerServicePriceList";
 	}
 
 	/**
@@ -173,18 +177,18 @@ public class AdminAuthorityController extends AdminController {
 	 * @param result
 	 * @return 跳转到权限的树形列表
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.POST })
 	public String edit(	HttpServletRequest request,	Model model,
-			@Valid @ModelAttribute("contentModel") AdminAuthority adminAuthority,
+			@Valid @ModelAttribute("contentModel") PartnerServicePrices partnerServicePrice,
 			@PathVariable(value = "id") Long id, BindingResult result) {
 		if (result.hasErrors()) return edit(request, model, id);
 		String returnUrl = ServletRequestUtils.getStringParameter(request,"returnUrl", null);
-		if(adminAuthority!=null){
-			adminAuthority.setId(Long.valueOf(id));
-			adminAuthorityService.updateByPrimaryKeySelective(adminAuthority);
+		if(partnerServicePrice!=null){
+			partnerServicePrice.setServicePriceId(Long.valueOf(id));
+			partnerServicePriceService.updateByPrimaryKeySelective(partnerServicePrice);
 		}
-		if (returnUrl == null) returnUrl = "authority/chain";
+		if (returnUrl == null) returnUrl = "partnerServicePrice/chain";
 		return "redirect:" + returnUrl;
 	}
 	/**
@@ -194,17 +198,17 @@ public class AdminAuthorityController extends AdminController {
 	 * @param id
 	 * @return 跳转到权限树形展示
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/delete/{id}", method = { RequestMethod.GET })
 	public String delete(HttpServletRequest request, Model model,@PathVariable(value = "id") String id) {
 		Long ids = Long.valueOf(id.trim());
 		//根据id查找出对应的该权限对象
 		//int result = adminAuthorityService.deleteAuthorityByRecurision(adminAuthority);
-		adminAuthorityService.deleteByPrimaryKey(ids);
+		partnerServicePriceService.deleteByPrimaryKey(ids);
 		String returnUrl = ServletRequestUtils.getStringParameter(request,
 				"returnUrl", null);
 		if (returnUrl == null)
-			returnUrl = "authority/chain";
+			returnUrl = "partnerServicePrice/chain";
 		return "redirect:" + returnUrl;
 	}
 

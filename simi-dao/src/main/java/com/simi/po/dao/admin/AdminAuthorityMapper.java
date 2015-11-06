@@ -25,4 +25,6 @@ public interface AdminAuthorityMapper {
 
 	int selectMaxId();
 
+	List<AdminAuthority> selectChildAdminAuthorities();
+
 }

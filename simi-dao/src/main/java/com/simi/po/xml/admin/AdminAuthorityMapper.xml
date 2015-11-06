@@ -49,6 +49,13 @@
      from admin_authority
     where parent_id = #{parentId,jdbcType=NUMERIC}
 	</select>
+	
+<!-- 查出所有的孩子节点权限 -->
+  <select id="selectChildAdminAuthorities" resultMap="BaseResultMap" >
+    select a.*
+     from admin_authority a,admin_authority b
+     where b.parent_id= '0' and a.parent_id = b.id
+	</select>	
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from admin_authority
     where id = #{id,jdbcType=NUMERIC}

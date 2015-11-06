@@ -1,8 +1,10 @@
 package com.simi.service.impl.admin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.simi.vo.admin.AdminAuthorityVo;
 import com.simi.po.dao.admin.AdminAuthorityMapper;
 import com.simi.po.dao.admin.AdminRoleAuthorityMapper;
 import com.simi.po.model.admin.AdminAuthority;
+import com.simi.po.model.admin.AdminRole;
 import com.simi.po.model.admin.AdminRoleAuthority;
 
 
@@ -64,6 +67,7 @@ public class AdminAuthorityServiceImpl implements AdminAuthorityService {
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			AdminAuthority adminAuthority = (AdminAuthority) iterator.next();
 			//获得每个对象的Id,调用递归返回树形结构的对象
+			System.out.println(adminAuthority.getId());
 			AdminAuthorityVo vo = ToTree(adminAuthority.getId());
 			listVo.add(vo);
 
@@ -88,8 +92,10 @@ public class AdminAuthorityServiceImpl implements AdminAuthorityService {
 		List<AdminAuthority>  child = adminAuthorityMapper.selectByParentId(id);
 
 		 for (AdminAuthority adminAuthority2 : child) {
-			 AdminAuthorityVo vo = ToTree(adminAuthority2.getId().longValue());
-			 adminAuthorityVo.getChildren().add(vo);
+			 if (adminAuthority2 != null && adminAuthority2.getId() != null) {
+				 AdminAuthorityVo vo = ToTree(adminAuthority2.getId().longValue());
+				 adminAuthorityVo.getChildren().add(vo);
+			 }
 		}
 		return adminAuthorityVo;
 	}
@@ -157,5 +163,15 @@ public class AdminAuthorityServiceImpl implements AdminAuthorityService {
 	@Override
 	public int selectMaxId() {
 		return adminAuthorityMapper.selectMaxId();
+	}
+
+	@Override
+	public Map<Long, String> getSelectSource() {
+		Map<Long,String> adminAuthorityMap = new HashMap<Long, String>();
+		List<AdminAuthority> adminAuthorityList = adminAuthorityMapper.selectChildAdminAuthorities();
+		for (AdminAuthority adminAuthority : adminAuthorityList) {
+			adminAuthorityMap.put(adminAuthority.getId(),adminAuthority.getName());
+		}
+		return adminAuthorityMap;
 	}
 }

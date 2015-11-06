@@ -10,7 +10,7 @@ public interface AdminRoleMapper {
 
     int insert(AdminRole record);
 
-    int insertSelective(AdminRole record);
+    Long insertSelective(AdminRole record);
 
     AdminRole selectByPrimaryKey(Long id);
 
