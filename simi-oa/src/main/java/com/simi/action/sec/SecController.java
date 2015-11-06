@@ -2,6 +2,8 @@ package com.simi.action.sec;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,14 +16,20 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
+import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.user.TagUsers;
@@ -197,45 +205,8 @@ public class SecController extends AdminController {
 		
 		Users u = usersService.selectByPrimaryKey(id);
 		UserApplyVo vo = new UserApplyVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 		
-		vo.setId(u.getId());
-		vo.setMobile(u.getMobile());
-		vo.setProvinceName(u.getProvinceName());
-		vo.setThirdType(u.getThirdType());
-		vo.setOpenid(u.getOpenid());
-		vo.setName(u.getName());
-		vo.setRealName(u.getRealName());
-		vo.setBirthDay(u.getBirthDay());
-		vo.setIdCard(u.getIdCard());
-		vo.setDegreeId(u.getDegreeId());
-		vo.setMajor(u.getMajor());
-		vo.setSex(u.getSex());
-		vo.setHeadImg(u.getHeadImg());
-		vo.setRestMoney(u.getRestMoney());
-		vo.setUserType(u.getUserType());
-		vo.setIsApproval(u.getIsApproval());
-		vo.setAddFrom(u.getAddFrom());
-		vo.setScore(u.getScore());
-		vo.setAddTime(u.getAddTime());
-		vo.setUpdateTime(u.getUpdateTime());
-	
-		/*
-		try {
-			BeanUtils.copyProperties(vo, u);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
-		//出生日期
-        /*Date birthday = u.getBirthDay();
-       
-        String dateStr = new SimpleDateFormat("yyyy-MM-dd").format(birthday);
-		vo.setBirthDay(DateUtil.parse(dateStr));*/
 		//是否审批名称
 		short isApproval = u.getIsApproval();
 		if (isApproval == 0) {
@@ -314,9 +285,43 @@ public class SecController extends AdminController {
 			BindingResult result,HttpServletRequest request)throws IOException {
     	
     	Long userId = Long.valueOf(request.getParameter("id"));
+    	
+    	
 
     	Users users = usersService.initUserForm();
-    	
+    	// 创建一个通用的多部分解析器.
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/sec");
+		String addr = request.getRemoteAddr();
+		int port = request.getServerPort();
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					String url = Constants.IMG_SERVER_HOST + "/upload/";
+					String fileName = file.getOriginalFilename();
+					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+					fileType = fileType.toLowerCase();
+					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+					String ret = o.get("ret").toString();
+
+					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+					String headImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+
+					userApplyVo.setHeadImg(headImg);
+
+				}
+			}
+		}
     	BeanUtilsExp.copyPropertiesIgnoreNull(userApplyVo, users);
     
     	if (userId > 0L ) {
@@ -343,22 +348,12 @@ public class SecController extends AdminController {
 				tagsUsersService.insert(record);
 			}
 		}
-    	/*Users u= usersService.selectByPrimaryKey(id);
-    	
-    	//u.setIsApproval((short)1);
-    	u.setIsApproval(isApproval);
-    	usersService.updateByPrimaryKeySelective(u);
-    	
-    	model.addAttribute("contentModel", u);*/
-    	
-    	
     	//秘书审核通过(IsApproval==2)后通知助理
     	if (users.getIsApproval()==2) {
     		usersService.userSecToUserPushSms(users);
 		}
     	
     	return "redirect:/sec/applyList";
-    	
     }
  
 }

@@ -58,3 +58,15 @@ function setTagButton() {
 		}
 	});	
 }
+$("#headImg").fileinput({
+	previewFileType: "image",
+	browseClass: "btn btn-success",
+	browseLabel: "上传图片",
+	browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+	removeClass: "btn btn-danger",
+	removeLabel: "删除",
+	removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+	allowedFileExtensions: ["jpg", "gif", "jpeg","png",],
+	maxFileSize: 8192,
+	msgSizeTooLarge: "上传文件大小超过8mb"
+});

@@ -108,7 +108,25 @@ public class OrderCardsServiceImpl implements OrderCardsService {
 
 		return record;
 	}
+	@Override
+	public OrderCards initCardMoney(Users users, Long cardType,
+			BigDecimal cardMoney, Short payType) {
+		OrderCards record = new OrderCards();
+		record.setCardMoney(cardMoney);
+		record.setCardPay(cardMoney);
+		record.setUserId(users.getId());
+		record.setMobile(users.getMobile());
+		record.setCardType(cardType);
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		record.setOrderStatus((short)0);
+		record.setPayType(payType);
+		record.setUpdateTime(0L);
 
+		String cardOrderNo = String.valueOf(OrderNoUtil.getOrderCardNo());
+		record.setCardOrderNo(cardOrderNo);
+		
+		return record;
+	}
 	@Override
 	public int insertSelective(OrderCards record) {
 		return orderCardsMapper.insertSelective(record);
@@ -133,4 +151,6 @@ public class OrderCardsServiceImpl implements OrderCardsService {
 	public OrderCards selectByOrderCardsNo(String cardOrderNo) {
 		return orderCardsMapper.selectByOrderCardsNo(cardOrderNo);
 	}
+
+	
 }

@@ -1,5 +1,7 @@
 package com.simi.action.app.user;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +42,8 @@ public class UserCardController extends BaseController {
 	public AppResultData<Object> cardBuy(
 			@RequestParam("user_id")	Long userId,
 			@RequestParam("card_type") Long cardType,
-			@RequestParam("pay_type")  Short payType) {
+			@RequestParam("pay_type")  Short payType,
+			@RequestParam("card_money") BigDecimal cardMoney) {
 //	    操作表 order_cards
 //	    根据card_type 传递参数从表 dict_card_type 获取相应的金额
 
@@ -55,6 +58,12 @@ public class UserCardController extends BaseController {
 			return result;
 		}		
 		
+		if (cardType==0 && cardMoney != null) {
+			OrderCards record = orderCardsService.initCardMoney(users, cardType, cardMoney, payType);
+			orderCardsService.insert(record);
+			result.setData(record);
+			return result;
+		}
 		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(cardType);
 
 		OrderCards record = orderCardsService.initOrderCards(users, cardType, dictCardType, payType);

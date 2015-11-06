@@ -19,6 +19,16 @@ public class Users {
     
     private String sex;
     
+    private String introduction;
+    
+    private short level;
+    
+    private Long workStart;
+    
+    private Long workEnd;
+    
+    private short isDoor;
+    
     private	String headImg;
 
     private BigDecimal restMoney;
@@ -106,6 +116,56 @@ public class Users {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+
+
+	public String getIntroduction() {
+		return introduction;
+	}
+
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+
+	public short getLevel() {
+		return level;
+	}
+
+
+	public void setLevel(short level) {
+		this.level = level;
+	}
+
+
+	public Long getWorkStart() {
+		return workStart;
+	}
+
+
+	public void setWorkStart(Long workStart) {
+		this.workStart = workStart;
+	}
+
+
+	public Long getWorkEnd() {
+		return workEnd;
+	}
+
+
+	public void setWorkEnd(Long workEnd) {
+		this.workEnd = workEnd;
+	}
+
+
+	public short getIsDoor() {
+		return isDoor;
+	}
+
+
+	public void setIsDoor(short isDoor) {
+		this.isDoor = isDoor;
 	}
 
 

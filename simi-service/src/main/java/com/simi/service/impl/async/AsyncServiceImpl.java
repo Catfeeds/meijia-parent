@@ -28,6 +28,21 @@ public class AsyncServiceImpl implements AsyncService {
         System.out.println("async end");
 
         return new AsyncResult<Boolean>(true);
-    }  
+    }
+
+    @Async
+	@Override
+	public Future<Boolean> schoolAsync() {
+		System.out.println("放学");
+		
+		try {
+			Thread.sleep(6000);
+			System.out.println("别");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		System.out.println("别");
+		return new AsyncResult<Boolean>(true);
+	}  
 	
 }

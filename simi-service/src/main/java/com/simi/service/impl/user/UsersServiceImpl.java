@@ -225,6 +225,11 @@ public class UsersServiceImpl implements UsersService {
 		u.setDegreeId((short) 0);
 		u.setMajor("");
 		u.setSex(" ");
+		u.setIntroduction("");
+		u.setLevel((short) 0);
+		u.setWorkStart(0L);
+		u.setWorkEnd(0L);
+		u.setIsDoor((short) 0);
 		u.setHeadImg(" ");
 		u.setRestMoney(new BigDecimal(0));
 		u.setUserType((short) 1);

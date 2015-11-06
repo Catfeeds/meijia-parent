@@ -16,7 +16,6 @@ public class UserApplyVo extends Users{
 	//学历名称
 	private String degreeName;
 	
-	private String sexName;
 	
     //用户标签名列表	
 	private List<String> tagNamelist;
@@ -56,13 +55,6 @@ public class UserApplyVo extends Users{
 		this.degreeName = degreeName;
 	}
 
-	public String getSexName() {
-		return sexName;
-	}
-
-	public void setSexName(String sexName) {
-		this.sexName = sexName;
-	}
 
 	public List<String> getTagNamelist() {
 		return tagNamelist;

@@ -22,8 +22,9 @@ public class TestUserCardController extends JUnitActionBase  {
 		String url = "/app/user/card_buy.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "18612514665");
-	    postRequest = postRequest.param("card_type", "1");
+	    postRequest = postRequest.param("user_id", "1");
+	    postRequest = postRequest.param("card_type", "0");
+	    postRequest = postRequest.param("card_money", "100");
 	    postRequest = postRequest.param("pay_type", "1");
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);

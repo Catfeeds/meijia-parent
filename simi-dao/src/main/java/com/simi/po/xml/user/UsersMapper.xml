@@ -11,6 +11,13 @@
 		<result column="real_name" jdbcType="VARCHAR" property="realName" />
 		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
 		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		
+		<result column="introduction" jdbcType="VARCHAR" property="introduction" />
+		<result column="level" jdbcType="NUMERIC" property="addTime" />
+		<result column="work_start" jdbcType="NUMERIC" property="workStart" />
+		<result column="work_end" jdbcType="NUMERIC" property="workEnd" />
+		<result column="is_door" jdbcType="NUMERIC" property="isDoor" />
+		
 		<result column="birth_day" jdbcType="DATE" property="birthDay" />
 		<result column="degree_id" jdbcType="NUMERIC" property="degreeId" />
 		<result column="major" jdbcType="VARCHAR" property="major" />
@@ -30,10 +37,10 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex, birth_day,
-		degree_id, major, head_img, rest_money, score, user_type, is_approval,
-		add_from,
-		add_time, update_time
+		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex,
+		introduction, level,work_start, work_end,is_door,
+		 birth_day,degree_id, major, head_img, rest_money, score,
+		  user_type, is_approval,add_from,add_time, update_time
 	</sql>
 
 	<select id="selectByAll" resultMap="BaseResultMap">
@@ -84,12 +91,12 @@
   </select>
 
 	<!--根据秘书Id查询用户信息 -->
-	<select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<!-- <select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from users
 		where mobile = #{mobile,jdbcType=VARCHAR}
-	</select>
+	</select> -->
 	<!--根据手机号查询用户信息 -->
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
 		select
@@ -234,6 +241,7 @@
 		insert into users (id, province_name, mobile,
 		3rd_type, openid, name,
 		real_name, id_card, sex,
+		introduction, level,work_start, work_end,is_door,
 		birth_day, degree_id, major,
 		head_img, rest_money, score,
 		user_type, is_approval, add_from,
@@ -241,6 +249,8 @@
 		values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},
 		#{thirdType,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{realName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+		#{introduction,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC}, #{workStart,jdbcType=NUMERIC},
+		 #{workEnd,jdbcType=NUMERIC}, #{isDoor,jdbcType=NUMERIC},
 		#{birthDay,jdbcType=DATE}, #{degreeId,jdbcType=NUMERIC}, #{major,jdbcType=VARCHAR},
 		#{headImg,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
 		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC}, #{addFrom,jdbcType=NUMERIC},
@@ -280,6 +290,23 @@
 			<if test="sex != null">
 				sex,
 			</if>
+			<if test="introduction != null">
+				introduction,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="workStart != null">
+				work_start,
+			</if>
+			<if test="workEnd != null">
+				work_end,
+			</if>
+			<if test="isDoor != null">
+				is_door,
+			</if>
+			
+			
 			<if test="birthDay != null">
 				birth_day,
 			</if>
@@ -341,6 +368,21 @@
 			</if>
 			<if test="sex != null">
 				#{sex,jdbcType=VARCHAR},
+			</if>
+		   <if test="introduction != null">
+				#{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+			 #{level,jdbcType=NUMERIC},
+			</if>
+			<if test="workStart != null">
+				#{workStart,jdbcType=NUMERIC},
+			</if>
+			<if test="workEnd != null">
+				 #{workEnd,jdbcType=NUMERIC},
+			</if>
+			<if test="isDoor != null">
+				 #{isDoor,jdbcType=NUMERIC},
 			</if>
 			<if test="birthDay != null">
 				#{birthDay,jdbcType=DATE},
@@ -404,6 +446,21 @@
 			<if test="sex != null">
 				sex = #{sex,jdbcType=VARCHAR},
 			</if>
+			 <if test="introduction != null">
+				introduction=#{introduction,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+			level = #{level,jdbcType=NUMERIC},
+			</if>
+			<if test="workStart != null">
+				work_start = #{workStart,jdbcType=NUMERIC},
+			</if>
+			<if test="workEnd != null">
+				 work_end = #{workEnd,jdbcType=NUMERIC},
+			</if>
+			<if test="isDoor != null">
+				is_door = #{isDoor,jdbcType=NUMERIC},
+			</if>
 			<if test="birthDay != null">
 				birth_day = #{birthDay,jdbcType=DATE},
 			</if>
@@ -450,6 +507,11 @@
 		real_name = #{realName,jdbcType=VARCHAR},
 		id_card = #{idCard,jdbcType=VARCHAR},
 		sex = #{sex,jdbcType=VARCHAR},
+		introduction =#{introduction,jdbcType=VARCHAR},
+		level = #{level,jdbcType=NUMERIC},
+		work_start = #{workStart,jdbcType=NUMERIC},
+		work_end = #{workEnd,jdbcType=NUMERIC},
+		is_door = #{isDoor,jdbcType=NUMERIC},
 		birth_day = #{birthDay,jdbcType=DATE},
 		degree_id = #{degreeId,jdbcType=NUMERIC},
 		major = #{major,jdbcType=VARCHAR},
