@@ -30,4 +30,19 @@ public class TestAsyncController extends JUnitActionBase{
 
 	    Thread.sleep(6000); // 因为junit结束会结束jvm，所以让它等会异步线程  
     }
+	@Test
+    public void testSchoolAsync() throws Exception {
+		String url = "/app/async/schoolTest.json";
+		
+		MockHttpServletRequestBuilder getRequest = get(url);
+		
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+	    Thread.sleep(6000); // 因为junit结束会结束jvm，所以让它等会异步线程  
+    }
 }

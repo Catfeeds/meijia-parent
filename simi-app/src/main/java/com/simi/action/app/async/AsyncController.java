@@ -26,4 +26,17 @@ public class AsyncController extends BaseController {
 		System.out.println("simi-app test async end.....");
 		return result;
 	}
+	
+	@RequestMapping(value = "schoolTest",method = RequestMethod.GET)
+	public AppResultData<Object> testSchoolAsync(){
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,"");
+		
+		System.out.println("你");
+		asyncService.schoolAsync();
+		System.out.println("走！");
+		
+		return result;
+
+		
+	}
 }
