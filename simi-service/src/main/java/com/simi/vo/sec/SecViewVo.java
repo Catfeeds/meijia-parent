@@ -7,6 +7,8 @@ public class SecViewVo {
 
     private String mobile;
     
+    private String introduction;
+    
     private String provinceName;
 
     private String name;
@@ -47,6 +49,14 @@ public class SecViewVo {
 
 	public String getSex() {
 		return sex;
+	}
+
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
 	}
 
 	public void setSex(String sex) {
