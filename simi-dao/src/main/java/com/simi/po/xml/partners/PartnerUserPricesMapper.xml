@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.partners.ParentUsersMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.ParentUsers" >
+<mapper namespace="com.simi.po.dao.partners.PartnerUserPricesMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerUserPrices" >
     <id column="id" property="id" jdbcType="NUMERIC" />
     <result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
     <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="service_price_id" property="servicePriceId" jdbcType="NUMERIC" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, partner_id, user_id, add_time
+    id, partner_id, user_id, service_price_id, add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from parent_users
+    from parent_user_prices
     where id = #{id,jdbcType=NUMERIC}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from parent_users
+    delete from parent_user_prices
     where id = #{id,jdbcType=NUMERIC}
   </delete>
-  <insert id="insert" parameterType="com.simi.po.model.partners.ParentUsers" >
-    insert into parent_users (id, partner_id, user_id, 
-      add_time)
+  <insert id="insert" parameterType="com.simi.po.model.partners.PartnerUserPrices" >
+    insert into parent_user_prices (id, partner_id, user_id, 
+      service_price_id, add_time)
     values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, 
-      #{addTime,jdbcType=NUMERIC})
+      #{servicePriceId,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
   </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.partners.ParentUsers" >
-    insert into parent_users
+  <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerUserPrices" >
+    insert into parent_user_prices
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -37,6 +38,9 @@
       </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="servicePriceId != null" >
+        service_price_id,
       </if>
       <if test="addTime != null" >
         add_time,
@@ -52,13 +56,16 @@
       <if test="userId != null" >
         #{userId,jdbcType=NUMERIC},
       </if>
+      <if test="servicePriceId != null" >
+        #{servicePriceId,jdbcType=NUMERIC},
+      </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=NUMERIC},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.ParentUsers" >
-    update parent_users
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerUserPrices" >
+    update parent_user_prices
     <set >
       <if test="partnerId != null" >
         partner_id = #{partnerId,jdbcType=NUMERIC},
@@ -66,16 +73,20 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=NUMERIC},
       </if>
+      <if test="servicePriceId != null" >
+        service_price_id = #{servicePriceId,jdbcType=NUMERIC},
+      </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=NUMERIC},
       </if>
     </set>
     where id = #{id,jdbcType=NUMERIC}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.ParentUsers" >
-    update parent_users
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerUserPrices" >
+    update parent_user_prices
     set partner_id = #{partnerId,jdbcType=NUMERIC},
       user_id = #{userId,jdbcType=NUMERIC},
+      service_price_id = #{servicePriceId,jdbcType=NUMERIC},
       add_time = #{addTime,jdbcType=NUMERIC}
     where id = #{id,jdbcType=NUMERIC}
   </update>

@@ -1,13 +1,11 @@
 package com.simi.po.model.partners;
 
-public class ParentUserPrices {
+public class PartnerUsers {
     private Long id;
 
     private Long partnerId;
 
     private Long userId;
-
-    private Long servicePriceId;
 
     private Long addTime;
 
@@ -33,14 +31,6 @@ public class ParentUserPrices {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getServicePriceId() {
-        return servicePriceId;
-    }
-
-    public void setServicePriceId(Long servicePriceId) {
-        this.servicePriceId = servicePriceId;
     }
 
     public Long getAddTime() {
