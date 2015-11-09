@@ -225,7 +225,7 @@ public class CardController extends BaseController {
 					Long newUserId = 0L;
 					Users newUser = userService.selectByMobile(mobile);
 					if (newUser == null) {
-						newUser = userService.genUser(mobile, item.getName(), (short) 2);
+						newUser = userService.genUser(mobile, item.getName(), (short) 3);
 										
 						usersAsyncService.genImUser(newUser.getId());
 					}

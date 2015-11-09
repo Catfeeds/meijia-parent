@@ -25,12 +25,12 @@ public class MobileUtil {
         String jsonString = null;
         JSONArray array = null;
         JSONObject jsonObject = null;
-        String urlString = "http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + mobile;
+        String urlString = "http://tcc.taobao.com/cc/json/mobile_tel_segment.htm";
 
         String province = "";
         
         Map<String, String> params = new HashMap<String, String>();
-
+        params.put("tel", mobile);
         try{
             
         	jsonString = HttpClientUtil.get(urlString, params);
