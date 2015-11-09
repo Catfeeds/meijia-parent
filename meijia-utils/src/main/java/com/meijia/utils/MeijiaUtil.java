@@ -237,6 +237,9 @@ public class MeijiaUtil {
 			case 2:
 				statusName = "管理平台";
 				break;
+			case 3:
+				statusName = "好友邀请";
+				break;				
 			case 999:
 				statusName = "所用来源";
 				break;
