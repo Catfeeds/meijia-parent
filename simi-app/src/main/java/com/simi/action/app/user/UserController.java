@@ -690,11 +690,8 @@ public class UserController extends BaseController {
 				HashMap<String, String> img = new HashMap<String, String>();
 				img.put("user_id", userId.toString());
 				img.put("img", imgUrl);
-				img.put("img_100x100",
-						ImgServerUtil.getImgSize(imgUrl, "100", "100"));
-				img.put("img_200x200",
-						ImgServerUtil.getImgSize(imgUrl, "200", "200"));
-
+				img.put("img_trumb", ImgServerUtil.getImgSize(imgUrl, "400", "400"));
+				
 				imgs.add(img);
 			}
 		}
@@ -708,7 +705,7 @@ public class UserController extends BaseController {
 	 * 
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "get_user_imgs", method = RequestMethod.POST)
+	@RequestMapping(value = "get_user_imgs", method = RequestMethod.GET)
 	public AppResultData<Object> getUserImgs(HttpServletRequest request,
 			@RequestParam("user_id") Long userId) throws IOException {
 

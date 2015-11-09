@@ -26,7 +26,8 @@
     									  com.simi.action.app.order.**,
     									  com.simi.action.app.user.**,
     									  com.simi.action.app.card.**,
-    									  com.simi.action.app.xcloud.**"
+    									  com.simi.action.app.xcloud.**,
+    									  com.simi.action.app.partner.**"
     									 use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
