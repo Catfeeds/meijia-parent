@@ -263,9 +263,9 @@ public class UserController extends BaseController {
 
 					// result.setStatus(Constants.ERROR_998);
 					// result.setMsg(ConstantMsg.USER_EXIST_SEC_MG);
-					Users u = userService
-							.initUsersByMobileAndName(mobile, name);
-
+					Users u = userService.initUsers();
+					u.setMobile(mobile);
+					u.setName(name);
 					result = new AppResultData<Object>(Constants.ERROR_998,
 							ConstantMsg.USER_EXIST_SEC_MG, u);
 

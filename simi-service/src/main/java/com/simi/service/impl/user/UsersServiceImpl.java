@@ -634,32 +634,11 @@ public class UsersServiceImpl implements UsersService {
 		u.setMajor("");
 		u.setSex(" ");
 		u.setHeadImg(" ");
-		u.setRestMoney(new BigDecimal(0));
-		u.setUserType((short) 0);
-		u.setIsApproval((short) 0);
-		u.setAddFrom((short) 0);
-		u.setScore(0);
-		u.setAddTime(TimeStampUtil.getNow() / 1000);
-		u.setUpdateTime(TimeStampUtil.getNow() / 1000);
-		return u;
-	}
-
-	@Override
-	public Users initUsersByMobileAndName(String mobile, String name) {
-		Users u = new Users();
-		u.setId(0L);
-		u.setMobile(mobile);
-		u.setProvinceName("");
-		u.setThirdType(" ");
-		u.setOpenid(" ");
-		u.setName(name);
-		u.setRealName("");
-		u.setBirthDay(new Date());
-		u.setIdCard("");
-		u.setDegreeId(0L);
-		u.setMajor("");
-		u.setSex(" ");
-		u.setHeadImg(" ");
+		u.setIntroduction("");
+		u.setLevel((short) 0);
+		u.setWorkStart("");
+		u.setWorkEnd("");
+		u.setIsDoor((short) 0);
 		u.setRestMoney(new BigDecimal(0));
 		u.setUserType((short) 0);
 		u.setIsApproval((short) 0);

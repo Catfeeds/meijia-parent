@@ -15,9 +15,7 @@ import com.simi.po.model.user.Users;
 public interface UsersService {
 	
 	Users initUsers();
-	
-	Users initUsersByMobileAndName(String mobile, String name);
-	
+		
 	Long insert(Users record);
 	
 	Long insertSelective(Users u);
