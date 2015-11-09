@@ -731,11 +731,9 @@ public class UserController extends BaseController {
 		for (UserImgs item : userImgs) {
 			UserImgVo vo = new UserImgVo();
 			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-
-			vo.setImg_100x100(ImgServerUtil.getImgSize(item.getImgUrl(), "100",
-					"100"));
-			vo.setImg_200x200(ImgServerUtil.getImgSize(item.getImgUrl(), "200",
-					"200"));
+			
+			vo.setImgTrumb(ImgServerUtil.getImgSize(item.getImgUrl(), "400", "400"));
+			vo.setImg(item.getImgUrl());
 			userImgVos.add(vo);
 		}
 		result.setData(userImgVos);
