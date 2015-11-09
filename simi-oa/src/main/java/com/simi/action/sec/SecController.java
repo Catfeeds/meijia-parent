@@ -216,7 +216,7 @@ public class SecController extends AdminController {
 		}
 		
 		//学历名称
-		short degreeId = u.getDegreeId();
+		/*short degreeId = u.getDegreeId();
 		if (degreeId == 0) {
 			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
 		}if (degreeId == 1) {
@@ -233,7 +233,7 @@ public class SecController extends AdminController {
 		}
 		if (degreeId == 6) {
 			vo.setDegreeName(MeijiaUtil.getDegreeName(degreeId));
-		}
+		}*/
 		
 		//1表示秘书
 		Short tagType = 1;

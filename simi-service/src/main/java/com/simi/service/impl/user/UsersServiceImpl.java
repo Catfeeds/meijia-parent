@@ -222,7 +222,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setRealName("");
 		u.setBirthDay(new Date());
 		u.setIdCard("");
-		u.setDegreeId((short) 0);
+		u.setDegreeId(0L);
 		u.setMajor("");
 		u.setSex(" ");
 		u.setIntroduction("");
@@ -630,7 +630,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setRealName("");
 		u.setBirthDay(new Date());
 		u.setIdCard("");
-		u.setDegreeId((short) 0);
+		u.setDegreeId(0L);
 		u.setMajor("");
 		u.setSex(" ");
 		u.setHeadImg(" ");
@@ -656,7 +656,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setRealName("");
 		u.setBirthDay(new Date());
 		u.setIdCard("");
-		u.setDegreeId((short) 0);
+		u.setDegreeId(0L);
 		u.setMajor("");
 		u.setSex(" ");
 		u.setHeadImg(" ");

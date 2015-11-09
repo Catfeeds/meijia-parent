@@ -164,10 +164,11 @@
 								<form:radiobutton path="isDoor" value="1" label="上门" />
 							</div>
 						</div>
-						<%-- <div class="form-group required">
-							<label class="col-md-2 control-label">学历*</label>
+					
+					<%-- 	<div class="form-group required">
+							<label class="col-md-2 control-label">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历</label>
 							<div class="col-md-5">
-								<degreeSelectTag:select degreeId="${ contentModel.edu}"/>
+								<degreeSelectTag:select degreeId="${ orgStaffVoModel.edu}"/>
 							</div>
 						</div> --%>
 						
@@ -179,7 +180,6 @@
 										id="${tag.tagId }" onclick="setTagButton()"
 										class="btn btn-default">
 								</c:forEach>
-
 							</div>
 						</div>
 

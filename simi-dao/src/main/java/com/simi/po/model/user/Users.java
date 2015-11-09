@@ -51,7 +51,7 @@ public class Users {
 
 	private Date birthDay;
 
-	private Short degreeId;
+	private Long degreeId;
 
 	private String major;   
 
@@ -276,13 +276,11 @@ public class Users {
 		this.birthDay = birthDay;
 	}
 
-
-	public Short getDegreeId() {
+	public Long getDegreeId() {
 		return degreeId;
 	}
 
-
-	public void setDegreeId(Short degreeId) {
+	public void setDegreeId(Long degreeId) {
 		this.degreeId = degreeId;
 	}
 
