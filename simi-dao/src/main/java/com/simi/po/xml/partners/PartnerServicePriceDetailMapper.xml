@@ -29,6 +29,10 @@
     where id = #{id,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail" >
+	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+	</selectKey>
+
     insert into partner_service_price_detail (id, service_price_id, service_title, 
       user_id, img_url, price, 
       dis_price, content_standard, content_desc, 
@@ -39,6 +43,11 @@
       #{contentFlow,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail" >
+
+	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+	</selectKey>	
+
     insert into partner_service_price_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

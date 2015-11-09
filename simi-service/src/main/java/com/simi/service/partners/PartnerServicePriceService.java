@@ -9,9 +9,9 @@ public interface PartnerServicePriceService {
 	
 	int deleteByPrimaryKey(Long serviceTypeId);
 
-    int insert(PartnerServicePrices record);
+    Long insert(PartnerServicePrices record);
 
-    int insertSelective(PartnerServicePrices record);
+    Long insertSelective(PartnerServicePrices record);
 
     PartnerServicePrices selectByPrimaryKey(Long serviceTypeId);
 
@@ -23,7 +23,7 @@ public interface PartnerServicePriceService {
 
 	PartnerServicePriceVo ToTree(Long id);
 	
-	PartnerServicePrices initPartnerServicePrices(PartnerServicePriceVo partnerServiceTypeVo);
+	PartnerServicePrices initPartnerServicePrices();
 	
 
 

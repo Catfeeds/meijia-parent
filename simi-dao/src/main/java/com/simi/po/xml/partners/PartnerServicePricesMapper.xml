@@ -29,6 +29,10 @@
 		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePrices">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="servicePriceId">
+			SELECT LAST_INSERT_ID() AS servicePriceId
+		</selectKey>		
+		
 		insert into partner_service_prices (service_price_id, name, parent_id
 		)
 		values (#{servicePriceId,jdbcType=NUMERIC},
@@ -36,6 +40,9 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePrices">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="servicePriceId">
+			SELECT LAST_INSERT_ID() AS servicePriceId
+		</selectKey>	
 		insert into partner_service_prices
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="servicePriceId != null">

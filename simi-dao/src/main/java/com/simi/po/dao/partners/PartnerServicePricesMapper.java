@@ -8,9 +8,9 @@ import com.simi.po.model.partners.PartnerServiceType;
 public interface PartnerServicePricesMapper {
     int deleteByPrimaryKey(Long servicePriceId);
 
-    int insert(PartnerServicePrices record);
+    Long insert(PartnerServicePrices record);
 
-    int insertSelective(PartnerServicePrices record);
+    Long insertSelective(PartnerServicePrices record);
 
     PartnerServicePrices selectByPrimaryKey(Long servicePriceId);
 

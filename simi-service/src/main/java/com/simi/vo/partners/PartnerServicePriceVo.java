@@ -10,8 +10,10 @@ import com.simi.base.model.models.ChainEntity;
 
 public class PartnerServicePriceVo extends ChainEntity<Integer, PartnerServicePriceVo> implements Serializable{
 
-
+	private Integer id;
+	
 	private Long parentId;
+	
 	private List<PartnerServicePriceVo> childList = new ArrayList<PartnerServicePriceVo>();
 	
 	public Long getParentId() {
@@ -25,6 +27,12 @@ public class PartnerServicePriceVo extends ChainEntity<Integer, PartnerServicePr
 	}
 	public void setChildList(List<PartnerServicePriceVo> childList) {
 		this.childList = childList;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 

@@ -1,7 +1,10 @@
 package com.simi.action.partners;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +22,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.admin.AdminController;
+import com.simi.common.Constants;
 import com.simi.models.AuthorityEditModel;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
 import com.simi.oa.auth.AuthPassport;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServicePrices;
 import com.simi.service.admin.AdminAuthorityService;
+import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServicePriceService;
+import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerServicePriceVo;
 
 
@@ -41,6 +53,9 @@ public class PartnerServicePriceController extends AdminController {
 	
 	@Autowired
 	private PartnerServicePriceService partnerServicePriceService;
+	
+	@Autowired
+	private PartnerServicePriceDetailService partnerServicePriceDetailService;
 
 	/**
 	 * 树形展示权限列表
@@ -77,9 +92,9 @@ public class PartnerServicePriceController extends AdminController {
 	public String add(HttpServletRequest request, Model model,
 			@PathVariable(value = "id") Integer id) {
 		if (!model.containsAttribute("contentModel")) {
-			AuthorityEditModel authorityEditModel = new AuthorityEditModel();
-			authorityEditModel.setParentId(id);
-			model.addAttribute("contentModel", authorityEditModel);
+			PartnerServicePriceDetailVo contentModel = new PartnerServicePriceDetailVo();
+			contentModel.setParentId(Long.valueOf(id));
+			model.addAttribute("contentModel", contentModel);
 		}
 		List<TreeModel> treeModels;
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
@@ -109,24 +124,64 @@ public class PartnerServicePriceController extends AdminController {
 	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.POST })
 	public String add(HttpServletRequest request,Model model,
-			@Valid @ModelAttribute("contentModel") PartnerServicePriceVo partnerServicePriceVo,
-			@PathVariable(value = "id") String id, BindingResult result) {
+			@Valid @ModelAttribute("contentModel") PartnerServicePriceDetailVo partnerServicePriceDetailVo,
+			@PathVariable(value = "id") String id, BindingResult result) throws IOException {
 		if (result.hasErrors()) return add(request, model, Integer.valueOf(id));
-		String returnUrl = ServletRequestUtils.getStringParameter(request,
-				"returnUrl", null);
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 
-		PartnerServicePrices partnerServicePrice = partnerServicePriceService.initPartnerServicePrices(partnerServicePriceVo);
-		/*String levelCode = "";
-		int count = adminAuthorityService.selectMaxId()+1;
-		if (partnerServicePriceVo.getParentId() != null 	&& partnerServicePriceVo.getParentId() > 0) {
-			partnerServicePrice.setParentId(partnerServicePrice.getParentId());
-			String parentLevelCode = adminAuthorityService.selectByPrimaryKey(partnerServicePriceVo.getParentId()).getLevelCode();
-			levelCode = count+ "," + parentLevelCode;
-
-		}else{
-			levelCode = count + levelCode  ;
-		}*/
+		PartnerServicePrices partnerServicePrice = partnerServicePriceService.initPartnerServicePrices();
+		
+		partnerServicePrice.setParentId(partnerServicePriceDetailVo.getParentId());
+		partnerServicePrice.setName(partnerServicePriceDetailVo.getName());
+		
 		partnerServicePriceService.insertSelective(partnerServicePrice);
+		
+		Long servicePriceId = partnerServicePrice.getServicePriceId();
+		
+		PartnerServicePriceDetail record = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+		
+		record.setServicePriceId(servicePriceId);
+		record.setServiceTitle(partnerServicePriceDetailVo.getServiceTitle());
+		record.setUserId(0L);
+		record.setPrice(partnerServicePriceDetailVo.getPrice());
+		record.setDisPrice(partnerServicePriceDetailVo.getDisPrice());
+		record.setContentStandard(partnerServicePriceDetailVo.getContentStandard());
+		record.setContentDesc(partnerServicePriceDetailVo.getContentDesc());
+		record.setContentFlow(partnerServicePriceDetailVo.getContentFlow());
+		
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					String url = Constants.IMG_SERVER_HOST + "/upload/";
+					String fileName = file.getOriginalFilename();
+					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+					fileType = fileType.toLowerCase();
+					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+					String ret = o.get("ret").toString();
+
+					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+
+					record.setImgUrl(imgUrl);
+
+				}
+			}
+		}		
+		
+		
+		partnerServicePriceDetailService.insert(record);
+		
 		if (returnUrl == null)	returnUrl = "partners/partnerServicePriceList";
 		return "redirect:" + returnUrl;
 	}

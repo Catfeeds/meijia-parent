@@ -21,23 +21,23 @@ public class PartnerServicePriceServiceImpl implements PartnerServicePriceServic
 	private PartnerServicePricesMapper partnerServicePriceMapper;
 	
 	@Override
-	public int deleteByPrimaryKey(Long serviceTypeId) {
-		return partnerServicePriceMapper.deleteByPrimaryKey(serviceTypeId);
+	public int deleteByPrimaryKey(Long servicePriceId) {
+		return partnerServicePriceMapper.deleteByPrimaryKey(servicePriceId);
 	}
 
 	@Override
-	public int insert(PartnerServicePrices record) {
+	public Long insert(PartnerServicePrices record) {
 		return partnerServicePriceMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(PartnerServicePrices record) {
+	public Long insertSelective(PartnerServicePrices record) {
 		return partnerServicePriceMapper.insertSelective(record);
 	}
 
 	@Override
-	public PartnerServicePrices selectByPrimaryKey(Long serviceTypeId) {
-		return partnerServicePriceMapper.selectByPrimaryKey(serviceTypeId);
+	public PartnerServicePrices selectByPrimaryKey(Long servicePriceId) {
+		return partnerServicePriceMapper.selectByPrimaryKey(servicePriceId);
 	}
 
 	@Override
@@ -56,8 +56,8 @@ public class PartnerServicePriceServiceImpl implements PartnerServicePriceServic
 		//根据parentId=0 查询出所用的父节点
 		List<PartnerServicePrices> list = partnerServicePriceMapper.selectByParentId(0L);
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			PartnerServicePrices partnerServiceType = (PartnerServicePrices) iterator.next();
-			PartnerServicePriceVo vo = ToTree(partnerServiceType.getParentId());
+			PartnerServicePrices partnerServicePrice = (PartnerServicePrices) iterator.next();
+			PartnerServicePriceVo vo = ToTree(partnerServicePrice.getServicePriceId());
 			listVo.add(vo);
 		}
 		return listVo;
@@ -69,32 +69,33 @@ public class PartnerServicePriceServiceImpl implements PartnerServicePriceServic
 	 */
 	@Override
 	public PartnerServicePriceVo ToTree(Long id) {
-		PartnerServicePriceVo partnerServiceTypeVo = new PartnerServicePriceVo();
+		PartnerServicePriceVo partnerServicePriceVo = new PartnerServicePriceVo();
 		
 		//根据id查出某对象
-		PartnerServicePrices partnerServiceType = partnerServicePriceMapper.selectByPrimaryKey(id);
+		PartnerServicePrices partnerServicePrice = partnerServicePriceMapper.selectByPrimaryKey(id);
 		try {
 			//赋值给树形结构的vo
-			BeanUtils.copyProperties(partnerServiceTypeVo, partnerServiceType);
+			BeanUtils.copyProperties(partnerServicePriceVo, partnerServicePrice);
+			partnerServicePriceVo.setId(partnerServicePrice.getServicePriceId().intValue());
 		}  catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		//已id作为parentId查询出所用的子节点
 		
 		List<PartnerServicePrices> child = partnerServicePriceMapper.selectByParentId(id);
-		for (PartnerServicePrices partnerServiceType2 : child) {
-			PartnerServicePriceVo vo =   ToTree(partnerServiceType2.getParentId().longValue());
-			partnerServiceTypeVo.getChildren().add(vo);
+		for (PartnerServicePrices partnerServicePrice2 : child) {
+			PartnerServicePriceVo vo =   ToTree(partnerServicePrice2.getServicePriceId().longValue());
+			partnerServicePriceVo.getChildren().add(vo);
 		}
-		return partnerServiceTypeVo;
+		return partnerServicePriceVo;
 	}
 
 	@Override
-	public PartnerServicePrices initPartnerServicePrices(PartnerServicePriceVo partnerServiceTypeVo) {
-		PartnerServicePrices partnerServicePrice = new PartnerServicePrices();
-		partnerServicePrice.setParentId(partnerServiceTypeVo.getParentId());
-		partnerServicePrice.setName(partnerServiceTypeVo.getName());
-		return partnerServicePrice;
+	public PartnerServicePrices initPartnerServicePrices() {
+		PartnerServicePrices record = new PartnerServicePrices();
+		record.setParentId(0L);
+		record.setName("");
+		return record;
 	}
 	
 	
