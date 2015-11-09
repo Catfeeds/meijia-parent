@@ -334,7 +334,7 @@ public class UserController extends BaseController {
 			@RequestParam("name") String name,
 			@RequestParam("realName") String realName,
 			@RequestParam("sex") String sex,
-			@RequestParam("degreeId") Short degreeId,
+			@RequestParam("degreeId") Long degreeId,
 			@RequestParam("major") String major,
 			@RequestParam("idCard") String idCard,
 			@RequestParam(value = "tag_ids", required = false, defaultValue = "") String tagIds) {
