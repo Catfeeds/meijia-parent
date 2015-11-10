@@ -185,6 +185,9 @@
 							<label class="col-md-2 control-label">认证&nbsp;*</label>
 							<div class="col-md-5">${spiderPartner.certification }</div>
 						</div>
+						
+						<h4>相关链接</h4>
+						<hr/>
 						<div class="form-group">
 							<label class="col-md-2 control-label">信用档案url</label>
 							<div class="col-md-5">
@@ -192,14 +195,23 @@
 								<p class="help-block"></p>
 							</div>
 						</div>
-						<h4>联系信息</h4>
-						<hr/>
+						
+						<div class="form-group">
+							<label class="col-md-2 control-label">采集内容链接</label>
+							<div class="col-md-8">
+								<a href="${spiderPartner.spiderUrl}"  target="_blank">采集内容链接</a>
+							</div>
+						</div>
+						
 						<div class="form-group">
 							<label class="col-md-2 control-label">企业网站</label>
 							<div class="col-md-5">
 								<a href="${spiderPartner.website }" target="_blank">企业网站链接</a>
 							</div>
-						</div>
+						</div>						
+						<h4>联系信息</h4>
+						<hr/>
+
 						<div class="form-group">
 
 							<!-- Text input-->
@@ -286,6 +298,21 @@
 								</table>
 							</div>
 						</div>
+						
+						<h4>服务人员</h4>
+						<hr/>
+						
+						<div class="form-group ">
+							<label class="col-md-2 control-label">服务人员列表&nbsp;*</label>
+							<div class="col-md-8">
+
+								
+							</div>
+						</div>						
+						
+						
+						
+						
 						<h4>运营数据</h4>
 						<hr/>
 						<div class="form-group">
@@ -416,12 +443,7 @@
 								<p class="help-block"></p>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-md-2 control-label">采集内容链接</label>
-							<div class="col-md-8">
-								<a href="${spiderPartner.spiderUrl}"  target="_blank">采集内容链接</a>
-							</div>
-						</div>
+
 					</div>
 					<div class="form-actions">
 						<div class="row">
