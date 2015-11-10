@@ -57,15 +57,17 @@ public class PartnerServicePriceDetail {
         this.userId = userId;
     }
 
+ 
+
     public String getImgUrl() {
-        return imgUrl;
-    }
+		return imgUrl;
+	}
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
-    }
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 
-    public BigDecimal getPrice() {
+	public BigDecimal getPrice() {
         return price;
     }
 

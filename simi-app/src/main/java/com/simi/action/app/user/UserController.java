@@ -199,16 +199,9 @@ public class UserController extends BaseController {
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("15712917308")) {
+		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")) {
 			code = "000000";
 		}
-
-		/*
-		 * Users user = userService.selectByMobile(mobile); if (user != null) {
-		 * result.setStatus(Constants.ERROR_999);
-		 * result.setMsg(ConstantMsg.MOBILE_EXIST_MG); return result; }
-		 */
-
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 				Constants.GET_CODE_TEMPLE_ID, content);
@@ -236,18 +229,17 @@ public class UserController extends BaseController {
 
 		// 判断验证码正确与否，测试账号13810002890 000000 不需要验证
 		AppResultData<Object> validateResult = null;
-		if (mobile.equals("15712917308") && smsToken.equals("000000")) {
+		if (mobile.equals("17090397818") && smsToken.equals("000000")||mobile.equals("17090397828") && smsToken.equals("000000")||mobile.equals("17090397822") && smsToken.equals("000000")) {
 			validateResult = result;
 		} else {
-
 			validateResult = smsTokenService.validateSmsToken(mobile, smsToken,
 					smsType);
 		}
-
+		
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
 			return validateResult;
 		}
-		if (!mobile.equals("15712917308")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&mobile.equals("17090397822")) {
 
 			Users user = userService.selectByMobile(mobile);
 			// 如果秘书或用户存在
@@ -313,7 +305,7 @@ public class UserController extends BaseController {
 		vo.setDegreeTypeList(degreeTypeList);
 		// 如果已注册用户，确定要注册秘书，则去表中查到对应的用户数据但是不在注册列表里展示信息
 		// 只为了存用户的昵称（name）;
-		if (!mobile.equals("15712917308")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&mobile.equals("17090397822")) {
 			Users user = userService.selectByMobile(mobile);
 			if (user != null && user.getUserType() == 0) {
 				user.setName(name);
@@ -341,7 +333,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		if (!mobile.equals("15712917308")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&mobile.equals("17090397822")) {
 
 			Users users = userService.selectByMobile(mobile);
 			// 若users不为空，则为已有用户注册秘书 ,修改用户为秘书（userType=1）
