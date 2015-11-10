@@ -1,82 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.partners.PartnerUsersMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerUsers" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, partner_id, user_id, add_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from parent_users
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from parent_users
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.partners.PartnerUsers" >
-    insert into parent_users (id, partner_id, user_id, 
-      add_time)
-    values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, 
-      #{addTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerUsers" >
-    insert into parent_users
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="partnerId != null" >
-        partner_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="partnerId != null" >
-        #{partnerId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerUsers" >
-    update parent_users
-    <set >
-      <if test="partnerId != null" >
-        partner_id = #{partnerId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerUsers" >
-    update parent_users
-    set partner_id = #{partnerId,jdbcType=NUMERIC},
-      user_id = #{userId,jdbcType=NUMERIC},
-      add_time = #{addTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+<mapper namespace="com.simi.po.dao.partners.PartnerUsersMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerUsers">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
+		<result column="response_time" property="responseTime" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, partner_id, user_id, service_type_id, response_time, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from parent_users
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from parent_users
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerUsers">
+		insert into parent_users (id, partner_id, user_id, service_type_id, response_time,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, 
+		#{userId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC}, #{responseTime,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerUsers">
+		insert into parent_users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="partnerId != null">
+				partner_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="serviceTypeId != null">
+				service_type_id,
+			</if>
+			
+			<if test="responseTime != null">
+				response_time,
+			</if>
+			
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="partnerId != null">
+				#{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTypeId != null">
+				#{serviceTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="responseTime != null">
+				#{responseTime,jdbcType=NUMERIC},
+			</if>			
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerUsers">
+		update parent_users
+		<set>
+			<if test="partnerId != null">
+				partner_id = #{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTypeId != null">
+				service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="responseTime != null">
+				response_time = #{responseTime,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerUsers">
+		update parent_users
+		set partner_id = #{partnerId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+		response_time = #{responseTime,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

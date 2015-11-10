@@ -4,24 +4,37 @@ import java.util.List;
 
 import com.simi.po.model.user.Tags;
 import com.simi.vo.user.UserImgVo;
+
 public class PartnerUserVo {
 	
-	private Long userId;
+	private Long id;
 	
-	private String name;
+	private Long partnerId;
 	
-	private String headImg;
-	
-	private String cityAndRegion;
-	
-	private String responseTime;
+	private String companyName;
+
+	private Long serviceTypeId;
 	
 	private String serviceTypeName;
+
+	private Long userId;
+
+	private String name;
 	
+	private String mobile;
+
+	private String headImg;
+
+	private String cityAndRegion;
+
+	private Short responseTime;
+	
+	private String responseTimeName;
+
 	private String introduction;
-	
+
 	private List<Tags> userTags;
-	
+
 	private List<UserImgVo> userImgs;
 
 	public Long getUserId() {
@@ -56,11 +69,11 @@ public class PartnerUserVo {
 		this.cityAndRegion = cityAndRegion;
 	}
 
-	public String getResponseTime() {
+	public Short getResponseTime() {
 		return responseTime;
 	}
 
-	public void setResponseTime(String responseTime) {
+	public void setResponseTime(Short responseTime) {
 		this.responseTime = responseTime;
 	}
 
@@ -95,8 +108,53 @@ public class PartnerUserVo {
 	public void setUserImgs(List<UserImgVo> userImgs) {
 		this.userImgs = userImgs;
 	}
-	
-	
-	
+
+	public Long getPartnerId() {
+		return partnerId;
+	}
+
+	public void setPartnerId(Long partnerId) {
+		this.partnerId = partnerId;
+	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getResponseTimeName() {
+		return responseTimeName;
+	}
+
+	public void setResponseTimeName(String responseTimeName) {
+		this.responseTimeName = responseTimeName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 }

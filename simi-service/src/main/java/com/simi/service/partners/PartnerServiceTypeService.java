@@ -24,6 +24,8 @@ public interface PartnerServiceTypeService {
 	PartnerServiceTypeVo ToTree(Long id);
 	
 	PartnerServiceType initPartnerServiceType(PartnerServiceTypeVo partnerServiceTypeVo);
+
+	List<PartnerServiceType> selectByParentId(Long parentId);
 	
 
 

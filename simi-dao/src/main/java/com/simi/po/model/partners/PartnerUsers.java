@@ -6,6 +6,10 @@ public class PartnerUsers {
     private Long partnerId;
 
     private Long userId;
+    
+    private Long serviceTypeId;
+    
+    private Short responseTime;
 
     private Long addTime;
 
@@ -40,4 +44,20 @@ public class PartnerUsers {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public Short getResponseTime() {
+		return responseTime;
+	}
+
+	public void setResponseTime(Short responseTime) {
+		this.responseTime = responseTime;
+	}
 }

@@ -1,6 +1,7 @@
 package com.meijia.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -604,4 +605,23 @@ public class MeijiaUtil {
 		}
 		return statusName;
 	}	
+	
+	//服务响应时间
+	public static String getResponseTimeName(Short responseTime) {
+		String responseTimeName = "";
+		switch (responseTime) {
+			case 0:
+				responseTimeName = "半个小时内响应";
+				break;
+			case 1:
+				responseTimeName = "一个小时内响应";
+				break;
+			case 2:
+				responseTimeName = "2个小时内响应";
+				break;
+			default:
+				responseTimeName = "";
+		}
+		return responseTimeName;		
+	}
 }

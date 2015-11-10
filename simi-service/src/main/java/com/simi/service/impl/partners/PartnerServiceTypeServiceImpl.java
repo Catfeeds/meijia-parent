@@ -61,6 +61,11 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		}
 		return listVo;
 	}
+	
+	@Override
+	public List<PartnerServiceType> selectByParentId(Long parentId) {
+		return partnerServiceTypeMapper.selectByParentId(parentId);
+	}
 	/**
 	 * 查询出根节点和所有的子节点，封装到Vo中
 	 * @param id

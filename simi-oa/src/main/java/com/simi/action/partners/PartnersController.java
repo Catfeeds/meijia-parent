@@ -3,8 +3,10 @@ package com.simi.action.partners;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -431,4 +433,24 @@ public class PartnersController extends BaseController{
 		}
 		return "redirect:list";
 	} 
+	
+	@RequestMapping(value = "/autocomplete", method = { RequestMethod.GET })
+	public List<Partners> list(HttpServletRequest request, @RequestParam("q") String q) {
+		
+		List<Partners> result = new ArrayList<Partners>();		
+		if (StringUtil.isEmpty(q)) return result;
+		
+		int pageNo = 1;
+		int pageSize = ConstantOa.DEFAULT_PAGE_SIZE;
+		
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setCompanyName(q);
+		
+		PageInfo pageList = partnersService.searchVoListPage(searchVo, pageNo, pageSize);
+		if (pageList != null) {
+			result = pageList.getList();
+		}
+		
+		return result;
+	}
 }
