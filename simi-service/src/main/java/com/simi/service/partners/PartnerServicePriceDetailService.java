@@ -17,6 +17,10 @@ public interface PartnerServicePriceDetailService {
     int updateByPrimaryKey(PartnerServicePriceDetail record);
     	
 	PartnerServicePriceDetail initPartnerServicePriceDetail();
+
+	PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId);
+
+	int deleteByServiceTypeId(Long servicePriceId);
 	
 
 

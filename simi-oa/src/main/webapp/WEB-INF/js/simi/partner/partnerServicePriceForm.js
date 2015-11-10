@@ -113,7 +113,7 @@ $("#btn_submit").click(function() {
 	}
 });
 
-$("#imgUrl").fileinput({
+$("#imgUrlFile").fileinput({
 	previewFileType: "image",
 	browseClass: "btn btn-success",
 	browseLabel: "上传图片",

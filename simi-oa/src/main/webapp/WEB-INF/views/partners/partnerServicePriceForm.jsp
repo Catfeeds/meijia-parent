@@ -35,7 +35,12 @@
 
 			<hr
 				style="width: 100%; color: black; height: 1px; background-color: black;" />
- 				<form:form modelAttribute="contentModel" enctype="multipart/form-data" class="form-horizontal" method="POST" id="partner-service-price-form">
+ 				<form:form modelAttribute="contentModel" 
+ 				enctype="multipart/form-data" class="form-horizontal" 
+ 				method="POST" id="partner-service-price-form">
+ 				
+ 						<form:hidden path="id" />
+ 						<form:hidden path="servicePriceId" />
                         <div class="form-body">
                            <div class="form-group">
                               <label  class="col-md-2 control-label">名称&nbsp;*</label>
@@ -50,7 +55,7 @@
 	
 									<label class="col-md-2 control-label">图片</label>
 									<div class="col-md-5">
-										<img src="${ contentModel.imgUrl }"/>
+										<img src="${ contentModel.imgUrl }?w=300&h=300"/>
 									</div>
 								</div>
 							</c:if>
@@ -59,7 +64,7 @@
 
 							<label class="col-md-2 control-label">图片地址</label>
 							<div class="col-md-5">
-								<input id="imgUrl" type="file" name="imgUrl" accept="image/*"
+								<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*"
 									data-show-upload="false">
 								<form:errors path="imgUrl" class="field-has-error"></form:errors>
 							</div>

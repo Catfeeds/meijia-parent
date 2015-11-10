@@ -21,9 +21,7 @@ public interface UsersService {
 	Long insertSelective(Users u);
 	
 	int updateByPrimaryKeySelective(Users user) ;
-	
-	Users initUserForm();
-	
+		
 	Users genUser(String mobile, String name, Short addFrom);
 	
 	Users selectByPrimaryKey(Long id);

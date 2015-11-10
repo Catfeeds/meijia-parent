@@ -85,7 +85,7 @@
     <include refid="Base_Column_List" />
     from users
     
-    where is_approval = 1 and user_type = 1
+    where is_approval = 2 and user_type = 1
     
     order by id desc
   </select>
@@ -183,7 +183,7 @@
 		<include refid="Base_Column_List" />
 		from users
 		where user_type = #{userType,jdbcType=NUMERIC}
-		and is_approval = 1
+		and is_approval = 2
 		order by add_time asc
 	</select>
 

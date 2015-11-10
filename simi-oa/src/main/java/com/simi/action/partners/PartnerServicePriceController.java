@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.admin.AdminController;
@@ -64,14 +66,14 @@ public class PartnerServicePriceController extends AdminController {
 	 * @return
 	 */
 	@AuthPassport
-	@RequestMapping(value = "/chain", method = { RequestMethod.GET })
+	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
+			
 			String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServicePriceService.listChain(), null, null,
 					StringHelper.toIntegerList(expanded, ","));
-			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false,
-							false, children)));
+			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 			String jsonString = JSONArray.fromObject(treeModels,new JsonConfig()).toString();
 			model.addAttribute("contentModel", jsonString);
 		}
@@ -80,38 +82,7 @@ public class PartnerServicePriceController extends AdminController {
 
 		return "partners/partnerServicePriceList";
 	}
-	/**
-	 * 根据id添加同级或者子级节点
-	 * @param request
-	 * @param model
-	 * @param id
-	 * @return 编辑页面
-	 */
-	@AuthPassport
-	@RequestMapping(value = "/add/{id}", method = { RequestMethod.GET })
-	public String add(HttpServletRequest request, Model model,
-			@PathVariable(value = "id") Integer id) {
-		if (!model.containsAttribute("contentModel")) {
-			PartnerServicePriceDetailVo contentModel = new PartnerServicePriceDetailVo();
-			contentModel.setParentId(Long.valueOf(id));
-			model.addAttribute("contentModel", contentModel);
-		}
-		List<TreeModel> treeModels;
-		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
-		if (id != null && id > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServicePriceService.listChain(), id, null,
-					StringHelper.toIntegerList(expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
-		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServicePriceService.listChain(), null, null,
-					StringHelper.toIntegerList(expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
-					"0", "0", "根节点", false, true, false, children)));
-		}
-		model.addAttribute(treeDataSourceName,JSONArray.fromObject(treeModels, new JsonConfig()).toString());
-		return "partners/partnerServicePriceForm";
-	}
+
 	/**
 	 * 根据页面选择的id,增加新节点
 	 * @param request
@@ -122,23 +93,38 @@ public class PartnerServicePriceController extends AdminController {
 	 * @return 权限的树形展示页面
 	 */
 	@AuthPassport
-	@RequestMapping(value = "/add/{id}", method = { RequestMethod.POST })
+	@RequestMapping(value = "/form/{id}", method = { RequestMethod.POST })
 	public String add(HttpServletRequest request,Model model,
-			@Valid @ModelAttribute("contentModel") PartnerServicePriceDetailVo partnerServicePriceDetailVo,
-			@PathVariable(value = "id") String id, BindingResult result) throws IOException {
-		if (result.hasErrors()) return add(request, model, Integer.valueOf(id));
-		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+			@ModelAttribute("contentModel") PartnerServicePriceDetailVo partnerServicePriceDetailVo,
+			@RequestParam("imgUrlFile") MultipartFile file, BindingResult result) throws IOException {
 
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		
+		
+		Long servicePriceId = partnerServicePriceDetailVo.getServicePriceId();
+		
 		PartnerServicePrices partnerServicePrice = partnerServicePriceService.initPartnerServicePrices();
+		
+		if (servicePriceId > 0L) {
+			partnerServicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+		}
 		
 		partnerServicePrice.setParentId(partnerServicePriceDetailVo.getParentId());
 		partnerServicePrice.setName(partnerServicePriceDetailVo.getName());
 		
-		partnerServicePriceService.insertSelective(partnerServicePrice);
+		if (servicePriceId.equals(0L)) {
+			partnerServicePriceService.insertSelective(partnerServicePrice);
+			servicePriceId = partnerServicePrice.getServicePriceId();
+		}
 		
-		Long servicePriceId = partnerServicePrice.getServicePriceId();
 		
+		//先删除后增加
+		Long id = partnerServicePriceDetailVo.getId();
 		PartnerServicePriceDetail record = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+		
+		if (id > 0L) {
+			record = partnerServicePriceDetailService.selectByPrimaryKey(id);
+		}
 		
 		record.setServicePriceId(servicePriceId);
 		record.setServiceTitle(partnerServicePriceDetailVo.getServiceTitle());
@@ -150,41 +136,39 @@ public class PartnerServicePriceController extends AdminController {
 		record.setContentFlow(partnerServicePriceDetailVo.getContentFlow());
 		
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		if (multipartResolver.isMultipart(request)) {
-			// 判断 request 是否有文件上传,即多部分请求...
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-					String url = Constants.IMG_SERVER_HOST + "/upload/";
-					String fileName = file.getOriginalFilename();
-					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-					fileType = fileType.toLowerCase();
-					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
 
-					ObjectMapper mapper = new ObjectMapper();
+		if (file != null && !file.isEmpty()) {
+			String url = Constants.IMG_SERVER_HOST + "/upload/";
+			String fileName = file.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+			fileType = fileType.toLowerCase();
+			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
 
-					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+			ObjectMapper mapper = new ObjectMapper();
 
-					String ret = o.get("ret").toString();
+			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
 
-					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+			String ret = o.get("ret").toString();
 
-					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
-					record.setImgUrl(imgUrl);
+			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 
-				}
-			}
-		}		
+			record.setImgUrl(imgUrl);
+
+		}
 		
+		if (id > 0L) {
+			partnerServicePriceDetailService.updateByPrimaryKeySelective(record);
+		} else {
+			partnerServicePriceDetailService.insert(record);
+		}
 		
-		partnerServicePriceDetailService.insert(record);
 		
 		if (returnUrl == null)	returnUrl = "partners/partnerServicePriceList";
 		return "redirect:" + returnUrl;
 	}
+	
 	/**
 	 * 根据id编辑对应的权限
 	 * @param request
@@ -193,59 +177,42 @@ public class PartnerServicePriceController extends AdminController {
 	 * @return 跳转到编辑页面
 	 */
 	@AuthPassport
-	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.GET })
+	@RequestMapping(value = "/form/{id}", method = { RequestMethod.GET })
 	public String edit(HttpServletRequest request, Model model,
 			@PathVariable(value = "id") Long id) {
+		
 		if (!model.containsAttribute("contentModel")) {
+			
+			PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
+			
 			PartnerServicePrices partnerServicePrice = partnerServicePriceService.selectByPrimaryKey(id);
-			model.addAttribute("contentModel", partnerServicePrice);
+			
+			PartnerServicePriceDetail partnerServicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(id);
+			
+			if (partnerServicePriceDetail == null) {
+				partnerServicePriceDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+			}
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(partnerServicePriceDetail, vo);
+			vo.setName(partnerServicePrice.getName());
+			vo.setParentId(partnerServicePrice.getServicePriceId());
+			model.addAttribute("contentModel", vo);
 		}
 		List<TreeModel> treeModels;
-		PartnerServicePrices editModel = (PartnerServicePrices) model.asMap().get("contentModel");
+		PartnerServicePriceDetailVo editModel = (PartnerServicePriceDetailVo) model.asMap().get("contentModel");
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					partnerServicePriceService.listChain(), editModel.getParentId()
-							.intValue(), null, StringHelper.toIntegerList(
-							expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
-					"0", "0", "根节点", false, false, false, children)));
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServicePriceService.listChain(), editModel.getParentId().intValue(), null, StringHelper.toIntegerList(expanded, ","));
+			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServicePriceService.listChain(), null, null,
-					StringHelper.toIntegerList(expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
-					"0", "0", "根节点", false, true, false, children)));
+			List<TreeModel> children = TreeModelExtension.ToTreeModels( partnerServicePriceService.listChain(), null, null, StringHelper.toIntegerList(expanded, ","));
+			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, true, false, children)));
 		}
-		model.addAttribute("treeDataSource",
-				JSONArray.fromObject(treeModels, new JsonConfig()).toString());
+		model.addAttribute("treeDataSource", JSONArray.fromObject(treeModels, new JsonConfig()).toString());
 
-		return "partners/partnerServicePriceList";
+		return "partners/partnerServicePriceForm";
 	}
 
-	/**
-	 *根据id更新权限
-	 * @param request
-	 * @param model
-	 * @param adminAuthority
-	 * @param id
-	 * @param result
-	 * @return 跳转到权限的树形列表
-	 */
-	@AuthPassport
-	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.POST })
-	public String edit(	HttpServletRequest request,	Model model,
-			@Valid @ModelAttribute("contentModel") PartnerServicePrices partnerServicePrice,
-			@PathVariable(value = "id") Long id, BindingResult result) {
-		if (result.hasErrors()) return edit(request, model, id);
-		String returnUrl = ServletRequestUtils.getStringParameter(request,"returnUrl", null);
-		if(partnerServicePrice!=null){
-			partnerServicePrice.setServicePriceId(Long.valueOf(id));
-			partnerServicePriceService.updateByPrimaryKeySelective(partnerServicePrice);
-		}
-		if (returnUrl == null) returnUrl = "partnerServicePrice/chain";
-		return "redirect:" + returnUrl;
-	}
 	/**
 	 * 根据id删除权限
 	 * @param request
@@ -256,10 +223,13 @@ public class PartnerServicePriceController extends AdminController {
 	@AuthPassport
 	@RequestMapping(value = "/delete/{id}", method = { RequestMethod.GET })
 	public String delete(HttpServletRequest request, Model model,@PathVariable(value = "id") String id) {
-		Long ids = Long.valueOf(id.trim());
+		Long serviceTypeId = Long.valueOf(id.trim());
 		//根据id查找出对应的该权限对象
 		//int result = adminAuthorityService.deleteAuthorityByRecurision(adminAuthority);
-		partnerServicePriceService.deleteByPrimaryKey(ids);
+		
+		partnerServicePriceDetailService.deleteByServiceTypeId(serviceTypeId);
+		partnerServicePriceService.deleteByPrimaryKey(serviceTypeId);
+		
 		String returnUrl = ServletRequestUtils.getStringParameter(request,
 				"returnUrl", null);
 		if (returnUrl == null)

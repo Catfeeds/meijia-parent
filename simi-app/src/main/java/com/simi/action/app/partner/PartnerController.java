@@ -1,5 +1,7 @@
 package com.simi.action.app.partner;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,19 +26,10 @@ import com.simi.vo.AppResultData;
 public class PartnerController extends BaseController {
 
 	@Autowired
-	private UserLoginedService userLoginedService;
-
-	@Autowired
 	private OrderQueryService orderQueryService;
 	
 	@Autowired
 	private UsersService userService;
-
-	@Autowired
-	private SecService secService;
-
-	@Autowired
-	private UserRefSecService userRefSecService;
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;
@@ -51,7 +44,9 @@ public class PartnerController extends BaseController {
 	public AppResultData<Object> partnerUserList(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("service_type_id") Long serviceTypeId,
-			@RequestParam(value = "city_id", required = false, defaultValue = "0") Long cityId) {
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "city_id", required = false, defaultValue = "0") Long cityId,
+			@RequestParam(value = "region_id", required = false, defaultValue = "0") Long regionId) {
 			
 			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 
@@ -62,6 +57,12 @@ public class PartnerController extends BaseController {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 				return result;
+			}
+			
+			List<Users> partnerUsers = userService.selectByUserType((short) 2);
+			
+			for (Users item : partnerUsers) {
+				
 			}
 
 			return result;

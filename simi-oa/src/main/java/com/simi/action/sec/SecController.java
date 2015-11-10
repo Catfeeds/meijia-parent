@@ -286,9 +286,7 @@ public class SecController extends AdminController {
     	
     	Long userId = Long.valueOf(request.getParameter("id"));
     	
-    	
-
-    	Users users = usersService.initUserForm();
+    	Users users = usersService.initUsers();
     	// 创建一个通用的多部分解析器.
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 		String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/sec");

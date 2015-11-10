@@ -28,6 +28,12 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 	public int deleteByPrimaryKey(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.deleteByPrimaryKey(servicePriceId);
 	}
+	
+	@Override
+	public int deleteByServiceTypeId(Long servicePriceId) {
+		return partnerServicePriceDetailMapper.deleteByServiceTypeId(servicePriceId);
+	}
+	
 
 	@Override
 	public Long insert(PartnerServicePriceDetail record) {
@@ -43,6 +49,11 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 	public PartnerServicePriceDetail selectByPrimaryKey(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.selectByPrimaryKey(servicePriceId);
 	}
+	
+	@Override
+	public PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId) {
+		return partnerServicePriceDetailMapper.selectByServicePriceId(servicePriceId);
+	}	
 
 	@Override
 	public int updateByPrimaryKeySelective(PartnerServicePriceDetail record) {

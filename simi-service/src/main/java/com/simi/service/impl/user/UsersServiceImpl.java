@@ -211,37 +211,6 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public Users initUserForm() {
-		Users u = new Users();
-		u.setId(0L);
-		u.setMobile("");
-		u.setProvinceName("");
-		u.setThirdType(" ");
-		u.setOpenid(" ");
-		u.setName(" ");
-		u.setRealName("");
-		u.setBirthDay(new Date());
-		u.setIdCard("");
-		u.setDegreeId(0L);
-		u.setMajor("");
-		u.setSex(" ");
-		u.setIntroduction("");
-		u.setLevel((short) 0);
-		u.setWorkStart("");
-		u.setWorkEnd("");
-		u.setIsDoor((short) 0);
-		u.setHeadImg(" ");
-		u.setRestMoney(new BigDecimal(0));
-		u.setUserType((short) 1);
-		u.setIsApproval((short) 0);
-		u.setAddFrom((short) 0);
-		u.setScore(0);
-		u.setAddTime(TimeStampUtil.getNow() / 1000);
-		u.setUpdateTime(TimeStampUtil.getNow() / 1000);
-		return u;
-	}
-
-	@Override
 	public PageInfo searchVoListPage(UserSearchVo searchVo, int pageNo,
 			int pageSize) {
 
@@ -686,6 +655,7 @@ public class UsersServiceImpl implements UsersService {
 		
 		return true;
 	}
+	
 	@Override
 	public List<Users> selectByListPageYes(UsersSearchVo usersSearchVo,
 			int pageNo, int pageSize) {
