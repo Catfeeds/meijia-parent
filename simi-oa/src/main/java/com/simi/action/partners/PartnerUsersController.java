@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
+import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.partners.PartnerServiceType;
@@ -38,7 +43,6 @@ import com.simi.service.partners.PartnersService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnerServicePriceListVo;
 import com.simi.vo.partners.PartnerUserDetailVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
@@ -198,14 +202,103 @@ public class PartnerUsersController extends BaseController{
 	 * @param partners
 	 * @param result
 	 * @return
+	 * @throws IOException 
 	 */
 	//@AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model,
-			@ModelAttribute("partners") PartnerFormVo partners, 
-			BindingResult result) {
+			@ModelAttribute("contentModel") PartnerUserDetailVo partnerUserDetailVo, 
+			@RequestParam("imgUrlFile") MultipartFile file,
+			BindingResult result) throws IOException {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
+		
+		Long id = partnerUserDetailVo.getId();
+		Long userId = partnerUserDetailVo.getUserId();
+		Long partnerId = partnerUserDetailVo.getPartnerId();
+		Short responseTime = partnerUserDetailVo.getResponseTime();
+		Long serviceTypeId = partnerUserDetailVo.getServiceTypeId();
+		String mobile = partnerUserDetailVo.getMobile();
+		String name = partnerUserDetailVo.getName();
+		
+		Users u = null;
+		
+		//创建新用户
+		if (userId.equals(0L)) {
+			u = userService.genUser(mobile, name, (short) 2);
+			userId = u.getId();
+		} else {
+			u = userService.selectByPrimaryKey(userId);
+			
+			if (!u.getName().equals(name)) {
+				u.setName(name);
+			}
+		}
+		
+		u.setIntroduction(partnerUserDetailVo.getIntroduction());
+		
+		//更新头像 
+		if (file != null && !file.isEmpty()) {
+			String url = Constants.IMG_SERVER_HOST + "/upload/";
+			String fileName = file.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+			fileType = fileType.toLowerCase();
+			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+			String ret = o.get("ret").toString();
+
+			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+
+			u.setHeadImg(imgUrl);
+			
+			
+
+		}
+		
+		userService.updateByPrimaryKeySelective(u);
+		
+		//更新服务商用户表
+		PartnerUsers partnerUser = partnerUserService.iniPartnerUsers();
+		if (id > 0L) {
+			partnerUser = partnerUserService.selectByPrimaryKey(id);
+		}
+		
+		partnerUser.setPartnerId(partnerId);
+		partnerUser.setUserId(userId);
+		partnerUser.setResponseTime(responseTime);
+		partnerUser.setServiceTypeId(serviceTypeId);
+		
+		if (id > 0L) {
+			partnerUserService.updateByPrimaryKey(partnerUser);
+		} else {
+			partnerUser.setId(0L);
+			partnerUserService.insert(partnerUser);
+		}
+		
+		//处理标签
+		String tagIds = request.getParameter("tagIds");
+		if (!StringUtil.isEmpty(tagIds)) {
+			tagsUsersService.deleteByUserId(userId);
+			String[] tagList = StringUtil.convertStrToArray(tagIds);
+			
+			for (int i = 0; i < tagList.length; i++) {
+				if (StringUtil.isEmpty(tagList[i])) continue;
+				
+				TagUsers record = new TagUsers();
+				record.setId(0L);
+				record.setUserId(userId);
+				record.setTagId(Long.valueOf(tagList[i]));
+				record.setAddTime(TimeStampUtil.getNowSecond());
+				tagsUsersService.insert(record);
+			}
+		}
+		
 		
 		return "redirect:user_list";
 	} 

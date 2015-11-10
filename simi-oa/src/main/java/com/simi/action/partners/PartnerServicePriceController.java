@@ -135,8 +135,6 @@ public class PartnerServicePriceController extends AdminController {
 		record.setContentDesc(partnerServicePriceDetailVo.getContentDesc());
 		record.setContentFlow(partnerServicePriceDetailVo.getContentFlow());
 		
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-
 		if (file != null && !file.isEmpty()) {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
 			String fileName = file.getOriginalFilename();
