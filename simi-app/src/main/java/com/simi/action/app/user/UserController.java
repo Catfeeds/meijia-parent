@@ -169,7 +169,7 @@ public class UserController extends BaseController {
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("18610807136")) {
+		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")) {
 			code = "000000";
 		}
 
@@ -239,7 +239,7 @@ public class UserController extends BaseController {
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
 			return validateResult;
 		}
-		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&mobile.equals("17090397822")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")) {
 
 			Users user = userService.selectByMobile(mobile);
 			// 如果秘书或用户存在
@@ -305,7 +305,7 @@ public class UserController extends BaseController {
 		vo.setDegreeTypeList(degreeTypeList);
 		// 如果已注册用户，确定要注册秘书，则去表中查到对应的用户数据但是不在注册列表里展示信息
 		// 只为了存用户的昵称（name）;
-		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&mobile.equals("17090397822")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")) {
 			Users user = userService.selectByMobile(mobile);
 			if (user != null && user.getUserType() == 0) {
 				user.setName(name);
@@ -333,7 +333,7 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&mobile.equals("17090397822")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")) {
 
 			Users users = userService.selectByMobile(mobile);
 			// 若users不为空，则为已有用户注册秘书 ,修改用户为秘书（userType=1）
