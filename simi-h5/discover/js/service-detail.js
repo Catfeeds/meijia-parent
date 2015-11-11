@@ -1,5 +1,5 @@
 var postdata = {};
-postdata.service_price_id = 1;
+postdata.service_price_id = 69;
 $.ajax({
 		type : "GET",
 		url : siteAPIPath  +"partner/get_partner_service_price_detail.json?",
@@ -11,14 +11,17 @@ $.ajax({
 		//	var partnerServicePriceDetail = result.data;
 			
 			//var result = data.response;
-			var partnerServicePriceDetail = data.data;
-			console.log(partnerServicePriceDetail);
+			var vo = data.data;
+			console.log(vo);
 
-			$("#contentStandard").html(partnerServicePriceDetail.content_standard);
-			$("#contentDesc").html(partnerServicePriceDetail.content_desc);
-			$("#contentFlow").html(partnerServicePriceDetail.content_flow);
-			$("#price").html(partnerServicePriceDetail.price);
-			$("#disPrice").html(partnerServicePriceDetail.dis_price);
+			$("#contentStandard").html(vo.content_standard);
+			$("#contentDesc").html(vo.content_desc);
+			$("#contentFlow").html(vo.content_flow);
+			$("#price").html(vo.price);
+			$("#disPrice").html(vo.dis_price);
+			$("#serviceTitle").html(vo.service_title);
+			$("#name").html(vo.name);
+			
 			//$("#contentFlow").text(partnerServicePriceDetail.content_flow);
 			//$("#contentFlow").val(partnerServicePriceDetail.content_flow);
 		}
