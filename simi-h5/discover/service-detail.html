@@ -1,134 +1,122 @@
-<div class="pages">
-	<div data-page="service-detail" class="page"
-		style="background-color: #e5e5e5 !important;">
-		<div class="page-content"
-			style="margin: 0; color: #999; padding-bottom: 44px !important; 
-			height: 792px !important;">
-			
-			
-			
-      <title>公司注册-云行政</title>
-<div class="wrapper bott_box">
-    <div class="book_banner">
-        <div class="banner_box">
-            <p class="banner_t1">公司注册</p>
-            <p class="banner_t2"><!-- 20日极速出证。 -->需要代理地址的有福利,同时购买国地税报到仅需￥400</p>
-        </div>
-    </div>
-    <div class="price_info">
-        <div class="price_b1">
-           
-                          <p class="p1">￥<span>598.0</span></p>
-             <p class="p2">￥1500.0</p>
-             <!-- <span class="actOrange">创业季</span><span class="actBlue">朝&nbsp;阳</span><span class="actStorm">低价风暴</span> -->
-                          
-        </div>
-        <div class="clear"></div>
-        <div class="price_b2">
-            <ul>
-                <li>20日出证</li>
-                <li>流程监控</li>
-                <li>专人服务</li>
-                <li>信息保密</li>
-            </ul>
-        </div>
-        <div class="dotted"></div> 
-            </div>
-     <!-- <div class="book_con_t">
-        <p class="tit">服务标准</p>
-    </div>
-    <div class="book_con">
-                <ul>
-            <li>名称登记核准，设立登记申请</li>
-            <li>营业执照，组织机构代码证，税务登记证</li>
-            <li>刻章及备案（公章、法人章、财务专用章、发票章、合同专用章）</li>
-            <li>专业法律顾问全程免费咨询</li>
-        </ul>
-             <!--    <p class="book_re">
-            送三个月代理记账
-        </p> -->
-        <p class="book_re">
-            送精美证件盒
-        </p>
-    </div>
-     <form id="service-detail-form" class="list-block">
-					<ul style="background: #F8F8F8">
-						<li>
-							<div class="item-content">
-								<div class="item-inner">
-									<div class="item-title label">服务标准:</div>
-									<div class="item-xx">
-										<input type="text" id="contentStandard" name="contentStandard"
-											maxLength="10" readonly>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="item-content">
-								<div class="item-inner">
-									<div class="item-title label">服务说明:</div>
-									<div class="item-xx">
-										<input type="text" id="contentDesc" name="contentDesc"
-											maxLength="10" readonly>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="item-content">
-								<div class="item-inner">
-									<div class="item-title label">服务流程:</div>
-									<div class="item-xx">
-										<input type="text" id="contentFlow" name="contentFlow"
-											maxLength="10" readonly>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-				<!-- 	<a href="#" id="information_btn" class="button active my-submit" style="border:1px solid #007aff">提交</a> -->
-				</form>
-   <!-- <div class="book_con_t">
-        <p class="tit">产品说明</p>
-    </div>
-    <div class="book_con">
-               <ul>
-            <li>本服务适用于小规模纳税人的内资有限公司在海淀、朝阳、丰台、东城、西城的设立，其他区域请电话咨询。</li>
-            <li>名称核准通过后再次修改，小微将另收取200元/次的服务费。 </li>
-            <li>代理地址已在工商局备案，费用由小微的合作方收取并开具发票，小微不收取任何中间费用。</li>
-        </ul>
-            </div>
-    <div class="book_con_t">
-        <p class="tit">服务流程</p>
-    </div>
-    <div class="book_flow">
-             <ul>
-            <li class="fole_b1">名称登记核准</li>
-            <li class="flow_line"></li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport"
+	content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,width=device-width">
+<title>公司注册-云行政</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+<meta name="viewport"
+	content="width=device-width,target-densitydpi=320,initial-scale=0.5, user-scalable=no">
+
+
+
+<link rel="stylesheet" type="text/css" href="css/index.css" media="all">
+</head>
+<body>
+	<div class="wrapper bott_box">
+		<div class="book_banner">
+			<div class="banner_box">
+				<p class="banner_t1">公司注册</p>
+				<p class="banner_t2">
+					<!-- 20日极速出证。 -->
+					需要代理地址的有福利,同时购买国地税报到仅需￥400
+				</p>
+			</div>
+		</div>
+		<div class="price_info">
+			<div class="price_b1">
+
+				<p class="p1">
+				
+					￥<span id = "price" ></span>
+					
+				</p>
+				<p class="p2"  >
+				
+				￥<span id="disPrice"></span>
+				
+				</p>
+				<!-- <span class="actOrange">创业季</span><span class="actBlue">朝&nbsp;阳</span><span class="actStorm">低价风暴</span> -->
+
+			</div>
+			<div class="clear"></div>
+			<div class="price_b2">
+				<ul>
+					<li>20日出证</li>
+					<li>流程监控</li>
+					<li>专人服务</li>
+					<li>信息保密</li>
+				</ul>
+			</div>
+			<div class="dotted"></div>
+		</div>
+		<div class="pages">
+			<div data-page="service-detail" class="page"
+				style="background-color: #e5e5e5 !important;">
+				<div class="page-content"
+					style="margin: 0; color: #999; padding-bottom: 44px !important; height: 792px !important;">
+					<form id="service-detail-form" class="list-block">
+						<div class="book_con_t">
+							<p class="tit">服务标准</p>
+						</div>
+						<div class="book_con">
+							<ul>
+								<!-- <input type="text" id="contentStandard" name="contentStandard"> -->
+								  <li id="contentStandard"></li>
+							</ul>
+							<!--    <p class="book_re">
+					            送三个月代理记账
+					        </p> -->
+							<p class="book_re">送精美证件盒</p>
+						</div>
+
+						<div class="book_con_t">
+							<p class="tit">产品说明</p>
+						</div>
+						<div class="book_con">
+							<ul>
+								 <li id="contentDesc"></li>
+							</ul>
+						</div>
+						<div class="book_con_t">
+							<p class="tit">服务流程</p>
+						</div>
+						<div class="book_flow">
+							<ul>
+								<li class="fole_b1" id="contentFlow"></li>
+								<!--  <li class="flow_line"></li>
             <li class="fole_b1">设立登记申请</li>
             <li class="flow_line"></li>
-            <li class="fole_b1">办理营业执照</li>
-            <li class="flow_line"></li>
-            <li class="fole_b1">刻章</li>
-            <li class="flow_line"></li>
-            <li class="fole_b1">办理组织机构代码证、税务登记证</li>
-            <li class="flow_line"></li>
-            <li class="fole_b1">证章交付</li>
-        </ul>
-             </div>  -->
-    <div class="book_con_more">
-        <p class="more">更多服务</p>
-    </div>
+             <li class="fole_b1">办理营业执照</li> -->
+							</ul>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/service-detail.js"></script>
+		<div class="book_con_more">
+			<p class="more">更多服务</p>
+		</div>
 
-    <div class="bookorder_btn r_t2">
-        <ul>
-            <li class="m3">
-                 <a href="tel:xxx" class="t3"><span>咨询</span></a>
-                 <a href="#" class="t2">免费预约</a>
-            </li>
-        </ul>
-    </div>
-</div>
-<span style="display: none;">站长统计</a></span></span>
-              
+		<div class="bookorder_btn r_t2">
+			<ul>
+				<li class="m3"><a href="tel:xxx" class="t3"><span>咨询</span></a>
+					<a href="#" class="t2">免费预约</a></li>
+			</ul>
+		</div>
+	</div>
+	<span style="display: none;">站长统计</a></span>
+	</span>
+
+</body>
+</html>
+
