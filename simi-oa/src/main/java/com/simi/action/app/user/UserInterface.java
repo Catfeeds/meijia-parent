@@ -89,7 +89,9 @@ public class UserInterface extends BaseController {
 	
 	@RequestMapping(value = "validate-user-mobile", method = RequestMethod.POST)
 	public AppResultData<Object> validateUserMobile(
-			@RequestParam("mobile") String mobile) {
+			@RequestParam("mobile") String mobile,
+			@RequestParam("userId") Long userId
+			) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,ConstantMsg.SUCCESS_0_MSG, null);
 		
 		if (StringUtil.isEmpty(mobile)) return result;
@@ -97,9 +99,11 @@ public class UserInterface extends BaseController {
 		Users u = usersService.selectByMobile(mobile);
 		
 		if (u != null && u.getId() > 0L) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("手机号已经存在");
-			return result;
+			if (!u.getId().equals(userId)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("手机号已经存在");
+				return result;
+			}
 		}
 		
 		

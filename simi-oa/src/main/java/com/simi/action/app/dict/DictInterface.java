@@ -39,10 +39,6 @@ public class DictInterface extends BaseController {
 
 		List<DictRegion> listRegion =  dictService.getRegionByCityId(cityId);
 
-		if (cityId > 0) {
-			listRegion = dictService.getRegionByCityId(cityId);
-		}
-
 		AppResultData<List> result = new AppResultData<List>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, listRegion);
 
@@ -54,23 +50,14 @@ public class DictInterface extends BaseController {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "get-city-by-provinceId", method = RequestMethod.GET)
-	public HashMap getCitys(
+	@RequestMapping(value = "get-city-by-provinceid", method = RequestMethod.GET)
+	public AppResultData<List> getCitys(
 			@RequestParam(value = "provinceId", required = true, defaultValue = "0") Long provinceId) {
 		
 		List<DictCity> listCity =  dictService.getCityByProvinceId(provinceId);
 		
-		if (provinceId > 0) {
-			listCity = dictService.getCityByProvinceId(provinceId);
-		}
-		
-		DictCity cityVo = null;
-		HashMap result = new HashMap();
-		result.put("0", "全部");
-		for (int i = 0; i < listCity.size(); i++) {
-			cityVo = listCity.get(i);
-			result.put(cityVo.getCityId().toString(), cityVo.getName());
-		}
+		AppResultData<List> result = new AppResultData<List>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, listCity);
 		return result;
 	}
 

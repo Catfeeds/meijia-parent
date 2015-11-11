@@ -62,15 +62,24 @@
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-	                                   <td></td>
-							            <td></td>
-							            <td> </td>
-								        <td></td>
-								        <td></td>
-							            <td></td>
-							            <td></td>
+	                                   <td><img alt="" width=100 height="100" src="${item.headImg}"></td>
+							            <td>${item.name}</td>
+							            <td>${item.mobile}</td>
+								        <td>${item.cityAndRegion}</td>
+								        <td>${item.serviceTypeName}</td>
+							            <td>${item.responseTimeName}</td>
 							            <td>
-							            	<button id="btn_update"  onClick="btn_update('partners/partnerForm)" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+							            	<c:forEach items="${item.userTags }" var="tag">
+												<input type="button" name="tagName" value="${tag.tagName }" onclick="setTagButton()" class="btn btn-success">
+												<br/>
+											</c:forEach>
+							            
+							            </td>
+							            <td>${item.introduction}</td>
+							            <td> <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/></td>
+							           
+							            <td>
+							            	<button id="btn_update"  onClick="btn_update('partners/user_form?id=${ item.id }&partnerId=${item.partnerId}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 							            </td>
                               </tr>
                               </c:forEach>

@@ -2,22 +2,16 @@ package com.simi.vo.partners;
 
 import java.util.List;
 
+import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.vo.user.UserImgVo;
 
-public class PartnerUserVo {
+public class PartnerUserVo extends PartnerUsers {
 	
-	private Long id;
-	
-	private Long partnerId;
-	
+
 	private String companyName;
 
-	private Long serviceTypeId;
-	
 	private String serviceTypeName;
-
-	private Long userId;
 
 	private String name;
 	
@@ -26,8 +20,6 @@ public class PartnerUserVo {
 	private String headImg;
 
 	private String cityAndRegion;
-
-	private Short responseTime;
 	
 	private String responseTimeName;
 
@@ -36,14 +28,8 @@ public class PartnerUserVo {
 	private List<Tags> userTags;
 
 	private List<UserImgVo> userImgs;
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+	
+	private Long addTime;
 
 	public String getName() {
 		return name;
@@ -69,13 +55,6 @@ public class PartnerUserVo {
 		this.cityAndRegion = cityAndRegion;
 	}
 
-	public Short getResponseTime() {
-		return responseTime;
-	}
-
-	public void setResponseTime(Short responseTime) {
-		this.responseTime = responseTime;
-	}
 
 	public String getServiceTypeName() {
 		return serviceTypeName;
@@ -109,21 +88,6 @@ public class PartnerUserVo {
 		this.userImgs = userImgs;
 	}
 
-	public Long getPartnerId() {
-		return partnerId;
-	}
-
-	public void setPartnerId(Long partnerId) {
-		this.partnerId = partnerId;
-	}
-
-	public Long getServiceTypeId() {
-		return serviceTypeId;
-	}
-
-	public void setServiceTypeId(Long serviceTypeId) {
-		this.serviceTypeId = serviceTypeId;
-	}
 
 	public String getCompanyName() {
 		return companyName;
@@ -149,12 +113,12 @@ public class PartnerUserVo {
 		this.responseTimeName = responseTimeName;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getAddTime() {
+		return addTime;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setAddTime(Long addTime) {
+		this.addTime = addTime;
 	}
 
 }

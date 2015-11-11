@@ -44,7 +44,7 @@ import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.partners.PartnerServicePriceListVo;
-import com.simi.vo.partners.PartnerUserDetailVo;
+import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 
 
@@ -81,12 +81,6 @@ public class PartnerUsersController extends BaseController{
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
 	
-	@Autowired
-	private CityService cityService;
-	
-	@Autowired
-	private RegionService regionService;
-
 	/**
 	 * 服务人员列表 
 	 * @param request
@@ -123,6 +117,8 @@ public class PartnerUsersController extends BaseController{
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		
 		PageInfo result = partnerUserService.searchVoListPage(searchVo, pageNo, pageSize);
+		
+		
 
 		model.addAttribute("contentModel", result);
 		return "partners/partnerUserList";
@@ -138,7 +134,7 @@ public class PartnerUsersController extends BaseController{
 	 */
    // @AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.GET })
-	public String spiderPartnerForm(Model model, HttpServletRequest request,
+	public String userForm(Model model, HttpServletRequest request,
 			@RequestParam("id") Long id, @RequestParam("partnerId") Long partnerId,
 			HttpServletRequest response)  {
     	
@@ -168,7 +164,7 @@ public class PartnerUsersController extends BaseController{
     	
     	Partners partner = partnersService.selectByPrimaryKey(partnerId);
     	
-    	PartnerUserDetailVo vo = new PartnerUserDetailVo();
+    	PartnerUserVo vo = new PartnerUserVo();
     	vo.setId(id);
     	vo.setPartnerId(partnerId);
     	vo.setCompanyName(partner.getCompanyName());
@@ -177,10 +173,12 @@ public class PartnerUsersController extends BaseController{
     	vo.setHeadImg(u.getHeadImg().trim());
     	vo.setName(u.getName());
     	vo.setMobile(u.getMobile());
-    	vo.setServicePrices(new ArrayList<PartnerServicePriceListVo>());
     	vo.setResponseTime(partnerUser.getResponseTime());
     	vo.setServiceTypeId(partnerUser.getServiceTypeId());
     	vo.setUserTags(userTags);
+    	vo.setProvinceId(partnerUser.getProvinceId());
+    	vo.setCityId(partnerUser.getCityId());
+    	vo.setRegionId(partnerUser.getRegionId());
     	
     	model.addAttribute("contentModel", vo);
     	model.addAttribute("tags", tags);
@@ -207,19 +205,19 @@ public class PartnerUsersController extends BaseController{
 	//@AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model,
-			@ModelAttribute("contentModel") PartnerUserDetailVo partnerUserDetailVo, 
+			@ModelAttribute("contentModel") PartnerUserVo partnerUserVo, 
 			@RequestParam("imgUrlFile") MultipartFile file,
 			BindingResult result) throws IOException {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 		
-		Long id = partnerUserDetailVo.getId();
-		Long userId = partnerUserDetailVo.getUserId();
-		Long partnerId = partnerUserDetailVo.getPartnerId();
-		Short responseTime = partnerUserDetailVo.getResponseTime();
-		Long serviceTypeId = partnerUserDetailVo.getServiceTypeId();
-		String mobile = partnerUserDetailVo.getMobile();
-		String name = partnerUserDetailVo.getName();
+		Long id = partnerUserVo.getId();
+		Long userId = partnerUserVo.getUserId();
+		Long partnerId = partnerUserVo.getPartnerId();
+		Short responseTime = partnerUserVo.getResponseTime();
+		Long serviceTypeId = partnerUserVo.getServiceTypeId();
+		String mobile = partnerUserVo.getMobile();
+		String name = partnerUserVo.getName();
 		
 		Users u = null;
 		
@@ -235,8 +233,9 @@ public class PartnerUsersController extends BaseController{
 			}
 		}
 		
-		u.setIntroduction(partnerUserDetailVo.getIntroduction());
-		
+		u.setIntroduction(partnerUserVo.getIntroduction());
+		u.setUserType((short) 2);
+		u.setIsApproval((short) 2);
 		//更新头像 
 		if (file != null && !file.isEmpty()) {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
@@ -273,7 +272,10 @@ public class PartnerUsersController extends BaseController{
 		partnerUser.setUserId(userId);
 		partnerUser.setResponseTime(responseTime);
 		partnerUser.setServiceTypeId(serviceTypeId);
-		
+		partnerUser.setPartnerId(partnerId);
+		partnerUser.setProvinceId(partnerUserVo.getProvinceId());
+		partnerUser.setCityId(partnerUserVo.getCityId());
+		partnerUser.setRegionId(partnerUserVo.getRegionId());
 		if (id > 0L) {
 			partnerUserService.updateByPrimaryKey(partnerUser);
 		} else {
@@ -300,6 +302,6 @@ public class PartnerUsersController extends BaseController{
 		}
 		
 		
-		return "redirect:user_list";
+		return "redirect:user_list?partnerId=" + partnerId;
 	} 
 }

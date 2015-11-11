@@ -3,6 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../shared/taglib.jsp"%>
 
+<%@ taglib prefix="provinceSelectTag" uri="/WEB-INF/tags/provinceSelect.tld"%>
+
 <html>
 <head>
 <!--common css for all pages-->
@@ -22,7 +24,9 @@
 		<div class="col-lg-12">
 			<section class="panel">
 			<div class="panel-body">
-				<form:form modelAttribute="contentModel" class="form-horizontal" method="POST" id="partner-user-form">
+				<form:form modelAttribute="contentModel" class="form-horizontal" 
+				method="POST"  enctype="multipart/form-data"
+				id="partner-user-form">
 					<div class="form-body">
 
 						<form:hidden path="partnerId" />
@@ -64,8 +68,40 @@
 
 							<label class="col-md-2 control-label">上传头像</label>
 							<div class="col-md-5">
-								<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*" data-show-upload="false">
-								<form:errors path="headImg" class="field-has-error"></form:errors>
+								<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*" data-show-upload="false" >
+								
+							</div>
+						</div>
+						
+						
+						<input type="hidden" id="citySelectedId" value="${contentModel.cityId}" />
+						<input type="hidden" id="regionSelectedId" value="${contentModel.regionId}" />
+						<div class="form-group required">
+							<label class="col-md-2 control-label" >所在省份:</label> 
+							<div class="col-md-5">
+								<provinceSelectTag:select selectId="${ contentModel.provinceId }"/>
+								<form:errors path="partnerId" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group" >
+							<label class="col-md-2 control-label">所在城市:</label> 
+							
+							<div class="col-md-5" >
+								 <select name="cityId" path="cityId" id="cityId" class="form-control">
+									<option value="0">全部</option>
+								</select> 
+								<form:errors path="cityId" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						
+						<div class="form-group" >
+							<label class="col-md-2 control-label">所在区县:</label> 
+							
+							<div class="col-md-5" >
+								 <select name="regionId" path="regionId" id="regionId" class="form-control">
+									<option value="0">全部</option>
+								</select> 
+								<form:errors path="regionId" class="field-has-error"></form:errors>
 							</div>
 						</div>
 
@@ -83,7 +119,6 @@
 							<label class="col-md-2 control-label">服务响应时间 </label>
 							<div class=col-md-5>
 								<form:select path="responseTime" class="form-control">
-								<option value="">请选择服务响应时间</option>
 								<form:option value="" label="请选择服务响应时间"/>  
 								<form:option value="0" label="半个小时内响应"/>  
 								<form:option value="1" label="一个小时内响应"/>  
@@ -109,7 +144,7 @@
 									</c:forEach>
 									<input type="hidden" name="tagIds" id="tagIds" value="${ tagIds }"/>
 								</div> 
-							</div> 
+							</div>
 
 
 							<div class="form-actions">
@@ -139,11 +174,16 @@
 	<!--script for this page-->
 
 	<script type="text/javascript" src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"></script>
+	<script src="<c:url value='/assets/jquery-validation/dist/additional-methods.min.js'/>" type="text/javascript" ></script>
 	<script src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/js/simi/common/validate-methods.js'/>" type="text/javascript"></script>
 	<script type="text/javascript" src="<c:url value='/js/simi/common/validate-ajax.js'/>"></script>
+	<!-- 省市区联动js -->
+	<script type="text/javascript"  src="<c:url value='/js/simi/common/select-province-city-region.js'/>"	></script>	
 	<script type="text/javascript" src="<c:url value='/js/simi/partner/partnerUserForm.js'/>"></script>
 	<script tyep="text/javascript">
+		$('#provinceId').trigger('change');
+		$('#cityId').trigger('change');
 		setTagButton();
 	</script>
 

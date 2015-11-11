@@ -10,6 +10,12 @@ public class PartnerUsers {
     private Long serviceTypeId;
     
     private Short responseTime;
+    
+    private Long provinceId;
+    
+    private Long cityId;
+    
+    private Long regionId;
 
     private Long addTime;
 
@@ -59,5 +65,29 @@ public class PartnerUsers {
 
 	public void setResponseTime(Short responseTime) {
 		this.responseTime = responseTime;
+	}
+
+	public Long getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(Long provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
 	}
 }

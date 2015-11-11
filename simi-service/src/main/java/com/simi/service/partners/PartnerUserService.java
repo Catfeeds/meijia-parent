@@ -3,6 +3,7 @@ package com.simi.service.partners;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.partners.PartnerUserVo;
 
 
 public interface PartnerUserService {
@@ -22,6 +23,8 @@ public interface PartnerUserService {
 	PartnerUsers selectByPrimaryKey(Long id);
 
 	PageInfo searchVoListPage(PartnerUserSearchVo partnersSearchVo, int pageNo, int pageSize);
+
+	PartnerUserVo changeToVo(PartnerUsers partnerUser);
 	
 
 	

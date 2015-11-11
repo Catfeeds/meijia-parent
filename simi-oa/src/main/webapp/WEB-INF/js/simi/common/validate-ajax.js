@@ -1,5 +1,5 @@
 //校验身份证号是否重复
-function validateUserMobile(mobile){
+function validateUserMobile(mobile, userId){
 	
 	var isExist = false;
 	var option ={
@@ -8,7 +8,8 @@ function validateUserMobile(mobile){
 		async :false,
 		dataType:"text",
 		data:{
-			mobile:mobile
+			mobile:mobile,
+			userId:userId
 		},
 		success:function(data){
 			console.log(data);

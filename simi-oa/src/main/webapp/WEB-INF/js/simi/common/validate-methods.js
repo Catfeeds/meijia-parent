@@ -35,7 +35,7 @@ $(function() {
 	// 手机号码验证
 	jQuery.validator.addMethod("isMobile",function(value, element) {
 			var length = value.length;
-			return this.optional(element) || (length == 11 && /^(( (13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}) )+\d{8})$/
+			return this.optional(element) || (length == 11 && /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/
 				.test(value));
 	}, "请正确填写手机号码。");
 

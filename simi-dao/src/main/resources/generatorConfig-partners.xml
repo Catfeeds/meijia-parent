@@ -76,7 +76,7 @@
 		</table>
 		
 		<!-- 服务商业务员表 -->
-		<table schema="simi" tableName="parent_users"
+		<table schema="simi" tableName="partner_users"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"

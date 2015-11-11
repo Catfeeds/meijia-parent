@@ -9,8 +9,7 @@ public class PartnerUserSearchVo {
 	 private String name;
 	 
 	 private String mobile;
-	 
-	 private Short isApproval;
+
 
 	public Long getPartnerId() {
 		return partnerId;
@@ -42,18 +41,5 @@ public class PartnerUserSearchVo {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-
-	public Short getIsApproval() {
-		return isApproval;
-	}
-
-	public void setIsApproval(Short isApproval) {
-		this.isApproval = isApproval;
-	}
-	 
-
-
-	 
-	 
+	}	 
 }

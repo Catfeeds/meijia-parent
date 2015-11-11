@@ -7,30 +7,60 @@
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
 		<result column="response_time" property="responseTime" jdbcType="NUMERIC" />
+		<result column="province_id" property="provinceId" jdbcType="NUMERIC" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
+		<result column="region_id" property="regionId" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, partner_id, user_id, service_type_id, response_time, add_time
+		id, partner_id, user_id, service_type_id, response_time, province_id, city_id, region_id, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
-		from parent_users
+		from partner_users
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from partner_users
+		where 1=1
+		<if test="partnerId != null">
+			and partner_id =  #{partnerId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="serviceTypeId != null">
+			and service_type_id =  #{serviceTypeId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="name != null">
+			and user_id in (select id from users where  name like CONCAT('%','${name}','%' ) )
+		</if>
+		<if test="mobile != null">
+			and user_id in (select id from users where  mobile like CONCAT('%','${mobile}','%' ) )
+		</if>
+
+		order by add_time desc
+	</select>
+
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from parent_users
+		delete from partner_users
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerUsers">
-		insert into parent_users (id, partner_id, user_id, service_type_id, response_time,
+		insert into partner_users (id, partner_id, user_id, service_type_id, response_time,
+		province_id, city_id, region_id,
 		add_time)
-		values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, 
+		values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC}, #{responseTime,jdbcType=NUMERIC},
+		#{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{regionId,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerUsers">
-		insert into parent_users
+		insert into partner_users
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -44,11 +74,23 @@
 			<if test="serviceTypeId != null">
 				service_type_id,
 			</if>
-			
+
 			<if test="responseTime != null">
 				response_time,
 			</if>
-			
+
+			<if test="provinceId != null">
+				province_id,
+			</if>
+
+			<if test="cityId != null">
+				city_id,
+			</if>
+
+			<if test="regionId != null">
+				region_id,
+			</if>
+
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -68,14 +110,27 @@
 			</if>
 			<if test="responseTime != null">
 				#{responseTime,jdbcType=NUMERIC},
-			</if>			
+			</if>
+
+			<if test="provinceId != null">
+				#{provinceId,jdbcType=NUMERIC},
+			</if>
+
+			<if test="cityId != null">
+				#{cityId,jdbcType=NUMERIC},
+			</if>
+
+			<if test="regionId != null">
+				#{regionId,jdbcType=NUMERIC},
+			</if>
+
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerUsers">
-		update parent_users
+		update partner_users
 		<set>
 			<if test="partnerId != null">
 				partner_id = #{partnerId,jdbcType=NUMERIC},
@@ -89,6 +144,18 @@
 			<if test="responseTime != null">
 				response_time = #{responseTime,jdbcType=NUMERIC},
 			</if>
+			<if test="provinceId != null">
+				province_id = #{provinceId,jdbcType=NUMERIC},
+			</if>
+
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=NUMERIC},
+			</if>
+
+			<if test="regionId != null">
+				region_id = #{regionId,jdbcType=NUMERIC},
+			</if>
+
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -96,11 +163,15 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerUsers">
-		update parent_users
+		update partner_users
 		set partner_id = #{partnerId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
 		response_time = #{responseTime,jdbcType=NUMERIC},
+		province_id = #{provinceId,jdbcType=NUMERIC},
+		city_id =
+		#{cityId,jdbcType=NUMERIC},
+		region_id = #{regionId,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

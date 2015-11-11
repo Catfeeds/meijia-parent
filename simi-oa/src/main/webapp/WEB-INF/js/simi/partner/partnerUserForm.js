@@ -12,12 +12,21 @@ var formVal = $('#partner-user-form').validate({
 			required: true,
 			isMobile : true
 		},
-				
-		imgUrlFile: {
-			required: true
-		},
-		
+						
+		provinceId : {
+			required: true,
+			isIntGtZero : true,
+		}, 
 
+		cityId : {
+			required: true,
+			isIntGtZero : true,
+		}, 
+		
+		regionId : {
+			required: true,
+			isIntGtZero : true,
+		}, 
 		serviceTypeId: {
 			required: true,
 		},
@@ -45,10 +54,21 @@ var formVal = $('#partner-user-form').validate({
 			isMobile : "请输入正确的手机号"
 		},
 				
-		imgUrlFile: {
-			required: "请选择头像上传."
-		},
 		
+		provinceId : {
+			required: "请选择所在省份",
+			isIntGtZero : "请选择所在省份"
+		}, 
+
+		cityId : {
+			required: "请选择所在城市",
+			isIntGtZero : "请选择所在城市"
+		}, 
+		
+		regionId : {
+			required: "请选择所在区县",
+			isIntGtZero : "请选择所在区县"
+		}, 
 
 		serviceTypeId: {
 			required: "请选择服务类别.",
@@ -98,15 +118,16 @@ $("#btn_submit").click(function() {
 		if ($('#partner-user-form').validate().form()) {
 			
 			var mobile = $("#mobile").val();
+			var userId = $("#userId").val();
 			console.log(validateUserMobile(mobile));
-			if (!validateUserMobile(mobile)) {
+			if (!validateUserMobile(mobile, userId)) {
 				var errors = {};
 				errors.mobile = "手机号码已经存在";
 		    	formVal.showErrors(errors);
 				return false;
 			}
 			
-//			$('#partner-user-form').submit();
+			$('#partner-user-form').submit();
 		}
 	}
 });
@@ -125,9 +146,8 @@ $("#imgUrlFile").fileinput({
 });
 
 $("#introduction").keyup(function(){
-	  console.log("keyup");
 	   var len = $(this).val().length;
-	   console.log("len = " + len);
+
 	   if(len > 200){
 		   $(this).val($(this).val().substring(0,200));
 	   }
