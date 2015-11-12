@@ -24,8 +24,7 @@ public interface PartnerServicePriceService {
 	PartnerServicePriceVo ToTree(Long id);
 	
 	PartnerServicePrices initPartnerServicePrices();
-	
 
-
+	List<PartnerServicePrices> selectByParentId(Long parentId);
 
 }

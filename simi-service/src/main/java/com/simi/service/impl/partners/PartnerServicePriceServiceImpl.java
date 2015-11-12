@@ -39,7 +39,7 @@ public class PartnerServicePriceServiceImpl implements PartnerServicePriceServic
 	public PartnerServicePrices selectByPrimaryKey(Long servicePriceId) {
 		return partnerServicePriceMapper.selectByPrimaryKey(servicePriceId);
 	}
-
+	
 	@Override
 	public int updateByPrimaryKeySelective(PartnerServicePrices record) {
 		return partnerServicePriceMapper.updateByPrimaryKeySelective(record);
@@ -48,6 +48,11 @@ public class PartnerServicePriceServiceImpl implements PartnerServicePriceServic
 	@Override
 	public int updateByPrimaryKey(PartnerServicePrices record) {
 		return partnerServicePriceMapper.updateByPrimaryKey(record);
+	}
+	
+	@Override 
+	public List<PartnerServicePrices> selectByParentId(Long parentId) {
+		return partnerServicePriceMapper.selectByParentId(parentId);
 	}
 
 	@Override

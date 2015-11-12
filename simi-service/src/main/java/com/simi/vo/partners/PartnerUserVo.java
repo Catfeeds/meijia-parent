@@ -26,8 +26,6 @@ public class PartnerUserVo extends PartnerUsers {
 	private String introduction;
 
 	private List<Tags> userTags;
-
-	private List<UserImgVo> userImgs;
 	
 	private Long addTime;
 
@@ -79,15 +77,6 @@ public class PartnerUserVo extends PartnerUsers {
 	public void setUserTags(List<Tags> userTags) {
 		this.userTags = userTags;
 	}
-
-	public List<UserImgVo> getUserImgs() {
-		return userImgs;
-	}
-
-	public void setUserImgs(List<UserImgVo> userImgs) {
-		this.userImgs = userImgs;
-	}
-
 
 	public String getCompanyName() {
 		return companyName;

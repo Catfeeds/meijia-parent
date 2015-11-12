@@ -121,7 +121,12 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 	}
 	
 	@Override
-	public PageInfo searchVoListPage(PartnerUserSearchVo partnersSearchVo, int pageNo, int pageSize) {
+	public PartnerUsers selectByUserId(Long userId) {
+		return partnerUsersMapper.selectByUserId(userId);
+	}	
+	
+	@Override
+	public PageInfo selectByListPage(PartnerUserSearchVo partnersSearchVo, int pageNo, int pageSize) {
 		
 		PageHelper.startPage(pageNo, pageSize);
 		List<PartnerUsers> list = partnerUsersMapper.selectByListPage(partnersSearchVo);

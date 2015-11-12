@@ -19,4 +19,6 @@ public interface PartnerUsersMapper {
     int updateByPrimaryKey(PartnerUsers record);
 
 	List<PartnerUsers> selectByListPage(PartnerUserSearchVo partnersSearchVo);
+
+	PartnerUsers selectByUserId(Long userId);
 }

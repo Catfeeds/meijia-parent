@@ -22,9 +22,11 @@ public interface PartnerUserService {
 
 	PartnerUsers selectByPrimaryKey(Long id);
 
-	PageInfo searchVoListPage(PartnerUserSearchVo partnersSearchVo, int pageNo, int pageSize);
-
 	PartnerUserVo changeToVo(PartnerUsers partnerUser);
+
+	PageInfo selectByListPage(PartnerUserSearchVo partnersSearchVo, int pageNo, int pageSize);
+
+	PartnerUsers selectByUserId(Long userId);
 	
 
 	

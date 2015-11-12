@@ -116,7 +116,7 @@ public class PartnerUsersController extends BaseController{
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		
-		PageInfo result = partnerUserService.searchVoListPage(searchVo, pageNo, pageSize);
+		PageInfo result = partnerUserService.selectByListPage(searchVo, pageNo, pageSize);
 		
 		
 

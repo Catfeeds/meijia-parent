@@ -6,7 +6,10 @@ import java.math.BigDecimal;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 
 
-public class PartnerServicePriceListVo extends PartnerServicePriceDetail {
+public class PartnerServicePriceListVo {
+	
+	private Long id;
+	
 	private String name;
 	
 	private Long servicePriceId;
@@ -55,5 +58,13 @@ public class PartnerServicePriceListVo extends PartnerServicePriceDetail {
 
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	} 
 }

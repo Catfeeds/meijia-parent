@@ -21,6 +21,13 @@
 		from partner_users
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_users
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
 
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
 		select
