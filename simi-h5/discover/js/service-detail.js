@@ -16,7 +16,13 @@ $.ajax({
 			//var result = data.response;
 			var vo = data.data;
 			console.log(vo);
-
+			
+			
+			var imgUrl = vo.img_url;
+			if (imgUrl != '') {
+				$(".book_banner").css("background-image","url("+imgUrl+")");
+			}
+			
 			$("#contentStandard").html(vo.content_standard);
 			$("#contentDesc").html(vo.content_desc);
 			$("#contentFlow").html(vo.content_flow);
