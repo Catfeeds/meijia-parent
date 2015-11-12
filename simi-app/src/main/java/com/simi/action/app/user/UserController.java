@@ -169,10 +169,14 @@ public class UserController extends BaseController {
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")) {
+		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")
+				||mobile.equals("13701187136")||mobile.equals("13810002890")||mobile.equals("18610807136")
+				||mobile.equals("18612514665")||mobile.equals("13146012753")||mobile.equals("15727372986")
+		 ) {
 			code = "000000";
 		}
-
+//13701187136,13810002890,18610807136,18612514665,13146012753
+		
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
 		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 				Constants.GET_CODE_TEMPLE_ID, content);
@@ -199,7 +203,9 @@ public class UserController extends BaseController {
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")) {
+		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")
+				||mobile.equals("13701187136")||mobile.equals("13810002890")||mobile.equals("18610807136")
+				||mobile.equals("18612514665")||mobile.equals("13146012753")||mobile.equals("15727372986")) {
 			code = "000000";
 		}
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
@@ -229,8 +235,15 @@ public class UserController extends BaseController {
 
 		// 判断验证码正确与否，测试账号13810002890 000000 不需要验证
 		AppResultData<Object> validateResult = null;
-		if (mobile.equals("17090397818") && smsToken.equals("000000")||mobile.equals("17090397828") && smsToken.equals("000000")||mobile.equals("17090397822") && smsToken.equals("000000")) {
+		if (mobile.equals("17090397818") && smsToken.equals("000000")||mobile.equals("17090397828") && smsToken.equals("000000")||mobile.equals("17090397822") && smsToken.equals("000000")
+				||mobile.equals("13701187136") && smsToken.equals("000000")||
+				mobile.equals("13810002890") && smsToken.equals("000000")||
+				mobile.equals("18610807136") && smsToken.equals("000000")||
+				mobile.equals("18612514665") && smsToken.equals("000000")||
+				mobile.equals("13146012753") && smsToken.equals("000000")||
+				mobile.equals("15727372986") && smsToken.equals("000000")) {
 			validateResult = result;
+	
 		} else {
 			validateResult = smsTokenService.validateSmsToken(mobile, smsToken,
 					smsType);
@@ -239,8 +252,16 @@ public class UserController extends BaseController {
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
 			return validateResult;
 		}
-		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")
+				&&!mobile.equals("13701187136")
+				&&!mobile.equals("13810002890")
+				&&!mobile.equals("18610807136")
+				&&!mobile.equals("18612514665")
+				&&!mobile.equals("13146012753")
+				&&!mobile.equals("15727372986")) {
 
+			
+			
 			Users user = userService.selectByMobile(mobile);
 			// 如果秘书或用户存在
 			if (user != null) {
@@ -305,7 +326,9 @@ public class UserController extends BaseController {
 		vo.setDegreeTypeList(degreeTypeList);
 		// 如果已注册用户，确定要注册秘书，则去表中查到对应的用户数据但是不在注册列表里展示信息
 		// 只为了存用户的昵称（name）;
-		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")
+			&&!mobile.equals("13701187136")&&!mobile.equals("13810002890")&&!mobile.equals("18610807136")
+			&&!mobile.equals("18612514665")&&!mobile.equals("13146012753")&&!mobile.equals("15727372986")){
 			Users user = userService.selectByMobile(mobile);
 			if (user != null && user.getUserType() == 0) {
 				user.setName(name);
@@ -333,7 +356,9 @@ public class UserController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")) {
+		if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")
+				&&!mobile.equals("13701187136")&&!mobile.equals("13810002890")&&!mobile.equals("18610807136")
+				&&!mobile.equals("18612514665")&&!mobile.equals("13146012753")&&!mobile.equals("15727372986")) {
 
 			Users users = userService.selectByMobile(mobile);
 			// 若users不为空，则为已有用户注册秘书 ,修改用户为秘书（userType=1）
