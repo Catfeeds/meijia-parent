@@ -7,57 +7,10 @@ var siteApp = "u";
 var sitePath = localUrl + "/" + siteApp;
 var userLoggedIn = false;
 
-// 初始化应用
-var myApp = new Framework7({
-	precompileTemplates: true,
-    template7Pages: true,
-    pushState: true,
-    cache: false,
-    modalTitle: "提示",
-    modalButtonOk:'确定',
-    modalButtonCancel:'返回',
-    template7Data: {},
-    material: true,
-    allowDuplicateUrls:true,
-    domCache: true,
-    // Hide and show indicator during ajax requests
-    onAjaxStart: function (xhr) {
-            myApp.showIndicator();
-    },
-    onAjaxComplete: function (xhr) {
-            myApp.hideIndicator();
-    },    
-    preroute: function (view, options) {
-    	
-			/*    	 if(!isLogin() && options.url!='login.html'){
-			//           console.log('must login');
-			           view.router.loadPage('login.html');
-			           return false;
-			   }*/
-    		//反向判断不好使！！！
-    }
-        
-        
-});
 
-// 定义Dom7框架工具
-var $$ = jQuery = Dom7;
-
-// 初始化主视图
-var mainView = myApp.addView('.view-main', {
-        dynamicNavbar: true,
-        // domCache: true
-});
-
-function isLogin(){
-        return typeof localStorage['user_id']!='undefined' && localStorage['user_id']!='';
+//获取参数
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
 }
-
-var ajaxError = function(data, textStatus, jqXHR) {	
-    	// We have received response and can hide activity indicator
-        myApp.hideIndicator();		
-    	myApp.alert('网络繁忙,请稍后再试.');
-};
-myApp.onPageInit('index', function (page) {
-	mainView.router.loadPage("register.html");
-}).trigger(); //And trigger it right away

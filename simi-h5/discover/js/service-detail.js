@@ -1,5 +1,7 @@
+
+var serviceTypeId = urlParam("service_type_id");
 var postdata = {};
-postdata.service_price_id = 69;
+postdata.service_price_id = serviceTypeId;
 $.ajax({
 		type : "GET",
 		url : siteAPIPath  +"partner/get_partner_service_price_detail.json?",
