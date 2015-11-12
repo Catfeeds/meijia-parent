@@ -1,5 +1,5 @@
 
-var serviceTypeId = urlParam("service_type_id");
+var serviceTypeId = getUrlParam("service_type_id");
 var postdata = {};
 postdata.service_price_id = serviceTypeId;
 $.ajax({
