@@ -12,9 +12,9 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
-import com.simi.po.model.partners.PartnerServicePrices;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.partners.PartnerServicePriceDetailService;
-import com.simi.service.partners.PartnerServicePriceService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServicePriceDetailVo;
 
@@ -28,7 +28,7 @@ public class PartnerServicePriceController extends BaseController {
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;
 
 	@Autowired
-	private PartnerServicePriceService partnerServicePriceService;
+	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	/**
 	 * 获取服务价格详情接口
@@ -49,7 +49,7 @@ public class PartnerServicePriceController extends BaseController {
 		BeanUtilsExp.copyPropertiesIgnoreNull(record,vo);
 		
 		//服务类别名称
-		PartnerServicePrices prices = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+		PartnerServiceType prices = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 		vo.setName(prices.getName());
 		
 		result.setData(vo);

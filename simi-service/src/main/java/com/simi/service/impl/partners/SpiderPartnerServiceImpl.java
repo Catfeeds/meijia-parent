@@ -105,7 +105,7 @@ public class SpiderPartnerServiceImpl implements SpiderPartnerService {
 		spiderPartner.setTotalOrder(0);
 		spiderPartner.setTotalRate((float)0);
 		spiderPartner.setWebsite("");
-		return null;
+		return spiderPartner;
 	}
 	
 

@@ -42,6 +42,15 @@
  						<form:hidden path="id" />
  						<form:hidden path="servicePriceId" />
                         <div class="form-body">
+                        
+                        	<div class="form-group">
+                              <label  class="col-md-2 control-label">排序&nbsp;*</label>
+                              <div class="col-md-5">
+                                 <form:input path="no" class="form-control" placeholder="排序"/><br/>
+                                 <form:errors path="no" class="field-has-error"></form:errors>
+                              </div>
+                           </div>
+                        
                            <div class="form-group">
                               <label  class="col-md-2 control-label">名称&nbsp;*</label>
                               <div class="col-md-5">
@@ -137,7 +146,12 @@
                         <div class="form-actions fluid">
                            <div class="col-md-offset-4">
                               <button type="button" id ="btn_submit" class="btn btn-success">保存</button>
+                           	
+                           	  <c:if test="${contentModel.id > 0 }">
+                           	  <button type="button" id ="btn_preview" class="btn btn-success">预览</button>
+                           	  </c:if>
                            </div>
+                                                      
                         </div>
                      </form:form>
 			</section>

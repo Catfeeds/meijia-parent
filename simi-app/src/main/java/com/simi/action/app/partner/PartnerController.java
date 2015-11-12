@@ -15,12 +15,12 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
-import com.simi.po.model.partners.PartnerServicePrices;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerServicePriceDetailService;
-import com.simi.service.partners.PartnerServicePriceService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
@@ -45,7 +45,7 @@ public class PartnerController extends BaseController {
 	private PartnerUserService partnerUserService;
 	
 	@Autowired
-	private PartnerServicePriceService partnerServicePriceService;
+	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;
@@ -111,17 +111,17 @@ public class PartnerController extends BaseController {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(vo, detailVo);
 		//服务价格
-		List<PartnerServicePrices> servicePrices = partnerServicePriceService.selectByParentId(serviceTypeId);
+		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectByParentId(serviceTypeId, (short) 1);
 		
 		List<PartnerServicePriceListVo> servicePriceVos = new ArrayList<PartnerServicePriceListVo>();
 		
-		for (PartnerServicePrices item : servicePrices) {
+		for (PartnerServiceType item : servicePrices) {
 			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
-			PartnerServicePriceDetail servicePriceDetali = partnerServicePriceDetailService.selectByServicePriceId(item.getServicePriceId());
+			PartnerServicePriceDetail servicePriceDetali = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetali, servicePriceVo);
 			servicePriceVo.setName(item.getName());
-			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_price_id=" + item.getServicePriceId();
+			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_price_id=" + item.getId();
 			servicePriceVo.setDetailUrl(detailUrl);
 			servicePriceVos.add(servicePriceVo);
 		}

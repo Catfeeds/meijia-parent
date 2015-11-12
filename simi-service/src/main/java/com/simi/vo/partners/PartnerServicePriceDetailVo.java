@@ -9,6 +9,8 @@ public class PartnerServicePriceDetailVo extends PartnerServicePriceDetail {
 	private String name;
 	
 	private Long parentId;
+	
+	private Integer no;
 		
 	public Long getParentId() {
 		return parentId;
@@ -21,6 +23,12 @@ public class PartnerServicePriceDetailVo extends PartnerServicePriceDetail {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Integer getNo() {
+		return no;
+	}
+	public void setNo(Integer no) {
+		this.no = no;
 	}
 
 

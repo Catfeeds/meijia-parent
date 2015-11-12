@@ -8,6 +8,9 @@ public class PartnerServiceType {
 
     private Long parentId;
 
+    private Short viewType;
+    
+    private Integer no;
   
 
     public Long getId() {
@@ -33,4 +36,20 @@ public class PartnerServiceType {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
+
+	public Short getViewType() {
+		return viewType;
+	}
+
+	public void setViewType(Short viewType) {
+		this.viewType = viewType;
+	}
+
+	public Integer getNo() {
+		return no;
+	}
+
+	public void setNo(Integer no) {
+		this.no = no;
+	}
 }

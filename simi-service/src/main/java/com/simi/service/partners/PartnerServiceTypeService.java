@@ -19,13 +19,13 @@ public interface PartnerServiceTypeService {
 
     int updateByPrimaryKey(PartnerServiceType record);
     
-	List<PartnerServiceTypeVo> listChain();
+	List<PartnerServiceTypeVo> listChain(Short viewType);
 
-	PartnerServiceTypeVo ToTree(Long id);
-	
-	PartnerServiceType initPartnerServiceType(PartnerServiceTypeVo partnerServiceTypeVo);
+	List<PartnerServiceType> selectByParentId(Long parentId, Short ViewType);
 
-	List<PartnerServiceType> selectByParentId(Long parentId);
+	PartnerServiceTypeVo ToTree(Long id, Short viewType);
+
+	PartnerServiceType initPartnerServiceType();
 	
 
 

@@ -3,6 +3,10 @@ $('#partner-service-price-form').validate({
 	errorClass : 'help-block', // default input error message class
 	focusInvalid : false, // do not focus the last invalid input
 	rules : {
+		no : {
+			required: true,
+			digits : true
+		},
 		name : {
 			required : true
 		},
@@ -43,6 +47,10 @@ $('#partner-service-price-form').validate({
 	},
 
 	messages : {
+		no : {
+			required: "请输入序号",
+			digits : "请输入数字"
+		},		
 		name : {
 			required : "请输入提供的服务名称"
 		},
@@ -111,6 +119,13 @@ $("#btn_submit").click(function() {
 			$('#partner-service-price-form').submit();
 		}
 	}
+});
+
+$("#btn_preview").click(function() {
+	var serviceTypeId = $("#servicePriceId").val()
+	//http://123.57.173.36/simi-h5/discover/service-detail.html?service_type_id=1
+	var url = "http://" + host + "/simi-h5/discover/service-detail.html?service_type_id="+ serviceTypeId;
+	window.open(url,"_blank");
 });
 
 $("#imgUrlFile").fileinput({

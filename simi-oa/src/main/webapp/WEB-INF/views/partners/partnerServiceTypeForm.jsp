@@ -73,7 +73,7 @@
 	</section>
 	<!--script for this page-->
     <script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"></script>
-	<script src="<c:url value='/js/simi/partner/partnerServicePriceForm.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/js/simi/partner/partnerServiceTypeForm.js'/>" type="text/javascript"></script>
   
 	
 </body>

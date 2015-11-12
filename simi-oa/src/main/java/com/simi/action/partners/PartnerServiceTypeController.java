@@ -52,7 +52,7 @@ public class PartnerServiceTypeController extends AdminController {
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
 			String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false,
 							false, children)));
@@ -83,12 +83,12 @@ public class PartnerServiceTypeController extends AdminController {
 		List<TreeModel> treeModels;
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (id != null && id > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServiceTypeService.listChain(), id, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServiceTypeService.listChain((short) 0), id, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServiceTypeService.listChain(), null, null,
+				partnerServiceTypeService.listChain((short) 0), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, true, false, children)));
@@ -114,7 +114,10 @@ public class PartnerServiceTypeController extends AdminController {
 		String returnUrl = ServletRequestUtils.getStringParameter(request,
 				"returnUrl", null);
 
-		PartnerServiceType partnerServiceType = partnerServiceTypeService.initPartnerServiceType(partnerServiceTypeVo);
+		PartnerServiceType partnerServiceType = partnerServiceTypeService.initPartnerServiceType();
+		partnerServiceType.setName(partnerServiceTypeVo.getName());
+		partnerServiceType.setViewType((short) 0);
+		partnerServiceType.setParentId(partnerServiceTypeVo.getParentId());
 		/*String levelCode = "";
 		int count = adminAuthorityService.selectMaxId()+1;
 		if (partnerServiceTypeVo.getParentId() != null 	&& partnerServiceTypeVo.getParentId() > 0) {
@@ -149,14 +152,14 @@ public class PartnerServiceTypeController extends AdminController {
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					partnerServiceTypeService.listChain(), editModel.getParentId()
+					partnerServiceTypeService.listChain((short) 0), editModel.getParentId()
 							.intValue(), null, StringHelper.toIntegerList(
 							expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, false, false, children)));
 		} else {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServiceTypeService.listChain(), null, null,
+				partnerServiceTypeService.listChain((short) 0), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, true, false, children)));

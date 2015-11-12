@@ -50,21 +50,21 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 	}
 
 	@Override
-	public List<PartnerServiceTypeVo> listChain() {
+	public List<PartnerServiceTypeVo> listChain(Short viewType) {
 		List<PartnerServiceTypeVo> listVo = new ArrayList<PartnerServiceTypeVo>();
 		//根据parentId=0 查询出所用的父节点
-		List<PartnerServiceType> list = partnerServiceTypeMapper.selectByParentId(0L);
+		List<PartnerServiceType> list = partnerServiceTypeMapper.selectByParentId(0L, (short) 0);
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
-			PartnerServiceTypeVo vo = ToTree(partnerServiceType.getId());
+			PartnerServiceTypeVo vo = ToTree(partnerServiceType.getId(), viewType);
 			listVo.add(vo);
 		}
 		return listVo;
 	}
 	
 	@Override
-	public List<PartnerServiceType> selectByParentId(Long parentId) {
-		return partnerServiceTypeMapper.selectByParentId(parentId);
+	public List<PartnerServiceType> selectByParentId(Long parentId, Short viewType) {
+		return partnerServiceTypeMapper.selectByParentId(parentId, viewType);
 	}
 	/**
 	 * 查询出根节点和所有的子节点，封装到Vo中
@@ -72,7 +72,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 	 * @return
 	 */
 	@Override
-	public PartnerServiceTypeVo ToTree(Long id) {
+	public PartnerServiceTypeVo ToTree(Long id, Short viewType) {
 		PartnerServiceTypeVo partnerServiceTypeVo = new PartnerServiceTypeVo();
 		
 		//根据id查出某对象
@@ -85,19 +85,22 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		}
 		//已id作为parentId查询出所用的子节点
 		
-		List<PartnerServiceType> child = partnerServiceTypeMapper.selectByParentId(id);
+		List<PartnerServiceType> child = partnerServiceTypeMapper.selectByParentId(id, viewType);
 		for (PartnerServiceType partnerServiceType2 : child) {
-			PartnerServiceTypeVo vo =   ToTree(partnerServiceType2.getId().longValue());
+			PartnerServiceTypeVo vo =   ToTree(partnerServiceType2.getId().longValue(), viewType);
 			partnerServiceTypeVo.getChildren().add(vo);
 		}
 		return partnerServiceTypeVo;
 	}
 
 	@Override
-	public PartnerServiceType initPartnerServiceType(PartnerServiceTypeVo partnerServiceTypeVo) {
+	public PartnerServiceType initPartnerServiceType() {
 		PartnerServiceType partnerServiceType = new PartnerServiceType();
-		partnerServiceType.setParentId(partnerServiceTypeVo.getParentId());
-		partnerServiceType.setName(partnerServiceTypeVo.getName());
+		partnerServiceType.setParentId(0L);
+		partnerServiceType.setName("");
+		partnerServiceType.setId(0L);
+		partnerServiceType.setViewType((short) 0);
+		partnerServiceType.setNo(0);
 		return partnerServiceType;
 	}
 	

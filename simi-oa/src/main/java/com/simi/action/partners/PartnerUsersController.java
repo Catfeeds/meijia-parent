@@ -185,7 +185,7 @@ public class PartnerUsersController extends BaseController{
     	model.addAttribute("tagIds", tagIds);
     	
     	//服务大类
-    	List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectByParentId(0L);
+    	List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectByParentId(0L, (short) 0);
     	model.addAttribute("partnerServiceType", partnerServiceType);
     	
 		return "partners/partnerUserForm";

@@ -127,21 +127,28 @@ public class PartnersController extends BaseController{
    // @AuthPassport
 	@RequestMapping(value = "/partnerForm", method = { RequestMethod.GET })
 	public String spiderPartnerForm(Model model, HttpServletRequest request,
-			@RequestParam("id") Long id,HttpServletRequest response)  {
+			@RequestParam("partnerId") Long partnerId,HttpServletRequest response)  {
     	
-    	if (id == null) {
-    		id = 0L;
+    	if (partnerId == null) {
+    		partnerId = 0L;
     	}
     	SpiderPartner spiderPartner = spiderPartnerService.initSpiderPartner();
     	Partners partners = partnersService.iniPartners();
     	PartnerFormVo partnerFormVo = new PartnerFormVo();
-    	if (id != null && id > 0) {
-    		spiderPartner = spiderPartnerService.selectByPrimaryKey(id);
-    		partners = partnersService.selectBySpiderPartnerId(id);
-    		if(partners == null){
-    			 partners = partnersService.iniPartners();
-    		}
+    	if (partnerId != null && partnerId > 0) {
+    		partners = partnersService.selectByPrimaryKey(partnerId);
     	}
+    	
+    	Long spiderPartnerId = partners.getSpiderPartnerId();
+    	
+    	if (spiderPartnerId > 0L) {
+    		spiderPartner = spiderPartnerService.selectByPrimaryKey(spiderPartnerId);
+    	}
+    	
+    	if (!StringUtil.isEmpty(partners.getCompanyName())) {
+    		spiderPartner.setCompanyName(partners.getCompanyName());
+    	}
+    	
 		try {
 			BeanUtils.copyProperties(partnerFormVo, partners);
 		}catch (Exception e) {
@@ -185,7 +192,7 @@ public class PartnersController extends BaseController{
 			model.addAttribute("partners", partnerFormVo);
 		}
     	String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
-		List<TreeModel> children=TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(), null, checkedPartnerTypeIntegers, StringHelper.toIntegerList( expanded, ","));
+		List<TreeModel> children=TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0), null, checkedPartnerTypeIntegers, StringHelper.toIntegerList( expanded, ","));
 		List<TreeModel> treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel(null,null,"根节点",false,false,false,children)));
 		model.addAttribute("treeDataSource", JSONArray .fromObject(treeModels, new JsonConfig()).toString());
 		
