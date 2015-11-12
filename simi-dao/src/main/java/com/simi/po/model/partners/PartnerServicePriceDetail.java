@@ -24,6 +24,10 @@ public class PartnerServicePriceDetail {
     private String contentFlow;
 
     private Long addTime;
+    
+    private Short orderType;
+    
+    private Short orderDuration;
 
     public Long getId() {
         return id;
@@ -114,4 +118,20 @@ public class PartnerServicePriceDetail {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Short getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(Short orderType) {
+		this.orderType = orderType;
+	}
+
+	public Short getOrderDuration() {
+		return orderDuration;
+	}
+
+	public void setOrderDuration(Short orderDuration) {
+		this.orderDuration = orderDuration;
+	}
 }

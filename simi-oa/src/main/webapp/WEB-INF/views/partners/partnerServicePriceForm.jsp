@@ -71,7 +71,7 @@
 
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">图片地址</label>
+							<label class="col-md-2 control-label">图片地址(尺寸为640 × 370)</label>
 							<div class="col-md-5">
 								<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*"
 									data-show-upload="false">
@@ -102,6 +102,33 @@
                                  <form:errors path="disPrice" class="field-has-error"></form:errors>
                               </div>
                            </div>
+                           
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">订单类型*</label>
+                              <div class="col-md-5">
+                                 <form:select path="orderType" class="form-control">
+									<form:option value="0" label="通用订单"/>  
+									<form:option value="1" label="时段订单"/> 
+								 </form:select>
+                              </div>
+                           </div>
+                           
+                           <div class="form-group" id="orderDurationSelectBox" style="display:none">
+                              <label  class="col-md-2 control-label">订单时长*</label>
+                              <div class="col-md-5">
+                                 <form:select path="orderDuration" class="form-control" >
+									<form:option value="1" label="一天"/>  
+									<form:option value="2" label="一周"/> 
+									<form:option value="3" label="一个月"/> 
+									<form:option value="4" label="三个月"/> 
+									<form:option value="5" label="六个月"/> 
+									<form:option value="6" label="九个月"/> 
+									<form:option value="7" label="一年"/> 
+								 </form:select>
+                              </div>
+                           </div>
+                           
+                           
                            
                            <div class="form-group required">
 								<label class="col-md-2 control-label">服务标准</label>
@@ -190,5 +217,8 @@
 	</script>	
 	
 	<script src="<c:url value='/js/simi/partner/partnerServicePriceForm.js'/>" type="text/javascript"></script>
+	<script>
+		$('#orderType').trigger('change');
+	</script>
 </body>
 </html>

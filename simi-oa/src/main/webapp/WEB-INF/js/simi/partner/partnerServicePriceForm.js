@@ -140,3 +140,15 @@ $("#imgUrlFile").fileinput({
 	maxFileSize: 8192,
 	msgSizeTooLarge: "上传文件大小超过8mb"
 });
+
+$("#orderType").change(function(){ 
+	var sel = $(this).children('option:selected').val();
+	if (sel == "0") {
+		$("#orderDurationSelectBox").css('display', 'none');
+	}
+	
+	if (sel == "1") {
+		console.log("adfsadfsadf")
+		$("#orderDurationSelectBox").css('display', 'block');
+	}
+});

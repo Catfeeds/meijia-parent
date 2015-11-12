@@ -134,6 +134,8 @@ public class PartnerServicePriceController extends AdminController {
 		record.setUserId(0L);
 		record.setPrice(partnerServiceTypeDetailVo.getPrice());
 		record.setDisPrice(partnerServiceTypeDetailVo.getDisPrice());
+		record.setOrderType(partnerServiceTypeDetailVo.getOrderType());
+		record.setOrderDuration(partnerServiceTypeDetailVo.getOrderDuration());
 		record.setContentStandard(partnerServiceTypeDetailVo.getContentStandard());
 		record.setContentDesc(partnerServiceTypeDetailVo.getContentDesc());
 		record.setContentFlow(partnerServiceTypeDetailVo.getContentFlow());

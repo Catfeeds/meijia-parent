@@ -13,9 +13,11 @@
 		<result column="content_desc" property="contentDesc" jdbcType="VARCHAR" />
 		<result column="content_flow" property="contentFlow" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
+		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, service_price_id, service_title, user_id, img_url, price, dis_price, content_standard,
+		id, service_price_id, service_title, user_id, img_url, price, dis_price, order_type, order_duration, content_standard,
 		content_desc, content_flow, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -49,11 +51,12 @@
 
 		insert into partner_service_price_detail (id, service_price_id, service_title,
 		user_id, img_url, price,
-		dis_price, content_standard, content_desc,
+		dis_price, order_type, order_duration, content_standard, content_desc,
 		content_flow, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
-		#{disPrice,jdbcType=DECIMAL}, #{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
+		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC}, #{orderDuration,jdbcType=NUMERIC}
+		#{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
 		#{contentFlow,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
@@ -84,6 +87,12 @@
 			</if>
 			<if test="disPrice != null">
 				dis_price,
+			</if>
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="orderDuration != null">
+				order_duration,
 			</if>
 			<if test="contentStandard != null">
 				content_standard,
@@ -120,6 +129,12 @@
 			<if test="disPrice != null">
 				#{disPrice,jdbcType=DECIMAL},
 			</if>
+			<if test="orderType != null">
+				#{orderType,jdbcType=DECIMAL},
+			</if>
+			<if test="orderDuration != null">
+				#{orderDuration,jdbcType=DECIMAL},
+			</if>
 			<if test="contentStandard != null">
 				#{contentStandard,jdbcType=VARCHAR},
 			</if>
@@ -155,6 +170,12 @@
 			<if test="disPrice != null">
 				dis_price = #{disPrice,jdbcType=DECIMAL},
 			</if>
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=DECIMAL},
+			</if>
+			<if test="orderDuration != null">
+				order_duration = #{orderDuration,jdbcType=DECIMAL},
+			</if>
 			<if test="contentStandard != null">
 				content_standard = #{contentStandard,jdbcType=VARCHAR},
 			</if>
@@ -178,6 +199,8 @@
 		img_url = #{imgUrl,jdbcType=VARCHAR},
 		price = #{price,jdbcType=DECIMAL},
 		dis_price = #{disPrice,jdbcType=DECIMAL},
+		order_type = #{orderType,jdbcType=DECIMAL},
+		order_duration = #{orderDuration,jdbcType=DECIMAL},
 		content_standard = #{contentStandard,jdbcType=VARCHAR},
 		content_desc = #{contentDesc,jdbcType=VARCHAR},
 		content_flow = #{contentFlow,jdbcType=VARCHAR},
