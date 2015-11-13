@@ -25,21 +25,12 @@ public class TestOrderAddController extends JUnitActionBase  {
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//通用订单. 无需支付
-//	    postRequest = postRequest.param("user_id", "92");
-//	    postRequest = postRequest.param("sec_id", "2");
-//	    postRequest = postRequest.param("mobile", "13520256623");
-//	    postRequest = postRequest.param("service_type", "1");
-//	    postRequest = postRequest.param("order_pay_type", "0");
-//	    postRequest = postRequest.param("service_content", "请我叫个快递，已经打电话给顺丰上门");
-     		
-     	//通用订单  需要支付
-	    postRequest = postRequest.param("user_id", "92");
-	    postRequest = postRequest.param("sec_id", "2");
-	    postRequest = postRequest.param("mobile", "13520256623");
-	    postRequest = postRequest.param("service_type", "6");
-	    postRequest = postRequest.param("order_pay_type", "1");
-	    postRequest = postRequest.param("service_content", "北京-上海 2015-07-22 18:00:00, 航班号CA5566");
-	    postRequest = postRequest.param("order_pay", "10");
+	    postRequest = postRequest.param("user_id", "1");
+	    postRequest = postRequest.param("partner_user_id", "273");
+	    postRequest = postRequest.param("service_type_id", "75");
+	    postRequest = postRequest.param("service_price_id", "183");
+	    postRequest = postRequest.param("mobile", "13810002890");
+	    postRequest = postRequest.param("pay_type", "1");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 

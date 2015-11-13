@@ -150,7 +150,7 @@ public class PartnerController extends BaseController {
 		
 		for (UserImgs item : userImgs) {
 			UserImgVo imgVo = new UserImgVo();
-			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, imgVo);
 			
 			imgVo.setImgTrumb(ImgServerUtil.getImgSize(item.getImgUrl(), "400", "400"));
 			imgVo.setImg(item.getImgUrl());

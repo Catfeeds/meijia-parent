@@ -64,9 +64,11 @@
 		insert into order_prices (order_id, order_no, service_price_id, partner_user_id, user_id, mobile, pay_type,
 		user_coupon_id, used_score, order_money, order_pay, order_pay_back, order_pay_back_fee,
 		add_time, update_time)
-		values
-		#{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR},
-		#{servicePriceId,jdbcType=NUMERIC}, #{partnerUserId,jdbcType=NUMERIC},
+		values (
+		#{orderId,jdbcType=NUMERIC}, 
+		#{orderNo,jdbcType=VARCHAR},
+		#{servicePriceId,jdbcType=NUMERIC}, 
+		#{partnerUserId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC},
 		#{mobile,jdbcType=CHAR},
 		#{payType,jdbcType=NUMERIC},

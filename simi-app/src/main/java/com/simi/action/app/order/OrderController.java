@@ -138,7 +138,7 @@ public class OrderController extends BaseController {
 		
 		orderMoney = servicePrice.getPrice();
 		orderPay = servicePrice.getDisPrice();
-		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
+//		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
 		
 		if (payType.equals(Constants.PAY_TYPE_0)) {
 			//1.先判断用户余额是否够支付
@@ -190,13 +190,8 @@ public class OrderController extends BaseController {
 		orderLogService.insert(orderLog);
 		
 		//保存订单价格信息
-		OrderPrices orderPrice = null;
-		if (orderId > 0L) {
-			orderPrice = orderPricesService.selectByOrderId(orderId);
-		} else {
-			orderPrice = orderPricesService.initOrderPrices();
-		}
-		
+		OrderPrices orderPrice = orderPricesService.initOrderPrices();
+
 		orderPrice.setOrderId(orderId);
 		orderPrice.setOrderNo(orderNo);
 		orderPrice.setServicePriceId(servicePriceId);
