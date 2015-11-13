@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.ImgServerUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -29,6 +30,7 @@ import com.simi.vo.partners.PartnerServicePriceListVo;
 import com.simi.vo.partners.PartnerUserDetailVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnerUserVo;
+import com.simi.vo.user.UserImgVo;
 
 
 @Controller
@@ -92,13 +94,13 @@ public class PartnerController extends BaseController {
 	 */
 	 @RequestMapping(value = "get_user_detail", method = RequestMethod.GET)
 	 public AppResultData<Object> getUserDetail(
-			 @RequestParam("user_id") Long userId,
+			 @RequestParam("partner_user_id") Long partnerUserId,
 			 @RequestParam("service_type_id") Long serviceTypeId) {
 		 AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 		 
-		Users u = userService.selectByPrimaryKey(userId);
+		Users u = userService.selectByPrimaryKey(partnerUserId);
 		
-		PartnerUsers parnterUser = partnerUserService.selectByUserId(userId);
+		PartnerUsers parnterUser = partnerUserService.selectByUserId(partnerUserId);
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null || parnterUser == null) {
 			result.setStatus(Constants.ERROR_999);
@@ -138,12 +140,24 @@ public class PartnerController extends BaseController {
 		
 		
 		//用户图片
-		List<UserImgs> userImgs = userImgService.selectByUserId(userId);
+		List<UserImgs> userImgs = userImgService.selectByUserId(partnerUserId);
 		
 		if (userImgs == null) {
 			userImgs = new ArrayList<UserImgs>();
 		}
-		detailVo.setUserImgs(userImgs);
+		
+		List<UserImgVo> userImgVos = new ArrayList<UserImgVo>();
+		
+		for (UserImgs item : userImgs) {
+			UserImgVo imgVo = new UserImgVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			imgVo.setImgTrumb(ImgServerUtil.getImgSize(item.getImgUrl(), "400", "400"));
+			imgVo.setImg(item.getImgUrl());
+			userImgVos.add(imgVo);
+		}
+		
+		detailVo.setUserImgs(userImgVos);
 		
 		result.setData(detailVo);
 

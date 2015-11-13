@@ -40,6 +40,21 @@ public class TestPartnerController extends JUnitActionBase  {
     }	
 	
 	@Test
+    public void testGetUserDetail() throws Exception {
+
+		String url = "/app/partner/get_user_detail.json";
+		String params = "?partner_user_id=273&service_type_id=75";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
+	
+	@Test
     public void testGetPartnerServicePriceDetail() throws Exception {
 
 		String url = "/app/partner/get_partner_service_price_detail.json";
