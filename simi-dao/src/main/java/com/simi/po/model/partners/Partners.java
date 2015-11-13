@@ -10,6 +10,8 @@ public class Partners {
     private String companyName;
 
     private String shortName;
+    
+    private String addr;
 
     private Short companySize;
 
@@ -50,6 +52,20 @@ public class Partners {
     private Long updateTime;
 
     private String businessDesc;
+    
+    private String creditFileUrl;
+
+    private String website;
+
+    private String spiderUrl;
+    
+    private String serviceArea;
+
+    private String serviceType;
+    
+    private String companyDesc;
+    
+    private String companyDescImg;
 
     public Long getPartnerId() {
         return partnerId;
@@ -242,4 +258,70 @@ public class Partners {
     public void setBusinessDesc(String businessDesc) {
         this.businessDesc = businessDesc == null ? null : businessDesc.trim();
     }
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+
+	public String getCreditFileUrl() {
+		return creditFileUrl;
+	}
+
+	public void setCreditFileUrl(String creditFileUrl) {
+		this.creditFileUrl = creditFileUrl;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public String getSpiderUrl() {
+		return spiderUrl;
+	}
+
+	public void setSpiderUrl(String spiderUrl) {
+		this.spiderUrl = spiderUrl;
+	}
+
+	public String getServiceArea() {
+		return serviceArea;
+	}
+
+	public void setServiceArea(String serviceArea) {
+		this.serviceArea = serviceArea;
+	}
+
+	public String getServiceType() {
+		return serviceType;
+	}
+
+	public void setServiceType(String serviceType) {
+		this.serviceType = serviceType;
+	}
+
+	public String getCompanyDesc() {
+		return companyDesc;
+	}
+
+	public void setCompanyDesc(String companyDesc) {
+		this.companyDesc = companyDesc;
+	}
+
+	public String getCompanyDescImg() {
+		return companyDescImg;
+	}
+
+	public void setCompanyDescImg(String companyDescImg) {
+		this.companyDescImg = companyDescImg;
+	}
+	
+    
 }

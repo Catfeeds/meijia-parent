@@ -6,6 +6,16 @@
     <id column="spider_partner_id" property="spiderPartnerId" jdbcType="NUMERIC" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+     <result column="addr" property="addr" jdbcType="VARCHAR" />
+   
+     <result column="credit_file_url" property="creditFileUrl" jdbcType="VARCHAR" />
+     <result column="website" property="website" jdbcType="VARCHAR" />
+     <result column="spider_url" property="spiderUrl" jdbcType="VARCHAR" />
+     <result column="service_area" property="serviceArea" jdbcType="VARCHAR" />
+     <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
+     <result column="company_desc" property="companyDesc" jdbcType="VARCHAR" />
+     <result column="company_desc_img" property="companyDescImg" jdbcType="VARCHAR" />
+     
     <result column="company_size" property="companySize" jdbcType="SMALLINT" />
     <result column="company_logo" property="companyLogo" jdbcType="VARCHAR" />
     <result column="is_door" property="isDoor" jdbcType="NUMERIC" />
@@ -29,14 +39,15 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.simi.po.model.partners.Partners" extends="BaseResultMap" >
     <result column="business_desc" property="businessDesc" jdbcType="LONGVARCHAR" />
+    <result column="company_desc" property="companyDesc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    partner_id,spider_partner_id, company_name, short_name, company_size, company_logo, is_door, keywords, 
+    partner_id,spider_partner_id, company_name, short_name, addr,company_size, company_logo, is_door, keywords, 
     status, status_remark, weixin, qq, email, province_id, city_id, is_cooperate, fax, 
     pay_type, discout, remark, add_time, admin_id, update_time
   </sql>
   <sql id="Blob_Column_List" >
-    business_desc
+    business_desc,company_desc
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
     select 
@@ -87,7 +98,8 @@
     where partner_id = #{partnerId,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.Partners" >
-    insert into partners (partner_id, spider_partner_id,company_name, short_name, 
+    insert into partners (partner_id, spider_partner_id,company_name, short_name, addr,
+        credit_file_url,website,spider_url,service_area,service_type,company_desc,company_desc_img,
       company_size, company_logo, is_door, 
       keywords, status, status_remark, 
       weixin, qq, email, 
@@ -96,6 +108,9 @@
       remark, add_time, admin_id, 
       update_time, business_desc)
     values (#{partnerId,jdbcType=NUMERIC},(#{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
+     #{addr,jdbcType=VARCHAR},
+    #{creditFileUrl,jdbcType=VARCHAR},#{website,jdbcType=VARCHAR},#{spiderUrl,jdbcType=VARCHAR},#{serviceArea,jdbcType=VARCHAR},
+    #{serviceType,jdbcType=VARCHAR},#{companyDesc,jdbcType=LONGVARCHAR},#{companyDescImg,jdbcType=VARCHAR},
       #{companySize,jdbcType=SMALLINT}, #{companyLogo,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC}, 
       #{keywords,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{statusRemark,jdbcType=VARCHAR}, 
       #{weixin,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
@@ -118,6 +133,25 @@
       </if>
       <if test="shortName != null" >
         short_name,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+     
+     <if test="creditFileUrl != null" >
+        credit_file_url,
+      </if><if test="website != null" >
+        website,
+      </if><if test="spiderUrl != null" >
+        spider_url,
+      </if><if test="serviceArea != null" >
+        service_area,
+      </if><if test="serviceType != null" >
+        service_type,
+      </if><if test="companyDesc != null" >
+        company_desc,
+      </if><if test="companyDescImg != null" >
+        company_desc_img,
       </if>
       <if test="companySize != null" >
         company_size,
@@ -193,6 +227,25 @@
       <if test="shortName != null" >
         #{shortName,jdbcType=VARCHAR},
       </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+     
+     <if test="creditFileUrl != null" >
+        #{creditFileUrl,jdbcType=VARCHAR},
+      </if><if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if><if test="spiderUrl != null" >
+        #{spiderUrl,jdbcType=VARCHAR},
+      </if><if test="serviceArea != null" >
+        #{serviceArea,jdbcType=VARCHAR},
+      </if><if test="serviceType != null" >
+        #{serviceType,jdbcType=VARCHAR},
+      </if><if test="companyDesc != null" >
+        #{companyDesc,jdbcType=LONGVARCHAR},
+      </if><if test="companyDescImg != null" >
+        #{companyDescImg,jdbcType=VARCHAR},
+      </if>
       <if test="companySize != null" >
         #{companySize,jdbcType=SMALLINT},
       </if>
@@ -267,6 +320,25 @@
       <if test="shortName != null" >
         short_name = #{shortName,jdbcType=VARCHAR},
       </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      
+     <if test="creditFileUrl != null" >
+        credit_file_url = #{creditFileUrl,jdbcType=VARCHAR},
+      </if><if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if><if test="spiderUrl != null" >
+        spider_url = #{spiderUrl,jdbcType=VARCHAR},
+      </if><if test="serviceArea != null" >
+        service_area = #{serviceArea,jdbcType=VARCHAR},
+      </if><if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if><if test="companyDesc != null" >
+        company_desc = #{companyDesc,jdbcType=VARCHAR},
+      </if><if test="companyDescImg != null" >
+        company_desc_img = #{companyDescImg,jdbcType=LONGVARCHAR},
+      </if>
       <if test="companySize != null" >
         company_size = #{companySize,jdbcType=SMALLINT},
       </if>
@@ -336,6 +408,16 @@
       spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}, 
       company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
+      addr =  #{addr,jdbcType=VARCHAR},
+      
+     credit_file_url =  #{creditFileUrl,jdbcType=VARCHAR},
+     website =  #{website,jdbcType=VARCHAR},
+     spider_url =  #{spiderUrl,jdbcType=VARCHAR},
+     service_area =  #{serviceArea,jdbcType=VARCHAR},
+     service_type =  #{serviceType,jdbcType=VARCHAR},
+     company_desc =  #{companyDesc,jdbcType=LONGVARCHAR},
+     company_desc_img =  #{companyDescImg,jdbcType=VARCHAR},
+     
       company_size = #{companySize,jdbcType=SMALLINT},
       company_logo = #{companyLogo,jdbcType=VARCHAR},
       is_door = #{isDoor,jdbcType=NUMERIC},
@@ -358,12 +440,21 @@
       business_desc = #{businessDesc,jdbcType=LONGVARCHAR}
     where partner_id = #{partnerId,jdbcType=NUMERIC}
   </update>
+    
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.Partners" >
     update partners
     set 
       spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
       company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+       credit_file_url =  #{creditFileUrl,jdbcType=VARCHAR},
+     website =  #{website,jdbcType=VARCHAR},
+     spider_url =  #{spiderUrl,jdbcType=VARCHAR},
+     service_area =  #{serviceArea,jdbcType=VARCHAR},
+     service_type =  #{serviceType,jdbcType=VARCHAR},
+     company_desc =  #{companyDesc,jdbcType=LONGVARCHAR},
+     company_desc_img =  #{companyDescImg,jdbcType=VARCHAR},
       company_size = #{companySize,jdbcType=SMALLINT},
       company_logo = #{companyLogo,jdbcType=VARCHAR},
       is_door = #{isDoor,jdbcType=NUMERIC},
