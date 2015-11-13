@@ -43,6 +43,9 @@
                       <section class="panel">
                           <header class="panel-heading">
                           	服务商列表
+                          	<div class="pull-right">
+                          		<button onClick="btn_add('/partnersAdd/partnerAddNewForm')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                    		</div> 
                           </header>
                           <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
                           

@@ -11,7 +11,11 @@ public class PartnerFormVo extends Partners {
 
 	List<PartnerLinkMan> linkMan;
 	
-	String addr;
+	//private String companyDescImg;
+	
+    //private String companyDesc;
+	
+	//String addr;
 	
 	String regionIds;
 
@@ -24,13 +28,7 @@ public class PartnerFormVo extends Partners {
 	private  Long[]  partnerTypeIds;
 	
 	String partnerCityId;
-	
-	public String getAddr() {
-		return addr;
-	}
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
+
 	public String getPartnerCityId() {
 		return partnerCityId;
 	}

@@ -23,12 +23,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.common.extension.ArrayHelper;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.BaseController;
+import com.simi.common.Constants;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
 import com.simi.oa.auth.AccountAuth;
@@ -89,6 +95,32 @@ public class PartnersAddNewController extends BaseController{
 	
 	@Autowired
 	private RegionService regionService;
+	
+	/**
+	 * 服务提供商列表 
+	 * @param request
+	 * @param model
+	 * @param searchVo
+	 * @return
+	 */
+	@AuthPassport
+	@RequestMapping(value = "/list", method = { RequestMethod.GET })
+	public String list(HttpServletRequest request, Model model,
+			PartnersSearchVo searchVo) {
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+		model.addAttribute("searchModel", searchVo);
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		
+		PageInfo result = partnersService.searchVoListPage(searchVo, pageNo, pageSize);
+
+		model.addAttribute("contentModel", result);
+		return "partners/partnersList";
+	}
 
 	/**
 	 * 跳转到新增服务提供商的页面
@@ -149,6 +181,27 @@ public class PartnersAddNewController extends BaseController{
 		model.addAttribute("treeDataSource", JSONArray .fromObject(treeModels, new JsonConfig()).toString());
 
 		/**
+		 * 获得服务商服务类别大类
+		 */
+		List<PartnerRefServiceType> listBig = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
+		List<String> bigServiceTypeName = new ArrayList<String>();
+		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
+			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
+			bigServiceTypeName.add(partnerRefServiceType.getName());
+		}
+		
+		/**
+		 * 获得服务商服务类别小类
+		 */
+		List<String> subServiceTypeName = new ArrayList<String>();
+		List<PartnerRefServiceType> listSub = partnersService.selectSubServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
+		for (Iterator iterator = listSub.iterator(); iterator.hasNext();) {
+			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
+			subServiceTypeName.add(partnerRefServiceType.getName());
+			
+		}
+		
+		/**
 		 * 获取北,上,广,深等城市和地区字典信息
 		 */
 		List<Long> cityIds = new ArrayList<Long>();
@@ -159,6 +212,9 @@ public class PartnersAddNewController extends BaseController{
 		List<DictCity> dictCityList = cityService.selectByCityIds(cityIds);
 		List<DictRegion> dictReigionList = regionService.selectByCityIds(cityIds);		
 	
+		model.addAttribute("bigServiceTypeName", bigServiceTypeName);
+	//	model.addAttribute("subServiceTypeName", subServiceTypeName);
+		
 		model.addAttribute("dictCityList", dictCityList);
 		model.addAttribute("dictReigionList", dictReigionList);
 		model.addAttribute("partners", partnerFormVo);
@@ -174,42 +230,72 @@ public class PartnersAddNewController extends BaseController{
 	 * @param partners
 	 * @param result
 	 * @return
+	 * @throws IOException 
 	 */
 	//@AuthPassport
 	@RequestMapping(value = "/savePartnerAddNewForm", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model,
 			@ModelAttribute("partners") PartnerFormVo partners,
-			
-			BindingResult result) {
-		model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
+			BindingResult result) throws IOException {
+	//	model.addAttribute("requestUrl", request.getServletPath());
+	//	model.addAttribute("requestQuery", request.getQueryString());
 	//	Long spiderPartnerId = Long.valueOf(request.getParameter("spiderPartnerId"));
-		Long partnerId = partners.getPartnerId();
+		//Long partnerId = partners.getPartnerId();
 		//SpiderPartner spiderPartner = spiderPartnerService.selectByPrimaryKey(spiderPartnerId);
 		//根据采集服务商名称进行排重
-	//	List<Partners> partnersList =  partnersService.selectByCompanyName(spiderPartner.getCompanyName());
-		
+	//List<Partners> partnersList =  partnersService.selectByCompanyName(partners.getCompanyName());
+		// 创建一个通用的多部分解析器.
+				CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+				//String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
+				//String addr = request.getRemoteAddr();
+			//	int port = request.getServerPort();
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					String url = Constants.IMG_SERVER_HOST + "/upload/";
+					String fileName = file.getOriginalFilename();
+					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+					fileType = fileType.toLowerCase();
+					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+					String ret = o.get("ret").toString();
+
+					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+					String companyDescImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+
+					partners.setCompanyDescImg(companyDescImg);
+
+						}
+					}
+				}
 		//获取登录的用户
     	AccountAuth accountAuth=AuthHelper.getSessionAccountAuth(request);
 
+    	
     	Partners partnersItem = partnersService.iniPartners();
-    	if (partnerId == null) {
-    		partnerId = 0L;
-    	}
 
 			try {
 				BeanUtils.copyProperties(partnersItem, partners);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		
-			partnersService.insertSelective(partnersItem);
+			partnersItem.setServiceArea("");
+			partnersItem.setServiceType("");
+			partnersItem.setAdminId(accountAuth.getId());
+			partnersItem.setCompanyLogo("");
+			partnersItem.setRemark("");
+			partnersItem.setStatusRemark("");
 			
-			/*SpiderPartner spiderPartner2 = spiderPartnerService.selectByPrimaryKey(partnersItem.getSpiderPartnerId());
-			spiderPartner2.setStatus(partnersItem.getStatus());
-			spiderPartner2.setAddr(partners.getAddr());
-			spiderPartnerService.updateByPrimaryKey(spiderPartner2);*/
-		//}
+			partnersService.insertSelective(partnersItem);
 		
 		/**
 		 * 保存服务商选中的服务类型

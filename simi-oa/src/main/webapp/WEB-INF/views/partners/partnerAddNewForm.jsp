@@ -14,6 +14,8 @@
 	href="<c:url value='/assets/jquery-multi-select/css/multi-select.css'/>"
 	rel="stylesheet" type="text/css" />
 <%@ include file="../shared/importJs.jsp"%>
+<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
+	type="text/css" />
 </head>
 
 <body>
@@ -30,7 +32,7 @@
 			<div class="panel-body">
 				<form:form modelAttribute="partners" commandName="partners"
 					class="form-horizontal" method="POST" action="savePartnerAddNewForm"
-					id="partner-form">
+					id="partner-new-form">
 					<div class="form-body">
 						<form:hidden path="partnerId" />
 						<form:hidden path="partnerTypeIds" id="partnerTypeIds" />
@@ -68,18 +70,22 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">服务区域 &nbsp;*</label>
 							<div class="col-md-5">
-								<input type="button" value="选择服务区域" class="btn btn-primary "
-									data-toggle="modal" data-target="#region">
+							<input type="button" value="选择服务区域" class="btn btn-primary " class="btn btn-primary " data-toggle="modal"
+									data-target="#region">
+								
+								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">服务类别&nbsp;*</label>
 							<div class="col-md-5">
-								<input type="button" value="选择服务类别" id="partnerType"
-									class="btn btn-primary " data-toggle="modal"
-									data-target="#myModal">
+							<input type="button" value="选择服务类别" id="partnerType"class="btn btn-primary " data-toggle="modal"
+								data-target="#myModal">
+							
+							<p class="help-block"></p>
 							</div>
 						</div>
+					
 						<div class="form-group">
 							<label class="col-md-2 control-label">公司规模 </label>
 							<div class=col-md-8>
@@ -154,6 +160,15 @@
 									placeholder="公司简介" />
 							</div>
 						</div>
+						<%-- <c:if test="${partners.companyDescImg != null && partners.companyDescImg != '' }">
+										<div class="form-group ">
+
+											<label class="col-md-2 control-label">图片</label>
+											<div class="col-md-5">
+												<img src="${ partners.companyDescImg }"/>
+											</div>
+										</div>
+									</c:if> --%>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">公司简介图片</label>
@@ -502,9 +517,13 @@
 	<script	type="text/javascript" src="<c:url value='/js/jquery.chained.remote.min.js'/>"></script>
 	<!--左右联动多选择js  -->
 	<script type="text/javascript"  src="<c:url value='/assets/jquery-multi-select/js/jquery.multi-select.js'/>"></script>
+
+    <script type="text/javascript"
+		src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>"></script>
 	<!-- form表单验证 -->
 	<script type="text/javascript" 	src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"></script>
-	<script  type="text/javascript" src="<c:url value='/js/simi/partner/partnerForm.js'/>"></script>
+	<script  type="text/javascript" src="<c:url value='/js/simi/partner/partnerAddNewForm.js'/>"></script>
+	<script src="<c:url value='/js/simi/demo.js'/>"></script>
 	<!-- partner依赖的城市，地区js -->
 	<script  type="text/javascript" src="<c:url value='/js/simi/partner/partnerRef.js'/>"></script>
 	<!--绑定服务类别  -->

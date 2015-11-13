@@ -196,6 +196,14 @@ public class PartnersServiceImpl implements PartnersService {
 		vo.setSpiderPartnerId(0L);
 		vo.setCompanyName("");
 		vo.setShortName("");
+		vo.setAddr("");
+		vo.setCreditFileUrl("");
+		vo.setWebsite("");
+		vo.setSpiderUrl("");
+		vo.setServiceArea("");
+		vo.setServiceType("");
+		vo.setCompanyDesc("");
+		vo.setCompanyDescImg("");
 		vo.setCompanySize((short) 0);
 		vo.setIsCooperate((short) 0);
 		vo.setCompanyLogo("");
