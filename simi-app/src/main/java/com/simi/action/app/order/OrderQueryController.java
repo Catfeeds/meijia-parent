@@ -20,6 +20,8 @@ import com.simi.service.order.OrdersService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderDetailVo;
+import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
 
 @Controller
@@ -39,14 +41,13 @@ public class OrderQueryController extends BaseController {
 	 * mobile:手机号 page分页页码
 	 */
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
-	public AppResultData<List<OrderViewVo>> list(
+	public AppResultData<Object> list(
 			@RequestParam("user_id") Long userId, 
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		
-		List<OrderViewVo> orderList = new ArrayList<OrderViewVo>();
+		List<OrderListVo> orderListVo = new ArrayList<OrderListVo>();
 		
-		AppResultData<List<OrderViewVo>> result = new AppResultData<List<OrderViewVo>>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, orderList);
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		Users u = userService.selectByPrimaryKey(userId);
 		
@@ -56,7 +57,14 @@ public class OrderQueryController extends BaseController {
 		OrderSearchVo searchVo = new OrderSearchVo();
 		searchVo.setUserId(userId);
 		PageInfo list = orderQueryService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
-		orderList = list.getList();
+		List<Orders> orderList = list.getList();
+		
+		for (Orders item : orderList) {
+			OrderListVo vo = new OrderListVo();
+			vo = orderQueryService.getOrderListVo(item);
+			orderListVo.add(vo);
+		}
+		
 		result.setData(orderList);
 		
 		return result;
@@ -70,7 +78,7 @@ public class OrderQueryController extends BaseController {
 	@RequestMapping(value = "get_detail", method = RequestMethod.GET)
 	public AppResultData<Object> detail(
 			@RequestParam("user_id") Long userId, 
-			@RequestParam("order_no") String order_no) {
+			@RequestParam("order_id") Long orderId) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -84,17 +92,18 @@ public class OrderQueryController extends BaseController {
 			return result;
 		}		
 		
-		Orders orders = orderQueryService.selectByOrderNo(String.valueOf(order_no));
+		Orders order = orderQueryService.selectByPrimaryKey(orderId);
 		
-		if (orders == null) {
+		if (order == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.ORDER_NO_NOT_EXIST_MG);			
 			return result;
 		}
 		
-		OrderViewVo orderViewVo = orderQueryService.getOrderView(orders);
+		OrderListVo listVo = orderQueryService.getOrderListVo(order);
+		OrderDetailVo detailVo = orderQueryService.getOrderDetailVo(order, listVo);
 		
-		result.setData(orderViewVo);
+		result.setData(detailVo);
 		
 		return result;
 	}	

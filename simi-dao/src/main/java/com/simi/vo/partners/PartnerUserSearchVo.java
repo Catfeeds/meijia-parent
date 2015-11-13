@@ -1,10 +1,14 @@
 package com.simi.vo.partners;
 
+import java.util.List;
+
 public class PartnerUserSearchVo {
 	
 	 private Long partnerId;
 
 	 private Long serviceTypeId;
+	 
+	 private List<Long> serviceTypeIds;
 	 
 	 private String name;
 	 
@@ -41,5 +45,13 @@ public class PartnerUserSearchVo {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public List<Long> getServiceTypeIds() {
+		return serviceTypeIds;
+	}
+
+	public void setServiceTypeIds(List<Long> serviceTypeIds) {
+		this.serviceTypeIds = serviceTypeIds;
 	}	 
 }

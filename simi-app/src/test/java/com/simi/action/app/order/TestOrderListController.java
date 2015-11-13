@@ -21,7 +21,7 @@ public class TestOrderListController extends JUnitActionBase  {
     public void testList() throws Exception {
 		String url = "/app/order/get_list.json";
 		
-		String params = "?user_id=92&page=1";
+		String params = "?user_id=1&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

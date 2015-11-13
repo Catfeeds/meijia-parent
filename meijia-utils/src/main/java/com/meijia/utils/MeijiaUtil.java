@@ -292,39 +292,6 @@ public class MeijiaUtil {
 		return payTypeName;
 	}
 
-	public static String getserviceTypeName(Short seviceType) {
-		String serviceTypeName = "";
-		switch (seviceType) {
-			case 0:
-				serviceTypeName = "全部";
-				break;
-			case 1:
-				serviceTypeName = "做饭";
-				break;
-			case 2:
-				serviceTypeName = "洗衣";
-				break;
-			case 3:
-				serviceTypeName = "家电清洗";
-				break;
-			case 4:
-				serviceTypeName = "保洁";
-				break;
-			case 5:
-				serviceTypeName = "擦玻璃";
-				break;
-			case 6:
-				serviceTypeName = "管道疏通";
-				break;
-			case 7:
-				serviceTypeName = "新居开荒";
-				break;
-			default:
-				serviceTypeName = "";
-		}
-		return serviceTypeName;
-	}
-
 	public static String getPartnerName(String partnerId) {
 		String partnerName = "";
 		switch (partnerId) {

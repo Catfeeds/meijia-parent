@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -61,7 +62,7 @@ public class PartnerController extends BaseController {
 	@RequestMapping(value = "get_user_list", method = RequestMethod.GET)
 	public AppResultData<Object> partnerUserList(
 			@RequestParam("user_id") Long userId,
-			@RequestParam("service_type_id") Long serviceTypeId,
+			@RequestParam("service_type_ids") String serviceTypeIdAry,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "city_id", required = false, defaultValue = "0") Long cityId,
 			@RequestParam(value = "region_id", required = false, defaultValue = "0") Long regionId) {
@@ -77,8 +78,17 @@ public class PartnerController extends BaseController {
 				return result;
 			}
 			
+			String[] serviceTypeArray = StringUtil.convertStrToArray(serviceTypeIdAry);
+			List<Long> serviceTypeIds = new ArrayList<Long>();
+			for (int i = 0; i < serviceTypeArray.length; i++) {
+				if (!StringUtil.isEmpty(serviceTypeArray[i])) {
+					Long serviceTypeId = Long.valueOf(serviceTypeArray[i]);
+					serviceTypeIds.add(serviceTypeId);
+				}
+			}
+			
 			PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
-			searchVo.setServiceTypeId(serviceTypeId);
+			searchVo.setServiceTypeIds(serviceTypeIds);
 			PageInfo pageList = partnerUserService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 			
 			List<PartnerUserVo> list = pageList.getList();

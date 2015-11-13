@@ -1,5 +1,6 @@
 package com.simi.service.impl.order;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.TimeStampUtil;
+import com.simi.service.dict.CouponService;
 import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -18,15 +21,20 @@ import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
+import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderDetailVo;
+import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
+import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
+import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 
 @Service
@@ -58,6 +66,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	
 	@Autowired
 	PartnerServicePriceDetailService partnerServicePriceDetailService;
+	
+	@Autowired
+	UserCouponService userCouponService;   
+	
+	@Autowired
+	CouponService couponService;
 	/**
 	 * 根据订单主键进行查询
 	 * @param id  订单id
@@ -90,16 +104,6 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		 PageHelper.startPage(pageNo, pageSize);
          List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
-         if(list!=null && list.size()!=0){
-             List<OrderViewVo> orderViewList = this.getOrderViewList(list);
-
-             for(int i = 0; i < list.size(); i++) {
-            	 if (orderViewList.get(i) != null) {
-            		 list.set(i, orderViewList.get(i));
-            	 }
-             }
-         }
-		 
          PageInfo result = new PageInfo(list);
         return result;
     }
@@ -262,5 +266,84 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
         return vo;
 	}
+	
+	@Override
+	public OrderListVo getOrderListVo(Orders order) {
+
+	    // 加载更多订单的信息
+		OrderListVo vo = new OrderListVo();
+		BeanUtils.copyProperties(order, vo);
+		
+		
+		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
+		
+		vo.setPartnerUserId(partnerUser.getId());
+		vo.setPartnerUserName(partnerUser.getName());
+		vo.setPartnerUserHeadImg(partnerUser.getHeadImg());
+		
+		Users user = usersService.selectByPrimaryKey(order.getUserId());
+		vo.setName(user.getName());
+		
+		//服务类型名称
+		vo.setServiceTypeName("");
+		if (order.getServiceTypeId() > 0L) {
+			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+			vo.setServiceTypeName(serviceType.getName());
+		}		
+		
+		//用户地址
+		vo.setAddrName("");
+		if (order.getAddrId() > 0L) {
+			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
+			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
+		}
+		
+		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
+		
+		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(order.getAddTime()));
+		
+		//订单价格信息
+		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
+		
+		
+		vo.setOrderMoney(orderPrice.getOrderMoney());
+		vo.setOrderPay(orderPrice.getOrderPay());
+        return vo;
+	}	
+	
+	@Override
+	public OrderDetailVo getOrderDetailVo(Orders order, OrderListVo listVo) {
+
+	    // 加载更多订单的信息
+		OrderDetailVo vo = new OrderDetailVo();
+		BeanUtils.copyProperties(listVo, vo);
+		
+		//订单价格信息
+		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
+		
+		//城市名称
+		vo.setCityName("");
+		if (order.getCityId() > 0L) {
+			String cityName = dictService.getCityName(order.getCityId());
+			vo.setCityName(cityName);
+		}		
+		
+		vo.setPayTypeName(MeijiaUtil.getPayTypeName(orderPrice.getPayType()));
+		vo.setRemarks(order.getRemarks());
+		vo.setServiceContent(order.getServiceContent());
+		
+		vo.setUserCouponId(orderPrice.getUserCouponId());
+		vo.setUserCouponName("");
+		vo.setUserCouponValue(new BigDecimal(0));
+		if (orderPrice.getUserCouponId() > 0L) {
+			UserCoupons userCoupon = userCouponService.selectByPrimaryKey(orderPrice.getUserCouponId());
+			
+			DictCoupons coupon = couponService.selectByPrimaryKey(userCoupon.getCouponId());
+			vo.setUserCouponName(coupon.getIntroduction());
+			vo.setUserCouponValue(coupon.getValue());
+		}
+		
+        return vo;
+	}		
 
 }

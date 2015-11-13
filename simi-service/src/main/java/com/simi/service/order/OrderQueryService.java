@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderDetailVo;
+import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
 import com.simi.po.model.order.Orders;
 
@@ -18,4 +20,8 @@ public interface OrderQueryService {
 	PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize);
 
 	OrderViewVo getOrderView(Orders order);
+
+	OrderListVo getOrderListVo(Orders order);
+
+	OrderDetailVo getOrderDetailVo(Orders order, OrderListVo listVo);
 }

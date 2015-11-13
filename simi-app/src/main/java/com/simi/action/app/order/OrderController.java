@@ -25,6 +25,7 @@ import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
@@ -32,11 +33,13 @@ import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.order.OrderListVo;
 
 @Controller
 @RequestMapping(value = "/app/order")
@@ -55,6 +58,9 @@ public class OrderController extends BaseController {
 	
 	@Autowired
 	OrderPricesService orderPricesService;
+	
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;	
@@ -96,11 +102,12 @@ public class OrderController extends BaseController {
 			@RequestParam("mobile") String mobile,
 			@RequestParam("pay_type") Short payType,
 			@RequestParam(value = "user_coupon_id", required = false, defaultValue = "0") Long userCouponId,
-			@RequestParam(value = "service_content", required = false, defaultValue = "") String serviceContent,
 			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks,
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
 			@RequestParam(value = "service_date", required = false, defaultValue = "0") Long serviceDate,
-			@RequestParam(value = "addr_id", required = false, defaultValue = "0") Long addrId) throws UnsupportedEncodingException {
+			@RequestParam(value = "addr_id", required = false, defaultValue = "0") Long addrId,
+			@RequestParam(value = "city_id", required = false, defaultValue = "1") Long cityId
+			) throws UnsupportedEncodingException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		Users u = userService.selectByPrimaryKey(userId);
@@ -149,10 +156,10 @@ public class OrderController extends BaseController {
 			}
 		}
 		
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 		// 服务内容及备注信息需要进行urldecode;
-		if (!StringUtil.isEmpty(serviceContent)) {
-			serviceContent = URLDecoder.decode(serviceContent,Constants.URL_ENCODE);
-		}
+		String serviceContent = serviceType.getName() + " " + serviceTypePrice.getName();
 		
 		if (!StringUtil.isEmpty(remarks)) {
 			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
@@ -181,7 +188,7 @@ public class OrderController extends BaseController {
 		order.setRemarks(remarks);
 		order.setOrderFrom(orderFrom);
 		order.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
-
+		order.setCityId(cityId);
 		ordersService.insert(order);
 		Long orderId = order.getOrderId();
 		
@@ -231,9 +238,9 @@ public class OrderController extends BaseController {
 			orderPayService.orderPaySuccessToDo(order);
 		}		
 		
+		OrderListVo vo = orderQueryService.getOrderListVo(order);
 		
-		
-		result.setData(order);
+		result.setData(vo);
 		return result;
 	}
 	
