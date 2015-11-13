@@ -31,11 +31,17 @@
 		where service_type_id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServiceType">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>	
 		insert into partner_service_type (service_type_id, name, parent_id, view_type, no)
 		values (#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
 		#{parentId,jdbcType=NUMERIC}, #{viewType,jdbcType=NUMERIC}, #{no,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServiceType">
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>	
 		insert into partner_service_type
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
