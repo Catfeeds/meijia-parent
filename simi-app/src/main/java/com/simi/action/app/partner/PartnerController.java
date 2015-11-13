@@ -117,11 +117,19 @@ public class PartnerController extends BaseController {
 		
 		for (PartnerServiceType item : servicePrices) {
 			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
-			PartnerServicePriceDetail servicePriceDetali = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
+			PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
 			
-			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetali, servicePriceVo);
+			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetail, servicePriceVo);
 			servicePriceVo.setName(item.getName());
+			
 			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_price_id=" + item.getId();
+			
+			if (servicePriceDetail.getContentDesc().equals("") &&
+				servicePriceDetail.getContentFlow().equals("") &&
+				servicePriceDetail.getContentDesc().equals("")) {
+				detailUrl = "";
+			}
+			
 			servicePriceVo.setDetailUrl(detailUrl);
 			servicePriceVos.add(servicePriceVo);
 		}

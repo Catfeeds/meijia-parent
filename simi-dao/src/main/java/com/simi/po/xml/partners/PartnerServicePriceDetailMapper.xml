@@ -55,7 +55,7 @@
 		content_flow, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
-		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC}, #{orderDuration,jdbcType=NUMERIC}
+		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC}, #{orderDuration,jdbcType=NUMERIC},
 		#{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
 		#{contentFlow,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
 	</insert>
