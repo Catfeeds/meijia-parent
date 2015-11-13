@@ -196,7 +196,13 @@ public class PartnerServicePriceController extends AdminController {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(partnerServiceTypeDetail, vo);
 		vo.setName(partnerServiceType.getName());
-		vo.setParentId(id);
+		
+		if (partnerServiceType.getParentId().equals(0L)) {
+			vo.setParentId(id);
+		} else {
+			vo.setParentId(partnerServiceType.getParentId());
+		}
+		
 		vo.setNo(partnerServiceType.getNo());
 		model.addAttribute("contentModel", vo);
 		
