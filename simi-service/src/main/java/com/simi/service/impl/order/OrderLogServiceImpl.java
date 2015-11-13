@@ -20,8 +20,8 @@ public class OrderLogServiceImpl implements OrderLogService {
 	public OrderLog initOrderLog(Orders orders) {
 		OrderLog orderLog = new OrderLog();
 		orderLog.setAddTime(TimeStampUtil.getNow()/1000);
-		orderLog.setMobile(orders.getMobile());
-		orderLog.setOrderId(orders.getId());
+		orderLog.setUserId(orders.getUserId());
+		orderLog.setOrderId(orders.getOrderId());
 		orderLog.setOrderNo(orders.getOrderNo());
 		orderLog.setOrderStatus(orders.getOrderStatus());
 		orderLog.setRemarks(" ");

@@ -107,7 +107,7 @@ public class OrderOnlinePayController extends BaseController {
 		}
 
 		
-		if (order != null && order.getOrderStatus().equals(Constants.ORDER_STATUS_4_PAY_DONE)) {
+		if (order != null && order.getOrderStatus().equals(Constants.ORDER_STATUS_2_PAY_DONE)) {
 			//更新付款用户账号名
 			if (payAccount != null && !payAccount.equals("")) {
 				userDetailPayService.updateByPayAccount(tradeNo, payAccount);
@@ -118,10 +118,10 @@ public class OrderOnlinePayController extends BaseController {
 		
 		Long updateTime = TimeStampUtil.getNow() / 1000;
 		
-		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getId());
+		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 		
 		//更新订单状态.
-		order.setOrderStatus(Constants.ORDER_STATUS_4_PAY_DONE);//支付状态
+		order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//支付状态
 		order.setUpdateTime(updateTime);
 		ordersService.updateByPrimaryKey(order);
 		

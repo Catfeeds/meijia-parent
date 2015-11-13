@@ -24,7 +24,7 @@ public class OrderViewVo extends Orders {
 
 	private BigDecimal orderPay;
 
-	private String cardPasswd;
+	private Long userCouponId;
 	
 	private String orderStatusName;
 
@@ -50,14 +50,6 @@ public class OrderViewVo extends Orders {
 
 	public void setOrderPay(BigDecimal orderPay) {
 		this.orderPay = orderPay;
-	}
-
-	public String getCardPasswd() {
-		return cardPasswd;
-	}
-
-	public void setCardPasswd(String cardPasswd) {
-		this.cardPasswd = cardPasswd;
 	}
 
 	public String getName() {
@@ -98,5 +90,13 @@ public class OrderViewVo extends Orders {
 
 	public void setOrderStatusName(String orderStatusName) {
 		this.orderStatusName = orderStatusName;
+	}
+
+	public Long getUserCouponId() {
+		return userCouponId;
+	}
+
+	public void setUserCouponId(Long userCouponId) {
+		this.userCouponId = userCouponId;
 	}
 }

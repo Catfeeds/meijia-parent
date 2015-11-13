@@ -105,7 +105,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		
 		userDetailPay.setUserId(user.getId());
 		userDetailPay.setMobile(user.getMobile());
-		userDetailPay.setOrderId(order.getId());
+		userDetailPay.setOrderId(order.getOrderId());
 		userDetailPay.setOrderNo(order.getOrderNo());
 
 		userDetailPay.setOrderType(Constants.ORDER_TYPE_0);

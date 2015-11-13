@@ -3,7 +3,7 @@ package com.simi.po.model.order;
 public class OrderLog {
     private Long id;
 
-	private String mobile;
+	private Long userId;
 
 	private Long orderId;
 
@@ -21,14 +21,6 @@ public class OrderLog {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile == null ? null : mobile.trim();
 	}
 
 	public Long getOrderId() {
@@ -69,6 +61,14 @@ public class OrderLog {
 
 	public void setAddTime(Long addTime) {
 		this.addTime = addTime;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 }

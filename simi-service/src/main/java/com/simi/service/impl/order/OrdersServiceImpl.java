@@ -68,21 +68,25 @@ public class OrdersServiceImpl implements OrdersService {
 	public Orders initOrders() {
 
 		Orders record = new Orders();
-		record.setId(0L);
-		record.setSecId(0L);
-		record.setMobile("");
+		record.setOrderId(0L);
+		record.setOrderNo("");
+		record.setPartnerUserId(0L);
+		record.setServiceTypeId(0L);
 		record.setUserId(0L);
+		record.setMobile("");
+		record.setProvinceId(0L);
 		record.setCityId(0L);
-		record.setAddrId(0L);
-		record.setServiceType(1L);
+		record.setRegionId(0L);
+		record.setOrderType((short) 0);
+		record.setOrderDuration((short) 0);
 		record.setServiceContent("");
 		record.setServiceDate(0L);
-		record.setStartTime(0L);
-		record.setOrderNo("");
+		record.setAddrId(0L);
+		record.setRemarks("");
+		record.setOrderFrom(Constants.USER_APP);
+		record.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
 		record.setOrderRate((short) 0);
 		record.setOrderRateContent("");
-		record.setOrderStatus(Constants.ORDER_STATUS_0_CLOSE);
-		record.setOrderFrom(Constants.USER_APP);
 		record.setIsScore((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -108,12 +112,6 @@ public class OrdersServiceImpl implements OrdersService {
 	public int updateByPrimaryKeySelective(Orders record) {
 		return ordersMapper.updateByPrimaryKeySelective(record);
 	}
-
-	@Override
-	public List<String> selectByDistinctMobileLists() {
-		return ordersMapper.selectByDistinctMobileLists();
-	}
-	
 	
 	/**
 	 * 下单成功后的操作
@@ -137,106 +135,11 @@ public class OrdersServiceImpl implements OrdersService {
 		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
 
 		Users u = usersService.selectByPrimaryKey(order.getUserId());
-		//2. 环信透传功能.
-		//获得发送者的环信账号
-		Long secId = orderViewVo.getSecId();
-		Users secUser = usersService.selectByPrimaryKey(secId);
-		
-		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
-		String fromIm = userRef3rd.getUsername();
-		Long userId = u.getId();
-		//获得接收者的环信账号.
-		userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
-		String toIm = userRef3rd.getUsername();
-		
-		
-		orderPushNotify(orderViewVo, fromIm, toIm);
-		
-		//3. 百度推送功能 todo
 		
 		return true;
 		
 	}
-	
-	
-	/**
-	 * 用户确认订单后的操作
-	 * 1. 记录订单日志
-	 * 2. 环信透传功能.
-	 * 3. 百度推送功能.(todo)
-	 */
-	@Override
-	public Boolean orderConfirmTodo(String orderNo) {
-		Orders order = ordersMapper.selectByOrderNo(orderNo);
 		
-		if (order == null) {
-			return false;
-		}
-		
-		//1.记录订单日志
-		OrderLog orderLog = orderLogService.initOrderLog(order);
-		orderLogService.insert(orderLog);
-		
-		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
-
-		//2. 环信透传功能.
-		//获得接受者的环信账号
-		Long secId = orderViewVo.getSecId();
-		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
-		String toIm = userRef3rd.getUsername();
-
-		orderPushNotify(orderViewVo, "", toIm);
-		
-		//3. 百度推送功能 todo
-		
-		return true;
-		
-	}	
-	
-	/**
-	 * 订单推送，触发环信的透传功能
-	 * @param orderNo
-	 * @return
-	 */
-	
-	public Boolean orderPushNotify(OrderViewVo orderViewVo, String fromIm, String toIm) {
-		
-
-		JsonNodeFactory factory = new JsonNodeFactory(false);		
-		String targetTypeus = "users";
-		ObjectNode ext = factory.objectNode();
-		ArrayNode targetusers = factory.arrayNode();
-		targetusers.add(toIm);
-
-		// 给用户发一条透传消息
-		ObjectNode cmdmsg = factory.objectNode();
-		cmdmsg.put("action", "order");
-		cmdmsg.put("type", "cmd");
-		
-
-		ext.put("order_id", orderViewVo.getId());
-		ext.put("order_no", orderViewVo.getOrderNo());
-		ext.put("order_pay_type", orderViewVo.getOrderPayType());
-		ext.put("add_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getAddTime() * 1000));
-		ext.put("service_type_name", orderViewVo.getServiceTypeName());
-		ext.put("service_content", orderViewVo.getServiceContent());
-		ext.put("order_status", orderViewVo.getOrderStatus());
-		
-		if (orderViewVo.getStartTime() > 0L) {
-			ext.put("service_time", TimeStampUtil.timeStampToDateStr(orderViewVo.getStartTime()));
-		} else {
-			ext.put("service_time", "");
-		}
-		
-		ext.put("service_addr", orderViewVo.getServiceAddr());
-		ext.put("order_money", orderViewVo.getOrderMoney());
-
-		ObjectNode sendcmdMessageusernode = EasemobMessages.sendMessages(targetTypeus, targetusers, cmdmsg, fromIm, ext);
-
-		return true;
-	}
-	
-	
 	/**
 	 * 订单评价成功后的操作
 	 * 1. 更新用户的积分，并添加到积分明细
@@ -250,12 +153,12 @@ public class OrdersServiceImpl implements OrdersService {
 		userDetailScore.setUserId(users.getId());
 		userDetailScore.setMobile(users.getMobile());
 		
-		userDetailScore.setScore(Constants.RATE_CORE);
+		userDetailScore.setScore(0);
 		userDetailScore.setActionId(Constants.ACTION_ORDER_RATE);		
 		userDetailScore.setIsConsume(Constants.CONSUME_SCORE_GET);
 		userDetailScoreService.insert(userDetailScore);
 		
-		users.setScore(users.getScore()+Constants.RATE_CORE);
+		users.setScore(users.getScore()+0);
 		usersService.updateByPrimaryKeySelective(users);				
 	}
 

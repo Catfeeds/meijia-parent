@@ -18,13 +18,9 @@ public interface OrdersService {
 
     int updateByPrimaryKey(Orders record);
 
-	List<String> selectByDistinctMobileLists();
-
 	Boolean orderSuccessTodo(String orderNo);
 
 	void orderRatedTodo(Orders orders);
-
-	Boolean orderConfirmTodo(String orderNo);
 
 	List<Orders> selectByUserId(Long userId);
 

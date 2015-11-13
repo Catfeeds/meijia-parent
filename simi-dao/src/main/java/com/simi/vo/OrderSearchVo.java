@@ -2,7 +2,7 @@ package com.simi.vo;
 
 public class OrderSearchVo {
 	
-	private Long secId;
+	private Long partnerUserId;
 	
 	private Long userId;
 	
@@ -10,7 +10,7 @@ public class OrderSearchVo {
 	
 	private String orderNo;
 
-	private Short serviceType;
+	private Long serviceTypeId;
 	
 	private Short orderFrom;
 	
@@ -32,13 +32,6 @@ public class OrderSearchVo {
 		this.orderNo = orderNo;
 	}
 
-	public Short getServiceType() {
-		return serviceType;
-	}
-
-	public void setServiceType(Short serviceType) {
-		this.serviceType = serviceType;
-	}
 
 	public Short getOrderFrom() {
 		return orderFrom;
@@ -64,12 +57,20 @@ public class OrderSearchVo {
 		this.userId = userId;
 	}
 
-	public Long getSecId() {
-		return secId;
+	public Long getPartnerUserId() {
+		return partnerUserId;
 	}
 
-	public void setSecId(Long secId) {
-		this.secId = secId;
+	public void setPartnerUserId(Long partnerUserId) {
+		this.partnerUserId = partnerUserId;
+	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
 	}
 
 }

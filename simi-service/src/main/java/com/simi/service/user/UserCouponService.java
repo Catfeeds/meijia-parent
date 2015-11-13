@@ -44,4 +44,6 @@ public interface UserCouponService {
 
 	UserCoupons selectByUserIdCardPwd(Long userId, String card_passwd);
 
+	UserCoupons selectByPrimaryKey(Long userCouponId);
+
 }

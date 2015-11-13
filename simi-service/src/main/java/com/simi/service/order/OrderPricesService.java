@@ -23,8 +23,8 @@ public interface OrderPricesService {
 
 	int updateByPrimaryKey(OrderPrices record);
 
-	BigDecimal getPayByOrder(String orderNo, String cardPasswd);
-
 	List<OrderPrices> selectByOrderIds(List<Long> orderIds);
+
+	BigDecimal getPayByOrder(BigDecimal orderPay, Long userCouponId);
 
 }

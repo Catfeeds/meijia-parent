@@ -19,6 +19,7 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.order.OrderCards;
+import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.Users;
@@ -102,13 +103,16 @@ public class OrderWxPayController extends BaseController {
 			
 			// 订单已经支付过，不需要重复支付
 			if (order.getOrderStatus()
-					.equals(Constants.ORDER_STATUS_4_PAY_DONE)) {
+					.equals(Constants.ORDER_STATUS_2_PAY_DONE)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("订单已经支付过！");
 				return result;
 			}
 			
-			BigDecimal orderPayNow  = orderPricesService.getPayByOrder(orderNo, "0");
+			
+			
+			OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
+			BigDecimal orderPayNow = orderPrice.getOrderPay();
 			wxPay = orderPayNow.toString();
 			body = "订单号:"+orderNo;
 		}

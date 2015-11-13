@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 有个管家的常用方法
+ * 云行政的常用方法
  *
  */
 public class MeijiaUtil {
@@ -46,18 +46,12 @@ public class MeijiaUtil {
 				statusName = "已支付";
 				break;
 			case 3:
-				statusName = "待服务";
-				break;
-			case 4:
-				statusName = "即将服务";
-				break;
-			case 5:
-				statusName = "待评价";
-				break;
-			case 6:
-				statusName = "已完成";
+				statusName = "处理中";
 				break;
 			case 7:
+				statusName = "待评价";
+				break;
+			case 9:
 				statusName = "已关闭";
 				break;
 			default:
@@ -172,13 +166,10 @@ public class MeijiaUtil {
 		list.add(0, "已取消");
 		list.add(1, "待支付");
 		list.add(2, "已支付");
-		list.add(3, "待服务");
-		list.add(4, "即将服务");
-		list.add(5, "待评价");
-		list.add(6, "已完成");
-		list.add(7, "已关闭");
+		list.add(3, "处理中");
+		list.add(7, "待评价");
+		list.add(9, "已完成");
 		return list;
-
 	}
 	public static List<String> getSpiderPartnerStatus(){
 		List<String> list = new ArrayList<String>();

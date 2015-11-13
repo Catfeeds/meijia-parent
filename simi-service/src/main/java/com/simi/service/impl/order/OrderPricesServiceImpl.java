@@ -67,23 +67,20 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 	public OrderPrices initOrderPrices() {
 		
 		OrderPrices record = new OrderPrices();
-		
-		record.setId(0L);
-		record.setUserId(0L);
-		record.setMobile("");
 		record.setOrderId(0L);
 		record.setOrderNo("");
+		record.setServicePriceId(0L);
+		record.setPartnerUserId(0L);
+		record.setUserId(0L);
+		record.setMobile("");
 		record.setPayType((short)Constants.PAY_TYPE_0);
-		record.setCardPasswd("");
+		record.setUserCouponId(0L);
 		record.setUsedScore(0l);
-		
 		BigDecimal defaultValue = new BigDecimal(0);
 		record.setOrderMoney(defaultValue);
-
 		record.setOrderPay(defaultValue);
 		record.setOrderPayBack(defaultValue);
 		record.setOrderPayBackFee(defaultValue);
-		
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		return record;
@@ -93,45 +90,25 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 	 * 获取服务订单及优惠券等的金额，返回最终的订单支付金额
 	 */
 	@Override
-	public BigDecimal getPayByOrder(String orderNo, String cardPasswd) {
+	public BigDecimal getPayByOrder(BigDecimal orderPay, Long userCouponId) {
 		
-		BigDecimal orderPayNow = new BigDecimal(0);
-		Orders order = orderQueryService.selectByOrderNo(orderNo);
-		if (order == null) {
-			return orderPayNow;
-		}
-		OrderPrices orderPrices = this.selectByOrderId(order.getId());
-
-		BigDecimal orderMoney = orderPrices.getOrderMoney();
-		BigDecimal orderPay = orderPrices.getOrderMoney();
-		String mobile = order.getMobile();
-		order.getOrderFrom();
-		order.getServiceType();
-		
-		if (cardPasswd == null || cardPasswd.equals("0")) {
-			cardPasswd = orderPrices.getCardPasswd();
-		}
+		BigDecimal orderPayNow = new BigDecimal(0.0);
 		// 处理优惠券的情况
+		if (userCouponId > 0L) {
+			UserCoupons userCoupons = null;
+			userCoupons = userCouponService.selectByPrimaryKey(userCouponId);
 
-		UserCoupons userCoupons = null;
-		// 验证优惠券是否正确.
-		if (cardPasswd!= null && !cardPasswd.equals("") && !cardPasswd.equals("0")) {
-			userCoupons = userCouponService.selectByMobileCardPwd(mobile,
-					cardPasswd);
-
-			orderPay = orderPrices.getOrderMoney();
 			BigDecimal couponValue = new BigDecimal(0);
-
 			couponValue = userCoupons.getValue();
+			
 			// 如果优惠券金额大于订单总金额
-			if (orderMoney.compareTo(couponValue) == 1) {
-				orderPay = orderMoney.subtract(couponValue);
+			if (orderPay.compareTo(couponValue) == 1) {
+				orderPay = orderPay.subtract(couponValue);
 			} else {
 				orderPay = new BigDecimal(0);
 			}
-			orderPrices.setOrderPay(orderPay);
+			
 		}
-
 		// 实际支付金额
 		BigDecimal p1 = new BigDecimal(100);
 		BigDecimal p2 = MathBigDeciamlUtil.mul(orderPay, p1);

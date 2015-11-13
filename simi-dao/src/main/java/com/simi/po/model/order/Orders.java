@@ -3,27 +3,31 @@ package com.simi.po.model.order;
 public class Orders {
 	
 	
-    private Long id;
+    private Long orderId;
     
-    private Long secId;
+    private String orderNo;
+    
+    private Long partnerUserId;
 
     private Long userId;
 
     private String mobile;
-
+    
+    private Long provinceId;
+    
     private Long cityId;
 
-    private String orderNo;
+    private Long regionId;
     
-    private Short orderPayType;
+    private Short orderType;
+    
+    private Short orderDuration;
 
-    private Long serviceType;
+    private Long serviceTypeId;
    
     private String serviceContent;
 
     private Long serviceDate;
-
-    private Long startTime;
 
     private Long addrId;
 
@@ -34,23 +38,16 @@ public class Orders {
     private Short orderStatus;
     
     private Short orderRate;
+    
+    private String orderRateContent;
 
     private Short isScore;
-
-    private String orderRateContent;
 
     private Long addTime;
 
     private Long updateTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+ 
     public Long getUserId() {
         return userId;
     }
@@ -81,22 +78,6 @@ public class Orders {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo == null ? null : orderNo.trim();
-    }
-
-    public Long getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(Long serviceType) {
-        this.serviceType = serviceType;
-    }
-
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
     }
 
     public Long getAddrId() {
@@ -179,27 +160,67 @@ public class Orders {
 		this.serviceDate = serviceDate;
 	}
 
-	public Short getOrderPayType() {
-		return orderPayType;
-	}
-
-	public void setOrderPayType(Short orderPayType) {
-		this.orderPayType = orderPayType;
-	}
-
-	public Long getSecId() {
-		return secId;
-	}
-
-	public void setSecId(Long secId) {
-		this.secId = secId;
-	}
-
 	public String getServiceContent() {
 		return serviceContent;
 	}
 
 	public void setServiceContent(String serviceContent) {
 		this.serviceContent = serviceContent;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public Long getPartnerUserId() {
+		return partnerUserId;
+	}
+
+	public void setPartnerUserId(Long partnerUserId) {
+		this.partnerUserId = partnerUserId;
+	}
+
+	public Long getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(Long provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public Long getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
+	}
+
+	public Short getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(Short orderType) {
+		this.orderType = orderType;
+	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public Short getOrderDuration() {
+		return orderDuration;
+	}
+
+	public void setOrderDuration(Short orderDuration) {
+		this.orderDuration = orderDuration;
 	}
 }

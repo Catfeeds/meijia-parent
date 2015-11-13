@@ -2,17 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simi.po.dao.order.OrdersMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.order.Orders">
-		<id column="id" property="id" jdbcType="NUMERIC" />
-		<result column="sec_id" property="secId" jdbcType="NUMERIC" />
+		<id column="order_id" property="orderId" jdbcType="NUMERIC" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="partner_user_id" property="partnerUserId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="province_id" property="provinceId" jdbcType="NUMERIC" />
 		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
-		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-		<result column="order_pay_type" property="orderPayType" jdbcType="NUMERIC" />
-		<result column="service_type" property="serviceType" jdbcType="NUMERIC" />
+		<result column="region_id" property="regionId" jdbcType="NUMERIC" />	
+		<result column="orderType" property="orderType" jdbcType="NUMERIC" />
+		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
+		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
 		<result column="service_content" property="serviceContent" jdbcType="VARCHAR" />
 		<result column="service_date" property="serviceDate" jdbcType="NUMERIC" />
-		<result column="start_time" property="startTime" jdbcType="NUMERIC" />
 		<result column="addr_id" property="addrId" jdbcType="NUMERIC" />
 		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="order_from" property="orderFrom" jdbcType="NUMERIC" />
@@ -25,43 +27,18 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, sec_id, user_id, mobile, city_id, order_no, order_pay_type,
-		service_type, service_content, service_date, start_time,
-		addr_id, remarks, order_from,
-		order_status, order_rate,
-		order_rate_content, is_score,
-		add_time,
-		update_time
+		order_id, order_no, partner_user_id, user_id, mobile, province_id, city_id, region_id, 
+		order_type, order_duration, service_type_id, service_content, service_date, 
+		addr_id, remarks, order_from, order_status, order_rate, order_rate_content, is_score,
+		add_time, update_time
 	</sql>
+	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from orders
-		where id = #{id,jdbcType=NUMERIC}
-	</select>
-
-
-	<select id="selectByStatus" resultMap="BaseResultMap"
-		parameterType="java.lang.Short">
-		select
-		<include refid="Base_Column_List" />
-		from orders
-		where order_status = #{orderStatus,jdbcType=NUMERIC}
-		order
-		by add_time desc
-	</select>
-	<!-- 根据多个orderstate进行查询 -->
-	<select id="selectByStatuses" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from orders
-		where order_status in
-		<foreach item="item" index="index" collection="list" open="("
-			separator="," close=")">
-			#{item}
-		</foreach>
-		order by add_time desc
+		where order_id = #{order_id,jdbcType=NUMERIC}
 	</select>
 
 	<select id="selectByOrderNo" resultMap="BaseResultMap"
@@ -71,6 +48,7 @@
 		from orders
 		where order_no = #{orderNo,jdbcType=VARCHAR}
 	</select>
+	
 	<select id="selectByUserId" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
 		select
@@ -78,59 +56,37 @@
 		from orders
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>
-	<select id="selectByUser" resultMap="BaseResultMap"
-		parameterType="java.lang.Long">
+	
+	<select id="selectByPartnerUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from orders
-		where user_id = #{userId,jdbcType=NUMERIC}
-	</select>
-	<select id="selectByUserIdList" resultMap="BaseResultMap"
-		parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from orders
-		where user_id = #{userId,jdbcType=NUMERIC}
-	</select>
-		<select id="selectBySecId" resultMap="BaseResultMap"
-		parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from orders
-		where sec_id = #{secId,jdbcType=VARCHAR}
-	</select>
-
-	<!-- 查出所用下过单用户的手机号 -->
-	<select id="selectByDistinctMobileLists" resultType="java.lang.String">
-		select mobile
-		from orders group by mobile
+		where partner_user_id = #{partnerUserId,jdbcType=VARCHAR}
 	</select>
 
 	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
 
-	<select id="selectByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.OrderSearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.OrderSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from orders
 		where 1=1
-		
-		<if test="secId != null">
-			and sec_id = #{secId,jdbcType=NUMERIC}
-		</if>	
-				
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>		
+		</if>	
 		
 		<if test="mobile != null">
 			and mobile like CONCAT('%','${mobile}','%' )
 		</if>
-
+		
 		<if test="orderNo != null">
 			and order_no like CONCAT('%','${orderNo}','%' )
 		</if>
 		
+		<if test="partnerUserId != null">
+			and partner_user_id = #{partnerUserId,jdbcType=NUMERIC}
+		</if>	
+
 		<if test="orderFrom != null">
 			and order_from = #{orderFrom,jdbcType=NUMERIC}
 		</if>
@@ -139,43 +95,43 @@
 			and order_status = #{orderStatus,jdbcType=NUMERIC}
 		</if>
 
-		<if test="serviceType != null">
-			and service_type = #{serviceType,jdbcType=NUMERIC}
+		<if test="serviceTypeId != null">
+			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
 		</if>
-		
 		order by add_time desc
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from orders
-		where id = #{id,jdbcType=NUMERIC}
+		where order_id = #{order_id,jdbcType=NUMERIC}
 	</delete>
+	
 	<insert id="insert" parameterType="com.simi.po.model.order.Orders">
-		<selectKey resultType="java.lang.Long" order="AFTER"
-			keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="orderId">
+			SELECT LAST_INSERT_ID() AS order_id
 		</selectKey>
-		insert into orders (id, sec_id, user_id, mobile, city_id, order_no,
-		order_pay_type, service_type, service_content,
-		service_date, start_time, addr_id,
-		remarks,
-		order_from, order_status,
-		order_rate, order_rate_content,
-		is_score, add_time, update_time)
+		insert into orders (order_id, order_no, partner_user_id, user_id, mobile, province_id, city_id, region_id, 
+		order_type, order_duration, service_type_id, service_content, service_date, 
+		addr_id, remarks, order_from, order_status, order_rate, order_rate_content, is_score,
+		add_time, update_time)
 		values
-		(#{id,jdbcType=NUMERIC},
-		#{secId,jdbcType=NUMERIC},
+		(#{orderId,jdbcType=NUMERIC},
+		#{orderNo,jdbcType=VARCHAR},
+		#{partnerUserId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC},
 		#{mobile,jdbcType=CHAR},
+		#{provinceId,jdbcType=NUMERIC},
 		#{cityId,jdbcType=NUMERIC},
-		#{orderNo,jdbcType=VARCHAR},
-		#{orderPayType,jdbcType=NUMERIC},
-		#{serviceType,jdbcType=NUMERIC},
+		#{regionId,jdbcType=NUMERIC},
+		#{orderType,jdbcType=NUMERIC},
+		#{orderDuration,jdbcType=NUMERIC},
+		#{serviceTypeId,jdbcType=NUMERIC},
 		#{serviceContent,jdbcType=VARCHAR},
 		#{serviceDate,jdbcType=NUMERIC},
-		#{startTime,jdbcType=NUMERIC},
-		#{addrId,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR},
-		#{orderFrom,jdbcType=NUMERIC}, #{orderStatus,jdbcType=NUMERIC},
+		#{addrId,jdbcType=NUMERIC}, 
+		#{remarks,jdbcType=VARCHAR},
+		#{orderFrom,jdbcType=NUMERIC},
+		#{orderStatus,jdbcType=NUMERIC},
 		#{orderRate,jdbcType=NUMERIC},
 		#{orderRateContent,jdbcType=VARCHAR},
 		#{isScore,jdbcType=NUMERIC},
@@ -185,11 +141,14 @@
 	<insert id="insertSelective" parameterType="com.simi.po.model.order.Orders">
 		insert into orders
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
+			<if test="orderId != null">
+				order_id,
 			</if>
-			<if test="secId != null">
-				sec_id,
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="partnerUserId != null">
+				partner_user_id,
 			</if>			
 			<if test="userId != null">
 				user_id,
@@ -197,15 +156,20 @@
 			<if test="mobile != null">
 				mobile,
 			</if>
-
+			<if test="provinceId != null">
+				province_id,
+			</if>
 			<if test="cityId != null">
 				city_id,
 			</if>
-			<if test="orderNo != null">
-				order_no,
+			<if test="regionId != null">
+				region_id,
 			</if>
-			<if test="orderPayType != null">
-				order_pay_type,
+			<if test="orderType != null">
+				order_type,
+			</if>
+			<if test="orderDuration != null">
+				order_duration,
 			</if>
 			<if test="serviceType != null">
 				service_type,
@@ -215,9 +179,6 @@
 			</if>
 			<if test="serviceDate != null">
 				service_date,
-			</if>
-			<if test="startTime != null">
-				start_time,
 			</if>
 			<if test="addrId != null">
 				addr_id,
@@ -248,11 +209,15 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=NUMERIC},
+
+			<if test="orderId != null">
+				#{orderId,jdbcType=NUMERIC},
 			</if>
-			<if test="secId != null">
-				#{secId,jdbcType=NUMERIC},
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="partnerUserId != null">
+				#{partnerUserId,jdbcType=NUMERIC},
 			</if>			
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
@@ -260,14 +225,20 @@
 			<if test="mobile != null">
 				#{mobile,jdbcType=CHAR},
 			</if>
+			<if test="provinceId != null">
+				#{provinceId,jdbcType=NUMERIC},
+			</if>
 			<if test="cityId != null">
 				#{cityId,jdbcType=NUMERIC},
 			</if>
-			<if test="orderNo != null">
-				#{orderNo,jdbcType=VARCHAR},
+			<if test="regionId != null">
+				#{regionId,jdbcType=NUMERIC},
 			</if>
-			<if test="orderPayType != null">
+			<if test="orderType != null">
 				#{orderPayType,jdbcType=NUMERIC},
+			</if>
+			<if test="orderDuration != null">
+				#{orderDuration,jdbcType=NUMERIC},
 			</if>
 			<if test="serviceType != null">
 				#{serviceType,jdbcType=NUMERIC},
@@ -277,9 +248,6 @@
 			</if>
 			<if test="serviceDate != null">
 				#{serviceDate,jdbcType=NUMERIC},
-			</if>
-			<if test="startTime != null">
-				#{startTime,jdbcType=NUMERIC},
 			</if>
 			<if test="addrId != null">
 				#{addrId,jdbcType=NUMERIC},
@@ -313,8 +281,11 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.Orders">
 		update orders
 		<set>
-			<if test="secId != null">
-				sec_id = #{secId,jdbcType=NUMERIC},
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="partnerUserId != null">
+				partner_user_id = #{partnerUserId,jdbcType=NUMERIC},
 			</if>
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
@@ -322,14 +293,20 @@
 			<if test="mobile != null">
 				mobile = #{mobile,jdbcType=CHAR},
 			</if>
+			<if test="provinceId != null">
+				province_id = #{provinceId,jdbcType=NUMERIC},
+			</if>
 			<if test="cityId != null">
 				city_id = #{cityId,jdbcType=NUMERIC},
 			</if>
-			<if test="orderNo != null">
-				order_no = #{orderNo,jdbcType=VARCHAR},
+			<if test="regionId != null">
+				region_id = #{regionId,jdbcType=NUMERIC},
 			</if>
-			<if test="orderPayType != null">
-				order_pay_type = #{orderPayType,jdbcType=NUMERIC},
+			<if test="orderType != null">
+				order_type = #{orderType,jdbcType=NUMERIC},
+			</if>
+			<if test="orderDuration != null">
+				order_duration= #{orderDuration,jdbcType=NUMERIC},
 			</if>
 			<if test="serviceType != null">
 				service_type = #{serviceType,jdbcType=NUMERIC},
@@ -339,9 +316,6 @@
 			</if>
 			<if test="serviceDate != null">
 				service_date = #{serviceDate,jdbcType=NUMERIC},
-			</if>
-			<if test="startTime != null">
-				start_time = #{startTime,jdbcType=NUMERIC},
 			</if>
 			<if test="addrId != null">
 				addr_id = #{addrId,jdbcType=NUMERIC},
@@ -372,21 +346,22 @@
 				update_time = #{updateTime,jdbcType=NUMERIC},
 			</if>
 		</set>
-		where id = #{id,jdbcType=NUMERIC}
+		where order_id = #{orderId,jdbcType=NUMERIC}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.Orders">
 		update orders
 		set
-		sec_id = #{secId,jdbcType=NUMERIC},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		partner_user_id = #{partnerUserId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		mobile = #{mobile,jdbcType=CHAR},
+		province_id = #{provinceId,jdbcType=NUMERIC},
 		city_id = #{cityId,jdbcType=NUMERIC},
-		order_no = #{orderNo,jdbcType=VARCHAR},
-		order_pay_type = #{orderPayType,jdbcType=NUMERIC},
+		region_id = #{regionId,jdbcType=NUMERIC},
+		order_type = #{orderType,jdbcType=NUMERIC},
 		service_type = #{serviceType,jdbcType=NUMERIC},
 		service_content = #{serviceContent,jdbcType=NUMERIC},
 		service_date = #{serviceDate,jdbcType=NUMERIC},
-		start_time = #{startTime,jdbcType=NUMERIC},
 		addr_id = #{addrId,jdbcType=NUMERIC},
 		remarks = #{remarks,jdbcType=VARCHAR},
 		order_from = #{orderFrom,jdbcType=NUMERIC},
@@ -396,6 +371,6 @@
 		is_score = #{isScore,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
-		where id = #{id,jdbcType=NUMERIC}
+		where order_id = #{orderId,jdbcType=NUMERIC}
 	</update>
 </mapper>

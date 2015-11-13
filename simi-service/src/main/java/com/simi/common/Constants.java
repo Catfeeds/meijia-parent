@@ -11,54 +11,30 @@ public class Constants {
 
 	//'0' COMMENT '用户来源 0 = APP  1 = 微网站  2 = 管理后台'
 	public static short USER_APP = 0;
-	public static short USER_NET = 1;
+	public static short USER_WWZ = 1;
 	public static short USER_BACK = 2;
-
-	//充值卡类型:1,无忧管家;2,快乐管家;3,超级管家
-	public static long DICT_CARD_TYPE_1 = 1;
-	public static long DICT_CARD_TYPE_2 = 2;
-	public static long DICT_CARD_TYPE_3 = 3;
 
 	//是否使用 0 = 未使用 1= 已使用
 	public static short IS_USER_0 = 0;
 	public static short IS_USER_1 = 1;
 
-	public static short IS_USER_PROMOTION_1 = 1;
-	public static short IS_USER_PROMOTION_0 = 0;
-
 	//地址默认 默认地址 1 = 默认  0 = 不默认
 	public static int ADDRESS_DEFAULT_1 = 1;
 	public static int ADDRESS_DEFAULT_NOT_0 = 0;
 	
-	//订单类型  0 = 无需支付 1 = 线上支付
-	public static short ORDER_PAY_TYPE_0 = 0;
-	public static short ORDER_PAY_TYPE_1 = 1;
-	
 	//0 = 已关闭 1 = 待确认 2 = 已确认 3 = 待支付 4 = 已支付
-	public static short ORDER_STATUS_0_CLOSE = 0;
-	public static short ORDER_STATUS_1_CONFIRM = 1;
-	public static short ORDER_STATUS_2_CONFIRM_DONE = 2;
-	
-	public static short ORDER_STATUS_3_PAY_WAIT = 3;
-	public static short ORDER_STATUS_4_PAY_DONE = 4;
-	
+	public static short ORDER_STATUS_0_CLOSE = 0;	
+	public static short ORDER_STATUS_1_PAY_WAIT = 1;
+	public static short ORDER_STATUS_2_PAY_DONE = 2;
+	public static short ORDER_STATUS_3_PROCESSING = 3;
+	public static short ORDER_STATUS_7_RATE_WAIT = 7;	
 	public static short ORDER_STATUS_9_COMPLETE = 9;
 	
-	//订单评价 0=好  1=一般 2=差
-	public static short ORDER_RATE_GOOD = 0;
-	public static short ORDER_RATE_GENERAL = 1;
-	public static short ORDER_RATE_BAD = 2;
+	//订单评价 5颗星  1 - 5
 
 	//1 = 支付成功 2 = 退款成功
 	public static short PAY_SUCCESS = 1;
 	public static short BACK_SUCCESS = 2;
-
-	//是否能取消订单. 0 = 不能取消 1 = 能取消
-	public static short ORDER_CANCLE_NO = 0;
-	public static short ORDER_CANCLE_YES = 1;
-
-	public static int RATE_CORE = 10;
-	public static int SHARE_CORE = 1;
 
 	//0 = 发送失败 1 = 发送成功
 	public static short SMS_SUCCESS= 0;
@@ -96,18 +72,12 @@ public class Constants {
 
 	public static int SUCCESS_0 = 0;
 	public static int ERROR_999 = 999;
-	public static int ERROR_998 = 998;
 	public static int ERROR_100 = 100;
-	public static int ERROR_101 = 101;
-	public static int ERROR_102 = 102;
-	public static int ERROR_103 = 103;
-	public static int ERROR_104 = 104;
+
 
 	//0 = 未支付 1 = 已支付
 	public static Short PAY_STATUS_0 = 0;
 	public static Short PAY_STATUS_1 = 1;
-
-	//服务类型0=做饭1=洗衣2=家电清洗3=保洁4=擦玻璃5=管道疏通6=新居开荒
 
 	//客服电话号码
 	public static String SERVICE_CALL = "4001691615";
@@ -132,9 +102,6 @@ public class Constants {
 	public static Short ORDER_TYPE_1 = 1; //购买充值卡
 	public static Short ORDER_TYPE_2 = 2; //购买私秘卡
 	public static Short ORDER_TYPE_3 = 3; //订单退款
-
-	//优惠券过期时间
-	public static Long COUPON_VALID_FOREVER = 0L;
 
 	//优惠券类型 - 订单支付
 	public static Short COUPON_TYPE_0 = 0;

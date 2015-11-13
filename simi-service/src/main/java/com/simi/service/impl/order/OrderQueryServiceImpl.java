@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.MeijiaUtil;
 import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
+import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
@@ -21,6 +25,7 @@ import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 
@@ -44,6 +49,15 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	@Autowired
 	DictService dictService;
+	
+	@Autowired
+	PartnersService partnersService;
+	
+	@Autowired
+	PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	PartnerServicePriceDetailService partnerServicePriceDetailService;
 	/**
 	 * 根据订单主键进行查询
 	 * @param id  订单id
@@ -63,27 +77,6 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Orders selectByOrderNo(String orderNo){
 		return ordersMapper.selectByOrderNo(orderNo);
 	}
-
-	/**
-	 * 根据单个订单状态进行查询
-	 * @param orderStatus  订单状态
-	 * @return List<Orders>
-	 */
-	@Override
-	public List<Orders> selectByStatus(Short orderStatus) {
-		return ordersMapper.selectByStatus(orderStatus);
-	}
-	
-	/**
-	 * 根据多个订单状态进行查询
-	 * @param orderStatus  多个订单状态，list<Short>
-	 *  @return List<Orders>
-	 */	
-	@Override
-	public List<Orders> selectByStatuses(List<Short> orderStatus) {
-		return ordersMapper.selectByStatuses(orderStatus);
-	}	
-	
 	
 	/**
 	 * 根据多个查询条件进行查询，并分页展现
@@ -110,57 +103,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
          PageInfo result = new PageInfo(list);
         return result;
     }
-	
-	/**
-	 * 根据用户ID进行订单查询，并分页展现
-	 * @param orderSearchVo  查询条件，OrderSearchVo
-	 * @param pageNo  		 页码
-	 * @param pageSize		 每页个数
-	 * @return PageInfo  List<OrderViewVo>
-	 */
-	@Override
-	public List<OrderViewVo> selectByUserId(Long userId, int pageNo, int pageSize) {
-		
-		PageHelper.startPage(pageNo, pageSize);
-		OrderSearchVo orderSearchVo = new OrderSearchVo();
-		orderSearchVo.setUserId(userId);
-        List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
-        
-        
-        List<OrderViewVo> result = new ArrayList<OrderViewVo>();
-        if (!list.isEmpty()) {
-        	result = this.getOrderViewList(list);
-        }
-            
-            return result;
-	}
-	  
-	/**
-	 * 根据用户ID进行订单查询，并分页展现
-	 * @param orderSearchVo  查询条件，OrderSearchVo
-	 * @param pageNo  		 页码
-	 * @param pageSize		 每页个数
-	 * @return PageInfo  List<OrderViewVo>
-	 */
-	@Override
-	public List<OrderViewVo> selectBySecId(Long secId, int pageNo, int pageSize) {
-		
-		PageHelper.startPage(pageNo, pageSize);
-		OrderSearchVo orderSearchVo = new OrderSearchVo();
-		orderSearchVo.setSecId(secId);
-        List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
-        List<OrderViewVo> result = this.getOrderViewList(list);
-        return result;
-	}	
-	@Override
-	public List<OrderViewVo> selectByUserIdList(Long userId) {
-		
 
-        List<Orders> list = ordersMapper.selectByUserIdList(userId);
-        
-        List<OrderViewVo> result = this.getOrderViewList(list);
-        return result;
-	}
 	/*
 	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素
 	 */
@@ -179,7 +122,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         		addrIds.add(item.getAddrId());
         	}
         	userIds.add(item.getUserId());
-        	orderIds.add(item.getId());
+        	orderIds.add(item.getOrderId());
         	orderNos.add(item.getOrderNo());
         }
         
@@ -199,7 +142,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
         for (int i = 0 ; i < list.size(); i ++) {
         	item = list.get(i);
-        	orderId = item.getId();
+        	orderId = item.getOrderId();
         	addrId = item.getAddrId();
         	userId = item.getUserId();
 
@@ -215,7 +158,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         		if (orderPrice.getOrderId().equals(orderId)) {
         			vo.setOrderMoney(orderPrice.getOrderMoney());
         			vo.setOrderPay(orderPrice.getOrderPay());
-        			vo.setCardPasswd(orderPrice.getCardPasswd());
+        			vo.setUserCouponId(orderPrice.getUserCouponId());
         			vo.setPayType(orderPrice.getPayType());
         			break;
         		}
@@ -230,11 +173,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
     		
     		//服务类型名称
     		vo.setServiceTypeName("");
-//    		if (vo.getServiceType() > 0L) {
-//    			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
-//    			vo.setServiceTypeName(serviceTypeName);
-//    		}
-//    		
+    		if (vo.getServiceTypeId() > 0L) {
+    			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(vo.getServiceTypeId());
+    			vo.setServiceTypeName(serviceType.getName());
+    		}
+   		
     		//用户姓名
     		String name = "";
     		Users u = null;
@@ -266,18 +209,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
         return result;
 	}
-	
-	@Override
-	public OrderViewVo selectByUserId(Long userId) {
 		
-		Orders orders = ordersMapper.selectByUser(userId);
-		
-        OrderViewVo result = this.getOrderView(orders);
-        
-		return result;
-	}
-
-	
 	/*
 	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素
 	 */
@@ -289,12 +221,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		BeanUtils.copyProperties(order, vo);
 		
 		//订单价格信息
-		OrderPrices orderPrice = orderPricesService.selectByOrderId(vo.getId());
+		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
 		
 		vo.setPayType(orderPrice.getPayType());
 		vo.setOrderMoney(orderPrice.getOrderMoney());
 		vo.setOrderPay(orderPrice.getOrderPay());
-		vo.setCardPasswd(orderPrice.getCardPasswd());
+		vo.setUserCouponId(orderPrice.getUserCouponId());
 		
 		//城市名称
 		vo.setCityName("");
@@ -305,10 +237,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		//服务类型名称
 		vo.setServiceTypeName("");
-//		if (vo.getServiceType() > 0L) {
-//			String serviceTypeName = dictService.getServiceTypeName(vo.getServiceType());
-//			vo.setServiceTypeName(serviceTypeName);
-//		}
+		if (vo.getServiceTypeId() > 0L) {
+			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(vo.getServiceTypeId());
+			vo.setServiceTypeName(serviceType.getName());
+		}
 //		
 		//用户称呼
 		vo.setName("");
@@ -325,44 +257,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 		
 		//订单状态
-		String orderStatusName = getOrderStatusName(order.getOrderStatus());
+		String orderStatusName = MeijiaUtil.getOrderStausName(vo.getOrderStatus());
 		vo.setOrderStatusName(orderStatusName);
 		
         return vo;
 	}
-
-	@Override
-	public String getOrderStatusName(Short status) {
-		
-		String statusName = "";
-		if (status.equals(Constants.ORDER_STATUS_0_CLOSE)) {
-			statusName = "已关闭";
-		}
-		
-		if (status.equals(Constants.ORDER_STATUS_1_CONFIRM)) {
-			statusName = "待确认";
-		}
-		
-		if (status.equals(Constants.ORDER_STATUS_2_CONFIRM_DONE)) {
-			statusName = "已确认";
-		}
-		
-		if (status.equals(Constants.ORDER_STATUS_3_PAY_WAIT)) {
-			statusName = "待支付";
-		}
-		
-		if (status.equals(Constants.ORDER_STATUS_4_PAY_DONE)) {
-			statusName = "已支付";
-		}
-		
-		if (status.equals(Constants.ORDER_STATUS_9_COMPLETE)) {
-			statusName = "已完成";
-		}
-		return statusName;
-	}
-
-
-
-
 
 }

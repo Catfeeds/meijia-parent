@@ -71,12 +71,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 	@Override
 	public void orderPaySuccessToDo(Orders orders) {
 		
-//		String serviceDate = TimeStampUtil.timeStampToDateStr(orders.getStartTime()*1000);
-//		String serviceTypeName = OneCareUtil.getserviceTypeName(orders.getServiceType());
-//		String[] content = new String[] { serviceDate, serviceTypeName };
-//		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
-//				Constants.PAY_SUCCESS_SMS_TEMPLE_ID, content);
-//		System.out.println(sendSmsResult.get(sendSmsResult.get(Constants.SMS_STATUS_CODE)));
+
 	}
 	
 	@Override

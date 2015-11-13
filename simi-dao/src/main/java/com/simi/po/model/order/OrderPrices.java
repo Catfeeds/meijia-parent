@@ -3,19 +3,22 @@ package com.simi.po.model.order;
 import java.math.BigDecimal;
 
 public class OrderPrices {
-    private Long id;
+	
+    private Long orderId;
 
+    private String orderNo;
+    
+    private Long servicePriceId;
+    
+    private Long partnerUserId;
+    
     private Long userId;
 
     private String mobile;
 
-    private Long orderId;
-
-    private String orderNo;
-
     private Short payType;
 
-    private String cardPasswd;
+    private Long userCouponId;
 
     private Long usedScore;
 
@@ -30,14 +33,6 @@ public class OrderPrices {
     private Long addTime;
 
     private Long updateTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
@@ -77,14 +72,6 @@ public class OrderPrices {
 
     public void setPayType(Short payType) {
         this.payType = payType;
-    }
-
-    public String getCardPasswd() {
-        return cardPasswd;
-    }
-
-    public void setCardPasswd(String cardPasswd) {
-        this.cardPasswd = cardPasswd == null ? null : cardPasswd.trim();
     }
 
     public Long getUsedScore() {
@@ -142,4 +129,28 @@ public class OrderPrices {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Long getServicePriceId() {
+		return servicePriceId;
+	}
+
+	public void setServicePriceId(Long servicePriceId) {
+		this.servicePriceId = servicePriceId;
+	}
+
+	public Long getPartnerUserId() {
+		return partnerUserId;
+	}
+
+	public void setPartnerUserId(Long partnerUserId) {
+		this.partnerUserId = partnerUserId;
+	}
+
+	public Long getUserCouponId() {
+		return userCouponId;
+	}
+
+	public void setUserCouponId(Long userCouponId) {
+		this.userCouponId = userCouponId;
+	}
 }

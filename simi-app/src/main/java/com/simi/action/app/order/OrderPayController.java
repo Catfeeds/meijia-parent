@@ -116,7 +116,7 @@ public class OrderPayController extends BaseController {
 			u.setUpdateTime(updateTime);
 			userService.updateByPrimaryKeySelective(u);
 			
-			order.setOrderStatus(Constants.ORDER_STATUS_4_PAY_DONE);//已支付
+			order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//已支付
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKeySelective(order);
 			

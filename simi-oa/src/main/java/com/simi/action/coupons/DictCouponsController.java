@@ -107,7 +107,7 @@ public class DictCouponsController extends BaseController {
 					dictCoupons.setExpTime(TimeStampUtil.getMillisOfDay(request
 							.getParameter("expTime")) / 1000);
 				} else {
-					dictCoupons.setExpTime(Constants.COUPON_VALID_FOREVER);
+					dictCoupons.setExpTime(0L);
 				}
 				dictCoupons.setUpdateTime(TimeStampUtil.getNow() / 1000);
 				couponService.insertSelective(dictCoupons);

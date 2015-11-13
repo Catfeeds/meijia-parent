@@ -98,10 +98,10 @@ public class OrdersController extends AdminController {
 			HttpServletRequest request,
 			OrderSearchVo searchVo) {
 		
-		OrderViewVo vo = orderQueryService.selectByUserId(userId);
-
-		//List<OrderViewVo> list = orderQueryService.selectByUserIdList(userId);
-		model.addAttribute("contentModel", vo);
+//		OrderViewVo vo = orderQueryService.selectByOrderNo(orderNo)
+//
+//		//List<OrderViewVo> list = orderQueryService.selectByUserIdList(userId);
+//		model.addAttribute("contentModel", vo);
 
 		return "order/orderViewForm";
 	}
@@ -127,7 +127,7 @@ public class OrdersController extends AdminController {
 //		}
 
 		Orders order  = orderQueryService.selectByOrderNo(orderNo);
-		Long orderId = order.getId();
+		Long orderId = order.getOrderId();
 		Long userId = order.getUserId();
 
 		List<Orders> orderList = new ArrayList<Orders>();

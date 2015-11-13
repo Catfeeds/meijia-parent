@@ -3,7 +3,7 @@
 <mapper namespace="com.simi.po.dao.order.OrderLogMapper">
   <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderLog">
     <id column="id" jdbcType="NUMERIC" property="id" />
-    <result column="mobile" jdbcType="CHAR" property="mobile" />
+    <result column="user_id" jdbcType="NUMERIC" property="userId" />
     <result column="order_id" jdbcType="NUMERIC" property="orderId" />
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="order_status" jdbcType="NUMERIC" property="orderStatus" />
@@ -11,7 +11,7 @@
     <result column="add_time" jdbcType="NUMERIC" property="addTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, mobile, order_id, order_no, order_status, remarks, add_time
+    id, user_id, order_id, order_no, order_status, remarks, add_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
@@ -33,10 +33,10 @@
     where id = #{id,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.order.OrderLog">
-    insert into order_log (id, mobile, order_id,
+    insert into order_log (id, user_id, order_id,
       order_no, order_status, remarks,
       add_time)
-    values (#{id,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR}, #{orderId,jdbcType=NUMERIC},
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC},
       #{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR},
       #{addTime,jdbcType=NUMERIC})
   </insert>
@@ -46,8 +46,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="mobile != null">
-        mobile,
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="orderId != null">
         order_id,
@@ -69,8 +69,8 @@
       <if test="id != null">
         #{id,jdbcType=NUMERIC},
       </if>
-      <if test="mobile != null">
-        #{mobile,jdbcType=CHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
       </if>
       <if test="orderId != null">
         #{orderId,jdbcType=NUMERIC},
@@ -93,8 +93,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderLog">
     update order_log
     <set>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=CHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=CHAR},
       </if>
       <if test="orderId != null">
         order_id = #{orderId,jdbcType=NUMERIC},
@@ -116,7 +116,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderLog">
     update order_log
-    set mobile = #{mobile,jdbcType=CHAR},
+    set user_id = #{userId,jdbcType=CHAR},
       order_id = #{orderId,jdbcType=NUMERIC},
       order_no = #{orderNo,jdbcType=VARCHAR},
       order_status = #{orderStatus,jdbcType=NUMERIC},

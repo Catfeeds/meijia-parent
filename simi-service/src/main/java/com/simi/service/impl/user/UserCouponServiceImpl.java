@@ -46,6 +46,11 @@ public class UserCouponServiceImpl implements UserCouponService {
 		record.setUpdateTime(0L);
 		return record;
 	}
+	
+	@Override
+	public UserCoupons selectByPrimaryKey(Long userCouponId) {
+		return userCouponsMapper.selectByPrimaryKey(userCouponId);
+	}
 
 	@Override
 	public List<UserCoupons> selectByMobile(String mobile) {
@@ -326,7 +331,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 		userCoupons.setCardPasswd(dictCoupons.getCardPasswd());
 		userCoupons.setValue(dictCoupons.getValue());
 		userCoupons.setExpTime(dictCoupons.getExpTime());
-		userCoupons.setIsUsed(Constants.IS_USER_PROMOTION_0);
+		userCoupons.setIsUsed((short) 1);
 		userCoupons.setAddTime(TimeStampUtil.getNow()/1000);
 		userCoupons.setOrderNo("0");
 		return userCoupons;
