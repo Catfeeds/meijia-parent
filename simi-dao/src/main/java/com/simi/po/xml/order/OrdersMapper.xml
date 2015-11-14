@@ -10,7 +10,7 @@
 		<result column="province_id" property="provinceId" jdbcType="NUMERIC" />
 		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
 		<result column="region_id" property="regionId" jdbcType="NUMERIC" />	
-		<result column="orderType" property="orderType" jdbcType="NUMERIC" />
+		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
 		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
 		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
 		<result column="service_content" property="serviceContent" jdbcType="VARCHAR" />
@@ -171,8 +171,8 @@
 			<if test="orderDuration != null">
 				order_duration,
 			</if>
-			<if test="serviceType != null">
-				service_type,
+			<if test="serviceType_id != null">
+				service_type_id,
 			</if>
 			<if test="serviceContent != null">
 				service_content,
@@ -240,8 +240,8 @@
 			<if test="orderDuration != null">
 				#{orderDuration,jdbcType=NUMERIC},
 			</if>
-			<if test="serviceType != null">
-				#{serviceType,jdbcType=NUMERIC},
+			<if test="serviceType_id != null">
+				#{serviceTypeId,jdbcType=NUMERIC},
 			</if>
 			<if test="serviceContent != null">
 				#{serviceContent,jdbcType=NUMERIC},
@@ -308,8 +308,8 @@
 			<if test="orderDuration != null">
 				order_duration= #{orderDuration,jdbcType=NUMERIC},
 			</if>
-			<if test="serviceType != null">
-				service_type = #{serviceType,jdbcType=NUMERIC},
+			<if test="serviceTypeId != null">
+				service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
 			</if>
 			<if test="serviceContent != null">
 				service_content = #{serviceContent,jdbcType=NUMERIC},
@@ -359,7 +359,7 @@
 		city_id = #{cityId,jdbcType=NUMERIC},
 		region_id = #{regionId,jdbcType=NUMERIC},
 		order_type = #{orderType,jdbcType=NUMERIC},
-		service_type = #{serviceType,jdbcType=NUMERIC},
+		service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
 		service_content = #{serviceContent,jdbcType=NUMERIC},
 		service_date = #{serviceDate,jdbcType=NUMERIC},
 		addr_id = #{addrId,jdbcType=NUMERIC},

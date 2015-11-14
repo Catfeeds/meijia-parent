@@ -146,7 +146,7 @@ public class TestUserController extends JUnitActionBase {
 	public void testGetUserIndex() throws Exception {
 
 		String url = "/app/user/get_user_index.json";
-		String params = "?user_id=18&view_user_id=18";
+		String params = "?user_id=282&view_user_id=282";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 		ResultActions resultActions = this.mockMvc.perform(getRequest);

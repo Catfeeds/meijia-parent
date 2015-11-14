@@ -181,7 +181,7 @@
 	<!-- 省市区联动js -->
 	<script type="text/javascript"  src="<c:url value='/js/simi/common/select-province-city-region.js'/>"	></script>	
 	<script type="text/javascript" src="<c:url value='/js/simi/partner/partnerUserForm.js'/>"></script>
-	<script tyep="text/javascript">
+	<script type="text/javascript">
 		$('#provinceId').trigger('change');
 		$('#cityId').trigger('change');
 		setTagButton();

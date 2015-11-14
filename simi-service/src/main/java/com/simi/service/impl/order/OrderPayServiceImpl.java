@@ -71,7 +71,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 	@Override
 	public void orderPaySuccessToDo(Orders orders) {
 		
-
+		//通知相关服务商
+		
+		
 	}
 	
 	@Override

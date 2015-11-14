@@ -120,7 +120,7 @@ $("#btn_submit").click(function() {
 			var mobile = $("#mobile").val();
 			var userId = $("#userId").val();
 			console.log(validateUserMobile(mobile));
-			if (!validateUserMobile(mobile, userId)) {
+			if (!validateUserMobile(mobile, userId, "1,2")) {
 				var errors = {};
 				errors.mobile = "手机号码已经存在";
 		    	formVal.showErrors(errors);

@@ -23,14 +23,16 @@ public class TestOrderAlipayController extends JUnitActionBase  {
 		String url = "/app/order/online_pay_notify.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "13910002890");
-	    postRequest = postRequest.param("order_no", "558601255530790912");
+	    postRequest = postRequest.param("mobile", "");
+	    postRequest = postRequest.param("order_no", "665427870880890880");
 	    postRequest = postRequest.param("pay_type", "1");
-	    postRequest = postRequest.param("notify_id", "7df9205dcefb1ab76a58d44e6a3f3af448");
-	    postRequest = postRequest.param("notify_time", "2015-01-23 20:25:11");
-	    postRequest = postRequest.param("trade_no", "2015012331275940");
+	    postRequest = postRequest.param("notify_id", "908d05e7e2487a4a6449ebbf8277ea704a");
+	    postRequest = postRequest.param("notify_time", "2015-11-14 15:16:02");
+	    postRequest = postRequest.param("trade_no", "2015111400001000410028651006");
 	    postRequest = postRequest.param("trade_status", "TRADE_SUCCESS");
-
+	    postRequest = postRequest.param("pay_account", "1206679275@qq.com");
+	    
+	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
 	    resultActions.andExpect(content().contentType(this.mediaType));

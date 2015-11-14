@@ -65,7 +65,7 @@ public class OrderQueryController extends BaseController {
 			orderListVo.add(vo);
 		}
 		
-		result.setData(orderList);
+		result.setData(orderListVo);
 		
 		return result;
 

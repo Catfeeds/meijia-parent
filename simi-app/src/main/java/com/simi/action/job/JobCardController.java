@@ -100,7 +100,7 @@ public class JobCardController extends BaseController {
 
 			String[] content = new String[] { minute, secNameList.get(i), cardTypeList.get(i).toString(), url };
 			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(secMobileList.get(i), Constants.SEC_TWO_MINUTE, content);
-			System.out.println(sendSmsResult + "00000000000000");
+//			System.out.println(sendSmsResult + "00000000000000");
 
 		}
 		return result;
@@ -152,7 +152,7 @@ public class JobCardController extends BaseController {
 			for (int j = 0; j < mobileList.size(); j++) {
 				HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(j), Constants.SEC_THIRTY_MINUTE, content);
 
-				System.out.println(sendSmsResult + "00000000000000");
+//				System.out.println(sendSmsResult + "00000000000000");
 			}
 		}
 		return result;
@@ -187,8 +187,8 @@ public class JobCardController extends BaseController {
 			Long serviceTime = vo.getServiceTime();
 			serviceTime = TimeStampUtil.timeStampToDateHour(serviceTime * 1000);
 			Long remindTime = serviceTime - remindMin * 60;
-			System.out.println("setRemind = " + setRemind.toString() + "----remindMin =" + remindMin);
-			System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime,DateUtil.DEFAULT_FULL_PATTERN));
+//			System.out.println("setRemind = " + setRemind.toString() + "----remindMin =" + remindMin);
+//			System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime,DateUtil.DEFAULT_FULL_PATTERN));
 			if (nowMin.equals(remindTime)) {
 				cardAsyncService.cardNotification(vo, false, true);
 			}

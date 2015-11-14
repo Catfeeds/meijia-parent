@@ -219,15 +219,13 @@ public class PartnerUsersController extends BaseController{
 		String mobile = partnerUserVo.getMobile();
 		String name = partnerUserVo.getName();
 		
-		Users u = null;
+		Users u = userService.selectByMobile(mobile);
 		
 		//创建新用户
-		if (userId.equals(0L)) {
+		if (u == null) {
 			u = userService.genUser(mobile, name, (short) 2);
 			userId = u.getId();
 		} else {
-			u = userService.selectByPrimaryKey(userId);
-			
 			if (!u.getName().equals(name)) {
 				u.setName(name);
 			}
