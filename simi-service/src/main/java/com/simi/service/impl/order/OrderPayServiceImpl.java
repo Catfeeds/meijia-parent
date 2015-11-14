@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.meijia.utils.SmsUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.order.OrdersService;
+import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
@@ -24,8 +27,11 @@ import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
 import com.simi.po.model.admin.AdminAccount;
+import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 
@@ -63,15 +69,47 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	private UserRefSecService userRefSecService;	
+	
+	@Autowired
+	private PartnerServicePriceDetailService partnerServicePriceDetailService;	
+	
+	@Autowired
+	PartnerServiceTypeService partnerServiceTypeService;
 		
 	/**
 	 * 订单支付成功,后续通知功能
 	 * 1. 如果为
 	 */
 	@Override
-	public void orderPaySuccessToDo(Orders orders) {
+	public void orderPaySuccessToDo(Orders order) {
+		
+		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
+		
+		//获取服务报价的信息。
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+				
+		
+		BigDecimal orderPay = orderPrice.getOrderPay();
+		String orderPayStr = orderPay.toString();
+		String servicePriceName = serviceType.getName();
+		
+		Users u = usersService.selectByPrimaryKey(order.getUserId());
+		String userName = u.getName();
+		String userMobile = order.getMobile();
+		
+		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
+		String partnerUserMobile = partnerUser.getMobile();
 		
 		//通知相关服务商
+		String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile };
+		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
+		
+		//通知用户
+		String addTimeStr = TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000 , "yyyy-MM-dd HH:mm");
+		String[] userContent = new String[] { userName, addTimeStr, servicePriceName };
+		SmsUtil.SendSms(userMobile, "48132", userContent);
+		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
+		
 		
 		
 	}

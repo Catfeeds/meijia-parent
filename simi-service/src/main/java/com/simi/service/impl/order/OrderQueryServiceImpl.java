@@ -300,7 +300,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
 		
-		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(order.getAddTime()));
+		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000));
 		
 		//订单价格信息
 		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
