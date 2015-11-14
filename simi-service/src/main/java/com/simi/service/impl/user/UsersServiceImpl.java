@@ -35,7 +35,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
-import com.simi.service.dict.CouponService;
+import com.simi.service.dict.DictCouponsService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
@@ -75,7 +75,7 @@ public class UsersServiceImpl implements UsersService {
 	private AdminAccountService adminAccountService;
 
 	@Autowired
-	private CouponService couponService;
+	private DictCouponsService couponService;
 
 	@Autowired
 	private UserRefSecMapper userRefSecMapper;

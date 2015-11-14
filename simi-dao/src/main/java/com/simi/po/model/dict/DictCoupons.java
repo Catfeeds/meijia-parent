@@ -1,6 +1,7 @@
 package com.simi.po.model.dict;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class DictCoupons {
     private Long id;
@@ -10,6 +11,8 @@ public class DictCoupons {
 	private String cardPasswd;
 
 	private BigDecimal value;
+	
+	private BigDecimal maxValue;
 
 	private Short couponType;
 
@@ -17,13 +20,19 @@ public class DictCoupons {
 
 	private Short rangFrom;
 
-	private String serviceType;
+	private long serviceTypeId;
+	
+	private long servicePriceId;
 
 	private String introduction;
 
 	private String description;
+	
+	private Short rangMonth;
 
-	private Long expTime;
+	private Date fromDate;
+
+	private Date toDate;
 
 	private Long addTime;
 
@@ -76,13 +85,21 @@ public class DictCoupons {
 	public void setRangFrom(Short rangFrom) {
 		this.rangFrom = rangFrom;
 	}
-
-	public String getServiceType() {
-		return serviceType;
+	
+	public long getServiceTypeId() {
+		return serviceTypeId;
 	}
 
-	public void setServiceType(String serviceType) {
-		this.serviceType = serviceType == null ? null : serviceType.trim();
+	public void setServiceTypeId(long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public long getServicePriceId() {
+		return servicePriceId;
+	}
+
+	public void setServicePriceId(long servicePriceId) {
+		this.servicePriceId = servicePriceId;
 	}
 
 	public String getIntroduction() {
@@ -99,14 +116,6 @@ public class DictCoupons {
 
 	public void setDescription(String description) {
 		this.description = description == null ? null : description.trim();
-	}
-
-	public Long getExpTime() {
-		return expTime;
-	}
-
-	public void setExpTime(Long expTime) {
-		this.expTime = expTime;
 	}
 
 	public Long getAddTime() {
@@ -132,4 +141,37 @@ public class DictCoupons {
 	public void setCouponType(Short couponType) {
 		this.couponType = couponType;
 	}
+
+	public BigDecimal getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(BigDecimal maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public Short getRangMonth() {
+		return rangMonth;
+	}
+
+	public void setRangMonth(Short rangMonth) {
+		this.rangMonth = rangMonth;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+	
 }

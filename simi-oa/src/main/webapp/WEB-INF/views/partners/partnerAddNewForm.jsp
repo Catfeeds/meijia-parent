@@ -160,7 +160,7 @@
 									placeholder="公司简介" />
 							</div>
 						</div>
-						<%-- <c:if test="${partners.companyDescImg != null && partners.companyDescImg != '' }">
+						<c:if test="${partners.companyDescImg != null && partners.companyDescImg != '' }">
 										<div class="form-group ">
 
 											<label class="col-md-2 control-label">图片</label>
@@ -168,7 +168,7 @@
 												<img src="${ partners.companyDescImg }"/>
 											</div>
 										</div>
-									</c:if> --%>
+									</c:if>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">公司简介图片</label>

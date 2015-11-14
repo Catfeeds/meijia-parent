@@ -1,19 +1,17 @@
-$(function() {
-			addCouponFormValidate.handleAddCoupon();
-		});
-var addCouponFormValidate = function () {
-
-	var handleAddCoupon = function() {
-		$('#coupon-form').validate({
+$('#recharge-coupon-form').validate({ 
 			errorElement: 'span', //default input error message container
 			errorClass: 'help-block', // default input error message class
 			focusInvalid: false, // do not focus the last invalid input
 			rules: {
-				id: {
-					required: true
+				 value: {
+					required: true,
+					number:true,
+					maxlength:9
 				},
-				value: {
-					required: true
+				maxValue: {
+					required: true,
+					number:true,
+					maxlength:6 
 				},
 				introduction: {
 					required: true
@@ -21,20 +19,24 @@ var addCouponFormValidate = function () {
 				description: {
 					required: true
 				},
-				expTime :{
+				rangMonth :{
 					required:true
-				},
+				}/*,
 				serviceType:{
 					required:true
-				}
+				}*/
 			},
 
 			messages: {
-				id: {
-					required: "请输入优惠券数量"
-				},
 				value: {
-					required: "请输入优惠券金额"
+					required: "请输入优惠券金额",
+					number:"请输入数字",
+					maxlength:"最多输入9位数字"
+				},
+				maxValue: {
+					required: "请输入订单满金额",
+					number:"请输入数字",
+					maxlength:"最多输入5位数字"
 				},
 				introduction: {
 					required: "请输入描述信息"
@@ -42,16 +44,16 @@ var addCouponFormValidate = function () {
 				description: {
 					required: "请输入详细信息"
 				},
-				expTime:{
-					required:"请选择过期日期"
-				},
+				rangMonth:{
+					required:"请选择日期范围"
+				}/*,
 				serviceType:{
 					required:"请选择服务类型"
-				}
+				}*/
 			},
 
 			invalidHandler: function (event, validator) { //display error alert on form submit
-				$('.alert-error', $('#coupon-form')).show();
+				$('.alert-error', $('#recharge-coupon-form')).show();
 			},
 
 			highlight: function (element) { // hightlight error inputs
@@ -70,7 +72,7 @@ var addCouponFormValidate = function () {
 
 		});
 
-		$('.coupon-form input').keypress(function (e) {
+		$('.recharge-coupon-form input').keypress(function (e) {
 			if (e.which == 13) {
 				$("#addCoupon_btn").click();
 				return false;
@@ -78,32 +80,32 @@ var addCouponFormValidate = function () {
 		});
 
 		$("#addCoupon_btn").click(function(){
-			if (confirm("确认要新增吗?")){
-				if ($('#coupon-form').validate().form()) {
-					$('#coupon-form').submit();
+			if (confirm("确认要保存吗?")){
+				if ($('#recharge-coupon-form').validate().form()) {
+					var startTime=$("#fromDate").val();  
+				    var start=new Date(startTime.replace("-", "/").replace("-", "/"));  
+				    var endTime=$("#toDate").val();  
+				    var end=new Date(endTime.replace("-", "/").replace("-", "/"));  
+					    if(end<start){ 
+					    	 BootstrapDialog.alert({
+					    			 title:'提示语',
+					    			 message:'结束日期必须大于开始时间!'
+					    	 });
+					        return false;  
+					    }else{
+					$('#recharge-coupon-form').submit();
+					    }
 				}
 		    }
 		});
-	}
-
-    return {
-        //main function to initiate the module
-    	handleAddCoupon: function () {
-    		handleAddCoupon();
-        }
-    };
-
-}();
-$('.input-group.date').datepicker({
-    format: "yyyy-mm-dd",
-    language: "zh-CN",
-    autoclose: true,
-    startView: 1,
-    defaultViewDate : {
-    		year:1980,
-    		month:0,
-    		day:1
-    }
-});
-
-
+		$('.input-group.date').datepicker({
+			format: "yyyy-mm-dd",
+			language: "zh-CN",
+			autoclose: true,
+			startView: 1,
+			defaultViewDate : {
+				year:1980,
+				month:0,
+				day:1
+			}
+		});

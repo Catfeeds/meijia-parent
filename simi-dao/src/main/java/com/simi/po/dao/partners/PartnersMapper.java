@@ -25,4 +25,6 @@ public interface PartnersMapper {
     List<Partners> selectByListPage(Map<String,Object> conditions);
 
     List<Partners> selectByCompanyName(String companyName);
+
+	List<Partners> selectBySpiderIds(List<Long> partnerIds);
 }

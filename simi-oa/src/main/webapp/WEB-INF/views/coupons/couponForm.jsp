@@ -11,6 +11,8 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
+<link rel="stylesheet" href="<c:url value='/assets/bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css'/>"
+ type="text/css"/>
 <link
 	href="<c:url value='/assets/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'/>"
 	rel="stylesheet" type="text/css" />
@@ -29,128 +31,133 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
-			新增优惠券 </header>
+			优惠券-充值后赠送 </header>
 
 			<hr
 				style="width: 100%; color: black; height: 1px; background-color: black;" />
 
 			<div class="panel-body">
-				<form:form modelAttribute="dictCoupons" id="coupon-form"
-					commandName="dictCoupons" action="addCoupons"
+				<form:form modelAttribute="dictCoupons" id="recharge-coupon-form"
+					commandName="dictCoupons" action="rechargeCouponForm"
 					class="form-horizontal" method="POST">
+					<form:hidden path="id" />
 					<div class="form-body">
-						<div class="form-group">
-							<!-- Text input-->
-							<label class="col-md-2 control-label">卡&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;量</label>
-							<div class=col-md-5>
-								<form:input path="id" class="form-control" placeholder="卡数量"
-									maxSize="10" />
-							</div>
-						</div>
+						
 
-						<div class="form-group">
-
-
-							<label class="col-md-2 control-label">优惠券类型 </label>
-
-							<div class="col-md-5">
-
-								<label class="radio"> <input checked="checked" value="0"
-									name="couponType" type="radio">订单支付
-								</label> <label class="radio"> <input value="1"
-									name="couponType" type="radio"> 充值卡充值
-								</label> <label class="radio"> <input value="2"
-									name="couponType" type="radio">活动相关
-								</label>
-							</div>
-
-						</div>
 						<div class="form-group">
 
 							<!-- Text input-->
 							<label class="col-md-2 control-label">优惠券金额</label>
 							<div class="col-md-5">
 								<form:input path="value" class="form-control"
-									placeholder="优惠券金额" maxSize="10" />
+									placeholder="优惠券金额" value="${dictCoupons.value}" maxSize="10" />
 								<form:errors path="value" class="field-has-error"></form:errors>
 
 							</div>
 						</div>
-
-
-
 						<div class="form-group">
-							<label class="col-md-2 control-label">通&nbsp;用&nbsp;类&nbsp;型</label>
+
+							<!-- Text input-->
+							<label class="col-md-2 control-label">订单满金额</label>
 							<div class="col-md-5">
-								<label class="radio"> <input checked="checked" value="0"
-									name="rangType" type="radio"> 通用
-								</label> <label class="radio"> <input value="1" name="rangType"
-									type="radio"> 唯一
-								</label>
+								<form:input path="maxValue" class="form-control"
+									placeholder="订单满金额" value="${dictCoupons.maxValue}" maxSize="10" />
+								<form:errors path="value" class="field-has-error"></form:errors>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">服&nbsp;务&nbsp;类&nbsp;型</label>
-							<div class="controls">
-								<td><form:checkbox path="serviceType" value="0" />全部 <form:checkbox
-										path="serviceType" value="1" />做饭 <form:checkbox
-										path="serviceType" value="2" />洗衣 <form:checkbox
-										path="serviceType" value="3" />家电清洗 <form:checkbox
-										path="serviceType" value="4" />保洁 <form:checkbox
-										path="serviceType" value="5" />擦玻璃 <form:checkbox
-										path="serviceType" value="6" />管道疏通 <form:checkbox
-										path="serviceType" value="7" />新居开荒 <form:errors
-										path="serviceType" class="field-has-error"></form:errors></td>
-							</div>
-						</div>
+							<label class="col-md-2 control-label">通用类型 </label>
 
-						<div class="form-group">
-
-							<!-- Select Basic -->
-							<label class="col-md-2 control-label">使&nbsp;用&nbsp;来&nbsp;源</label>
 							<div class="col-md-5">
-								<select name="rangFrom" class="form-control">
-									<option value="0">APP</option>
-									<option value="1">微网站</option>
-									<option value="999">所用来源</option>
-								</select>
+								<form:radiobutton path="rangType" value="0" />
+								通用
+								<form:radiobutton path="rangType" value="1" />
+								唯一
 							</div>
 
 						</div>
+<%-- 
+						<div class="form-group">
+							<label class="col-md-2 control-label">服务类型 </label>
 
+							<div class="col-md-5">
+								<form:radiobuttons path="serviceType" items="${serviceTypeMap}"/><br/>
+							</div>
+
+						</div> --%>
+							<input type="hidden" id="citySelectedId" value="${contentModel.cityId}" />
+						<input type="hidden" id="regionSelectedId" value="${contentModel.regionId}" />
+						<div class="form-group" >
+							<label class="col-md-2 control-label">所在城市:</label> 
+							
+							<div class="col-md-5" >
+								 <select name="cityId" path="cityId" id="cityId" class="form-control">
+									<option value="0">全部</option>
+								</select> 
+								<form:errors path="cityId" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group" >
+							<label class="col-md-2 control-label">所在区县:</label> 
+							
+							<div class="col-md-5" >
+								 <select name="regionId" path="regionId" id="regionId" class="form-control">
+									<option value="0">全部</option>
+								</select> 
+								<form:errors path="regionId" class="field-has-error"></form:errors>
+							</div>
+						</div>
 						<div class="form-group">
 
 							<!-- Text input-->
 							<label class="col-md-2 control-label">描&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述</label>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述*</label>
 							<div class="col-md-5">
-								<form:input path="introduction" class="form-control"
-									placeholder="请输入描述" />
+								<form:input path="introduction" name="introduction" 
+									class="form-control" placeholder="请输入描述" />
 								<p class="help-block"></p>
 							</div>
 						</div>
-
 						<div class="form-group">
 
 							<!-- Textarea -->
-							<label class="col-md-2 control-label">详&nbsp;细&nbsp;说&nbsp;明</label>
+							<label class="col-md-2 control-label">详&nbsp;细&nbsp;说&nbsp;明*</label>
 							<div class="col-md-5">
 								<div class="textarea">
-									<textarea type="textarea" name="description"
-										class="form-control"> </textarea>
+								<%-- 	<textarea type="textarea" name="description"
+										class="form-control">${dictCoupons.description}</textarea> --%>
+									<form:textarea class="form-control" path="description" placeholder="一句话描述"/><br/>
 								</div>
 							</div>
 						</div>
-
+						<div class="form-group">
+							<label class="col-sm-2 col-sm-2 control-label">日&nbsp;期&nbsp;范&nbsp;围</label>
+							<div class="col-md-5">
+								<form:select path="rangMonth" class="form-control">
+									<form:options items="${selectDataSource}" />
+								</form:select>
+							</div>
+						</div>
 						<div class="form-group">
 
 							<!-- Text input-->
 							<label class="col-md-2 control-label">过&nbsp;期&nbsp;时&nbsp;间</label>
-							<div class="col-md-6">
+							<div class="col-md-5">
+							From:
 								<div class="input-group date">
-						<%--<fmt:formatDate var='formattedDate' value='${staffs.birth}' type='both' pattern="yyyy-MM-dd" /> --%>
-							<input type="text" path="expTime" <%-- value="${expTime}" --%> readonly class="form-control">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+									<fmt:formatDate var='formattedDate1' value='${dictCoupons.fromDate}' type='both'
+										pattern="yyyy-MM-dd" />
+										<input type="text" value="${formattedDate1}" 
+										id="fromDate" name="fromDate" readonly class="form-control">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+								</div>
+							To:
+								<div class="input-group date">
+									<fmt:formatDate var='formattedDate2' value='${dictCoupons.toDate}' type='both'
+										pattern="yyyy-MM-dd" />
+										<input type="text" value="${formattedDate2}" id="toDate"
+										name="toDate" readonly class="form-control">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 								</div>
 							</div>
 						</div>
@@ -158,7 +165,8 @@
 					<div class="form-actions">
 						<div class="row">
 							<div class="col-md-4" align="right">
-								<button class="btn btn-success" id="addCoupon_btn" type="button">新增</button>
+								<button class="btn btn-success" id="addCoupon_btn" type="button">
+									保存</button>
 							</div>
 							<!-- Button -->
 							<div class="col-md-8">
@@ -181,16 +189,16 @@
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
 
-
+<!-- 日期处理js -->
+	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script>
 	<!--script for this page-->
-	<script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
-	<script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script>
-	<script
-		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
+	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
+	<!-- rechargeCoupon Form表单 js -->
 	<script src="<c:url value='/js/simi/coupon/couponForm.js'/>"
 		type="text/javascript"></script>
+			<script type="text/javascript" src="<c:url value='
+			/assets/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js'/>"></script>
 </body>
 </html>

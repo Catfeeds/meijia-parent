@@ -123,7 +123,7 @@ public class PartnersAddNewController extends BaseController{
 	}
 
 	/**
-	 * 跳转到新增服务提供商的页面
+	 * 跳转到新增或修改服务提供商的页面
 	 * @param model
 	 * @param request
 	 * @param response
@@ -131,16 +131,21 @@ public class PartnersAddNewController extends BaseController{
 	 */
    // @AuthPassport
 	@RequestMapping(value = "/partnerAddNewForm", method = { RequestMethod.GET })
-	public String spiderPartnerForm(Model model, HttpServletRequest request,
+	public String spiderPartnerForm(Model model,
+			@RequestParam("partnerId") Long partnerId,HttpServletRequest request,
 			HttpServletRequest response)  {
     	
     	Partners partners = partnersService.iniPartners();
     	PartnerFormVo partnerFormVo = new PartnerFormVo();
+    	if (partnerId > 0L) {
+			partners = partnersService.selectByPrimaryKey(partnerId);
+		}
 		try {
 			BeanUtils.copyProperties(partnerFormVo, partners);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		//获得服务商的联系人
 		List<PartnerLinkMan> linkMan = new ArrayList<PartnerLinkMan>();
 		//保证至少有一个，默认为空的列表
@@ -223,7 +228,7 @@ public class PartnersAddNewController extends BaseController{
     
 	
 	/**
-	 * 新增服务提供商
+	 * 新增或修改服务提供商
 	 *
 	 * @param request
 	 * @param model
@@ -245,6 +250,9 @@ public class PartnersAddNewController extends BaseController{
 		//根据采集服务商名称进行排重
 	//List<Partners> partnersList =  partnersService.selectByCompanyName(partners.getCompanyName());
 		// 创建一个通用的多部分解析器.
+		Long partnerId = partners.getPartnerId();
+		
+		
 				CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 				//String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
 				//String addr = request.getRemoteAddr();
@@ -277,26 +285,48 @@ public class PartnersAddNewController extends BaseController{
 						}
 					}
 				}
+		
+
 		//获取登录的用户
     	AccountAuth accountAuth=AuthHelper.getSessionAccountAuth(request);
 
     	
     	Partners partnersItem = partnersService.iniPartners();
+    	if (partnerId >0L) {
+    		partnersItem.setShortName(partners.getShortName());
+    		partnersItem.setCompanySize(partners.getCompanySize());
+    		partnersItem.setIsDoor(partners.getIsDoor());
+    		partnersItem.setCompanyDescImg(partners.getCompanyDescImg());
+    		partnersItem.setKeywords(partners.getKeywords());
+    		partnersItem.setStatus(partners.getStatus());
+    		partnersItem.setBusinessDesc(partners.getBusinessDesc());
+    		partnersItem.setWeixin(partners.getWeixin());
+    		partnersItem.setQq(partners.getQq());
+    		partnersItem.setEmail(partners.getEmail());
+    		partnersItem.setFax(partners.getFax());
+    		partnersItem.setPayType(partners.getPayType());
+    		partnersItem.setDiscout(partners.getDiscout());
+    		//注册时间
+    	//	partnersItem.setRegisterTime("");
+    		partnersItem.setIsCooperate(partners.getIsCooperate());
+    		
+    		partnersService.updateByPrimaryKeySelective(partnersItem);
+    			}else {
+    				try {
+    					BeanUtils.copyProperties(partnersItem, partners);
+    				} catch (Exception e) {
+    					e.printStackTrace();
+    				}
+    				partnersItem.setServiceArea("");
+    				partnersItem.setServiceType("");
+    				partnersItem.setAdminId(accountAuth.getId());
+    				partnersItem.setCompanyLogo("");
+    				partnersItem.setRemark("");
+    				partnersItem.setStatusRemark("");
+    				
+    				partnersService.insertSelective(partnersItem);
+				}
 
-			try {
-				BeanUtils.copyProperties(partnersItem, partners);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			partnersItem.setServiceArea("");
-			partnersItem.setServiceType("");
-			partnersItem.setAdminId(accountAuth.getId());
-			partnersItem.setCompanyLogo("");
-			partnersItem.setRemark("");
-			partnersItem.setStatusRemark("");
-			
-			partnersService.insertSelective(partnersItem);
-		
 		/**
 		 * 保存服务商选中的服务类型
 		 */
@@ -306,7 +336,9 @@ public class PartnersAddNewController extends BaseController{
 		 * 操作partner_ref_region表更新
 		 */
 		//1、先删除原来的数据
-	//	partnersService.deleteRegionByPartnerId(partnersItem.getPartnerId());
+		if (partnerId >0L) {
+		partnersService.deleteRegionByPartnerId(partnersItem.getPartnerId());
+		}
 		String tempRegionId = request.getParameter("regionIdStr");
 		if(!StringUtil.isEmpty(tempRegionId)){
 			Long regionIdLong = 0L;
@@ -328,7 +360,9 @@ public class PartnersAddNewController extends BaseController{
 		 * 操作partner_ref_city表更新
 		 */
 		//1、先删除原来的数据
-		//partnerRefCityService.deleteByPartnerId(partnersItem.getPartnerId());
+		if (partnerId >0L) {
+		partnerRefCityService.deleteByPartnerId(partnersItem.getPartnerId());
+		}
 		String tempCityId = request.getParameter("cityIdStr");
 		if(!StringUtil.isEmpty(tempCityId)){
 			String cityId[] = tempCityId.split(",");
@@ -350,7 +384,9 @@ public class PartnersAddNewController extends BaseController{
 		 * 操作partnerLinkMan表
 		 */
 		//第一步先删除
-	//	partnerLinkManService.deleteByPartnerId(partnersItem.getPartnerId());
+		if (partnerId >0L) {
+		partnerLinkManService.deleteByPartnerId(partnersItem.getPartnerId());
+		}
 		String linkMan[] = request.getParameterValues("linkMan");
 		String linkMobile[] = request.getParameterValues("linkMobile");
 		String linkTel[] = request.getParameterValues("linkTel");

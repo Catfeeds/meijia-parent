@@ -12,7 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.service.dict.CouponService;
+import com.simi.service.dict.DictCouponsService;
 import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -71,7 +71,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	UserCouponService userCouponService;   
 	
 	@Autowired
-	CouponService couponService;
+	private DictCouponsService couponService;
 	/**
 	 * 根据订单主键进行查询
 	 * @param id  订单id

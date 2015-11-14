@@ -14,7 +14,7 @@ import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.CardTypeService;
-import com.simi.service.dict.CouponService;
+import com.simi.service.dict.DictCouponsService;
 import com.simi.service.order.OrderCardsService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserDetailScoreService;
@@ -34,7 +34,7 @@ public class UserExchangeController extends BaseController {
 	@Autowired
 	private UserCouponService userCouponService;
 	@Autowired
-	private CouponService couponService;
+	private DictCouponsService couponService;
 	@Autowired
 	private UserDetailScoreService userDetailScoreService;
 

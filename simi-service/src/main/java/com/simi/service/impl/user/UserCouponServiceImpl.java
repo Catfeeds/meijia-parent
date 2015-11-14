@@ -11,7 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.service.dict.CouponService;
+import com.simi.service.dict.DictCouponsService;
 import com.simi.service.user.UserCouponService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserCouponSearchVo;
@@ -27,7 +27,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	private UserCouponsMapper userCouponsMapper;
 
 	@Autowired
-	private CouponService couponService;
+	private DictCouponsService couponService;
 
 	@Override
 	public UserCoupons initUserCoupon() {
@@ -130,14 +130,14 @@ public class UserCouponServiceImpl implements UserCouponService {
 		
 		//1. 是否已经过了有效期  exp_time，
 		//如果已经过去，返回提示信息：“要兑换的优惠券已过期，换一个吧。”
-		Long expTime = coupon.getExpTime();
+		//Long expTime = coupon.getExpTime();
 		Long nowTime = TimeStampUtil.getNow() / 1000;
-		if (expTime > 0 && expTime < nowTime) {
+		/*if (expTime > 0 && expTime < nowTime) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.COUPON_EXP_TIME_MSG);
 			result.setData("");
 			return result;
-		}		
+		}	*/	
 		
 		//3.如果是唯一性的优惠券，则需要判定是否被别人用过.
 		if (coupon.getRangType().equals((short)1)) {
@@ -330,7 +330,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 		userCoupons.setCouponId(dictCoupons.getId());
 		userCoupons.setCardPasswd(dictCoupons.getCardPasswd());
 		userCoupons.setValue(dictCoupons.getValue());
-		userCoupons.setExpTime(dictCoupons.getExpTime());
+	//	userCoupons.setExpTime(dictCoupons.getExpTime());
 		userCoupons.setIsUsed((short) 1);
 		userCoupons.setAddTime(TimeStampUtil.getNow()/1000);
 		userCoupons.setOrderNo("0");

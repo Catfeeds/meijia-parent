@@ -11,6 +11,8 @@ public class Partners {
 
     private String shortName;
     
+    private String registerTime;
+    
     private String addr;
 
     private Short companySize;
@@ -75,7 +77,15 @@ public class Partners {
         this.partnerId = partnerId;
     }
 
-    public Long getSpiderPartnerId() {
+    public String getRegisterTime() {
+		return registerTime;
+	}
+
+	public void setRegisterTime(String registerTime) {
+		this.registerTime = registerTime;
+	}
+
+	public Long getSpiderPartnerId() {
 		return spiderPartnerId;
 	}
 

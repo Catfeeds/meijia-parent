@@ -19,7 +19,7 @@ public interface DictCouponsMapper {
     int updateByPrimaryKey(DictCoupons record);
 
 	List<DictCoupons> selectAll();
-
+	
 	List<DictCoupons> selectAllByCardNo();
 
 	List<DictCoupons> selectByIds(List<Long> ids);
@@ -27,4 +27,6 @@ public interface DictCouponsMapper {
 	DictCoupons selectByCardPasswd(String cardPasswd);
 
 	List<DictCoupons> selectByListPage(Map<String,Object> conditions);
+	
+	List<DictCoupons> selectByCouponType(Short couponType);
 }

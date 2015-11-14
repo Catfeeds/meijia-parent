@@ -39,9 +39,17 @@
 						<input type="hidden" id="partnerRegionList" value="${partners.regionIds}"/>
 						<h4>企业基本信息</h4>
 						<hr/>
-						<div class="form-group">
+						<%-- <div class="form-group">
 							<label class="col-md-2 control-label">公司名称&nbsp;*</label>
 							<div class=col-md-5>${spiderPartner.companyName }</div>
+						</div> --%>
+						<div class="form-group">
+							<!-- Text input-->
+							<label class="col-md-2 control-label">公司名称</label>
+							<div class=col-md-5>
+								<form:input path="companyName" class="form-control"
+									placeholder="公司名称" maxSize="10" />
+							</div>
 						</div>
 						<div class="form-group">
 							<!-- Text input-->

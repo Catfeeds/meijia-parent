@@ -18,7 +18,7 @@ import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
-import com.simi.service.dict.CouponService;
+import com.simi.service.dict.DictCouponsService;
 import com.simi.service.impl.user.UserDetailPayServiceImpl;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
@@ -35,7 +35,7 @@ public class UserCouponController extends BaseController {
 	private UserCouponService userCouponService;
 
 	@Autowired
-	private CouponService couponService;
+	private DictCouponsService couponService;
 
 	@Autowired
 	private UsersService userService;
@@ -152,7 +152,7 @@ public class UserCouponController extends BaseController {
 		record.setCardPasswd(cardPasswd);
 		record.setCouponId(dictCoupon.getId());
 		record.setValue(dictCoupon.getValue());
-		record.setExpTime(dictCoupon.getExpTime());
+		//record.setExpTime(dictCoupon.getExpTime());
 		Long newId = userCouponService.insert(record);
 
 		// 如果优惠券类型为充值卡充值，则直接进行用户充值，并且返回提示信息.

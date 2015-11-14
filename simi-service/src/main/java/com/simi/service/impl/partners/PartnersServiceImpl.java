@@ -144,22 +144,24 @@ public class PartnersServiceImpl implements PartnersService {
 	public List<PartnersVo> getPartnersViewList(List<Partners> list) {
 
 	
-		List<Long> spiderPartnerIds = new ArrayList<Long>();
-		
+	//	List<Long> spiderPartnerIds = new ArrayList<Long>();
+		List<Long> partnerIds = new ArrayList<Long>();
 	     Partners item = null;
 	    //获得所有spiderPartnerId集合
 	     for (int i = 0 ; i < list.size(); i ++) {
 	     	item = list.get(i);
-	     	spiderPartnerIds.add(item.getSpiderPartnerId());
+	     	partnerIds.add(item.getSpiderPartnerId());
 	     }
 	     //根据集合查询出所有对应的SpiderPartner集合
-	    List<SpiderPartner> spiderPartnersList = spiderPartnerMapper.selectBySpiderIds(spiderPartnerIds);
+	   // List<SpiderPartner> spiderPartnersList = spiderPartnerMapper.selectBySpiderIds(spiderPartnerIds);
+	     List<Partners> partnersList = partnersMapper.selectBySpiderIds(partnerIds);
 	    List<PartnersVo> result = new ArrayList<PartnersVo>();
 	    
-     Long spiderPartnerId = 0L;
+   //  Long spiderPartnerId = 0L;
+     Long partnerId = 0L;
      for (int i = 0 ; i < list.size(); i ++) {
      	item = list.get(i);
-     	spiderPartnerId = item.getSpiderPartnerId();
+     	partnerId = item.getPartnerId();
      	PartnersVo vo = new PartnersVo();
      	try {
 			BeanUtils.copyProperties(vo,item);
@@ -168,7 +170,17 @@ public class PartnersServiceImpl implements PartnersService {
 		}
      	String registerTime = "";
      	String spiderUrl = "";
-     	SpiderPartner spiderPartner = null;
+     	
+     	Partners partners = null;
+     	for(int n = 0; n < partnersList.size(); n++) {
+     		partners = partnersList.get(n);
+     		if (partners.getSpiderPartnerId().equals(partnerId)) {
+     			registerTime = partners.getRegisterTime();
+     			spiderUrl = partners.getSpiderUrl();
+     			break;
+     		}
+     	}
+     	/*SpiderPartner spiderPartner = null;
      	for(int n = 0; n < spiderPartnersList.size(); n++) {
      		spiderPartner = spiderPartnersList.get(n);
      		if (spiderPartner.getSpiderPartnerId().equals(spiderPartnerId)) {
@@ -176,7 +188,7 @@ public class PartnersServiceImpl implements PartnersService {
      			spiderUrl = spiderPartner.getSpiderUrl();
      			break;
      		}
-     	}
+     	}*/
      	vo.setRegisterTime(registerTime);
      	vo.setSpiderUrl(spiderUrl);
      	result.add(vo);
@@ -199,6 +211,7 @@ public class PartnersServiceImpl implements PartnersService {
 		vo.setAddr("");
 		vo.setCreditFileUrl("");
 		vo.setWebsite("");
+		vo.setRegisterTime("");
 		vo.setSpiderUrl("");
 		vo.setServiceArea("");
 		vo.setServiceType("");

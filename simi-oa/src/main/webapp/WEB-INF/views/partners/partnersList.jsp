@@ -83,7 +83,7 @@
 							               <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.updateTime * 1000}"/>
 							            </td>
 							            <td>
-							            	<button id="btn_update"  onClick="btn_update('partners/partnerForm?partnerId=${ item.partnerId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+							            	<button id="btn_update"  onClick="btn_update('partnersAdd/partnerAddNewForm?partnerId=${ item.partnerId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 	                                  		<button id="btn_view" onClick="btn_update('partners/user_list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="查看服务人员"><i class="icon-search "></i></button>
 							            </td>
                               </tr>
