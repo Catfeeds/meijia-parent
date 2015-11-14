@@ -77,21 +77,34 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 */
 	@Override
 	public AppResultData<Object> validateCouponAll(Long userId, 
-												   String cardPasswd,
+												   Long userCouponId,
 										  		   String orderNo, 
-										  		   Short orderFrom,
-												   Short serviceType) {
+										  		   Long serviceTypeId,
+										  		   Long servicePriceId,
+										  		   Short orderFrom
+												   ) {
 		
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
+		UserCoupons userCoupon = userCouponsMapper.selectByPrimaryKey(userCouponId);
+		
+		if (userCoupon == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.COUPON_INVALID_MSG);
+			result.setData("");
+		}
+		
+		DictCoupons coupon =  couponService.selectByPrimaryKey(userCoupon.getCouponId());
+
+		if (coupon == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.COUPON_INVALID_MSG);
+			result.setData("");
+		}		
+		
+		String cardPasswd = coupon.getCardPasswd();
 		result = this.validateCoupon(userId, cardPasswd);
 
-		if (result.getStatus() != Constants.SUCCESS_0) {
-			return result;
-		}
-
-		result = this.validateByCouponsSuitType(cardPasswd, String.valueOf(serviceType), orderFrom);
 		if (result.getStatus() != Constants.SUCCESS_0) {
 			return result;
 		}
@@ -100,6 +113,37 @@ public class UserCouponServiceImpl implements UserCouponService {
 		if (result.getStatus() != Constants.SUCCESS_0) {
 			return result;
 		}
+		
+		//验证服务大类是否一致.
+		if (!coupon.getServiceTypeId().equals(0L)) {
+			if (!coupon.getServiceTypeId().equals(serviceTypeId)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("您选择的优惠券类型不能支付本次服务，请换一张哦！");
+				result.setData("");
+				return result;
+			}
+		}
+		
+		//验证服务大类是否一致.
+		if (!coupon.getServicePriceId().equals(0L)) {
+			if (!coupon.getServicePriceId().equals(servicePriceId)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("您选择的优惠券类型不能支付本次服务，请换一张哦！");
+				result.setData("");
+				return result;
+			}
+		}		
+		
+		//6.该优惠卷的渠道类型 dict_coupons.range_from
+		//跟当前的订单来源order_from 是否匹配   999 = 全部渠道适用
+		if (coupon !=null && coupon.getRangFrom() < 999) {
+			if (!coupon.getRangFrom().equals(orderFrom)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("您选择的优惠券类型不能支付本次服务，请换一张哦！");
+				result.setData("");
+				return result;
+			}
+		}		
 
 		return result;
 	}
@@ -111,13 +155,9 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 		cardPasswd  优惠券  require = true
 	 */
 	@Override
-	public AppResultData<Object> validateCoupon(Long userId,
-			String cardPasswd) {
+	public AppResultData<Object> validateCoupon(Long userId, String cardPasswd) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG,
-				"");
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		//查找出此优惠券信息.
 		DictCoupons coupon =  couponService.selectByCardPasswd(cardPasswd);
 
@@ -191,13 +231,9 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 		orderNo		订单号，默认为""  require = false;
 	 */
 	@Override
-	public AppResultData<Object> validateByOrderNo(Long userId,
-			String cardPasswd, String orderNo) {
+	public AppResultData<Object> validateByOrderNo(Long userId, String cardPasswd, String orderNo) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG,
-				"");
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		//查找出此优惠券信息.
 		DictCoupons coupon =  couponService.selectByCardPasswd(cardPasswd);
 
@@ -235,57 +271,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 
 		return result;
 	}
-
-	/*
-	 * 验证优惠券是否有效方法，仅验证服务类型和来源渠道是否正确
-	 * @param
-	 * 		mobile  手机号, require = true
-	 * 		cardPasswd  优惠券  require = true
-	 * 		serviceType  服务类型，默认为 0 ,
-	 */
-	@Override
-	public AppResultData<Object> validateByCouponsSuitType(
-			String cardPasswd, String serviceType, Short rangFrom ) {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG,
-				"");
-		//查找出此优惠券信息.
-		DictCoupons coupon =  couponService.selectByCardPasswd(cardPasswd);
-
-		if (coupon == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.COUPON_INVALID_MSG);
-			result.setData("");
-		}
-
-		//5.  该优惠券的服务类型 dict_coupons.service_type 跟当前的订单服务类型是否匹配
-		if (coupon !=null && serviceType.isEmpty() == false) {
-				if (!coupon.getServiceType().equals("0")) {
-					if (coupon.getServiceType().indexOf(serviceType) < 0) {
-						result.setStatus(Constants.ERROR_999);
-						result.setMsg(ConstantMsg.COUPON_SERVICE_TYPE_INVALID_MSG);
-						result.setData("");
-						return result;
-					}
-				}
-		}
-		
-		//6.该优惠卷的渠道类型 dict_coupons.range_from
-		//跟当前的订单来源order_from 是否匹配   999 = 全部渠道适用
-		if (coupon !=null && coupon.getRangFrom() < 999) {
-			if (!coupon.getRangFrom().equals(rangFrom)) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg(ConstantMsg.COUPON_INVALID_MSG);
-				result.setData("");
-				return result;
-			}
-		}
-
-		return result;
-	}
-
+	
 	@Override
 	public int updateByPrimaryKeySelective(UserCoupons userCoupons) {
 		return userCouponsMapper.updateByPrimaryKeySelective(userCoupons);

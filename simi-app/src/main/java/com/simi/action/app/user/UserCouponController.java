@@ -96,7 +96,8 @@ public class UserCouponController extends BaseController {
 				if (item.getCouponId().equals(dictCoupon.getId())) {
 					vo.setRangeType(dictCoupon.getRangType());
 					vo.setRangFrom(dictCoupon.getRangFrom());
-					vo.setServiceType(dictCoupon.getServiceType());
+					vo.setServiceTypeId(dictCoupon.getServiceTypeId());
+					vo.setServicePriceId(dictCoupon.getServicePriceId());
 					vo.setIntroduction(dictCoupon.getIntroduction());
 					vo.setDescription(dictCoupon.getDescription());
 					break;
@@ -195,7 +196,8 @@ public class UserCouponController extends BaseController {
 
 		vo.setRangeType(dictCoupon.getRangType());
 		vo.setRangFrom(dictCoupon.getRangFrom());
-		vo.setServiceType(dictCoupon.getServiceType());
+		vo.setServiceTypeId(dictCoupon.getServiceTypeId());
+		vo.setServicePriceId(dictCoupon.getServicePriceId());
 		vo.setIntroduction(dictCoupon.getIntroduction());
 		vo.setDescription(dictCoupon.getDescription());
 

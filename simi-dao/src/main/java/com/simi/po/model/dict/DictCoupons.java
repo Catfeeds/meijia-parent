@@ -20,9 +20,9 @@ public class DictCoupons {
 
 	private Short rangFrom;
 
-	private long serviceTypeId;
+	private Long serviceTypeId;
 	
-	private long servicePriceId;
+	private Long servicePriceId;
 
 	private String introduction;
 
@@ -86,19 +86,19 @@ public class DictCoupons {
 		this.rangFrom = rangFrom;
 	}
 	
-	public long getServiceTypeId() {
+	public Long getServiceTypeId() {
 		return serviceTypeId;
 	}
 
-	public void setServiceTypeId(long serviceTypeId) {
+	public void setServiceTypeId(Long serviceTypeId) {
 		this.serviceTypeId = serviceTypeId;
 	}
 
-	public long getServicePriceId() {
+	public Long getServicePriceId() {
 		return servicePriceId;
 	}
 
-	public void setServicePriceId(long servicePriceId) {
+	public void setServicePriceId(Long servicePriceId) {
 		this.servicePriceId = servicePriceId;
 	}
 

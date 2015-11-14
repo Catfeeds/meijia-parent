@@ -86,7 +86,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 		
 		//获取服务报价的信息。
-		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(orderPrice.getServicePriceId());
 				
 		
 		BigDecimal orderPay = orderPrice.getOrderPay();

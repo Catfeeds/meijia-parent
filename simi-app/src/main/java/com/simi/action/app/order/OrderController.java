@@ -3,6 +3,8 @@ package com.simi.action.app.order;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
+import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -155,6 +157,25 @@ public class OrderController extends BaseController {
 				return result;
 			}
 		}
+		
+		//如果服务大类为 云秘书 如果当前已经有秘书，且还未过期，则提示不可购买
+		if (serviceTypeId.equals(75)) {
+			
+		}
+		
+		
+//		Map<String, Date> validSecDate = orderSeniorService.getSeniorRangeDate(userId);
+//		if (validSecDate != null && validSecDate.size() > 1) {
+//			Date endDate = validSecDate.get("endDate");
+//			Date nowDate = DateUtil.getNowOfDate();
+//			if (endDate.after(nowDate)) {
+//				result.setStatus(Constants.ERROR_999);
+//				result.setMsg("当前已经购买过秘书，服务时间到"+ DateUtil.formatDate(endDate) + "截止.");
+//				return result;
+//			}
+//		}
+		
+		
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);

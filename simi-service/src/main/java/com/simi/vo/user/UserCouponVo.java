@@ -19,7 +19,9 @@ public class UserCouponVo {
 
     private Short rangFrom;
 
-    private String serviceType;
+    private Long serviceTypeId;
+    
+    private Long servicePriceId;
 
     private String introduction;
 
@@ -149,14 +151,6 @@ public class UserCouponVo {
 		this.rangFrom = rangFrom;
 	}
 
-	public String getServiceType() {
-		return serviceType;
-	}
-
-	public void setServiceType(String serviceType) {
-		this.serviceType = serviceType;
-	}
-
 	public String getIntroduction() {
 		return introduction;
 	}
@@ -171,5 +165,21 @@ public class UserCouponVo {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public Long getServicePriceId() {
+		return servicePriceId;
+	}
+
+	public void setServicePriceId(Long servicePriceId) {
+		this.servicePriceId = servicePriceId;
 	}
 }
