@@ -114,7 +114,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		SmsUtil.SendSms(userMobile, "48132", userContent);
 		
 		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
-		if (serviceTypeId.equals(75)) {
+		if (serviceTypeId.equals(75L)) {
 			//分配秘书
 			UserRefSec userRefSec  = userRefSecService.selectByUserId(userId);
 			
