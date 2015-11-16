@@ -24,6 +24,7 @@ import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
 
 @Controller
@@ -131,8 +132,8 @@ public class OrderPayController extends BaseController {
 			orderPayService.orderPaySuccessToDo(order);
 		}
 		
-		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
-		result.setData(orderViewVo);
+		OrderListVo vo = orderQueryService.getOrderListVo(order);
+		result.setData(vo);
 		
 		return result;
 	}

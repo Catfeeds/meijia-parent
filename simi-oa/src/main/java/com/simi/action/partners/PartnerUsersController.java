@@ -232,7 +232,14 @@ public class PartnerUsersController extends BaseController{
 		}
 		
 		u.setIntroduction(partnerUserVo.getIntroduction());
+		
 		u.setUserType((short) 2);
+		if (serviceTypeId.equals(75L)) {
+			u.setUserType((short) 1);
+		}
+		
+		
+		
 		u.setIsApproval((short) 2);
 		//更新头像 
 		if (file != null && !file.isEmpty()) {

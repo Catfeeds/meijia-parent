@@ -83,6 +83,10 @@ public class OrderPayServiceImpl implements OrderPayService {
 	@Override
 	public void orderPaySuccessToDo(Orders order) {
 		
+		
+		Long serviceTypeId = order.getServiceTypeId();
+		Long userId = order.getUserId();
+		Long partnerUserId = order.getPartnerUserId();
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 		
 		//获取服务报价的信息。
@@ -101,15 +105,30 @@ public class OrderPayServiceImpl implements OrderPayService {
 		String partnerUserMobile = partnerUser.getMobile();
 		
 		//通知相关服务商
-		String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile };
+		String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile , " " };
 		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
 		
 		//通知用户
 		String addTimeStr = TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000 , "yyyy-MM-dd HH:mm");
 		String[] userContent = new String[] { userName, addTimeStr, servicePriceName };
 		SmsUtil.SendSms(userMobile, "48132", userContent);
-		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
 		
+		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
+		if (serviceTypeId.equals(75)) {
+			//分配秘书
+			UserRefSec userRefSec  = userRefSecService.selectByUserId(userId);
+			
+			if (userRefSec == null) {
+				userRefSec = userRefSecService.initUserRefSec();
+				userRefSec.setUserId(userId);
+				userRefSec.setSecId(partnerUserId);
+				userRefSecService.insert(userRefSec);
+			} else {
+				userRefSec.setUserId(userId);
+				userRefSec.setSecId(partnerUserId);
+				userRefSecService.updateByPrimaryKeySelective(userRefSec);
+			}			
+		}
 		
 		
 	}

@@ -43,7 +43,7 @@ public class UserCardController extends BaseController {
 			@RequestParam("user_id")	Long userId,
 			@RequestParam("card_type") Long cardType,
 			@RequestParam("pay_type")  Short payType,
-			@RequestParam("card_money") BigDecimal cardMoney) {
+			@RequestParam(value = "card_money", required = false, defaultValue="0") BigDecimal cardMoney) {
 //	    操作表 order_cards
 //	    根据card_type 传递参数从表 dict_card_type 获取相应的金额
 
@@ -58,12 +58,20 @@ public class UserCardController extends BaseController {
 			return result;
 		}		
 		
-		if (cardType==0 && cardMoney != null) {
+		if (cardType.equals(0L)) {
+			if (cardMoney == null || cardMoney.equals(0)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("充值金额不正确!");
+				return result;
+			}
+			
 			OrderCards record = orderCardsService.initCardMoney(users, cardType, cardMoney, payType);
 			orderCardsService.insert(record);
 			result.setData(record);
 			return result;
 		}
+		
+		
 		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(cardType);
 
 		OrderCards record = orderCardsService.initOrderCards(users, cardType, dictCardType, payType);

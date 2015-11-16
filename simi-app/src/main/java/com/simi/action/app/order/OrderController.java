@@ -108,7 +108,7 @@ public class OrderController extends BaseController {
 			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom,
 			@RequestParam(value = "service_date", required = false, defaultValue = "0") Long serviceDate,
 			@RequestParam(value = "addr_id", required = false, defaultValue = "0") Long addrId,
-			@RequestParam(value = "city_id", required = false, defaultValue = "1") Long cityId
+			@RequestParam(value = "city_id", required = false, defaultValue = "2") Long cityId
 			) throws UnsupportedEncodingException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -161,6 +161,18 @@ public class OrderController extends BaseController {
 		//如果服务大类为 云秘书 如果当前已经有秘书，且还未过期，则提示不可购买
 		if (serviceTypeId.equals(75)) {
 			
+			Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
+
+			if (!seniorEndDate.equals(null)) {
+				
+				String endDateStr = DateUtil.formatDate(seniorEndDate);
+				String nowStr = DateUtil.getToday();
+				if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+					result.setStatus(Constants.ERROR_999);
+					result.setMsg("当前已经购买过秘书，服务时间到"+ endDateStr + "截止.");
+					return result;
+				} 	
+			}	
 		}
 		
 		
@@ -174,9 +186,7 @@ public class OrderController extends BaseController {
 //				return result;
 //			}
 //		}
-		
-		
-		
+
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 		// 服务内容及备注信息需要进行urldecode;

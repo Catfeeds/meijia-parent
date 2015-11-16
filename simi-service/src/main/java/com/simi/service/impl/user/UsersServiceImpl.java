@@ -36,6 +36,7 @@ import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.DictCouponsService;
+import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
@@ -60,7 +61,7 @@ public class UsersServiceImpl implements UsersService {
 	private UserCouponService userCouponService;
 
 	@Autowired
-	private OrderSeniorService orderSeniorService;
+	private OrderQueryService orderQueryService;
 
 	@Autowired
 	private UserRef3rdMapper userRef3rdMapper;
@@ -132,14 +133,10 @@ public class UsersServiceImpl implements UsersService {
 		BeanUtilsExp.copyPropertiesIgnoreNull(user, userInfo);
 
 		String seniorRange = "";
-		HashMap<String, Date> seniorRangeResult = orderSeniorService
-				.getSeniorRangeDate(userId);
+		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-		if (!seniorRangeResult.isEmpty()) {
-			Date startDate = seniorRangeResult.get("startDate");
-			Date endDate = seniorRangeResult.get("endDate");
-			seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至"
-					+ DateUtil.formatDate(endDate);
+		if (!seniorEndDate.equals(null)) {
+			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
 		}
 		userInfo.setSeniorRange(seniorRange);
 
@@ -298,23 +295,21 @@ public class UsersServiceImpl implements UsersService {
 		vo.setIsSenior((short) 0);
 		String seniorRange = "";
 
-		HashMap<String, Date> seniorRangeResult = orderSeniorService
-				.getSeniorRangeDate(userId);
+		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-		if (!seniorRangeResult.isEmpty()) {
-			Date startDate = seniorRangeResult.get("startDate");
-			Date endDate = seniorRangeResult.get("endDate");
-			String endDateStr = DateUtil.formatDate(endDate);
+		if (!seniorEndDate.equals(null)) {
+			
+			String endDateStr = DateUtil.formatDate(seniorEndDate);
 			String nowStr = DateUtil.getToday();
 			if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
 				vo.setIsSenior((short) 1);
-				seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至"
-						+ DateUtil.formatDate(endDate);
+				seniorRange = "截止" + endDateStr;
 			} else {
 				seniorRange = "已过期";
 			}
+			
 		}
-
+		
 		vo.setSeniorRange(seniorRange);
 
 		// 用户环信IM信息
@@ -369,23 +364,21 @@ public class UsersServiceImpl implements UsersService {
 			vo.setIsSenior((short) 0);
 			String seniorRange = "";
 
-			HashMap<String, Date> seniorRangeResult = orderSeniorService
-					.getSeniorRangeDate(u.getId());
+			Date seniorEndDate = orderQueryService.getSeniorRangeDate(u.getId());
 
-			if (!seniorRangeResult.isEmpty()) {
-				Date startDate = seniorRangeResult.get("startDate");
-				Date endDate = seniorRangeResult.get("endDate");
-				String endDateStr = DateUtil.formatDate(endDate);
+			if (!seniorEndDate.equals(null)) {
+				
+				String endDateStr = DateUtil.formatDate(seniorEndDate);
 				String nowStr = DateUtil.getToday();
 				if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
 					vo.setIsSenior((short) 1);
+					seniorRange = "截止" + endDateStr;
+				} else {
+					seniorRange = "已过期";
 				}
-
-				seniorRange = "有效期:" + DateUtil.formatDate(startDate) + "至"
-						+ DateUtil.formatDate(endDate);
-
-			}
-
+				
+			}			
+			
 			// 去掉已经到期的用户
 			if (vo.getIsSenior().equals((short) 0))
 				continue;
@@ -663,7 +656,4 @@ public class UsersServiceImpl implements UsersService {
 		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
 		return lists;
 	}
-
-
-
 }

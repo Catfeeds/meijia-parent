@@ -60,9 +60,11 @@ public class OrderQueryController extends BaseController {
 		List<Orders> orderList = list.getList();
 		
 		for (Orders item : orderList) {
-			OrderListVo vo = new OrderListVo();
-			vo = orderQueryService.getOrderListVo(item);
-			orderListVo.add(vo);
+			OrderListVo listVo = new OrderListVo();
+			listVo = orderQueryService.getOrderListVo(item);
+			
+			OrderDetailVo detailVo = orderQueryService.getOrderDetailVo(item, listVo);
+			orderListVo.add(detailVo);
 		}
 		
 		result.setData(orderListVo);

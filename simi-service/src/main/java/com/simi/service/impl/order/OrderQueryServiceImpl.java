@@ -2,6 +2,9 @@ package com.simi.service.impl.order;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.service.dict.DictCouponsService;
@@ -31,6 +35,7 @@ import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.order.OrderPrices;
+import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
@@ -345,5 +350,72 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
         return vo;
 	}		
+	
+	
+	/*
+	 * 根据订单获得秘书的有效期限
+	 */
+	@Override
+	public Date getSeniorRangeDate(Long userId) {
+
+		Date endDate = null;
+		OrderSearchVo searchVo = new OrderSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setOrderStatus((short) 2);
+		searchVo.setServiceTypeId((long) 75);
+		List<Orders> list = ordersMapper.selectByListPage(searchVo);
+		
+		if (list.isEmpty()) {
+			return endDate;
+		}
+		
+		
+		Orders order = list.get(0);
+		
+		Short orderDuration = order.getOrderDuration();
+		Long addTime = order.getAddTime();
+		/**
+		 *  1 = 一天
+			2 = 一周
+			3 = 一个月
+			4 = 三个月
+			5 = 六个月
+			6 = 九个月
+			7 = 一年
+		 */
+		Date startDate = TimeStampUtil.timeStampToDate(addTime * 1000);
+		String endDateStr = "";
+		
+		switch (orderDuration) {
+			case 0:
+				endDateStr = DateUtil.addDay(startDate, 0, Calendar.DATE, "yyyy-MM-dd");
+				break;
+			case 1:
+				endDateStr = DateUtil.addDay(startDate, 1, Calendar.DATE, "yyyy-MM-dd");
+				break;
+			case 2:
+				endDateStr = DateUtil.addDay(startDate, 7, Calendar.DATE, "yyyy-MM-dd");
+				break;	
+			case 3:
+				endDateStr = DateUtil.addDay(startDate, 1, Calendar.MONTH, "yyyy-MM-dd");
+				break;	
+			case 4:
+				endDateStr = DateUtil.addDay(startDate, 3, Calendar.MONTH, "yyyy-MM-dd");
+				break;	
+			case 5:
+				endDateStr = DateUtil.addDay(startDate, 6, Calendar.MONTH, "yyyy-MM-dd");
+				break;	
+			case 6:
+				endDateStr = DateUtil.addDay(startDate, 9, Calendar.MONTH, "yyyy-MM-dd");
+				break;
+			case 7:
+				endDateStr = DateUtil.addDay(startDate, 1, Calendar.YEAR, "yyyy-MM-dd");
+				break;
+		}
+		
+		endDate = DateUtil.parse(endDateStr);
+		
+		return endDate;
+	}	
 
 }

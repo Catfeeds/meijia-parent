@@ -1,5 +1,7 @@
 package com.simi.service.order;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
@@ -24,4 +26,6 @@ public interface OrderQueryService {
 	OrderListVo getOrderListVo(Orders order);
 
 	OrderDetailVo getOrderDetailVo(Orders order, OrderListVo listVo);
+
+	Date getSeniorRangeDate(Long userId);
 }

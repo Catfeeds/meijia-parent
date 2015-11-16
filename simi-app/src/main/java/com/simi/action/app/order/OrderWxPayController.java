@@ -114,6 +114,9 @@ public class OrderWxPayController extends BaseController {
 			OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 			BigDecimal orderPayNow = orderPrice.getOrderPay();
 			wxPay = orderPayNow.toString();
+			
+			//测试一分钱
+			wxPay = "1";
 			body = "订单号:"+orderNo;
 		}
 		
@@ -154,8 +157,7 @@ public class OrderWxPayController extends BaseController {
 			}
 
 			// 订单已经支付过，不需要重复支付
-			if (orderSenior.getOrderStatus()
-					.equals(Constants.PAY_STATUS_1)) {
+			if (orderSenior.getOrderStatus().equals(Constants.PAY_STATUS_1)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("订单已经支付过！");
 				return result;

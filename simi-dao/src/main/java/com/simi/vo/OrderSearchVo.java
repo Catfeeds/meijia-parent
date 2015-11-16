@@ -9,6 +9,8 @@ public class OrderSearchVo {
 	private String mobile;
 	
 	private String orderNo;
+	
+	private String orderType;
 
 	private Long serviceTypeId;
 	
@@ -71,6 +73,14 @@ public class OrderSearchVo {
 
 	public void setServiceTypeId(Long serviceTypeId) {
 		this.serviceTypeId = serviceTypeId;
+	}
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
 	}
 
 }
