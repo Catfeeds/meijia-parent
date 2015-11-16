@@ -37,6 +37,7 @@ import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.UserCoupons;
@@ -309,10 +310,17 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		//订单价格信息
 		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
+		Long servciePriceId = orderPrice.getServicePriceId();
+		
+		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByPrimaryKey(servciePriceId);
 		
 		
 		vo.setOrderMoney(orderPrice.getOrderMoney());
 		vo.setOrderPay(orderPrice.getOrderPay());
+		
+		//设置订单的是否需要地址.
+		vo.setIsAddr(partnerServicePriceDetail.getIsAddr());
+		
         return vo;
 	}	
 	

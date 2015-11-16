@@ -24,6 +24,8 @@ public class OrderListVo {
 	private String name;    
     
     private String serviceTypeName;
+    
+    private Short isAddr;
    
   	private String addrName;
   	
@@ -155,5 +157,13 @@ public class OrderListVo {
 
 	public void setOrderStatus(Short orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+
+	public Short getIsAddr() {
+		return isAddr;
+	}
+
+	public void setIsAddr(Short isAddr) {
+		this.isAddr = isAddr;
 	}
 }
