@@ -220,7 +220,7 @@ public class PartnerUsersController extends BaseController{
 		String name = partnerUserVo.getName();
 		
 		Users u = userService.selectByMobile(mobile);
-		
+		userId = u.getId();
 		//创建新用户
 		if (u == null) {
 			u = userService.genUser(mobile, name, (short) 2);
@@ -229,6 +229,7 @@ public class PartnerUsersController extends BaseController{
 			if (!u.getName().equals(name)) {
 				u.setName(name);
 			}
+			
 		}
 		
 		u.setIntroduction(partnerUserVo.getIntroduction());
