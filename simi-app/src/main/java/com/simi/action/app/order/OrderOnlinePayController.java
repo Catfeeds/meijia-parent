@@ -125,6 +125,9 @@ public class OrderOnlinePayController extends BaseController {
 		order.setUpdateTime(updateTime);
 		ordersService.updateByPrimaryKey(order);
 		
+		orderPrice.setPayType(payType);
+		orderPricesService.updateByPrimaryKey(orderPrice);
+		
 		//插入订单日志
 		OrderLog orderLog = orderLogService.initOrderLog(order);
 		orderLogService.insert(orderLog);
