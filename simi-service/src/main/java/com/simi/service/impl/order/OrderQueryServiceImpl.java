@@ -302,7 +302,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
 			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
 		}
-		
+		vo.setOrderStatus(order.getOrderStatus());
 		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
 		
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000));

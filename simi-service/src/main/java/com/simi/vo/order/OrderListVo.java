@@ -26,6 +26,8 @@ public class OrderListVo {
     private String serviceTypeName;
    
   	private String addrName;
+  	
+  	private Short orderStatus;
 
     private String orderStatusName;
         
@@ -145,5 +147,13 @@ public class OrderListVo {
 
 	public void setOrderPay(BigDecimal orderPay) {
 		this.orderPay = orderPay;
+	}
+
+	public Short getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(Short orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 }
