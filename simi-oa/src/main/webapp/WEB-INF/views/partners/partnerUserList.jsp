@@ -47,15 +47,15 @@
                           <table class="table table-striped table-advance table-hover">
                               <thead>
                               <tr>
-                                	  <th >头像</th>
-		                              <th >姓名</th>
-		                              <th >手机号</th>
-		                              <th >所在地区</th>
-		                              <th >服务大类</th>
-		                              <th >服务响应时间</th>
-		                              <th >标签</th>
-		                              <th >个人简介</th>
-		                              <th >添加时间</th>
+                                	  <th width="5%">头像</th>
+		                              <th width="6%">姓名</th>
+		                              <th width="3%">手机号</th>
+		                              <th width="5%">所在地区</th>
+		                              <th width="5%">服务大类</th>
+		                              <th width="8%">服务响应时间</th>
+		                              <th width="30%">标签</th>
+		                              <th width="30%">个人简介</th>
+		                              <!-- <th >添加时间</th> -->
 		                              <th >操作</th>
                               </tr>
                               </thead>
@@ -71,12 +71,12 @@
 							            <td>
 							            	<c:forEach items="${item.userTags }" var="tag">
 												<input type="button" name="tagName" value="${tag.tagName }" onclick="setTagButton()" class="btn btn-success">
-												<br/>
+												
 											</c:forEach>
 							            
 							            </td>
 							            <td>${item.introduction}</td>
-							            <td> <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/></td>
+							            <%-- <td> <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/></td> --%>
 							           
 							            <td>
 							            	<button id="btn_update"  onClick="btn_update('partners/user_form?id=${ item.id }&partnerId=${item.partnerId}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
