@@ -159,7 +159,7 @@ public class OrderController extends BaseController {
 		}
 		
 		//如果服务大类为 云秘书 如果当前已经有秘书，且还未过期，则提示不可购买
-		if (serviceTypeId.equals(75)) {
+		if (serviceTypeId.equals(75L)) {
 			
 			Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
