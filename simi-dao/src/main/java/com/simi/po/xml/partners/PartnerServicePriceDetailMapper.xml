@@ -15,10 +15,11 @@
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
 		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
+		<result column="is_addr" property="isAddr" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, service_price_id, service_title, user_id, img_url, price, dis_price, order_type, order_duration, content_standard,
-		content_desc, content_flow, add_time
+		is_addr, content_desc, content_flow, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -51,11 +52,12 @@
 
 		insert into partner_service_price_detail (id, service_price_id, service_title,
 		user_id, img_url, price,
-		dis_price, order_type, order_duration, content_standard, content_desc,
+		dis_price, order_type, order_duration, is_addr, content_standard, content_desc,
 		content_flow, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
 		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC}, #{orderDuration,jdbcType=NUMERIC},
+		#{isAddr,jdbcType=NUMERIC},
 		#{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
 		#{contentFlow,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
 	</insert>
@@ -93,6 +95,9 @@
 			</if>
 			<if test="orderDuration != null">
 				order_duration,
+			</if>
+			<if test="isAddr != null">
+				is_addr,
 			</if>
 			<if test="contentStandard != null">
 				content_standard,
@@ -135,6 +140,9 @@
 			<if test="orderDuration != null">
 				#{orderDuration,jdbcType=DECIMAL},
 			</if>
+			<if test="isAddr != null">
+				#{isAddr,jdbcType=DECIMAL},
+			</if>
 			<if test="contentStandard != null">
 				#{contentStandard,jdbcType=VARCHAR},
 			</if>
@@ -176,6 +184,9 @@
 			<if test="orderDuration != null">
 				order_duration = #{orderDuration,jdbcType=DECIMAL},
 			</if>
+			<if test="isAddr != null">
+				is_addr = #{isAddr,jdbcType=DECIMAL},
+			</if>
 			<if test="contentStandard != null">
 				content_standard = #{contentStandard,jdbcType=VARCHAR},
 			</if>
@@ -201,6 +212,7 @@
 		dis_price = #{disPrice,jdbcType=DECIMAL},
 		order_type = #{orderType,jdbcType=DECIMAL},
 		order_duration = #{orderDuration,jdbcType=DECIMAL},
+		is_addr = #{isAddr,jdbcType=DECIMAL},
 		content_standard = #{contentStandard,jdbcType=VARCHAR},
 		content_desc = #{contentDesc,jdbcType=VARCHAR},
 		content_flow = #{contentFlow,jdbcType=VARCHAR},

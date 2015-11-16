@@ -69,6 +69,7 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 		record.setDisPrice(new BigDecimal(0));
 		record.setOrderType((short) 0);
 		record.setOrderDuration((short) 0);
+		record.setIsAddr((short) 0);
 		record.setContentStandard("");
 		record.setContentDesc("");
 		record.setContentFlow("");

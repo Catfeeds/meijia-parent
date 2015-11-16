@@ -28,6 +28,8 @@ public class PartnerServicePriceDetail {
     private Short orderType;
     
     private Short orderDuration;
+    
+    private Short isAddr;
 
     public Long getId() {
         return id;
@@ -133,5 +135,13 @@ public class PartnerServicePriceDetail {
 
 	public void setOrderDuration(Short orderDuration) {
 		this.orderDuration = orderDuration;
+	}
+
+	public Short getIsAddr() {
+		return isAddr;
+	}
+
+	public void setIsAddr(Short isAddr) {
+		this.isAddr = isAddr;
 	}
 }

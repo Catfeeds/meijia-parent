@@ -129,6 +129,13 @@
                               </div>
                            </div>
                            
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">是否需要用户地址</label>
+                              <div class="col-md-5">
+                                <form:radiobutton path="isAddr" value="0" />不需要
+                                 <form:radiobutton path="isAddr" value="1" />需要
+                              </div>
+                           </div>
                            
                            
                            <div class="form-group required">
