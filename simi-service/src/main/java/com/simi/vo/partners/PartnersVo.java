@@ -1,20 +1,24 @@
 package com.simi.vo.partners;
 
+import java.util.Date;
+
 import com.simi.po.model.partners.Partners;
 
 public class PartnersVo extends Partners{
 	
-	private String registerTime;
+	//private Date registerTime;
 
 	private String spiderUrl;
 
-	public String getRegisterTime() {
+	
+
+	/*public Date getRegisterTime() {
 		return registerTime;
 	}
 
-	public void setRegisterTime(String registerTime) {
+	public void setRegisterTime(Date registerTime) {
 		this.registerTime = registerTime;
-	}
+	}*/
 
 	public String getSpiderUrl() {
 		return spiderUrl;

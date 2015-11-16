@@ -44,7 +44,7 @@
                           <header class="panel-heading">
                           	服务商列表
                           	<div class="pull-right">
-                          		<button onClick="btn_add('/partnersAdd/partnerAddNewForm')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                          		<button onClick="btn_add('/partners/partnerAddNewForm?partnerId=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
                     		</div> 
                           </header>
                           <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
@@ -69,7 +69,10 @@
 	                                   <td>${ item.companyName }</td>
 							            <td>
 							            <partneCompanySizeTag:companySize companySize="${ item.companySize }"/></td>
-							            <td>${ item.registerTime }</td>
+							           <%--  <td>${ item.registerTime }</td> --%>
+							             <td><fmt:formatDate var='formattedDate1' value='${item.registerTime}' type='both' pattern="yyyy-MM-dd" />
+							        	   ${formattedDate1}
+							            </td>
 								        <td>
 								           <partneIsCooperate:isCooperate isCooperate="${ item.isCooperate }"/>
 								         </td>
@@ -83,7 +86,7 @@
 							               <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.updateTime * 1000}"/>
 							            </td>
 							            <td>
-							            	<button id="btn_update"  onClick="btn_update('partnersAdd/partnerAddNewForm?partnerId=${ item.partnerId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+							            	<button id="btn_update"  onClick="btn_update('partners/partnerAddNewForm?partnerId=${ item.partnerId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 	                                  		<button id="btn_view" onClick="btn_update('partners/user_list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="查看服务人员"><i class="icon-search "></i></button>
 							            </td>
                               </tr>
@@ -113,7 +116,8 @@
     <!-- js placed at the end of the document so the pages load faster -->
     <!--common script for all pages-->
     <%@ include file="../shared/importJs.jsp"%>
-
+	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script>
     <!--script for this page-->	
 	<script type="text/javascript">
 	function doReset(){

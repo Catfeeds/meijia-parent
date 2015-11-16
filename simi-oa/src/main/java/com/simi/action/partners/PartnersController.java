@@ -62,7 +62,7 @@ import com.simi.vo.partners.PartnersSearchVo;
  * @date:2015年8月11日 
  */
 @Controller
-@RequestMapping(value = "/partners")
+@RequestMapping(value = "/partnersAdd")
 public class PartnersController extends BaseController{
 
 
@@ -97,7 +97,7 @@ public class PartnersController extends BaseController{
 	 * @param searchVo
 	 * @return
 	 */
-	@AuthPassport
+	/*@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model,
 			PartnersSearchVo searchVo) {
@@ -116,7 +116,7 @@ public class PartnersController extends BaseController{
 		return "partners/partnersList";
 	}
 	
-
+*/
 	/**
 	 * 跳转到编辑服务提供商的页面
 	 * @param model
@@ -125,7 +125,7 @@ public class PartnersController extends BaseController{
 	 * @throws IOException
 	 */
    // @AuthPassport
-	@RequestMapping(value = "/partnerForm", method = { RequestMethod.GET })
+	/*@RequestMapping(value = "/partnerForm", method = { RequestMethod.GET })
 	public String spiderPartnerForm(Model model, HttpServletRequest request,
 			@RequestParam("partnerId") Long partnerId,HttpServletRequest response)  {
     	
@@ -165,14 +165,14 @@ public class PartnersController extends BaseController{
     	partners.setSpiderPartnerId(spiderPartner.getSpiderPartnerId());
     	
     	
-    	/**
+    	*//**
     	 * 包装partner为Vo
-    	 */
+    	 *//*
     	PartnerFormVo partnerFormVoItem  = partnersService.selectPartnerFormVoByPartnerFormVo(partnerFormVo);
     	
-    	/**
+    	*//**
     	 *  获得提供商所关联的服务类型 
-    	 */
+    	 *//*
     	List<Long> checkedPartnerTypeIds = new ArrayList<Long>();
 		List<Integer> checkedPartnerTypeIntegers = new ArrayList<Integer>();
 		if(partnerFormVoItem.getChildList()!=null){
@@ -197,9 +197,9 @@ public class PartnersController extends BaseController{
 		model.addAttribute("treeDataSource", JSONArray .fromObject(treeModels, new JsonConfig()).toString());
 		
 		
-		/**
+		*//**
 		 * 根据partnerId查询服务商对应的地区
-		 */
+		 *//*
 		String regionsId = "";
 		List<PartnerRefRegion> partnerRegions =partnersService.selectByPartnerId(partnerFormVo.getPartnerId());			
 		if(partnerRegions !=null && partnerRegions.size()>0){
@@ -212,9 +212,9 @@ public class PartnersController extends BaseController{
 		}
 		partnerFormVo.setRegionIds(regionsId);
 		
-		/**
+		*//**
 		 * 获得服务商服务类别大类
-		 */
+		 *//*
 		List<PartnerRefServiceType> listBig = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
 		List<String> bigServiceTypeName = new ArrayList<String>();
 		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
@@ -222,9 +222,9 @@ public class PartnersController extends BaseController{
 			bigServiceTypeName.add(partnerRefServiceType.getName());
 		}
 		
-		/**
+		*//**
 		 * 获得服务商服务类别小类
-		 */
+		 *//*
 		List<String> subServiceTypeName = new ArrayList<String>();
 		List<PartnerRefServiceType> listSub = partnersService.selectSubServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
 		for (Iterator iterator = listSub.iterator(); iterator.hasNext();) {
@@ -232,9 +232,9 @@ public class PartnersController extends BaseController{
 			subServiceTypeName.add(partnerRefServiceType.getName());
 			
 		}
-		/**
+		*//**
 		 * 获取提供商对应的城市
-		 */
+		 *//*
 		String cityId = "";
 		List<PartnerRefCity> partnerRefCity = partnerRefCityService.selectByPartnerId(partnerFormVo.getPartnerId());
 		if(partnerRefCity !=null && partnerRefCity.size()>0){
@@ -247,9 +247,9 @@ public class PartnersController extends BaseController{
 		}
 		partnerFormVo.setPartnerCityId(cityId);;		
 		
-		/**
+		*//**
 		 * 获取北,上,广,深等城市和地区字典信息
-		 */
+		 *//*
 		List<Long> cityIds = new ArrayList<Long>();
 		cityIds.add(2L);
 		cityIds.add(3L);
@@ -266,7 +266,7 @@ public class PartnersController extends BaseController{
 		model.addAttribute("partners", partnerFormVo);
 		return "partners/partnerForm";
 	}
-    
+    */
 	
 	/**
 	 * 添加服务提供商
@@ -278,7 +278,7 @@ public class PartnersController extends BaseController{
 	 * @return
 	 */
 	//@AuthPassport
-	@RequestMapping(value = "/partnerForm", method = { RequestMethod.POST })
+	/*@RequestMapping(value = "/partnerForm", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model,
 			@ModelAttribute("partners") PartnerFormVo partners, 
 			BindingResult result) {
@@ -297,9 +297,9 @@ public class PartnersController extends BaseController{
     	if (partnerId == null) {
     		partnerId = 0L;
     	}
-    	/**
+    	*//**
     	 * 如果服务商名称已经存在，则进行修改，否则进行新增
-    	 */
+    	 *//*
 		if (partnersList != null && partnersList.size() > 0) {
 			partnersItem = partnersList.get(0);
 			partnersItem.setShortName(partners.getShortName());
@@ -350,14 +350,14 @@ public class PartnersController extends BaseController{
 			spiderPartnerService.updateByPrimaryKey(spiderPartner2);
 		}
 		
-		/**
+		*//**
 		 * 保存服务商选中的服务类型
-		 */
+		 *//*
 		partnersService.savePartnerToPartnerType(partnersItem.getPartnerId(), ArrayHelper.removeArrayLongItem(partners.getPartnerTypeIds(), new Integer(0)));
 	
-		/**
+		*//**
 		 * 操作partner_ref_region表更新
-		 */
+		 *//*
 		//1、先删除原来的数据
 		partnersService.deleteRegionByPartnerId(partnersItem.getPartnerId());
 		String tempRegionId = request.getParameter("regionIdStr");
@@ -377,9 +377,9 @@ public class PartnersController extends BaseController{
 				}
 			}
 		}
-		/**
+		*//**
 		 * 操作partner_ref_city表更新
-		 */
+		 *//*
 		//1、先删除原来的数据
 		partnerRefCityService.deleteByPartnerId(partnersItem.getPartnerId());
 		String tempCityId = request.getParameter("cityIdStr");
@@ -398,11 +398,11 @@ public class PartnersController extends BaseController{
 				}
 				}
 			}
-		}
+		}*/
 		/**
 		 * 操作partnerLinkMan表
 		 */
-		//第一步先删除
+		/*//第一步先删除
 		partnerLinkManService.deleteByPartnerId(partnersItem.getPartnerId());
 		String linkMan[] = request.getParameterValues("linkMan");
 		String linkMobile[] = request.getParameterValues("linkMobile");
@@ -439,9 +439,9 @@ public class PartnersController extends BaseController{
 			}
 		}
 		return "redirect:list";
-	} 
+	} */
 	
-	@RequestMapping(value = "/autocomplete", method = { RequestMethod.GET })
+	/*@RequestMapping(value = "/autocomplete", method = { RequestMethod.GET })
 	public List<Partners> list(HttpServletRequest request, @RequestParam("q") String q) {
 		
 		List<Partners> result = new ArrayList<Partners>();		
@@ -459,5 +459,5 @@ public class PartnersController extends BaseController{
 		}
 		
 		return result;
-	}
+	}*/
 }

@@ -136,6 +136,17 @@ $("#save_partner_btn").click(function() {
 		}
 	}
 });
+$('.input-group.date').datepicker({
+	format: "yyyy-mm-dd",
+	language: "zh-CN",
+	autoclose: true,
+	startView: 1,
+	defaultViewDate : {
+		year:1980,
+		month:0,
+		day:1
+	}
+});
 /**
  *联系人添加多个脚本 
  */
@@ -173,7 +184,7 @@ $(document).on('click','.btn-add', function(e) {
 /**
  * 显示服务商对应的城市和地区
  */
-$(function(){
+/*$(function(){
 	var partnerCityId = $("#partnerCityList").val();
 	var parnerRegionId = $("#partnerRegionList").val();
 
@@ -195,8 +206,8 @@ $(function(){
 				$(this).attr("checked","checked");
 			}
 		}
-	}); 
-
+	}); */
+/*
 	
 	
 	
@@ -254,7 +265,7 @@ $(function(){
 		cityHtml=cityHtml+reg+"</div>";
 	}
 	$("#cityAndRegion").append(cityHtml);
-});
+});*/
 $("#companyDescImg").fileinput({
 	previewFileType: "image",
 	browseClass: "btn btn-success",

@@ -7,6 +7,13 @@
 <%@ taglib prefix="citySelectTag" uri="/WEB-INF/tags/citySelect.tld"%>
 <html>
 <head>
+<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
+	type="text/css" />
+	<link rel="stylesheet" href="<c:url value='/assets/bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css'/>"
+ type="text/css"/>
+<link
+	href="<c:url value='/assets/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'/>"
+	rel="stylesheet" type="text/css" />
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
@@ -14,8 +21,8 @@
 	href="<c:url value='/assets/jquery-multi-select/css/multi-select.css'/>"
 	rel="stylesheet" type="text/css" />
 <%@ include file="../shared/importJs.jsp"%>
-<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
-	type="text/css" />
+
+	
 </head>
 
 <body>
@@ -32,8 +39,9 @@
 			<div class="panel-body">
 				<form:form modelAttribute="partners" commandName="partners"
 					class="form-horizontal" method="POST" action="savePartnerAddNewForm"
-					id="partner-new-form">
+					id="partner-new-form" enctype="multipart/form-data">
 					<div class="form-body">
+					
 						<form:hidden path="partnerId" />
 						<form:hidden path="partnerTypeIds" id="partnerTypeIds" />
 						<input type="hidden" id="regionIdStr" name="regionIdStr">
@@ -159,6 +167,18 @@
 								<form:textarea path="companyDesc" class="form-control"
 									placeholder="公司简介" />
 							</div>
+						</div>
+						<div class="form-group">
+						<label class="col-md-2 control-label">注&nbsp;册&nbsp;时&nbsp;间</label>
+							<div class="col-md-5">
+								<div class="input-group date">
+									<fmt:formatDate var='formattedDate1' value='${partners.registerTime}' type='both'
+										pattern="yyyy-MM-dd" />
+										<input type="text" value="${formattedDate1}" 
+										id="registerTime" name="registerTime" readonly class="form-control">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+								</div>
+								</div>
 						</div>
 						<c:if test="${partners.companyDescImg != null && partners.companyDescImg != '' }">
 										<div class="form-group ">
@@ -512,6 +532,9 @@
 	<!-- js placed at the end of the document so the pages load faster -->
 	<!--common script for all pages-->
 	<!--script for this page-->
+	<!-- 日期处理js -->
+	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script>
 	
 	<!-- 省市联动js -->
 	<script	type="text/javascript" src="<c:url value='/js/jquery.chained.remote.min.js'/>"></script>
@@ -528,5 +551,7 @@
 	<script  type="text/javascript" src="<c:url value='/js/simi/partner/partnerRef.js'/>"></script>
 	<!--绑定服务类别  -->
 	<script src="<c:url value='/js/jquery.treeLites.js?ver=10'/>"></script>
+	<script type="text/javascript" src="<c:url value='
+			/assets/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js'/>"></script>
 </body>
 </html>

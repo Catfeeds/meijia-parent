@@ -3,6 +3,7 @@ package com.simi.action.partners;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,10 +28,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+
+
+
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.common.extension.ArrayHelper;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.BaseController;
@@ -68,7 +76,7 @@ import com.simi.vo.partners.PartnersSearchVo;
  * @date:2015年8月11日 
  */
 @Controller
-@RequestMapping(value = "/partnersAdd")
+@RequestMapping(value = "/partners")
 public class PartnersAddNewController extends BaseController{
 
 
@@ -134,14 +142,15 @@ public class PartnersAddNewController extends BaseController{
 	public String spiderPartnerForm(Model model,
 			@RequestParam("partnerId") Long partnerId,HttpServletRequest request,
 			HttpServletRequest response)  {
-    	
+	//	Long partnerId = Long.valueOf(request.getParameter("partnerId"));
     	Partners partners = partnersService.iniPartners();
     	PartnerFormVo partnerFormVo = new PartnerFormVo();
-    	if (partnerId > 0L) {
+    	if (partnerId != null && partnerId > 0) {
 			partners = partnersService.selectByPrimaryKey(partnerId);
 		}
 		try {
-			BeanUtils.copyProperties(partnerFormVo, partners);
+		//	BeanUtils.copyProperties(partnerFormVo, partners);
+			BeanUtilsExp.copyPropertiesIgnoreNull(partners, partnerFormVo);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -242,6 +251,8 @@ public class PartnersAddNewController extends BaseController{
 	public String doPartnerForm(HttpServletRequest request, Model model,
 			@ModelAttribute("partners") PartnerFormVo partners,
 			BindingResult result) throws IOException {
+		//String registerTime = request.getParameter("registerTime");	
+		String registerTime = request.getParameter("registerTime");	
 	//	model.addAttribute("requestUrl", request.getServletPath());
 	//	model.addAttribute("requestQuery", request.getQueryString());
 	//	Long spiderPartnerId = Long.valueOf(request.getParameter("spiderPartnerId"));
@@ -293,6 +304,8 @@ public class PartnersAddNewController extends BaseController{
     	
     	Partners partnersItem = partnersService.iniPartners();
     	if (partnerId >0L) {
+    		partnersItem.setPartnerId(partners.getPartnerId());
+    		partnersItem.setCompanyName(partners.getCompanyName());
     		partnersItem.setShortName(partners.getShortName());
     		partnersItem.setCompanySize(partners.getCompanySize());
     		partnersItem.setIsDoor(partners.getIsDoor());
@@ -306,23 +319,34 @@ public class PartnersAddNewController extends BaseController{
     		partnersItem.setFax(partners.getFax());
     		partnersItem.setPayType(partners.getPayType());
     		partnersItem.setDiscout(partners.getDiscout());
+    		partnersItem.setAddr(partners.getAddr());
     		//注册时间
-    	//	partnersItem.setRegisterTime("");
+    		partnersItem.setRegisterTime(DateUtil.parse(registerTime));
     		partnersItem.setIsCooperate(partners.getIsCooperate());
+    		partnersItem.setUpdateTime(TimeStampUtil.getNow() / 1000);
     		
     		partnersService.updateByPrimaryKeySelective(partnersItem);
+    		//partnersService.insertSelective(partnersItem);
     			}else {
     				try {
-    					BeanUtils.copyProperties(partnersItem, partners);
+    					BeanUtilsExp.copyPropertiesIgnoreNull(partners,partnersItem);
+    				//	BeanUtils.copyProperties(partnersItem, partners);
     				} catch (Exception e) {
     					e.printStackTrace();
     				}
+    				//partnersItem.setRegisterTime("");
     				partnersItem.setServiceArea("");
     				partnersItem.setServiceType("");
     				partnersItem.setAdminId(accountAuth.getId());
     				partnersItem.setCompanyLogo("");
     				partnersItem.setRemark("");
+    				if (!StringUtil.isEmpty(registerTime)) {
+    					partnersItem.setRegisterTime(DateUtil.parse(registerTime));
+    				}
+    			//	partnersItem.setRegisterTime(DateUtil.parse(registerTime));
     				partnersItem.setStatusRemark("");
+    				partnersItem.setAddTime(TimeStampUtil.getNow()/1000);
+    				partnersItem.setUpdateTime(TimeStampUtil.getNow()/1000);
     				
     				partnersService.insertSelective(partnersItem);
 				}

@@ -2,6 +2,7 @@ package com.simi.service.impl.partners;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.dict.DictCityMapper;
@@ -164,18 +167,19 @@ public class PartnersServiceImpl implements PartnersService {
      	partnerId = item.getPartnerId();
      	PartnersVo vo = new PartnersVo();
      	try {
-			BeanUtils.copyProperties(vo,item);
+     		BeanUtilsExp.copyPropertiesIgnoreNull(item,vo);
+			//BeanUtils.copyProperties(vo,item);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-     	String registerTime = "";
+     	//String registerTime = "";
      	String spiderUrl = "";
      	
      	Partners partners = null;
      	for(int n = 0; n < partnersList.size(); n++) {
      		partners = partnersList.get(n);
      		if (partners.getSpiderPartnerId().equals(partnerId)) {
-     			registerTime = partners.getRegisterTime();
+     			//registerTime = partners.getRegisterTime().toString();
      			spiderUrl = partners.getSpiderUrl();
      			break;
      		}
@@ -189,7 +193,7 @@ public class PartnersServiceImpl implements PartnersService {
      			break;
      		}
      	}*/
-     	vo.setRegisterTime(registerTime);
+     //	vo.setRegisterTime(DateUtil.parse(registerTime));
      	vo.setSpiderUrl(spiderUrl);
      	result.add(vo);
      }
@@ -211,7 +215,7 @@ public class PartnersServiceImpl implements PartnersService {
 		vo.setAddr("");
 		vo.setCreditFileUrl("");
 		vo.setWebsite("");
-		vo.setRegisterTime("");
+		vo.setRegisterTime(new Date());
 		vo.setSpiderUrl("");
 		vo.setServiceArea("");
 		vo.setServiceType("");

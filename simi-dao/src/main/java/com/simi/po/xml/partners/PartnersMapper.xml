@@ -6,7 +6,7 @@
     <id column="spider_partner_id" property="spiderPartnerId" jdbcType="NUMERIC" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="short_name" property="shortName" jdbcType="VARCHAR" />
-    <result column="register_time" property="registerTime" jdbcType="VARCHAR" />
+     <result column="register_time" jdbcType="DATE" property="registerTime" javaType="java.util.Date"/>
      <result column="addr" property="addr" jdbcType="VARCHAR" />
    
      <result column="credit_file_url" property="creditFileUrl" jdbcType="VARCHAR" />
@@ -44,7 +44,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
   
-    partner_id,spider_partner_id, company_name, short_name,register_time, addr,credit_file_url,website,spider_url,company_size, company_logo, is_door, keywords, 
+    partner_id,spider_partner_id, company_name, short_name,register_time,company_desc_img, addr,credit_file_url,website,spider_url,company_size, company_logo, is_door, keywords, 
     status, status_remark, weixin, qq, email, province_id, city_id, is_cooperate, fax, 
     pay_type, discout, remark, add_time, admin_id, update_time
   </sql>
@@ -119,7 +119,7 @@
       remark, add_time, admin_id, 
       update_time, business_desc)
     values (#{partnerId,jdbcType=NUMERIC},(#{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
-    #{registerTime,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
+    #{registerTime,jdbcType=DATE}, #{addr,jdbcType=VARCHAR},
     #{creditFileUrl,jdbcType=VARCHAR},#{website,jdbcType=VARCHAR},#{spiderUrl,jdbcType=VARCHAR},#{serviceArea,jdbcType=VARCHAR},
     #{serviceType,jdbcType=VARCHAR},#{companyDesc,jdbcType=LONGVARCHAR},#{companyDescImg,jdbcType=VARCHAR},
       #{companySize,jdbcType=SMALLINT}, #{companyLogo,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC}, 
@@ -142,16 +142,16 @@
       <if test="companyName != null" >
         company_name,
       </if>
-      <if test="registerTime != null" >
-        register_time,
-      </if>
+     
       <if test="shortName != null" >
         short_name,
       </if>
       <if test="addr != null" >
         addr,
       </if>
-     
+      <if test="registerTime != null" >
+        register_time,
+      </if>
      <if test="creditFileUrl != null" >
         credit_file_url,
       </if><if test="website != null" >
@@ -242,13 +242,13 @@
         #{shortName,jdbcType=VARCHAR},
       </if>
       
-      <if test="registerTime != null" >
-        #{registerTime,jdbcType=VARCHAR},
-      </if>
+      
       <if test="addr != null" >
         #{addr,jdbcType=VARCHAR},
       </if>
-     
+     <if test="registerTime != null" >
+        #{registerTime,jdbcType=DATE},
+      </if>
      <if test="creditFileUrl != null" >
         #{creditFileUrl,jdbcType=VARCHAR},
       </if><if test="website != null" >
@@ -338,14 +338,12 @@
       <if test="shortName != null" >
         short_name = #{shortName,jdbcType=VARCHAR},
       </if>
-      <if test="registertime != null" >
-        register_time = #{registerTime,jdbcType=VARCHAR},
-      </if>
-      
       <if test="addr != null" >
         addr = #{addr,jdbcType=VARCHAR},
       </if>
-      
+       <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=DATE},
+      </if>
      <if test="creditFileUrl != null" >
         credit_file_url = #{creditFileUrl,jdbcType=VARCHAR},
       </if><if test="website != null" >
@@ -430,7 +428,7 @@
       spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}, 
       company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=DATE},
       
       addr =  #{addr,jdbcType=VARCHAR},
       
@@ -471,7 +469,7 @@
       spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
       company_name = #{companyName,jdbcType=VARCHAR},
       short_name = #{shortName,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=DATE},
       
       addr = #{addr,jdbcType=VARCHAR},
        credit_file_url =  #{creditFileUrl,jdbcType=VARCHAR},

@@ -47,6 +47,7 @@ public class DateUtil {
 	public static boolean isDate(String date) {
 		return isDate(date, DEFAULT_PATTERN);
 	}
+	
 
 	/**
 	 * 判断是否为日期
@@ -149,7 +150,6 @@ public class DateUtil {
 		}
 		return date;
 	}
-
 	/**
 	 * 默认格式:yyyy-MM-dd
 	 * @param strDate

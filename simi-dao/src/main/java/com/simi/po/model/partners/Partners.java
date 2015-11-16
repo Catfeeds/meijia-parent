@@ -1,6 +1,8 @@
 package com.simi.po.model.partners;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.util.Date;
 
 public class Partners {
     private Long partnerId;
@@ -11,8 +13,8 @@ public class Partners {
 
     private String shortName;
     
-    private String registerTime;
-    
+	private Date registerTime;
+	
     private String addr;
 
     private Short companySize;
@@ -77,11 +79,11 @@ public class Partners {
         this.partnerId = partnerId;
     }
 
-    public String getRegisterTime() {
+	public Date getRegisterTime() {
 		return registerTime;
 	}
 
-	public void setRegisterTime(String registerTime) {
+	public void setRegisterTime(Date registerTime) {
 		this.registerTime = registerTime;
 	}
 

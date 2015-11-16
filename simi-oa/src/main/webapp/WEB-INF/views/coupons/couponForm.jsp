@@ -85,7 +85,7 @@
 							</div>
 
 						</div> --%>
-							<input type="hidden" id="citySelectedId" value="${contentModel.cityId}" />
+						<%-- 	<input type="hidden" id="citySelectedId" value="${contentModel.cityId}" />
 						<input type="hidden" id="regionSelectedId" value="${contentModel.regionId}" />
 						<div class="form-group" >
 							<label class="col-md-2 control-label">所在城市:</label> 
@@ -106,7 +106,7 @@
 								</select> 
 								<form:errors path="regionId" class="field-has-error"></form:errors>
 							</div>
-						</div>
+						</div> --%>
 						<div class="form-group">
 
 							<!-- Text input-->
