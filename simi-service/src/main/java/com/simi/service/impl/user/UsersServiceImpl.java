@@ -135,7 +135,7 @@ public class UsersServiceImpl implements UsersService {
 		String seniorRange = "";
 		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-		if (!seniorEndDate.equals(null)) {
+		if (! (seniorEndDate == null) ) {
 			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
 		}
 		userInfo.setSeniorRange(seniorRange);
@@ -297,7 +297,7 @@ public class UsersServiceImpl implements UsersService {
 
 		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-		if (!seniorEndDate.equals(null)) {
+		if (! (seniorEndDate == null) ) {
 			
 			String endDateStr = DateUtil.formatDate(seniorEndDate);
 			String nowStr = DateUtil.getToday();
@@ -366,7 +366,7 @@ public class UsersServiceImpl implements UsersService {
 
 			Date seniorEndDate = orderQueryService.getSeniorRangeDate(u.getId());
 
-			if (!seniorEndDate.equals(null)) {
+			if (! (seniorEndDate == null) ) {
 				
 				String endDateStr = DateUtil.formatDate(seniorEndDate);
 				String nowStr = DateUtil.getToday();

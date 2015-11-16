@@ -163,7 +163,7 @@ public class OrderController extends BaseController {
 			
 			Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-			if (!seniorEndDate.equals(null)) {
+			if (! (seniorEndDate == null) ) {
 				
 				String endDateStr = DateUtil.formatDate(seniorEndDate);
 				String nowStr = DateUtil.getToday();
