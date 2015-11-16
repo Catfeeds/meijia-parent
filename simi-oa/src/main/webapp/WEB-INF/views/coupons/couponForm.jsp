@@ -74,39 +74,30 @@
 								<form:radiobutton path="rangType" value="1" />
 								唯一
 							</div>
-
 						</div>
-<%-- 
+						<input type="hidden" id="serviceTypeSelectedId" value="${dictCoupons.serviceTypeId}" />
+						<input type="hidden" id="servicePriceIdSelectedId" value="${dictCoupons.servicePriceId}" />
 						<div class="form-group">
-							<label class="col-md-2 control-label">服务类型 </label>
-
+							<label class="col-md-2 control-label">服务类别*</label>
 							<div class="col-md-5">
-								<form:radiobuttons path="serviceType" items="${serviceTypeMap}"/><br/>
-							</div>
-
-						</div> --%>
-						<%-- 	<input type="hidden" id="citySelectedId" value="${contentModel.cityId}" />
-						<input type="hidden" id="regionSelectedId" value="${contentModel.regionId}" />
-						<div class="form-group" >
-							<label class="col-md-2 control-label">所在城市:</label> 
-							
-							<div class="col-md-5" >
-								 <select name="cityId" path="cityId" id="cityId" class="form-control">
-									<option value="0">全部</option>
-								</select> 
-								<form:errors path="cityId" class="field-has-error"></form:errors>
+								<form:select path="serviceTypeId" class="form-control">
+								<option value="">请选择服务类别</option>
+								<form:options items="${partnerServiceType}" itemValue="id" itemLabel="name"/>
+								</form:select>
 							</div>
 						</div>
 						<div class="form-group" >
-							<label class="col-md-2 control-label">所在区县:</label> 
+							<label class="col-md-2 control-label">服务小类:</label> 
 							
 							<div class="col-md-5" >
-								 <select name="regionId" path="regionId" id="regionId" class="form-control">
+								 <select name="servicePriceId" path="servicePriceId" id="servicePriceId" class="form-control">
 									<option value="0">全部</option>
+								
 								</select> 
-								<form:errors path="regionId" class="field-has-error"></form:errors>
+								<form:errors path="servicePriceId" class="field-has-error"></form:errors>
 							</div>
-						</div> --%>
+						</div>
+						
 						<div class="form-group">
 
 							<!-- Text input-->
@@ -200,5 +191,15 @@
 		type="text/javascript"></script>
 			<script type="text/javascript" src="<c:url value='
 			/assets/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js'/>"></script>
+			<!-- 大类小类联动js -->
+	<script type="text/javascript"  src="<c:url value='/js/simi/coupon/select-price-type.js'/>"	></script>	
+	<script type="text/javascript" src="<c:url value='/js/simi/coupon/couponForm.js'/>"></script>
+	<script type="text/javascript">
+	
+	$('#serviceTypeId').trigger('change');
+		//$('#servicePriceId').trigger('change');
+	//	$('#cityId').trigger('change');
+	//	setTagButton();
+	</script>
 </body>
 </html>

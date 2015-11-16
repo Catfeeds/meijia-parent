@@ -268,7 +268,20 @@
 								<p class="help-block"></p>
 							</div>
 						</div>
-
+<%-- <div class="form-group">
+							<label class="col-md-2 control-label">联系人</label>
+							<div class="col-md-5">
+								${partners.linkMan }
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">联系电话&nbsp;*</label>
+							<div class="col-md-5">
+								${partners.linkTel }
+								<p class="help-block"></p>
+							</div>
+						</div> --%>
 						<div class="form-group ">
 							<label class="col-md-2 control-label">联系人信息&nbsp;*</label>
 							<div class="col-md-8">

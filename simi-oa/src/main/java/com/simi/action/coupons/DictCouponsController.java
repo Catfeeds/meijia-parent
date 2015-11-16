@@ -1,5 +1,7 @@
 package com.simi.action.coupons;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -17,7 +19,9 @@ import com.github.pagehelper.PageInfo;
 import com.simi.action.BaseController;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictCoupons;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.dict.DictCouponsService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserCouponService;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.RandomUtil;
@@ -35,6 +39,8 @@ public class DictCouponsController extends BaseController {
 	@Autowired
 	private UserCouponService userCouponService;
 
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
 	
 
 	/**优惠券列表
@@ -91,7 +97,10 @@ public class DictCouponsController extends BaseController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+		List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectByParentId(0L, (short) 0);
+		model.addAttribute("partnerServiceType", partnerServiceType);
+		   
 		model.addAttribute("dictCoupons", couponVo);
 		model.addAttribute("selectDataSource",couponService.getSelectRangMonthSource());
 		//model.addAttribute("serviceTypeMap",couponService.getSelectServiceTypeSource());
@@ -114,6 +123,9 @@ public class DictCouponsController extends BaseController {
 		String toDate = request.getParameter("toDate");	            //有效结束时间
 		
 		Long flag = Long.valueOf(request.getParameter("id"));
+		
+		//Long servicePriceId = dictCoupons.getServicePriceId();
+		//Long serviceTypeId = dictCoupons.getServiceTypeId();
 		//更新或者新增
 		if (flag != null && flag > 0) {
 			//更新充值后赠送优惠券
@@ -135,6 +147,10 @@ public class DictCouponsController extends BaseController {
 			dictCoupon.setValue(dictCoupons.getValue());
 			dictCoupon.setMaxValue(dictCoupons.getMaxValue());
 			dictCoupon.setDescription(dictCoupons.getDescription());
+			
+			dictCoupon.setServiceTypeId(dictCoupons.getServiceTypeId());
+			dictCoupon.setServicePriceId(dictCoupons.getServicePriceId());
+			
 			dictCoupon.setIntroduction(dictCoupons.getIntroduction());
 			dictCoupon.setRangMonth(dictCoupons.getRangMonth());
 			if (!StringUtil.isEmpty(fromDate) && !StringUtil.isEmpty(toDate)) {

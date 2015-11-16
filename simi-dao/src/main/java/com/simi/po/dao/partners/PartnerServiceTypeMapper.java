@@ -18,4 +18,5 @@ public interface PartnerServiceTypeMapper {
     int updateByPrimaryKey(PartnerServiceType record);
     
     List<PartnerServiceType> selectByParentId(Long  partnerId, Short viewType);
+
 }
