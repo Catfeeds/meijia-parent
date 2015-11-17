@@ -91,8 +91,9 @@
 							
 							<div class="col-md-5" >
 								 <select name="servicePriceId" path="servicePriceId" id="servicePriceId" class="form-control">
-									<option value="0">全部</option>
-								
+									<%-- <option value="0">${dictCoupons.servicePriceId}</option> --%>
+									<option value="">全部</option>
+								<%-- <option items="${dictCoupons.servicePriceId}" itemValue="id" itemLabel="name"/> --%>
 								</select> 
 								<form:errors path="servicePriceId" class="field-has-error"></form:errors>
 							</div>
@@ -189,8 +190,8 @@
 	<!-- rechargeCoupon Form表单 js -->
 	<script src="<c:url value='/js/simi/coupon/couponForm.js'/>"
 		type="text/javascript"></script>
-			<script type="text/javascript" src="<c:url value='
-			/assets/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js'/>"></script>
+			<%-- <script type="text/javascript" src="<c:url value='
+			/assets/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js'/>"></script> --%>
 			<!-- 大类小类联动js -->
 	<script type="text/javascript"  src="<c:url value='/js/simi/coupon/select-price-type.js'/>"	></script>	
 	<script type="text/javascript" src="<c:url value='/js/simi/coupon/couponForm.js'/>"></script>

@@ -24,20 +24,20 @@ $("#serviceTypeId").on('change', function(){
 		data:{serviceTypeId:$serviceTypeId},
 		success:function($result){
 			if(0 == $result.status){
-				var serviceTypeSelectedId = 0;
-				if ( $("#serviceTypeSelectedId").length >0 ) { 
-					serviceTypeSelectedId = $('#serviceTypeSelectedId').val();
+				var servicePriceIdSelectedId = 0;
+				if ( $("#servicePriceIdSelectedId").length >0 ) { 
+					servicePriceIdSelectedId = $('#servicePriceIdSelectedId').val();
 				}		
-				
+				console.log(servicePriceIdSelectedId);
 				//针对所在城市的下拉联动
 
 				$cityOptions = '<option value="0">全部</option>';
 				//$optionList = "";
 				$.each($result.data, function(i, obj) {
-					if (obj.service_price_id == serviceTypeSelectedId) {
-						$cityOptions += '<option value="'+obj.service_price_id+'" selected>' + obj.name + "</option>";
+					if (obj.id == servicePriceIdSelectedId) {
+						$cityOptions += '<option value="'+obj.id+'" selected>' + obj.name + "</option>";
 					} else {
-						$cityOptions += '<option value="'+obj.service_price_id+'">' + obj.name + "</option>";
+						$cityOptions += '<option value="'+obj.id+'">' + obj.name + "</option>";
 					}
 
 				});
