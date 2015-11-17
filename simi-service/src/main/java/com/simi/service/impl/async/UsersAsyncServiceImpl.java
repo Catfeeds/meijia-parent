@@ -181,7 +181,9 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
 		List<String> mobileList = new ArrayList<String>();
 		for (AdminAccount item: adminAccounts) {
-			mobileList.add(item.getMobile());
+			if (!StringUtil.isEmpty(item.getMobile())) {
+				mobileList.add(item.getMobile());
+			}
 		}
 		String[] content = new String[] { name,addTimeStr };
 		for (int i = 0; i < mobileList.size(); i++) {

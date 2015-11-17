@@ -27,6 +27,17 @@
 		order by no asc
 	</select>
 	
+	<select id="selectByIds" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_type
+		where service_type_id in
+	 	<foreach item="item" index="index" collection="list"
+	             open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</select>	
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from partner_service_type
 		where service_type_id = #{id,jdbcType=NUMERIC}

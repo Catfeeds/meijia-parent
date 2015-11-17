@@ -26,6 +26,8 @@ public interface PartnerServiceTypeService {
 	PartnerServiceTypeVo ToTree(Long id, Short viewType);
 
 	PartnerServiceType initPartnerServiceType();
+
+	List<PartnerServiceType> selectByIds(List<Long> ids);
 	
 
 

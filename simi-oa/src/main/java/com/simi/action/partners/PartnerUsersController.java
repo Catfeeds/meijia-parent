@@ -27,6 +27,7 @@ import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
@@ -184,8 +185,25 @@ public class PartnerUsersController extends BaseController{
     	model.addAttribute("tags", tags);
     	model.addAttribute("tagIds", tagIds);
     	
-    	//服务大类
-    	List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectByParentId(0L, (short) 0);
+    	//服务大类，该公司的服务大类
+    	List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
+    	
+    	
+    	List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+    	
+    	if (!partnerRefServiceType.isEmpty()) {
+	    	List<Long> serviceTypeIds = new ArrayList<Long>();
+	    	
+	    	for (PartnerRefServiceType item : partnerRefServiceType) {
+	    		if (!serviceTypeIds.contains(item.getServiceTypeId())) {
+	    			serviceTypeIds.add(item.getServiceTypeId());
+	    		}
+	    	}
+	    	
+	    	
+	    	partnerServiceType =   partnerServiceTypeService.selectByIds(serviceTypeIds);
+    	}
+    	
     	model.addAttribute("partnerServiceType", partnerServiceType);
     	
 		return "partners/partnerUserForm";
