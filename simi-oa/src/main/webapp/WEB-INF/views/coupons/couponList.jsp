@@ -112,7 +112,7 @@
     <%@ include file="../shared/importJs.jsp"%>
 
     <!--script for this page-->	
-	<script src="<c:url value='/js/jhj/account/list.js'/>"></script>
+	
 
   </body>
 </html>

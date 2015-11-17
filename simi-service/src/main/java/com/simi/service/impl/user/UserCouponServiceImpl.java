@@ -170,8 +170,8 @@ public class UserCouponServiceImpl implements UserCouponService {
 		
 		//1. 是否已经过了有效期  exp_time，
 		//如果已经过去，返回提示信息：“要兑换的优惠券已过期，换一个吧。”
-		//Long expTime = coupon.getExpTime();
-		Long nowTime = TimeStampUtil.getNow() / 1000;
+		//short rang_month = coupon.getRangMonth();
+		//Long nowTime = TimeStampUtil.getNow() / 1000;
 		/*if (expTime > 0 && expTime < nowTime) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.COUPON_EXP_TIME_MSG);

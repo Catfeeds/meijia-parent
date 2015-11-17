@@ -47,7 +47,7 @@ public class UserCouponController extends BaseController {
 	 * 我的优惠券接口
 	 * 接口文档: http://182.92.160.194/trac/wiki/%E6%88%91%E7%9A%84%E4%BC%98%E6%83%A0%E5%88%B8%E6%8E%A5%E5%8F%A3
 	 * @param
-	 *    mobile   手机号
+	 *  user_id 用户ID
 	 */
 	@RequestMapping(value = "get_coupons", method = RequestMethod.GET)
 	public AppResultData<List> getCoupons(
@@ -157,7 +157,7 @@ public class UserCouponController extends BaseController {
 		Long newId = userCouponService.insert(record);
 
 		// 如果优惠券类型为充值卡充值，则直接进行用户充值，并且返回提示信息.
-		if (dictCoupon.getCouponType().equals(Constants.COUPON_TYPE_1)) {
+		/*if (dictCoupon.getCouponType().equals(Constants.COUPON_TYPE_1)) {
 			//先进行用户的账号明细记录
 			UserDetailPay userDetailPay = userDetailPayService.initUserDetail();
 			userDetailPay.setMobile(u.getMobile());
@@ -188,7 +188,7 @@ public class UserCouponController extends BaseController {
 			result.setMsg("恭喜！"+ couponValue.toPlainString() + "元已成功充入您的账户。");
 			result.setData("");
 			return result;
-		}
+		}*/
 
 		//如果 优惠券类型为 返回插入的数据
 		UserCouponVo vo = new UserCouponVo();

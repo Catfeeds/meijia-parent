@@ -98,6 +98,7 @@ $('#recharge-coupon-form').validate({
 				}
 		    }
 		});
+		
 		$('.input-group.date').datepicker({
 			format: "yyyy-mm-dd",
 			language: "zh-CN",

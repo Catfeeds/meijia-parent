@@ -74,6 +74,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	public UserDetailPay initUserDetail() {
 		UserDetailPay userDetailPay = new UserDetailPay();
 		userDetailPay.setId(0L);
+		userDetailPay.setPayAccount("");
 		userDetailPay.setUserId(0L);
 		userDetailPay.setMobile("");
 		userDetailPay.setOrderType((short) 0);

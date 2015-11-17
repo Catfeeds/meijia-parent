@@ -178,7 +178,10 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		long addTime = u.getAddTime();
 		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime*1000);
 		
-		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+	//	List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+		//查出所有运营部的人员（roleId=3）
+		Long roleId = 3L;
+		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
 		List<String> mobileList = new ArrayList<String>();
 		for (AdminAccount item: adminAccounts) {
 			if (!StringUtil.isEmpty(item.getMobile())) {

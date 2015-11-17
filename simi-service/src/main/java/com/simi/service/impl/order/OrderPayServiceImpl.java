@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.meijia.utils.SmsUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
 
@@ -162,12 +163,18 @@ public class OrderPayServiceImpl implements OrderPayService {
 		String secMobile = sec.getMobile();
 		String validDayStr = String.valueOf(validDay);
 		
-		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+//		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+			//查出所有运营部的人员（roleId=3）
+		Long roleId = 3L;
+		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
 		List<String> mobileList = new ArrayList<String>();
 		for (AdminAccount item: adminAccounts) {
+			if (!StringUtil.isEmpty(item.getMobile())) {
 			mobileList.add(item.getMobile());
-			mobileList.add(secMobile);
+			}
+			
 		}
+		mobileList.add(secMobile);
 		String[] content = new String[] { name,orderPStr,validDayStr };
 		for (int i = 0; i < mobileList.size(); i++) {
 			
