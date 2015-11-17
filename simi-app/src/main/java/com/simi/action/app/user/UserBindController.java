@@ -45,7 +45,7 @@ public class UserBindController extends BaseController {
 	 *    user_id
 	 *    mobile   手机号
 	 */
-	@RequestMapping(value = "bind_mobile", method = RequestMethod.GET)
+	@RequestMapping(value = "bind_mobile", method = RequestMethod.POST)
 	public AppResultData<Object> bindMobile(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("mobile") String mobile,

@@ -149,7 +149,7 @@ public class OrderController extends BaseController {
 		orderPay = servicePrice.getDisPrice();
 		
 		if (userCouponId > 0L) {
-			
+			//todo, 校验优惠劵是否有效.
 		}
 		
 		
@@ -238,7 +238,8 @@ public class OrderController extends BaseController {
 		orderPrice.setOrderPay(orderPay);
 		orderPricesService.insert(orderPrice);
 		
-		//
+		//todo ,保存优惠劵的使用情况,更新 user_coupons 的order_no字段.
+		
 		
 		if (payType.equals(Constants.PAY_TYPE_0) || orderPay.equals(0)) {
 			// 1. 扣除用户余额.
