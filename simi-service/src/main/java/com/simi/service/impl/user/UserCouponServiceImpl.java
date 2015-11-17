@@ -124,7 +124,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 			}
 		}
 		
-		//验证服务大类是否一致.
+		//验证服务报价是否一致.
 		if (!coupon.getServicePriceId().equals(0L)) {
 			if (!coupon.getServicePriceId().equals(servicePriceId)) {
 				result.setStatus(Constants.ERROR_999);

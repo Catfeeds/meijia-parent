@@ -147,6 +147,13 @@ public class OrderController extends BaseController {
 		
 		orderMoney = servicePrice.getPrice();
 		orderPay = servicePrice.getDisPrice();
+		
+		if (userCouponId > 0L) {
+			
+		}
+		
+		
+		
 //		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
 		
 		if (payType.equals(Constants.PAY_TYPE_0)) {
@@ -176,17 +183,6 @@ public class OrderController extends BaseController {
 		}
 		
 		
-//		Map<String, Date> validSecDate = orderSeniorService.getSeniorRangeDate(userId);
-//		if (validSecDate != null && validSecDate.size() > 1) {
-//			Date endDate = validSecDate.get("endDate");
-//			Date nowDate = DateUtil.getNowOfDate();
-//			if (endDate.after(nowDate)) {
-//				result.setStatus(Constants.ERROR_999);
-//				result.setMsg("当前已经购买过秘书，服务时间到"+ DateUtil.formatDate(endDate) + "截止.");
-//				return result;
-//			}
-//		}
-
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 		// 服务内容及备注信息需要进行urldecode;
