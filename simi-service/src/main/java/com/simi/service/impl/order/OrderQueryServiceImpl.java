@@ -312,7 +312,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
 		Long servciePriceId = orderPrice.getServicePriceId();
 		
-		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByPrimaryKey(servciePriceId);
+		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servciePriceId);
 		
 		
 		vo.setOrderMoney(orderPrice.getOrderMoney());
