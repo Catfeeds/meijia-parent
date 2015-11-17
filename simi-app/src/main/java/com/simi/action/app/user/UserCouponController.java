@@ -15,17 +15,20 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictCoupons;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.impl.user.UserDetailPayServiceImpl;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.MathBigDeciamlUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserCouponVo;
+import com.simi.vo.user.UserCouponsVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -42,6 +45,9 @@ public class UserCouponController extends BaseController {
 
 	@Autowired
 	private UserDetailPayServiceImpl userDetailPayService;
+	
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
 
 	/*
 	 * 我的优惠券接口
@@ -80,24 +86,38 @@ public class UserCouponController extends BaseController {
 		//根据coupons_id 关联对应的优惠券实体
 		List<DictCoupons> listCoupons = new ArrayList<DictCoupons>();
 		if (!couponsIds.isEmpty()) {
+			
 			listCoupons = couponService.selectByIds(couponsIds);
 		}
 
 		//循环，创建为UserCouponVo对象
 		DictCoupons  dictCoupon = null;
-		List<UserCouponVo> list = new ArrayList<UserCouponVo>();
+		List<UserCouponsVo> list = new ArrayList<UserCouponsVo>();
 		for(int i = 0; i < listUserCoupons.size(); i++) {
 			item = listUserCoupons.get(i);
 
-			UserCouponVo vo = new UserCouponVo();
+			UserCouponsVo vo = new UserCouponsVo();
 			BeanUtils.copyProperties(item, vo);
+			
 			for (int j = 0; j< listCoupons.size(); j++) {
 				dictCoupon = listCoupons.get(j);
 				if (item.getCouponId().equals(dictCoupon.getId())) {
-					vo.setRangeType(dictCoupon.getRangType());
-					vo.setRangFrom(dictCoupon.getRangFrom());
+					
 					vo.setServiceTypeId(dictCoupon.getServiceTypeId());
 					vo.setServicePriceId(dictCoupon.getServicePriceId());
+					
+					//服务类型名称
+					PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
+					vo.setServiceTypeName(partnerServiceType.getName());
+					//服务报价名称
+					partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
+					vo.setServicePriceName(partnerServiceType.getName());
+					
+					vo.setMaxValue(dictCoupon.getMaxValue());
+					//过期时间
+					Long expTime = item.getExpTime();
+					vo.setToDate(expTime.toString());
+					
 					vo.setIntroduction(dictCoupon.getIntroduction());
 					vo.setDescription(dictCoupon.getDescription());
 					break;
@@ -191,13 +211,26 @@ public class UserCouponController extends BaseController {
 		}*/
 
 		//如果 优惠券类型为 返回插入的数据
-		UserCouponVo vo = new UserCouponVo();
+		UserCouponsVo vo = new UserCouponsVo();
 		BeanUtils.copyProperties(record, vo);
 
-		vo.setRangeType(dictCoupon.getRangType());
-		vo.setRangFrom(dictCoupon.getRangFrom());
 		vo.setServiceTypeId(dictCoupon.getServiceTypeId());
 		vo.setServicePriceId(dictCoupon.getServicePriceId());
+		
+		//服务类型名称
+		PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
+		vo.setServiceTypeName(partnerServiceType.getName());
+		//服务报价名称
+		partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
+		vo.setServicePriceName(partnerServiceType.getName());
+		
+		vo.setMaxValue(dictCoupon.getMaxValue());
+		//过期时间
+		//Long expTime = item.getExpTime();
+		vo.setToDate(DateUtil.formatDate(dictCoupon.getToDate()));
+		
+		//vo.setToDate(DateUtil.parse(dictCoupon.getToDate()));
+		
 		vo.setIntroduction(dictCoupon.getIntroduction());
 		vo.setDescription(dictCoupon.getDescription());
 
