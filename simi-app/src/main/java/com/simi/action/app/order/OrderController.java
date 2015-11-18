@@ -264,7 +264,7 @@ public class OrderController extends BaseController {
 		}
 		
 		
-		if (payType.equals(Constants.PAY_TYPE_0) || orderPay.equals(0)) {
+		if (payType.equals(Constants.PAY_TYPE_0) || orderPay.equals(new BigDecimal(0))) {
 			// 1. 扣除用户余额.
 			// 2. 用户账号明细增加.
 			// 3. 订单状态变为已支付.
