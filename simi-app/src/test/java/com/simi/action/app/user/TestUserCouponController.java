@@ -11,7 +11,7 @@ import com.simi.action.app.JUnitActionBase;
 
 public class TestUserCouponController extends JUnitActionBase  {
 
-	@Test
+	/*@Test
     public void testGetCoupons() throws Exception {
 
 		String url = "/app/user/get_coupons.json";
@@ -26,7 +26,7 @@ public class TestUserCouponController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
+    }*/
 
 	@Test
     public void testPostCoupons() throws Exception {

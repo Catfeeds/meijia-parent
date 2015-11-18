@@ -92,7 +92,7 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 	@Override
 	public BigDecimal getPayByOrder(BigDecimal orderPay, Long userCouponId) {
 		
-		BigDecimal orderPayNow = new BigDecimal(0.0);
+	//	BigDecimal orderPayNow = new BigDecimal(0.0);
 		// 处理优惠券的情况
 		if (userCouponId > 0L) {
 			UserCoupons userCoupons = null;
@@ -110,11 +110,11 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 			
 		}
 		// 实际支付金额
-		BigDecimal p1 = new BigDecimal(100);
+		/*BigDecimal p1 = new BigDecimal(100);
 		BigDecimal p2 = MathBigDeciamlUtil.mul(orderPay, p1);
-		orderPayNow = MathBigDeciamlUtil.round(p2, 0);
+		orderPayNow = MathBigDeciamlUtil.round(p2, 0);*/
 
-		return orderPayNow;
+		return orderPay;
 	}	
 	
 	@Override

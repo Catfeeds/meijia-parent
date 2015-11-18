@@ -48,7 +48,15 @@ public class Orders {
     private Long updateTime;
 
  
-    public Long getUserId() {
+    public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 
@@ -166,14 +174,6 @@ public class Orders {
 
 	public void setServiceContent(String serviceContent) {
 		this.serviceContent = serviceContent;
-	}
-
-	public Long getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
 	}
 
 	public Long getPartnerUserId() {

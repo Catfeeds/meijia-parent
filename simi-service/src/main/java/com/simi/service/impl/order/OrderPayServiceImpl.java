@@ -33,6 +33,7 @@ import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 
@@ -88,6 +89,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		Long serviceTypeId = order.getServiceTypeId();
 		Long userId = order.getUserId();
 		Long partnerUserId = order.getPartnerUserId();
+		String orderNo = order.getOrderNo();
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 		
 		//获取服务报价的信息。
@@ -132,6 +134,8 @@ public class OrderPayServiceImpl implements OrderPayService {
 		}
 		
 		//todo, 更新user_couonp_id 的使用，变成已使用.
+	
+		
 	}
 	
 	@Override

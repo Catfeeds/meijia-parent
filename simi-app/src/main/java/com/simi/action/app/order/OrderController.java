@@ -23,11 +23,13 @@ import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
@@ -37,6 +39,7 @@ import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
+import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
@@ -48,9 +51,14 @@ import com.simi.vo.order.OrderListVo;
 public class OrderController extends BaseController {
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private UserCouponService userCouponService;
 		
 	@Autowired
 	private OrdersService ordersService;
+	
+
 	
 	@Autowired
 	private OrderQueryService orderQueryService;	
@@ -111,6 +119,7 @@ public class OrderController extends BaseController {
 			@RequestParam(value = "city_id", required = false, defaultValue = "2") Long cityId
 			) throws UnsupportedEncodingException {
 
+		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		Users u = userService.selectByPrimaryKey(userId);
 		Users partnerUser = userService.selectByPrimaryKey(partnerUserId);
@@ -145,16 +154,30 @@ public class OrderController extends BaseController {
 		BigDecimal orderMoney = new BigDecimal(0.0);
 		BigDecimal orderPay = new BigDecimal(0.0);
 		
-		orderMoney = servicePrice.getPrice();
-		orderPay = servicePrice.getDisPrice();
+		orderMoney = servicePrice.getPrice();//原价
+		orderPay = servicePrice.getDisPrice();//折扣价
+		
+		// 调用公共订单号类，生成唯一订单号
+    	Orders order = null;
+    	String orderNo = "";
+    
+    	orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+		order = ordersService.initOrders();
+    	
 		
 		if (userCouponId > 0L) {
 			//todo, 校验优惠劵是否有效.
+			result = userCouponService.validateCouponAll(userId, userCouponId, orderNo, serviceTypeId, servicePriceId, orderFrom);
+			if (result.getStatus() != Constants.SUCCESS_0) {
+				return result;
+			}
+			
+			
 		}
 		
+		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
 		
 		
-//		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
 		
 		if (payType.equals(Constants.PAY_TYPE_0)) {
 			//1.先判断用户余额是否够支付
@@ -192,13 +215,7 @@ public class OrderController extends BaseController {
 			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
 		}
 		    	
-		// 调用公共订单号类，生成唯一订单号
-    	Orders order = null;
-    	String orderNo = "";
-    
-    	orderNo = String.valueOf(OrderNoUtil.genOrderNo());
-		order = ordersService.initOrders();
-    	
+		
 		//保存订单信息
 		
 		order.setOrderNo(orderNo);
@@ -239,7 +256,11 @@ public class OrderController extends BaseController {
 		orderPricesService.insert(orderPrice);
 		
 		//todo ,保存优惠劵的使用情况,更新 user_coupons 的order_no字段.
-		
+		UserCoupons userCoupons = userCouponService.selectByPrimaryKey(userCouponId);
+		userCoupons.setIsUsed((short)1);
+		userCoupons.setOrderNo(orderNo);
+		userCoupons.setUpdateTime(TimeStampUtil.getNowSecond());
+		userCouponService.updateByPrimaryKeySelective(userCoupons);
 		
 		if (payType.equals(Constants.PAY_TYPE_0) || orderPay.equals(0)) {
 			// 1. 扣除用户余额.
