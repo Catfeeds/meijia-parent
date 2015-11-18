@@ -222,7 +222,10 @@ public class UserCouponController extends BaseController {
 		vo.setServiceTypeName(partnerServiceType.getName());
 		//服务报价名称
 		partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
-		vo.setServicePriceName(partnerServiceType.getName());
+		
+		if (!partnerServiceType.getName().equals(null) ) {
+			vo.setServicePriceName(partnerServiceType.getName());
+		}
 		
 		vo.setMaxValue(dictCoupon.getMaxValue());
 		//过期时间
