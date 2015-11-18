@@ -77,7 +77,7 @@ public class UserCouponController extends BaseController {
 			//已经使用过的
 			//优惠券已经过期的，都不显示
 			if (item.getIsUsed().equals((short)0) &&
-				item.getExpTime() > (now/1000) ) {
+				item.getExpTime() > (now/1000) ||item.getExpTime() == 0) {
 				couponsIds.add(item.getCouponId());
 			} else {
 				listUserCoupons.remove(i);
@@ -105,13 +105,22 @@ public class UserCouponController extends BaseController {
 					
 					vo.setServiceTypeId(dictCoupon.getServiceTypeId());
 					vo.setServicePriceId(dictCoupon.getServicePriceId());
+					if (dictCoupon.getServiceTypeId() == 0) {
+						vo.setServiceTypeName("");
+					}else {
+						//服务类型名称
+						PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
+						vo.setServiceTypeName(partnerServiceType.getName());
+					}
+					if (dictCoupon.getServicePriceId() == 0) {
+						vo.setServicePriceName("");
+					}else {
+						//服务报价名称
+						PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
+						partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
+						vo.setServicePriceName(partnerServiceType.getName());
+					}
 					
-					//服务类型名称
-					PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
-					vo.setServiceTypeName(partnerServiceType.getName());
-					//服务报价名称
-					partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
-					vo.setServicePriceName(partnerServiceType.getName());
 					
 					vo.setMaxValue(dictCoupon.getMaxValue());
 					//过期时间
