@@ -28,7 +28,7 @@ public class TestUserCouponController extends JUnitActionBase  {
 
     }
 
-/*	@Test
+	/*@Test
     public void testPostCoupons() throws Exception {
 
 		String url = "/app/user/post_coupon.json";
