@@ -2,6 +2,7 @@ package com.simi.action.app.user;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -125,7 +126,7 @@ public class UserCouponController extends BaseController {
 					vo.setMaxValue(dictCoupon.getMaxValue());
 					//过期时间
 					Long expTime = item.getExpTime();
-					vo.setToDate(expTime.toString());
+					vo.setToDate(TimeStampUtil.timeStampToDateStr(expTime, "yyy-MM-dd"));
 					
 					vo.setIntroduction(dictCoupon.getIntroduction());
 					vo.setDescription(dictCoupon.getDescription());
@@ -182,7 +183,12 @@ public class UserCouponController extends BaseController {
 		record.setCardPasswd(cardPasswd);
 		record.setCouponId(dictCoupon.getId());
 		record.setValue(dictCoupon.getValue());
-		//record.setExpTime(dictCoupon.getExpTime());
+
+		String extTimeStr = DateUtil.formatDate(dictCoupon.getToDate());
+		Long extTime = TimeStampUtil.getMillisOfDay(extTimeStr)/1000;
+		record.setExpTime(extTime);
+		
+		
 		Long newId = userCouponService.insert(record);
 
 		// 如果优惠券类型为充值卡充值，则直接进行用户充值，并且返回提示信息.
