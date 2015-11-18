@@ -280,6 +280,8 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		OrderListVo vo = new OrderListVo();
 		BeanUtils.copyProperties(order, vo);
 		
+		//订单价格信息
+		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
 		
 		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
 		
@@ -291,11 +293,17 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setName(user.getName());
 		
 		//服务类型名称
+		vo.setServiceTypeId(order.getServiceTypeId());
 		vo.setServiceTypeName("");
 		if (order.getServiceTypeId() > 0L) {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			vo.setServiceTypeName(serviceType.getName());
 		}		
+		
+		//服务报价ID和名称
+		vo.setServicePriceId(orderPrice.getServicePriceId());
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(orderPrice.getServicePriceId());
+		vo.setServicePriceName(servicePrice.getName());
 		
 		//用户地址
 		vo.setAddrName("");
@@ -309,7 +317,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000));
 		
 		//订单价格信息
-		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
+		
 		Long servciePriceId = orderPrice.getServicePriceId();
 		
 		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servciePriceId);

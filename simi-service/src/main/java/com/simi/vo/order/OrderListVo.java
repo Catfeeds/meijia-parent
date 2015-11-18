@@ -2,8 +2,6 @@ package com.simi.vo.order;
 
 import java.math.BigDecimal;
 
-import com.simi.po.model.order.Orders;
-
 public class OrderListVo {
 	
     private Long orderId;
@@ -22,8 +20,14 @@ public class OrderListVo {
     
 	//用户称呼
 	private String name;    
+	
+	private Long serviceTypeId;
     
     private String serviceTypeName;
+    
+    private Long servicePriceId;
+    
+    private String servicePriceName;
     
     private Short isAddr;
    
@@ -165,5 +169,29 @@ public class OrderListVo {
 
 	public void setIsAddr(Short isAddr) {
 		this.isAddr = isAddr;
+	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public Long getServicePriceId() {
+		return servicePriceId;
+	}
+
+	public void setServicePriceId(Long servicePriceId) {
+		this.servicePriceId = servicePriceId;
+	}
+
+	public String getServicePriceName() {
+		return servicePriceName;
+	}
+
+	public void setServicePriceName(String servicePriceName) {
+		this.servicePriceName = servicePriceName;
 	}
 }
