@@ -217,15 +217,19 @@ public class UserCouponController extends BaseController {
 		vo.setServiceTypeId(dictCoupon.getServiceTypeId());
 		vo.setServicePriceId(dictCoupon.getServicePriceId());
 		
-		//服务类型名称
-		PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
-		vo.setServiceTypeName(partnerServiceType.getName());
-		//服务报价名称
-		partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
-		
-		if (!partnerServiceType.getName().equals(null) ) {
+		if(dictCoupon.getServicePriceId() == 0){
+			vo.setServiceTypeName("");
+			vo.setServicePriceName("");
+		}else {
+			//服务类型名称
+			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServiceTypeId());
+			vo.setServiceTypeName(partnerServiceType.getName());
+			//服务报价名称
+			partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(dictCoupon.getServicePriceId());
 			vo.setServicePriceName(partnerServiceType.getName());
+			
 		}
+		
 		
 		vo.setMaxValue(dictCoupon.getMaxValue());
 		//过期时间
