@@ -274,10 +274,13 @@ public class OrderController extends BaseController {
 			u.setUpdateTime(TimeStampUtil.getNowSecond());
 			userService.updateByPrimaryKeySelective(u);
 			
+			
 			order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//已支付
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKeySelective(order);
-			
+			System.out.println("================order id =  " + order.getOrderId().toString() );
+			System.out.println("================order status =  " + order.getOrderStatus().toString() );
+			System.out.println();
 			//记录订单日志.
 			orderLog = orderLogService.initOrderLog(order);
 			orderLogService.insert(orderLog);
