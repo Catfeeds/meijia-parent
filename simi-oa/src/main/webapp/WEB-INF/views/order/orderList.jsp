@@ -58,18 +58,19 @@ import="com.simi.oa.common.UrlHelper"%>
                               <tr>
                                 	  <th >订单号</th>
 		                              <th >下单时间</th>
-		                              <th >服务类型</th>
+		                              <!-- <th >服务类型</th> -->
 		                              <th >服务日期</th>
 		                              <!-- <th >服务时间</th> -->
 		                              <th>用户手机号</th>
 		                              <th >地址</th>
-		                              <th >订单状态</th>
-		                              <th >总金额</th>
-		                              <th >支付金额</th>
-		                              <th >支付方式</th>
+		                              <!-- <th >订单状态</th> -->
+		                          <!--     <th >总金额</th> -->
+		                              <!-- <th >支付金额</th> -->
+		                             <!--  <th >支付方式</th> -->
+		                               <th>操作</th>
 		                             <!--  <th>优惠券</th> -->
 		                              <!-- <th>备注</th> -->
-		                             <!--  <th>操作</th> -->
+		                             
                               </tr>
                               </thead>
                               <tbody>
@@ -80,10 +81,10 @@ import="com.simi.oa.common.UrlHelper"%>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							            </td>
 
-							            <td>
+							           <%--  <td>
 											<serviceTypeTag:servicetype serviceType="${item.serviceType }"/>
 
-							            </td>
+							            </td> --%>
 							            <td>
 											<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.serviceDate * 1000}"/>
 										</td>
@@ -94,7 +95,7 @@ import="com.simi.oa.common.UrlHelper"%>
 
 										<td>${ item.mobile }</td>
 							            <td>${ item.addrId }</td>
-							            <td>
+							          <%--   <td>
 							            	<c:if test="${ item.orderStatus < 2 }">
 							            		<orderStatusTag:orderstatus orderStatus="${ item.orderStatus }"/>
 							            	</c:if>
@@ -104,11 +105,12 @@ import="com.simi.oa.common.UrlHelper"%>
 							            	<c:if test="${ item.orderStatus > 2 }">
 							            		<span style="color:green;font-weight:bold;"><orderStatusTag:orderstatus orderStatus="${ item.orderStatus }"/></span>
 							            	</c:if>
-							            </td>
-							            <td>${ item.orderMoney }</td>
-							            <td>${ item.orderPay }</td>
-							            <td><payTypeNameTag:payType payType="${ item.payType }" orderStatus="${ item.orderStatus }"/></td>
-							       		<%-- <td>${item.cardPasswd }</td> --%>
+							            </td> --%>
+							           <%--  <td>${ item.orderMoney }</td> --%>
+							           <%--  <td>${ item.orderPay }</td> --%>
+							            <%-- <td><payTypeNameTag:payType payType="${ item.payType }" orderStatus="${ item.orderStatus }"/></td>
+							       		 --%>
+							       		 <%-- <td>${item.cardPasswd }</td> --%>
 							       	<%-- 	<td>${item.remarks }</td> --%>
 							       	<td><button id="btn_update" onClick="btn_update('order/orderView?user_id=${ item.userId }')" class="btn btn-primary btn-xs" title="订单详情"><i class=" icon-ambulance"></i></button></td>
 							       		<%-- <td>

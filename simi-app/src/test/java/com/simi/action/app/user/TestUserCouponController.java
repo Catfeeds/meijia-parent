@@ -11,11 +11,11 @@ import com.simi.action.app.JUnitActionBase;
 
 public class TestUserCouponController extends JUnitActionBase  {
 
-	/*@Test
+	@Test
     public void testGetCoupons() throws Exception {
 
 		String url = "/app/user/get_coupons.json";
-		String params = "?user_id=4";
+		String params = "?user_id=100";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -26,16 +26,16 @@ public class TestUserCouponController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }*/
+    }
 
-	@Test
+/*	@Test
     public void testPostCoupons() throws Exception {
 
 		String url = "/app/user/post_coupon.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("user_id", "4");
-	    postRequest = postRequest.param("card_passwd", "3XD26X1S");
+	    postRequest = postRequest.param("user_id", "100");
+	    postRequest = postRequest.param("card_passwd", "KTH5L363");
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
@@ -46,6 +46,6 @@ public class TestUserCouponController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
+    }*/
 
 }
