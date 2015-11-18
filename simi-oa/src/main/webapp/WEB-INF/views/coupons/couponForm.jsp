@@ -75,6 +75,29 @@
 								唯一
 							</div>
 						</div>
+						<c:if test="${dictCoupons.id == 0}">
+							<div class="form-group">
+
+							<!-- Text input-->
+							<label class="col-md-2 control-label">卡数量</label>
+							<div class="col-md-5">
+								<input name="count" id="count" class="form-control"
+									placeholder="卡数量" maxSize="10" />
+								<form:errors path="value" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<!-- Text input-->
+							<label class="col-md-2 control-label">兑换码位数</label>
+							<div class="col-md-5">
+								<input type="radio" name="password_num"   checked="checked"  value='4'/>4位
+								<input type="radio" name="password_num"  value="6" />6位
+								<form:errors path="value" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						</c:if>
+						
 						<input type="hidden" id="serviceTypeSelectedId" value="${dictCoupons.serviceTypeId}" />
 						<input type="hidden" id="servicePriceIdSelectedId" value="${dictCoupons.servicePriceId}" />
 						<div class="form-group">
@@ -122,14 +145,14 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
+						<%-- <div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">日&nbsp;期&nbsp;范&nbsp;围</label>
 							<div class="col-md-5">
 								<form:select path="rangMonth" class="form-control">
 									<form:options items="${selectDataSource}" />
 								</form:select>
 							</div>
-						</div>
+						</div> --%>
 						<div class="form-group">
 
 							<!-- Text input-->
@@ -188,8 +211,6 @@
 	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
 	<!-- rechargeCoupon Form表单 js -->
-	<script src="<c:url value='/js/simi/coupon/couponForm.js'/>"
-		type="text/javascript"></script>
 			<%-- <script type="text/javascript" src="<c:url value='
 			/assets/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js'/>"></script> --%>
 			<!-- 大类小类联动js -->

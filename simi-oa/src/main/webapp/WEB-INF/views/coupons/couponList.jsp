@@ -55,26 +55,38 @@
                               <thead>
                               <tr>
                               		  <th >描述</th>
+                              		
+                              		  <th >优惠券卡号</th>
+		                              <th >优惠券密码</th>
 		                              <th >优惠券金额</th>
-		                              <th >订单金额满</th>
-		                             <!--  <th >服务类型</th> -->
-		                              <th >日期范围</th>
+		                              <th >通用类型</th>
+                              		  <th >开始日期</th>
+		                              <th >结束日期</th>
 		                              <th >添加时间</th>
 		                              <th>操作</th>
+		                         
                               </tr>
                               </thead>
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
                               			<td>${ item.introduction }</td>
+                              			<td>${ item.cardNo }</td>
+							            <td>${ item.cardPasswd }</td>
 							            <td>${ item.value }</td>
-							            <td>${ item.maxValue }</td>
-							            <%-- <td>
-							            	<serviceTypeTag:servicetype serviceType="${item.serviceType }"/>
-							            </td> --%>
-							            <td>
-							            	${ item.rangMonth }个月
+							             <td>
+											<rangTypeNameTag:rangType rangType="${ item.rangType }"/>
 							            </td>
+							          
+							          <td>
+							            <fmt:formatDate var='formattedDate1' value='${item.fromDate}' type='both' pattern="yyyy-MM-dd" />
+							        	   ${formattedDate1}
+							            </td>
+							            <td>
+							            <fmt:formatDate var='formattedDate2' value='${item.toDate}' type='both' pattern="yyyy-MM-dd" />
+										  ${formattedDate2}
+							            </td>
+							            
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							            </td>
