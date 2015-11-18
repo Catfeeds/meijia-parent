@@ -30,7 +30,7 @@ public class TestOrderAddController extends JUnitActionBase  {
 	    postRequest = postRequest.param("service_type_id", "42");
 	    postRequest = postRequest.param("service_price_id", "176");
 	    postRequest = postRequest.param("mobile", "15712917308");
-	    postRequest = postRequest.param("pay_type", "1");
+	    postRequest = postRequest.param("pay_type", "0");
 	    postRequest = postRequest.param("user_coupon_id", "266");
 	    
 	    

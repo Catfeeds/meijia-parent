@@ -134,7 +134,15 @@ public class OrderPayServiceImpl implements OrderPayService {
 		}
 		
 		//todo, 更新user_couonp_id 的使用，变成已使用.
-	
+		
+		if (orderPrice.getUserCouponId()>0) {
+			UserCoupons record = userCouponsMapper.selectByPrimaryKey(orderPrice.getUserCouponId());
+			
+			record.setIsUsed((short)1);
+			record.setUpdateTime(TimeStampUtil.getNowSecond());
+			userCouponsMapper.updateByPrimaryKeySelective(record);
+		}
+		
 		
 	}
 	

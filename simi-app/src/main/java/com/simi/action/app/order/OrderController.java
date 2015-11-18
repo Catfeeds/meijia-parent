@@ -257,7 +257,6 @@ public class OrderController extends BaseController {
 		
 		//todo ,保存优惠劵的使用情况,更新 user_coupons 的order_no字段.
 		UserCoupons userCoupons = userCouponService.selectByPrimaryKey(userCouponId);
-		userCoupons.setIsUsed((short)1);
 		userCoupons.setOrderNo(orderNo);
 		userCoupons.setUpdateTime(TimeStampUtil.getNowSecond());
 		userCouponService.updateByPrimaryKeySelective(userCoupons);
