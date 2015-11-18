@@ -14,12 +14,14 @@ import com.simi.common.Constants;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
+import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.TimeStampUtil;
@@ -51,6 +53,9 @@ public class OrderPayController extends BaseController {
 	
 	@Autowired
 	private UserDetailPayService userDetailPayService;
+	
+	@Autowired
+	private UserCouponService userCouponService;	
 
 	// 17.订单支付前接口
 	/**
@@ -65,7 +70,10 @@ public class OrderPayController extends BaseController {
 			@RequestParam("user_id") Long userId, 
 			@RequestParam("order_id") Long orderId, 
 			@RequestParam("order_no") String orderNo, 
-			@RequestParam("pay_type") Short payType) {
+			@RequestParam("pay_type") Short payType,
+			@RequestParam(value = "user_coupon_id", required = false, defaultValue = "0") Long userCouponId,
+			@RequestParam(value = "addr_id", required = false, defaultValue = "0") Long addrId,
+			@RequestParam(value = "order_from", required = false, defaultValue = "0") Short orderFrom) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -84,15 +92,22 @@ public class OrderPayController extends BaseController {
 			return result;
 		}
 		
+		if (!order.getUserId().equals(userId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);
-		long updateTime = TimeStampUtil.getNowSecond();
-				
+		
+		Long serviceTypeId = order.getServiceTypeId();
+		Long servicePriceId = orderPrice.getServicePriceId();
 
-		orderPrice.setOrderPay(orderPrice.getOrderMoney());
+		BigDecimal orderPay = orderPrice.getOrderPay();
 
-		BigDecimal orderPay = orderPrice.getOrderMoney();
-		BigDecimal orderMoney = orderPrice.getOrderMoney();
-
+		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
+		
+		
 		if (payType.equals(Constants.PAY_TYPE_0)) {
 			//1.先判断用户余额是否够支付
 			if(u.getRestMoney().compareTo(orderPay) < 0) {
@@ -102,10 +117,30 @@ public class OrderPayController extends BaseController {
 			}
 		}
 		
+		if (userCouponId > 0L) {
+			//todo, 校验优惠劵是否有效.
+			result = userCouponService.validateCouponAll(userId, userCouponId, orderNo, serviceTypeId, servicePriceId, orderFrom);
+			if (result.getStatus() != Constants.SUCCESS_0) {
+				return result;
+			}
+		}
+		
+		order.setAddrId(addrId);
+		ordersService.updateByPrimaryKeySelective(order);
+		
 		
 		orderPrice.setPayType(payType);
-		orderPrice.setUpdateTime(updateTime);
+		orderPrice.setOrderPay(orderPay);
+		orderPrice.setUserCouponId(userCouponId);
+		orderPrice.setUpdateTime(TimeStampUtil.getNowSecond());
 		orderPricesService.updateByPrimaryKey(orderPrice);
+		
+		if (userCouponId > 0) {
+			UserCoupons userCoupons = userCouponService.selectByPrimaryKey(userCouponId);
+			userCoupons.setOrderNo(orderNo);
+			userCoupons.setUpdateTime(TimeStampUtil.getNowSecond());
+			userCouponService.updateByPrimaryKeySelective(userCoupons);
+		}
 		
 		if (payType.equals(Constants.PAY_TYPE_0)) {
 			// 1. 扣除用户余额.
@@ -114,7 +149,7 @@ public class OrderPayController extends BaseController {
 			// 4. 订单日志
 			
 			u.setRestMoney(u.getRestMoney().subtract(orderPay));
-			u.setUpdateTime(updateTime);
+			u.setUpdateTime(TimeStampUtil.getNowSecond());
 			userService.updateByPrimaryKeySelective(u);
 			
 			order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//已支付
