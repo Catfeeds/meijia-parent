@@ -109,7 +109,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		
 		//通知相关服务商
 		String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile , " " };
-		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
+//		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
 		
 		//通知用户
 		String addTimeStr = TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000 , "yyyy-MM-dd HH:mm");
