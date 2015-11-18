@@ -99,7 +99,7 @@ public class UserCouponController extends BaseController {
 
 			UserCouponsVo vo = new UserCouponsVo();
 			BeanUtils.copyProperties(item, vo);
-			
+			vo.setId(item.getCouponId());
 			for (int j = 0; j< listCoupons.size(); j++) {
 				dictCoupon = listCoupons.get(j);
 				if (item.getCouponId().equals(dictCoupon.getId())) {
@@ -228,6 +228,7 @@ public class UserCouponController extends BaseController {
 		//如果 优惠券类型为 返回插入的数据
 		UserCouponsVo vo = new UserCouponsVo();
 		BeanUtils.copyProperties(record, vo);
+		vo.setId(record.getCouponId());
 
 		vo.setServiceTypeId(dictCoupon.getServiceTypeId());
 		vo.setServicePriceId(dictCoupon.getServicePriceId());
