@@ -14,6 +14,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderLogService;
@@ -21,6 +22,7 @@ import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
+import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
@@ -56,6 +58,9 @@ public class OrderPayController extends BaseController {
 	
 	@Autowired
 	private UserCouponService userCouponService;	
+	
+	@Autowired
+	private PartnerServicePriceDetailService partnerServicePriceDetailService;		
 
 	// 17.订单支付前接口
 	/**
@@ -100,10 +105,15 @@ public class OrderPayController extends BaseController {
 		
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);
 		
+		//获取服务报价的信息。
+		PartnerServicePriceDetail servicePrice = partnerServicePriceDetailService.selectByServicePriceId(orderPrice.getServicePriceId());
+				
+		
+		
 		Long serviceTypeId = order.getServiceTypeId();
 		Long servicePriceId = orderPrice.getServicePriceId();
 
-		BigDecimal orderPay = orderPrice.getOrderPay();
+		BigDecimal orderPay = servicePrice.getDisPrice();//折扣价
 
 		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
 		
