@@ -19,6 +19,8 @@ public class PartnerServicePriceListVo {
     private BigDecimal disPrice;
     
     private String detailUrl;
+    
+    private Short isAddr;
 
 	public String getName() {
 		return name;
@@ -66,5 +68,13 @@ public class PartnerServicePriceListVo {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Short getIsAddr() {
+		return isAddr;
+	}
+
+	public void setIsAddr(Short isAddr) {
+		this.isAddr = isAddr;
 	} 
 }

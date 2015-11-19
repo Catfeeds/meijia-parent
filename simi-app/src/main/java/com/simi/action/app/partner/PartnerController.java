@@ -144,6 +144,7 @@ public class PartnerController extends BaseController {
 			
 			servicePriceVo.setDetailUrl(detailUrl);
 			servicePriceVos.add(servicePriceVo);
+			
 		}
 		
 		detailVo.setServicePrices(servicePriceVos);
