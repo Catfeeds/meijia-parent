@@ -132,6 +132,7 @@ public class OrderPayController extends BaseController {
 		orderPrice.setPayType(payType);
 		orderPrice.setOrderPay(orderPay);
 		orderPrice.setUserCouponId(userCouponId);
+		orderPrice.setOrderPay(orderPay);
 		orderPrice.setUpdateTime(TimeStampUtil.getNowSecond());
 		orderPricesService.updateByPrimaryKey(orderPrice);
 		
