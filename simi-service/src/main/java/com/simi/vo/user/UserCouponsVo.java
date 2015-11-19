@@ -6,7 +6,7 @@ public class UserCouponsVo {
 
     private Long userId;
     //优惠券Id
-    private Long couponId;
+    private Long id;
 
     private String introduction;
     
@@ -39,12 +39,13 @@ public class UserCouponsVo {
 		this.userId = userId;
 	}
 
-	public Long getCouponId() {
-		return couponId;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setCouponId(Long couponId) {
-		this.couponId = couponId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCardPasswd() {
