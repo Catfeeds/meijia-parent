@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.admin.AdminAccountService;
+import com.simi.service.async.OrderAsyncService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
@@ -47,6 +48,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	private OrderPricesService orderPricesService;
+	
+	@Autowired
+	private OrderAsyncService orderAsyncService;
 	
 	@Autowired
 	private UsersService usersService;
@@ -142,7 +146,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			userCouponsMapper.updateByPrimaryKeySelective(record);
 		}
-		
+		//异步操作
+		//订单操作成功后，对应的用户累加积分（1:1）
+		//orderAsyncService.orderScore(order);
 		
 	}
 	
