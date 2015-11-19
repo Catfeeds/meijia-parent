@@ -30,6 +30,8 @@ public class OrderListVo {
     private String servicePriceName;
     
     private Short isAddr;
+    
+    private Long  addrId;
    
   	private String addrName;
   	
@@ -193,5 +195,13 @@ public class OrderListVo {
 
 	public void setServicePriceName(String servicePriceName) {
 		this.servicePriceName = servicePriceName;
+	}
+
+	public Long getAddrId() {
+		return addrId;
+	}
+
+	public void setAddrId(Long addrId) {
+		this.addrId = addrId;
 	}
 }

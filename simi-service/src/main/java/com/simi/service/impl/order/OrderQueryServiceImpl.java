@@ -306,6 +306,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setServicePriceName(servicePrice.getName());
 		
 		//用户地址
+		vo.setAddrId(order.getAddrId());
 		vo.setAddrName("");
 		if (order.getAddrId() > 0L) {
 			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
