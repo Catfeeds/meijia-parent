@@ -22,4 +22,6 @@ public interface UserDetailScoreService {
 
 	UserDetailScore initUserDetailScore();
 
+	int updateByPrimaryKeySelective(UserDetailScore record);
+
 }

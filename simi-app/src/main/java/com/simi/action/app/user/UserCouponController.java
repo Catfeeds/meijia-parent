@@ -125,9 +125,10 @@ public class UserCouponController extends BaseController {
 					
 					vo.setMaxValue(dictCoupon.getMaxValue());
 					//过期时间
-					Long expTime = item.getExpTime();
-					vo.setToDate(TimeStampUtil.timeStampToDateStr(expTime, "yyy-MM-dd"));
-					
+					Long expTime = item.getExpTime()*1000;
+				//	String expTimestr = expTime.toString();
+					vo.setToDate(TimeStampUtil.timeStampToDateStr(expTime, "yyyy-MM-dd"));
+				//	vo.setToDate(TimeStampUtil.);
 					vo.setIntroduction(dictCoupon.getIntroduction());
 					vo.setDescription(dictCoupon.getDescription());
 					break;

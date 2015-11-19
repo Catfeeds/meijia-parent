@@ -71,4 +71,10 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	public UserDetailScore selectByPrimaryKey(Long id) {
 		return userDetailScoreMapper.selectByPrimaryKey(id);
 	}
+
+	@Override
+	public int updateByPrimaryKeySelective(UserDetailScore record) {
+		
+		return userDetailScoreMapper.updateByPrimaryKeySelective(record);
+	}
 }

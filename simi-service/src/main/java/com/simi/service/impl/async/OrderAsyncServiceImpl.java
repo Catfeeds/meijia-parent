@@ -62,24 +62,17 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 			user.setScore(scoreSum);
 			user.setUpdateTime(TimeStampUtil.getNow()/1000);
 			usersService.updateByPrimaryKeySelective(user);
-			
+			//增加积分明细记录
 			UserDetailScore  record = userDetailScoreService.initUserDetailScore();
 			
-			
 			record.setUserId(order.getUserId());
-			/*record.setMobile("");
-			record.setActionId((short) 0);
-			record.setIsConsume((short) 0);
-			record.setScore(0);
-			record.setAddTime(TimeStampUtil.getNowSecond());
-			*/
 			record.setMobile(user.getMobile());
 			record.setScore(orderPayInteger);
 			
-		//	userDetailScoreService.updateByPrimaryKeySelective(record);
+			userDetailScoreService.updateByPrimaryKeySelective(record);
 			
 		}
-		
+		//更新order 表的 is_score字段放置为 1,积分已返回
 		
 		
 		
