@@ -1,25 +1,3 @@
-var Script = function () {
-
-
-//    tool tips
-
-    $('.tooltips').tooltip();
-
-//    popovers
-
-    $('.popovers').popover();
-
-//    bxslider
-
-//    $('.bxslider').show();
-//    $('.bxslider').bxSlider({
-//        minSlides: 4,
-//        maxSlides: 4,
-//        slideWidth: 276,
-//        slideMargin: 20
-//    });
-}();
-
 var host = window.location.host;
 var appName = "simi";
 var localUrl = "http://" + host;
