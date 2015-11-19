@@ -16,6 +16,7 @@ import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.OrderAsyncService;
 import com.simi.service.order.OrderPricesService;
+import com.simi.service.order.OrdersService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
 @Service
@@ -30,6 +31,10 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 	
 	@Autowired
 	private UserDetailScoreService userDetailScoreService;
+	
+	@Autowired
+	private OrdersService ordersService;
+	
 	//订单支付成功后，将用户的积分增加相应的积分
 	@Async
 	@Override
@@ -73,22 +78,9 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 			
 		}
 		//更新order 表的 is_score字段放置为 1,积分已返回
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		order.setIsScore((short)1);
+		ordersService.updateByPrimaryKeySelective(order);
+
 		return new AsyncResult<Boolean>(true);
 	}
 	
