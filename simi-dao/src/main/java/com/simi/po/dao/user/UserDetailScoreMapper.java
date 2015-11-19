@@ -16,4 +16,6 @@ public interface UserDetailScoreMapper {
     List<UserDetailScore> selectByPage(String mobile, int start, int end);
 
 	int updateByPrimaryKeySelective(UserDetailScore record);
+
+	List<UserDetailScore> selectByUserIdPage(Long userId, int start, int end);
 }

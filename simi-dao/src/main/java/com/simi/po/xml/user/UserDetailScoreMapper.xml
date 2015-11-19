@@ -28,6 +28,14 @@
     order by add_time desc
     limit #{1,jdbcType=NUMERIC}, #{2,jdbcType=NUMERIC}
   </select>
+  <select id="selectByUserIdPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_detail_score
+    where user_id = #{0,jdbcType=VARCHAR}
+    order by add_time desc
+    limit #{1,jdbcType=NUMERIC}, #{2,jdbcType=NUMERIC}
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user_detail_score

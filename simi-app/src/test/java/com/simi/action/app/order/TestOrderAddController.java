@@ -41,6 +41,6 @@ public class TestOrderAddController extends JUnitActionBase  {
 
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-	    Thread.sleep(6000); // 因为junit结束会结束jvm，所以让它等会异步线程  
+	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
     }
 }

@@ -24,4 +24,7 @@ public interface UserDetailScoreService {
 
 	int updateByPrimaryKeySelective(UserDetailScore record);
 
+
+	List<UserDetailScore> selectByUserIdPage(Long userId, int page);
+
 }

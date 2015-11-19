@@ -77,4 +77,15 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 		
 		return userDetailScoreMapper.updateByPrimaryKeySelective(record);
 	}
+
+	@Override
+	public List<UserDetailScore> selectByUserIdPage(Long userId, int page) {
+		int start = 0;
+		int end = Constants.PAGE_MAX_NUMBER;
+		if (page > 1) {
+			start = (page - 1) * Constants.PAGE_MAX_NUMBER;
+//			end = page * Constants.PAGE_MAX_NUMBER;
+		}
+		return userDetailScoreMapper.selectByUserIdPage(userId, start, end);
+	}
 }
