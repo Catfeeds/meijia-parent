@@ -36,7 +36,7 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 	private OrdersService ordersService;
 	
 	//订单支付成功后，将用户的积分增加相应的积分
-//	@Async
+	@Async
 	@Override
 	public Future<Boolean> orderScore(Orders order){
 		
@@ -67,14 +67,15 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 			user.setScore(scoreSum);
 			user.setUpdateTime(TimeStampUtil.getNow()/1000);
 			usersService.updateByPrimaryKeySelective(user);
-			//增加积分明细记录
+			//向UserDetailScore表中插入积分明细记录
 			UserDetailScore  record = userDetailScoreService.initUserDetailScore();
 			
 			record.setUserId(order.getUserId());
 			record.setMobile(user.getMobile());
 			record.setScore(orderPayInteger);
 			
-			userDetailScoreService.updateByPrimaryKeySelective(record);
+			//userDetailScoreService.updateByPrimaryKeySelective(record);
+			userDetailScoreService.insert(record);
 			
 		}
 		//更新order 表的 is_score字段放置为 1,积分已返回
