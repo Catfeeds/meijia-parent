@@ -1,6 +1,7 @@
 cd /data/src/meijia-parent/
 svn up
-mvn clean install package -pl simi-app -am
+cd /data/src/meijia-parent/simi-app
+mvn clean package
 /data/tomcat/bin/shutdown.sh
 sleep 1
 rm -rf /data/tomcat/webapps/simi
