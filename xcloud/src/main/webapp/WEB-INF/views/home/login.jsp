@@ -27,7 +27,9 @@
 
     <div class="row">
         <div class="well col-md-5 center login-box">
-
+			<div class="alert alert-info">
+                没有账号，请点击这里注册.
+            </div>
             <form class="form-horizontal" action="index.html" method="post">
                 <fieldset>
                     <div class="input-group input-group-lg">
