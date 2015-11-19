@@ -42,8 +42,15 @@
                     </div>
                     <div class="clearfix"></div>
 
-                    <div class="input-prepend">
-                        <label class="remember" for="remember"><input type="checkbox" id="remember">下次自动登录</label>
+                    <div class="row">
+                    
+                    	<p class="col-md-9 col-md-12 col-xs-12 copyright">
+                    		
+                    	</p>
+
+        				<p class="col-md-3 col-sm-3 col-xs-12 powered-by">
+        					<a href="#">忘记密码</a>
+        				</p>
                     </div>
                     <div class="clearfix"></div>
 

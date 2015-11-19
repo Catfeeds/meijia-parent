@@ -23,7 +23,6 @@
     <link href="<c:url value='css/elfinder.min.css'/>" rel='stylesheet'>
     <link href="<c:url value='css/elfinder.theme.css'/>" rel='stylesheet'>
     <link href="<c:url value='css/jquery.iphone.toggle.css'/>" rel='stylesheet'>
-    <link href="<c:url value='css/uploadify.css'/>" rel='stylesheet'>
     <link href="<c:url value='css/animate.min.css'/>" rel='stylesheet'>
     <!-- Custom styles for this template -->
 	

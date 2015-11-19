@@ -1,7 +1,7 @@
 $(document).ready(function () {
     //themes, change CSS with JS
     //default theme(CSS) is cerulean, change it if needed
-    var defaultTheme = 'united';
+    var defaultTheme = 'classic';
 
     var currentTheme = $.cookie('currentTheme') == null ? defaultTheme : $.cookie('currentTheme');
     var msie = navigator.userAgent.match(/msie/i);

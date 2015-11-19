@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Shojumaru);
-
+@import url(Shojumaru.css);
 
 body.login-page {
   background: url(../img/app-header-bg.jpg) no-repeat center center fixed;
