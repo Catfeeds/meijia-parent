@@ -36,7 +36,7 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 	private OrdersService ordersService;
 	
 	//订单支付成功后，将用户的积分增加相应的积分
-	@Async
+//	@Async
 	@Override
 	public Future<Boolean> orderScore(Orders order){
 		

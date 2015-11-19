@@ -148,7 +148,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		}
 		//异步操作
 		//订单操作成功后，对应的用户累加积分（1:1）
-		//orderAsyncService.orderScore(order);
+		orderAsyncService.orderScore(order);
 		
 	}
 	
