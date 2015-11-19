@@ -9,18 +9,21 @@
     <title>美家生活-行政云平台</title>
 
  	<!-- Bootstrap core CSS -->
-    <link href="<c:url value='/css/bootstrap.min.css'/>" rel="stylesheet" type="text/css"/>
-	<link href="<c:url value='/css/bootstrap-reset.css'/>" rel="stylesheet" type="text/css"/>
+    <link href="<c:url value='/css/bootstrap-cerulean.min.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/assets/bootstrap-tour/build/css/bootstrap-tour.min.css'/>" rel="stylesheet" />
+	
 	<!--external css-->
-	<link href="<c:url value='/assets/font-awesome/css/font-awesome.min.css'/>" rel="stylesheet" type="text/css"/>
-     
-    <!-- Custom styles for this template -->
-    <link href="<c:url value='/css/style.css'/>" rel="stylesheet">
-    <link href="<c:url value='/css/style-responsive.css'/>" rel="stylesheet" />
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->    
+	<link href="<c:url value='/css/xcloud-app.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/assets/colorbox/example3/colorbox.css'/>" rel="stylesheet" />
+    <link href="<c:url value='/assets/chosen/chosen.min.css'/>" rel="stylesheet" />
+    <link href="<c:url value='/assets/colorbox/example3/colorbox.css'/>" rel="stylesheet" />
     
+    <link href="<c:url value='css/jquery.noty.css'/>" rel='stylesheet'>
+    <link href="<c:url value='css/noty_theme_default.css'/>" rel='stylesheet'>
+    <link href="<c:url value='css/elfinder.min.css'/>" rel='stylesheet'>
+    <link href="<c:url value='css/elfinder.theme.css'/>" rel='stylesheet'>
+    <link href="<c:url value='css/jquery.iphone.toggle.css'/>" rel='stylesheet'>
+    <link href="<c:url value='css/uploadify.css'/>" rel='stylesheet'>
+    <link href="<c:url value='css/animate.min.css'/>" rel='stylesheet'>
+    <!-- Custom styles for this template -->
+	
