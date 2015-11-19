@@ -154,7 +154,7 @@ public class OrderController extends BaseController {
 		BigDecimal orderMoney = new BigDecimal(0.0);
 		BigDecimal orderPay = new BigDecimal(0.0);
 		
-		orderMoney = servicePrice.getPrice();//原价
+		orderMoney = servicePrice.getDisPrice();//原价
 		orderPay = servicePrice.getDisPrice();//折扣价
 		
 		// 调用公共订单号类，生成唯一订单号
