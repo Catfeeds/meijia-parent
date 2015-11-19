@@ -66,8 +66,8 @@ public class UserScoreController extends BaseController {
 	
 	@RequestMapping(value = "get_score", method = RequestMethod.GET)
 	public AppResultData<List<UserDetailScore>> myScore(@RequestParam("user_id")
-	Long userId, @RequestParam("page")
-	int page) {
+	Long userId, 
+	@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		
 		List<UserDetailScore> userAddrs = userDetailScoreService.selectByUserIdPage(
 				userId, page);

@@ -229,6 +229,18 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		return userDetailPay;
 	}
 
+	@Override
+	public List<UserDetailPay> selectByUserIdPage(Long userId, int page) {
+		int start = 0;
+		int end = Constants.PAGE_MAX_NUMBER;
+		if (page > 1) {
+			start = (page - 1) * Constants.PAGE_MAX_NUMBER;
+//			end = page * Constants.PAGE_MAX_NUMBER;
+		}
+		return userDetailPayMapper.selectByUserIdPage(userId, start, end);
+	}
+	
+
 	
 
 

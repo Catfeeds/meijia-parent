@@ -22,4 +22,6 @@ public interface UserDetailPayMapper {
 
 	 List<UserDetailPay> selectByListPage(Map<String,Object> conditions);
 
+	List<UserDetailPay> selectByUserIdPage(Long userId, int start, int end);
+
 }

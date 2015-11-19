@@ -199,7 +199,14 @@
       </if>
     order by add_time desc
   </select>
-
+<select id="selectByUserIdPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_detail_pay
+    where user_id = #{0,jdbcType=VARCHAR}
+    order by add_time desc
+    limit #{1,jdbcType=NUMERIC}, #{2,jdbcType=NUMERIC}
+  </select>
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserDetailPay" >
     update user_detail_pay
     set user_id = #{userId,jdbcType=NUMERIC},
