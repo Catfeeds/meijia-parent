@@ -8,11 +8,14 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;  
 import java.io.File;  
 import java.io.IOException;  
+import java.net.URL;
 import java.util.HashMap;  
 import java.util.Map;  
   
+
 import javax.imageio.ImageIO;  
   
+
 import com.google.zxing.BarcodeFormat;  
 import com.google.zxing.EncodeHintType;  
 import com.google.zxing.MultiFormatWriter;  
@@ -46,7 +49,7 @@ public class QrCodeUtil {
         }  
     }  
   
-    private static BufferedImage genBarcode(String content, int width,  
+    public static BufferedImage genBarcode(String content, int width,  
             int height, String srcImagePath) throws WriterException,  
             IOException {  
         // 读取源图像  
@@ -130,8 +133,16 @@ public class QrCodeUtil {
     private static BufferedImage scale(String srcImageFile, int height,  
             int width, boolean hasFiller) throws IOException {  
         double ratio = 0.0; // 缩放比例  
-        File file = new File(srcImageFile);  
-        BufferedImage srcImage = ImageIO.read(file);  
+        
+        BufferedImage srcImage = null;
+        if (RegexUtil.isUrl(srcImageFile)) {
+        	URL urlImage = new URL(srcImageFile);
+        	srcImage = ImageIO.read(urlImage);  
+        } else {
+        	File file = new File(srcImageFile);  
+            srcImage = ImageIO.read(file);  
+        }
+        
         Image destImage = srcImage.getScaledInstance(width, height,  
                 Image.SCALE_SMOOTH);  
         // 计算比例  
@@ -170,10 +181,8 @@ public class QrCodeUtil {
     }  
   
     public static void main(String[] args) {  
-    	QrCodeUtil.encode(
-    		"http://1gj.cc/onecare-oa/d/tck",  
-            800, 800, 
-            "/Users/lnczx/Pictures/logo-yuan.png", 
+    	QrCodeUtil.encode("http://www.baidu.com",  800, 800, 
+    		"http://img.51xingzheng.cn/c9778e512787866532e425e550023262", 
             "/Users/lnczx/Pictures/1.jpg");  
     }  
 }  

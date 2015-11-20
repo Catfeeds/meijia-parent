@@ -596,6 +596,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setMajor("");
 		u.setSex(" ");
 		u.setHeadImg(" ");
+		u.setQrCode("");
 		u.setIntroduction("");
 		u.setLevel((short) 0);
 		u.setWorkStart("");

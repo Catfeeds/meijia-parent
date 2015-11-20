@@ -206,7 +206,7 @@ public class JobOrderController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "check_coupons_1Day", method = RequestMethod.GET)
+	@RequestMapping(value = "check_coupons_1day", method = RequestMethod.GET)
 	public AppResultData<Object> OrderCoupons1Day(HttpServletRequest request) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());

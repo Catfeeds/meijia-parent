@@ -1,5 +1,7 @@
 package com.simi.action.app.user;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.zxing.WriterException;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.IPUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.QrCodeUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
@@ -783,5 +788,70 @@ public class UserController extends BaseController {
 		}
 		return result;
 	}
+	
+	/**
+	 * 获取用户二维码
+	 * 
+	 * @throws IOException
+	 * @throws WriterException 
+	 */
+	@RequestMapping(value = "get_qrcode", method = RequestMethod.GET)
+	public AppResultData<Object> getUserQRCode(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId) throws IOException, WriterException {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		if (!StringUtil.isEmpty(u.getQrCode())) {
+			result.setData(u.getQrCode());
+			
+			return result;
+		}
+		
+		String qrCodeLogo = u.getHeadImg();
+		if (StringUtil.isEmpty(qrCodeLogo)) {
+			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
+		}
+		
+		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(u.getId().toString(), 400, 400, qrCodeLogo);
+		
+		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
+        try {  
+            boolean resultWrite = ImageIO.write(qrCodeImg, "png", imageStream);  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        imageStream.flush();  
+        byte[] imgBytes = imageStream.toByteArray();  
+		
+        String url = Constants.IMG_SERVER_HOST + "/upload/";
+		String sendResult = ImgServerUtil.sendPostBytes(url, imgBytes, "png");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+		String ret = o.get("ret").toString();
+
+		HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+		String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();		
+		
+		u.setQrCode(imgUrl);
+		userService.updateByPrimaryKeySelective(u);
+		
+		result.setData(imgUrl);
+		
+		return result;
+	}	
 
 }

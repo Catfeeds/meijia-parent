@@ -113,7 +113,7 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 		/*BigDecimal p1 = new BigDecimal(100);
 		BigDecimal p2 = MathBigDeciamlUtil.mul(orderPay, p1);
 		orderPayNow = MathBigDeciamlUtil.round(p2, 0);*/
-
+		orderPay = MathBigDeciamlUtil.round(orderPay, 2);
 		return orderPay;
 	}	
 	

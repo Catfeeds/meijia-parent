@@ -54,6 +54,8 @@ public class Users {
 	private Long degreeId;
 
 	private String major;   
+	
+	private String qrCode;
 
 
     public Users() {
@@ -302,6 +304,16 @@ public class Users {
 
 	public void setOpenid(String openid) {
 		this.openid = openid;
+	}
+
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
 	}
 
 	

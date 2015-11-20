@@ -22,6 +22,7 @@
 		<result column="degree_id" jdbcType="NUMERIC" property="degreeId" />
 		<result column="major" jdbcType="VARCHAR" property="major" />
 		<result column="head_img" jdbcType="VARCHAR" property="headImg" />
+		<result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
 		<result column="rest_money" jdbcType="DECIMAL" property="restMoney" />
 		<result column="score" jdbcType="INTEGER" property="score" />
 		<result column="user_type" jdbcType="NUMERIC" property="userType" />
@@ -39,7 +40,7 @@
 	<sql id="Base_Column_List">
 		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex,
 		introduction, level,work_start, work_end,is_door,
-		 birth_day,degree_id, major, head_img, rest_money, score,
+		 birth_day,degree_id, major, head_img, qr_code, rest_money, score,
 		  user_type, is_approval,add_from,add_time, update_time
 	</sql>
 
@@ -243,7 +244,7 @@
 		real_name, id_card, sex,
 		introduction, level,work_start, work_end,is_door,
 		birth_day, degree_id, major,
-		head_img, rest_money, score,
+		head_img, qr_code, rest_money, score,
 		user_type, is_approval, add_from,
 		add_time, update_time)
 		values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},
@@ -252,7 +253,7 @@
 		#{introduction,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC}, #{workStart,jdbcType=VARCHAR},
 		 #{workEnd,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC},
 		#{birthDay,jdbcType=DATE}, #{degreeId,jdbcType=NUMERIC}, #{major,jdbcType=VARCHAR},
-		#{headImg,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
+		#{headImg,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
 		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC}, #{addFrom,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
@@ -318,6 +319,9 @@
 			</if>
 			<if test="headImg != null">
 				head_img,
+			</if>
+			<if test="qrCode != null">
+				qr_code,
 			</if>
 			<if test="restMoney != null">
 				rest_money,
@@ -396,6 +400,9 @@
 			<if test="headImg != null">
 				#{headImg,jdbcType=VARCHAR},
 			</if>
+			<if test="qrCode != null">
+				#{qrCode,jdbcType=VARCHAR},
+			</if>
 			<if test="restMoney != null">
 				#{restMoney,jdbcType=DECIMAL},
 			</if>
@@ -473,6 +480,9 @@
 			<if test="headImg != null">
 				head_img = #{headImg,jdbcType=VARCHAR},
 			</if>
+			<if test="qrCode != null">
+				qr_code = #{qrCode,jdbcType=VARCHAR},
+			</if>
 			<if test="restMoney != null">
 				rest_money = #{restMoney,jdbcType=DECIMAL},
 			</if>
@@ -516,6 +526,7 @@
 		degree_id = #{degreeId,jdbcType=NUMERIC},
 		major = #{major,jdbcType=VARCHAR},
 		head_img = #{headImg,jdbcType=VARCHAR},
+		qr_code = #{qrCode,jdbcType=VARCHAR},
 		rest_money = #{restMoney,jdbcType=DECIMAL},
 		score = #{score,jdbcType=INTEGER},
 		user_type = #{userType,jdbcType=NUMERIC},
