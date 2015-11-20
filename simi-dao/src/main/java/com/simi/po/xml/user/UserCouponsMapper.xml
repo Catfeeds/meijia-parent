@@ -126,6 +126,42 @@
 		where user_id = #{userId,jdbcType=NUMERIC}
 		order by add_time asc 
 	</select>	
+	
+	<!-- <select id="selectCountUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select user_id,mobile,count(*) as count
+		from user_coupons where`coupon_id`> 0
+		and `is_used`=0 and `exp_time`-86400 &gt; unix_timestamp(now()) &lt; `exp_time` group by `user_id`
+	</select> -->
+	
+	<select id="selectCountUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	    select count(*) 
+		from user_coupons 
+		where coupon_id> 0 and is_used=0 
+	
+		<![CDATA[and (exp_time -86400) < unix_timestamp(now()) ]]> 
+		<![CDATA[and  exp_time > unix_timestamp(now())]]>   
+		
+		  
+</select>
+
+	<!-- <select id="selectByorder1Hour" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select 
+        <include refid="Base_Column_List" />
+		from orders
+		where order_status = 1
+	
+		<![CDATA[and (add_time +3600)  > unix_timestamp(now())]]>   
+	
+		<![CDATA[and add_time < unix_timestamp(now()) ]]>   
+
+	</select> -->
+	<select id="selectCountListByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select count(*)
+		from user_coupons where user_id = #{userId,jdbcType=NUMERIC}
+		<![CDATA[and  exp_time > unix_timestamp(now())]]>   
+	
+		<![CDATA[and (exp_time -86400) < unix_timestamp(now()) ]]>
+	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from user_coupons

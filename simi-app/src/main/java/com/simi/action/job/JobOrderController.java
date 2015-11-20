@@ -1,22 +1,35 @@
 package com.simi.action.job;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.ss.formula.functions.Count;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import sun.tools.jar.resources.jar;
+
 import com.gexin.rp.sdk.http.utils.Constant;
+import com.meijia.utils.SmsUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
+import com.simi.po.model.user.Users;
+import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserCouponService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 
 @Controller
@@ -28,6 +41,15 @@ public class JobOrderController extends BaseController {
 	
 	@Autowired
 	private UserCouponService userCouponService;
+	
+	@Autowired
+	private UsersService usersService;
+	
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private OrderPricesService orderPricesService;
 
 	/**
 	 *  订单超过1个小时未支付,则关闭订单,
@@ -66,10 +88,25 @@ public class JobOrderController extends BaseController {
 			if (record.getOrderNo() != ""&& record.getOrderNo() != null) {
 				
 			UserCoupons userCoupons = userCouponService.selectByOrderNo(record.getOrderNo());
-			userCoupons.setOrderNo("0");
-			userCoupons.setUpdateTime(TimeStampUtil.getNowSecond());
-			userCouponService.updateByPrimaryKeySelective(userCoupons);
+			if (userCoupons != null) {
+				userCoupons.setOrderNo("0");
+				userCoupons.setUpdateTime(TimeStampUtil.getNowSecond());
+				userCouponService.updateByPrimaryKeySelective(userCoupons);
 			}
+			
+			
+			//设置orderPrice表中counpnId为0
+			OrderPrices orderPrices = orderPricesService.selectByOrderId(record.getOrderId());
+			if (orderPrices!=null) {
+				if (orderPrices.getUserCouponId()>0) {
+					orderPrices.setUserCouponId(0L);
+					orderPrices.setUpdateTime(TimeStampUtil.getNowSecond());
+					orderPricesService.updateByPrimaryKeySelective(orderPrices);
+				}
+			}
+			
+			}
+			
 			}
 		}
 		return result;
@@ -115,5 +152,93 @@ public class JobOrderController extends BaseController {
 		}
 		return result;
 		}
+
+	/**
+	 * 订单超时未支付通知用户， 找出当前未支付的订单， 
+	 * 找到用户手机号，通知用户.
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "check_order_more_1hour", method = RequestMethod.GET)
+	public AppResultData<Object> OrderOrder1Hour(HttpServletRequest request) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+	
+		//查找出订单在一小时内未支付的订单集合
+		List<Orders> list = ordersService.selectByorder1Hour();
+		
+		/*{1} = 用户名
+				{2} = 下单时间 2016-01-01 17:55分
+				{3} = 服务报价名称*/
+		for (int i = 0; i < list.size(); i++) {
+			
+			Orders orders = list.get(i);
+			
+			Users users = usersService.selectByPrimaryKey(orders.getUserId());
+			//用户名
+			String name = users.getName();
+			
+			Long addTime = orders.getAddTime()*1000;
+			//下单时间
+			String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime);
+			
+		    String mobile = orders.getMobile();
+		    
+			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(orders.getServiceTypeId());
+			
+			//服务报价名称
+			String partnerServiceTypeName = partnerServiceType.getName();
+			
+			String[] content = new String[] {name,addTimeStr,partnerServiceTypeName};
+			
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
+					Constants.USER_ORDER_MORE_1HOUR, content);
+			
+			System.out.println(sendSmsResult + "00000000000000");
+			
+		}
+		return result;
+		}
+	
+	
+	/**
+	 *  优惠劵即将过期通知， 如果优惠劵离过期还有一天，则发送短信.
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "check_coupons_1Day", method = RequestMethod.GET)
+	public AppResultData<Object> OrderCoupons1Day(HttpServletRequest request) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+	
+		//查出count（*）
+		List<UserCoupons> list = userCouponService.selectCountUserId();
+		
+		for (int i = 0; i < list.size(); i++) {
+		
+		UserCoupons userCoupons = list.get(i);
+			
+		    //给用户发短信提醒	
+		 	String mobile = userCoupons.getMobile();
+		 	
+		 	List<UserCoupons> countList = userCouponService.selectCountListByUserId(userCoupons.getUserId());
+			//优惠券个数
+		 	/*for (int j = 0; j < countList.size(); j++) {
+		 		
+		 		count = countList.get(j) + 1;
+		 		
+		 	}*/
+		 	 Long count =  1L;
+		
+			String[] content = new String[] {count.toString()};
+			
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
+					Constants.USER_COUPON_EXPTIME, content);
+			
+			System.out.println(sendSmsResult + "00000000000000");
+		}
+		
+		return result;
+	}
 	
 	}

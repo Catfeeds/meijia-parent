@@ -29,5 +29,7 @@ public interface OrdersMapper {
 	List<Orders> selectByOrderStatus();
 
 	List<Orders> selectByOrderStatus7Days();
+
+	List<Orders> selectByorder1Hour();
 	
 }

@@ -59,8 +59,8 @@ public class Constants {
 	public static String SEC_REGISTER_USER_ID= "44655";//秘书审批后给用户发短信
 	public static String SEC_TWO_MINUTE= "44659";//秘书2分钟未接受卡片--给秘书发短信提醒
 	public static String SEC_THIRTY_MINUTE= "44660";//秘书30分钟未接受卡片--给运营人员发短信提醒
-	
-	
+	public static String USER_COUPON_EXPTIME= "48146";//  优惠劵即将过期通知， 如果优惠劵离过期还有一天，则给用户发送短信.
+	public static String USER_ORDER_MORE_1HOUR= "48136";//订单超时未支付通知用户
 	//支付方式： 0 = 余额支付 1 = 支付宝 2 = 微信支付 3 = 智慧支付(保留,暂不开发)
 	//4 = 上门刷卡（保留，暂不开发） 5 = 优惠券兑换
 	public static Short PAY_TYPE_0 = 0;

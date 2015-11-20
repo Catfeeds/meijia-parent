@@ -28,6 +28,8 @@ public interface OrdersService {
 
 	List<Orders> selectByOrderStatus7Days();
 
+	List<Orders> selectByorder1Hour();
+
 
 
 	

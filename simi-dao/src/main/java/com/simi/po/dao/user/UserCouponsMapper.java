@@ -40,4 +40,8 @@ public interface UserCouponsMapper {
 	List<UserCoupons> selectByUserId(Long userId);
 
 	UserCoupons selectByOrderNo(String orderNo);
+
+	List<UserCoupons> selectCountUserId();
+
+	List<UserCoupons> selectCountListByUserId(Long userId);
 }

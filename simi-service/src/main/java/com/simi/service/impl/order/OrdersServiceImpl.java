@@ -178,6 +178,13 @@ public class OrdersServiceImpl implements OrdersService {
 		
 		return ordersMapper.selectByOrderStatus7Days();
 	}
+
+	@Override
+	public List<Orders> selectByorder1Hour() {
+		
+		return ordersMapper.selectByorder1Hour();
+				
+	}
 	
 
 

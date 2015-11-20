@@ -45,4 +45,8 @@ public interface UserCouponService {
 
 	UserCoupons selectByOrderNo(String orderNo);
 
+	List<UserCoupons> selectCountUserId();
+
+	List<UserCoupons> selectCountListByUserId(Long userId);
+
 }
