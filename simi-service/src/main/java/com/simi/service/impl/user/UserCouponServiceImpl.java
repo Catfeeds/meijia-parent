@@ -338,4 +338,10 @@ public class UserCouponServiceImpl implements UserCouponService {
 		return userCouponsMapper.selectByUserId(userId);
 	}
 
+	@Override
+	public UserCoupons selectByOrderNo(String orderNo) {
+		
+		return userCouponsMapper.selectByOrderNo(orderNo);
+	}
+
 }

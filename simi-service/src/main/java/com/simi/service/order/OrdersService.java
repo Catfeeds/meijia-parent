@@ -24,6 +24,10 @@ public interface OrdersService {
 
 	List<Orders> selectByUserId(Long userId);
 
+	List<Orders> selectByOrderStatus();
+
+	List<Orders> selectByOrderStatus7Days();
+
 
 
 	

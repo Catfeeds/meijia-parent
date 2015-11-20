@@ -63,6 +63,20 @@
 		from orders
 		where partner_user_id = #{partnerUserId,jdbcType=VARCHAR}
 	</select>
+	<!-- 超过一个小时未支付的订单 -->
+	<select id="selectByOrderStatus" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where  order_status = 1
+	</select>
+	<!-- 超过7天未评价的订单 -->
+	<select id="selectByOrderStatus7Days" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where  order_status = 7
+	</select>
 
 	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
 

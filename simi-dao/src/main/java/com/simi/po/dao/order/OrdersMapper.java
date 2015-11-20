@@ -25,5 +25,9 @@ public interface OrdersMapper {
 	List<Orders> selectByUserId(Long userId);
 	
 	List<Orders> selectByPartnerUserId(Long partnerUserId);
+
+	List<Orders> selectByOrderStatus();
+
+	List<Orders> selectByOrderStatus7Days();
 	
 }

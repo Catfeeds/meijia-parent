@@ -43,4 +43,6 @@ public interface UserCouponService {
 
 	AppResultData<Object> validateCouponAll(Long userId, Long userCouponId, String orderNo, Long serviceTypeId, Long servicePriceId, Short orderFrom);
 
+	UserCoupons selectByOrderNo(String orderNo);
+
 }

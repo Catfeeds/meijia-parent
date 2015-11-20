@@ -167,6 +167,17 @@ public class OrdersServiceImpl implements OrdersService {
 		
 		return ordersMapper.selectByUserId(userId);
 	}
+
+	@Override
+	public List<Orders> selectByOrderStatus() {
+		
+		return ordersMapper.selectByOrderStatus();
+	}
+	@Override
+	public List<Orders> selectByOrderStatus7Days() {
+		
+		return ordersMapper.selectByOrderStatus7Days();
+	}
 	
 
 
