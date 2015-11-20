@@ -69,6 +69,12 @@ public class UserFriendController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
+		
+		if (userId.equals(friendId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("不能添加自己.");
+			return result;
+		}
 
 		userFriendService.addFriends(u, friendUser);
 		
