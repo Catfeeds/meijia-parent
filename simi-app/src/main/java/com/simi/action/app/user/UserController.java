@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -823,7 +822,7 @@ public class UserController extends BaseController {
 			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
 		}
 		
-		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(JSON.toJSONString(u), 400, 400, qrCodeLogo);
+		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(u.getId().toString(), 800, 800, qrCodeLogo);
 		
 		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
         try {  

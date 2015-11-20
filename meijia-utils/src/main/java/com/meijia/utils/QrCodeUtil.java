@@ -181,7 +181,7 @@ public class QrCodeUtil {
     }  
   
     public static void main(String[] args) {  
-    	QrCodeUtil.encode("http://www.baidu.com",  800, 800, 
+    	QrCodeUtil.encode("1",  800, 800, 
     		"http://img.51xingzheng.cn/c9778e512787866532e425e550023262", 
             "/Users/lnczx/Pictures/1.jpg");  
     }  
