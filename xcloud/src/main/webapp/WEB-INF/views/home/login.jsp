@@ -30,17 +30,19 @@
 			<div class="alert alert-info">
                 没有账号，请点击这里注册.
             </div>
-            <form class="form-horizontal" action="index.html" method="post">
+            <form:form modelAttribute="contentModel" class="form-horizontal" method="post">
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
-                        <input type="text" class="form-control" placeholder="手机号/邮箱">
+                   		<form:input path="username" class="form-control placeholder-no-fix" autocomplete="off" placeholder="手机号/邮箱"/>
                     </div>
                     <div class="clearfix"></div><br>
 
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                        <input type="password" class="form-control" placeholder="密码(8-20位)">
+                
+                        <form:password path="password" class="form-control placeholder-no-fix" autocomplete="off" placeholder="密码(8-20位)"/>
+			
                     </div>
                     <div class="clearfix"></div>
 
@@ -60,7 +62,7 @@
                         <button type="submit" class="btn btn-primary">登陆</button>
                     </p>
                 </fieldset>
-            </form>
+            </form:form>
         </div>
         <!--/span-->
     </div><!--/row-->

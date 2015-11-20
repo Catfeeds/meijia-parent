@@ -4,89 +4,73 @@
 <%@ include file="../shared/taglib.jsp"%>
 
 <html>
-  <head>
-	
-	<!--common css for all pages-->
-	<%@ include file="../shared/importCss.jsp"%>
-	
-	<!--css for this page-->
-	<link href="<c:url value='/css/flexslider.css'/>" rel="stylesheet" type="text/css">
-	<link href="<c:url value='/assets/bxslider/jquery.bxslider.css'/>" rel="stylesheet" type="text/css">
-	<link href="<c:url value='/assets/fancybox/source/jquery.fancybox.css'/>" rel="stylesheet" type="text/css">
-	<link href="<c:url value='/assets/revolution_slider/css/rs-style.css'/>" rel="stylesheet" type="text/css">
-	<link href="<c:url value='/assets/revolution_slider/rs-plugin/css/settings.css'/>" rel="stylesheet" type="text/css">
+<head>
 
-  </head>
+<!--common css for all pages-->
+<%@ include file="../shared/importCss.jsp"%>
 
-  <body>
-	  <!--header start-->
-	  <%@ include file="../shared/pageHeader.jsp"%>
-	  <!--header end-->		
+<!--css for this page-->
 
-     
+</head>
 
-    <!--container start-->
-    <div class="container">
-        <div class="row">
-            <!--feature start-->
-            <div class="text-center feature-head">
-                <h1>欢迎来到行政云平台</h1>
-                <p>Professional html Template Perfect for Admin Dashboard</p>
-            </div>
-            <div class="col-lg-4 col-sm-4">
-                <section>
-                    <div class="f-box">
-                        <i class=" icon-desktop"></i>
-                        <h2>responsive design</h2>
-                    </div>
-                    <p class="f-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ablic jiener.</p>
-                </section>
-            </div>
-            <div class="col-lg-4 col-sm-4">
-                <section>
-                    <div class="f-box active">
-                        <i class=" icon-code"></i>
-                        <h2>friendly code</h2>
-                    </div>
-                    <p class="f-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ablic jiener.</p>
-                </section>
-            </div>
-            <div class="col-lg-4 col-sm-4">
-                <section>
-                    <div class="f-box">
-                        <i class="icon-gears"></i>
-                        <h2>fully customizable</h2>
-                    </div>
-                    <p class="f-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ablic jiener.</p>
-                </section>
-            </div>
-            <!--feature end-->
-        </div>
-        <div class="row">
-            <!--quote start-->
-            <div class="quote">
-                <div class="col-lg-9 col-sm-9">
-                    <div class="quote-info">
-                        <h1>developer friendly code</h1>
-                        <p>Bundled with awesome features, UI resource unlimited colors, advanced theme options & much more!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-3">
-                    <a href="#" class="btn btn-danger purchase-btn">Purchase now</a>
-                </div>
-            </div>
-            <!--quote end-->
-        </div>
-    </div>
+<body>
+	<!--header start-->
+	<%@ include file="../shared/pageHeader.jsp"%>
+	<!--header end-->
+
+	<div class="ch-container">
+		<!--sidebar start-->
+		<%@ include file="../shared/sidebarMenu.jsp"%>
+		<!--sidebar end-->
+
+		<div class=" row">
+			<div class="col-md-3 col-sm-3 col-xs-6">
+				<a data-toggle="tooltip" title="6 new members." class="well top-block" href="#"> <i
+					class="glyphicon glyphicon-user blue"></i>
+
+					<div>Total Members</div>
+					<div>507</div> <span class="notification">6</span>
+				</a>
+			</div>
+
+			<div class="col-md-3 col-sm-3 col-xs-6">
+				<a data-toggle="tooltip" title="4 new pro members." class="well top-block" href="#"> <i
+					class="glyphicon glyphicon-star green"></i>
+
+					<div>Pro Members</div>
+					<div>228</div> <span class="notification green">4</span>
+				</a>
+			</div>
+
+			<div class="col-md-3 col-sm-3 col-xs-6">
+				<a data-toggle="tooltip" title="$34 new sales." class="well top-block" href="#"> <i
+					class="glyphicon glyphicon-shopping-cart yellow"></i>
+
+					<div>Sales</div>
+					<div>$13320</div> <span class="notification yellow">$34</span>
+				</a>
+			</div>
+
+			<div class="col-md-3 col-sm-3 col-xs-6">
+				<a data-toggle="tooltip" title="12 new messages." class="well top-block" href="#"> <i
+					class="glyphicon glyphicon-envelope red"></i>
+
+					<div>Messages</div>
+					<div>25</div> <span class="notification red">12</span>
+				</a>
+			</div>
+		</div>
 
 
+	</div>
 
-    <!-- js placed at the end of the document so the pages load faster -->
+
+	<!-- js placed at the end of the document so the pages load faster -->
 	<!--common script for all pages-->
-    <%@ include file="../shared/importJs.jsp"%>
-    
-    <!--script for this page-->
+	<%@ include file="../shared/importJs.jsp"%>
+
+	<!--script for this page-->
 
 
-  </body>
+</body>
 </html>

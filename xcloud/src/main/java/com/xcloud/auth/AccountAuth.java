@@ -3,14 +3,12 @@ package com.xcloud.auth;
 public class AccountAuth {
 
 	private Long userId;
+	
 	private Long companyId;
-
-
-
-	public AccountAuth(Long userId, Long companyId) {
-		this.userId = userId;
-		this.companyId = companyId;
-	}
+	
+	private String companyName;
+	
+	private String name;
 
 	public Long getUserId() {
 		return userId;
@@ -26,6 +24,22 @@ public class AccountAuth {
 
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
