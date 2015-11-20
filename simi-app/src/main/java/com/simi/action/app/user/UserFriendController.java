@@ -43,6 +43,37 @@ public class UserFriendController extends BaseController {
 	
 	@Autowired
 	private UserRefSecService userRefSecService;
+	
+	
+	/**
+	 * 添加好友功能
+	 * @param userId  用户ID
+	 * @param mobile  添加好友的手机号
+	 * @param name    添加好友名称
+	 * @return
+	 */
+	@RequestMapping(value = "add_friend", method = RequestMethod.GET)
+	public AppResultData<Object> addFriend(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId,
+			@RequestParam("friend_id") Long  friendId
+			) {
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		//1. 判断当前好友的情况，如果已经是好友，则直接返回。 
+		Users u = userService.selectByPrimaryKey(userId);
+		Users friendUser = userService.selectByPrimaryKey(friendId);
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null || friendUser == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		userFriendService.addFriends(u, friendUser);
+		
+		return result;
+	}
 	/**
 	 * 添加好友功能
 	 * @param userId  用户ID
@@ -51,7 +82,7 @@ public class UserFriendController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "post_friend", method = RequestMethod.POST)
-	public AppResultData<Object> login(
+	public AppResultData<Object> postFriend(
 			HttpServletRequest request,
 			@RequestParam("user_id") Long userId,
 			@RequestParam("mobile") String mobile,
