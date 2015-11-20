@@ -60,7 +60,7 @@ public class TestJobOrderController extends JUnitActionBase{
 	 * @param request
 	 * @return
 	 */
-	@Test
+/*	@Test
     public void OrderOrder1Hour() throws Exception {
 
 		String url = "/app/job/order/check_order_more_1hour.json";
@@ -75,14 +75,14 @@ public class TestJobOrderController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }	
+    }	*/
 
 	/**
 	 *  优惠劵即将过期通知， 如果优惠劵离过期还有一天，则发送短信.
 	 * @param request
 	 * @return
 	 */
-	/*@Test
+	@Test
     public void OrderCoupons1Day() throws Exception {
 
 		String url = "/app/job/order/check_coupons_1Day.json";
@@ -97,7 +97,7 @@ public class TestJobOrderController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }	*/
+    }	
 	
 
 

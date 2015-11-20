@@ -344,9 +344,9 @@ public class UserCouponServiceImpl implements UserCouponService {
 		return userCouponsMapper.selectByOrderNo(orderNo);
 	}
 
+
 	@Override
-	public List<UserCoupons> selectCountUserId() {
-		
+	public List<HashMap> selectCountUserId() {
 		return userCouponsMapper.selectCountUserId();
 	}
 

@@ -41,7 +41,7 @@ public interface UserCouponsMapper {
 
 	UserCoupons selectByOrderNo(String orderNo);
 
-	List<UserCoupons> selectCountUserId();
+	List<HashMap> selectCountUserId();
 
 	List<UserCoupons> selectCountListByUserId(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.simi.service.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
@@ -45,7 +46,8 @@ public interface UserCouponService {
 
 	UserCoupons selectByOrderNo(String orderNo);
 
-	List<UserCoupons> selectCountUserId();
+	//List<UserCoupons> selectCountUserId();
+	List<HashMap> selectCountUserId();
 
 	List<UserCoupons> selectCountListByUserId(Long userId);
 

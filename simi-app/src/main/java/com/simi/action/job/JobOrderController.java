@@ -167,9 +167,6 @@ public class JobOrderController extends BaseController {
 		//查找出订单在一小时内未支付的订单集合
 		List<Orders> list = ordersService.selectByorder1Hour();
 		
-		/*{1} = 用户名
-				{2} = 下单时间 2016-01-01 17:55分
-				{3} = 服务报价名称*/
 		for (int i = 0; i < list.size(); i++) {
 			
 			Orders orders = list.get(i);
@@ -212,32 +209,23 @@ public class JobOrderController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 	
 		//查出count（*）
-		List<UserCoupons> list = userCouponService.selectCountUserId();
+		List<HashMap> list = userCouponService.selectCountUserId();
 		
 		for (int i = 0; i < list.size(); i++) {
 		
-		UserCoupons userCoupons = list.get(i);
-			
+		    HashMap map = list.get(i);
 		    //给用户发短信提醒	
-		 	String mobile = userCoupons.getMobile();
+		 	String mobile = map.get("mobile").toString();
+		 	String count = map.get("count").toString();
 		 	
-		 	List<UserCoupons> countList = userCouponService.selectCountListByUserId(userCoupons.getUserId());
-			//优惠券个数
-		 	/*for (int j = 0; j < countList.size(); j++) {
-		 		
-		 		count = countList.get(j) + 1;
-		 		
-		 	}*/
-		 	 Long count =  1L;
-		
-			String[] content = new String[] {count.toString()};
+			String[] content = new String[] {count};
 			
 			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 					Constants.USER_COUPON_EXPTIME, content);
 			
 			System.out.println(sendSmsResult + "00000000000000");
-		}
 		
+		}
 		return result;
 	}
 	
