@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -822,7 +823,17 @@ public class UserController extends BaseController {
 			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
 		}
 		
-		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(u.getId().toString(), 800, 800, qrCodeLogo);
+		Map<String, String> contents = new HashMap<String, String>();
+		
+		contents.put("tag", "xcloud");
+		contents.put("user_id", u.getId().toString());
+		contents.put("name", u.getName());
+		contents.put("mobile", u.getMobile());
+		
+		 ObjectMapper objectMapper = new ObjectMapper();
+		 String jsonContents = objectMapper.writeValueAsString(contents);
+		
+		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(jsonContents, 800, 800, qrCodeLogo);
 		
 		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
         try {  
