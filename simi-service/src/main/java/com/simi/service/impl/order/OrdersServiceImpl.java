@@ -185,6 +185,12 @@ public class OrdersServiceImpl implements OrdersService {
 		return ordersMapper.selectByorder1Hour();
 				
 	}
+
+	@Override
+	public Orders selectByOrderNo(String orderNo) {
+		
+		return ordersMapper.selectByOrderNo(orderNo);
+	}
 	
 
 

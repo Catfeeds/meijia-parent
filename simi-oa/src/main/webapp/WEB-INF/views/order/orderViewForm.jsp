@@ -40,27 +40,27 @@
 					method="GET" action="orderView" 
 					enctype="multipart/form-data">
 
-					<form:hidden path="id" />
+				<%-- 	<form:hidden path="id" /> --%>
 					<div class="form-body">
 						<div class="form-group required">
 						
 						
 							<label class="col-md-2 control-label">姓名</label>
 							<div class="col-md-5">
-								<form:input path="name" class="form-control"
+								<form:input path="userName" class="form-control"
 									maxLength="32" readonly="true"/>
-								<form:errors path="name" class="field-has-error"></form:errors>
+								<form:errors path="userName" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<%-- <div class="form-group required">
+						<div class="form-group required">
 
 							<label class="col-md-2 control-label">订单号</label>
 							<div class="col-md-5">
-								<form:input path="orderNo " class="form-control"
+								<form:input path="orderNo" class="form-control"
 									maxLength="32" readonly="true"/>
-								<form:errors path="orderNo " class="field-has-error"></form:errors>
+								<form:errors path="orderNo" class="field-has-error"></form:errors>
 							</div>
-						</div> --%>
+						</div>
 						<div class="form-group">
 
 							<label class="col-md-2 control-label">下单时间</label>
@@ -81,7 +81,7 @@
 							</div>
 						</div>
 						
-						<div class="form-group">
+						<%-- <div class="form-group">
 
 							<label class="col-md-2 control-label">城市名称</label>
 							<div class="col-md-5">
@@ -89,18 +89,18 @@
 									maxLength="32" readonly="true"/>
 								<form:errors path="cityName" class="field-has-error"></form:errors>
 							</div>
-						</div>
+						</div> --%>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">用户服务地址</label>
 							<div class="col-md-5">								
-								<form:input path="addrId" class="form-control"
+								<form:input path="addr" class="form-control"
 									maxLength="32" readonly="true"/>
-								<form:errors path="addrId" class="field-has-error"></form:errors>
+								<form:errors path="addr" class="field-has-error"></form:errors>
 							</div>
 						</div>
 						
-						<div class="form-group">
+						<%-- <div class="form-group">
 
 							<label class="col-md-2 control-label">优惠券</label>
 							<div class="col-md-5">
@@ -108,15 +108,15 @@
 									maxLength="32" readonly="true"/>
 								<form:errors path="cardPasswd" class="field-has-error"></form:errors>
 							</div>
-						</div>
+						</div> --%>
 						
 						<div class="form-group">
 
 							<label class="col-md-2 control-label">订单状态</label>
 							<div class="col-md-5">
-								<form:input path="orderStatus" class="form-control"
+								<form:input path="orderStatusName" class="form-control"
 									maxLength="32" readonly="true"/>
-								<form:errors path="orderStatus" class="field-has-error"></form:errors>
+								<form:errors path="orderStatusName" class="field-has-error"></form:errors>
 							</div>
 						</div>
 						<div class="form-group">
@@ -137,7 +137,7 @@
 								<form:errors path="orderPay" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<div class="form-group">
+						<%-- <div class="form-group">
 
 							<label class="col-md-2 control-label">支付方式</label>
 							<div class="col-md-5">
@@ -145,7 +145,7 @@
 									maxLength="32" readonly="true"/>
 								<form:errors path="payType" class="field-has-error"></form:errors>
 							</div>
-						</div>
+						</div> --%>
 				</form:form>
 			</div>
 			</section>

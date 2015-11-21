@@ -22,7 +22,8 @@ public class Constants {
 	public static int ADDRESS_DEFAULT_1 = 1;
 	public static int ADDRESS_DEFAULT_NOT_0 = 0;
 	
-	//0 = 已关闭 1 = 待确认 2 = 已确认 3 = 待支付 4 = 已支付
+
+	//0 = 已关闭 1 = 待支付 2 = 已支付 3 = 处理中 7 = 待评价 9 = 已完成
 	public static short ORDER_STATUS_0_CLOSE = 0;	
 	public static short ORDER_STATUS_1_PAY_WAIT = 1;
 	public static short ORDER_STATUS_2_PAY_DONE = 2;

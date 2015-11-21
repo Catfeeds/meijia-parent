@@ -134,15 +134,12 @@
 	</select> -->
 	
 	<select id="selectCountUserId" resultType="java.util.HashMap" parameterType="java.util.List">
-<!-- 	<select id="selectCountUserId" resultMap="BaseResultMap" parameterType="java.lang.Long"> -->
 	    select user_id,mobile,count(*) as count
 		from user_coupons 
 		where coupon_id> 0 and is_used=0 
-	
 		<![CDATA[and (exp_time -86400) < unix_timestamp(now()) ]]> 
 		<![CDATA[and  exp_time > unix_timestamp(now())]]>   
 		group by user_id
-		  
     </select>
 
 	<!-- <select id="selectByorder1Hour" resultMap="BaseResultMap" parameterType="java.lang.Long">

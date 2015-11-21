@@ -30,6 +30,8 @@ public interface OrdersService {
 
 	List<Orders> selectByorder1Hour();
 
+	Orders selectByOrderNo(String orderNo);
+
 
 
 	

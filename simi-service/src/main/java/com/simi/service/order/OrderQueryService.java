@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
@@ -19,6 +20,7 @@ public interface OrderQueryService {
 
 	List<OrderViewVo> getOrderViewList(List<Orders> list);
 	
+	List<Orders> selectByListPageList(OrderSearchVo orderSearchVo, int pageNo, int pageSize);
 	PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize);
 
 	OrderViewVo getOrderView(Orders order);
@@ -28,4 +30,7 @@ public interface OrderQueryService {
 	OrderDetailVo getOrderDetailVo(Orders order, OrderListVo listVo);
 
 	Date getSeniorRangeDate(Long userId);
+
+	OrdersListVo completeVo(Orders orders);
+
 }

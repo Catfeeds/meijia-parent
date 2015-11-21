@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -21,6 +22,7 @@ import com.simi.service.dict.DictService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
+import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
@@ -28,6 +30,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
@@ -48,6 +51,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	@Autowired
 	private OrdersMapper ordersMapper;
+	
+	@Autowired
+	private OrdersService ordersService;
 
 	@Autowired
 	private OrderPricesService orderPricesService;
@@ -106,6 +112,14 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @return PageInfo  List<OrderViewVo>
 	 */	
 	@Override
+	public List<Orders> selectByListPageList(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
+
+		 PageHelper.startPage(pageNo, pageSize);
+         List<Orders> list = ordersMapper.selectByListPage(orderSearchVo);
+       
+        return list;
+    }
+	@Override
 	public PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
 
 		 PageHelper.startPage(pageNo, pageSize);
@@ -113,7 +127,6 @@ public class OrderQueryServiceImpl implements OrderQueryService {
          PageInfo result = new PageInfo(list);
         return result;
     }
-
 	/*
 	 *  进行orderViewVo  结合了 orders , order_prices,  两张表的元素
 	 */
@@ -433,6 +446,76 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		endDate = DateUtil.parse(endDateStr);
 		
 		return endDate;
+	}
+
+	@Override
+	public OrdersListVo completeVo(Orders orders) {
+		
+		OrdersListVo vo = initVo();
+		
+		BeanUtils.copyProperties(orders, vo);
+
+		//服务类型名称
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(orders.getServiceTypeId());
+		
+		if (serviceType != null) {
+			vo.setServiceTypeName(serviceType.getName());
+		}
+		//服务地址
+		UserAddrs addrs = userAddrsService.selectByPrimaryKey(orders.getUserId());
+		if (addrs != null) {
+			vo.setAddr(addrs.getAddr());
+		}
+		//服务人员姓名
+		//订单状态
+		
+		//用户姓名
+		Users users = usersService.selectByPrimaryKey(orders.getUserId());
+		if (users != null) {
+			vo.setUserName(users.getName());
+		}
+		//0 = 已关闭 1 = 待支付 2 = 已支付 3 = 处理中 7 = 待评价 9 = 已完成
+		if (orders.getOrderStatus() == 0) {
+			vo.setOrderStatusName("已关闭");
+		}
+		if (orders.getOrderStatus() == 1) {
+			vo.setOrderStatusName("待支付");
+		}
+		if (orders.getOrderStatus() == 2) {
+			vo.setOrderStatusName("已支付");
+		}
+		if (orders.getOrderStatus() == 3) {
+			vo.setOrderStatusName("处理中");
+		}
+		if (orders.getOrderStatus() == 7) {
+			vo.setOrderStatusName("待评价");
+		}
+		if (orders.getOrderStatus() == 9) {
+			vo.setOrderStatusName("已完成");
+		}
+		OrderPrices orderPrices = orderPricesService.selectByOrderId(orders.getOrderId());
+		if (orderPrices != null) {
+			//订单金额
+			vo.setOrderMoney(orderPrices.getOrderMoney());
+			//支付金额
+			vo.setOrderPay(orderPrices.getOrderPay());
+		}
+		return vo;
+	}
+
+	private OrdersListVo initVo() {
+		OrdersListVo vo = new OrdersListVo();
+		Orders orders = ordersService.initOrders();
+		BeanUtilsExp.copyPropertiesIgnoreNull(orders, vo);
+		
+		vo.setServiceTypeName("");
+		vo.setAddr("");
+		vo.setPartnerUserName("");
+		vo.setOrderStatusName("");
+		vo.setOrderMoney(new BigDecimal(0));
+		vo.setOrderPay(new BigDecimal(0));
+		
+		return vo;
 	}	
 
 }
