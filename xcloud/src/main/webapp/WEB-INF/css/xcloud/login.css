@@ -1,0 +1,21 @@
+@import url(Shojumaru.css);
+
+body.login-page {
+  background: url(../../img/app-header-bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+}
+
+.ch-container {
+    padding: 0 15px;
+}
+
+div.center, p.center, img.center {
+    display: block;
+    float: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center;
+}

@@ -10,10 +10,11 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-
+<link href="<c:url value='/css/xcloud/login.css'/>" rel="stylesheet" />
 </head>
 
 <body class="login-page">
+
 
 <div class="ch-container">
     <div class="row">
@@ -69,7 +70,6 @@
 </div><!--/fluid-row-->
 
 </div><!--/.fluid-container-->
-
 	<!-- js placed at the end of the document so the pages load faster -->
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>

@@ -1,67 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!-- topbar starts -->
-<div class="navbar navbar-default" role="navigation">
-
-	<div class="navbar-inner">
-		<button type="button" class="navbar-toggle pull-left animated flip">
-			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-				class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="index.html"> <img alt="Charisma Logo" src="img/logo20.png" class="hidden-xs" /> <span>云行政</span></a>
-
-		<!-- user dropdown starts -->
-		<div class="btn-group pull-right">
-			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> admin</span> <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li><a href="#">个人资料</a></li>
-				<li class="divider"></li>
-				<li><a href="login.html">退出</a></li>
-			</ul>
+<header class="navbar navbar-fixed-top ">
+		<div class="container top-header" >
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon icon-bar"></span> <span class="icon icon-bar"></span> <span class="icon icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><img src="img/logo_header.png" alt="云行政"> <span
+					class="text"></span></a>
+			</div>
 		</div>
-		<!-- user dropdown ends -->
-
-		<!-- theme selector starts -->
-		<div class="btn-group pull-right theme-container animated tada">
-			<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<i class="glyphicon glyphicon-tint"></i><span class="hidden-sm hidden-xs"> Change Theme / Skin</span> <span
-					class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" id="themes">
-				<li><a data-value="classic" href="#"><i class="whitespace"></i> Classic</a></li>
-				<li><a data-value="cerulean" href="#"><i class="whitespace"></i> Cerulean</a></li>
-				<li><a data-value="cyborg" href="#"><i class="whitespace"></i> Cyborg</a></li>
-				<li><a data-value="simplex" href="#"><i class="whitespace"></i> Simplex</a></li>
-				<li><a data-value="darkly" href="#"><i class="whitespace"></i> Darkly</a></li>
-				<li><a data-value="lumen" href="#"><i class="whitespace"></i> Lumen</a></li>
-				<li><a data-value="slate" href="#"><i class="whitespace"></i> Slate</a></li>
-				<li><a data-value="spacelab" href="#"><i class="whitespace"></i> Spacelab</a></li>
-				<li><a data-value="united" href="#"><i class="whitespace"></i> United</a></li>
-			</ul>
+		
+		<div class="worker">
+			<div class="apps apps-hover ui-tab ui-tab-hover">
+				<div class="nav_shadow">
+					<div class="ui-tab-title apps-title ">
+						<label class="ui-item ui-item-selected ui-tab-item ui-tab-item-selected"><div><i class="fa fa-desktop"></i>工作台</div></label>
+						<label class=" ui-tab-item ui-item ui-hide"><div>通讯录</div></label>
+						<label class=" ui-tab-item ui-item ui-hide"><div>日程安排</div></label>
+					</div>
+				</div>
+			</div>
 		</div>
-		<!-- theme selector ends -->
+</header>
 
-		<ul class="collapse navbar-collapse nav navbar-nav top-menu">
-			
-			<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="glyphicon glyphicon-star"></i> Dropdown <span
-					class="caret"></span></a>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else here</a></li>
-					<li class="divider"></li>
-					<li><a href="#">Separated link</a></li>
-					<li class="divider"></li>
-					<li><a href="#">One more separated link</a></li>
-				</ul></li>
-			<li>
-				<form class="navbar-search pull-left">
-					<input placeholder="Search" class="search-query form-control col-md-10" name="query" type="text">
-				</form>
-			</li>
-		</ul>
-
-	</div>
-</div>
-<!-- topbar ends -->

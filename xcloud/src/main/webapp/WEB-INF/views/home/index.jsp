@@ -3,6 +3,7 @@
 
 <%@ include file="../shared/taglib.jsp"%>
 
+
 <html>
 <head>
 
@@ -13,56 +14,101 @@
 
 </head>
 
-<body>
+<body data-offset="250" data-target=".h5a-sidebar" data-spy="scroll">
 	<!--header start-->
 	<%@ include file="../shared/pageHeader.jsp"%>
 	<!--header end-->
+	</br>
+	<div class="h5a-header" id="content">
+		<div class="container h5a-container gray">
+			<div class="row">
 
-	<div class="ch-container">
-		<!--sidebar start-->
-		<%@ include file="../shared/sidebarMenu.jsp"%>
-		<!--sidebar end-->
+				<div class="col-sm-4">
+					<div class="box hidden-print" style="height:180px;">
+						 <div class="title">
+								<h4 >
+									<div style="margin-top:-15px;"><a href="#" >员工管理</a></div>
+									
+								</h4>
+								<span class="pull-right boxes_right" style="margin-top:-30px;">
+									<button class="btn btn-danger " type="button">添加员工</button>
+								</span>
+						
+						 </div>
 
-		<div class=" row">
-			<div class="col-md-3 col-sm-3 col-xs-6">
-				<a data-toggle="tooltip" title="6 new members." class="well top-block" href="#"> <i
-					class="glyphicon glyphicon-user blue"></i>
+						<dl class="num_list clearfix">
+							<dd>
+								<a href="#">
+									<p class="ind_num ind_color_green">
+										7<em>人</em>
+									</p>
+									<p class="ind_name">在职员工</p>
+								</a>
+							</dd>
+							<dd>
+								<p class="ind_num ind_color_blue">
+									4<em>人</em>
+								</p>
+								<p class="ind_name">全职员工</p>
+							</dd>
+							<dd>
+								<p class="ind_num ind_color_red">
+									3<em>人</em>
+								</p>
+								<p class="ind_name">外勤员工</p>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				
+				<div class="col-sm-4">
+					<div class="box hidden-print" style="height:180px;">
+						 <div class="title">
+								<h4 >
+									<div style="margin-top:-15px;"><a href="#" >员工管理</a></div>
+									
+								</h4>
+								<span class="pull-right boxes_right" style="margin-top:-30px;">
+									<button class="btn btn-danger " type="button">添加员工</button>
+								</span>
+						
+						 </div>
 
-					<div>Total Members</div>
-					<div>507</div> <span class="notification">6</span>
-				</a>
-			</div>
+						<dl class="num_list clearfix">
+							<dd>
+								<a href="#">
+									<p class="ind_num ind_color_green">
+										7<em>人</em>
+									</p>
+									<p class="ind_name">在职员工</p>
+								</a>
+							</dd>
+							<dd>
+								<p class="ind_num ind_color_blue">
+									4<em>人</em>
+								</p>
+								<p class="ind_name">全职员工</p>
+							</dd>
+							<dd>
+								<p class="ind_num ind_color_red">
+									3<em>人</em>
+								</p>
+								<p class="ind_name">外勤员工</p>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				
+				
 
-			<div class="col-md-3 col-sm-3 col-xs-6">
-				<a data-toggle="tooltip" title="4 new pro members." class="well top-block" href="#"> <i
-					class="glyphicon glyphicon-star green"></i>
 
-					<div>Pro Members</div>
-					<div>228</div> <span class="notification green">4</span>
-				</a>
-			</div>
 
-			<div class="col-md-3 col-sm-3 col-xs-6">
-				<a data-toggle="tooltip" title="$34 new sales." class="well top-block" href="#"> <i
-					class="glyphicon glyphicon-shopping-cart yellow"></i>
-
-					<div>Sales</div>
-					<div>$13320</div> <span class="notification yellow">$34</span>
-				</a>
-			</div>
-
-			<div class="col-md-3 col-sm-3 col-xs-6">
-				<a data-toggle="tooltip" title="12 new messages." class="well top-block" href="#"> <i
-					class="glyphicon glyphicon-envelope red"></i>
-
-					<div>Messages</div>
-					<div>25</div> <span class="notification red">12</span>
-				</a>
 			</div>
 		</div>
-
-
 	</div>
+
+
+
 
 
 	<!-- js placed at the end of the document so the pages load faster -->

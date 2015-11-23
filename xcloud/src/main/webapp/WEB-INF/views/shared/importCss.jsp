@@ -9,20 +9,14 @@
     <title>美家生活-行政云平台</title>
 
  	<!-- Bootstrap core CSS -->
-    <link href="<c:url value='/css/bootstrap-cerulean.min.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/assets/bootstrap-tour/build/css/bootstrap-tour.min.css'/>" rel="stylesheet" />
+    <link href="<c:url value='/css/vendor/bootstrap.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/css/vendor/font-awesome.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/css/overrides/bootstrap-overrides.css'/>" rel="stylesheet" />
 	
 	<!--external css-->
-	<link href="<c:url value='/css/xcloud-app.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/assets/colorbox/example3/colorbox.css'/>" rel="stylesheet" />
-    <link href="<c:url value='/assets/chosen/chosen.min.css'/>" rel="stylesheet" />
-    <link href="<c:url value='/assets/colorbox/example3/colorbox.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/css/vendor/jquery.dataTables.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/css/overrides/datatables-overrides.css'/>" rel="stylesheet" />
+    <link href="<c:url value='/css/vendor/animate.css'/>" rel="stylesheet" />
     
-    <link href="<c:url value='css/jquery.noty.css'/>" rel='stylesheet'>
-    <link href="<c:url value='css/noty_theme_default.css'/>" rel='stylesheet'>
-    <link href="<c:url value='css/elfinder.min.css'/>" rel='stylesheet'>
-    <link href="<c:url value='css/elfinder.theme.css'/>" rel='stylesheet'>
-    <link href="<c:url value='css/jquery.iphone.toggle.css'/>" rel='stylesheet'>
-    <link href="<c:url value='css/animate.min.css'/>" rel='stylesheet'>
     <!-- Custom styles for this template -->
-	
+	<link href="<c:url value='/css/HTML5admin.css'/>" rel='stylesheet'>
