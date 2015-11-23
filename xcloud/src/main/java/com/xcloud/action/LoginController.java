@@ -1,12 +1,14 @@
 package com.xcloud.action;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,7 +38,9 @@ public class LoginController extends BaseController {
     }
 
 	@RequestMapping(value="/login", method = {RequestMethod.POST})
-	public String login(HttpServletRequest request, Model model, BindingResult result){
+	public String login(HttpServletRequest request, Model model, 
+			@Valid @ModelAttribute("contentModel") LoginVo loginVol ,
+			BindingResult result){
 		//如果有验证错误 返回到form页面
         if (result.hasErrors())
             return login(model);
@@ -48,6 +52,7 @@ public class LoginController extends BaseController {
 		Long userId = 1L;
 		String companyName = "北京美家生活科技有限公司";
 		String name = "13810002890";
+		name= "13810002890";
 
         AccountAuth accountAuth= new AccountAuth();
         accountAuth.setUserId(userId);
