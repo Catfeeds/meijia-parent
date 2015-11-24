@@ -19,4 +19,4 @@
     <link href="<c:url value='/css/vendor/animate.css'/>" rel="stylesheet" />
     
     <!-- Custom styles for this template -->
-	<link href="<c:url value='/css/HTML5admin.css'/>" rel='stylesheet'>
+	<link href="<c:url value='/css/xcloud.css'/>" rel='stylesheet'>

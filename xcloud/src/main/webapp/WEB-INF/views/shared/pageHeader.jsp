@@ -6,7 +6,7 @@
 					<span class="icon icon-bar"></span> <span class="icon icon-bar"></span> <span class="icon icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="/"><img src="img/logo_header.png" alt="云行政"> <span
-					class="text"></span></a>
+					class="text" style="color:#fff">云行政-智慧行政服务平台</span></a>
 			</div>
 		</div>
 		
