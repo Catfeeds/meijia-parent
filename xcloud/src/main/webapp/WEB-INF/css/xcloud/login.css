@@ -5,7 +5,8 @@ body.login-page {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; }
+  background-size: cover; 
+  color:#CCCCCC;
 }
 
 .ch-container {
