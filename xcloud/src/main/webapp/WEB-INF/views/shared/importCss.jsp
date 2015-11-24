@@ -10,7 +10,7 @@
 
  	<!-- Bootstrap core CSS -->
     <link href="<c:url value='/css/vendor/bootstrap.css'/>" rel="stylesheet" />
-	<link href="<c:url value='/css/vendor/font-awesome.css'/>" rel="stylesheet" />
+	<link href="<c:url value='/css/vendor/font-awesome/css/font-awesome.min.css'/>" rel="stylesheet" />
 	<link href="<c:url value='/css/overrides/bootstrap-overrides.css'/>" rel="stylesheet" />
 	
 	<!--external css-->
