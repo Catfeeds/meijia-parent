@@ -15,8 +15,9 @@
 				<div class="nav_shadow">
 					<div class="ui-tab-title apps-title ">
 						<label class="ui-item ui-item-selected ui-tab-item ui-tab-item-selected"><div><i class="fa fa-desktop"></i>工作台</div></label>
-						<label class=" ui-tab-item ui-item ui-hide"><a href="/xcloud/staff/list"><div>通讯录</div></a></label>
-						<label class=" ui-tab-item ui-item ui-hide"><div>日程安排</div></label>
+						<label class="ui-item ui-item-selected ui-tab-item-hover ui-tab-item"><a href="/xcloud/staff/list"><div><i class="fa fa-desktop"></i>通讯录</div></a></label>
+						<label class="ui-item ui-item-selected ui-tab-item-hover ui-tab-item"><div>日程安排</div></label>
+						<!-- <label class=" ui-tab-item ui-item ui-hide"><a id ="tongxunlua1" href="/xcloud/staff/list"><div>通讯录</div></a></label> -->
 					</div>
 				</div>
 			</div>
