@@ -16,4 +16,12 @@ public class StaffController extends BaseController {
 		    
         return "/staffs/staff-list";
     }
+
+	
+	@RequestMapping(value="/userForm", method = {RequestMethod.GET})
+    public String staffUserForm(Model model){
+		    
+        return "/staffs/userForm";
+    }
 }
+

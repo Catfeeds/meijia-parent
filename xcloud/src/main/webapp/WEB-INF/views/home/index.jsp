@@ -142,6 +142,14 @@
 						
 						 </div>
 							<div id="external-events">
+								
+								<!-- <button class="btn btn-success" type="button">Success</button>
+								
+								
+								<div class="btn btn-danger external-event-button" type="button">Danger111112345</div>
+								<div class="btn btn-danger external-event red" data-class="red" type="button">Danger11111</div>
+								 -->
+								<!--  在xcloud的2159行设置长度 -->
 								<div class="external-event red" data-class="red">备忘标签</div>
 								<div class="external-event violet" data-class="violet">差旅规划</div>
 								<div class="external-event gray" data-class="gray">会议安排</div>
