@@ -3,7 +3,8 @@ var setting = {
 		dblClickExpand: dblClickExpand,
 		addHoverDom : addHoverDom,
 		removeHoverDom : removeHoverDom,
-		selectedMulti : false
+		selectedMulti : false,
+
 	},
 	
 	data : {
@@ -23,7 +24,7 @@ var zNodes =[
              { id:12, pId:1, name:"行政部"},
              { id:13, pId:1, name:"销售部"},
              { id:14, pId:1, name:"技术部"},
-             { id:14, pId:1, name:"总经办"}
+             { id:15, pId:1, name:"总经办"}
          ];
 
 
@@ -33,7 +34,9 @@ $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 
 var newCount = 1;
 function addHoverDom(treeId, treeNode) {
+	console.log("addHoverDom");
     var sObj = $("#" + treeNode.tId + "_span");
+    console.log(sObj);
     if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
     var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
         + "' title='add node' onfocus='this.blur();'></span>";
