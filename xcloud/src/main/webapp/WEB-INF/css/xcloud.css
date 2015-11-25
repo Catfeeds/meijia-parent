@@ -84,6 +84,7 @@
 .worker .apps-title .ui-tab-item-hover .workbench {
   background-position: -100px 0;
 }
+
 .worker .apps-title .ui-tab-item-hover i {
   visibility: visible;
 }
@@ -144,6 +145,7 @@
   .worker .apps-title .ui-tab-item-hover .workbench,
   .worker .apps-title .ui-tab-item a:hover i.workbench {
     background-position: -95px 0;
+    color:blue;
   }
   .worker .apps-title i.menu-remove {
     background-position: -211px -40px;
@@ -2085,12 +2087,12 @@ input[type="date"] {
 	margin-top: 0;
 	padding-top: 1em;
 }
-
+/* 卡片文字的设置 */
 .external-event {
 	margin: 10px 0;
 	padding: 2px 4px;
 	background: #6bb5c1;
-	color: #fff;
+	color: #fff ;
 	font-size: .85em;
 	cursor: pointer;
 	-webkit-border-radius: 3px;
@@ -2114,8 +2116,8 @@ input[type="date"] {
 	background-clip: padding-box;
 }
 
-.external-event.red {
-	background: red;
+.external-event-red {
+	background: #ffcc99;
 }
 
 a.fc-event:hover {
@@ -2155,6 +2157,7 @@ a.fc-event:hover {
 
 .fc-event, .external-event {
 	height: 20px;
+	width : 100px;
 	overflow: hidden;
 }
 
@@ -2163,27 +2166,27 @@ a.fc-event:hover {
 }
 
 .fc-event.blue, .external-event.blue {
-	background: #6bb5c1;
+	background: #ff4a4a;
 }
 
 .fc-event.violet, .external-event.violet {
-	background: #6033a3;
+	background: #ff4a4a;
 }
 
 .fc-event.orange, .external-event.orange {
-	background: #efad29;
+	background: #ff4a4a;
 }
 
 .fc-event.green, .external-event.green {
-	background: #7ac17d;
+	background: #ff4a4a;
 }
 
 .fc-event.red, .external-event.red {
-	background: #c95b5b;
+	background: #ff4a4a;
 }
 
 .fc-event.gray, .external-event.gray {
-	background: #716b7a;
+	background: #ff4a4a;
 }
 
 #external-events p {
