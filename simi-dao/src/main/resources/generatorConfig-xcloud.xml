@@ -4,7 +4,8 @@
 	<!--  
 	  <classPathEntry location="C:\workspace\java\libs\mysql-connector-java-5.1.5-bin.jar" />
     -->
-	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
+	<!-- <classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" /> -->
+ <classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" />
 
 
 	<!-- 数据库链接URL、用户名、密码 -->
@@ -68,6 +69,20 @@
 			<columnOverride  column="poi_type" property="poiType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
 		
-
+        <!--公司部门表 -->
+		<table schema="simi" tableName="xcompany_dept"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="dept_id" property="deptId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+		</table>
 	</context>
 </generatorConfiguration>
