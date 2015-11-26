@@ -26,7 +26,23 @@ var zNodes =[
              { id:14, pId:1, name:"技术部"},
              { id:15, pId:1, name:"总经办"}
          ];
-
+function query() {
+    $.ajax({
+        //url: basePath + "item/navigatorTree?basePath=" + basePath,   //路径
+        url:"/simi-oa/interface-zTree/check-token-dumplicate.json", //发送给服务器的url
+        type: "get",
+        dataType: "json",
+        success: function (treeNode) {
+            zNodes = treeNode;                                      //取得ajax数据
+       /*     var height = document.documentElement.clientHeight - 115;  //设定高度
+            $("#navigatorTree").height(height);
+            $.fn.zTree.init($("#navigatorTree"), setting, zNodes);
+            zTree = $.fn.zTree.getZTreeObj("navigatorTree");        //初始化树
+            rMenu = $("#rMenu");*/                                    //初始化右键
+        },
+        error: doError
+    });
+}
 
 
 $.fn.zTree.init($("#treeDemo"), setting, zNodes);

@@ -31,7 +31,7 @@ public class TestUserDetailPayController extends JUnitActionBase {
 	public void testGetDetailPay() throws Exception {
 
 		String url = "/app/user/get_detail_pay.json";
-		String params = "?user_id=77";
+		String params = "?user_id=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 		ResultActions resultActions = this.mockMvc.perform(getRequest);

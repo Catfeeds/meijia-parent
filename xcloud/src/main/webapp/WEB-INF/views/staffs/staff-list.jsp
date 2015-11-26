@@ -75,7 +75,7 @@
 
 						</div>
 
-						<dl class="num_list clearfix">
+						<!-- <dl class="num_list clearfix">
 							<dd>
 								<a href="#">
 									<p class="ind_num ind_color_green">
@@ -96,7 +96,7 @@
 								</p>
 								<p class="ind_name">外勤员工</p>
 							</dd>
-						</dl>
+						</dl> -->
 						<!-- ///////////////////////////////////////// -->
 					<div class="card-body">
 					<div id="DataTables_Table_0_wrapper"

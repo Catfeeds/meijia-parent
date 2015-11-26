@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.user.UserDetailPayVo;
 import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
@@ -41,5 +42,7 @@ public interface UserDetailPayService {
 	UserDetailPay userDetailPayForOrderCard(Users user, OrderCards orderCard, String tradeStatus, String tradeNo, String payAccount);
 
 	List<UserDetailPay> selectByUserIdPage(Long userId, int page);
+
+	UserDetailPayVo getUserDetailPayVo(UserDetailPay userDetailPay);
 
 }

@@ -1,5 +1,6 @@
 package com.simi.service.admin;
 
+import java.util.List;
 import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
@@ -32,6 +33,8 @@ public interface AdminRoleService {
 	public void saveRoleToAuthorize(Long roleId, Long[] authorityIds);
 
 	Map<Long,String> getSelectSource();
+
+	List<AdminRole> selectAll();
 
 
 

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.UserSearchVo;
+import com.simi.vo.order.OrderListVo;
+import com.simi.vo.user.UserDetailPayVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserDetailPayMapper;
 import com.simi.po.dao.user.UserFeedbackMapper;
@@ -22,6 +25,7 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.UserFeedback;
 import com.simi.po.model.user.Users;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -238,6 +242,36 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 //			end = page * Constants.PAGE_MAX_NUMBER;
 		}
 		return userDetailPayMapper.selectByUserIdPage(userId, start, end);
+	}
+
+	@Override
+	public UserDetailPayVo getUserDetailPayVo(UserDetailPay userDetailPay) {
+		
+		UserDetailPayVo vo = new UserDetailPayVo();
+		BeanUtils.copyProperties(userDetailPay, vo);
+		
+		//订单类型名称
+		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_0) {
+			vo.setOrderTypeName("订单支付");
+		}
+		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_1) {
+			vo.setOrderTypeName("购买充值卡");
+		}
+		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_2) {
+			vo.setOrderTypeName("购买私秘卡");
+		}
+		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_3) {
+			vo.setOrderTypeName("订单退款");
+		}
+		
+		//日期格式的字符串
+		if (userDetailPay.getAddTime() != null) {
+			Long addTime = userDetailPay.getAddTime()*1000;
+			//vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
+			vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-mm-dd"));
+		}
+		
+		return vo;
 	}
 	
 
