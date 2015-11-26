@@ -14,12 +14,12 @@
 }
 
 .navbar-brand {
-	padding: 3px 15px 0 15px;
+	padding: 3px 15px 0px 15px;
 	color: black;
 }
 
 .navbar-brand img {
-	height: 40px;
+	height: 30px;
 	width: auto;
 }
 

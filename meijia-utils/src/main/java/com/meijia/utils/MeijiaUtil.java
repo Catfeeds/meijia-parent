@@ -582,4 +582,17 @@ public class MeijiaUtil {
 		}
 		return responseTimeName;		
 	}
+	
+	public static List<String> getDefaultDept() {
+		List<String> depts = new ArrayList<String>();
+		depts.add("行政部");
+		depts.add("人事部");
+		depts.add("研发部");
+		depts.add("销售部");
+		depts.add("市场部");
+		depts.add("运营部");
+		depts.add("财务部");
+		depts.add("总经办");
+		return depts;
+	}
 }

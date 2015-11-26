@@ -24,23 +24,23 @@ public class CompanyController extends BaseController {
 	
 	@RequestMapping(value="/check-duplicate", method = {RequestMethod.GET})
 	public AppResultData<Object> checkDuplicate(
-			@RequestParam("company_name") String companyName,
+			@RequestParam("user_name") String userName,
 			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId
 			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, "");
 		
-		if (StringUtil.isEmpty(companyName)) return result;
+		if (StringUtil.isEmpty(userName)) return result;
 		
-		Xcompany xCompany = xCompanyService.selectByCompanyName(companyName);
+		Xcompany xCompany = xCompanyService.selectByUserName(userName);
 		
 		if (xCompany != null) {
 			if (companyId > 0L && xCompany.getCompanyId().equals(companyId)) {
 				return result;
 			}
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("公司名称已经存在,请重新输入。");
+			result.setMsg("用户已经绑定过公司主体。");
 			return result;
 		}
 		

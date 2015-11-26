@@ -9,10 +9,11 @@ public class Constants {
 	 */
 	public static int CHECK_CODE_MAX_LENGTH = 999999;
 
-	//'0' COMMENT '用户来源 0 = APP  1 = 微网站  2 = 管理后台'
+	//'0' COMMENT '用户来源 0 = APP  1 = 微网站  2 = 管理后台 3 = 云平台'
 	public static short USER_APP = 0;
 	public static short USER_WWZ = 1;
 	public static short USER_BACK = 2;
+	public static short User_XCOULD = 3;
 
 	//是否使用 0 = 未使用 1= 已使用
 	public static short IS_USER_0 = 0;

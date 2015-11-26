@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.Xcompany">
 		<id column="company_id" property="companyId" jdbcType="NUMERIC" />
 		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="short_name" property="shortName" jdbcType="VARCHAR" />
 		<result column="company_size" property="companySize" jdbcType="NUMERIC" />
 		<result column="company_trade" property="companyTrade" jdbcType="SMALLINT" />
 		<result column="province_id" property="provinceId" jdbcType="NUMERIC" />
@@ -16,15 +17,15 @@
 		<result column="addr" property="addr" jdbcType="VARCHAR" />
 		<result column="user_name" property="userName" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
-		<result column="auth_mobile" property="authMobile" jdbcType="CHAR" />
+		<result column="invitation_code" property="invitationCode" jdbcType="CHAR" />
 		<result column="link_man" property="linkMan" jdbcType="VARCHAR" />
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		company_id, company_name, company_size, company_trade, province_id, city_id, region_id,
-		latitude, longitude, poi_type, addr_name, addr, user_name, password, auth_mobile,
+		company_id, company_name, short_name, company_size, company_trade, province_id, city_id, region_id,
+		latitude, longitude, poi_type, addr_name, addr, user_name, password, invitation_code,
 		link_man, email, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -64,25 +65,30 @@
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.Xcompany">
 		<selectKey resultType="java.lang.Long" order="AFTER"
-			keyProperty="id">
+			keyProperty="companyId">
 			SELECT LAST_INSERT_ID() AS company_id
 		</selectKey>	
-		insert into xcompany (company_id, company_name, company_size,
+		insert into xcompany (company_id, company_name, short_name, company_size,
 		company_trade, province_id, city_id,
 		region_id, latitude, longitude,
 		poi_type, addr_name, addr,
-		user_name, password, auth_mobile,
+		user_name, password, invitation_code,
 		link_man, email, add_time,
 		update_time)
-		values (#{companyId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
+		values (#{companyId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
 		#{companyTrade,jdbcType=SMALLINT}, #{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC},
 		#{regionId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
 		#{poiType,jdbcType=NUMERIC}, #{addrName,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
-		#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{authMobile,jdbcType=CHAR},
+		#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{invitationCode,jdbcType=CHAR},
 		#{linkMan,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.Xcompany">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="companyId">
+			SELECT LAST_INSERT_ID() AS company_id
+		</selectKey>
+	
 		insert into xcompany
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="companyId != null">
@@ -90,6 +96,9 @@
 			</if>
 			<if test="companyName != null">
 				company_name,
+			</if>
+			<if test="shortName != null">
+				short_name,
 			</if>
 			<if test="companySize != null">
 				company_size,
@@ -127,8 +136,8 @@
 			<if test="password != null">
 				password,
 			</if>
-			<if test="authMobile != null">
-				auth_mobile,
+			<if test="invitationCode != null">
+				invitation_code,
 			</if>
 			<if test="linkMan != null">
 				link_man,
@@ -149,6 +158,9 @@
 			</if>
 			<if test="companyName != null">
 				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="shortName != null">
+				#{shrotName,jdbcType=VARCHAR},
 			</if>
 			<if test="companySize != null">
 				#{companySize,jdbcType=NUMERIC},
@@ -186,8 +198,8 @@
 			<if test="password != null">
 				#{password,jdbcType=VARCHAR},
 			</if>
-			<if test="authMobile != null">
-				#{authMobile,jdbcType=CHAR},
+			<if test="invitationCode != null">
+				#{invitationCode,jdbcType=CHAR},
 			</if>
 			<if test="linkMan != null">
 				#{linkMan,jdbcType=VARCHAR},
@@ -208,6 +220,9 @@
 		<set>
 			<if test="companyName != null">
 				company_name = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="shortName != null">
+				short_name = #{shortName,jdbcType=VARCHAR},
 			</if>
 			<if test="companySize != null">
 				company_size = #{companySize,jdbcType=NUMERIC},
@@ -245,8 +260,8 @@
 			<if test="password != null">
 				password = #{password,jdbcType=VARCHAR},
 			</if>
-			<if test="authMobile != null">
-				auth_mobile = #{authMobile,jdbcType=CHAR},
+			<if test="invitationCode != null">
+				invitation_code = #{invitationCode,jdbcType=CHAR},
 			</if>
 			<if test="linkMan != null">
 				link_man = #{linkMan,jdbcType=VARCHAR},
@@ -266,6 +281,7 @@
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.Xcompany">
 		update xcompany
 		set company_name = #{companyName,jdbcType=VARCHAR},
+		short_name = #{shortName,jdbcType=VARCHAR},
 		company_size = #{companySize,jdbcType=NUMERIC},
 		company_trade = #{companyTrade,jdbcType=SMALLINT},
 		province_id = #{provinceId,jdbcType=NUMERIC},
@@ -278,7 +294,7 @@
 		addr = #{addr,jdbcType=VARCHAR},
 		user_name = #{userName,jdbcType=VARCHAR},
 		password = #{password,jdbcType=VARCHAR},
-		auth_mobile = #{authMobile,jdbcType=CHAR},
+		invitation_code = #{invitationCode,jdbcType=CHAR},
 		link_man = #{linkMan,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC},

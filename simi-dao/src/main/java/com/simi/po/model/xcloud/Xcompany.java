@@ -4,6 +4,8 @@ public class Xcompany {
     private Long companyId;
 
     private String companyName;
+    
+    private String shortName;
 
     private Short companySize;
 
@@ -29,7 +31,7 @@ public class Xcompany {
 
     private String password;
 
-    private String authMobile;
+    private String invitationCode;
 
     private String linkMan;
 
@@ -151,14 +153,6 @@ public class Xcompany {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getAuthMobile() {
-        return authMobile;
-    }
-
-    public void setAuthMobile(String authMobile) {
-        this.authMobile = authMobile == null ? null : authMobile.trim();
-    }
-
     public String getLinkMan() {
         return linkMan;
     }
@@ -190,4 +184,20 @@ public class Xcompany {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getInvitationCode() {
+		return invitationCode;
+	}
+
+	public void setInvitationCode(String invitationCode) {
+		this.invitationCode = invitationCode;
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
 }
