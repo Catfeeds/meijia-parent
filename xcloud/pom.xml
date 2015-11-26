@@ -124,7 +124,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>xclound</finalName>
+		<finalName>xcloud</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
