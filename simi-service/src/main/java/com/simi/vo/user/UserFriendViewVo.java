@@ -11,6 +11,8 @@ public class UserFriendViewVo {
     private	String headImg;
     
     private String ImUsername;
+    
+    private String mobile;
 
 	public String getName() {
 		return name;
@@ -50,5 +52,13 @@ public class UserFriendViewVo {
 
 	public void setFriendId(Long friendId) {
 		this.friendId = friendId;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}    
 }

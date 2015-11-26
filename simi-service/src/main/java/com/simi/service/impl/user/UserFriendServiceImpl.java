@@ -113,6 +113,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 					vo.setName(u.getName());
 					vo.setSex(u.getSex());
 					vo.setHeadImg(u.getHeadImg());
+					vo.setMobile(u.getMobile());
 					break;
 				}
 			}
