@@ -115,7 +115,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 					
 					String headImg = u.getHeadImg();
 					if (headImg.indexOf("http://img.51xingzheng.cn") >= 0) {
-						headImg = headImg + "?w=200&h=200";
+						headImg = headImg + "?w=100&h=100";
 					}
 					
 					vo.setHeadImg(headImg);
