@@ -112,7 +112,13 @@ public class UserFriendServiceImpl implements UserFriendService {
 					vo.setFriendId(item.getFriendId());
 					vo.setName(u.getName());
 					vo.setSex(u.getSex());
-					vo.setHeadImg(u.getHeadImg());
+					
+					String headImg = u.getHeadImg();
+					if (headImg.indexOf("http://img.51xingzheng.cn") >= 0) {
+						headImg = headImg + "?w=200&h=200";
+					}
+					
+					vo.setHeadImg(headImg);
 					vo.setMobile(u.getMobile());
 					break;
 				}
