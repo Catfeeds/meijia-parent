@@ -32,6 +32,8 @@ public class XcompanyServiceImpl implements XCompanyService {
 		record.setUserName("");
 		record.setPassword("");
 		record.setLinkMan("");
+		record.setInvitationCode("");
+		record.setQrCode("");
 		record.setEmail("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());

@@ -8,7 +8,7 @@ public class AccountAuth {
 	
 	private String companyName;
 	
-	private String name;
+	private String shortName;
 
 	public Long getUserId() {
 		return userId;
@@ -34,12 +34,12 @@ public class AccountAuth {
 		this.companyName = companyName;
 	}
 
-	public String getName() {
-		return name;
+	public String getShortName() {
+		return shortName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
 	}
 
 

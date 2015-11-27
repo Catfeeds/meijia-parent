@@ -1,8 +1,14 @@
 package com.xcloud.action;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,8 +20,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.zxing.WriterException;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.QrCodeUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
@@ -56,7 +67,7 @@ public class RegisterController extends BaseController {
     						 HttpServletResponse response,  
     						 Model model,
     						 @ModelAttribute("contentModel") Xcompany xCompanyVo, 
-    						 BindingResult result) throws NoSuchAlgorithmException {
+    						 BindingResult result) throws NoSuchAlgorithmException, WriterException, IOException {
         
 		//获得注册的form信息
 		Long companyId = xCompanyVo.getCompanyId();
@@ -84,6 +95,45 @@ public class RegisterController extends BaseController {
 			xCompany.setInvitationCode(invitationCode);
 			xCompanyService.insert(xCompany);
 			companyId = xCompany.getCompanyId();
+			
+			//生成公司邀请二维码
+			String qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
+			Map<String, String> contents = new HashMap<String, String>();
+			
+			contents.put("tag", "xcloud");
+			contents.put("company_id", companyId.toString());
+			contents.put("company_name", xCompany.getCompanyName());
+			contents.put("invitation_code", xCompany.getInvitationCode());
+			
+			 ObjectMapper objectMapper = new ObjectMapper();
+			 String jsonContents = objectMapper.writeValueAsString(contents);
+			
+			BufferedImage qrCodeImg = QrCodeUtil.genBarcode(jsonContents, 800, 800, qrCodeLogo);
+			
+			ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
+	        try {  
+	            boolean resultWrite = ImageIO.write(qrCodeImg, "png", imageStream);  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	        imageStream.flush();  
+	        byte[] imgBytes = imageStream.toByteArray();  
+			
+	        String url = Constants.IMG_SERVER_HOST + "/upload/";
+			String sendResult = ImgServerUtil.sendPostBytes(url, imgBytes, "png");
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+			String ret = o.get("ret").toString();
+
+			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+			String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();				
+			
+			xCompany.setQrCode(imgUrl);
+			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		}
 		
 		//然后判断用户是否已经存在，不存在则添加新用户

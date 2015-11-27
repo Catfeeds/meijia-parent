@@ -1,5 +1,7 @@
 package com.xcloud.action;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -15,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
 import com.xcloud.vo.LoginVo;
+import com.meijia.utils.StringUtil;
+import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.Xcompany;
+import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 
 
@@ -24,6 +30,9 @@ public class LoginController extends BaseController {
 	
 	@Autowired
 	private XCompanyService xCompanyService;	
+	
+	@Autowired
+	private UsersService usersService;		
 
 	@RequestMapping(value="/login", method = {RequestMethod.GET})
     public String login(Model model){
@@ -40,25 +49,30 @@ public class LoginController extends BaseController {
 	@RequestMapping(value="/login", method = {RequestMethod.POST})
 	public String login(HttpServletRequest request, Model model, 
 			@Valid @ModelAttribute("contentModel") LoginVo loginVol ,
-			BindingResult result){
+			BindingResult result) throws NoSuchAlgorithmException{
 		//如果有验证错误 返回到form页面
         if (result.hasErrors())
             return login(model);
 
-//        String mobile = request.getParameter("mobile").trim();
-//        String smsToken = request.getParameter("sms_token").trim();
+        String userName = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
         
-		Long companyId = 1L;
-		Long userId = 1L;
-		String companyName = "北京美家生活科技有限公司";
-		String name = "13810002890";
-		name= "13810002890";
+        String passwordMd5 = StringUtil.md5(password.trim());
+        Xcompany xCompany = xCompanyService.selectByUserNameAndPass(userName, passwordMd5);
+        
+        Users u = usersService.selectByMobile(userName);
+        
+		Long companyId = xCompany.getCompanyId();
+		Long userId = u.getId();
+		String companyName = xCompany.getCompanyName();
+		String shortName = xCompany.getShortName();
+
 
         AccountAuth accountAuth= new AccountAuth();
         accountAuth.setUserId(userId);
         accountAuth.setCompanyId(companyId);
         accountAuth.setCompanyName(companyName);
-        accountAuth.setName(name);
+        accountAuth.setShortName(shortName);
 
     	AuthHelper.setSessionAccountAuth(request, accountAuth);
 

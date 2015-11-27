@@ -13,19 +13,11 @@
 
 <!--css for this page-->
 
-<link rel="stylesheet"
-	href="<c:url value='/js/vendor/zTree/css/awesomeStyle/awesome.css'/>"
-	type="text/css">
+<link rel="stylesheet" href="<c:url value='/js/vendor/zTree/css/awesomeStyle/awesome.css'/>" type="text/css">
 <style type="text/css">
-.ztree li span.button.switch.level0 {
-	visibility: hidden;
-	width: 1px;
-}
 
-.ztree li ul.level0 {
-	padding: 0;
-	background: none;
-}
+
+
 </style>
 
 </head>
@@ -38,6 +30,10 @@
 	<div class="h5a-header" id="content">
 		<div class="container h5a-container gray">
 			<div class="row">
+
+				<input type="hidden" id="companyId" value="${companyId}"/>
+				<input type="hidden" id="companyName" value="${companyName}"/>
+				<input type="hidden" id="shortName" value="${shortName}"/>
 
 				<div class="col-sm-2">
 					<div class="box hidden-print" style="height: 500px;">
@@ -67,7 +63,7 @@
 								</dl>
 							</div>
 						</div>
-						<ul id="treeDemo" class="ztree"></ul>
+						<ul id="detpTree" class="ztree"></ul>
 					</div>
 				</div>
 
@@ -320,16 +316,9 @@
 		<%@ include file="../shared/importJs.jsp"%>
 
 		<!--script for this page-->
-		<script type="text/javascript"
-			src="<c:url value='/js/vendor/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
-			<%-- <script type="text/javascript"
-			src="<c:url value='/js/vendor/zTree/js/jquery-1.4.4.min.js'/>"></script> --%>
-		<%-- <script type="text/javascript"
-			src="<c:url value='/js/vendor/zTree/css/zTreeStyle/zTreeStyle.css'/>"></script>
-		<script type="text/javascript"
-			src="<c:url value='/js/vendor/zTree/css/zTreeStyle/img'/>"></script>
-				 --%>	
-
+		<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.excheck-3.5.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.exedit-3.5.js'/>"></script>
 		<script type="text/javascript"
 			src="<c:url value='/js/xcloud/staffs/staff-list.js'/>"></script>
 </body>

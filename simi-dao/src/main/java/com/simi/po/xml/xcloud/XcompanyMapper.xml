@@ -18,6 +18,7 @@
 		<result column="user_name" property="userName" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
 		<result column="invitation_code" property="invitationCode" jdbcType="CHAR" />
+		<result column="qr_code" property="qrCode" jdbcType="CHAR" />
 		<result column="link_man" property="linkMan" jdbcType="VARCHAR" />
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
@@ -25,7 +26,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		company_id, company_name, short_name, company_size, company_trade, province_id, city_id, region_id,
-		latitude, longitude, poi_type, addr_name, addr, user_name, password, invitation_code,
+		latitude, longitude, poi_type, addr_name, addr, user_name, password, invitation_code, qr_code,
 		link_man, email, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -72,14 +73,14 @@
 		company_trade, province_id, city_id,
 		region_id, latitude, longitude,
 		poi_type, addr_name, addr,
-		user_name, password, invitation_code,
+		user_name, password, invitation_code, qr_code,
 		link_man, email, add_time,
 		update_time)
 		values (#{companyId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
 		#{companyTrade,jdbcType=SMALLINT}, #{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC},
 		#{regionId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
 		#{poiType,jdbcType=NUMERIC}, #{addrName,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
-		#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{invitationCode,jdbcType=CHAR},
+		#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{invitationCode,jdbcType=CHAR}, #{qrCode,jdbcType=CHAR},
 		#{linkMan,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
 	</insert>
@@ -138,6 +139,9 @@
 			</if>
 			<if test="invitationCode != null">
 				invitation_code,
+			</if>
+			<if test="qrCode != null">
+				qr_code,
 			</if>
 			<if test="linkMan != null">
 				link_man,
@@ -201,6 +205,9 @@
 			<if test="invitationCode != null">
 				#{invitationCode,jdbcType=CHAR},
 			</if>
+			<if test="qrCode != null">
+				#{qrCode,jdbcType=CHAR},
+			</if>
 			<if test="linkMan != null">
 				#{linkMan,jdbcType=VARCHAR},
 			</if>
@@ -263,6 +270,9 @@
 			<if test="invitationCode != null">
 				invitation_code = #{invitationCode,jdbcType=CHAR},
 			</if>
+			<if test="qrCode != null">
+				qr_code = #{qrCode,jdbcType=CHAR},
+			</if>
 			<if test="linkMan != null">
 				link_man = #{linkMan,jdbcType=VARCHAR},
 			</if>
@@ -295,6 +305,7 @@
 		user_name = #{userName,jdbcType=VARCHAR},
 		password = #{password,jdbcType=VARCHAR},
 		invitation_code = #{invitationCode,jdbcType=CHAR},
+		qr_code = #{qrCode,jdbcType=CHAR},
 		link_man = #{linkMan,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC},

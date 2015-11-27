@@ -32,6 +32,8 @@ public class Xcompany {
     private String password;
 
     private String invitationCode;
+    
+    private String qrCode;
 
     private String linkMan;
 
@@ -199,5 +201,13 @@ public class Xcompany {
 
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
+	}
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
 	}
 }
