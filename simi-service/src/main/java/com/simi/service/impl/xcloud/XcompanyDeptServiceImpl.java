@@ -68,6 +68,12 @@ public class XcompanyDeptServiceImpl implements XcompanyDeptService {
 
 		return xCompanyDeptMapper.selectByParentId(parentId);
 	}
+
+	@Override
+	public List<XcompanyDept> selectByParentIdAndXcompanyId(Long parentId,Long xcompanyId) {
+
+		return xCompanyDeptMapper.selectByParentIdAndXcompanyId(parentId,xcompanyId);
+	}
 	
 	}
 

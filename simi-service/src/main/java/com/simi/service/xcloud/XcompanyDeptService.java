@@ -24,4 +24,7 @@ public interface XcompanyDeptService {
 
 	List<XcompanyDept> selectByParentId(Long parentId);
 
+	List<XcompanyDept> selectByParentIdAndXcompanyId(Long parentId,
+			Long xcompanyId);
+
 }

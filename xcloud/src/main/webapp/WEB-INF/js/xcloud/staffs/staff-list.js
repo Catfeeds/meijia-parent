@@ -164,29 +164,20 @@ function dblClickExpand(treeId, treeNode) {
 		};
 
 		function filter(treeId, parentNode, childNodes) {
-			/*if (!childNodes) return null;
-			for (var i=0, l=childNodes.length; i<l; i++) {
-				childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
-			}*/
-			/* for ($i=1; $i<5; $i++) {
-			    	$nId = $pId.$i;
-			    	$nName = $pName."n".$i;
-			    	
-			    	$deptId = $pId.$i;
-			    	$name = $pName.$i;
-			    	
-			    	echo : "{ id:'".$deptId"',	name:'".$Name"',	isParent:"
-			    	(( $pLevel < "2" && ($i%2)!=0)?"true":"false")
-			    	($pCheck==""?"":((($pLevel < "2" && ($i%2)!=0)?", halfCheck:true":"")
-			    			($i==3?", checked:true":"")))"}";
-			    	if ($i<4) {
-			    		echo ",";
-			    	}
-			    }*/
+		
+			
 			return childNodes;
 		}
 
+
+		/*$(document).ready(function () {
+		 *var hei = childNodes;
+		        $.fn.zTree.init($("#treeDemo"), setting, hei);
+		        });*/
+
+
 		$(document).ready(function(){
+			
 			$.fn.zTree.init($("#treeDemo"), setting);
 		});
 /*$.ajax({
