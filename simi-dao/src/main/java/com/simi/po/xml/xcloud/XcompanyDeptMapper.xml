@@ -16,10 +16,26 @@
     from xcompany_dept
     where dept_id = #{deptId,jdbcType=NUMERIC}
   </select>
+  
+   <select id="selectByXcompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xcompany_dept
+    where company_id = #{companyId,jdbcType=NUMERIC}
+  </select>
+  
+  <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xcompany_dept
+    where parent_id = #{parentId,jdbcType=NUMERIC}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from xcompany_dept
     where dept_id = #{deptId,jdbcType=NUMERIC}
   </delete>
+  
   <insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyDept" >
     insert into xcompany_dept (dept_id, company_id, name, 
       parent_id)

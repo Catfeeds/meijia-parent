@@ -1,6 +1,7 @@
 package com.simi.service.xcloud;
 
-import com.simi.po.model.xcloud.Xcompany;
+import java.util.List;
+
 import com.simi.po.model.xcloud.XcompanyDept;
 
 public interface XcompanyDeptService {
@@ -18,5 +19,9 @@ public interface XcompanyDeptService {
 	int updateByPrimaryKeySelective(XcompanyDept record);
 
 	int insert(XcompanyDept record);
+
+	List<XcompanyDept> selectByXcompanyId(Long xcompanyId);
+
+	List<XcompanyDept> selectByParentId(Long parentId);
 
 }

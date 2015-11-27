@@ -1,12 +1,11 @@
 package com.simi.service.impl.xcloud;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyDeptMapper;
-import com.simi.po.dao.xcloud.XcompanyMapper;
-import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.service.xcloud.XcompanyDeptService;
 
@@ -58,4 +57,17 @@ public class XcompanyDeptServiceImpl implements XcompanyDeptService {
 		return xCompanyDeptMapper.updateByPrimaryKeySelective(record);
 	}
 
-}
+	@Override
+	public List<XcompanyDept> selectByXcompanyId(Long xcompanyId) {
+		
+		return xCompanyDeptMapper.selectByXcompanyId(xcompanyId);
+	}
+
+	@Override
+	public List<XcompanyDept> selectByParentId(Long parentId) {
+
+		return xCompanyDeptMapper.selectByParentId(parentId);
+	}
+	
+	}
+

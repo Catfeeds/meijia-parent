@@ -48,13 +48,26 @@
 								</div>
 
 							</h4>
-							<span class="pull-right boxes_right" style="margin-top: -35px;">
+							<!-- <span class="pull-right boxes_right" style="margin-top: -35px;">
 								<button class="btn btn-danger " type="button">修改</button>
-							</span>
-
+							</span> -->
+							<div class="title_right newadd fr prelative">
+								<i class="add_icon"></i>
+								<dl class="newadd_list company_message" style="display: none;">
+									<dd>
+										<a id="department_id" class="add_element"
+											data-add_target="a.add_element" href="javascript:;">新增部门</a>
+									</dd>
+									<dd>
+										<a href="/members/multi?to=add">添加员工</a>
+									</dd>
+									<dd>
+										<a class="members_multi_add" href="javascript:void(0);">批量导入</a>
+									</dd>
+								</dl>
+							</div>
 						</div>
 						<ul id="treeDemo" class="ztree"></ul>
-
 					</div>
 				</div>
 
@@ -69,8 +82,9 @@
 							</h4>
 							<span class="pull-right boxes_right" style="margin-top: -30px;">
 								<%-- <button class="btn btn-danger " type="button" onClick="btn_add('order/orderView?orderNo=${item.orderNo }')">添加员工</button> --%>
-							<a href="/xcloud/staff/userForm"><button class="btn btn-danger " type="button">添加员工</button></a>
-							
+								<a href="/xcloud/staff/userForm"><button
+										class="btn btn-danger " type="button">添加员工</button></a>
+
 							</span>
 
 						</div>
@@ -98,97 +112,98 @@
 							</dd>
 						</dl> -->
 						<!-- ///////////////////////////////////////// -->
-					<div class="card-body">
-					<div id="DataTables_Table_0_wrapper"
-						class="dataTables_wrapper form-inline dt-bootstrap">
-						<div class="top">
-							<div id="DataTables_Table_0_filter" class="dataTables_filter">
-								<label> Search: <input class="form-control input-sm"
-									type="search" placeholder="" aria-controls="DataTables_Table_0">
-								</label>
-							</div>
-							<div id="DataTables_Table_0_length" class="dataTables_length">
-								<label> Show <select class="form-control input-sm"
-									name="DataTables_Table_0_length"
-									aria-controls="DataTables_Table_0">
-										<option value="10">10</option>
-										<option value="25">25</option>
-										<option value="50">50</option>
-										<option value="100">100</option>
-								</select> entries
-								</label>
-							</div>
-							<div class="clear"></div>
-						</div>
-						<table id="DataTables_Table_0"
-							class="datatable table table-striped dataTable" width="100%"
-							cellspacing="0" role="grid"
-							aria-describedby="DataTables_Table_0_info" style="width: 100%;">
-							<thead>
-								<tr role="row">
-									<th class="sorting_asc" tabindex="0"
-										aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 178px;" aria-sort="ascending"
-										aria-label="Name: activate to sort column descending">Name</th>
-									<th class="sorting" tabindex="0"
-										aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 273px;"
-										aria-label="Position: activate to sort column ascending">Position</th>
-									<th class="sorting" tabindex="0"
-										aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 132px;"
-										aria-label="Office: activate to sort column ascending">Office</th>
-									<th class="sorting" tabindex="0"
-										aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 79px;"
-										aria-label="Age: activate to sort column ascending">Age</th>
-									<th class="sorting" tabindex="0"
-										aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 143px;"
-										aria-label="Start date: activate to sort column ascending">Start
-										date</th>
-									<th class="sorting" tabindex="0"
-										aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 106px;"
-										aria-label="Salary: activate to sort column ascending">Salary</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th rowspan="1" colspan="1">Name</th>
-									<th rowspan="1" colspan="1">Position</th>
-									<th rowspan="1" colspan="1">Office</th>
-									<th rowspan="1" colspan="1">Age</th>
-									<th rowspan="1" colspan="1">Start date</th>
-									<th rowspan="1" colspan="1">Salary</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								<tr class="odd" role="row">
-									<td class="sorting_1">Airi Satou</td>
-									<td>Accountant</td>
-									<td>Tokyo</td>
-									<td>33</td>
-									<td>2008/11/28</td>
-									<td>$162,700</td>
-								</tr>
-								<tr class="even" role="row">
-									<td class="sorting_1">Angelica Ramos</td>
-									<td>Chief Executive Officer (CEO)</td>
-									<td>London</td>
-									<td>47</td>
-									<td>2009/10/09</td>
-									<td>$1,200,000</td>
-								</tr>
-								<tr class="odd" role="row">
-									<td class="sorting_1">Ashton Cox</td>
-									<td>Junior Technical Author</td>
-									<td>San Francisco</td>
-									<td>66</td>
-									<td>2009/01/12</td>
-									<td>$86,000</td>
-								</tr>
-								<!--<tr class="even" role="row">
+						<div class="card-body">
+							<div id="DataTables_Table_0_wrapper"
+								class="dataTables_wrapper form-inline dt-bootstrap">
+								<div class="top">
+									<div id="DataTables_Table_0_filter" class="dataTables_filter">
+										<label> Search: <input class="form-control input-sm"
+											type="search" placeholder=""
+											aria-controls="DataTables_Table_0">
+										</label>
+									</div>
+									<div id="DataTables_Table_0_length" class="dataTables_length">
+										<label> Show <select class="form-control input-sm"
+											name="DataTables_Table_0_length"
+											aria-controls="DataTables_Table_0">
+												<option value="10">10</option>
+												<option value="25">25</option>
+												<option value="50">50</option>
+												<option value="100">100</option>
+										</select> entries
+										</label>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<table id="DataTables_Table_0"
+									class="datatable table table-striped dataTable" width="100%"
+									cellspacing="0" role="grid"
+									aria-describedby="DataTables_Table_0_info" style="width: 100%;">
+									<thead>
+										<tr role="row">
+											<th class="sorting_asc" tabindex="0"
+												aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+												style="width: 178px;" aria-sort="ascending"
+												aria-label="Name: activate to sort column descending">Name</th>
+											<th class="sorting" tabindex="0"
+												aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+												style="width: 273px;"
+												aria-label="Position: activate to sort column ascending">Position</th>
+											<th class="sorting" tabindex="0"
+												aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+												style="width: 132px;"
+												aria-label="Office: activate to sort column ascending">Office</th>
+											<th class="sorting" tabindex="0"
+												aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+												style="width: 79px;"
+												aria-label="Age: activate to sort column ascending">Age</th>
+											<th class="sorting" tabindex="0"
+												aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+												style="width: 143px;"
+												aria-label="Start date: activate to sort column ascending">Start
+												date</th>
+											<th class="sorting" tabindex="0"
+												aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+												style="width: 106px;"
+												aria-label="Salary: activate to sort column ascending">Salary</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th rowspan="1" colspan="1">Name</th>
+											<th rowspan="1" colspan="1">Position</th>
+											<th rowspan="1" colspan="1">Office</th>
+											<th rowspan="1" colspan="1">Age</th>
+											<th rowspan="1" colspan="1">Start date</th>
+											<th rowspan="1" colspan="1">Salary</th>
+										</tr>
+									</tfoot>
+									<tbody>
+										<tr class="odd" role="row">
+											<td class="sorting_1">Airi Satou</td>
+											<td>Accountant</td>
+											<td>Tokyo</td>
+											<td>33</td>
+											<td>2008/11/28</td>
+											<td>$162,700</td>
+										</tr>
+										<tr class="even" role="row">
+											<td class="sorting_1">Angelica Ramos</td>
+											<td>Chief Executive Officer (CEO)</td>
+											<td>London</td>
+											<td>47</td>
+											<td>2009/10/09</td>
+											<td>$1,200,000</td>
+										</tr>
+										<tr class="odd" role="row">
+											<td class="sorting_1">Ashton Cox</td>
+											<td>Junior Technical Author</td>
+											<td>San Francisco</td>
+											<td>66</td>
+											<td>2009/01/12</td>
+											<td>$86,000</td>
+										</tr>
+										<!--<tr class="even" role="row">
 									<td class="sorting_1">Bradley Greer</td>
 									<td>Software Engineer</td>
 									<td>London</td>
@@ -244,47 +259,52 @@
 									<td>2012/03/29</td>
 									<td>$433,060</td>
 								</tr> -->
-							</tbody>
-						</table>
-						<div class="bottom">
-							<div id="DataTables_Table_0_info" class="dataTables_info"
-								role="status" aria-live="polite">Showing 1 to 10 of 57
-								entries</div>
-							<div id="DataTables_Table_0_paginate"
-								class="dataTables_paginate paging_simple_numbers">
-								<ul class="pagination">
-									<li id="DataTables_Table_0_previous"
-										class="paginate_button previous disabled"
-										aria-controls="DataTables_Table_0" tabindex="0"><a
-										href="#">Previous</a></li>
-									<li class="paginate_button active"
-										aria-controls="DataTables_Table_0" tabindex="0"><a
-										href="#">1</a></li>
-									<li class="paginate_button " aria-controls="DataTables_Table_0"
-										tabindex="0"><a href="#">2</a></li>
-									<li class="paginate_button " aria-controls="DataTables_Table_0"
-										tabindex="0"><a href="#">3</a></li>
-									<li class="paginate_button " aria-controls="DataTables_Table_0"
-										tabindex="0"><a href="#">4</a></li>
-									<li class="paginate_button " aria-controls="DataTables_Table_0"
-										tabindex="0"><a href="#">5</a></li>
-									<li class="paginate_button " aria-controls="DataTables_Table_0"
-										tabindex="0"><a href="#">6</a></li>
-									<li id="DataTables_Table_0_next" class="paginate_button next"
-										aria-controls="DataTables_Table_0" tabindex="0"><a
-										href="#">Next</a></li>
-								</ul>
+									</tbody>
+								</table>
+								<div class="bottom">
+									<div id="DataTables_Table_0_info" class="dataTables_info"
+										role="status" aria-live="polite">Showing 1 to 10 of 57
+										entries</div>
+									<div id="DataTables_Table_0_paginate"
+										class="dataTables_paginate paging_simple_numbers">
+										<ul class="pagination">
+											<li id="DataTables_Table_0_previous"
+												class="paginate_button previous disabled"
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">Previous</a></li>
+											<li class="paginate_button active"
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">1</a></li>
+											<li class="paginate_button "
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">2</a></li>
+											<li class="paginate_button "
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">3</a></li>
+											<li class="paginate_button "
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">4</a></li>
+											<li class="paginate_button "
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">5</a></li>
+											<li class="paginate_button "
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">6</a></li>
+											<li id="DataTables_Table_0_next" class="paginate_button next"
+												aria-controls="DataTables_Table_0" tabindex="0"><a
+												href="#">Next</a></li>
+										</ul>
+									</div>
+									<div class="clear"></div>
+								</div>
 							</div>
-							<div class="clear"></div>
+							<!-- /////////////////////////////////// -->
 						</div>
+
 					</div>
-						<!-- /////////////////////////////////// -->
-					</div>
-					
-				</div>
-			
-				
-					
+
+
+
 				</div>
 
 
@@ -302,6 +322,13 @@
 		<!--script for this page-->
 		<script type="text/javascript"
 			src="<c:url value='/js/vendor/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
+			<%-- <script type="text/javascript"
+			src="<c:url value='/js/vendor/zTree/js/jquery-1.4.4.min.js'/>"></script> --%>
+		<%-- <script type="text/javascript"
+			src="<c:url value='/js/vendor/zTree/css/zTreeStyle/zTreeStyle.css'/>"></script>
+		<script type="text/javascript"
+			src="<c:url value='/js/vendor/zTree/css/zTreeStyle/img'/>"></script>
+				 --%>	
 
 		<script type="text/javascript"
 			src="<c:url value='/js/xcloud/staffs/staff-list.js'/>"></script>

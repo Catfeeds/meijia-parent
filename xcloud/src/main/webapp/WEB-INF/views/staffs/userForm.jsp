@@ -3,8 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-
-
+<html>
+<head>
 
 <header class="navbar navbar-fixed-top">
 <div class="container top-header">
@@ -30,8 +30,6 @@
 	href="<c:url value='/js/vendor/zTree/css/awesomeStyle/awesome.css'/>"
 	type="text/css">
 
-<html>
-<head>
 
 
 <body class="members_index"><div class="wrapper clearfix"
@@ -48,9 +46,10 @@
 	<div class="main">
 		<div class="container clearfix">
 			<div class="title clearfix" style="margin: 0 24px;">
-				<h3 class="title_left">
+				<h4 class="title_left">
 					<a class="cur" href="javascript:void(0);">添加员工</a>
-				</h3>
+				</h4>
+				
 				<div class="title_right fr">
 					<a class="btn btn_blue fr bradius12 members_multi_add"
 						href="javascript:void(0);">批量导入</a>
