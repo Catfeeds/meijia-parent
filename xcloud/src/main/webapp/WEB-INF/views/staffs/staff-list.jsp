@@ -40,7 +40,7 @@
 						<div class="title">
 							<h4>
 								<div style="margin-top: -10px;">
-									<a href="#">部门</a>
+									<a href="#">组织架构</a>
 								</div>
 
 							</h4>
