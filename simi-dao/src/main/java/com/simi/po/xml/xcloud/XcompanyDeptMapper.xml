@@ -1,105 +1,111 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.xcloud.XcompanyDeptMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyDept" >
-    <id column="dept_id" property="deptId" jdbcType="NUMERIC" />
-    <result column="company_id" property="companyId" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    dept_id, company_id, name, parent_id
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from xcompany_dept
-    where dept_id = #{deptId,jdbcType=NUMERIC}
-  </select>
-  
-   <select id="selectByXcompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from xcompany_dept
-    where company_id = #{companyId,jdbcType=NUMERIC}
-  </select>
-  
-  <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from xcompany_dept
-    where parent_id = #{parentId,jdbcType=NUMERIC}
-  </select>
-  
-  <select id="selectByParentIdAndXcompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from xcompany_dept
-    where parent_id = #{0}
-    and company_id = #{1}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from xcompany_dept
-    where dept_id = #{deptId,jdbcType=NUMERIC}
-  </delete>
-  
-  <insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyDept" >
-    insert into xcompany_dept (dept_id, company_id, name, 
-      parent_id)
-    values (#{deptId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyDept" >
-    insert into xcompany_dept
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="deptId != null" >
-        dept_id,
-      </if>
-      <if test="companyId != null" >
-        company_id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="deptId != null" >
-        #{deptId,jdbcType=NUMERIC},
-      </if>
-      <if test="companyId != null" >
-        #{companyId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyDept" >
-    update xcompany_dept
-    <set >
-      <if test="companyId != null" >
-        company_id = #{companyId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where dept_id = #{deptId,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyDept" >
-    update xcompany_dept
-    set company_id = #{companyId,jdbcType=NUMERIC},
-      name = #{name,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=NUMERIC}
-    where dept_id = #{deptId,jdbcType=NUMERIC}
-  </update>
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyDeptMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyDept">
+		<id column="dept_id" property="deptId" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		dept_id, company_id, name, parent_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_dept
+		where dept_id = #{deptId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByXcompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_dept
+		where company_id = #{companyId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_dept
+		where parent_id = #{parentId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByParentIdAndXcompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_dept
+		where parent_id = #{0}
+		and company_id = #{1}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_dept
+		where dept_id = #{deptId,jdbcType=NUMERIC}
+	</delete>
+
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyDept">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="deptId">
+			SELECT LAST_INSERT_ID() AS dept_id
+		</selectKey>
+		insert into xcompany_dept (dept_id, company_id, name,
+		parent_id)
+		values (#{deptId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{parentId,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyDept">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="deptId">
+			SELECT LAST_INSERT_ID() AS dept_id
+		</selectKey>
+		insert into xcompany_dept
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId != null">
+				dept_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deptId != null">
+				#{deptId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyDept">
+		update xcompany_dept
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where dept_id = #{deptId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyDept">
+		update xcompany_dept
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		parent_id = #{parentId,jdbcType=NUMERIC}
+		where dept_id = #{deptId,jdbcType=NUMERIC}
+	</update>
 </mapper>

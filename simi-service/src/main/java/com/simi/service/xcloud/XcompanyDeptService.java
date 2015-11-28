@@ -18,7 +18,7 @@ public interface XcompanyDeptService {
 
 	int updateByPrimaryKeySelective(XcompanyDept record);
 
-	int insert(XcompanyDept record);
+	Long insert(XcompanyDept record);
 
 	List<XcompanyDept> selectByXcompanyId(Long xcompanyId);
 

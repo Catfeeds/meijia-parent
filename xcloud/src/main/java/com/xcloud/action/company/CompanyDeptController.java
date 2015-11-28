@@ -53,4 +53,120 @@ public class CompanyDeptController extends BaseController {
 		return result;
 
 	}	
+	
+	@RequestMapping(value = "add_dept", method = RequestMethod.POST)
+	public AppResultData<Object> addComapnyDept(
+			HttpServletRequest request,
+			@RequestParam(value = "company_id", required = true, defaultValue = "0") Long xcompanyId,
+			@RequestParam(value = "paernt_id", required = true, defaultValue = "0") Long parentId,
+			@RequestParam(value = "name", required = true, defaultValue = "0") String name) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, null);
+
+
+		if (xcompanyId.equals(0L) || StringUtil.isEmpty(name)) {
+			return result;
+		}
+		
+		List<XcompanyDept> list = xcompanyDeptService.selectByXcompanyId(xcompanyId);
+		
+		boolean canAdd = true;
+		for (XcompanyDept item : list) {
+			if (item.getName().equals(name) ) {
+				canAdd = false;
+				break;
+			}
+		}
+			
+		if (!canAdd) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("部门名称重复");
+			result.setData("");
+			return result;
+		}
+		
+		XcompanyDept record = xcompanyDeptService.initXcompanyDept();
+		record.setCompanyId(xcompanyId);
+		record.setName(name);
+		record.setParentId(parentId);
+		xcompanyDeptService.insert(record);
+		
+		result.setData(record);
+
+		return result;
+
+	}		
+	
+	@RequestMapping(value = "edit_dept", method = RequestMethod.POST)
+	public AppResultData<Object> editComapnyDept(
+			HttpServletRequest request,
+			@RequestParam(value = "company_id", required = true, defaultValue = "0") Long xcompanyId,
+			@RequestParam(value = "dept_id", required = true, defaultValue = "0") Long deptId,
+			@RequestParam(value = "name", required = true, defaultValue = "0") String name) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, null);
+
+
+		if (xcompanyId.equals(0L) || deptId.equals(0L) || StringUtil.isEmpty(name)) {
+			return result;
+		}
+		
+		List<XcompanyDept> list = xcompanyDeptService.selectByXcompanyId(xcompanyId);
+		
+		boolean canRename = true;
+		for (XcompanyDept item : list) {
+			if (item.getName().equals(name) && !item.getDeptId().equals(deptId)) {
+				canRename = false;
+				break;
+			}
+		}
+		
+		XcompanyDept xCompanyDept = xcompanyDeptService.selectByPrimaryKey(deptId);
+		
+		
+		if (!canRename) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("部门名称重复");
+			result.setData(xCompanyDept);
+			return result;
+		}
+		
+		xCompanyDept.setName(name);
+		xcompanyDeptService.updateByPrimaryKeySelective(xCompanyDept);
+
+		return result;
+
+	}	
+	
+	@RequestMapping(value = "del_dept", method = RequestMethod.POST)
+	public AppResultData<Object> delComapnyDept(
+			HttpServletRequest request,
+			@RequestParam(value = "company_id", required = true, defaultValue = "0") Long xcompanyId,
+			@RequestParam(value = "dept_id", required = true, defaultValue = "0") Long deptId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, null);
+
+
+		if (xcompanyId.equals(0L) || deptId.equals(0L) ) {
+			return result;
+		}
+		
+		List<XcompanyDept> list = xcompanyDeptService.selectByParentId(deptId);
+		
+		if (!list.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("有下级部门,无法删除!");
+			return result;
+		}
+		
+		//在判断当前是否有员工，有则无法删除
+		
+		
+		xcompanyDeptService.deleteByPrimaryKey(deptId);
+
+		return result;
+
+	}		
 }

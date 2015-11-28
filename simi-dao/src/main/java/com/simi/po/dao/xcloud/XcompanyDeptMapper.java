@@ -7,7 +7,7 @@ import com.simi.po.model.xcloud.XcompanyDept;
 public interface XcompanyDeptMapper {
     int deleteByPrimaryKey(Long deptId);
 
-    int insert(XcompanyDept record);
+    Long insert(XcompanyDept record);
 
     int insertSelective(XcompanyDept record);
 

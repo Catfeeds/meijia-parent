@@ -33,7 +33,7 @@ public class XcompanyDeptServiceImpl implements XcompanyDeptService {
 	}
 	
 	@Override
-	public int insert(XcompanyDept record) {
+	public Long insert(XcompanyDept record) {
 		return xCompanyDeptMapper.insert(record);
 	}
 	
