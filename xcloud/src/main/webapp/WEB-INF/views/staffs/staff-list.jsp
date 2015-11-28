@@ -31,41 +31,7 @@
 		<div class="container h5a-container gray">
 			<div class="row">
 
-				<input type="hidden" id="companyId" value="${companyId}"/>
-				<input type="hidden" id="companyName" value="${companyName}"/>
-				<input type="hidden" id="shortName" value="${shortName}"/>
-
-				<div class="col-sm-2">
-					<div class="box hidden-print" style="height: 500px;">
-						<div class="title">
-							<h4>
-								<div style="margin-top: -10px;">
-									<a href="#">组织架构</a>
-								</div>
-
-							</h4>
-							<!-- <span class="pull-right boxes_right" style="margin-top: -35px;">
-								<button class="btn btn-danger " type="button">修改</button>
-							</span> -->
-							<div class="title_right newadd fr prelative">
-								<i class="add_icon"></i>
-								<dl class="newadd_list company_message" style="display: none;">
-									<dd>
-										<a id="department_id" class="add_element"
-											data-add_target="a.add_element" href="javascript:;">新增部门</a>
-									</dd>
-									<dd>
-										<a href="/members/multi?to=add">添加员工</a>
-									</dd>
-									<dd>
-										<a class="members_multi_add" href="javascript:void(0);">批量导入</a>
-									</dd>
-								</dl>
-							</div>
-						</div>
-						<ul id="detpTree" class="ztree"></ul>
-					</div>
-				</div>
+				<%@ include file="../shared/dept-tree.jsp"%>
 
 				<div class="col-sm-8">
 					<div class="box hidden-print" style="height: 500px;">
@@ -85,28 +51,7 @@
 
 						</div>
 
-						<!-- <dl class="num_list clearfix">
-							<dd>
-								<a href="#">
-									<p class="ind_num ind_color_green">
-										7<em>人</em>
-									</p>
-									<p class="ind_name">在职员工</p>
-								</a>
-							</dd>
-							<dd>
-								<p class="ind_num ind_color_blue">
-									4<em>人</em>
-								</p>
-								<p class="ind_name">全职员工</p>
-							</dd>
-							<dd>
-								<p class="ind_num ind_color_red">
-									3<em>人</em>
-								</p>
-								<p class="ind_name">外勤员工</p>
-							</dd>
-						</dl> -->
+						
 						<!-- ///////////////////////////////////////// -->
 						<div class="card-body">
 							<div id="DataTables_Table_0_wrapper"

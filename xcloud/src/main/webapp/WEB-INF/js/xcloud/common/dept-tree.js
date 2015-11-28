@@ -90,15 +90,66 @@ function addHoverDom(treeId, treeNode) {
     var sObj = $("#" + treeNode.tId + "_span");
     if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
     var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-        + "' title='add node' onfocus='this.blur();'></span>";
+        + "' title='添加' onfocus='this.blur();'></span>";
     sObj.after(addStr);
     var btn = $("#addBtn_"+treeNode.tId);
     if (btn) btn.bind("click", function(){
-        var zTree = $.fn.zTree.getZTreeObj("detpTree");
-        zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
-        return false;
+//        var zTree = $.fn.zTree.getZTreeObj("detpTree");
+//        zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+//        return false;
+    	$('#tree_tid_modal').val(treeNode.tId);
+    	$('#parent_id_modal').val(treeNode.id);
+    	$('#parent_name_modal').html(treeNode.name);
+    	$('#deptAddModal').modal('show');
     });
 };
+
+
+$('#deptAddModal').on('hide.bs.modal', function(e) {
+
+   var deptParentId = $('#parent_id_modal').val();
+   var deptName = $('#dept_name_modal').val();
+   var treeTid = $('#tree_tid_modal').val();
+   
+   if (deptName == undefined) return true;
+   if (deptName == "") return true;
+   
+   var params = {};
+	params.company_id = companyId;
+	params.paernt_id = deptParentId;
+	params.name = deptName;
+	
+	console.log(params);
+	$.ajax({
+       type : "post",
+       url : "/xcloud/company/add_dept.json",
+       data : params,
+       dataType : "json",
+       async : false,
+       success : function(rdata, textStatus) {
+          if (rdata.status == "999") {
+       	   		alert(rdata.msg);
+       	   		return true;
+          }
+          
+          if (rdata.status == "0") {
+        	  var zTree = $.fn.zTree.getZTreeObj("detpTree");
+        	  
+        	  var parentTreeNode = zTree.getNodeByTId(treeTid);
+        	  
+        	  zTree.addNodes(parentTreeNode, {id:rdata.data.dept_id, pId:deptParentId, name:deptName});
+        	  return true;
+          }
+       },
+       error : function(XMLHttpRequest, textStatus, errorThrown) {
+           
+       },
+       
+   });   
+   return true;
+});
+
+
 function removeHoverDom(treeId, treeNode) {
 
     $("#addBtn_"+treeNode.tId).unbind().remove();
