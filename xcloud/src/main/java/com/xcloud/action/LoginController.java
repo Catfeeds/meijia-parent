@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +60,13 @@ public class LoginController extends BaseController {
         
         String passwordMd5 = StringUtil.md5(password.trim());
         Xcompany xCompany = xCompanyService.selectByUserNameAndPass(userName, passwordMd5);
+        
+        if ( xCompany == null ) {
+        	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
+        	result.addError(new FieldError("contentModel","password","用户名或密码错误。"));
+        	return login(model);
+    	}
+        
         
         Users u = usersService.selectByMobile(userName);
         

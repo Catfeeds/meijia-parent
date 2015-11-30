@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,9 +34,11 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
+import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
+import com.simi.vo.AppResultData;
 
 @Controller
 @RequestMapping(value = "/")
@@ -46,6 +49,9 @@ public class RegisterController extends BaseController {
 
 	@Autowired
 	private UsersService usersService;	
+	
+	@Autowired
+	private UserSmsTokenService smsTokenService;	
 	
 	@Autowired
 	private XcompanyDeptService xCompanyDeptService;
@@ -69,6 +75,17 @@ public class RegisterController extends BaseController {
     						 @ModelAttribute("contentModel") Xcompany xCompanyVo, 
     						 BindingResult result) throws NoSuchAlgorithmException, WriterException, IOException {
         
+		String mobile = xCompanyVo.getUserName();
+		String smsToken = request.getParameter("sendToken");
+		
+		AppResultData<Object> validateResult = smsTokenService.validateSmsToken(mobile, smsToken, (short) 3);
+		
+		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+			result.addError(new FieldError("contentModel","sendToken","验证码错误"));
+			return register(model);
+		}
+		
+		
 		//获得注册的form信息
 		Long companyId = xCompanyVo.getCompanyId();
 		
@@ -137,7 +154,6 @@ public class RegisterController extends BaseController {
 		}
 		
 		//然后判断用户是否已经存在，不存在则添加新用户
-		String mobile = xCompany.getUserName();
 		Users u = usersService.selectByMobile(mobile);
 		
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，

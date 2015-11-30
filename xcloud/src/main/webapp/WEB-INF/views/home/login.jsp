@@ -75,6 +75,7 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-
+	<script src="<c:url value='/js/vendor/jquery.validate.min.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/js/xcloud/home/login.js'/>" type="text/javascript"></script>
 </body>
 </html>
