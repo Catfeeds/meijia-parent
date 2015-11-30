@@ -3339,3 +3339,9 @@ table.item tr:nth-child(even) {
 .card .card-body {
     padding: 25px;
 }
+
+.control-label .required {
+  color: #e02222;
+  font-size: 12px;
+  padding-left: 2px;
+}
