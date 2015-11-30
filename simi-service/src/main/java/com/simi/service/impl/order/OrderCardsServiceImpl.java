@@ -61,7 +61,7 @@ public class OrderCardsServiceImpl implements OrderCardsService {
 		userPayStatus.setMobile(users.getMobile());
 		userPayStatus.setOrderId(orderCards.getId());
 		userPayStatus.setOrderNo(orderCards.getCardOrderNo());
-		userPayStatus.setOrderType(orderCards.getPayType());
+		userPayStatus.setOrderType((short) 1);
 		userPayStatus.setTradeId(tradeNo);
 		userPayStatus.setTradeStatus(tradeStatus);
 		userPayStatus.setUserId(orderCards.getUserId());
