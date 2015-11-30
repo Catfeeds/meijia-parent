@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simi.service.order.OrderPricesService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.order.OrderListVo;
@@ -22,6 +24,7 @@ import com.simi.po.model.order.OrderCards;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.UserFeedback;
 import com.simi.po.model.user.Users;
@@ -37,6 +40,11 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	@Autowired
 	private UsersMapper usersMapper;
 
+	@Autowired
+	private OrderPricesService orderPricesService;
+	
+	@Autowired PartnerServiceTypeService partnerServiceTypeService;
+	
 	@Autowired
 	private UserFeedbackMapper userFeedbackMapper;
 	@Override
@@ -252,7 +260,14 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		
 		//订单类型名称
 		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_0) {
-			vo.setOrderTypeName("订单支付");
+			OrderPrices orderPrices = orderPricesService.selectByOrderId(vo.getOrderId());
+			if (orderPrices.getServicePriceId() != null) {
+				PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(orderPrices.getServicePriceId());
+				vo.setOrderTypeName(partnerServiceType.getName());
+			}else {
+				vo.setOrderTypeName("");
+			}
+			
 		}
 		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_1) {
 			vo.setOrderTypeName("购买充值卡");
