@@ -14,8 +14,6 @@ public class UserFriendViewVo {
     
     private String mobile;
     
-    private Short hasCompany;
-
 	public String getName() {
 		return name;
 	}
@@ -63,12 +61,4 @@ public class UserFriendViewVo {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
-	public Short getHasCompany() {
-		return hasCompany;
-	}
-
-	public void setHasCompany(Short hasCompany) {
-		this.hasCompany = hasCompany;
-	}    
 }

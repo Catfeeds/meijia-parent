@@ -323,6 +323,10 @@ public class UsersServiceImpl implements UsersService {
 		vo.setClientId("");
 		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
 		if (userPushBind != null) vo.setClientId(userPushBind.getClientId());
+		
+		
+		//用户是否为某个公司的职员
+		 vo.setHasCompany((short) 0);
 		return vo;
 	}
 

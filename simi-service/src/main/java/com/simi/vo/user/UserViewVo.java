@@ -53,6 +53,8 @@ public class UserViewVo extends Users {
      */
     private String clientId;
     
+    private Short hasCompany;
+    
 	public String getImUsername() {
 		return ImUsername;
 	}
@@ -144,6 +146,14 @@ public class UserViewVo extends Users {
 
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
+	}
+
+	public Short getHasCompany() {
+		return hasCompany;
+	}
+
+	public void setHasCompany(Short hasCompany) {
+		this.hasCompany = hasCompany;
 	}
 
 }

@@ -130,9 +130,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 					break;
 				}
 			}
-			
-			//是否是加入过某个公司
-			vo.setHasCompany((short) 0);
+
 			result.add(vo);
 		}
 		
