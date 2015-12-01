@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.weather.WeatherIndexMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.weather.WeatherIndex">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="area_id" property="areaId" jdbcType="NUMERIC" />
+		<result column="area_cn" property="areaCn" jdbcType="VARCHAR" />
+		<result column="publish_time" property="publicTime" jdbcType="VARCHAR" />
+		<result column="i1" property="i1" jdbcType="VARCHAR" />
+		<result column="i2" property="i2" jdbcType="VARCHAR" />
+		<result column="i3" property="i3" jdbcType="VARCHAR" />
+		<result column="i4" property="i4" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, area_id, area_cn, publish_time, i1, i2, i3, i4
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from weather_index
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByAreaIdAndPublishTime" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from weather_index
+		where area_id = #{0} and publish_time = #{1}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from weather_index
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<delete id="deleteByAreaIdAndPublishTime" parameterType="java.lang.Long">
+		delete from weather_index
+		where area_id = #{0} and publish_time = #{1}
+	</delete>
+	<delete id="deleteByAreaId" parameterType="java.lang.Long">
+		delete from weather_index
+		where area_id = #{areaId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.weather.WeatherIndex">
+		insert into weather_index (id, area_id, area_cn,
+		publish_time, i1, i2,
+		i3, i4)
+		values (#{id,jdbcType=NUMERIC}, #{areaId,jdbcType=NUMERIC}, #{areaCn,jdbcType=VARCHAR},
+		#{publicTime,jdbcType=VARCHAR}, #{i1,jdbcType=VARCHAR}, #{i2,jdbcType=VARCHAR},
+		#{i3,jdbcType=VARCHAR}, #{i4,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.weather.WeatherIndex">
+		insert into weather_index
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="areaId != null">
+				area_id,
+			</if>
+			<if test="areaCn != null">
+				area_cn,
+			</if>
+			<if test="publicTime != null">
+				publish_time,
+			</if>
+			<if test="i1 != null">
+				i1,
+			</if>
+			<if test="i2 != null">
+				i2,
+			</if>
+			<if test="i3 != null">
+				i3,
+			</if>
+			<if test="i4 != null">
+				i4,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="areaId != null">
+				#{areaId,jdbcType=NUMERIC},
+			</if>
+			<if test="areaCn != null">
+				#{areaCn,jdbcType=VARCHAR},
+			</if>
+			<if test="publicTime != null">
+				#{publicTime,jdbcType=VARCHAR},
+			</if>
+			<if test="i1 != null">
+				#{i1,jdbcType=VARCHAR},
+			</if>
+			<if test="i2 != null">
+				#{i2,jdbcType=VARCHAR},
+			</if>
+			<if test="i3 != null">
+				#{i3,jdbcType=VARCHAR},
+			</if>
+			<if test="i4 != null">
+				#{i4,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.weather.WeatherIndex">
+		update weather_index
+		<set>
+			<if test="areaId != null">
+				area_id = #{areaId,jdbcType=NUMERIC},
+			</if>
+			<if test="areaCn != null">
+				area_cn = #{areaCn,jdbcType=VARCHAR},
+			</if>
+			<if test="publicTime != null">
+				publish_time = #{publicTime,jdbcType=VARCHAR},
+			</if>
+			<if test="i1 != null">
+				i1 = #{i1,jdbcType=VARCHAR},
+			</if>
+			<if test="i2 != null">
+				i2 = #{i2,jdbcType=VARCHAR},
+			</if>
+			<if test="i3 != null">
+				i3 = #{i3,jdbcType=VARCHAR},
+			</if>
+			<if test="i4 != null">
+				i4 = #{i4,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.weather.WeatherIndex">
+		update weather_index
+		set area_id = #{areaId,jdbcType=NUMERIC},
+		area_cn = #{areaCn,jdbcType=VARCHAR},
+		publish_time = #{publicTime,jdbcType=VARCHAR},
+		i1 = #{i1,jdbcType=VARCHAR},
+		i2 = #{i2,jdbcType=VARCHAR},
+		i3 = #{i3,jdbcType=VARCHAR},
+		i4 = #{i4,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>
