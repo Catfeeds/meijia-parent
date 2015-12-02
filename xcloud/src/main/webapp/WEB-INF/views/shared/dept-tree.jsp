@@ -2,6 +2,7 @@
 <input type="hidden" id="companyId" value="${companyId}" />
 <input type="hidden" id="companyName" value="${companyName}" />
 <input type="hidden" id="shortName" value="${shortName}" />
+<%-- <input type="hidden" id="deptId" value="${deptId}" /> --%>
 
 <div class="col-sm-2">
 	<div class="box hidden-print" style="height: 500px;">
@@ -13,6 +14,7 @@
 
 			</h4>
 		</div>
+		<%-- <a href="/xcloud/staff/list?dept_id=${deptId}"> --%>
 		<ul id="detpTree" class="ztree"></ul>
 
 		<!-- Modal -->

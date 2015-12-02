@@ -25,11 +25,11 @@ public class TreeInterface extends BaseController {
 
 	@Autowired
 	private UsersService usersService;
-
+	
 	@Autowired
 	private AdminRoleService adminRoleService;
-
-	@Autowired
+	
+	@Autowired 
 	private XcompanyDeptService xcompanyDeptService;
 
 	@Autowired
@@ -40,37 +40,37 @@ public class TreeInterface extends BaseController {
 	public AppResultData<Object> zTreezNodes(
 			HttpServletRequest request,
 			@RequestParam(value = "parent_id", required = true, defaultValue = "0") Long parentId,
-			@RequestParam(value = "xcompany_id", required = true, defaultValue = "0") Long xcompanyId) {
+			@RequestParam(value = "xcompany_id" , required = true, defaultValue = "0") Long xcompanyId
+			) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, null);
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
+				ConstantMsg.SUCCESS_0_MSG, null);
 		xcompanyId = 1L;
-
-		if (xcompanyId == 0) {
-
+		
+		if (xcompanyId ==0) {
+			
 			return result;
 		}
-		// Long xcompanyId = Long.valueOf(request.getParameter("xcompanyId"));
-		String treeStr = "";
-		xcompanyId = 1L;
-		parentId = 0L;
-		List<XcompanyDept> list = xcompanyDeptService
-				.selectByParentIdAndXcompanyId(parentId, xcompanyId);
-
-		if (list != null) {
-			for (int i = 0, len = list.size(); i < len; i++) {
-
-				// treeStr +=
-				// "{id:'deptId',pId:'companyId',name:'name' ,isParent:true},";
-				treeStr += "{id:'2',pId:'1',name:'上级部' ,isParent:true},";
-			}
-		}
-		treeStr = "[" + treeStr.substring(0, treeStr.length() - 1) + "]";
-		// 这里ajax返回treeStr
-
+	   // Long xcompanyId = Long.valueOf(request.getParameter("xcompanyId"));  
+	    String treeStr = ""; 
+	    xcompanyId = 1L;
+	    parentId = 0L;
+	    List<XcompanyDept> list= xcompanyDeptService.selectByParentIdAndXcompanyId(parentId,xcompanyId);
+	    
+	    if(list!=null){  
+	        for(int i=0,len=list.size();i<len;i++){  
+	        	
+	            //treeStr += "{id:'deptId',pId:'companyId',name:'name' ,isParent:true},";
+	            treeStr += "{id:'2',pId:'1',name:'上级部' ,isParent:true},";
+	        }  
+	    }  
+	    treeStr = "["+treeStr.substring(0,treeStr.length()-1)+"]";  
+	 //   这里ajax返回treeStr  	
+	    
 		result.setData(treeStr);
 		return result;
-
+		
 	}
+
 
 }

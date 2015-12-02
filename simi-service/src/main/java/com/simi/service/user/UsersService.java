@@ -8,6 +8,7 @@ import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
+import com.simi.vo.xcloud.UserCompanyFormVo;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 
@@ -70,6 +71,10 @@ public interface UsersService {
 	Boolean userOrderAmPushSms(Users users);
 
 	Boolean userSecToUserPushSms(Users users);
+
+	PageInfo searchVoListPage(List<Long> userIds, int pageNo, int pageSize);
+
+
 
 	
 

@@ -1,6 +1,6 @@
 //此为在jsp中需要设置，作为根节点和公司参数使用.
 var companyId = $("#companyId").val();
-var shortName = $("#shortName").val()
+var shortName = $("#shortName").val();
 
 var setting = {
 	view: {
@@ -39,6 +39,7 @@ var setting = {
 		onAsyncSuccess: zTreeOnAsyncSuccess,
 		onRename: zTreeOnRename,
 		beforeRemove: beforeRemove,
+		onClick: onClick
 	}
 
 };
@@ -154,6 +155,14 @@ function removeHoverDom(treeId, treeNode) {
 
     $("#addBtn_"+treeNode.tId).unbind().remove();
 };
+
+function onClick(event, treeId, treeNode, clickFlag) {
+//	showLog("[ "+getTime()+" onClick ]&nbsp;&nbsp;clickFlag = " + clickFlag + " (" + (clickFlag===1 ? "普通选中": (clickFlag===0 ? "<b>取消选中</b>" : "<b>追加选中</b>")) + ")");
+	console.log(treeNode.dept_id);
+	console.log("11111111111111");
+	var dept_id = treeNode.dept_id;
+	location.href = "/xcloud/staff/list?dept_id="+dept_id;
+}	
 
 function zTreeOnRename(event, treeId, treeNode, isCancel) {
 

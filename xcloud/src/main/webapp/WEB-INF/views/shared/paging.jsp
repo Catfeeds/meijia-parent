@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	import="com.github.pagehelper.PageInfo"
     import="com.meijia.utils.PageUtil"
-    import="com.simi.oa.common.ConstantOa"
+    import = "com.xcloud.common.Constant"
     import="org.apache.taglibs.standard.tag.common.core.UrlSupport"%>
 
 <%
 	String urlAddress=request.getParameter("urlAddress");
 	String pageModelName= request.getParameter("pageModelName");
-	Integer pageCount= ConstantOa.DEFAULT_PAGE_SIZE;
+	Integer pageCount= Constant.DEFAULT_PAGE_SIZE;
 	if (request.getParameter("pageCount")!=null &&
 	    !request.getParameter("pageCount").isEmpty()) {
 		pageCount = Integer.valueOf(request.getParameter("pageCount"));

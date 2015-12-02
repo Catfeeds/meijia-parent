@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyStaffMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyStaff" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="company_id" property="companyId" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="dept_id" property="deptId" jdbcType="NUMERIC" />
+    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="tel_ext" property="telExt" jdbcType="VARCHAR" />
+    <result column="company_email" property="companyEmail" jdbcType="VARCHAR" />
+    <result column="company_fax" property="companyFax" jdbcType="VARCHAR" />
+    <result column="staff_type" property="staffType" jdbcType="NUMERIC" />
+    <result column="job_number" property="jobNumber" jdbcType="VARCHAR" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="join_date" property="joinDate" jdbcType="DATE" />
+    <result column="regular_date" property="regularDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, company_id, user_id, dept_id, city_id, tel, tel_ext, company_email, company_fax, 
+    staff_type, job_number, job_name, join_date, regular_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xcompany_staff
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  
+   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xcompany_staff
+    where user_id = #{userId,jdbcType=NUMERIC}
+  </select>
+  
+  	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff
+		where <!-- company_id = #{0} 
+		and dept_id = #{1} -->
+		1=1
+		<if test="companyId != null">
+			and company_id = #{1,jdbcType=NUMERIC}
+		</if>
+		<if test="deptId != null">
+			and dept_id = #{0,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+	
+	<select id="selectByCompanyIdAndDeptId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff
+		where
+		company_id = #{0}
+		and dept_id = #{1}
+		
+		
+	</select>
+	
+	<select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff
+		where
+		company_id = #{companyId,jdbcType=NUMERIC}
+		
+	</select>
+	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xcompany_staff
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyStaff" >
+    insert into xcompany_staff (id, company_id, user_id, 
+      dept_id, city_id, tel, 
+      tel_ext, company_email, company_fax, 
+      staff_type, job_number, job_name, 
+      join_date, regular_date)
+    values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, 
+      #{deptId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{tel,jdbcType=VARCHAR}, 
+      #{telExt,jdbcType=VARCHAR}, #{companyEmail,jdbcType=VARCHAR}, #{companyFax,jdbcType=VARCHAR}, 
+      #{staffType,jdbcType=NUMERIC}, #{jobNumber,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, 
+      #{joinDate,jdbcType=DATE}, #{regularDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyStaff" >
+    insert into xcompany_staff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="telExt != null" >
+        tel_ext,
+      </if>
+      <if test="companyEmail != null" >
+        company_email,
+      </if>
+      <if test="companyFax != null" >
+        company_fax,
+      </if>
+      <if test="staffType != null" >
+        staff_type,
+      </if>
+      <if test="jobNumber != null" >
+        job_number,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="joinDate != null" >
+        join_date,
+      </if>
+      <if test="regularDate != null" >
+        regular_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=NUMERIC},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="telExt != null" >
+        #{telExt,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyFax != null" >
+        #{companyFax,jdbcType=VARCHAR},
+      </if>
+      <if test="staffType != null" >
+        #{staffType,jdbcType=NUMERIC},
+      </if>
+      <if test="jobNumber != null" >
+        #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="joinDate != null" >
+        #{joinDate,jdbcType=DATE},
+      </if>
+      <if test="regularDate != null" >
+        #{regularDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyStaff" >
+    update xcompany_staff
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=NUMERIC},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="telExt != null" >
+        tel_ext = #{telExt,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        company_email = #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyFax != null" >
+        company_fax = #{companyFax,jdbcType=VARCHAR},
+      </if>
+      <if test="staffType != null" >
+        staff_type = #{staffType,jdbcType=NUMERIC},
+      </if>
+      <if test="jobNumber != null" >
+        job_number = #{jobNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="joinDate != null" >
+        join_date = #{joinDate,jdbcType=DATE},
+      </if>
+      <if test="regularDate != null" >
+        regular_date = #{regularDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyStaff" >
+    update xcompany_staff
+    set company_id = #{companyId,jdbcType=NUMERIC},
+      user_id = #{userId,jdbcType=NUMERIC},
+      dept_id = #{deptId,jdbcType=NUMERIC},
+      city_id = #{cityId,jdbcType=NUMERIC},
+      tel = #{tel,jdbcType=VARCHAR},
+      tel_ext = #{telExt,jdbcType=VARCHAR},
+      company_email = #{companyEmail,jdbcType=VARCHAR},
+      company_fax = #{companyFax,jdbcType=VARCHAR},
+      staff_type = #{staffType,jdbcType=NUMERIC},
+      job_number = #{jobNumber,jdbcType=VARCHAR},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      join_date = #{joinDate,jdbcType=DATE},
+      regular_date = #{regularDate,jdbcType=DATE}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

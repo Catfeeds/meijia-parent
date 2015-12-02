@@ -44,12 +44,14 @@ import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
+import com.simi.vo.xcloud.UserCompanyFormVo;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -93,7 +95,8 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UsersAsyncService userAsyncService;
 	
-	
+	@Autowired
+	private XcompanyStaffService xcompanyStaffService;
 	/**
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
@@ -667,4 +670,22 @@ public class UsersServiceImpl implements UsersService {
 		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
 		return lists;
 	}
+
+	@Override
+	public PageInfo searchVoListPage(List<Long> userIds, int pageNo,
+			int pageSize) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+		List<Users> list = usersMapper.selectByUserIds(userIds);
+		for (int i = 0; i < list.size(); i++) {
+		Users users = list.get(i);
+		UserCompanyFormVo vo = xcompanyStaffService.getUserCompany(users);
+		list.set(i, vo);
+		}
+		PageInfo result = new PageInfo(list);
+		
+		return result;
+	}
+
+	
 }

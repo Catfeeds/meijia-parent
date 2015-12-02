@@ -105,7 +105,7 @@
                        <input type="button" value="导出数据" onclick="download()"/>
                       <c:import url = "../shared/paging.jsp">
 	        				<c:param name="pageModelName" value="contentModel"/>
-	        				<c:param name="urlAddress" value="/user/list"/>
+	        				<c:param name="urlAddress" value="/staff/list"/>
 	       			  </c:import>
                   </div>
               </div>
