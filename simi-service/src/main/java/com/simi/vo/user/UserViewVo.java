@@ -54,7 +54,7 @@ public class UserViewVo extends Users {
     private String clientId;
     
     private Short hasCompany;
-    
+        
 	public String getImUsername() {
 		return ImUsername;
 	}

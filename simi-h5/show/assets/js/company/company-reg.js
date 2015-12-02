@@ -1,0 +1,124 @@
+if ($.AMUI && $.AMUI.validator) {
+	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
+}
+
+var formVal = $('#company-reg-form').validator({
+	validate : function(validity) {
+		// Ajax 验证
+		if ($(validity.field).is('.js-ajax-validate')) {
+			// 异步操作必须返回 Deferred 对象
+			var mobile = $('mobile').val();
+			if (mobile == undefined || mobile == "")  {
+				validity.valid = false;
+				return validity;
+			}
+			var params = {};
+			params.mobile = $('mobile').val();
+			params.sms_token = $('sms_token').val();
+			params.sms_type = 3;
+			return $.ajax({
+				type : 'GET',
+				url : appRootUrl + '/user/val_sms_token.json',
+				cache: false,
+				async : false,
+				data : params,
+				dataType : 'json'
+			}).then(function(data) {
+				if (data.status == "999") validity.valid = false;
+				if (data.status == "0") validity.valid = true;
+				return validity;
+			}, function() {
+				return validity;
+			});
+		}
+
+	}
+});
+
+$("#reg-submit").on('click', function(e) {
+	console.log("reg-submit click");
+	var $form = $('#company-reg-form');
+	console.log($form.validator());
+
+	var validator = $form.data('amui.validator');
+
+	if (!validator.isFormValid()) {
+		return false;
+	}
+	var userName =  $('#mobile').val();
+	var companyName = $('#company_name').val();
+	//检测是否 手机号+公司名称是否重复
+	var isExist = checkCompanyUserNameExist(userName, 0, companyName);
+	
+	if (isExist) {
+		alert("您已经注册过"+companyName);
+		return false;
+    }
+	
+	var params = {};
+	params.user_name = userName;
+	params.password = $('#password').val();
+	params.sms_token = $('#sms_token').val();
+	params.company_name = $('#company_name').val();
+	params.short_name = $('#short_name').val();
+	//提交数据，完成注册流程
+	$.ajax({
+		type : "POST",
+		url: appRootUrl + "/company/company-reg.json", //发送给服务器的url
+		data : params,
+		dataType : "json",
+		async : false,
+		success : function(data) {
+			
+			if (data.status == "999") {
+				alert(data.msg);
+				return false;
+			}
+			
+			if (data.status == 0) {
+				location.href = "company-reg-ok.html";
+			}
+		},
+		error:function(){
+			return false;
+		}
+	});
+	
+});
+
+
+//获取验证码功能
+$("#btn_sms_token").click(function() {
+	console.log("btn-get-sms click");
+	var mobile = $('#mobile').val();
+	if (mobile == undefined || mobile == "")  {
+		alert("请输入手机号!");
+		return false;
+	}
+	
+	if (!verifyMobile(mobile)) {
+		alert("请输入正确的手机号!");
+		return false;
+	}
+	
+	var params = {};
+	params.mobile = mobile;
+	params.sms_type = 3;
+	//发送验证码
+	$.ajax({
+		type : "GET",
+		url: appRootUrl + "/user/get_sms_token.json", //发送给服务器的url
+		data : params,
+		dataType : "json",
+		async : false,
+		success : function(data) {
+			$("#btn_sms_token").html('<span id=\"cd\">60</span>').attr('disabled','disabled');
+	    	$('#cd').countDown(function(){
+	    		$("#btn_sms_token").html('获取验证码').removeAttr('disabled');
+			})
+		}
+	})
+	
+	
+});
+

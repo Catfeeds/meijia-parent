@@ -1,16 +1,10 @@
 package com.simi.action.app.user;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.zxing.WriterException;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.IPUtil;
-import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
-import com.meijia.utils.QrCodeUtil;
-import com.meijia.utils.RandomUtil;
-import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
@@ -39,16 +25,13 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
-import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
-import com.simi.service.user.UserImgService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserRef3rdService;
@@ -57,7 +40,6 @@ import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.TagNameListVo;
-import com.simi.vo.user.UserImgVo;
 import com.simi.vo.user.UserPushBindVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
@@ -92,9 +74,6 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserRefSecService userRefSecService;
-
-	@Autowired
-	private UserImgService userImgService;
 	
 	@Autowired
 	private UsersAsyncService usersAsyncService;
@@ -157,71 +136,6 @@ public class UserController extends BaseController {
 		long ip = IPUtil.getIpAddr(request);
 		usersAsyncService.userLogined(u.getId(), loginFrom, ip);
 		
-		return result;
-	}
-
-	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
-	@RequestMapping(value = "get_sms_token", method = RequestMethod.GET)
-	public AppResultData<String> getSmsToken(
-			@RequestParam("mobile") String mobile,
-			@RequestParam("sms_type") int sms_type) {
-
-		/*
-		 * AppResultData<String> result = new AppResultData<String>(
-		 * Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		 */
-		AppResultData<String> result = new AppResultData<String>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
-		String code = RandomUtil.randomNumber();
-
-		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")
-				||mobile.equals("13701187136")||mobile.equals("13810002890")||mobile.equals("18610807136")
-				||mobile.equals("18612514665")||mobile.equals("13146012753")||mobile.equals("15727372986")
-		 ) {
-			code = "000000";
-		}
-//13701187136,13810002890,18610807136,18612514665,13146012753
-		
-		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
-				Constants.GET_CODE_TEMPLE_ID, content);
-		UserSmsToken record = smsTokenService.initUserSmsToken(mobile,
-				sms_type, code, sendSmsResult);
-
-		smsTokenService.insert(record);
-
-		return result;
-	}
-
-	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
-	@RequestMapping(value = "get_register_sms_token", method = RequestMethod.GET)
-	public AppResultData<String> getRegisterSmsToken(
-			@RequestParam("mobile") String mobile,
-			@RequestParam("sms_type") int sms_type) {
-
-		/*
-		 * AppResultData<String> result = new AppResultData<String>(
-		 * Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		 */
-		AppResultData<String> result = new AppResultData<String>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
-		String code = RandomUtil.randomNumber();
-
-		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")
-				||mobile.equals("13701187136")||mobile.equals("13810002890")||mobile.equals("18610807136")
-				||mobile.equals("18612514665")||mobile.equals("13146012753")||mobile.equals("15727372986")) {
-			code = "000000";
-		}
-		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
-				Constants.GET_CODE_TEMPLE_ID, content);
-		UserSmsToken record = smsTokenService.initUserSmsToken(mobile,
-				sms_type, code, sendSmsResult);
-
-		smsTokenService.insert(record);
-
 		return result;
 	}
 
@@ -464,19 +378,6 @@ public class UserController extends BaseController {
 		return result;
 	}
 
-	// 4. 获取验证码接口sms_type：0 = 用户登陆 1 = 秘书登录
-	@RequestMapping(value = "val_sms_token", method = RequestMethod.GET)
-	public AppResultData<Object> valSmsToken(
-			@RequestParam("mobile") String mobile,
-			@RequestParam("sms_token") String smsToken,
-			@RequestParam("sms_type") Short smsType) {
-
-		AppResultData<Object> result = smsTokenService.validateSmsToken(mobile,
-				smsToken, smsType);
-
-		return result;
-	}
-
 	// 6. 账号信息
 	/**
 	 * mobile:手机号 rest_money 余额 score会员积分
@@ -587,282 +488,5 @@ public class UserController extends BaseController {
 
 		return result;
 	}
-
-	/**
-	 * 用户头像上传接口
-	 * 
-	 * @throws IOException
-	 * 
-	 *             参考 ：http://www.concretepage.com/spring-4/spring-4-mvc-single-
-	 *             multiple-file-upload-example-with-tomcat
-	 */
-	@RequestMapping(value = "post_user_head_img", method = RequestMethod.POST)
-	public AppResultData<Object> userHeadImg(HttpServletRequest request,
-			@RequestParam("user_id") Long userId,
-			@RequestParam("file") MultipartFile file) throws IOException {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users u = userService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		HashMap<String, String> img = new HashMap<String, String>();
-		if (file != null && !file.isEmpty()) {
-
-			String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String fileName = file.getOriginalFilename();
-			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-			
-			
-			System.out.println("fileName = " + fileName);
-			System.out.println("fileType = " + fileType);
-			
-			fileType = fileType.toLowerCase();
-			String sendResult = ImgServerUtil.sendPostBytes(url,
-					file.getBytes(), fileType);
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult,
-					HashMap.class);
-			System.out.println(o.toString());
-			String ret = o.get("ret").toString();
-			
-			HashMap<String, String> info = (HashMap<String, String>) o
-					.get("info");
-
-			String imgUrl = Constants.IMG_SERVER_HOST + "/"
-					+ info.get("md5").toString();
-
-			u.setHeadImg(ImgServerUtil.getImgSize(imgUrl, "100", "100"));
-
-			userService.updateByPrimaryKeySelective(u);
-
-			img.put("user_id", userId.toString());
-			img.put("head_img", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
-		}
-
-		result.setData(img);
-		return result;
-
-	}
-
-	/**
-	 * 用户图片上传
-	 * 
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
-	public AppResultData<Object> userImg(HttpServletRequest request,
-			@RequestParam("user_id") Long userId,
-			@RequestParam("file") MultipartFile[] files) throws IOException {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users u = userService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		List<HashMap<String, String>> imgs = new ArrayList<HashMap<String, String>>();
-
-		if (files != null && files.length > 0) {
-
-			for (int i = 0; i < files.length; i++) {
-				String url = Constants.IMG_SERVER_HOST + "/upload/";
-				String fileName = files[i].getOriginalFilename();
-				String fileType = fileName
-						.substring(fileName.lastIndexOf(".") + 1);
-				fileType = fileType.toLowerCase();
-				String sendResult = ImgServerUtil.sendPostBytes(url,
-						files[i].getBytes(), fileType);
-
-				ObjectMapper mapper = new ObjectMapper();
-
-				HashMap<String, Object> o = mapper.readValue(sendResult,
-						HashMap.class);
-
-				String ret = o.get("ret").toString();
-
-				HashMap<String, String> info = (HashMap<String, String>) o
-						.get("info");
-
-				String imgUrl = Constants.IMG_SERVER_HOST + "/"
-						+ info.get("md5").toString();
-
-				UserImgs userImg = new UserImgs();
-				userImg.setImgId(0L);
-				userImg.setImgUrl(imgUrl);
-				userImg.setUserId(userId);
-				userImg.setAddTime(TimeStampUtil.getNowSecond());
-				userImgService.insert(userImg);
-
-				HashMap<String, String> img = new HashMap<String, String>();
-				img.put("user_id", userId.toString());
-				img.put("img", imgUrl);
-				img.put("img_trumb", ImgServerUtil.getImgSize(imgUrl, "400", "400"));
-				
-				imgs.add(img);
-			}
-		}
-
-		result.setData(imgs);
-		return result;
-	}
-
-	/**
-	 * 获取用户图片
-	 * 
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "get_user_imgs", method = RequestMethod.GET)
-	public AppResultData<Object> getUserImgs(HttpServletRequest request,
-			@RequestParam("user_id") Long userId) throws IOException {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users u = userService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		List<UserImgs> userImgs = userImgService.selectByUserId(userId);
-
-		List<UserImgVo> userImgVos = new ArrayList<UserImgVo>();
-
-		for (UserImgs item : userImgs) {
-			UserImgVo vo = new UserImgVo();
-			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-			
-			vo.setImgTrumb(ImgServerUtil.getImgSize(item.getImgUrl(), "400", "400"));
-			vo.setImg(item.getImgUrl());
-			userImgVos.add(vo);
-		}
-		result.setData(userImgVos);
-
-		return result;
-	}
-
-	/**
-	 * 用户图片删除
-	 * 
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "del_user_img", method = RequestMethod.POST)
-	public AppResultData<Object> delUserImg(HttpServletRequest request,
-			@RequestParam("user_id") Long userId,
-			@RequestParam("img_id") Long imgId) throws IOException {
-
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users u = userService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		UserImgs userImg = userImgService.selectByPrimaryKey(imgId);
-
-		if (userImg != null) {
-			userImgService.deleteByPrimaryKey(imgId);
-		}
-		return result;
-	}
-	
-	/**
-	 * 获取用户二维码
-	 * 
-	 * @throws IOException
-	 * @throws WriterException 
-	 */
-	@RequestMapping(value = "get_qrcode", method = RequestMethod.GET)
-	public AppResultData<Object> getUserQRCode(
-			HttpServletRequest request,
-			@RequestParam("user_id") Long userId) throws IOException, WriterException {
-
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users u = userService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		if (!StringUtil.isEmpty(u.getQrCode())) {
-			result.setData(u.getQrCode());
-			
-			return result;
-		}
-		
-		String qrCodeLogo = u.getHeadImg();
-		if (StringUtil.isEmpty(qrCodeLogo)) {
-			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
-		}
-		
-		Map<String, String> contents = new HashMap<String, String>();
-		
-		contents.put("tag", "xcloud");
-		contents.put("user_id", u.getId().toString());
-		contents.put("name", u.getName());
-		contents.put("mobile", u.getMobile());
-		
-		 ObjectMapper objectMapper = new ObjectMapper();
-		 String jsonContents = objectMapper.writeValueAsString(contents);
-		
-		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(jsonContents, 800, 800, qrCodeLogo);
-		
-		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
-        try {  
-            boolean resultWrite = ImageIO.write(qrCodeImg, "png", imageStream);  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
-        imageStream.flush();  
-        byte[] imgBytes = imageStream.toByteArray();  
-		
-        String url = Constants.IMG_SERVER_HOST + "/upload/";
-		String sendResult = ImgServerUtil.sendPostBytes(url, imgBytes, "png");
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-		String ret = o.get("ret").toString();
-
-		HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-		String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();		
-		
-		u.setQrCode(imgUrl);
-		userService.updateByPrimaryKeySelective(u);
-		
-		result.setData(imgUrl);
-		
-		return result;
-	}	
 
 }

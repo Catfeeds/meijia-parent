@@ -585,6 +585,7 @@ public class MeijiaUtil {
 	
 	public static List<String> getDefaultDept() {
 		List<String> depts = new ArrayList<String>();
+		depts.add("未提交");
 		depts.add("行政部");
 		depts.add("人事部");
 		depts.add("研发部");
