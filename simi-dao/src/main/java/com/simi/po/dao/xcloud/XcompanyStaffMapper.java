@@ -25,4 +25,6 @@ public interface XcompanyStaffMapper {
 	XcompanyStaff selectByUserId(Long userId);
 
 	List<XcompanyStaff> selectByCompanyId(Long companyId);
+
+	XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId);
 }

@@ -20,4 +20,8 @@ public interface XcompanyMapper {
 	Xcompany selectByUserNameAndPass(String userName, String passMd5);
 	
 	Xcompany selectByCompanyName(String companyName);
+
+	Xcompany selectByInvitationCode(String invitationCode);
+
+	Xcompany selectByCompanyNameAndUserName(String companyName, String userName);
 }

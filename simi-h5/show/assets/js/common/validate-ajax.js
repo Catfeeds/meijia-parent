@@ -29,33 +29,6 @@ function validateUserMobile(mobile, userId, userType){
 	return isExist;
 }
 
-
-//查询公司用户是否重复
-function checkCompanyUserNameExist(userName, companyId, companyName) {
-	console.log("checkCompanyUserNameExist");
-	var isExist = true;
-	var params = {};
-	params.user_name = userName;
-	params.company_id = companyId;
-	params.company_name = companyName;
-	$.ajax({
-		type : "GET",
-		url: appRootUrl + "/company/check-duplicate.json", //发送给服务器的url
-		data : params,
-		dataType : "json",
-		async : false,
-		success : function(data) {
-			if (data.status == 0) {
-				isExist = false;
-			}
-		},
-		error:function(){
-			return false;
-		}
-	});
-	return isExist;
-}
-
 //查询图片验证码是否正确
 function checkCaptcha(token) {
 	

@@ -51,6 +51,16 @@
 		user_name = #{0, jdbcType=VARCHAR} and password = #{1, jdbcType=VARCHAR}
 	</select>	
 	
+	<select id="selectByCompanyNameAndUserName" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany
+		where 
+		company_name = #{0, jdbcType=VARCHAR} and user_name = #{1, jdbcType=VARCHAR}
+	</select>
+	
+	
+	
 	<select id="selectByCompanyName" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
@@ -59,7 +69,14 @@
 		company_name = #{companyName, jdbcType=VARCHAR}
 	</select>	
 	
-	
+	<select id="selectByInvitationCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany
+		where 
+		invitation_code = #{invitationCode, jdbcType=VARCHAR}
+	</select>	
+		
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from xcompany
 		where company_id = #{companyId,jdbcType=NUMERIC}

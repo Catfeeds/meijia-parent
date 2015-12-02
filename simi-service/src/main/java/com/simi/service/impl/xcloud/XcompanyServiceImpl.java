@@ -81,6 +81,16 @@ public class XcompanyServiceImpl implements XCompanyService {
 		return xCompanyMapper.selectByUserName(userName);
 	}
 	
+	@Override
+	public Xcompany selectByCompanyNameAndUserName(String companyName, String userName) {
+		return xCompanyMapper.selectByCompanyNameAndUserName(companyName, userName);
+	}		
+	
+	@Override
+	public Xcompany selectByInvitationCode(String invitationCode) {
+		return xCompanyMapper.selectByInvitationCode(invitationCode);
+	}	
+	
 	/**
 	 * 登陆方式
 	 * @param userName

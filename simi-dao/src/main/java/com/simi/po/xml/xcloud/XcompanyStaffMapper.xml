@@ -62,6 +62,17 @@
 		
 	</select>
 	
+	<select id="selectByCompanyIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff
+		where
+		company_id = #{0}
+		and user_id = #{1}
+	</select>
+	
+	
+	
 	<select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />

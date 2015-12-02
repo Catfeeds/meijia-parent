@@ -2,7 +2,7 @@ if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
 }
 
-var formVal = $('#company-reg-form').validator({
+$('#company-reg-form').validator({
 	validate : function(validity) {
 		// Ajax 验证
 		if ($(validity.field).is('.js-ajax-validate')) {
@@ -47,24 +47,17 @@ $("#reg-submit").on('click', function(e) {
 	}
 	var userName =  $('#mobile').val();
 	var companyName = $('#company_name').val();
-	//检测是否 手机号+公司名称是否重复
-	var isExist = checkCompanyUserNameExist(userName, 0, companyName);
-	
-	if (isExist) {
-		alert("您已经注册过"+companyName);
-		return false;
-    }
 	
 	var params = {};
 	params.user_name = userName;
 	params.password = $('#password').val();
 	params.sms_token = $('#sms_token').val();
-	params.company_name = $('#company_name').val();
+	params.company_name = companyName;
 	params.short_name = $('#short_name').val();
 	//提交数据，完成注册流程
 	$.ajax({
 		type : "POST",
-		url: appRootUrl + "/company/company-reg.json", //发送给服务器的url
+		url: appRootUrl + "/company/reg.json", //发送给服务器的url
 		data : params,
 		dataType : "json",
 		async : false,

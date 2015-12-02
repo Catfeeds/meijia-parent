@@ -26,4 +26,8 @@ public interface XCompanyService {
 
 	Xcompany selectByCompanyName(String companyName);
 
+	Xcompany selectByInvitationCode(String invitationCode);
+
+	Xcompany selectByCompanyNameAndUserName(String companyName, String userName);
+
 }

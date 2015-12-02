@@ -29,6 +29,8 @@ public interface XcompanyStaffService {
 
 	int updateByPrimaryKeySelective(XcompanyStaff xcompanyStaff);
 
+	XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId);
+
 
 	
 

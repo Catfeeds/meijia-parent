@@ -69,6 +69,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		return xCompanyStaffMapper
 				.selectByCompanyIdAndDeptId(companyId, deptId);
 	}
+	
+	@Override
+	public XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId) {
+
+		return xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
+	}	
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {

@@ -31,10 +31,12 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
+import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
+import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 
 
@@ -52,42 +54,13 @@ public class CompanyController extends BaseController {
 	private UsersService usersService;	
 	
 	@Autowired
-	private XcompanyDeptService xCompanyDeptService;	
+	private XcompanyDeptService xCompanyDeptService;
 	
-	@RequestMapping(value="/check-duplicate", method = {RequestMethod.GET})
-	public AppResultData<Object> checkDuplicate(
-			@RequestParam("user_name") String userName,
-			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId,
-			@RequestParam(value = "company_name", required = false, defaultValue = "") String companyName
-			) {
-
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, "");
+	@Autowired
+	private XcompanyStaffService xCompanyStaffService;		
 		
-		if (StringUtil.isEmpty(userName)) return result;
-		
-		Xcompany xCompany = xCompanyService.selectByUserName(userName);
-		
-		if (xCompany != null) {
-			if (companyId > 0L && xCompany.getCompanyId().equals(companyId)) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("用户已经绑定过公司。");
-				return result;
-			}
-			
-			if (!StringUtil.isEmpty(companyName) && xCompany.getCompanyName().trim().equals(companyName.trim())) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("您已经注册过"+companyName);
-				return result;
-			}
-			
-		}
-		
-		return result;
-	}
-	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/company-reg", method = {RequestMethod.POST})
+	@RequestMapping(value="/reg", method = {RequestMethod.POST})
 	public AppResultData<Object> companyReg(
 			@RequestParam("user_name") String userName,
 			@RequestParam("sms_token") String smsToken,
@@ -119,9 +92,24 @@ public class CompanyController extends BaseController {
 			return result;
 		}
 		
+		//然后判断用户是否已经存在，不存在则添加新用户
+		Users u = usersService.selectByMobile(mobile);
+		
+		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+			u = usersService.genUser(mobile, "", Constants.User_XCOULD);
+		}		
+		
+		//验证是否出现重名的情况.
+		Xcompany xCompany = xCompanyService.selectByCompanyNameAndUserName(companyName, userName);
+		if (xCompany != null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您已经注册过"+companyName);
+			return result;
+		}		
+		
 		String passwordMd5 = StringUtil.md5(password.trim());
 		
-		Xcompany xCompany = xCompanyService.initXcompany();
+		xCompany = xCompanyService.initXcompany();
 		if (companyId > 0L) {
 			xCompany = xCompanyService.selectByPrimaryKey(companyId);
 		}
@@ -182,13 +170,6 @@ public class CompanyController extends BaseController {
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		}
 		
-		//然后判断用户是否已经存在，不存在则添加新用户
-		Users u = usersService.selectByMobile(mobile);
-		
-		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = usersService.genUser(mobile, "", Constants.User_XCOULD);
-		}
-		
 		//公司部门预置信息.
 		List<String> defaultDepts = MeijiaUtil.getDefaultDept();
 		for (int i = 0 ; i < defaultDepts.size(); i++) {
@@ -198,8 +179,92 @@ public class CompanyController extends BaseController {
 			dept.setParentId(0L);
 			xCompanyDeptService.insert(dept);
 		}
+
+		
+		
+		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未提交");
+		Long deptId = 0L;
+		if (defaultDept != null) {
+			deptId = defaultDept.getDeptId();
+		}
+		//将用户加入公司员工中
+		XcompanyStaff record = xCompanyStaffService.initXcompanyStaff();
+		record.setUserId(u.getId());
+		record.setCompanyId(companyId);
+		record.setDeptId(deptId);
+		xCompanyStaffService.insertSelective(record);
 		
 		return result;
 	
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/join", method = {RequestMethod.POST})
+	public AppResultData<Object> companyReg(
+			@RequestParam("user_name") String userName,
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam("invitation_code") String invitationCode
+			) {	
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
+				ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (StringUtil.isEmpty(userName) || 
+		    StringUtil.isEmpty(smsToken) ||
+		    StringUtil.isEmpty(invitationCode) ) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数据异常");
+			return result;
+		}
+		
+		String mobile = userName;
+		AppResultData<Object> validateResult = smsTokenService.validateSmsToken(mobile, smsToken, (short) 3);
+		
+		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("验证码错误");
+			return result;
+		}
+		
+		Users u = usersService.selectByMobile(userName);
+		Long userId = 0L;
+		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+			u = usersService.genUser(userName, "", Constants.User_XCOULD);
+		}
+		userId = u.getId();
+		
+		Xcompany xCompany = xCompanyService.selectByInvitationCode(invitationCode);
+		Long companyId = 0L;
+		if (xCompany == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("邀请码不存在!");
+			return result;
+		}
+		companyId = xCompany.getCompanyId();
+		
+		XcompanyStaff  vo = xCompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+		
+		if (vo != null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您已经加入该公司");
+			return result;
+		}
+		
+
+		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未提交");
+		Long deptId = 0L;
+		if (defaultDept != null) {
+			deptId = defaultDept.getDeptId();
+		}
+		//将用户加入公司员工中
+		XcompanyStaff record = xCompanyStaffService.initXcompanyStaff();
+		record.setUserId(u.getId());
+		record.setCompanyId(companyId);
+		record.setDeptId(deptId);
+		xCompanyStaffService.insertSelective(record);
+		
+		return result;
+	
+	}	
 }
