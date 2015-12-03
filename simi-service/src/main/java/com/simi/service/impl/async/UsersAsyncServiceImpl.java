@@ -210,5 +210,20 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		return new AsyncResult<Boolean>(true);
 	}
 	
+	/**
+	 *  默认加固定账号为好友.
+	 */	
+	@Async
+	@Override
+	public Future<Boolean> addDefaultFriends(Long userId) {
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		if (u != null) {
+			Users friendUser = usersService.selectByMobile("18888888888");
+			userFriendService.addFriends(u, friendUser);
+		}
+		return new AsyncResult<Boolean>(true);
+	}	
+	
 	
 }

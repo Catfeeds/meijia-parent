@@ -115,6 +115,9 @@ public class UsersServiceImpl implements UsersService {
 			
 			//新用户注册通知运营人员
 			userAsyncService.newUserNotice(u.getId());
+			
+			//默认加固定客服用户为好友
+			userAsyncService.addDefaultFriends(u.getId());
 		}
 		return u;
 	}
