@@ -1,6 +1,7 @@
 package com.simi.service.impl.xcloud;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,15 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.xcloud.UserCompanyFormVo;
 
 @Service
@@ -31,6 +37,8 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	@Autowired
 	XcompanyDeptService xcompanyDeptService;
 
+	@Autowired
+	UsersService usersService;
 	
 	@Override
 	public XcompanyStaff initXcompanyStaff() {
@@ -56,6 +64,26 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 	
 	@Override
+	public PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize) {
+
+		PageHelper.startPage(pageNo, pageSize);
+		List<XcompanyStaff> list = xCompanyStaffMapper.selectByListPage(searchVo);
+		List<UserCompanyFormVo> plist = new ArrayList<UserCompanyFormVo>();
+		if (list.isEmpty()) {
+			
+			
+			for (int i = 0; i < list.size(); i++) {
+				XcompanyStaff item = list.get(i);
+				UserCompanyFormVo vo = getUserCompany(item.getCompanyId(), item.getUserId());
+				plist.add(vo);
+			}
+			
+		}
+		PageInfo result = new PageInfo(plist);
+		return result;
+	}	
+	
+	@Override
 	public List<XcompanyStaff> selectBySearchVo(Long companyId, Long deptId) {
 
 		return xCompanyStaffMapper.selectBySearchVo(companyId, deptId);
@@ -63,11 +91,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public List<XcompanyStaff> selectByCompanyIdAndDeptId(Long companyId,
-			Long deptId) {
+	public List<XcompanyStaff> selectByCompanyIdAndDeptId(Long companyId, Long deptId) {
 
-		return xCompanyStaffMapper
-				.selectByCompanyIdAndDeptId(companyId, deptId);
+		return xCompanyStaffMapper.selectByCompanyIdAndDeptId(companyId, deptId);
 	}
 	
 	@Override
@@ -83,13 +109,14 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public UserCompanyFormVo getUserCompany(Long companyId, Users users) {
+	public UserCompanyFormVo getUserCompany(Long companyId, Long userId) {
 
 		UserCompanyFormVo vo = new UserCompanyFormVo();
+		
+		Users users = usersService.selectByPrimaryKey(userId);
 
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
 		
-		Long userId = users.getId();
 		// 员工类型
 		XcompanyStaff xcompanyStaff = xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
 

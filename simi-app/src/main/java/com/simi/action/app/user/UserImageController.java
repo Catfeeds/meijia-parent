@@ -279,19 +279,13 @@ public class UserImageController extends BaseController {
 		if (StringUtil.isEmpty(qrCodeLogo)) {
 			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
 		}
+				
+		String contents = "xcloud://action=add_friend";
+			   contents+= "&user_id="+u.getId().toString();
+			   contents+= "&name="+u.getName();
+			   contents+= "&mobile="+u.getMobile();
 		
-		Map<String, String> contents = new HashMap<String, String>();
-		
-		contents.put("tag", "xcloud");
-		contents.put("action", "add_friend");
-		contents.put("user_id", u.getId().toString());
-		contents.put("name", u.getName());
-		contents.put("mobile", u.getMobile());
-		
-		 ObjectMapper objectMapper = new ObjectMapper();
-		 String jsonContents = objectMapper.writeValueAsString(contents);
-		
-		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(jsonContents, 800, 800, qrCodeLogo);
+		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(contents, 800, 800, qrCodeLogo);
 		
 		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
         try {  

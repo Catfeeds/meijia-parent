@@ -1,33 +1,25 @@
 package com.xcloud.action.company;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserApplyVo;
+import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.UserCompanyFormVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
@@ -52,7 +44,8 @@ public class StaffController extends BaseController {
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String staffTreeAndList(HttpServletRequest request, Model model,
 	// UserCompanySearchVo searchVo,
-			@RequestParam(value = "dept_id", required = false) Long deptId) {
+			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
@@ -67,40 +60,23 @@ public class StaffController extends BaseController {
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
 		Long companyId = accountAuth.getCompanyId();
-		// deptId = 2L;
-		if (deptId == null || deptId == 0L) {
-			List<XcompanyStaff> list = xcompanyStaffService
-					.selectByCompanyId(companyId);
-
-			List<Long> userIds = new ArrayList<Long>();
-			if (!list.isEmpty()) {
-				for (int i = 0; i < list.size(); i++) {
-					userIds.add(list.get(i).getUserId());
-				}
-				PageInfo result = usersService.searchVoListPage(userIds,
-						pageNo, pageSize);
-				model.addAttribute("companyId", accountAuth.getCompanyId());
-				model.addAttribute("companyName", accountAuth.getCompanyName());
-				model.addAttribute("shortName", accountAuth.getShortName());
-				model.addAttribute("contentModel", result);
-			}
-		} else {
-			List<XcompanyStaff> list = xcompanyStaffService
-					.selectByCompanyIdAndDeptId(companyId, deptId);
-
-			List<Long> userIds = new ArrayList<Long>();
-			if (!list.isEmpty()) {
-				for (int i = 0; i < list.size(); i++) {
-					userIds.add(list.get(i).getUserId());
-				}
-				PageInfo result = usersService.searchVoListPage(userIds,
-						pageNo, pageSize);
-				model.addAttribute("companyId", accountAuth.getCompanyId());
-				model.addAttribute("companyName", accountAuth.getCompanyName());
-				model.addAttribute("shortName", accountAuth.getShortName());
-				model.addAttribute("contentModel", result);
-			}
+		
+		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
+		model.addAttribute("companyId", accountAuth.getCompanyId());
+		model.addAttribute("companyName", accountAuth.getCompanyName());
+		model.addAttribute("shortName", accountAuth.getShortName());
+		
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		
+		if (deptId > 0L) {
+			searchVo.setDeptId(deptId);
 		}
+		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, pageNo, Constants.PAGE_MAX_NUMBER);
+
+		model.addAttribute("contentModel", plist);
+		
 
 		return "/staffs/staff-list";
 	}
@@ -110,10 +86,17 @@ public class StaffController extends BaseController {
 			@RequestParam(value = "id", required = false) Long userId) {
 
 		UserCompanyFormVo vo = new UserCompanyFormVo();
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
+		Long companyId = accountAuth.getCompanyId();
+		
+		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
+				
 		if (userId > 0L) {
 
-			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByUserId(userId);
+			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
 
 			Users users = usersService.selectByPrimaryKey(userId);
 
@@ -152,6 +135,7 @@ public class StaffController extends BaseController {
 	 */
 	@RequestMapping(value = "/postUserForm", method = RequestMethod.POST)
 	public String saveUserForm(HttpServletRequest request,
+			@RequestParam("company_id") Long companyId,
 			@RequestParam("name") String name,
 			@RequestParam("idCard") String idCard,
 			@RequestParam("companyEmail") String companyEmail,
@@ -175,7 +159,7 @@ public class StaffController extends BaseController {
 			users.setIdCard(idCard);
 			usersService.updateByPrimaryKeySelective(users);
 			
-			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByUserId(users.getId());
+			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
 			if (xcompany != null) {
 			xcompanyStaff.setCompanyId(xcompany.getCompanyId());
 			xcompanyStaff.setUserId(users.getId());

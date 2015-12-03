@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -266,5 +267,87 @@ public class CompanyController extends BaseController {
 		
 		return result;
 	
+	}	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/get_by_user", method = {RequestMethod.POST})
+	public AppResultData<Object> getByUserId(
+			@RequestParam("user_id") Long userId) {	
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null ) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		 List<XcompanyStaff>  companyList = xCompanyStaffService.selectByUserId(userId);
+		 
+		 if (companyList.isEmpty()) {
+			 return result;
+		 }
+		 
+		 
+		 
+		 List<Map> resultMap = new ArrayList<Map>();
+		 
+		 for (XcompanyStaff item : companyList) {
+			 Map<String, Object> vo = new HashMap<String, Object>();
+			 
+			 vo.put("company_id", item.getCompanyId());
+			 
+			 Xcompany xCompany = xCompanyService.selectByPrimaryKey(item.getCompanyId());
+			 
+			 vo.put("company_name", xCompany.getCompanyName());
+			 resultMap.add(vo);
+		 }
+		 result.setData(resultMap);
+		
+		return result;
+	}	
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/get_staffs", method = {RequestMethod.POST})
+	public AppResultData<Object> getStaffs(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("company_id") Long companyId) {	
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null ) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		 List<XcompanyStaff>  companyList = xCompanyStaffService.selectByCompanyId(companyId);
+		 
+		 if (companyList.isEmpty()) {
+			 return result;
+		 }
+
+		 List<Map> resultMap = new ArrayList<Map>();
+		 
+		 for (XcompanyStaff item : companyList) {
+			 Map<String, Object> vo = new HashMap<String, Object>();
+			 
+			 vo.put("company_id", item.getCompanyId());
+			 
+			 Xcompany xCompany = xCompanyService.selectByPrimaryKey(item.getCompanyId());
+			 
+			 vo.put("company_name", xCompany.getCompanyName());
+			 resultMap.add(vo);
+		 }
+		 result.setData(resultMap);
+		
+		return result;
 	}	
 }

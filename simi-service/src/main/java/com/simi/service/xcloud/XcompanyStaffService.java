@@ -2,6 +2,7 @@ package com.simi.service.xcloud;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.UserCompanySearchVo;
@@ -29,7 +30,9 @@ public interface XcompanyStaffService {
 
 	XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId);
 
-	UserCompanyFormVo getUserCompany(Long compnayId, Users users);
+	PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize);
+
+	UserCompanyFormVo getUserCompany(Long companyId, Long userId);
 
 
 	
