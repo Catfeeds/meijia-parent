@@ -3,7 +3,6 @@ package com.simi.po.dao.xcloud;
 import java.util.List;
 
 import com.simi.po.model.xcloud.XcompanyStaff;
-import com.simi.vo.UserCompanySearchVo;
 
 public interface XcompanyStaffMapper {
     int deleteByPrimaryKey(Long id);
@@ -22,7 +21,7 @@ public interface XcompanyStaffMapper {
 
 	List<XcompanyStaff> selectByCompanyIdAndDeptId(Long companyId, Long deptId);
 
-	XcompanyStaff selectByUserId(Long userId);
+	List<XcompanyStaff> selectByUserId(Long userId);
 
 	List<XcompanyStaff> selectByCompanyId(Long companyId);
 

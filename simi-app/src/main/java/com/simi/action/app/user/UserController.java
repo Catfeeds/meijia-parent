@@ -208,6 +208,9 @@ public class UserController extends BaseController {
 		Users u = userService.initUsers();
 		u.setMobile(mobile);
 		u.setName(name);
+		
+		//注册为美家公司的一员.
+		
 
 		result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, u);

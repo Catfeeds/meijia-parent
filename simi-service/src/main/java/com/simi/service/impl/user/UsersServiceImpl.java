@@ -32,6 +32,7 @@ import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
@@ -97,6 +98,7 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
+		
 	/**
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
@@ -257,8 +259,7 @@ public class UsersServiceImpl implements UsersService {
 	public UserViewVo getUserInfo(Long userId) {
 		UserViewVo vo = new UserViewVo();
 		Users u = usersMapper.selectByPrimaryKey(userId);
-		;
-
+	
 		if (u == null) {
 			return vo;
 		}
@@ -333,6 +334,19 @@ public class UsersServiceImpl implements UsersService {
 		
 		//用户是否为某个公司的职员
 		 vo.setHasCompany((short) 0);
+		 vo.setCompanyId(0L);
+		 vo.setCompanyCount(0);
+		 List<XcompanyStaff>  companyList = xcompanyStaffService.selectByUserId(userId);
+		 
+		 if (!companyList.isEmpty()) {
+			 vo.setHasCompany((short) 1);
+			 vo.setCompanyCount(companyList.size());
+			 if (companyList.size() == 1) {
+				 XcompanyStaff item = companyList.get(0);
+				 vo.setCompanyId(item.getCompanyId());
+			 }
+		 }
+		 
 		return vo;
 	}
 
@@ -673,22 +687,5 @@ public class UsersServiceImpl implements UsersService {
 		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
 		return lists;
 	}
-
-	@Override
-	public PageInfo searchVoListPage(List<Long> userIds, int pageNo,
-			int pageSize) {
-		
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> list = usersMapper.selectByUserIds(userIds);
-		for (int i = 0; i < list.size(); i++) {
-		Users users = list.get(i);
-		UserCompanyFormVo vo = xcompanyStaffService.getUserCompany(users);
-		list.set(i, vo);
-		}
-		PageInfo result = new PageInfo(list);
-		
-		return result;
-	}
-
 	
 }

@@ -53,7 +53,14 @@ public class UserViewVo extends Users {
      */
     private String clientId;
     
+    //是否属于某公司的员工
     private Short hasCompany;
+    
+    //所属公司的ID
+    private Long companyId;
+    
+    //所属公司个数
+    private int companyCount;
         
 	public String getImUsername() {
 		return ImUsername;
@@ -154,6 +161,22 @@ public class UserViewVo extends Users {
 
 	public void setHasCompany(Short hasCompany) {
 		this.hasCompany = hasCompany;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
+	public int getCompanyCount() {
+		return companyCount;
+	}
+
+	public void setCompanyCount(int companyCount) {
+		this.companyCount = companyCount;
 	}
 
 }

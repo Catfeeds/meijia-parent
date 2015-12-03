@@ -83,15 +83,15 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public UserCompanyFormVo getUserCompany(Users users) {
+	public UserCompanyFormVo getUserCompany(Long companyId, Users users) {
 
 		UserCompanyFormVo vo = new UserCompanyFormVo();
 
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
-
+		
+		Long userId = users.getId();
 		// 员工类型
-		XcompanyStaff xcompanyStaff = xCompanyStaffMapper.selectByUserId(users
-				.getId());
+		XcompanyStaff xcompanyStaff = xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
 
 		vo.setStaffType(xcompanyStaff.getStaffType());
 		if (xcompanyStaff.getStaffType() == 0) {
@@ -144,7 +144,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public XcompanyStaff selectByUserId(Long userId) {
+	public List<XcompanyStaff> selectByUserId(Long userId) {
 		
 		return xCompanyStaffMapper.selectByUserId(userId);
 	}

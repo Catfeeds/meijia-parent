@@ -17,19 +17,19 @@ public interface XcompanyStaffService {
 	
 	int deleteByPrimaryKey(Long id);
 
-	UserCompanyFormVo getUserCompany(Users users);
-
 	List<XcompanyStaff> selectByCompanyId(Long companyId);
 
 	int insertSelective(XcompanyStaff xcompanyStaff);
 
 	XcompanyStaff selectByPrimarykey(Long id);
 
-	XcompanyStaff selectByUserId(Long userId);
+	List<XcompanyStaff> selectByUserId(Long userId);
 
 	int updateByPrimaryKeySelective(XcompanyStaff xcompanyStaff);
 
 	XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId);
+
+	UserCompanyFormVo getUserCompany(Long compnayId, Users users);
 
 
 	

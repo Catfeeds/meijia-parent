@@ -71,13 +71,4 @@ public interface UsersService {
 	Boolean userOrderAmPushSms(Users users);
 
 	Boolean userSecToUserPushSms(Users users);
-
-	PageInfo searchVoListPage(List<Long> userIds, int pageNo, int pageSize);
-
-
-
-	
-
-	
-
 }
