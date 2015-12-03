@@ -323,6 +323,7 @@ public class SecController extends AdminController {
     	BeanUtilsExp.copyPropertiesIgnoreNull(userApplyVo, users);
     
     	if (userId > 0L ) {
+    		users.setUserType((short)1);
 			users.setUpdateTime(TimeStampUtil.getNow()/1000);
 			usersService.updateByPrimaryKeySelective(users);
 		}else {
