@@ -2,6 +2,12 @@ if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.join_mobile = /^\s*1\d{10}\s*$/;
 }
 
+var reqInvitationCode = getUrlParam("invitation_code");
+console.log("reqInvitationCode = " + reqInvitationCode);
+if (reqInvitationCode != undefined) {
+	$('#invitation_code').val(reqInvitationCode);
+}
+
 $('#company-join-form').validator({
 	validate : function(validity) {
 		// Ajax 验证
