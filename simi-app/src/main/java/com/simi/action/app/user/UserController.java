@@ -319,7 +319,7 @@ public class UserController extends BaseController {
 			} else {
 				// 记录用户注册信息
 				// long ip = IPUtil.getIpAddr(request);
-				Users record = new Users();
+				Users record = userService.initUsers();
 				record.setId(0L);
 				record.setMobile(mobile);
 				record.setProvinceName("");
