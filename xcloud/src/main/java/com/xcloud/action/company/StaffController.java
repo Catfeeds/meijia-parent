@@ -44,8 +44,7 @@ public class StaffController extends BaseController {
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String staffTreeAndList(HttpServletRequest request, Model model,
 	// UserCompanySearchVo searchVo,
-			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
