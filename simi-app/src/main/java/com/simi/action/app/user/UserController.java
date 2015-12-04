@@ -282,101 +282,60 @@ public class UserController extends BaseController {
 				&&!mobile.equals("13701187136")&&!mobile.equals("13810002890")&&!mobile.equals("18610807136")
 				&&!mobile.equals("18612514665")&&!mobile.equals("13146012753")&&!mobile.equals("15727372986")) {
 
+			Users record = userService.initUsers();
+			
 			Users users = userService.selectByMobile(mobile);
-			// 若users不为空，则为已有用户注册秘书 ,修改用户为秘书（userType=1）
+			
 			if (users != null) {
-				users.setName(name);
-				users.setRealName(realName);
-				users.setSex(sex);
-				users.setIdCard(idCard);
-				users.setMajor(major);
-				users.setDegreeId(degreeId);
-				users.setUserType((short) 1);
-				users.setAddTime(TimeStampUtil.getNow() / 1000);
-				users.setUpdateTime(TimeStampUtil.getNow() / 1000);
-				userService.updateByPrimaryKeySelective(users);
-				// 像tagUsers表中插入用户的标签记录
-				if (!StringUtil.isEmpty(tagIds)) {
-
-					String[] tagIdsAry = StringUtil.convertStrToArray(tagIds);
-
-					for (int i = 0; i < tagIdsAry.length; i++) {
-						TagUsers tagUsers = new TagUsers();
-
-						tagUsers.setUserId(users.getId());
-						tagUsers.setAddTime(TimeStampUtil.getNow() / 1000);
-
-						if (StringUtil.isEmpty(tagIdsAry[i])) {
-							continue;
-						} else {
-							tagUsers.setTagId(Long.valueOf(tagIdsAry[i]));
-
-							tagsUsersService.insertByTagUsers(tagUsers);
-
-						}
-					}
-				}
-
-				// 用户注册秘书成功给运营人员推送短信通知
-				userService.userOrderAmPushSms(users);
-			} else {
-				// 记录用户注册信息
-				// long ip = IPUtil.getIpAddr(request);
-				Users record = userService.initUsers();
-				record.setId(0L);
-				record.setMobile(mobile);
-				record.setProvinceName("");
-				record.setThirdType(" ");
-				record.setOpenid("");
-				record.setName(name);
-				record.setRealName(realName);
-				record.setIdCard(idCard);
-				record.setSex(sex);
-				record.setBirthDay(new Date());
-				record.setDegreeId(degreeId);
-				record.setMajor(major);
-				record.setHeadImg(" ");
-				record.setRestMoney(new BigDecimal(0));
-				record.setUserType((short) 1);
-				record.setIsApproval((short) 0);
-				record.setAddFrom((short) 1);
-				record.setScore(0);
-
-				record.setAddTime(TimeStampUtil.getNow() / 1000);
-				record.setUpdateTime(TimeStampUtil.getNow() / 1000);
-
-				userService.insert(record);
-				userService.updateByPrimaryKeySelective(record);
-				// 如果第一次登陆未注册时未成功注册环信，则重新注册
-				UserRef3rd userRef3rd = userRef3rdService
-						.selectByUserIdForIm(record.getId());
-				if (userRef3rd == null) {
-					userService.genImUser(record);
-				}
-				Users least = userService.selectUserByIdCard(idCard);
-				// 想tagUsers表中插入用户的标签记录
-				if (!StringUtil.isEmpty(tagIds)) {
-
-					String[] tagIdsAry = StringUtil.convertStrToArray(tagIds);
-
-					for (int i = 0; i < tagIdsAry.length; i++) {
-						TagUsers tagUsers = new TagUsers();
-
-						tagUsers.setUserId(least.getId());
-						tagUsers.setAddTime(TimeStampUtil.getNow() / 1000);
-
-						if (StringUtil.isEmpty(tagIdsAry[i])) {
-							continue;
-						} else {
-							tagUsers.setTagId(Long.valueOf(tagIdsAry[i]));
-
-							tagsUsersService.insertByTagUsers(tagUsers);
-
-						}
-					}
-				}
-				userService.userOrderAmPushSms(record);
+				record = users;
 			}
+			
+			record.setName(name);
+			record.setRealName(realName);
+			record.setSex(sex);
+			record.setIdCard(idCard);
+			record.setMajor(major);
+			record.setDegreeId(degreeId);
+			record.setUserType((short) 1);
+
+			
+			if (users != null) {
+				userService.updateByPrimaryKeySelective(record);
+			} else {
+				userService.insert(record);
+			}
+			Long userId = record.getId();
+			// 如果第一次登陆未注册时未成功注册环信，则重新注册
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(record.getId());
+			if (userRef3rd == null) {
+				userService.genImUser(record);
+			}
+				
+			
+			// 像tagUsers表中插入用户的标签记录
+			if (!StringUtil.isEmpty(tagIds)) {
+				tagsUsersService.deleteByUserId(userId);
+				String[] tagIdsAry = StringUtil.convertStrToArray(tagIds);
+
+				for (int i = 0; i < tagIdsAry.length; i++) {
+					TagUsers tagUsers = new TagUsers();
+
+					tagUsers.setUserId(users.getId());
+					tagUsers.setAddTime(TimeStampUtil.getNow() / 1000);
+
+					if (StringUtil.isEmpty(tagIdsAry[i])) {
+						continue;
+					} else {
+						tagUsers.setTagId(Long.valueOf(tagIdsAry[i]));
+
+						tagsUsersService.insertByTagUsers(tagUsers);
+
+					}
+				}
+			}
+			
+			// 用户注册秘书成功给运营人员推送短信通知
+			userService.userOrderAmPushSms(record);
 		}
 		return result;
 	}
