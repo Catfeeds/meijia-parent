@@ -34,7 +34,7 @@
 		from xcompany_staff
 		where 1=1
 		<if test="companyId != null">
-			and comapny_id = #{companyId,jdbcType=NUMERIC}
+			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="deptId != null">
@@ -45,7 +45,7 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
-		order by add_time desc
+		order by id desc
 	</select>
 
 	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">

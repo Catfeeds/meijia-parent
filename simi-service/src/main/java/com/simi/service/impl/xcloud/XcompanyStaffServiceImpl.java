@@ -68,18 +68,18 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		PageHelper.startPage(pageNo, pageSize);
 		List<XcompanyStaff> list = xCompanyStaffMapper.selectByListPage(searchVo);
+		
 		List<UserCompanyFormVo> plist = new ArrayList<UserCompanyFormVo>();
 		if (list.isEmpty()) {
-			
-			
 			for (int i = 0; i < list.size(); i++) {
 				XcompanyStaff item = list.get(i);
 				UserCompanyFormVo vo = getUserCompany(item.getCompanyId(), item.getUserId());
 				plist.add(vo);
 			}
-			
 		}
-		PageInfo result = new PageInfo(plist);
+		
+		
+		PageInfo result = new PageInfo(list);
 		return result;
 	}	
 	

@@ -13,6 +13,8 @@ public class PartnerUserSearchVo {
 	 private String name;
 	 
 	 private String mobile;
+	 
+	 private Long parentId;
 
 
 	public Long getPartnerId() {
@@ -53,5 +55,13 @@ public class PartnerUserSearchVo {
 
 	public void setServiceTypeIds(List<Long> serviceTypeIds) {
 		this.serviceTypeIds = serviceTypeIds;
+	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}	 
 }

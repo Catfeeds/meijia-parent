@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.vo.partners.PartnerServiceTypeVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 
 public interface PartnerServiceTypeService {
 	
@@ -28,6 +29,8 @@ public interface PartnerServiceTypeService {
 	PartnerServiceType initPartnerServiceType();
 
 	List<PartnerServiceType> selectByIds(List<Long> ids);
+
+	List<PartnerServiceType> selectByName(PartnerUserSearchVo searchVo);
 	
 
 

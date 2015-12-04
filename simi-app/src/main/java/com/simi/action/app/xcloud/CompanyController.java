@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageInfo;
 import com.google.zxing.WriterException;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
@@ -29,16 +30,21 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.user.UserFriendViewVo;
+import com.simi.vo.xcloud.UserCompanyFormVo;
 
 
 @Controller
@@ -58,7 +64,10 @@ public class CompanyController extends BaseController {
 	private XcompanyDeptService xCompanyDeptService;
 	
 	@Autowired
-	private XcompanyStaffService xCompanyStaffService;		
+	private XcompanyStaffService xCompanyStaffService;	
+	
+	@Autowired
+	private UserFriendService userFriendService;	
 		
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/reg", method = {RequestMethod.POST})
@@ -133,17 +142,12 @@ public class CompanyController extends BaseController {
 			
 			//生成公司邀请二维码
 			String qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
-			Map<String, String> contents = new HashMap<String, String>();
-			
-			contents.put("tag", "xcloud");
-			contents.put("company_id", companyId.toString());
-			contents.put("company_name", xCompany.getCompanyName());
-			contents.put("invitation_code", xCompany.getInvitationCode());
-			
-			 ObjectMapper objectMapper = new ObjectMapper();
-			 String jsonContents = objectMapper.writeValueAsString(contents);
-			
-			BufferedImage qrCodeImg = QrCodeUtil.genBarcode(jsonContents, 800, 800, qrCodeLogo);
+
+			String contents = "xcloud://action=company-reg";
+			   contents+= "&company_id="+companyId.toString();
+			   contents+= "&company_name="+xCompany.getCompanyName().toString();
+
+			BufferedImage qrCodeImg = QrCodeUtil.genBarcode(contents, 800, 800, qrCodeLogo);
 			
 			ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
 	        try {  
@@ -270,7 +274,7 @@ public class CompanyController extends BaseController {
 	}	
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/get_by_user", method = {RequestMethod.POST})
+	@RequestMapping(value="/get_by_user", method = {RequestMethod.GET})
 	public AppResultData<Object> getByUserId(
 			@RequestParam("user_id") Long userId) {	
 		
@@ -312,10 +316,13 @@ public class CompanyController extends BaseController {
 	
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/get_staffs", method = {RequestMethod.POST})
+	@RequestMapping(value="/get_staffs", method = {RequestMethod.GET})
 	public AppResultData<Object> getStaffs(
 			@RequestParam("user_id") Long userId,
-			@RequestParam("company_id") Long companyId) {	
+			@RequestParam("company_id") Long companyId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "name", required = false, defaultValue = "") String name
+			) {	
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
@@ -328,25 +335,31 @@ public class CompanyController extends BaseController {
 			return result;
 		}
 		
-		 List<XcompanyStaff>  companyList = xCompanyStaffService.selectByCompanyId(companyId);
-		 
-		 if (companyList.isEmpty()) {
-			 return result;
-		 }
-
-		 List<Map> resultMap = new ArrayList<Map>();
-		 
-		 for (XcompanyStaff item : companyList) {
-			 Map<String, Object> vo = new HashMap<String, Object>();
-			 
-			 vo.put("company_id", item.getCompanyId());
-			 
-			 Xcompany xCompany = xCompanyService.selectByPrimaryKey(item.getCompanyId());
-			 
-			 vo.put("company_name", xCompany.getCompanyName());
-			 resultMap.add(vo);
-		 }
-		 result.setData(resultMap);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		
+		PageInfo list = xCompanyStaffService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		
+		List<XcompanyStaff> plist = list.getList();
+		
+		if (plist.isEmpty()) return result;
+		
+		List<UserFriends> userFriends = new ArrayList<UserFriends>();
+		
+		for (XcompanyStaff item : plist) {
+			UserFriends vo = userFriendService.initUserFriend();
+			vo.setFriendId(item.getUserId());
+			vo.setId(0L);
+			vo.setUserId(userId);
+			vo.setAddTime(0L);
+			vo.setUpdateTime(0L);
+			userFriends.add(vo);
+		}
+		
+		List<UserFriendViewVo> userList = userFriendService.changeToUserFriendViewVos(userFriends);
+		
+		result.setData(userList);
+		
 		
 		return result;
 	}	

@@ -12,6 +12,7 @@ import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.vo.partners.PartnerServiceTypeVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Service
 public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService {
@@ -70,6 +71,11 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 	@Override
 	public List<PartnerServiceType> selectByIds(List<Long> ids) {
 		return partnerServiceTypeMapper.selectByIds(ids);
+	}	
+	
+	@Override
+	public List<PartnerServiceType> selectByName(PartnerUserSearchVo searchVo) {
+		return partnerServiceTypeMapper.selectByName(searchVo);
 	}	
 	
 	/**

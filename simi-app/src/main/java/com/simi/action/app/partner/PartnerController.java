@@ -174,5 +174,76 @@ public class PartnerController extends BaseController {
 
 		 return result;
 	 }
+	 
+	/**
+	 * 获取服务人员详细信息
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
+	 @RequestMapping(value = "get_hot_keyword", method = RequestMethod.GET)	 
+	 public AppResultData<Object> getHotKeyword() {
+		 AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
+		 List<String> hotKeywords = new ArrayList<String>();
+		 hotKeywords.add("工商注册");
+		 hotKeywords.add("财务会计");
+		 hotKeywords.add("技术服务");
+		 hotKeywords.add("社保公积金");
+		 result.setData(hotKeywords);
+		 return result;
+	 }
+	 
+	 
+	/**
+	 * 获取可用的服务商人员列表
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "search", method = RequestMethod.GET)
+	public AppResultData<Object> searchBykey(
+			@RequestParam("user_id") Long userId, 
+			@RequestParam("keyword") String keyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "city_id", required = false, defaultValue = "0") Long cityId,
+			@RequestParam(value = "region_id", required = false, defaultValue = "0") Long regionId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		if (StringUtil.isEmpty(keyword)) return result;
+		
+		PartnerUserSearchVo searchVo1 = new PartnerUserSearchVo();
+		searchVo1.setName(keyword);
+		searchVo1.setParentId(0L);
+		List<PartnerServiceType> serviceTypes =  partnerServiceTypeService.selectByName(searchVo1);
+		if (serviceTypes.isEmpty()) return result;
+
+		List<Long> serviceTypeIds = new ArrayList<Long>();
+		for (PartnerServiceType item : serviceTypes) {
+			if (!serviceTypeIds.contains(item.getId())) {
+				serviceTypeIds.add(item.getId());
+			}
+		}
+		
+		if (serviceTypeIds.isEmpty()) return result;
+		
+		PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
+		searchVo.setServiceTypeIds(serviceTypeIds);
+		PageInfo pageList = partnerUserService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+
+		List<PartnerUserVo> list = pageList.getList();
+		result.setData(list);
+		return result;
+	}
+	 
 	
 }

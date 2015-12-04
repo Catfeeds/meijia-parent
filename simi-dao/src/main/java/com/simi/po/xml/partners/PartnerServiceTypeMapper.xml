@@ -36,6 +36,21 @@
 	             open="(" separator="," close=")">
 	        #{item}
 	    </foreach>
+	</select>
+	
+	<select id="selectByName" resultMap="BaseResultMap" parameterType="com.simi.vo.partners.PartnerUserSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_type
+		where 1=1
+		<if test="name != null and name !='' ">
+			and name like '%${name}%'
+		</if>
+		
+		<if test="parentId != null ">
+			and parent_id = #{parentId,jdbcType=NUMERIC}
+		</if>
+		
 	</select>	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
