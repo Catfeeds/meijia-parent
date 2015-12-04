@@ -13,14 +13,14 @@ $('#company-join-form').validator({
 		// Ajax 验证
 		if ($(validity.field).is('.js-ajax-validate')) {
 			// 异步操作必须返回 Deferred 对象
-			var mobile = $('join_mobile').val();
+			var mobile = $('#join_mobile').val();
 			if (mobile == undefined || mobile == "")  {
 				validity.valid = false;
 				return validity;
 			}
 			var params = {};
-			params.mobile = $('join_mobile').val();
-			params.sms_token = $('join_sms_token').val();
+			params.mobile = $('#join_mobile').val();
+			params.sms_token = $('#join_sms_token').val();
 			params.sms_type = 3;
 			return $.ajax({
 				type : 'GET',
@@ -42,15 +42,22 @@ $('#company-join-form').validator({
 });
 
 $("#join-submit").on('click', function(e) {
-	console.log("join-submit click");
+	console.log("join-submit click");	
 	var $form = $('#company-join-form');
-	console.log($form.validator());
-
 	var validator = $form.data('amui.validator');
+	var formValidity = validator.isFormValid()
+	$.when(formValidity).then(function() {
+		// done, submit form
+		companyJoinSubmit()
+	}, function() {
+		// fail
+	});
+	
 
-	if (!validator.isFormValid()) {
-		return false;
-	}
+	
+});
+
+function companyJoinSubmit() {
 	var userName =  $('#join_mobile').val();
 	
 	var params = {};
@@ -78,10 +85,8 @@ $("#join-submit").on('click', function(e) {
 		error:function(){
 			return false;
 		}
-	});
-	
-});
-
+	});	
+}
 
 //获取验证码功能
 $("#join_btn_sms_token").click(function() {
@@ -110,7 +115,8 @@ $("#join_btn_sms_token").click(function() {
 		success : function(data) {
 			$("#join_btn_sms_token").html('<span id=\"cd1\">60</span>').attr('disabled','disabled');
 	    	$('#cd1').countDown(function(){
-	    		$("#join_btn_sms_token").html('获取验证码').removeAttr('disabled');
+	    		$("#join_btn_sms_token").html('获取验证码');
+	    		$("#join_btn_sms_token").removeAttr('disabled');
 			})
 		}
 	})
