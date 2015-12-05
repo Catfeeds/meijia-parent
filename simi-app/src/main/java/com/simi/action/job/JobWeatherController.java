@@ -40,12 +40,12 @@ public class JobWeatherController extends BaseController {
 
 		String reqHost = request.getRemoteHost();
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
-//			List<DictCity> citys = dictService.LoadCityData();
-//			
-//			for (DictCity item : citys) {
-//				weatherService.getWeather(item.getCityId(), item.getName());
-//			}
-			weatherService.getWeather(2L, "北京市");
+			List<DictCity> citys = dictService.LoadCityData();
+			
+			for (DictCity item : citys) {
+				weatherService.getWeather(item.getCityId(), item.getName());
+			}
+//			weatherService.getWeather(2L, "北京市");
 		}
 		return result;
 	}
