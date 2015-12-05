@@ -25,6 +25,8 @@ public class DateUtil {
 	public static final long ONE_MONTH = 2592000;
 	public static final long ONE_YEAR = 31104000;	
 
+	private static final int[] quarters = {1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4};
+
 	/**
 	 * 返回固定格式的日期
 	 */
@@ -475,7 +477,58 @@ public class DateUtil {
         }
  
     }	
+
+    /**
+	 * 某一天的结束
+	 * @param  day:yyyy-MM-dd
+	 * @return
+	 */
+	public static String getBeginOfYear() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.MONTH, 0);
+		c.set(Calendar.DAY_OF_MONTH,1);		
+		return format(c.getTime(), "yyyy-MM-dd");
+	}	
 	
+	public static String getLastOfYear(int year) {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.YEAR, year -1 );
+		c.set(Calendar.MONTH, 11);
+		c.set(Calendar.DAY_OF_MONTH,31);		
+		return format(c.getTime(), "yyyy-MM-dd");
+	}		
+	
+	/**
+	 * 当前年份
+	 * @return
+	 */
+	public static int getYear(Date day) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(day);	
+		return c.get(Calendar.YEAR);
+	}	
+
+	/**
+	 * 当前月份
+	 * @return
+	 */
+	public static int getMonth(Date day) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(day);		
+		return c.get(Calendar.MONTH) + 1;
+	}	
+
+	/**
+	 * 根据当前月份获得季度
+	 * 		
+	 * @param month
+	 * 
+	 * 		12月 会越界，因而是 month-1
+	 */
+	
+	public static int getQuarter(int month) {
+		return quarters[month-1];
+	}			
 	
 	public static void main(String[] args) {
 //		List<String> result = DateUtil.getLastMonth(6, 12);

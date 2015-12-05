@@ -8,6 +8,7 @@ import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
+import com.simi.vo.chart.ChartSearchVo;
 
 
 
@@ -54,5 +55,7 @@ public interface UsersMapper {
 	List<Users> selectVoByListPage(UsersSearchVo userSearchVo);
 
 	List<Users> selectVoByListPageYes(UsersSearchVo usersSearchVo);
+
+	int statTotalUser(ChartSearchVo chartSearchVo);
 	
 }

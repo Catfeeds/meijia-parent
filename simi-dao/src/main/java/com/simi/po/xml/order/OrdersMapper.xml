@@ -124,6 +124,26 @@
 		</if>
 		order by add_time desc
 	</select>
+	
+	<!-- 市场订单数求和 -->
+	<select id="statTotalOrder" resultType="java.lang.Integer" parameterType="com.simi.vo.chart.ChartSearchVo">
+		SELECT COUNT(*) AS total 
+			   FROM orders
+		WHERE 1=1
+		<if test="startTime !=null">
+			<![CDATA[ and add_time >= #{startTime}]]>
+		</if>
+		<if test="endTime !=null">
+			<![CDATA[ and add_time <= #{endTime}]]>
+		</if>
+		<if test="status != null">
+			and order_status in
+			<foreach item="item" index="index" collection="status" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from orders

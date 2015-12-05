@@ -1,8 +1,10 @@
 package com.simi.po.dao.order;
 
 import java.util.List;
+
 import com.simi.po.model.order.Orders;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.chart.ChartSearchVo;
 
 public interface OrdersMapper {
 	
@@ -31,5 +33,7 @@ public interface OrdersMapper {
 	List<Orders> selectByOrderStatus7Days();
 
 	List<Orders> selectByorder1Hour();
+
+	int statTotalOrder(ChartSearchVo chartSearchVo);
 	
 }

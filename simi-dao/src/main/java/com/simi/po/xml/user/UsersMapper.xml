@@ -11,13 +11,13 @@
 		<result column="real_name" jdbcType="VARCHAR" property="realName" />
 		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
 		<result column="sex" jdbcType="VARCHAR" property="sex" />
-		
+
 		<result column="introduction" jdbcType="VARCHAR" property="introduction" />
 		<result column="level" jdbcType="NUMERIC" property="addTime" />
 		<result column="work_start" jdbcType="VARCHAR" property="workStart" />
 		<result column="work_end" jdbcType="VARCHAR" property="workEnd" />
 		<result column="is_door" jdbcType="NUMERIC" property="isDoor" />
-		
+
 		<result column="birth_day" jdbcType="DATE" property="birthDay" />
 		<result column="degree_id" jdbcType="NUMERIC" property="degreeId" />
 		<result column="major" jdbcType="VARCHAR" property="major" />
@@ -40,8 +40,8 @@
 	<sql id="Base_Column_List">
 		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex,
 		introduction, level,work_start, work_end,is_door,
-		 birth_day,degree_id, major, head_img, qr_code, rest_money, score,
-		  user_type, is_approval,add_from,add_time, update_time
+		birth_day,degree_id, major, head_img, qr_code, rest_money, score,
+		user_type, is_approval,add_from,add_time, update_time
 	</sql>
 
 	<select id="selectByAll" resultMap="BaseResultMap">
@@ -64,40 +64,33 @@
 		from users
 		where mobile = #{mobile,jdbcType=VARCHAR}
 	</select>
-	
+
 	<select id="selectUserByIdCard" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from users
 		where id_card = #{idCard,jdbcType=VARCHAR}
 	</select>
-	
-	<select id="selectByIsAppRoval" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    
-    where is_approval = 0 and user_type = 1
-    
-    order by id desc
-  </select>
-  <select id="selectByIsAppRovalYes" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from users
-    
-    where is_approval = 2 and user_type = 1
-    
-    order by id desc
-  </select>
 
-	<!--根据秘书Id查询用户信息 -->
-	<!-- <select id="selectVoBySecId" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="selectByIsAppRoval" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from users
-		where mobile = #{mobile,jdbcType=VARCHAR}
-	</select> -->
+
+		where is_approval = 0 and user_type = 1
+
+		order by id desc
+	</select>
+	<select id="selectByIsAppRovalYes" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+
+		where is_approval = 2 and user_type = 1
+
+		order by id desc
+	</select>
+
 	<!--根据手机号查询用户信息 -->
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
 		select
@@ -116,54 +109,55 @@
 				#{item}
 			</foreach>
 		</if>
-		
+
 		<if test="isApproval != null">
 			and is_approval = #{isApproval,jdbcType=NUMERIC}
 		</if>
-		
+
 		order by add_time desc
 	</select>
+	
 	<!-- 秘书申请列表列表 -->
-	  <select id="selectVoByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
-  	select
-    <include refid="Base_Column_List" />
-    from users
- 	where 1=1 and is_approval &lt; 2 
-    <if test="userType == 0 or userType == 1 ">
-		and user_type = #{userType}
-	</if>
-     <if test="name != null and name !='' ">
-		and name like '%${name}%'
-	</if>
-	<if test="mobile !=null and mobile !='' ">
-		and mobile like '%${mobile}%' 
-	</if>
-	<if test="id !=null and id !='' ">
-		and id = ${id} 
-	</if>	
-    order by add_time desc    
-  </select>
- <!--  秘书列表 -->
-  	  <select id="selectVoByListPageYes" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
-  	select
-    <include refid="Base_Column_List" />
-    from users
- 	where 1=1 and is_approval = 2 
-    <if test="userType == 0 or userType == 1 ">
-		and user_type = #{userType}
-	</if>
-     <if test="name != null and name !='' ">
-		and name like '%${name}%'
-	</if>
-	<if test="mobile !=null and mobile !='' ">
-		and mobile like '%${mobile}%' 
-	</if>
-	<if test="id !=null and id !='' ">
-		and id = #{id,jdbcType=NUMERIC} 
-	</if>	
-    order by add_time desc    
-  </select>
- 
+	<select id="selectVoByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1 and is_approval &lt; 2
+		<if test="userType == 0 or userType == 1 ">
+			and user_type = #{userType}
+		</if>
+		<if test="name != null and name !='' ">
+			and name like '%${name}%'
+		</if>
+		<if test="mobile !=null and mobile !='' ">
+			and mobile like '%${mobile}%'
+		</if>
+		<if test="id !=null and id !='' ">
+			and id = ${id}
+		</if>
+		order by add_time desc
+	</select>
+	<!-- 秘书列表 -->
+	<select id="selectVoByListPageYes" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where 1=1 and is_approval = 2
+		<if test="userType == 0 or userType == 1 ">
+			and user_type = #{userType}
+		</if>
+		<if test="name != null and name !='' ">
+			and name like '%${name}%'
+		</if>
+		<if test="mobile !=null and mobile !='' ">
+			and mobile like '%${mobile}%'
+		</if>
+		<if test="id !=null and id !='' ">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+
 	<!--根据openid和登录类型查询用户信息 -->
 	<select id="selectByOpenidAnd3rdType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
 		select
@@ -187,9 +181,6 @@
 		and is_approval = 2
 		order by add_time asc
 	</select>
-
-	<!-- <select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap"> select <include refid="Base_Column_List" /> from user_addrs where id in 
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")"> #{item} </foreach> order by add_time asc </select> -->
 
 	<!--根据Ids查询Users -->
 	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -228,40 +219,59 @@
 		from users
 		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
 	</select>
+	
+	<!-- 用户个数统计 -->
+	 <select id="statTotalUser" resultType="java.lang.Integer" parameterType="com.simi.vo.chart.ChartSearchVo">
+		SELECT 
+			   COUNT(*) AS total 
+			   FROM users
+		WHERE 1=1
+		<if test="startTime !=null">
+			<![CDATA[ and add_time >= #{startTime}]]>
+		</if>
+		<if test="endTime !=null">
+			<![CDATA[ and add_time <= #{endTime}]]>
+		</if>
+	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from users
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.user.Users">
-	
+
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
-		</selectKey>		
-	
+		</selectKey>
+
 		insert into users (id, province_name, mobile,
 		3rd_type, openid, name,
 		real_name, id_card, sex,
 		introduction, level,work_start, work_end,is_door,
-		birth_day, degree_id, major,
+		birth_day,
+		degree_id, major,
 		head_img, qr_code, rest_money, score,
 		user_type, is_approval, add_from,
 		add_time, update_time)
-		values (#{id,jdbcType=NUMERIC}, #{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},
+		values (#{id,jdbcType=NUMERIC},
+		#{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},
 		#{thirdType,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{realName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
-		#{introduction,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC}, #{workStart,jdbcType=VARCHAR},
-		 #{workEnd,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC},
+		#{introduction,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC},
+		#{workStart,jdbcType=VARCHAR},
+		#{workEnd,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC},
 		#{birthDay,jdbcType=DATE}, #{degreeId,jdbcType=NUMERIC}, #{major,jdbcType=VARCHAR},
-		#{headImg,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
-		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC}, #{addFrom,jdbcType=NUMERIC},
+		#{headImg,jdbcType=VARCHAR},
+		#{qrCode,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
+		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC},
+		#{addFrom,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.Users">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
-		</selectKey>		
-		
+		</selectKey>
+
 		insert into users
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -306,8 +316,8 @@
 			<if test="isDoor != null">
 				is_door,
 			</if>
-			
-			
+
+
 			<if test="birthDay != null">
 				birth_day,
 			</if>
@@ -373,20 +383,20 @@
 			<if test="sex != null">
 				#{sex,jdbcType=VARCHAR},
 			</if>
-		   <if test="introduction != null">
+			<if test="introduction != null">
 				#{introduction,jdbcType=VARCHAR},
 			</if>
 			<if test="level != null">
-			 #{level,jdbcType=NUMERIC},
+				#{level,jdbcType=NUMERIC},
 			</if>
 			<if test="workStart != null">
 				#{workStart,jdbcType=VARCHAR},
 			</if>
 			<if test="workEnd != null">
-				 #{workEnd,jdbcType=VARCHAR},
+				#{workEnd,jdbcType=VARCHAR},
 			</if>
 			<if test="isDoor != null">
-				 #{isDoor,jdbcType=NUMERIC},
+				#{isDoor,jdbcType=NUMERIC},
 			</if>
 			<if test="birthDay != null">
 				#{birthDay,jdbcType=DATE},
@@ -453,17 +463,17 @@
 			<if test="sex != null">
 				sex = #{sex,jdbcType=VARCHAR},
 			</if>
-			 <if test="introduction != null">
+			<if test="introduction != null">
 				introduction=#{introduction,jdbcType=VARCHAR},
 			</if>
 			<if test="level != null">
-			level = #{level,jdbcType=NUMERIC},
+				level = #{level,jdbcType=NUMERIC},
 			</if>
 			<if test="workStart != null">
 				work_start = #{workStart,jdbcType=VARCHAR},
 			</if>
 			<if test="workEnd != null">
-				 work_end = #{workEnd,jdbcType=VARCHAR},
+				work_end = #{workEnd,jdbcType=VARCHAR},
 			</if>
 			<if test="isDoor != null">
 				is_door = #{isDoor,jdbcType=NUMERIC},
@@ -515,19 +525,23 @@
 		openid = #{openid,jdbcType=VARCHAR},
 		name = #{name,jdbcType=VARCHAR},
 		real_name = #{realName,jdbcType=VARCHAR},
-		id_card = #{idCard,jdbcType=VARCHAR},
+		id_card
+		= #{idCard,jdbcType=VARCHAR},
 		sex = #{sex,jdbcType=VARCHAR},
 		introduction =#{introduction,jdbcType=VARCHAR},
 		level = #{level,jdbcType=NUMERIC},
-		work_start = #{workStart,jdbcType=VARCHAR},
+		work_start =
+		#{workStart,jdbcType=VARCHAR},
 		work_end = #{workEnd,jdbcType=VARCHAR},
 		is_door = #{isDoor,jdbcType=NUMERIC},
 		birth_day = #{birthDay,jdbcType=DATE},
-		degree_id = #{degreeId,jdbcType=NUMERIC},
+		degree_id =
+		#{degreeId,jdbcType=NUMERIC},
 		major = #{major,jdbcType=VARCHAR},
 		head_img = #{headImg,jdbcType=VARCHAR},
 		qr_code = #{qrCode,jdbcType=VARCHAR},
-		rest_money = #{restMoney,jdbcType=DECIMAL},
+		rest_money =
+		#{restMoney,jdbcType=DECIMAL},
 		score = #{score,jdbcType=INTEGER},
 		user_type = #{userType,jdbcType=NUMERIC},
 		is_approval = #{isApproval,jdbcType=NUMERIC},
