@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.meijia.utils.HttpClientUtil;
-import com.meijia.utils.JsonUtil;
+import com.meijia.utils.GsonUtil;
 
 public class DwzUtil {
 	
@@ -22,7 +22,7 @@ public class DwzUtil {
         params.put("url", longUrl);
         
         String result = HttpClientUtil.post(urlString, params);
-        Map<String, Object> resultMap = JsonUtil.stringToMap(result);
+        Map<String, Object> resultMap = GsonUtil.GsonToMaps(result);
         String tinyUrl = resultMap.get("tinyurl").toString();
         return tinyUrl;
     }

@@ -29,36 +29,25 @@
 		</javaTypeResolver>
 
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="com.simi.po.model.weather"
+		<javaModelGenerator targetPackage="com.simi.po.model.data"
 			targetProject="simi-dao">
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
 		<!-- 生成的映射文件包名和位置 -->
-		<sqlMapGenerator targetPackage="com.simi.po.xml.weather"
+		<sqlMapGenerator targetPackage="com.simi.po.xml.data"
 			targetProject="simi-dao">
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator targetPackage="com.simi.po.dao.weather"
+		<javaClientGenerator targetPackage="com.simi.po.dao.data"
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<!--天气地区对应表 -->
-		<table schema="simi" tableName="weather_area"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="area_id" property="areaId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-		</table>
+		
 		
         <!-- 天气预报数据表 -->
 		<table schema="simi" tableName="weathers"
@@ -71,23 +60,7 @@
 			enableSelectByExample="false"
 			enableCountByExample="false">
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="area_id" property="areaId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="publish_time" property="publicTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-		</table>
-		
-		<!-- 天气指数数据表 -->
-		<table schema="simi" tableName="weather_index"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="area_id" property="areaId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="publish_time" property="publicTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 	</context>
 </generatorConfiguration>

@@ -74,8 +74,9 @@ public class DictServiceImpl implements DictService {
 		}
 		return cityName;
 	}
-
-	private List<DictProvince> LoadProvinceData() {
+	
+	@Override
+	public List<DictProvince> LoadProvinceData() {
 		// 城市信息
 		List<DictProvince> listProvince = memDictMap.get("listProvince");
 		if (listProvince == null || listProvince.isEmpty()) {
@@ -85,8 +86,9 @@ public class DictServiceImpl implements DictService {
 
 		return listProvince;
 	}
-
-	private List<DictCity> LoadCityData() {
+	
+	@Override
+	public List<DictCity> LoadCityData() {
 		// 城市信息
 		List<DictCity> listCity = memDictMap.get("listCity");
 		if (listCity == null || listCity.isEmpty()) {

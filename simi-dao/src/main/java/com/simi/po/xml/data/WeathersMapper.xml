@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.data.WeathersMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.data.Weathers">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="weather_date" property="weatherDate" jdbcType="DATE" />
+		<result column="pm25" property="pm25" jdbcType="VARCHAR" />
+		<result column="day_picture_url" property="dayPictureUrl" jdbcType="VARCHAR" />
+		<result column="night_picture_url" property="nightPictureUrl" jdbcType="VARCHAR" />
+		<result column="weather" property="weather" jdbcType="VARCHAR" />
+		<result column="wind" property="wind" jdbcType="VARCHAR" />
+		<result column="temperature" property="temperature" jdbcType="VARCHAR" />
+		<result column="real_temp" property="realTemp" jdbcType="VARCHAR" />
+		<result column="weather_index" property="weatherIndex" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, city_id, city_name, weather_date, pm25, day_picture_url, night_picture_url, weather,
+		wind, temperature, real_temp, weather_index
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from weathers
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByCityIdAndDate" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from weathers
+		where city_id = #{0,jdbcType=NUMERIC} and weather_date = #{1,jdbcType=DATE}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from weathers
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	
+	<delete id="deleteByDate" parameterType="java.util.Date">
+		delete from weathers
+		where weather_date = #{weatherDate,jdbcType=DATE}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.data.Weathers">
+		insert into weathers (id, city_id, city_name,
+		weather_date, pm25, day_picture_url,
+		night_picture_url, weather, wind,
+		temperature, real_temp, weather_index
+		)
+		values (#{id,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{cityName,jdbcType=VARCHAR},
+		#{weatherDate,jdbcType=DATE}, #{pm25,jdbcType=VARCHAR}, #{dayPictureUrl,jdbcType=VARCHAR},
+		#{nightPictureUrl,jdbcType=VARCHAR}, #{weather,jdbcType=VARCHAR}, #{wind,jdbcType=VARCHAR},
+		#{temperature,jdbcType=VARCHAR}, #{realTemp,jdbcType=VARCHAR}, #{weatherIndex,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.data.Weathers">
+		insert into weathers
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cityId != null">
+				city_id,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="weatherDate != null">
+				weather_date,
+			</if>
+			<if test="pm25 != null">
+				pm25,
+			</if>
+			<if test="dayPictureUrl != null">
+				day_picture_url,
+			</if>
+			<if test="nightPictureUrl != null">
+				night_picture_url,
+			</if>
+			<if test="weather != null">
+				weather,
+			</if>
+			<if test="wind != null">
+				wind,
+			</if>
+			<if test="temperature != null">
+				temperature,
+			</if>
+			<if test="realTemp != null">
+				real_temp,
+			</if>
+			<if test="weatherIndex != null">
+				weather_index,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=NUMERIC},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="weatherDate != null">
+				#{weatherDate,jdbcType=DATE},
+			</if>
+			<if test="pm25 != null">
+				#{pm25,jdbcType=VARCHAR},
+			</if>
+			<if test="dayPictureUrl != null">
+				#{dayPictureUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="nightPictureUrl != null">
+				#{nightPictureUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="weather != null">
+				#{weather,jdbcType=VARCHAR},
+			</if>
+			<if test="wind != null">
+				#{wind,jdbcType=VARCHAR},
+			</if>
+			<if test="temperature != null">
+				#{temperature,jdbcType=VARCHAR},
+			</if>
+			<if test="realTemp != null">
+				#{realTemp,jdbcType=VARCHAR},
+			</if>
+			<if test="weatherIndex != null">
+				#{weatherIndex,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.data.Weathers">
+		update weathers
+		<set>
+			<if test="cityId != null">
+				city_id = #{cityId,jdbcType=NUMERIC},
+			</if>
+			<if test="cityName != null">
+				city_name = #{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="weatherDate != null">
+				weather_date = #{weatherDate,jdbcType=DATE},
+			</if>
+			<if test="pm25 != null">
+				pm25 = #{pm25,jdbcType=VARCHAR},
+			</if>
+			<if test="dayPictureUrl != null">
+				day_picture_url = #{dayPictureUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="nightPictureUrl != null">
+				night_picture_url = #{nightPictureUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="weather != null">
+				weather = #{weather,jdbcType=VARCHAR},
+			</if>
+			<if test="wind != null">
+				wind = #{wind,jdbcType=VARCHAR},
+			</if>
+			<if test="temperature != null">
+				temperature = #{temperature,jdbcType=VARCHAR},
+			</if>
+			<if test="realTemp != null">
+				real_temp = #{realTemp,jdbcType=VARCHAR},
+			</if>
+			<if test="weatherIndex != null">
+				weather_index = #{weatherIndex,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.data.Weathers">
+		update weathers
+		set city_id = #{cityId,jdbcType=NUMERIC},
+		city_name = #{cityName,jdbcType=VARCHAR},
+		weather_date = #{weatherDate,jdbcType=DATE},
+		pm25 = #{pm25,jdbcType=VARCHAR},
+		day_picture_url = #{dayPictureUrl,jdbcType=VARCHAR},
+		night_picture_url = #{nightPictureUrl,jdbcType=VARCHAR},
+		weather = #{weather,jdbcType=VARCHAR},
+		wind = #{wind,jdbcType=VARCHAR},
+		temperature = #{temperature,jdbcType=VARCHAR},
+		real_temp = #{realTemp,jdbcType=VARCHAR},
+		weather_index = #{weatherIndex,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

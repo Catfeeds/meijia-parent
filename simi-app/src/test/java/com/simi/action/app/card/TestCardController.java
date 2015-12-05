@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.meijia.utils.JsonUtil;
+import com.meijia.utils.GsonUtil;
 import com.simi.action.app.JUnitActionBase;
 import com.simi.vo.card.LinkManVo;
 
@@ -54,7 +54,7 @@ public class TestCardController extends JUnitActionBase  {
 //	    attendsList.add(a2);	
 //	    attendsList.add(a3);
 	    
-	    String attends = JsonUtil.listTojson(attendsList);
+	    String attends = GsonUtil.GsonString(attendsList);
 	    
 	    postRequest = postRequest.param("attends", attends);
 	    postRequest = postRequest.param("service_time", "1446544740");

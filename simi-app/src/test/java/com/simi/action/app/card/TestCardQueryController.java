@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.meijia.utils.JsonUtil;
+import com.meijia.utils.GsonUtil;
 import com.simi.action.app.JUnitActionBase;
 import com.simi.vo.card.LinkManVo;
 
