@@ -310,15 +310,20 @@ public class SecController extends BaseController {
 			if (!mobile.equals("17090397828")&&!mobile.equals("17090397818")&&!mobile.equals("17090397822")
 					&&!mobile.equals("13701187136")&&!mobile.equals("13810002890")&&!mobile.equals("18610807136")
 					&&!mobile.equals("18612514665")&&!mobile.equals("13146012753")&&!mobile.equals("15727372986")) {
+				
 
 				Users record = userService.initUsers();
 				
 				Users users = userService.selectByMobile(mobile);
 				
 				if (users != null) {
-					record = users;
+					result.setStatus(Constants.ERROR_999);
+					result.setMsg(ConstantMsg.SEC_EXIST_MG);
+					return result;
 				}
-				
+				/*if (users != null) {
+					record = users;
+				}*/
 				record.setName(name);
 				record.setRealName(realName);
 				record.setMobile(mobile);
