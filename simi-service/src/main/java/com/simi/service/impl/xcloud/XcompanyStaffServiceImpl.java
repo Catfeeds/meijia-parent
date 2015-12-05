@@ -17,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
+import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
@@ -24,6 +25,7 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.OrdersListVo;
 import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.xcloud.UserCompanyFormVo;
@@ -68,20 +70,17 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		PageHelper.startPage(pageNo, pageSize);
 		List<XcompanyStaff> list = xCompanyStaffMapper.selectByListPage(searchVo);
-		
-		List<UserCompanyFormVo> plist = new ArrayList<UserCompanyFormVo>();
-		if (list.isEmpty()) {
+
+		if (!list.isEmpty()) {
 			for (int i = 0; i < list.size(); i++) {
 				XcompanyStaff item = list.get(i);
-				UserCompanyFormVo vo = getUserCompany(item.getCompanyId(), item.getUserId());
-				plist.add(vo);
+				UserCompanyFormVo vo = getUserCompany(item);
+				list.set(i, vo);
 			}
-		}
-		
-		
+	}	
 		PageInfo result = new PageInfo(list);
 		return result;
-	}	
+	}
 	
 	@Override
 	public List<XcompanyStaff> selectBySearchVo(Long companyId, Long deptId) {
@@ -109,16 +108,18 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public UserCompanyFormVo getUserCompany(Long companyId, Long userId) {
+	public UserCompanyFormVo getUserCompany(XcompanyStaff item) {
 
 		UserCompanyFormVo vo = new UserCompanyFormVo();
 		
-		Users users = usersService.selectByPrimaryKey(userId);
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		Users users = usersService.selectByPrimaryKey(item.getUserId());
 
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
 		
 		// 员工类型
-		XcompanyStaff xcompanyStaff = xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
+		XcompanyStaff xcompanyStaff = xCompanyStaffMapper.selectByCompanyIdAndUserId(item.getCompanyId(), item.getUserId());
 
 		vo.setStaffType(xcompanyStaff.getStaffType());
 		if (xcompanyStaff.getStaffType() == 0) {
@@ -130,12 +131,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		if (xcompanyStaff.getStaffType() == 2) {
 			vo.setStaffName("实习");
 		}
-
-		// 工号
-		vo.setJobNumber(xcompanyStaff.getJobNumber());
-
-		// 部门Id
-		vo.setDeptId(xcompanyStaff.getDeptId());
 		// 部门名称
 		XcompanyDept xcompanyDept = xcompanyDeptService
 				.selectByPrimaryKey(xcompanyStaff.getDeptId());
@@ -144,10 +139,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		} else {
 			vo.setDeptName("");
 		}
-
-		// 职位
-		vo.setJobName(xcompanyStaff.getJobName());
-
 		return vo;
 	}
 
