@@ -1,5 +1,6 @@
 package com.simi.action.app.dict;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.MeijiaUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.TagNameListVo;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCardType;
 import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.dict.DictTrade;
+import com.simi.po.model.user.Tags;
+import com.simi.po.model.user.Users;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.CardTypeService;
 import com.simi.service.dict.DictSeniorTypeService;
 import com.simi.service.dict.TradeService;
+import com.simi.service.user.TagsService;
+import com.simi.service.user.UsersService;
 
 @Controller
 @RequestMapping(value="/app/dict")
@@ -26,10 +36,16 @@ public class DictController<T> {
 	private AdService adService;
 	
 	@Autowired
+	private UsersService userService;
+	
+	@Autowired
 	private CardTypeService cardTypeService;
 	
 	@Autowired
 	private DictSeniorTypeService seniorTypeService;	
+	
+	@Autowired
+	private TagsService tagsService;
 	
 	@Autowired
 	private TradeService tradeService;	
@@ -87,4 +103,24 @@ public class DictController<T> {
     	return result;
     }		
 
+	/**
+	 * 获得标签列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "get_tag_list", method = RequestMethod.GET)
+	public AppResultData<Object> getTagsList(
+			@RequestParam("tag_type") Short tagType
+			//,@RequestParam("name") String name
+			) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		List<Tags> tagList = tagsService.selectByTagType(tagType);
+		result.setData(tagList);
+
+		return result;
+	}
+	
 }

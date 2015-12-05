@@ -6,7 +6,7 @@ myApp.onPageInit('register2', function(page) {
 	// 页面加载时获得标签列表
 	$$.ajax({
 		type : "GET",
-		url : siteAPIPath + "user/get_tag_list.json?mobile=" + mobile
+		url : siteAPIPath + "dict/get_tag_list.json?mobile=" + mobile
 				+ "&name=" + name,
 		dataType : "json",
 		cache : true,
@@ -35,7 +35,7 @@ myApp.onPageInit('register2', function(page) {
 
 		$$.ajax({
 			type : "POST",
-			url : siteAPIPath + "user/post_user_register.json?",
+			url : siteAPIPath + "sec/post_user_register.json?",
 			dataType : "json",
 			cache : false,
 			data : formData,

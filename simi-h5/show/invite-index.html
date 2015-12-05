@@ -1,67 +1,141 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="UTF-8">
-  <title>企业用户注册与登录</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+<meta charset="UTF-8">
+<title>企业用户注册与登录</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
 
-  <style>
-    .header {
-      text-align: center;
-    }
-    .header h1 {
-      font-size: 200%;
-      color: #333;
-      margin-top: 30px;
-    }
-    .header p {
-      font-size: 14px;
-    }
-  </style>
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+</style>
 </head>
 <body>
 
-<div class="am-g">
-<img src="images/invist-bg.jpg" class="am-img-responsive" alt=""/>
-  <div class="am-u-md-centered">
-    <div class="am-input-group">
-              <span class="am-input-group-label"><i class="am-icon-phone am-icon-fw"></i></span>
-              <input type="text" class="am-form-field" placeholder="请输入手机号">
-            </div>
-            
-            <div class="am-input-group">
-              <input type="text" class="am-form-field" placeholder="输入验证码">
-              <span class="am-input-group-btn">
-                <button class="am-btn am-btn-default"  placeholder="输入您的手机号" type="button">获取验证码</button>
-              </span>
-            </div>
-            <div class="am-input-group">
-            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-              <input type="text" class="am-form-field" placeholder="请输昵称，可选题">
-            </div>
-    
-    <hr>
-    <p align="center">© 云行政 版权所有</p>
-  </div>
-</div>
+	<div class="am-g">
+		<img src="images/invist-bg.jpg" class="am-img-responsive" alt="" />
+		<div class="am-u-md-centered">
+		<form action="" id="sec-form" class="am-forml">
 
-<!--[if lt IE 9]>
+		 <div class="am-form-group">
+		      <label for="doc-ipt-email-1">请输入手机号</label>
+		      <input type="text" type="text" id="mobile" class="am-form-field" placeholder="输入手机号" required>
+		 </div>
+
+		<div class="am-input-group">
+				<input type="text" id="verify_code" class="am-form-field js-ajax-validate"
+					placeholder="输入验证码">
+					 <span class="am-input-group-btn">
+					<button class="am-btn am-btn-default" id="get_code"
+						placeholder="输入您的手机号" type="button">获取验证码</button>
+				</span>
+		</div>
+			 <div class="am-form-group">
+		      <label for="doc-ipt-email-1">请输入昵称</label>
+		      <input type="text" type="text" id="name" class="am-form-field" placeholder="请输昵称，可选填">
+		 </div>
+
+			<div class="am-form-group">
+		      <label for="doc-ipt-email-1">请输入真实姓名</label>
+		      <input type="text" type="text" id="real_name" class="am-form-field" placeholder="请输入真实姓名" required>
+		 </div>
+
+			<div class="am-form-group">
+			<label for="doc-ipt-email-1">请输入身份证号</label>
+			<input type="text"
+					id="id_card" class="am-form-field js-idcard-validate" placeholder="请输入身份证号" maxLength="18" required>
+			</div>
+
+			<div class="am-input-group">
+			
+				<div class="item-xx">
+					<input type="radio" value="0" id = "sex" name="sex"> 男
+					<input type="radio" value="1"  id = "sex" name="sex" checked="checked"> 女
+				</div>
+
+			</div><br>
+			
+			<!-- <div class="item-content">
+			<div class="item-inner">
+				<div class="item-xx">
+				<input type="radio" name="sex" id="sex" value="0" />男 
+				<input type="radio" name="sex" id="sex" value="1" checked="checked" />女
+				</div>
+			</div>
+			</div><br> -->
+			
+			<div class="am-form-group">
+				<label for="doc-ipt-email-1">请输入所学专业</label>
+					<input type="text" id="major" class="am-form-field" placeholder="请输入所学专业" required>
+			</div>
+
+			<div class="am-form-group">
+				<label for="doc-select-1">最高学历</label> <select id="degreeId" class="am-form-field">
+					<option value="0">小学</option>
+					<option value="1">初中</option>
+					<option value="2">高中</option>
+					<option value="3">专科</option>
+					<option value="4" selected="selected">本科</option>
+					<option value="5">硕士研究生</option>
+					<option value="6">博士研究生</option>
+				</select> <span class="am-form-caret"></span>
+			</div>
+			
+			<input type="hidden" id="tag_ids" name="tag_ids" value="" />
+			<div class="am-form-group" >
+				<div id ="tagNames" >
+				
+				</div>
+			</div>
+			
+			<div class="am-form-group">
+			   <!--  <button type="button" id="information_btn" class="am-btn am-btn-primary am-radius">提&nbsp;&nbsp;&nbsp;&nbsp;交</button> -->
+			<button type="button" id="information_btn" class="am-btn am-btn-primary am-btn-block">提交</button>
+			</div>
+			</form>
+			<hr>
+			<p align="center">© 云行政 版权所有</p>
+		</div>
+	</div>
+
+	<!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="assets/js/jquery.min.js"></script>
-<!--<![endif]-->
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+	
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/countdown.js"></script>
+
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<!--<![endif]-->
+	<!--<![endif]-->
+	<script src="assets/js/company/invite-index.js"></script>
 
 </body>
 </html>

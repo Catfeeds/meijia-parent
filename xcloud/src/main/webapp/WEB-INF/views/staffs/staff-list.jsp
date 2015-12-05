@@ -3,7 +3,6 @@
 
 <%@ include file="../shared/taglib.jsp"%>
 
-
 <html>
 <head>
 
@@ -69,7 +68,7 @@
 							</thead>
 							<tbody>
 								  <c:forEach items="${contentModel.list}" var="item">
-								  	<%-- <form:hidden path="companyId" /> --%>
+								  	<form:hidden path="companyId" />
 									<tr>
 										<td> <img src="${ item.headImg }?w=60&h=60"/> </td>
 										<td> ${item.name} </td>
@@ -84,8 +83,8 @@
 											<button id="btn_update" onClick="btn_update('staff/deleteById?id=${item.id}')" class="btn btn-primary btn-xs" title="删除"><i class=" icon-remove"></i></button>
 										 	<button id="btn_update" onClick="#" class="btn btn-primary btn-xs" title="员工离职"><i class="  icon-share-alt"></i></button>
 										    <a href="/xcloud/staff/userForm?id=${item.id}"><button id="btn_update" class="btn btn-primary btn-xs"  title="修改"><i class=" icon-edit"></i></button></a>
-										<%--<button id="btn_update"  onClick="btn_update('coupon/toRechargeCouponForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-	                                  		<button id="btn_del" onClick="btn_del('coupon/deleteByRechargeCouponId?id=${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button> --%>
+										<%-- <button id="btn_update"  onClick="btn_update('coupon/toRechargeCouponForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button> --%>
+	                                  		<button id="btn_del" onClick="btn_del('coupon/deleteByRechargeCouponId?id=${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
 										</td>
 									</tr>
 									</c:forEach>
@@ -126,5 +125,7 @@
 		<script type="text/javascript" src="<c:url value='/js/xcloud/staffs/staff-list.js'/>"></script>
 		<%-- <script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
 	    <script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script> --%>
+		<%-- <script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" type="text/javascript"></script>
+	    <script src="<c:url value='/js/vendor/jquery.dataTables.min.js'/>" type="text/javascript"></script> --%>
 </body>
 </html>

@@ -11,7 +11,7 @@ public class TagNameListVo extends Users{
 	//标签idList
 	private List<Long> tagList;
 	//学历类型集合
-	private List<String> DegreeTypeList;
+//	private List<String> DegreeTypeList;
 	
 	public List<Tags> getList() {
 		return list;
@@ -25,12 +25,12 @@ public class TagNameListVo extends Users{
 	public void setTagList(List<Long> tagList) {
 		this.tagList = tagList;
 	}
-	public List<String> getDegreeTypeList() {
+/*	public List<String> getDegreeTypeList() {
 		return DegreeTypeList;
 	}
 	public void setDegreeTypeList(List<String> degreeTypeList) {
 		DegreeTypeList = degreeTypeList;
-	}
+	}*/
 
 
 	

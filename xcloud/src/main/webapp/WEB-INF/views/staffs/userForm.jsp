@@ -253,11 +253,10 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-	<script type="text/javascript"
-		src="<c:url value='/js/vendor/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
-		<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
-		type="text/javascript"></script>
-		<script type="text/javascript"
-		src="<c:url value='/js/xcloud/staffs/userForm.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
+	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" type="text/javascript"></script>
+	<script type="text/javascript" src="<c:url value='/js/xcloud/staffs/userForm.js'/>"></script>
+		
+
 	</body>
 </html>

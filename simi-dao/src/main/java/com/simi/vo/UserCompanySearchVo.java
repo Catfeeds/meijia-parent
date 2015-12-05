@@ -8,11 +8,11 @@ public class UserCompanySearchVo{
 	
 	private Long userId;
 	
-	private String companyName;
+/*	private String companyName;
 	
 	private String name;
 	
-	private String mobile;
+	private String mobile;*/
 	
 	
 	public Long getCompanyId() {
@@ -39,7 +39,7 @@ public class UserCompanySearchVo{
 		this.userId = userId;
 	}
 
-	public String getCompanyName() {
+/*	public String getCompanyName() {
 		return companyName;
 	}
 
@@ -62,6 +62,6 @@ public class UserCompanySearchVo{
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
+*/
 	
 }

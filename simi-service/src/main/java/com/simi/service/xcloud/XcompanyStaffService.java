@@ -32,7 +32,7 @@ public interface XcompanyStaffService {
 
 	PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize);
 
-	UserCompanyFormVo getUserCompany(Long companyId, Long userId);
+	UserCompanyFormVo getUserCompany(XcompanyStaff item);
 
 
 	

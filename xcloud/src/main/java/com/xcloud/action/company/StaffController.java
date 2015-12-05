@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.simi.vo.AppResultData;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.simi.common.Constants;
@@ -43,18 +44,18 @@ public class StaffController extends BaseController {
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String staffTreeAndList(HttpServletRequest request, Model model,
-	// UserCompanySearchVo searchVo,
-			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId) {
+			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
-		model.addAttribute("requestUrl", request.getServletPath());
+		/*model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-
-		// model.addAttribute("searchModel", searchVo);
-		int pageNo = ServletRequestUtils.getIntParameter(request,
+*/
+		/*int pageNo = ServletRequestUtils.getIntParameter(request,
 				Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request,
-				Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);
-		// searchVo.setSecId(secId);
+				Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);*/
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
@@ -72,15 +73,17 @@ public class StaffController extends BaseController {
 		if (deptId > 0L) {
 			searchVo.setDeptId(deptId);
 		}
-		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, pageNo, Constants.PAGE_MAX_NUMBER);
+		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 
 		model.addAttribute("contentModel", plist);
 		
 
+	//	result.setData(plist);
 		return "/staffs/staff-list";
+		//return result;
 	}
 
-	@RequestMapping(value = "/userForm", method = { RequestMethod.GET })
+	/*@RequestMapping(value = "/userForm", method = { RequestMethod.GET })
 	public String staffUserForm(Model model, HttpServletRequest request,
 			@RequestParam(value = "id", required = false) Long userId) {
 
@@ -114,7 +117,7 @@ public class StaffController extends BaseController {
 		model.addAttribute("contentModel", vo);
 
 		return "/staffs/userForm";
-	}
+	}*/
 
 	/**
 	 * 新增员工提交

@@ -31,9 +31,11 @@
 				<div class="ui-tab-title apps-title ">
 					<label class="ui-item ui-tab-item "><a href="/xcloud/index/"><div>
 								<i class="fa fa-desktop"></i>工作台
-							</div></a></label> <label class="ui-item ui-tab-item"><a href="/xcloud/staff/list"><div>
-								<i class="fa fa-desktop"></i>通讯录
-							</div></a></label> <label class="ui-item ui-tab-item"><div>日程安排</div></label>
+							</div></a></label>
+							 <label class="ui-item ui-tab-item"><a href="/xcloud/staff/list"><div><i class="fa fa-desktop"></i>通讯录
+							</div></a></label>
+							 
+							 <label class="ui-item ui-tab-item"><div>日程安排</div></label>
 					<!-- <label class=" ui-tab-item ui-item ui-hide"><a id ="tongxunlua1" href="/xcloud/staff/list"><div>通讯录</div></a></label> -->
 				</div>
 			</div>

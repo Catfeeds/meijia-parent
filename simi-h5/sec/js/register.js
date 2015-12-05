@@ -93,7 +93,7 @@ myApp.onPageInit('register', function (page) {
 	      
 	        $$.ajax({
 	            type : "POST",
-	            url  : siteAPIPath+"user/register.json",
+	            url  : siteAPIPath+"sec/register.json",
 	            dataType: "json",
 	            cache : true,
 	            data : postdata,
