@@ -56,7 +56,7 @@ public class ConstantMsg {
 	public static String MOBILE_EXIST_MG = "手机号已注册";
 	
 	//秘书已存在
-	public static String SEC_EXIST_MG = "秘书已存在";
+	public static String SEC_EXIST_MG = "秘书已存在,不需要重新注册！";
 	
 	//用户已注册是否注册秘书
 	public static String USER_EXIST_SEC_MG = "用户已注册是否注册秘书";

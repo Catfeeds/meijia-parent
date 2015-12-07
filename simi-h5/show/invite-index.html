@@ -30,14 +30,14 @@
 </head>
 <body>
 
-	<div class="am-g">
+	<div class="am-g" >
 		<img src="images/invist-bg.jpg" class="am-img-responsive" alt="" />
 		<div class="am-u-md-centered">
 		<form action="" id="sec-form" class="am-forml">
 
 		 <div class="am-form-group">
 		      <label for="doc-ipt-email-1">请输入手机号</label>
-		      <input type="text" type="text" id="mobile" class="am-form-field" placeholder="输入手机号" required>
+		      <input type="text" type="text" id="mobile" name = "mobile" class="am-form-field" placeholder="输入手机号" required>
 		 </div>
 
 		<div class="am-input-group">
@@ -50,18 +50,18 @@
 		</div>
 			 <div class="am-form-group">
 		      <label for="doc-ipt-email-1">请输入昵称</label>
-		      <input type="text" type="text" id="name" class="am-form-field" placeholder="请输昵称，可选填">
+		      <input type="text" type="text" id="name" name = "name" class="am-form-field" placeholder="请输昵称，可选填">
 		 </div>
 
 			<div class="am-form-group">
 		      <label for="doc-ipt-email-1">请输入真实姓名</label>
-		      <input type="text" type="text" id="real_name" class="am-form-field" placeholder="请输入真实姓名" required>
+		      <input type="text" type="text" id="real_name" name = "real_name" class="am-form-field" placeholder="请输入真实姓名" required>
 		 </div>
 
 			<div class="am-form-group">
 			<label for="doc-ipt-email-1">请输入身份证号</label>
 			<input type="text"
-					id="id_card" class="am-form-field js-idcard-validate" placeholder="请输入身份证号" maxLength="18" required>
+					id="id_card" name="id_card" class="am-form-field js-idcard-validate" placeholder="请输入身份证号" maxLength="18" required>
 			</div>
 
 			<div class="am-input-group">
@@ -84,11 +84,11 @@
 			
 			<div class="am-form-group">
 				<label for="doc-ipt-email-1">请输入所学专业</label>
-					<input type="text" id="major" class="am-form-field" placeholder="请输入所学专业" required>
+					<input type="text" id="major" name="major" class="am-form-field" placeholder="请输入所学专业" required>
 			</div>
 
 			<div class="am-form-group">
-				<label for="doc-select-1">最高学历</label> <select id="degreeId" class="am-form-field">
+				<label for="doc-select-1">最高学历</label> <select id="degreeId" name="degreeId"  class="am-form-field">
 					<option value="0">小学</option>
 					<option value="1">初中</option>
 					<option value="2">高中</option>
@@ -101,7 +101,7 @@
 			
 			<input type="hidden" id="tag_ids" name="tag_ids" value="" />
 			<div class="am-form-group" >
-				<div id ="tagNames" >
+				<div id ="tagNames" name ="tagNames">
 				
 				</div>
 			</div>

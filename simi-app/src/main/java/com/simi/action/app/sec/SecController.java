@@ -205,18 +205,19 @@ public class SecController extends BaseController {
 	@RequestMapping(value = "register", method = RequestMethod.POST)
 	public AppResultData<Object> register(
 			HttpServletRequest request,
-			@RequestParam("mobile") String mobile,
-			@RequestParam("sms_token") String smsToken,
-			@RequestParam("name") String name,
+			@RequestParam("mobile") String mobile
+			//@RequestParam("sms_token") String smsToken,
+		//	@RequestParam("name") String name,
 			// @RequestParam("login_from") Short loginFrom,
-			@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
-			@RequestParam(value = "user_type", required = false, defaultValue = "1") int userType) {
+		//	@RequestParam(value = "sms_type", required = false, defaultValue = "0") Short smsType,
+		//	@RequestParam(value = "user_type", required = false, defaultValue = "1") int userType
+			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 		// 判断验证码正确与否，测试账号13810002890 000000 不需要验证
-		AppResultData<Object> validateResult = null;
+/*		AppResultData<Object> validateResult = null;
 		if (mobile.equals("17090397818") && smsToken.equals("000000")
 				|| mobile.equals("17090397828") && smsToken.equals("000000")
 				|| mobile.equals("17090397822") && smsToken.equals("000000")
@@ -235,7 +236,7 @@ public class SecController extends BaseController {
 
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
 			return validateResult;
-		}
+		}*/
 		if (!mobile.equals("17090397828") && !mobile.equals("17090397818")
 				&& !mobile.equals("17090397822")
 				&& !mobile.equals("13701187136")
@@ -259,11 +260,11 @@ public class SecController extends BaseController {
 
 					// result.setStatus(Constants.ERROR_998);
 					// result.setMsg(ConstantMsg.USER_EXIST_SEC_MG);
-					Users u = userService.initUsers();
-					u.setMobile(mobile);
-					u.setName(name);
+					//Users u = userService.initUsers();
+					//u.setMobile(mobile);
+					//u.setName(name);
 					result = new AppResultData<Object>(Constants.ERROR_999,
-							ConstantMsg.USER_EXIST_SEC_MG, u);
+							ConstantMsg.USER_EXIST_SEC_MG, user);
 
 					return result;
 				}
@@ -271,7 +272,7 @@ public class SecController extends BaseController {
 		}
 		Users u = userService.initUsers();
 		u.setMobile(mobile);
-		u.setName(name);
+	//	u.setName(name);
 
 		// 注册为美家公司的一员.
 
@@ -314,16 +315,26 @@ public class SecController extends BaseController {
 
 				Users record = userService.initUsers();
 				
+				//1.若用户已注册已经是用户user_type=0,则提醒用户”您已是用户，是否注册秘书“
+				//2.若用户已注册过秘书user_type = 1,则提醒，”秘书已存在“。
 				Users users = userService.selectByMobile(mobile);
-				
-				if (users != null) {
-					result.setStatus(Constants.ERROR_999);
-					result.setMsg(ConstantMsg.SEC_EXIST_MG);
-					return result;
+				if (users != null ) {
+					/*if (users.getUserType() == 0) {
+						result = new AppResultData<Object>(Constants.ERROR_999,
+								ConstantMsg.USER_EXIST_SEC_MG, users);
+						return result;
+					}*/
+					if (users.getUserType() == 1) {
+						
+						result.setStatus(Constants.ERROR_999);
+						result.setMsg(ConstantMsg.SEC_EXIST_MG);
+						return result;	
+					}
+					
 				}
-				/*if (users != null) {
+				if (users != null) {
 					record = users;
-				}*/
+				}
 				record.setName(name);
 				record.setRealName(realName);
 				record.setMobile(mobile);
