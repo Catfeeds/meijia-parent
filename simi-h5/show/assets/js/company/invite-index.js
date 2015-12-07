@@ -48,6 +48,46 @@ function tagClick(tagId) {
 	console.log($("#tag_ids").val());
 }
 
+/*var mobile=document.getElementById("mobile");
+mobile.onblur=function(){
+	//document.getElementById("mobile").value=mobile.value;
+};*/
+$("#mobile").on('blur', function(e) {
+	
+	//alert("失去焦点失去焦点！！");
+	var params = {};
+	params.mobile = $('#mobile').val();
+	$.ajax({
+		type : "POST",
+		url : appRootUrl + "/sec/register.json", // 发送给服务器的url
+		data : params,
+		dataType : "json",
+		async : false,
+		success : function(data) {
+
+			if (data.status == "999") {
+				alert(data.msg);
+				console.log(data);
+				console.log(data.data);
+				var user = data.data;
+					$("#mobile").val(user.mobile);
+					$("#name").val(user.name);
+					$("#real_name").val(user.real_name);
+					$("#id_card").val(user.id_card);
+					$("#sex").val(user.sex);
+					$("#major").val(user.major);
+					$("#degreeId").val(user.degree_id);
+				return false;
+			}
+		},
+		error : function() {
+			return false;
+		}
+	});
+	
+});
+
+
 $('#sec-form').validator({
 	validate : function(validity) {
 		// Ajax 验证
