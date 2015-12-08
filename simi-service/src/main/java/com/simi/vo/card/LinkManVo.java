@@ -2,7 +2,7 @@ package com.simi.vo.card;
 
 public class LinkManVo {
 	
-	private Long userId;
+	private Long user_id;
 	
 	private String mobile;
 	
@@ -24,12 +24,12 @@ public class LinkManVo {
 		this.mobile = mobile;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public Long getUser_id() {
+		return user_id;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
 }

@@ -217,7 +217,7 @@ public class CardController extends BaseController {
 					mobile = mobile.replaceAll(" ", "");  
 					
 					Long newUserId = 0L;
-					newUserId = item.getUserId();
+					newUserId = item.getUser_id();
 					
 					if (newUserId == null || newUserId.equals(0L)) {
 						if (StringUtil.isEmpty(mobile)) continue;
