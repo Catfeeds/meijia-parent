@@ -303,6 +303,10 @@ public class CardController extends BaseController {
 			cardZan.setUserId(userId);
 			cardZanService.insert(cardZan);
 		}
+		
+		int totalZan = cardZanService.totalByCardId(cardId);
+		result.setData(totalZan);
+		
 		return result;
 	}
 	
@@ -448,6 +452,7 @@ public class CardController extends BaseController {
 	 * @return
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
 	public AppResultData<Object> userImg(HttpServletRequest request,
 			@RequestParam("user_id") Long userId,
@@ -487,16 +492,13 @@ public class CardController extends BaseController {
 
 				ObjectMapper mapper = new ObjectMapper();
 
-				HashMap<String, Object> o = mapper.readValue(sendResult,
-						HashMap.class);
+				HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
 
 				String ret = o.get("ret").toString();
 
-				HashMap<String, String> info = (HashMap<String, String>) o
-						.get("info");
+				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
-				String imgUrl = Constants.IMG_SERVER_HOST + "/"
-						+ info.get("md5").toString();
+				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 
 				CardImgs cardImg = new CardImgs();
 				cardImg.setImgId(0L);
