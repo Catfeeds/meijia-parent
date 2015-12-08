@@ -216,19 +216,30 @@ public class CardController extends BaseController {
 					String mobile = item.getMobile();
 					mobile = mobile.replaceAll(" ", "");  
 					
-					if (StringUtil.isEmpty(mobile)) continue;
-					if (!RegexUtil.isMobile(mobile)) continue;
-
-					mobile = RegexUtil.checkMobile(mobile);
+					Long newUserId = 0L;
+					newUserId = item.getUserId();
+					
+					if (newUserId == null || newUserId.equals(0L)) {
+						if (StringUtil.isEmpty(mobile)) continue;
+						if (!RegexUtil.isMobile(mobile)) continue;
+					}
+//					mobile = RegexUtil.checkMobile(mobile);
 					
 					//根据手机号找出对应的userID, 如果没有则直接新增用户.
-					Long newUserId = 0L;
-					Users newUser = userService.selectByMobile(mobile);
+					
+					Users newUser = null;
+					
+					if (newUserId != null && newUserId > 0L) {
+						newUser = userService.selectByPrimaryKey(newUserId);
+					} else {
+						newUser = userService.selectByMobile(mobile);
+					}
+					
 					if (newUser == null) {
-						newUser = userService.genUser(mobile, item.getName(), (short) 3);
-										
+						newUser = userService.genUser(mobile, item.getName(), (short) 3);					
 						usersAsyncService.genImUser(newUser.getId());
 					}
+					
 					newUserId = newUser.getId();
 					
 					newUserId = newUser.getId();
