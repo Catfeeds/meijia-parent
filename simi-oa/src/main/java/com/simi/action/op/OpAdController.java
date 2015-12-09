@@ -135,7 +135,7 @@ public class OpAdController extends BaseController {
 			//opAd.setId(Long.valueOf(request.getParameter("id")));
 			// dictAd.setImgUrl("");
 			opAd.setAddTime(TimeStampUtil.getNow() / 1000);
-			opAd.setUpdateTime(0L);
+			opAd.setUpdateTime(TimeStampUtil.getNow() / 1000);
 			if (opAd.getImgUrl() == null) {
 				opAd.setImgUrl("");
 			}

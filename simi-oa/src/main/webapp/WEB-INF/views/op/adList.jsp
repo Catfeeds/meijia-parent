@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-
+<%@ taglib prefix="timestampTag" uri="/WEB-INF/tags/timestamp.tld"%>
 <html>
   <head>
 	
@@ -35,7 +35,7 @@
                       <section class="panel">
                       
                           <header class="panel-heading">
-                          	用户管理
+                          	运营广告管理
                           	
                           	<div class="pull-right">
                           		<button onClick="btn_add('/op/adForm?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
@@ -67,9 +67,20 @@
 											<td>${ item.gotoUrl }</td>
 											<td>${ item.serviceTypeIds }</td>
 											<td>${ item.adType }</td>
-											<td>${ item.enable }</td>
-											<td>${ item.addTime }</td>
-											<td>${ item.updateTime }</td>
+											<td><c:choose>
+									<c:when test="${item.enable  == 0}">
+														不可用
+												</c:when>
+									<c:when test="${item.enable  == 1}">
+														可用
+												</c:when>
+								</c:choose></td>
+											
+											<td><timestampTag:timestamp patten="yyyy-MM-dd"
+									t="${item.addTime * 1000}" /></td>
+									
+									<td><timestampTag:timestamp patten="yyyy-MM-dd"
+									t="${item.updateTime * 1000}" /></td>
 									<td>
 	                                    <button id="btn_update" onClick="btn_update('/op/adForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>                                    
                                   	</td>
