@@ -49,6 +49,7 @@
                               <thead>
                               <tr>
                                  		<th>序号</th>
+                                 		<th>标题</th>
 										<th>图片地址</th>
 										<th>跳转地址</th>
 										
@@ -62,6 +63,7 @@
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
                                   	        <td>${ item.no}</td>
+                                  	         <td>${ item.title}</td>
 											<td><img src="${ item.imgUrl }?w=100&h=100"/></td>
 											<td>${ item.gotoUrl }</td>
 											

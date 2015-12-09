@@ -49,7 +49,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from op_ad
-		where ad_type like CONCAT('%','${adType}','%' )
+		where ad_type like CONCAT('%',#{adType},'%' )
 	</select>
 
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.OpAd">
