@@ -21,10 +21,12 @@ public class UserCompanyFormVo extends XcompanyStaff{
     //部门名称
     private String deptName;
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}

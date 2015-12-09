@@ -1,8 +1,6 @@
 package com.simi.action.app.user;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -18,7 +16,6 @@ import com.simi.common.Constants;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
-import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.impl.user.UserDetailPayServiceImpl;
@@ -26,7 +23,6 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.MathBigDeciamlUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserCouponsVo;

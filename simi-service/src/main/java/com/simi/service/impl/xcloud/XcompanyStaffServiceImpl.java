@@ -1,33 +1,22 @@
 package com.simi.service.impl.xcloud;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.poi.hssf.record.UseSelFSRecord;
-import org.aspectj.weaver.patterns.IfPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
-import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.OrdersListVo;
 import com.simi.vo.UserCompanySearchVo;
-import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.xcloud.UserCompanyFormVo;
 
 @Service

@@ -1,7 +1,5 @@
 package com.simi.action.app.op;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +13,9 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
-import com.simi.po.model.user.UserAddrs;
-import com.simi.po.model.user.Users;
-import com.simi.service.dict.CityService;
 import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
-import com.simi.service.user.UserAddrsService;
-import com.simi.service.user.UsersService;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 
 @Controller

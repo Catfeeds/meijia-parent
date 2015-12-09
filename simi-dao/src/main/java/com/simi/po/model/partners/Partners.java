@@ -1,7 +1,6 @@
 package com.simi.po.model.partners;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.util.Date;
 
 public class Partners {

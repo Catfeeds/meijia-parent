@@ -1,6 +1,5 @@
 package com.simi.action.coupons;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,6 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.dict.CouponSearchVo;
 import com.simi.vo.dict.CouponVo;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Controller
 @RequestMapping(value = "/coupon")

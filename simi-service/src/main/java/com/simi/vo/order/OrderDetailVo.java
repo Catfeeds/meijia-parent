@@ -2,8 +2,6 @@ package com.simi.vo.order;
 
 import java.math.BigDecimal;
 
-import com.simi.po.model.order.Orders;
-
 public class OrderDetailVo extends OrderListVo {
 	
     private String cityName;

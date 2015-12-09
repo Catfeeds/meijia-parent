@@ -14,7 +14,6 @@ import com.simi.service.order.OrderPricesService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.UserSearchVo;
-import com.simi.vo.order.OrderListVo;
 import com.simi.vo.user.UserDetailPayVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserDetailPayMapper;
@@ -28,7 +27,6 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.UserFeedback;
 import com.simi.po.model.user.Users;
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

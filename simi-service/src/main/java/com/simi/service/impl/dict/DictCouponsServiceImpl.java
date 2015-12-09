@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,6 @@ import com.simi.po.dao.dict.DictCouponsMapper;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.vo.dict.CouponSearchVo;
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 

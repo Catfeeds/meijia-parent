@@ -34,8 +34,6 @@ import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
-import com.simi.service.dict.CityService;
-import com.simi.service.dict.RegionService;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -44,7 +42,6 @@ import com.simi.service.partners.PartnersService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.partners.PartnerServicePriceListVo;
 import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 

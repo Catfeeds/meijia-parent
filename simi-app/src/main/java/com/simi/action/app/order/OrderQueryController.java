@@ -22,7 +22,6 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
-import com.simi.vo.order.OrderViewVo;
 
 @Controller
 @RequestMapping(value = "/app/order")

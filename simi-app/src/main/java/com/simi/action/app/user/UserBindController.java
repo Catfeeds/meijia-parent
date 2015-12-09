@@ -1,10 +1,5 @@
 package com.simi.action.app.user;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,19 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictCoupons;
-import com.simi.po.model.user.UserCoupons;
-import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
-import com.simi.service.dict.DictCouponsService;
-import com.simi.service.impl.user.UserDetailPayServiceImpl;
-import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
-import com.meijia.utils.MathBigDeciamlUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserCouponVo;
 
 @Controller
 @RequestMapping(value = "/app/user")

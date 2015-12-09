@@ -3,7 +3,6 @@ package com.simi.po.dao.user;
 import java.util.List;
 
 import com.simi.po.model.user.Tags;
-import com.sun.javadoc.Tag;
 
 public interface TagsMapper {
     int deleteByPrimaryKey(Long tagId);

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
-import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
 import com.simi.vo.chart.ChartSearchVo;
 

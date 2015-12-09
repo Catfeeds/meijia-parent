@@ -7,7 +7,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import com.simi.service.dict.DictUtil;
-import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
 
 public class RegionSelectTag extends SimpleTagSupport {

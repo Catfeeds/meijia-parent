@@ -1,13 +1,7 @@
 package com.simi.service.impl.partners;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,26 +9,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.po.dao.dict.DictCityMapper;
-import com.simi.po.dao.dict.DictRegionMapper;
-import com.simi.po.dao.partners.PartnerRefRegionMapper;
-import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
-import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.dao.partners.PartnerUsersMapper;
-import com.simi.po.dao.partners.SpiderPartnerMapper;
-import com.simi.po.model.dict.DictCity;
-import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.partners.PartnerRefRegion;
-import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
-import com.simi.po.model.partners.SpiderPartner;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
-import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.DictUtil;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -44,10 +25,8 @@ import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.partners.PartnerUserDetailVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnerUserVo;
-import com.simi.vo.partners.PartnersVo;
 
 
 

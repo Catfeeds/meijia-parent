@@ -1,10 +1,7 @@
 package com.simi.action.app.dict;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.annotation.processing.SupportedAnnotationTypes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.google.zxing.Result;
 import com.simi.action.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -25,7 +21,6 @@ import com.simi.service.dict.DictService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Controller
 @RequestMapping(value = "/interface-dict")

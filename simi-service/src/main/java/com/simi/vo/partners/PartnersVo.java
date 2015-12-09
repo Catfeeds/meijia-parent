@@ -1,7 +1,5 @@
 package com.simi.vo.partners;
 
-import java.util.Date;
-
 import com.simi.po.model.partners.Partners;
 
 public class PartnersVo extends Partners{
@@ -20,10 +18,12 @@ public class PartnersVo extends Partners{
 		this.registerTime = registerTime;
 	}*/
 
+	@Override
 	public String getSpiderUrl() {
 		return spiderUrl;
 	}
 
+	@Override
 	public void setSpiderUrl(String spiderUrl) {
 		this.spiderUrl = spiderUrl;
 	}

@@ -3,7 +3,6 @@ package com.simi.service.xcloud;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
-import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.UserCompanyFormVo;

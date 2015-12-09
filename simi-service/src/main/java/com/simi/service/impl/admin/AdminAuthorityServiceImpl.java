@@ -15,7 +15,6 @@ import com.simi.vo.admin.AdminAuthorityVo;
 import com.simi.po.dao.admin.AdminAuthorityMapper;
 import com.simi.po.dao.admin.AdminRoleAuthorityMapper;
 import com.simi.po.model.admin.AdminAuthority;
-import com.simi.po.model.admin.AdminRole;
 import com.simi.po.model.admin.AdminRoleAuthority;
 
 

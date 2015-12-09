@@ -20,13 +20,8 @@ import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserDetailScore;
-import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.huanxin.EasemobMessages;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {

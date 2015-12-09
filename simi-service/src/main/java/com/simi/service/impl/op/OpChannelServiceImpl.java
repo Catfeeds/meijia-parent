@@ -1,8 +1,6 @@
 package com.simi.service.impl.op;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +9,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.op.OpChannelService;
-import com.simi.vo.op.OpAdVo;
 import com.simi.po.dao.op.OpChannelMapper;
-import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
 import com.meijia.utils.TimeStampUtil;
 

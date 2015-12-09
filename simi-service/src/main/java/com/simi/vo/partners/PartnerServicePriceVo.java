@@ -28,9 +28,11 @@ public class PartnerServicePriceVo extends ChainEntity<Integer, PartnerServicePr
 	public void setChildList(List<PartnerServicePriceVo> childList) {
 		this.childList = childList;
 	}
+	@Override
 	public Integer getId() {
 		return id;
 	}
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}

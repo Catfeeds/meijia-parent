@@ -1,22 +1,16 @@
 package com.simi.action.job;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.poi.ss.formula.functions.Count;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import sun.tools.jar.resources.jar;
-
-import com.gexin.rp.sdk.http.utils.Constant;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;

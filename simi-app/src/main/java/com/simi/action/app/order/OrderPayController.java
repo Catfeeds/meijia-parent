@@ -29,7 +29,6 @@ import com.simi.service.user.UsersService;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.order.OrderListVo;
-import com.simi.vo.order.OrderViewVo;
 
 @Controller
 @RequestMapping(value = "/app/order")

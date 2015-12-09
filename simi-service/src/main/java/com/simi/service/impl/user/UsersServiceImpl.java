@@ -38,7 +38,6 @@ import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.order.OrderQueryService;
-import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
@@ -52,7 +51,6 @@ import com.simi.vo.UsersSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
-import com.simi.vo.xcloud.UserCompanyFormVo;
 
 @Service
 public class UsersServiceImpl implements UsersService {

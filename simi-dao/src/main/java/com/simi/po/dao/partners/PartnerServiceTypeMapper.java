@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.partners.PartnerUserSearchVo;
 
 public interface PartnerServiceTypeMapper {
     int deleteByPrimaryKey(Long serviceTypeId);

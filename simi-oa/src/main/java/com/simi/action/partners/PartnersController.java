@@ -1,49 +1,9 @@
 package com.simi.action.partners;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.github.pagehelper.PageInfo;
-import com.meijia.utils.StringUtil;
-import com.meijia.utils.common.extension.ArrayHelper;
-import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.BaseController;
-import com.simi.models.TreeModel;
-import com.simi.models.extention.TreeModelExtension;
-import com.simi.oa.auth.AccountAuth;
-import com.simi.oa.auth.AuthHelper;
-import com.simi.oa.auth.AuthPassport;
-import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.dict.DictCity;
-import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.partners.PartnerLinkMan;
-import com.simi.po.model.partners.PartnerRefCity;
-import com.simi.po.model.partners.PartnerRefRegion;
-import com.simi.po.model.partners.PartnerRefServiceType;
-import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.po.model.partners.Partners;
-import com.simi.po.model.partners.SpiderPartner;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.RegionService;
 import com.simi.service.partners.PartnerLinkManService;
@@ -52,8 +12,6 @@ import com.simi.service.partners.PartnerRefRegionService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.partners.SpiderPartnerService;
-import com.simi.vo.partners.PartnerFormVo;
-import com.simi.vo.partners.PartnersSearchVo;
 
 
 /**

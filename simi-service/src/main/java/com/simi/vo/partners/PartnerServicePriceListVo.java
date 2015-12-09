@@ -3,8 +3,6 @@ package com.simi.vo.partners;
 
 import java.math.BigDecimal;
 
-import com.simi.po.model.partners.PartnerServicePriceDetail;
-
 
 public class PartnerServicePriceListVo {
 	

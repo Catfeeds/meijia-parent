@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.Tags;
-import com.simi.vo.user.UserImgVo;
 
 public class PartnerUserVo extends PartnerUsers {
 	
@@ -102,10 +101,12 @@ public class PartnerUserVo extends PartnerUsers {
 		this.responseTimeName = responseTimeName;
 	}
 
+	@Override
 	public Long getAddTime() {
 		return addTime;
 	}
 
+	@Override
 	public void setAddTime(Long addTime) {
 		this.addTime = addTime;
 	}

@@ -1,18 +1,8 @@
 package com.simi.service.impl.chart;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
-import com.meijia.utils.ChartUtil;
-import com.meijia.utils.MathBigDeciamlUtil;
-import com.meijia.utils.MathDoubleUtil;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.service.chart.OrderChartService;

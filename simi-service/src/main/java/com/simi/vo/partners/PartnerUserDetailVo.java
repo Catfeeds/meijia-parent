@@ -2,7 +2,6 @@ package com.simi.vo.partners;
 
 import java.util.List;
 
-import com.simi.po.model.user.UserImgs;
 import com.simi.vo.user.UserImgVo;
 public class PartnerUserDetailVo extends PartnerUserVo {
 	

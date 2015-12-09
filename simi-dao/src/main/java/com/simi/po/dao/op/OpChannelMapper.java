@@ -2,7 +2,6 @@ package com.simi.po.dao.op;
 
 import java.util.List;
 
-import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
 
 public interface OpChannelMapper {

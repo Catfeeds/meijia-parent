@@ -1,17 +1,8 @@
 package com.simi.action.op;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,24 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.RandomUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
-import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.dict.DictAd;
-import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
-import com.simi.service.dict.AdService;
-import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
 
 @Controller

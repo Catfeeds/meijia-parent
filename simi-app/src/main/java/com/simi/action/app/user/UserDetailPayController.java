@@ -13,7 +13,6 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserDetailPay;
-import com.simi.po.model.user.UserDetailScore;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserDetailPayVo;
