@@ -73,7 +73,7 @@
 							<td>${ item.title}</td>
 							<td><img src="${ item.imgUrl }?w=100&h=100" /></td>
 							<td>${ item.channelNames}</td>
-							<td>${ item.gotoUrl }</td>
+							<td><a href="${ item.gotoUrl }" target="_blank">点击</a></td>
 
 							<td><c:choose>
 									<c:when test="${item.enable  == 0}">
