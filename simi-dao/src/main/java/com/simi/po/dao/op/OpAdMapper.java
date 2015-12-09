@@ -3,17 +3,18 @@ package com.simi.po.dao.op;
 import java.util.List;
 
 import com.simi.po.model.op.OpAd;
+import com.simi.vo.po.AdSearchVo;
 
 public interface OpAdMapper {
     int insert(OpAd record);
 
     int insertSelective(OpAd record);
 
-	List<OpAd> selectByListPage();
-
 	OpAd selectByPrimaryKey(Long id);
 
 	int updateByPrimaryKeySelective(OpAd record);
 
 	List<OpAd> selectByAdType(String adType);
+
+	List<OpAd> selectByListPage(AdSearchVo searchVo);
 }

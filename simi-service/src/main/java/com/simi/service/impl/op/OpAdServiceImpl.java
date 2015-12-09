@@ -8,8 +8,14 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.op.OpAdService;
+import com.simi.service.op.OpChannelService;
+import com.simi.vo.op.OpAdVo;
+import com.simi.vo.po.AdSearchVo;
 import com.simi.po.dao.op.OpAdMapper;
 import com.simi.po.model.op.OpAd;
+import com.simi.po.model.op.OpChannel;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -17,13 +23,54 @@ public class OpAdServiceImpl implements OpAdService {
 
 	@Autowired
 	private OpAdMapper opAdMapper;
+	
+	@Autowired
+	private OpChannelService opChannelService;		
 
 	@Override
-	public PageInfo searchVoListPage(int pageNo, int pageSize) {
+	public PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize) {
 		
 		PageHelper.startPage(pageNo, pageSize);
-		List<OpAd> list = opAdMapper.selectByListPage();
+		List<OpAd> list = opAdMapper.selectByListPage(searchVo);
+		
+		OpChannel cardChannel = opChannelService.initOpChannel();
+		cardChannel.setName("日程广告位卡片");
+		List<OpChannel> opChannels = opChannelService.selectByAll();
+		opChannels.add(0, cardChannel);
 
+		for (int i =0; i< list.size(); i++) {
+			OpAd item = list.get(i);
+			OpAdVo vo = new OpAdVo();
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			String adType = item.getAdType();
+			
+			String channelNames = "";
+			
+			String[] adTypeAry = StringUtil.convertStrToArray(adType);
+			
+			
+			
+			
+			for (int j = 0; j < adTypeAry.length; j++) {
+				if (StringUtil.isEmpty(adTypeAry[j].toString())) continue;
+				
+				for (OpChannel op : opChannels) {
+					if (op.getChannelId().toString().equals(adTypeAry[j])) {
+						channelNames+= op.getName() + ",";
+					}
+				}
+			}
+			
+			if (!StringUtil.isEmpty(channelNames)) {
+				channelNames = channelNames.substring(0, channelNames.length() - 1);
+			}
+			
+			vo.setChannelNames(channelNames);
+			list.set(i, vo);
+		}
+		
 		PageInfo result = new PageInfo(list);
 		
 		return result;

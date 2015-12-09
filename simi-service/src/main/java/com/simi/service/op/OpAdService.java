@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.op.OpAd;
+import com.simi.vo.po.AdSearchVo;
 
 public interface OpAdService {
-
-	PageInfo searchVoListPage(int pageNo, int pageSize);
 
 	OpAd initAd();
 
@@ -18,6 +17,8 @@ public interface OpAdService {
 	int insertSelective(OpAd opAd);
 
 	List<OpAd> selectByAdType(String adType);
+
+	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
 
 
 

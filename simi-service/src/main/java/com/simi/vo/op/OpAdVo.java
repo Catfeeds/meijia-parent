@@ -6,14 +6,16 @@ import com.simi.po.model.op.OpAd;
 
 public class OpAdVo extends OpAd{
 
-	private String imgUrlNew;
+	private String channelNames;
 
-	public String getImgUrlNew() {
-		return imgUrlNew;
+	public String getChannelNames() {
+		return channelNames;
 	}
 
-	public void setImgUrlNew(String imgUrlNew) {
-		this.imgUrlNew = imgUrlNew;
+	public void setChannelNames(String channelNames) {
+		this.channelNames = channelNames;
 	}
+
+
 
 }

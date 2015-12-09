@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
@@ -32,6 +33,7 @@ import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.po.AdSearchVo;
 
 @Controller
 @RequestMapping(value = "/op")
@@ -48,18 +50,40 @@ public class OpAdController extends BaseController {
 
 	 @AuthPassport
 	@RequestMapping(value = "/ad_list", method = { RequestMethod.GET })
-	public String list(HttpServletRequest request, Model model) {
+	public String list(HttpServletRequest request, Model model, AdSearchVo searchVo) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		model.addAttribute("searchModel");
+		//获取频道信息
+		OpChannel cardChannel = opChannelService.initOpChannel();
+		cardChannel.setName("日程广告位卡片");
+		List<OpChannel> opChannels = opChannelService.selectByAll();
+		opChannels.add(0, cardChannel);
+		model.addAttribute("opChannels", opChannels);
+		
+		if (searchVo == null) {
+			searchVo = new AdSearchVo();
+		}		
+		
+		model.addAttribute("searchModel", searchVo);
+		
+		
+		
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-
-		PageInfo result = opAdService.searchVoListPage(pageNo, pageSize);
+		
+		String adType = searchVo.getAdType();
+		if (!StringUtil.isEmpty(adType)) {
+			adType = adType + ",";
+			searchVo.setAdType(adType);
+		}
+		
+		PageInfo result = opAdService.searchVoListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);
+		
+
 
 		return "op/adList";
 	}
