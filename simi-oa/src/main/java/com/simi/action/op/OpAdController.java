@@ -163,6 +163,9 @@ public class OpAdController extends BaseController {
 		adType+= ",";
 		opAd.setAdType(adType);
 		
+		if (StringUtil.isEmpty(opAd.getServiceTypeIds())) {
+			opAd.setServiceTypeIds("");
+		}
 		
 		// 更新或者新增
 		if (id != null && id > 0) {
