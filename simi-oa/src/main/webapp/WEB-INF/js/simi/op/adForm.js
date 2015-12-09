@@ -126,13 +126,6 @@ $("#adForm_btn").click(function() {
 	}
 });
 
-
-$("#adType").multiSelect({   
-	keepOrder: true,
-	selectableHeader: "<div class='custom-header'>可选</div>",
-	selectionHeader: "<div class='custom-header'>已选</div>",
-});
-
 $('#adType option').each(function(){
 	var selectedAdType = $("#adTypeSelected").val() + ",";
 	var v = $(this).val();
@@ -142,12 +135,13 @@ $('#adType option').each(function(){
      }
 });
 
-
-$("#serviceTypeIds").multiSelect({   
+$("#adType").multiSelect({   
 	keepOrder: true,
 	selectableHeader: "<div class='custom-header'>可选</div>",
 	selectionHeader: "<div class='custom-header'>已选</div>",
 });
+
+
 
 $('#serviceTypeIds option').each(function(){
 	var serviceTypeIdsSelected = $("#serviceTypeIdsSelected").val() + ",";
@@ -157,6 +151,14 @@ $('#serviceTypeIds option').each(function(){
 		$(this).attr('selected', true);
      }
 });
+
+$("#serviceTypeIds").multiSelect({   
+	keepOrder: true,
+	selectableHeader: "<div class='custom-header'>可选</div>",
+	selectionHeader: "<div class='custom-header'>已选</div>",
+});
+
+
 
 
 

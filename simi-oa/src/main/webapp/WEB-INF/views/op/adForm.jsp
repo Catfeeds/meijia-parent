@@ -79,10 +79,7 @@
 								<input type="hidden" id="adTypeSelected" value="${ contentModel.adType }"/>
 								<form:select path="adType" class="multi-select" multiple="multiple">
 
-									<c:forEach items="${opChannels}" var="item">
-									
-										<option value="${ item.channelId }">${ item.name }</form>
-									</c:forEach>
+									<form:options items="${opChannels}" itemValue="channelId" itemLabel="name"/>
 									
 								</form:select>
 								

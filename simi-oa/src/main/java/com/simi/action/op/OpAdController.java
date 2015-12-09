@@ -60,7 +60,7 @@ public class OpAdController extends BaseController {
 	@Autowired
 	private OpChannelService opChannelService;	
 
-	// @AuthPassport
+	 @AuthPassport
 	@RequestMapping(value = "/ad_list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model) {
 
@@ -78,7 +78,7 @@ public class OpAdController extends BaseController {
 		return "op/adList";
 	}
 
-	// @AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/adForm", method = { RequestMethod.GET })
 	public String adForm(HttpServletRequest request, Model model, @RequestParam(value = "id") Long id) {
 
@@ -110,7 +110,7 @@ public class OpAdController extends BaseController {
 		return "op/adForm";
 	}
 
-	// @AuthPassport
+	 @AuthPassport
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/adForm", method = { RequestMethod.POST })
 	public String doAdForm(HttpServletRequest request, Model model, 
