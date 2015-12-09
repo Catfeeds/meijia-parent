@@ -12,6 +12,24 @@ import com.simi.action.app.JUnitActionBase;
 public class TestOpController extends JUnitActionBase{
 	
 	@Test
+    public void getChannels() throws Exception {
+
+		String url = "/app/op/get_channels.json";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+
+	  
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
+	
+	@Test
     public void getAds() throws Exception {
 
 		String url = "/app/op/get_ads.json?channel_id=1";
