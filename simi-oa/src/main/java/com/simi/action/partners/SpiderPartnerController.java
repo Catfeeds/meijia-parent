@@ -187,7 +187,7 @@ public class SpiderPartnerController extends BaseController{
 			model.addAttribute("partners", partnerFormVo);
 		}
     	String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
-		List<TreeModel> children=TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0), null, checkedPartnerTypeIntegers, StringHelper.toIntegerList( expanded, ","));
+		List<TreeModel> children=TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, checkedPartnerTypeIntegers, StringHelper.toIntegerList( expanded, ","));
 		List<TreeModel> treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel(null,null,"根节点",false,false,false,children)));
 		model.addAttribute("treeDataSource", JSONArray .fromObject(treeModels, new JsonConfig()).toString());
 		

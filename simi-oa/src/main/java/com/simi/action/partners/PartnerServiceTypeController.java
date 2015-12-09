@@ -52,7 +52,7 @@ public class PartnerServiceTypeController extends AdminController {
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
 			String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false,
 							false, children)));
@@ -83,12 +83,12 @@ public class PartnerServiceTypeController extends AdminController {
 		List<TreeModel> treeModels;
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (id != null && id > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServiceTypeService.listChain((short) 0), id, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), id, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServiceTypeService.listChain((short) 0), null, null,
+				partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, true, false, children)));
@@ -152,14 +152,14 @@ public class PartnerServiceTypeController extends AdminController {
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					partnerServiceTypeService.listChain((short) 0), editModel.getParentId()
+					partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), editModel.getParentId()
 							.intValue(), null, StringHelper.toIntegerList(
 							expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, false, false, children)));
 		} else {
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServiceTypeService.listChain((short) 0), null, null,
+				partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
 					"0", "0", "根节点", false, true, false, children)));

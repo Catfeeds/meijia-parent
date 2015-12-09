@@ -3,6 +3,7 @@ package com.simi.po.dao.partners;
 import java.util.List;
 
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 
 public interface PartnerServiceTypeMapper {
@@ -18,10 +19,8 @@ public interface PartnerServiceTypeMapper {
 
     int updateByPrimaryKey(PartnerServiceType record);
     
-    List<PartnerServiceType> selectByParentId(Long  partnerId, Short viewType);
-
 	List<PartnerServiceType> selectByIds(List<Long> ids);
 
-	List<PartnerServiceType> selectByName(PartnerUserSearchVo searchVo);
+	List<PartnerServiceType> selectBySearchVo(PartnerServiceTypeSearchVo searchVo);
 
 }

@@ -19,4 +19,6 @@ public interface OpChannelMapper {
     int updateByPrimaryKey(OpChannel record);
 
 	List<OpChannel> selectByListPage();
+
+	List<OpChannel> selectByAll();
 }

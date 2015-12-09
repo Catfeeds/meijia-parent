@@ -32,6 +32,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
@@ -67,6 +68,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.partners.SpiderPartnerService;
 import com.simi.vo.partners.PartnerFormVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnersSearchVo;
 
 
@@ -190,7 +192,10 @@ public class PartnersAddNewController extends BaseController{
 			model.addAttribute("partners", partnerFormVo);
 		}
     	String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
-		List<TreeModel> children=TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0), null, checkedPartnerTypeIntegers, StringHelper.toIntegerList( expanded, ","));
+    	
+		
+    	
+		List<TreeModel> children=TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, checkedPartnerTypeIntegers, StringHelper.toIntegerList( expanded, ","));
 		List<TreeModel> treeModels=new ArrayList<TreeModel>(Arrays.asList(new TreeModel(null,null,"根节点",false,false,false,children)));
 		model.addAttribute("treeDataSource", JSONArray .fromObject(treeModels, new JsonConfig()).toString());
 

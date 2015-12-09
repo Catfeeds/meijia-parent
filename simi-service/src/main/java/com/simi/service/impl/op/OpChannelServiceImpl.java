@@ -50,6 +50,11 @@ public class OpChannelServiceImpl implements OpChannelService {
 	public OpChannel selectByPrimaryKey(Long channelId) {
 		return opChannelMapper.selectByPrimaryKey(channelId);
 	}
+	
+	@Override
+	public List<OpChannel> selectByAll() {
+		return opChannelMapper.selectByAll();
+	}	
 
 	@Override
 	public int updateByPrimaryKeySelective(OpChannel record) {

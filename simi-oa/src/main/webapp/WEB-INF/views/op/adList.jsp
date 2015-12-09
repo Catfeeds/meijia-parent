@@ -51,11 +51,10 @@
                                  		<th>序号</th>
 										<th>图片地址</th>
 										<th>跳转地址</th>
-										<th>服务大类Id</th>
-										<th>广告类型</th>
+										
 										<th>是否可用</th>
-										<th>添加时间戳</th>
-										<th>更新时间戳</th>
+										<th>添加时间</th>
+										
                                         <th>操作</th>
                               </tr>
                               </thead>
@@ -63,10 +62,9 @@
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
                                   	        <td>${ item.no}</td>
-											<td><img src="${ item.imgUrl }"/></td>
+											<td><img src="${ item.imgUrl }?w=100&h=100"/></td>
 											<td>${ item.gotoUrl }</td>
-											<td>${ item.serviceTypeIds }</td>
-											<td>${ item.adType }</td>
+											
 											<td><c:choose>
 									<c:when test="${item.enable  == 0}">
 														不可用
@@ -79,8 +77,7 @@
 											<td><timestampTag:timestamp patten="yyyy-MM-dd"
 									t="${item.addTime * 1000}" /></td>
 									
-									<td><timestampTag:timestamp patten="yyyy-MM-dd"
-									t="${item.updateTime * 1000}" /></td>
+									
 									<td>
 	                                    <button id="btn_update" onClick="btn_update('/op/adForm?id=${item.id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>                                    
                                   	</td>

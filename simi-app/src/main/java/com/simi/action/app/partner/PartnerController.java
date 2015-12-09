@@ -28,6 +28,7 @@ import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServicePriceListVo;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerUserDetailVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnerUserVo;
@@ -122,8 +123,18 @@ public class PartnerController extends BaseController {
 		PartnerUserDetailVo detailVo = new PartnerUserDetailVo();
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(vo, detailVo);
+		
+		Long partnerId = parnterUser.getPartnerId();
 		//服务价格
-		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectByParentId(serviceTypeId, (short) 1);
+		List<Long> partnerIds = new ArrayList<Long>();
+		partnerIds.add(0L);
+		partnerIds.add(partnerId);
+		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+		searchVo.setParentId(0L);
+		searchVo.setViewType((short) 1);
+		searchVo.setPartnerIds(partnerIds);
+		
+		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectBySearchVo(searchVo);
 		
 		List<PartnerServicePriceListVo> servicePriceVos = new ArrayList<PartnerServicePriceListVo>();
 		
@@ -221,10 +232,13 @@ public class PartnerController extends BaseController {
 		
 		if (StringUtil.isEmpty(keyword)) return result;
 		
-		PartnerUserSearchVo searchVo1 = new PartnerUserSearchVo();
+		PartnerServiceTypeSearchVo searchVo1 = new PartnerServiceTypeSearchVo();
 		searchVo1.setName(keyword);
 		searchVo1.setParentId(0L);
-		List<PartnerServiceType> serviceTypes =  partnerServiceTypeService.selectByName(searchVo1);
+		
+		
+		
+		List<PartnerServiceType> serviceTypes =  partnerServiceTypeService.selectBySearchVo(searchVo1);
 		if (serviceTypes.isEmpty()) return result;
 
 		List<Long> serviceTypeIds = new ArrayList<Long>();

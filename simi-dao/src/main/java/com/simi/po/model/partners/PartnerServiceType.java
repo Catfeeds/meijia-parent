@@ -11,6 +11,8 @@ public class PartnerServiceType {
     private Short viewType;
     
     private Integer no;
+    
+    private Long partnerId;
   
 
     public Long getId() {
@@ -51,5 +53,13 @@ public class PartnerServiceType {
 
 	public void setNo(Integer no) {
 		this.no = no;
+	}
+
+	public Long getPartnerId() {
+		return partnerId;
+	}
+
+	public void setPartnerId(Long partnerId) {
+		this.partnerId = partnerId;
 	}
 }

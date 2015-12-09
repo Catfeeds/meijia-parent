@@ -1,7 +1,5 @@
 package com.simi.service.impl.op;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simi.service.dict.AdService;
 import com.simi.service.op.OpAdService;
-import com.simi.vo.op.OpAdVo;
-import com.simi.po.dao.dict.DictAdMapper;
 import com.simi.po.dao.op.OpAdMapper;
-import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.op.OpAd;
 import com.meijia.utils.TimeStampUtil;
 
@@ -29,26 +23,7 @@ public class OpAdServiceImpl implements OpAdService {
 		
 		PageHelper.startPage(pageNo, pageSize);
 		List<OpAd> list = opAdMapper.selectByListPage();
-		List<OpAd> listNew = new ArrayList<OpAd>();
-		for (Iterator iterator = list.iterator();iterator.hasNext();) {
-			
-			OpAd opAd = (OpAd) iterator.next();
-			OpAdVo opAdView = new OpAdVo();
-			String imgUrl =	opAd.getImgUrl();
-			
-			if (!imgUrl.equals("")) {
-				String extensionName = imgUrl.substring(imgUrl.lastIndexOf("."));
-	             String beforName = imgUrl.substring(0,(imgUrl.lastIndexOf(".")));
-	             String newImgUrl = beforName+"_small"+extensionName;
-	             opAd.setImgUrl(newImgUrl);
-			}
-			listNew.add(opAd);
-		}
-		for (int i = 0; i < list.size(); i++) {
-			if (listNew.get(i) != null) {
-				list.set(i, listNew.get(i));
-			}
-		}
+
 		PageInfo result = new PageInfo(list);
 		
 		return result;
@@ -67,7 +42,7 @@ public class OpAdServiceImpl implements OpAdService {
 			record.setServiceTypeIds("");
 			record.setAddTime(TimeStampUtil.getNow()/1000);
 			record.setUpdateTime(0L);
-			record.setEnable((short)0);
+			record.setEnable((short)1);
 
 			return record;
 		}
@@ -75,6 +50,11 @@ public class OpAdServiceImpl implements OpAdService {
 	public OpAd selectByPrimaryKey(Long id) {
 		return opAdMapper.selectByPrimaryKey(id);
 	}
+	
+	@Override
+	public List<OpAd> selectByAdType(String adType) {
+		return opAdMapper.selectByAdType(adType);
+	}	
 
 	@Override
 	public int updateByPrimaryKeySelective(OpAd record) {

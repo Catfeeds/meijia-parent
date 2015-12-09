@@ -1,5 +1,6 @@
 package com.simi.action.coupons;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,8 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.dict.CouponSearchVo;
 import com.simi.vo.dict.CouponVo;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Controller
 @RequestMapping(value = "/coupon")
@@ -98,8 +101,14 @@ public class DictCouponsController extends BaseController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+		searchVo.setParentId(0L);
+		searchVo.setViewType((short) 0);
 
-		List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectByParentId(0L, (short) 0);
+		
+		
+		List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectBySearchVo(searchVo);
 		model.addAttribute("partnerServiceType", partnerServiceType);
 		   
 		model.addAttribute("dictCoupons", couponVo);

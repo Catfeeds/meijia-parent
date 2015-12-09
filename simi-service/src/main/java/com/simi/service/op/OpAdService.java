@@ -18,6 +18,8 @@ public interface OpAdService {
 
 	int insertSelective(OpAd opAd);
 
+	List<OpAd> selectByAdType(String adType);
+
 
 
 }

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RandomUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
@@ -36,8 +38,14 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.op.OpAd;
+import com.simi.po.model.op.OpChannel;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.dict.AdService;
 import com.simi.service.op.OpAdService;
+import com.simi.service.op.OpChannelService;
+import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Controller
 @RequestMapping(value = "/op")
@@ -46,7 +54,13 @@ public class OpAdController extends BaseController {
 	@Autowired
 	private OpAdService opAdService;
 
-	@AuthPassport
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private OpChannelService opChannelService;	
+
+	// @AuthPassport
 	@RequestMapping(value = "/ad_list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model) {
 
@@ -64,9 +78,9 @@ public class OpAdController extends BaseController {
 		return "op/adList";
 	}
 
-	//@AuthPassport
+	// @AuthPassport
 	@RequestMapping(value = "/adForm", method = { RequestMethod.GET })
-	public String adForm(Model model, @RequestParam(value = "id") Long id, HttpServletRequest request) {
+	public String adForm(HttpServletRequest request, Model model, @RequestParam(value = "id") Long id) {
 
 		if (id == null) {
 			id = 0L;
@@ -75,90 +89,98 @@ public class OpAdController extends BaseController {
 		OpAd opAd = opAdService.initAd();
 		if (id != null && id > 0) {
 			opAd = opAdService.selectByPrimaryKey(id);
-
 		}
 
-		model.addAttribute("adModel", opAd);
+		model.addAttribute("contentModel", opAd);
+		
+		//获取频道信息
+		OpChannel cardChannel = opChannelService.initOpChannel();
+		cardChannel.setName("日程广告位卡片");
+		List<OpChannel> opChannels = opChannelService.selectByAll();
+		opChannels.add(0, cardChannel);
+		model.addAttribute("opChannels", opChannels);
+		// 所有大类信息
+		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+		searchVo.setParentId(0L);
+		searchVo.setViewType((short) 0);
+
+		List<PartnerServiceType> serviceTypelist = partnerServiceTypeService.selectBySearchVo(searchVo);
+		model.addAttribute("serviceTypelist", serviceTypelist);
 
 		return "op/adForm";
 	}
-	
-//	@AuthPassport
+
+	// @AuthPassport
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/adForm", method = { RequestMethod.POST })
-	public String doAdForm(HttpServletRequest request, Model model, @ModelAttribute("opAd") OpAd opAd, BindingResult result) throws IOException {
+	public String doAdForm(HttpServletRequest request, Model model, 
+			@ModelAttribute("contentModel") OpAd opAd, 
+			@RequestParam("imgUrlFile") MultipartFile file,
+			BindingResult result
+			) throws IOException {
 
-		Long id = Long.valueOf(request.getParameter("id"));
+		Long id = opAd.getId();
 
-		 //创建一个通用的多部分解析器.
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-        String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
-        String urlPath = request.getContextPath();
-        String addr = request.getRemoteAddr();
-        int port = request.getServerPort();
-		 if(multipartResolver.isMultipart(request))
-	        {
-	             //判断 request 是否有文件上传,即多部分请求...
-	            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)(request);
-	            Iterator<String> iter = multiRequest.getFileNames();
-	            while(iter.hasNext()){
-	                MultipartFile file = multiRequest.getFile(iter.next());
-	                if(file!=null && !file.isEmpty()){
+		// 更新头像
+		String imgUrl = "";
+		if (file != null && !file.isEmpty()) {
+			String url = Constants.IMG_SERVER_HOST + "/upload/";
+			String fileName = file.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+			fileType = fileType.toLowerCase();
+			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
 
-	                	  String fileName = file.getOriginalFilename();
-	                      String extensionName = fileName.substring(fileName.lastIndexOf(".") + 1);
-	                      // 新的图片文件名 = 获取时间戳+随机六位数+"."图片扩展名
-	                      String before = TimeStampUtil.getNow()+String.valueOf(RandomUtil.randomNumber());
-	                      String newFileName = String.valueOf(before+"."+extensionName);
-	                     //获取系统发布后upload路径
-	                     FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path,newFileName));
-	                     String imgUrl = urlPath+ "/upload/ad/"+newFileName;
-	                     opAd.setImgUrl(imgUrl);
+			ObjectMapper mapper = new ObjectMapper();
 
-	                     //生成缩略图
-	                     BufferedImage bufferedImage1 = new BufferedImage(60,60,BufferedImage.TYPE_INT_BGR);
-	                     BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-	                     Image image = bufferedImage.getScaledInstance(60,60,Image.SCALE_DEFAULT);
-	                     bufferedImage1.getGraphics().drawImage(image, 0, 0, null);
-	                     String newFileName1 = String.valueOf(before+"_small."+extensionName);
+			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
 
-	                     FileOutputStream out = new FileOutputStream(path + "/" + newFileName1);
-	                     ImageIO.write(bufferedImage1, "jpg",out);//把图片输出
-	                }
-	            }
-	        }
+			String ret = o.get("ret").toString();
 
+			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+
+		}
+		
+		String gotoType = opAd.getGotoType();
+		String gotoUrl = opAd.getGotoUrl();
+		
+//		if (gotoType.equals("h5")) {
+//			if (gotoUrl.indexOf("?") >= 0) {
+//				gotoUrl+= "&goto_type=h5";
+//			} else {
+//				gotoUrl+= "?goto_type=h5";
+//			}
+//		}
+//		
+		if (gotoType.equals("app")) {
+			gotoUrl = "xcloud://service_type_ids="+opAd.getServiceTypeIds();
+			gotoUrl+= "&goto_type=app";
+		}
+		opAd.setGotoUrl(gotoUrl);
+		
+		String adType = opAd.getAdType();
+		adType+= ",";
+		opAd.setAdType(adType);
+		
+		
 		// 更新或者新增
 		if (id != null && id > 0) {
+			if (!StringUtil.isEmpty(imgUrl)) {
+				opAd.setImgUrl(imgUrl);
+			}
+			
 			opAd.setUpdateTime(TimeStampUtil.getNow() / 1000);
 			opAdService.updateByPrimaryKeySelective(opAd);
 		} else {
-			//opAd.setId(Long.valueOf(request.getParameter("id")));
-			// dictAd.setImgUrl("");
+
 			opAd.setAddTime(TimeStampUtil.getNow() / 1000);
 			opAd.setUpdateTime(TimeStampUtil.getNow() / 1000);
-			if (opAd.getImgUrl() == null) {
-				opAd.setImgUrl("");
-			}
-		//	opAd.setEnable((short) 0);
-		//	opAd.setAdType("");
-			opAd.setServiceTypeIds("");
-			//opAd.setTitle("");
-			// dictAd.setEnable((short)0);
-            
+			opAd.setImgUrl(imgUrl);
+
 			opAdService.insertSelective(opAd);
 		}
 
 		return "redirect:ad_list";
 	}
-
-	// 删除
-	/*
-	 * @RequestMapping(value ="/delete/{id}", method = {RequestMethod.GET})
-	 * public String deleterAdminRole(Model model,@PathVariable(value="id")
-	 * String id,HttpServletRequest response) { Long ids = 0L; if (id != null &&
-	 * NumberUtils.isNumber(id)) { ids = Long.valueOf(id.trim()); } String path
-	 * = "redirect:/dict/ad"; int result = adService.deleteByPrimaryKey(ids);
-	 * if(result>0){ return path; }else{ return "error"; } }
-	 */
-
 }

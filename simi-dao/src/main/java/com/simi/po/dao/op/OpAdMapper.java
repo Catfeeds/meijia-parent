@@ -14,4 +14,6 @@ public interface OpAdMapper {
 	OpAd selectByPrimaryKey(Long id);
 
 	int updateByPrimaryKeySelective(OpAd record);
+
+	List<OpAd> selectByAdType(String adType);
 }

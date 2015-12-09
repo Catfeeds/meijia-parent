@@ -1,5 +1,6 @@
 package com.simi.action.app.dict;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +24,8 @@ import com.simi.service.dict.AdService;
 import com.simi.service.dict.DictService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Controller
 @RequestMapping(value = "/interface-dict")
@@ -80,9 +83,18 @@ public class DictInterface extends BaseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "get-price-by-type",method = RequestMethod.GET)
 	public AppResultData<List> getPrice(
-			@RequestParam(value = "serviceTypeId", required = true, defaultValue = "0") Long serviceTypeId
-			){
-		List<PartnerServiceType> list = partnerServiceTypeMapper.selectByParentId(serviceTypeId, (short) 1);
+			@RequestParam(value = "serviceTypeId", required = true, defaultValue = "0") Long serviceTypeId){
+		
+		
+		List<Long> partnerIds = new ArrayList<Long>();
+		partnerIds.add(0L);
+
+		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+		searchVo.setParentId(serviceTypeId);
+		searchVo.setViewType((short) 1);
+		searchVo.setPartnerIds(partnerIds);
+		
+		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
 		
 		AppResultData<List> result = new AppResultData<List>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
 		

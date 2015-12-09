@@ -4,177 +4,176 @@
 <%@ include file="../shared/taglib.jsp"%>
 
 <html>
-  <head>
-	
-	<!--common css for all pages-->
-	<%@ include file="../shared/importCss.jsp"%>
-	
-	<!--css for this page-->
-	<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
-	type="text/css" />
+<head>
 
-  </head>
+<!--common css for all pages-->
+<%@ include file="../shared/importCss.jsp"%>
 
-  <body>
+<!--css for this page-->
+<link  href="<c:url value='/css/fileinput.css'/>" type="text/css" rel="stylesheet" />
+<link  href="<c:url value='/assets/jquery-multi-select/css/multi-select.css'/>" media="screen" type="text/css" rel="stylesheet"  />
+</head>
 
-  <section id="container" >
-	  
-	  <!--header start-->
-	  <%@ include file="../shared/pageHeader.jsp"%>
-	  <!--header end-->
-	  
-      <!--sidebar start-->
-	  <%@ include file="../shared/sidebarMenu.jsp"%>
-      <!--sidebar end-->
-      
-<!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-              <!-- page start-->
-              <div class="row">
-                  <div class="col-lg-12">
-                      <section class="panel">
-                          <header class="panel-heading">
-                             用户管理
-                          </header>
-                          
-                          <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
-                          
-                          <div class="panel-body">
-                              <form:form modelAttribute="adModel" class="form-horizontal"
-								method="POST" action="adForm" id="dict-form"
-								enctype="multipart/form-data">
+<body>
 
-								<form:hidden path="id" />
-								<div class="form-body">
+	<section id="container"> <!--header start--> <%@ include file="../shared/pageHeader.jsp"%>
+	<!--header end--> <!--sidebar start--> <%@ include file="../shared/sidebarMenu.jsp"%> <!--sidebar end-->
 
-									<div class="form-group required">
+	<!--main content start--> <section id="main-content"> <section class="wrapper"> <!-- page start-->
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel"> <header class="panel-heading"> 用户管理 </header>
 
-										<label class="col-md-2 control-label">标题</label>
-										<div class="col-md-5">
-											<form:input path="title" class="form-control" placeholder="标题"
-												maxLength="32" />
-											<form:errors path="title" class="field-has-error"></form:errors>
-										</div>
-									</div>
-									<div class="form-group required">
+			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 
-										<label class="col-md-2 control-label">序号</label>
-										<div class="col-md-5">
-											<form:input path="No" class="form-control" placeholder="序号"
-												maxLength="32" />
-											<form:errors path="No" class="field-has-error"></form:errors>
-										</div>
-									</div>
+			<div class="panel-body">
+				
+				<form:form modelAttribute="contentModel" 
+ 				enctype="multipart/form-data" class="form-horizontal" 
+ 				method="POST" id="dict-form">
+					<form:hidden path="id" />
 
-									<c:if test="${adModel.imgUrl != null && adModel.imgUrl != '' }">
-										<div class="form-group ">
+					<div class="form-body">
 
-											<label class="col-md-2 control-label">图片</label>
-											<div class="col-md-5">
-												<img src="${ adModel.imgUrl }"/>
-											</div>
-										</div>
-									</c:if>
+						<div class="form-group required">
 
-                                    <input type="hidden" name="img_url_new" id="img_url_new"
-							                     value="${ adModel.imgUrl }" />
-									<div class="form-group required">
+							<label class="col-md-2 control-label">标题</label>
+							<div class="col-md-5">
+								<form:input path="title" class="form-control" placeholder="标题" maxLength="32" />
+								<form:errors path="title" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group required">
 
-										<label class="col-md-2 control-label">图片地址</label>
-										<div class="col-md-5">
-											<input id="imgUrl" type="file" name="imgUrl" accept="image/*"
-												data-show-upload="false">
-											<form:errors path="imgUrl" class="field-has-error"></form:errors>
-										</div>
-									</div>
-									<div class="form-group required">
+							<label class="col-md-2 control-label">序号</label>
+							<div class="col-md-5">
+								<form:input path="No" class="form-control" placeholder="序号" maxLength="32" />
+								<form:errors path="No" class="field-has-error"></form:errors>
+							</div>
+						</div>
 
-										<label class="col-md-2 control-label">跳转地址</label>
-										<div class="col-md-5">
-											<form:input path="gotoUrl" class="form-control"
-												placeholder="跳转地址" maxLength="255" />
-											<form:errors path="gotoUrl" class="field-has-error"></form:errors>
-										</div>
-									</div>
+						<c:if test="${contentModel.imgUrl != null && contentModel.imgUrl != '' }">
+							<div class="form-group ">
 
-									<div class="form-group required">
-							<label class="col-md-2 control-label">广告类型</label>
+								<label class="col-md-2 control-label">图片</label>
+								<div class="col-md-5">
+									<img src="${ contentModel.imgUrl }" />
+								</div>
+							</div>
+						</c:if>
+
+						<input type="hidden" name="img_url_new" id="img_url_new" value="${ contentModel.imgUrl }" />
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">图片地址</label>
+							<div class="col-md-5">
+								<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*" data-show-upload="false">
+								<form:errors path="imgUrl" class="field-has-error"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group required form-horizontal">
+							<label class="col-md-2 control-label">出现位置：</label>
+							<div class="col-md-10">
+								
+								<input type="hidden" id="adTypeSelected" value="${ contentModel.adType }"/>
+								<form:select path="adType" class="multi-select" multiple="multiple">
+
+									<c:forEach items="${opChannels}" var="item">
+									
+										<option value="${ item.channelId }">${ item.name }</form>
+									</c:forEach>
+									
+								</form:select>
+								
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-2 control-label">显示服务大类</label>
+							<div class="col-md-8">
+							    <input type="hidden" id="serviceTypeIdsSelected" value="${ contentModel.serviceTypeIds }"/>
+								<form:select path="serviceTypeIds" class="multi-select" multiple="multiple">
+									<form:options items="${serviceTypelist}" itemValue="id" itemLabel="name"/>
+								</form:select>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">跳转类型</label>
 							<div class="col-md-10">
 
 								<div class="row">
 									<div class="col-md-2" align="right">
-										<label class="radio"> <form:radiobutton path="adType"
-												value="1" />精选特惠
+										<label class="radio">
+										<form:radiobutton path="gotoType" value="h5"/>h5
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="adType"
-												value="2" checked="checked" />运营卡片
-										</label>
+										<label class="radio"> <form:radiobutton path="gotoType" value="app"/>App内打开</label>
 									</div>
+
 								</div>
 							</div>
 						</div>
+						
+						
+						<div class="form-group required">
 
-									<div class="form-group required">
+							<label class="col-md-2 control-label">跳转地址</label>
+							<div class="col-md-5">
+								<form:input path="gotoUrl" class="form-control" placeholder="跳转地址" maxLength="255" />
+								<form:errors path="gotoUrl" class="field-has-error"></form:errors>
+							</div>
+						</div>
 
-										<!-- Text input-->
-										<label class="col-md-2 control-label">是否可用</label>
-										<div class="col-md-10">
+						<div class="form-group required">
 
-											<div class="row">
-												<div class="col-md-2" align="right">
-													<label class="radio"> <input value="0" name="enable"
-														type="radio"> 不可用
-													</label>
-												</div>
-												<div class="col-md-2" align="left">
-													<label class="radio"> <input checked="checked"
-														value="1" name="enable" type="radio"> 可用
-													</label>
-												</div>
-											</div>
+							<!-- Text input-->
+							<label class="col-md-2 control-label">是否可用</label>
+							<div class="col-md-10">
 
-										</div>
+								<div class="row">
+									<div class="col-md-2" align="right">
+										<label class="radio"> 
+											<form:radiobutton path="enable" value="1"/>可用
+											
+										</label>
 									</div>
-
-									<div class="form-actions fluid">
-										<div class="col-md-offset-6 col-md-6">
-											<button type="submit" id="adForm_btn"
-												class="btn btn-success">保存</button>
-
-										</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> 
+											<form:radiobutton path="enable" value="0"/>不可用
+										</label>
 									</div>
-							</form:form>
-                          </div>
-                      </section>
-                  </div>
-              </div>
-              <!-- page end-->
-          </section>
-      </section>
-      <!--main content end-->
-      
-      <!--footer start-->
-      <%@ include file="../shared/pageFooter.jsp"%>
-      <!--footer end-->
-  </section>
+								</div>
 
-    <!-- js placed at the end of the document so the pages load faster -->
-    <!--common script for all pages-->
-    <%@ include file="../shared/importJs.jsp"%>
+							</div>
+						</div>
+
+						<div class="form-actions fluid">
+							<div class="col-md-offset-6 col-md-6">
+								<button type="button" id="adForm_btn" class="btn btn-success">保存</button>
+
+							</div>
+						</div>
+				</form:form>
+			</div>
+			</section>
+		</div>
+	</div>
+	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> <%@ include file="../shared/pageFooter.jsp"%>
+	<!--footer end--> </section>
+
+	<!-- js placed at the end of the document so the pages load faster -->
+	<!--common script for all pages-->
+	<%@ include file="../shared/importJs.jsp"%>
+
+	<!--script for this page-->
+	<script src="<c:url value='/assets/jquery-multi-select/js/jquery.multi-select.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/js/simi/op/adForm.js'/>" type="text/javascript"></script>
 
 
-    <!--script for this page-->	
-    <script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>"></script>
-	<script
-		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
-		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/op/adForm.js'/>"
-		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/demo.js'/>"></script>
-
-  </body>
+</body>
 </html>

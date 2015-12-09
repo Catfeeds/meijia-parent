@@ -3,6 +3,7 @@ package com.simi.service.partners;
 import java.util.List;
 
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 
@@ -20,19 +21,14 @@ public interface PartnerServiceTypeService {
 
     int updateByPrimaryKey(PartnerServiceType record);
     
-	List<PartnerServiceTypeVo> listChain(Short viewType);
-
-	List<PartnerServiceType> selectByParentId(Long parentId, Short ViewType);
-
-	PartnerServiceTypeVo ToTree(Long id, Short viewType);
-
 	PartnerServiceType initPartnerServiceType();
 
 	List<PartnerServiceType> selectByIds(List<Long> ids);
 
-	List<PartnerServiceType> selectByName(PartnerUserSearchVo searchVo);
+	List<PartnerServiceTypeVo> listChain(Short viewType, List<Long> partnerIds);
+
+	PartnerServiceTypeVo ToTree(Long id, Short viewType, List<Long> partnerIds);
+
+	List<PartnerServiceType> selectBySearchVo(PartnerServiceTypeSearchVo searchVo);
 	
-
-
-
 }

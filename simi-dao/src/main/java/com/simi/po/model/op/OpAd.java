@@ -12,6 +12,8 @@ public class OpAd {
     private String serviceTypeIds;
 
     private String imgUrl;
+    
+    private String gotoType;
 
     private String gotoUrl;
 
@@ -100,4 +102,12 @@ public class OpAd {
     public void setEnable(Short enable) {
         this.enable = enable;
     }
+
+	public String getGotoType() {
+		return gotoType;
+	}
+
+	public void setGotoType(String gotoType) {
+		this.gotoType = gotoType;
+	}
 }

@@ -100,6 +100,7 @@ public class PartnerUsersController extends BaseController{
 		if (searchVo == null) {
 			searchVo = new PartnerUserSearchVo();
 		}
+		
 		searchVo.setPartnerId(partnerId);
 		
 		model.addAttribute("searchModel", searchVo);

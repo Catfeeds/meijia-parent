@@ -71,7 +71,7 @@ public class PartnerServicePriceController extends AdminController {
 		if (!model.containsAttribute("contentModel")) {
 			
 			String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 1), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 1, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 			String jsonString = JSONArray.fromObject(treeModels,new JsonConfig()).toString();
@@ -211,10 +211,10 @@ public class PartnerServicePriceController extends AdminController {
 		PartnerServicePriceDetailVo editModel = (PartnerServicePriceDetailVo) model.asMap().get("contentModel");
 		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 1), editModel.getParentId().intValue(), null, StringHelper.toIntegerList(expanded, ","));
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 1, new ArrayList<Long>()), editModel.getParentId().intValue(), null, StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels( partnerServiceTypeService.listChain((short) 1), null, null, StringHelper.toIntegerList(expanded, ","));
+			List<TreeModel> children = TreeModelExtension.ToTreeModels( partnerServiceTypeService.listChain((short) 1, new ArrayList<Long>()), null, null, StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, true, false, children)));
 		}
 		model.addAttribute("treeDataSource", JSONArray.fromObject(treeModels, new JsonConfig()).toString());

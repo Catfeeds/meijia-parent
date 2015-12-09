@@ -1,8 +1,14 @@
-$('#dict-form').validate({
+
+
+var formVal = $('#dict-form').validate({
 	errorElement: 'span', //default input error message container
 	errorClass: 'help-block', // default input error message class
 	focusInvalid: false, // do not focus the last invalid input
 	rules: {
+		title : {
+			required: true
+		},
+		
 		No: {
 			required: true,
      		digits:true,
@@ -12,18 +18,22 @@ $('#dict-form').validate({
 		imgUrl: {
 			required: true
 		},
-		gotoUrl: {
+		gotoType: {
 			required: true
 		},
-		serviceType: {
+
+		adType: {
 			required: true
 		}
-
 
 
 	},
 
 	messages: {
+		
+		title : {
+			required: "标题.标题.标题，重要的事情说三遍!"
+		},
 		No: {
 			required: "请输入编号。",
 			digits:"请输入整数",
@@ -33,12 +43,10 @@ $('#dict-form').validate({
 		imgUrl: {
 			required: "请选择上传路径。"
 		},
-		gotoUrl: {
-			required: "请输入跳转路径。"
+		gotoType: {
+			required: "请选择跳转类型。"
 		},
-		serviceType: {
-			required: "请选择服务类型。"
-		}
+
 
 	},
 
@@ -64,12 +72,12 @@ $('#dict-form').validate({
 
 $('.dict-form input').keypress(function (e) {
 	if (e.which == 13) {
-		$("#addstaff_btn").click();
+		$("#adForm_btn").click();
 		return false;
 	}
 });
 
-$("#imgUrl").fileinput({
+$("#imgUrlFile").fileinput({
 	previewFileType: "image",
 	browseClass: "btn btn-success",
 	browseLabel: "上传图片",
@@ -86,11 +94,79 @@ $('#imgUrl').change(function(){
 	console.log($("#imgUrl").val()+"0000000000");
 	 $("#img_url_new").text($("#imgUrl").val());
 });
-/*$("#adForm_btn").click(function() {
+
+$("#adForm_btn").click(function() {
 	if (confirm("确认要保存吗?")) {
 		if ($('#dict-form').validate().form()) {
+			
+			var gotoType = $('input:radio[name=gotoType]:checked').val();
+			console.log("gotoType = " + gotoType);
+			var errors = {};
+			if (gotoType == "h5") {
+				if ($("#gotoUrl").val() == "") {
+					
+					errors.gotoUrl = "请输入跳转地址";
+					formVal.showErrors(errors);
+					return false;
+				}
+				
+			}
+			
+			if (gotoType == "app") {
+				if ($("#serviceTypeIds").val() == "") {
+					errors.gotoUrl = "请选择显示服务大类";
+					formVal.showErrors(errors);
+					return false;
+				}
+				
+			}
+			
 			$('#dict-form').submit();
 		}
 	}
-});*/
+});
+
+
+$("#adType").multiSelect({   
+	keepOrder: true,
+	selectableHeader: "<div class='custom-header'>可选</div>",
+	selectionHeader: "<div class='custom-header'>已选</div>",
+});
+
+$('#adType option').each(function(){
+	var selectedAdType = $("#adTypeSelected").val() + ",";
+	var v = $(this).val();
+	console.log(v);
+	if (selectedAdType.indexOf(v + ",") >= 0) {
+		$(this).attr('selected', true);
+     }
+});
+
+
+$("#serviceTypeIds").multiSelect({   
+	keepOrder: true,
+	selectableHeader: "<div class='custom-header'>可选</div>",
+	selectionHeader: "<div class='custom-header'>已选</div>",
+});
+
+$('#serviceTypeIds option').each(function(){
+	var serviceTypeIdsSelected = $("#serviceTypeIdsSelected").val() + ",";
+	var v = $(this).val();
+	console.log(v);
+	if (serviceTypeIdsSelected.indexOf(v + ",") >= 0) {
+		$(this).attr('selected', true);
+     }
+});
+
+
+
+////查看有选择的checkbox
+//$("input[name='adType']:checkbox").each(function(){
+//	var selectedAdType = $("#adTypeSelected").val();
+//	var v = $(this).attr('value');
+//	if (selectedAdType.indexOf(v + ",") >= 0) {
+//		$(this).attr('checked', true);
+//	}
+//	
+//});
 
