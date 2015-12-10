@@ -91,7 +91,6 @@ $("#imgUrlFile").fileinput({
 });
 
 $('#imgUrl').change(function(){
-	console.log($("#imgUrl").val()+"0000000000");
 	 $("#img_url_new").text($("#imgUrl").val());
 });
 
@@ -100,10 +99,10 @@ $("#adForm_btn").click(function() {
 		if ($('#dict-form').validate().form()) {
 			
 			var gotoType = $('#gotoType').val();
-			console.log("gotoType = " + gotoType);
+
 			var errors = {};
 			if (gotoType.indexOf("h5") >= 0 ) {
-				if ($("#gotoUrl").val() == "") {
+				if ($("#gotoUrl").val() == null || $("#gotoUrl").val() == "" ) {
 					alert("请输入跳转地址");
 					errors.gotoUrl = "请输入跳转地址";
 					formVal.showErrors(errors);
@@ -113,16 +112,16 @@ $("#adForm_btn").click(function() {
 			}
 			
 			if (gotoType == "app" || gotoType == "h5+list" ) {
-				if ($("#serviceTypeIds").val() == "") {
+				if ($("#serviceTypeIds").val() == null || $("#serviceTypeIds").val() == "") {
 					alert("请选择显示服务大类");
-					errors.gotoUrl = "请选择显示服务大类";
+					errors.serviceTypeIds = "请选择显示服务大类";
 					formVal.showErrors(errors);
 					return false;
 				}
 				
 			}
 			
-			$('#dict-form').submit();
+//			$('#dict-form').submit();
 		}
 	}
 });
@@ -130,7 +129,6 @@ $("#adForm_btn").click(function() {
 $('#adType option').each(function(){
 	var selectedAdType = $("#adTypeSelected").val() + ",";
 	var v = $(this).val();
-	console.log(v);
 	if (selectedAdType.indexOf(v + ",") >= 0) {
 		$(this).attr('selected', true);
      }
@@ -147,7 +145,6 @@ $("#adType").multiSelect({
 $('#serviceTypeIds option').each(function(){
 	var serviceTypeIdsSelected = $("#serviceTypeIdsSelected").val() + ",";
 	var v = $(this).val();
-	console.log(v);
 	if (serviceTypeIdsSelected.indexOf(v + ",") >= 0) {
 		$(this).attr('selected', true);
      }
