@@ -19,5 +19,7 @@ public interface OpChannelMapper {
 
 	List<OpChannel> selectByListPage();
 
+	List<OpChannel> selectByAppType(String appType);
+
 	List<OpChannel> selectByAll();
 }

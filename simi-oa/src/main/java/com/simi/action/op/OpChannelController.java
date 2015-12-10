@@ -27,7 +27,7 @@ public class OpChannelController extends BaseController {
 	@Autowired
 	private OpChannelService opChannelService;
 
-	@AuthPassport
+//	@AuthPassport
 	@RequestMapping(value = "/channel_list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model) {
 

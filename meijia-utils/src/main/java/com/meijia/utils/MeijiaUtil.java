@@ -596,4 +596,26 @@ public class MeijiaUtil {
 		depts.add("总经办");
 		return depts;
 	}
+	
+	//服务响应时间
+	public static String getAppTypeName(String appType) {
+		
+		String appTypeName = "云行政";
+		
+		if (StringUtil.isEmpty(appType)) return appTypeName;
+		switch (appType) {
+			case "xcloud":
+				appTypeName = "云行政";
+				break;
+			case "timechick":
+				appTypeName = "时光机";
+				break;
+			case "simi":
+				appTypeName = "私秘";
+				break;
+			default:
+				appTypeName = "云行政";
+		}
+		return appTypeName;		
+	}	
 }

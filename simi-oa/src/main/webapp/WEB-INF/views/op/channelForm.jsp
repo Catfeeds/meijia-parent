@@ -58,6 +58,18 @@
 										</div>
 									</div>
 									
+									<div class="form-group required">
+
+										<label class="col-md-2 control-label">频道名称</label>
+										<div class="col-md-5">
+											<form:select path="appType">
+												<form:option value="xlcoud">云行政</form:option>
+												<form:option value="timecheck">时光机</form:option>
+												<form:option value="simi">私秘</form:option>
+											</form:select>
+										</div>
+									</div>
+									
 
 									<div class="form-group required">
 

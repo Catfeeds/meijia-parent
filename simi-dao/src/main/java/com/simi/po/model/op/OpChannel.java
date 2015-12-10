@@ -2,6 +2,8 @@ package com.simi.po.model.op;
 
 public class OpChannel {
     private Long channelId;
+    
+    private String appType;
 
     private String name;
 
@@ -40,4 +42,12 @@ public class OpChannel {
     public void setAddTime(long addTime) {
         this.addTime = addTime;
     }
+
+	public String getAppType() {
+		return appType;
+	}
+
+	public void setAppType(String appType) {
+		this.appType = appType;
+	}
 }

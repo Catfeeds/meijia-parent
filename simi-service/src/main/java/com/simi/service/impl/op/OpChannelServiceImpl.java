@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.service.op.OpChannelService;
 import com.simi.po.dao.op.OpChannelMapper;
 import com.simi.po.model.op.OpChannel;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -25,6 +26,13 @@ public class OpChannelServiceImpl implements OpChannelService {
 		PageHelper.startPage(pageNo, pageSize);
 		List<OpChannel> list = opChannelMapper.selectByListPage();
 		
+		for (int i = 0 ; i < list.size(); i++) {
+			OpChannel item = list.get(i);
+			String appType = item.getAppType();
+			appType = MeijiaUtil.getAppTypeName(appType);
+			item.setAppType(appType);
+			list.set(i, item);
+		}
 		PageInfo result = new PageInfo(list);
 		
 		return result;
@@ -46,6 +54,11 @@ public class OpChannelServiceImpl implements OpChannelService {
 	public OpChannel selectByPrimaryKey(Long channelId) {
 		return opChannelMapper.selectByPrimaryKey(channelId);
 	}
+	
+	@Override
+	public List<OpChannel> selectByAppType(String appType) {
+		return opChannelMapper.selectByAppType(appType);
+	}		
 	
 	@Override
 	public List<OpChannel> selectByAll() {

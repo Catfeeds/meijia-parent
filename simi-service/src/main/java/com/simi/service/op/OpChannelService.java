@@ -22,5 +22,7 @@ public interface OpChannelService {
 
 	List<OpChannel> selectByAll();
 
+	List<OpChannel> selectByAppType(String appType);
+
 
 }

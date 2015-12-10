@@ -3,12 +3,13 @@
 <mapper namespace="com.simi.po.dao.op.OpChannelMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.op.OpChannel">
 		<id column="channel_id" property="channelId" jdbcType="NUMERIC" />
+		<result column="add_type" property="appType" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="enable" property="enable" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		channel_id, name, enable, add_time
+		channel_id, app_type, name, enable, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -22,20 +23,28 @@
 		from op_channel
 		order by channel_id asc
 	</select>
+	<select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from op_channel where app_type = #{appType,jdbcType=VARCHAR} and enable = 1
+		order by channel_id asc
+	</select>
+	
 	<select id="selectByAll" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from op_channel where enable = 1
 		order by channel_id asc
 	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from op_channel
 		where channel_id = #{channelId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.op.OpChannel">
-		insert into op_channel (channel_id, name, enable,
+		insert into op_channel (channel_id, app_type, name, enable,
 		add_time)
-		values (#{channelId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{enable,jdbcType=NUMERIC},
+		values (#{channelId,jdbcType=NUMERIC}, #{appType,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enable,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.op.OpChannel">
@@ -43,6 +52,9 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="channelId != null">
 				channel_id,
+			</if>
+			<if test="appType != null">
+				app_type,
 			</if>
 			<if test="name != null">
 				name,
@@ -58,6 +70,9 @@
 			<if test="channelId != null">
 				#{channelId,jdbcType=NUMERIC},
 			</if>
+			<if test="appType != null">
+				#{appType,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -72,6 +87,9 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.OpChannel">
 		update op_channel
 		<set>
+			<if test="appType != null">
+				app_type = #{appType,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
@@ -86,6 +104,7 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.OpChannel">
 		update op_channel
+		set app_type = #{appType,jdbcType=VARCHAR},
 		set name = #{name,jdbcType=VARCHAR},
 		enable = #{enable,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
