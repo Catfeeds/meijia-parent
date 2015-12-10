@@ -130,7 +130,7 @@ public class PartnerController extends BaseController {
 		partnerIds.add(0L);
 		partnerIds.add(partnerId);
 		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
-		searchVo.setParentId(0L);
+		searchVo.setParentId(serviceTypeId);
 		searchVo.setViewType((short) 1);
 		searchVo.setPartnerIds(partnerIds);
 		

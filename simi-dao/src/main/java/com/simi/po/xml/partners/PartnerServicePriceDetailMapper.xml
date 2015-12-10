@@ -32,7 +32,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_price_detail
-		where service_price_id = #{id,jdbcType=NUMERIC}
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</select>	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
