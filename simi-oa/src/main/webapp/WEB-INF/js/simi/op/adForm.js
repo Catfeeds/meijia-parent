@@ -99,12 +99,12 @@ $("#adForm_btn").click(function() {
 	if (confirm("确认要保存吗?")) {
 		if ($('#dict-form').validate().form()) {
 			
-			var gotoType = $('input:radio[name=gotoType]:checked').val();
+			var gotoType = $('#gotoType').val();
 			console.log("gotoType = " + gotoType);
 			var errors = {};
-			if (gotoType == "h5") {
+			if (gotoType.indexOf("h5") >= 0 ) {
 				if ($("#gotoUrl").val() == "") {
-					
+					alert("请输入跳转地址");
 					errors.gotoUrl = "请输入跳转地址";
 					formVal.showErrors(errors);
 					return false;
@@ -112,8 +112,9 @@ $("#adForm_btn").click(function() {
 				
 			}
 			
-			if (gotoType == "app") {
+			if (gotoType == "app" || gotoType == "h5+list" ) {
 				if ($("#serviceTypeIds").val() == "") {
+					alert("请选择显示服务大类");
 					errors.gotoUrl = "请选择显示服务大类";
 					formVal.showErrors(errors);
 					return false;

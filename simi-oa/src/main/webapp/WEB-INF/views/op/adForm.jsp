@@ -99,18 +99,12 @@
 						<div class="form-group required">
 							<label class="col-md-2 control-label">跳转类型</label>
 							<div class="col-md-10">
-
-								<div class="row">
-									<div class="col-md-2" align="right">
-										<label class="radio">
-										<form:radiobutton path="gotoType" value="h5"/>h5
-										</label>
-									</div>
-									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="gotoType" value="app"/>App内打开</label>
-									</div>
-
-								</div>
+								<form:select path="gotoType" >
+									<form:option value="h5">h5</form:option>
+									<form:option value="app">app</form:option>
+									<form:option value="h5+list">h5再跳转人员列表</form:option>
+									<%-- <form:option value="h5+order">h5再跳转订单</form:option> --%>
+								</form:select>
 							</div>
 						</div>
 						
