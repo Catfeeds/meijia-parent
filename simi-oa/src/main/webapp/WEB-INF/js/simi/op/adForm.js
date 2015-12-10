@@ -121,7 +121,7 @@ $("#adForm_btn").click(function() {
 				
 			}
 			
-//			$('#dict-form').submit();
+			$('#dict-form').submit();
 		}
 	}
 });
