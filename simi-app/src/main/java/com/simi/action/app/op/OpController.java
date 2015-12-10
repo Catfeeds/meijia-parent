@@ -30,8 +30,9 @@ public class OpController extends BaseController {
 
 
 	@RequestMapping(value = "get_channels", method = RequestMethod.GET)
-	public AppResultData<Object> getChannels() {
-		List<OpChannel> opChannels = opChannelService.selectByAll();
+	public AppResultData<Object> getChannels(
+			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType) {
+		List<OpChannel> opChannels = opChannelService.selectByAppType(appType);
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, opChannels);
