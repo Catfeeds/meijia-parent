@@ -97,7 +97,7 @@ $('#imgUrl').change(function(){
 $("#adForm_btn").click(function() {
 	if (confirm("确认要保存吗?")) {
 		if ($('#dict-form').validate().form()) {
-			
+			console.log($("#serviceTypeIds").val());
 			var gotoType = $('#gotoType').val();
 
 			var errors = {};
@@ -121,15 +121,15 @@ $("#adForm_btn").click(function() {
 				
 			}
 			
-			$('#dict-form').submit();
+//			$('#dict-form').submit();
 		}
 	}
 });
 
 $('#adType option').each(function(){
-	var selectedAdType = $("#adTypeSelected").val() + ",";
-	var v = $(this).val();
-	if (selectedAdType.indexOf(v + ",") >= 0) {
+	var selectedAdType = "," +  $("#adTypeSelected").val() + ",";
+	var v = "," +  $(this).val() + ",";
+	if (selectedAdType.indexOf(v) >= 0) {
 		$(this).attr('selected', true);
      }
 });
@@ -143,9 +143,12 @@ $("#adType").multiSelect({
 
 
 $('#serviceTypeIds option').each(function(){
-	var serviceTypeIdsSelected = $("#serviceTypeIdsSelected").val() + ",";
-	var v = $(this).val();
-	if (serviceTypeIdsSelected.indexOf(v + ",") >= 0) {
+	
+	var serviceTypeIdsSelected = "," + $("#serviceTypeIdsSelected").val() + ",";
+	var v =  "," + $(this).val()  + ",";
+	console.log(serviceTypeIdsSelected + "----" + v);
+	if (serviceTypeIdsSelected.indexOf(v) >= 0) {
+		console.log($(this).val());
 		$(this).attr('selected', true);
      }
 });
