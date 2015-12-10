@@ -27,7 +27,7 @@ public class OpChannelController extends BaseController {
 	@Autowired
 	private OpChannelService opChannelService;
 
-//	@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/channel_list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model) {
 
@@ -45,7 +45,7 @@ public class OpChannelController extends BaseController {
 		return "op/channelList";
 	}
 
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/channelForm", method = { RequestMethod.GET })
 	public String adForm(Model model, @RequestParam(value = "channel_id") Long channelId, HttpServletRequest request) {
 
@@ -64,7 +64,7 @@ public class OpChannelController extends BaseController {
 		return "op/channelForm";
 	}
 	
-//	@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/channelForm", method = { RequestMethod.POST })
 	public String doAdForm(HttpServletRequest request, Model model, @ModelAttribute("opChannel") OpChannel opChannel, BindingResult result) throws IOException {
 
