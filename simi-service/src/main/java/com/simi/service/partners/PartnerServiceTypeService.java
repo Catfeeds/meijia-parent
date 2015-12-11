@@ -29,5 +29,7 @@ public interface PartnerServiceTypeService {
 	PartnerServiceTypeVo ToTree(Long id, Short viewType, List<Long> partnerIds);
 
 	List<PartnerServiceType> selectBySearchVo(PartnerServiceTypeSearchVo searchVo);
+
+	List<PartnerServiceType> selectByPartnerId(Long partnerId);
 	
 }

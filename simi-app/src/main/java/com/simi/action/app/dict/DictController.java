@@ -1,5 +1,7 @@
 package com.simi.action.app.dict;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCardType;
 import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.dict.DictTrade;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Tags;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.CardTypeService;
 import com.simi.service.dict.DictSeniorTypeService;
 import com.simi.service.dict.TradeService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.UsersService;
 
@@ -29,6 +33,9 @@ public class DictController<T> {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
 	private UsersService userService;
@@ -117,5 +124,26 @@ public class DictController<T> {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "get_service_type_list", method = RequestMethod.GET)
+	public AppResultData<Object> getTagsList(
+			@RequestParam("partner_id") Long partnerId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+	    List<PartnerServiceType> listBig = partnerServiceTypeService.selectByPartnerId(partnerId);
+		List<String> bigServiceTypeName = new ArrayList<String>();
+		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
+			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
+			bigServiceTypeName.add(partnerServiceType.getName());
+		}
+		
+		result.setData(bigServiceTypeName);
+
+		return result;
+	}
+	
+	
 	
 }

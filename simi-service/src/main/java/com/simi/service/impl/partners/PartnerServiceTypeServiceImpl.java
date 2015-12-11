@@ -123,6 +123,12 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		partnerServiceType.setPartnerId(0L);
 		return partnerServiceType;
 	}
+
+	@Override
+	public List<PartnerServiceType> selectByPartnerId(Long partnerId) {
+		
+		return partnerServiceTypeMapper.selectByPartnerId(partnerId);
+	}
 	
 	
 

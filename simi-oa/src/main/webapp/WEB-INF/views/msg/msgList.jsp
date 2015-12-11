@@ -49,7 +49,7 @@ import="com.simi.oa.common.UrlHelper"%>
       <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
-
+				<%@ include file="../common/msg/msgSearch.jsp"%>
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
@@ -67,44 +67,32 @@ import="com.simi.oa.common.UrlHelper"%>
                           <table class="table table-striped table-advance table-hover">
                               <thead>
                               <tr>
-                                  <th >序号</th>
-		                              <th >标题</th>
-		                              <th >摘要</th>
-		                              <th >发送用户群</th>
-		                              <th>是否有效</th>
-		                              <th>发送状态</th>
-		                              <th>发送用户数</th>
-		                              <th >添加时间</th>
-		                              <th >操作</th>
+			                              <th >标题</th>
+			                              <th >用户类型</th>
+			                              <th>发送时间</th>
+			                              <th>是否已发送</th>
+			                              <th>是否可用</th>
+			                              <th >操作</th>
                               </tr>
                               </thead>
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-                                    <td>${ item.id }
-							            </td>
+                                    
 							            <td>${ item.title }</td>
-							            <td >
-							            	<div id="sum" >
-							            		<nobr>${item.summary}	</nobr>
-							            	</div>
-							            </td>
+							            <td>${ item.userType }</td>
 							            <td>
-							            	<msgSendGroupTag:sendGroupId sendGroupId="${item.sendGroup}"/>
+							            	<timestampTag:timestamp patten="yyyy-MM-dd HH:mm:ss" t="${item.sendTime * 1000}"/>
 							            </td>
+							            <td>${ item.isSend }</td>
 							            <td>
 							            	<statusTag:status status="${ item.isEnable }"/>
 							            </td>
 							            <td>
-							            	<sendStatusTag:sendStatus sendStatus="${item.sendStatus }"/>
+							                <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+	                                  		<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
 							            </td>
-							            <td>
-											${item.sendTotal}
-							            </td>
-							            <td>
-							            	<timestampTag:timestamp patten="yyyy-MM-dd HH:mm:ss" t="${item.addTime * 1000}"/>
-							            </td>
-							            <td>
+							            <%-- <td>
 							            	<c:if test="${item.sendStatus==1}">
 							            	<button type="button"  onclick="sendAgain('${(item.id)}')"class="btn btn-primary btn-xs">再次发送</button>
 							            	</c:if>
@@ -113,10 +101,10 @@ import="com.simi.oa.common.UrlHelper"%>
 							            	</c:if>
 							            	<button type="button"  onclick="preview('${item.htmlUrl}')" class="btn btn-success btn-xs">预览消息</button>
 							              
-							               <%--  <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+							                <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 	                                  		<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
-                                  	    --%>
-							            </td>
+                                  	   
+							            </td> --%>
                               </tr>
                               </c:forEach>
                               </tbody>

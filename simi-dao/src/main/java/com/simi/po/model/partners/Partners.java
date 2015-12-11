@@ -9,6 +9,8 @@ public class Partners {
     private Long spiderPartnerId;
 
     private String companyName;
+    
+    private short registerType;
 
     private String shortName;
     
@@ -102,7 +104,15 @@ public class Partners {
         this.companyName = companyName == null ? null : companyName.trim();
     }
 
-    public String getShortName() {
+    public short getRegisterType() {
+		return registerType;
+	}
+
+	public void setRegisterType(short registerType) {
+		this.registerType = registerType;
+	}
+
+	public String getShortName() {
         return shortName;
     }
 

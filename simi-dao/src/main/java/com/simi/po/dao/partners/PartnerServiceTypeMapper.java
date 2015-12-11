@@ -22,4 +22,6 @@ public interface PartnerServiceTypeMapper {
 
 	List<PartnerServiceType> selectBySearchVo(PartnerServiceTypeSearchVo searchVo);
 
+	List<PartnerServiceType> selectByPartnerId(Long partnerId);
+
 }

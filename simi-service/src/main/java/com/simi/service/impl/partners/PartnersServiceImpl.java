@@ -208,6 +208,7 @@ public class PartnersServiceImpl implements PartnersService {
 		vo.setPartnerId(0L);
 		vo.setSpiderPartnerId(0L);
 		vo.setCompanyName("");
+		vo.setRegisterType((short)0L);
 		vo.setShortName("");
 		vo.setAddr("");
 		vo.setCreditFileUrl("");
@@ -329,6 +330,12 @@ public class PartnersServiceImpl implements PartnersService {
 	@Override
 	public List<Partners> selectByCompanyName(String companyName) {
 		return partnersMapper.selectByCompanyName(companyName);
+	}
+
+	@Override
+	public Partners selectByCompanyNames(String companyName) {
+		
+		return partnersMapper.selectByCompanyNames(companyName);
 	}
 	
 	

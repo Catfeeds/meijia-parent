@@ -51,4 +51,6 @@ public interface PartnersService {
 	
 	List<PartnerRefServiceType> selectSubServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
 
+	Partners selectByCompanyNames(String companyName);
+
 }

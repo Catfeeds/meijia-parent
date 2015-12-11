@@ -27,4 +27,6 @@ public interface PartnersMapper {
     List<Partners> selectByCompanyName(String companyName);
 
 	List<Partners> selectBySpiderIds(List<Long> partnerIds);
+
+	Partners selectByCompanyNames(String companyName);
 }

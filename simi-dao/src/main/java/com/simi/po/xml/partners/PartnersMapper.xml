@@ -5,6 +5,7 @@
     <id column="partner_id" property="partnerId" jdbcType="NUMERIC" />
     <id column="spider_partner_id" property="spiderPartnerId" jdbcType="NUMERIC" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+     <result column="register_type" property="registerType" jdbcType="NUMERIC" />
     <result column="short_name" property="shortName" jdbcType="VARCHAR" />
      <result column="register_time" jdbcType="DATE" property="registerTime" javaType="java.util.Date"/>
      <result column="addr" property="addr" jdbcType="VARCHAR" />
@@ -16,7 +17,6 @@
      <result column="service_type" property="serviceType" jdbcType="VARCHAR" />
      <result column="company_desc" property="companyDesc" jdbcType="VARCHAR" />
      <result column="company_desc_img" property="companyDescImg" jdbcType="VARCHAR" />
-     
     <result column="company_size" property="companySize" jdbcType="SMALLINT" />
     <result column="company_logo" property="companyLogo" jdbcType="VARCHAR" />
     <result column="is_door" property="isDoor" jdbcType="NUMERIC" />
@@ -44,7 +44,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
   
-    partner_id,spider_partner_id, company_name, short_name,register_time,company_desc_img, addr,credit_file_url,website,spider_url,company_size, company_logo, is_door, keywords, 
+    partner_id,spider_partner_id, company_name, register_type,short_name,register_time,company_desc_img, addr,credit_file_url,website,spider_url,company_size, company_logo, is_door, keywords, 
     status, status_remark, weixin, qq, email, province_id, city_id, is_cooperate, fax, 
     pay_type, discout, remark, add_time, admin_id, update_time
   </sql>
@@ -67,6 +67,15 @@
     from partners
     where company_name = #{companyName,jdbcType=VARCHAR}
   </select>
+   <select id="selectByCompanyNames" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from partners
+    where company_name = #{companyName,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectBySpiderIds" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -109,7 +118,7 @@
     where partner_id = #{partnerId,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.partners.Partners" >
-    insert into partners (partner_id, spider_partner_id,company_name, short_name, register_time,addr,
+    insert into partners (partner_id, spider_partner_id,company_name, register_type,short_name, register_time,addr,
         credit_file_url,website,spider_url,service_area,service_type,company_desc,company_desc_img,
       company_size, company_logo, is_door, 
       keywords, status, status_remark, 
@@ -118,7 +127,8 @@
       fax, pay_type, discout, 
       remark, add_time, admin_id, 
       update_time, business_desc)
-    values (#{partnerId,jdbcType=NUMERIC},(#{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
+    values (#{partnerId,jdbcType=NUMERIC},#{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, 
+    #{registerType,jdbcType=NUMERIC},#{shortName,jdbcType=VARCHAR}, 
     #{registerTime,jdbcType=DATE}, #{addr,jdbcType=VARCHAR},
     #{creditFileUrl,jdbcType=VARCHAR},#{website,jdbcType=VARCHAR},#{spiderUrl,jdbcType=VARCHAR},#{serviceArea,jdbcType=VARCHAR},
     #{serviceType,jdbcType=VARCHAR},#{companyDesc,jdbcType=LONGVARCHAR},#{companyDescImg,jdbcType=VARCHAR},
@@ -142,7 +152,9 @@
       <if test="companyName != null" >
         company_name,
       </if>
-     
+      <if test="registerType != null" >
+        register_type,
+      </if>
       <if test="shortName != null" >
         short_name,
       </if>
@@ -237,6 +249,9 @@
       </if>
       <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="registerType != null" >
+        #{registerType,jdbcType=NUMERIC},
       </if>
       <if test="shortName != null" >
         #{shortName,jdbcType=VARCHAR},
@@ -335,6 +350,9 @@
       <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
+       <if test="registerType != null" >
+        register_type = #{registerType,jdbcType=NUMERIC},
+      </if>
       <if test="shortName != null" >
         short_name = #{shortName,jdbcType=VARCHAR},
       </if>
@@ -427,6 +445,7 @@
     set
       spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC}, 
       company_name = #{companyName,jdbcType=VARCHAR},
+      register_type = #{registerType,jdbcType=NUMERIC},
       short_name = #{shortName,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=DATE},
       
@@ -468,6 +487,7 @@
     set 
       spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
       company_name = #{companyName,jdbcType=VARCHAR},
+       register_type = #{registerType,jdbcType=NUMERIC},
       short_name = #{shortName,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=DATE},
       

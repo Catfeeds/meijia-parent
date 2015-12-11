@@ -47,6 +47,9 @@ public class ConstantMsg {
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
 	
+	//公司名称已存在
+	public static String XCOMPANY_NAME_EXIST = "公司名称已存在";
+	
 	//卡片不存在
 	public static String CADR_NOT_EXIST_MG = "卡片不存在";
 	//用户已存在
