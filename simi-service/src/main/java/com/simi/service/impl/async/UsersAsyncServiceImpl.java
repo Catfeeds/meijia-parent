@@ -126,7 +126,7 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		
 		UserLogined record = userLoginedService.initUserLogined();
 		
-		record.setUserId(userId);
+		record.setUserId(u.getId());
 		record.setMobile(u.getMobile());
 		record.setLoginFrom(loginFrom);
 		record.setLoginIp(ip);
