@@ -52,6 +52,15 @@ public class OpController extends BaseController {
 		
 		if (list.isEmpty()) return result;
 		
+		for (int i =0 ; i < list.size(); i++) {
+			OpAd item = list.get(i);
+			String imgUrl = item.getImgUrl();
+			imgUrl =  imgUrl + "?w=300&h=125";
+			item.setImgUrl(imgUrl);
+			list.set(i, item);
+		}
+		
+		
 		result.setData(list);
 		
 		return result;
