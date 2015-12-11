@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>店铺注册</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+	<div class="am-g" >
+		<img src="images/store-bg.jpg" class="am-img-responsive" alt="" />
+		<div class="am-u-md-centered">
+		<form action="" id="sec-form" class="am-forml">
+			<div class="am-form-group">
+			  <label for="doc-ipt-email-1">您是：</label>
+		      <label class="am-radio-inline">
+		        <input type="radio"  value="" name="docInlineRadio"> 个人开店
+		      </label>
+		      <label class="am-radio-inline">
+		        <input type="radio" name="docInlineRadio"> 企业入驻
+		      </label>
+			</div>
+
+		 <div class="am-form-group">
+		      <label for="doc-ipt-email-1">请输入手机号</label>
+		      <input type="text" type="text" id="mobile" name = "mobile" class="am-form-field" placeholder="输入手机号" required>
+		 </div>
+
+		<div class="am-input-group">
+				<input type="text" id="verify_code" class="am-form-field js-ajax-validate"
+					placeholder="输入验证码">
+					 <span class="am-input-group-btn">
+					<button class="am-btn am-btn-default" id="get_code"
+						placeholder="输入您的手机号" type="button">获取验证码</button>
+				</span>
+		</div>
+			 <div class="am-form-group">
+		      <label for="doc-ipt-email-1">请输入店铺名称</label>
+		      <input type="text" type="text" id="name" name = "name" class="am-form-field" placeholder="企业用户输入公司名称">
+		 </div>
+			
+			
+
+			<div class="am-form-group">
+				<label for="doc-select-1">您能提供的服务内容：</label> <select id="degreeId" name="degreeId"  class="am-form-field">
+					<option value="0">工商注册</option>
+					<option value="1">代理记账</option>
+					<option value="2">社保公积金</option>
+					<option value="3">设计印刷</option>
+					<option value="4" selected="selected">技术服务</option>
+			
+				</select> <span class="am-form-caret"></span>
+			</div>
+			
+			
+			
+			<div class="am-form-group">
+			   <!--  <button type="button" id="information_btn" class="am-btn am-btn-primary am-radius">提&nbsp;&nbsp;&nbsp;&nbsp;交</button> -->
+			<button type="button" id="information_btn" class="am-btn am-btn-danger am-btn-block">申请开店</button>
+			</div>
+			</form>
+			<hr>
+			<p align="center">© 云行政 版权所有</p>
+		</div>
+	</div>
+
+	<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+    <script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+	
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/countdown.js"></script>
+
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<!--<![endif]-->
+	<!--<![endif]-->
+	<script src="assets/js/company/invite-index.js"></script>
+
+</body>
+</html>
