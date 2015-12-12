@@ -13,19 +13,11 @@ public class Weathers {
 
     private String pm25;
 
-    private String dayPictureUrl;
-
-    private String nightPictureUrl;
-
-    private String weather;
-
-    private String wind;
-
-    private String temperature;
-
-    private String realTemp;
-
+    private String weatherData;
+    
     private String weatherIndex;
+    
+    private String lastTime;
 
     public Long getId() {
         return id;
@@ -67,54 +59,6 @@ public class Weathers {
         this.pm25 = pm25 == null ? null : pm25.trim();
     }
 
-    public String getDayPictureUrl() {
-        return dayPictureUrl;
-    }
-
-    public void setDayPictureUrl(String dayPictureUrl) {
-        this.dayPictureUrl = dayPictureUrl == null ? null : dayPictureUrl.trim();
-    }
-
-    public String getNightPictureUrl() {
-        return nightPictureUrl;
-    }
-
-    public void setNightPictureUrl(String nightPictureUrl) {
-        this.nightPictureUrl = nightPictureUrl == null ? null : nightPictureUrl.trim();
-    }
-
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather == null ? null : weather.trim();
-    }
-
-    public String getWind() {
-        return wind;
-    }
-
-    public void setWind(String wind) {
-        this.wind = wind == null ? null : wind.trim();
-    }
-
-    public String getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(String temperature) {
-        this.temperature = temperature == null ? null : temperature.trim();
-    }
-
-    public String getRealTemp() {
-        return realTemp;
-    }
-
-    public void setRealTemp(String realTemp) {
-        this.realTemp = realTemp == null ? null : realTemp.trim();
-    }
-
     public String getWeatherIndex() {
         return weatherIndex;
     }
@@ -122,4 +66,20 @@ public class Weathers {
     public void setWeatherIndex(String weatherIndex) {
         this.weatherIndex = weatherIndex == null ? null : weatherIndex.trim();
     }
+
+	public String getWeatherData() {
+		return weatherData;
+	}
+
+	public void setWeatherData(String weatherData) {
+		this.weatherData = weatherData;
+	}
+
+	public String getLastTime() {
+		return lastTime;
+	}
+
+	public void setLastTime(String lastTime) {
+		this.lastTime = lastTime;
+	}
 }

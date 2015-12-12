@@ -7,17 +7,12 @@
 		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
 		<result column="weather_date" property="weatherDate" jdbcType="DATE" />
 		<result column="pm25" property="pm25" jdbcType="VARCHAR" />
-		<result column="day_picture_url" property="dayPictureUrl" jdbcType="VARCHAR" />
-		<result column="night_picture_url" property="nightPictureUrl" jdbcType="VARCHAR" />
-		<result column="weather" property="weather" jdbcType="VARCHAR" />
-		<result column="wind" property="wind" jdbcType="VARCHAR" />
-		<result column="temperature" property="temperature" jdbcType="VARCHAR" />
-		<result column="real_temp" property="realTemp" jdbcType="VARCHAR" />
+		<result column="weather_data" property="weatherData" jdbcType="VARCHAR" />
 		<result column="weather_index" property="weatherIndex" jdbcType="VARCHAR" />
+		<result column="last_time" property="lastTime" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, city_id, city_name, weather_date, pm25, day_picture_url, night_picture_url, weather,
-		wind, temperature, real_temp, weather_index
+		id, city_id, city_name, weather_date, pm25, weather_data, weather_index, last_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -45,14 +40,11 @@
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.data.Weathers">
 		insert into weathers (id, city_id, city_name,
-		weather_date, pm25, day_picture_url,
-		night_picture_url, weather, wind,
-		temperature, real_temp, weather_index
+		weather_date, pm25, weather_data, weather_index, last_time
 		)
 		values (#{id,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{cityName,jdbcType=VARCHAR},
-		#{weatherDate,jdbcType=DATE}, #{pm25,jdbcType=VARCHAR}, #{dayPictureUrl,jdbcType=VARCHAR},
-		#{nightPictureUrl,jdbcType=VARCHAR}, #{weather,jdbcType=VARCHAR}, #{wind,jdbcType=VARCHAR},
-		#{temperature,jdbcType=VARCHAR}, #{realTemp,jdbcType=VARCHAR}, #{weatherIndex,jdbcType=VARCHAR}
+		#{weatherDate,jdbcType=DATE}, #{pm25,jdbcType=VARCHAR}, #{weatherData,jdbcType=VARCHAR}, 
+		#{weatherIndex,jdbcType=VARCHAR},  #{lastTime,jdbcType=VARCHAR}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.data.Weathers">
@@ -73,26 +65,14 @@
 			<if test="pm25 != null">
 				pm25,
 			</if>
-			<if test="dayPictureUrl != null">
-				day_picture_url,
-			</if>
-			<if test="nightPictureUrl != null">
-				night_picture_url,
-			</if>
-			<if test="weather != null">
-				weather,
-			</if>
-			<if test="wind != null">
-				wind,
-			</if>
-			<if test="temperature != null">
-				temperature,
-			</if>
-			<if test="realTemp != null">
-				real_temp,
+			<if test="weatherData != null">
+				weather_data,
 			</if>
 			<if test="weatherIndex != null">
 				weather_index,
+			</if>
+			<if test="lastTime != null">
+				last_time,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -111,26 +91,14 @@
 			<if test="pm25 != null">
 				#{pm25,jdbcType=VARCHAR},
 			</if>
-			<if test="dayPictureUrl != null">
-				#{dayPictureUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="nightPictureUrl != null">
-				#{nightPictureUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="weather != null">
-				#{weather,jdbcType=VARCHAR},
-			</if>
-			<if test="wind != null">
-				#{wind,jdbcType=VARCHAR},
-			</if>
-			<if test="temperature != null">
-				#{temperature,jdbcType=VARCHAR},
-			</if>
-			<if test="realTemp != null">
-				#{realTemp,jdbcType=VARCHAR},
+			<if test="weatherData != null">
+				#{weatherData,jdbcType=VARCHAR},
 			</if>
 			<if test="weatherIndex != null">
 				#{weatherIndex,jdbcType=VARCHAR},
+			</if>
+			<if test="lastTime != null">
+				#{last_time,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -149,26 +117,14 @@
 			<if test="pm25 != null">
 				pm25 = #{pm25,jdbcType=VARCHAR},
 			</if>
-			<if test="dayPictureUrl != null">
-				day_picture_url = #{dayPictureUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="nightPictureUrl != null">
-				night_picture_url = #{nightPictureUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="weather != null">
-				weather = #{weather,jdbcType=VARCHAR},
-			</if>
-			<if test="wind != null">
-				wind = #{wind,jdbcType=VARCHAR},
-			</if>
-			<if test="temperature != null">
-				temperature = #{temperature,jdbcType=VARCHAR},
-			</if>
-			<if test="realTemp != null">
-				real_temp = #{realTemp,jdbcType=VARCHAR},
+			<if test="weatherData != null">
+				weather_data = #{weatherData,jdbcType=VARCHAR},
 			</if>
 			<if test="weatherIndex != null">
 				weather_index = #{weatherIndex,jdbcType=VARCHAR},
+			</if>
+			<if test="lastTime != null">
+				last_time = #{lastTime,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=NUMERIC}
@@ -179,13 +135,9 @@
 		city_name = #{cityName,jdbcType=VARCHAR},
 		weather_date = #{weatherDate,jdbcType=DATE},
 		pm25 = #{pm25,jdbcType=VARCHAR},
-		day_picture_url = #{dayPictureUrl,jdbcType=VARCHAR},
-		night_picture_url = #{nightPictureUrl,jdbcType=VARCHAR},
-		weather = #{weather,jdbcType=VARCHAR},
-		wind = #{wind,jdbcType=VARCHAR},
-		temperature = #{temperature,jdbcType=VARCHAR},
-		real_temp = #{realTemp,jdbcType=VARCHAR},
-		weather_index = #{weatherIndex,jdbcType=VARCHAR}
+		weather_data = #{weatherData,jdbcType=VARCHAR},
+		weather_index = #{weatherIndex,jdbcType=VARCHAR},
+		last_time = #{lastTime,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 </mapper>

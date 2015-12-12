@@ -10,11 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.GsonUtil;
+import com.meijia.utils.weather.WeatherDataVo;
+import com.meijia.utils.weather.WeatherIndexVo;
+import com.meijia.utils.weather.WeatherInfoVo;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.data.Weathers;
 import com.simi.po.model.dict.DictCity;
 import com.simi.service.data.WeatherService;
 import com.simi.service.dict.DictService;
@@ -63,6 +69,36 @@ public class JobWeatherController extends BaseController {
 			
 			Date threeDayAgoDate = DateUtil.parse(threeDayAgo);
 			weatherService.deleteByDate(threeDayAgoDate);
+		}
+		return result;
+	}	
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "get_some_weather", method = RequestMethod.GET)
+	public AppResultData<Object> getSomeWeather(HttpServletRequest request,
+			@RequestParam(value = "city_id", required = false, defaultValue="2L") Long cityId
+			) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		String reqHost = request.getRemoteHost();
+		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+			Date curDate = DateUtil.getNowOfDate();
+			
+			
+			Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, curDate);
+			
+			List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
+			
+			for (WeatherDataVo item : weatherDatas) {
+				System.out.println(item.getDate());
+			}
+			
+			List<WeatherIndexVo> weatherIndexs =GsonUtil.GsonToList(weatherInfo.getWeatherIndex(), WeatherIndexVo.class);
+			for (WeatherIndexVo item : weatherIndexs) {
+				System.out.println(item.getTitle());
+			}
 		}
 		return result;
 	}	

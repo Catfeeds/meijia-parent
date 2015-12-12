@@ -45,6 +45,23 @@ public class TestJobWeatherController extends JUnitActionBase{
 
     }	
 	
+	@Test
+    public void testGetSomeWeather() throws Exception {
+
+		String url = "/app/job/weather/get_some_weather.json?city_id=2";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
+	
 
 
 	

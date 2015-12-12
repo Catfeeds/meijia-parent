@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.weather.WeatherData;
-import com.meijia.utils.weather.WeatherIndex;
-import com.meijia.utils.weather.WeatherInfo;
-import com.meijia.utils.weather.WeatherResult;
+import com.meijia.utils.weather.WeatherDataVo;
+import com.meijia.utils.weather.WeatherIndexVo;
+import com.meijia.utils.weather.WeatherInfoVo;
+import com.meijia.utils.weather.WeatherResultVo;
 import com.meijia.utils.weather.WeatherUtil;
 import com.simi.po.dao.data.WeathersMapper;
 import com.simi.po.model.data.Weathers;
@@ -32,15 +32,11 @@ public class WeatherServiceImpl implements WeatherService {
 		record.setId(0L);
 		record.setCityId(0L);
 		record.setCityName("");
-		record.setDayPictureUrl("");
-		record.setNightPictureUrl("");
 		record.setPm25("");
-		record.setRealTemp("");
-		record.setTemperature("");
-		record.setWeather("");
+		record.setWeatherData("");
 		record.setWeatherDate(DateUtil.getNowOfDate());
 		record.setWeatherIndex("");
-		record.setWind("");
+		record.setLastTime("");
 		return record;
 	}
 
@@ -97,61 +93,82 @@ public class WeatherServiceImpl implements WeatherService {
 		
 		if (StringUtil.isEmpty(repo)) return false;
 		
-		WeatherInfo weatherInfo = GsonUtil.GsonToObject(repo, WeatherInfo.class);
+		WeatherInfoVo weatherInfo = GsonUtil.GsonToObject(repo, WeatherInfoVo.class);
 		if (weatherInfo == null) return false;
 		if (!weatherInfo.getStatus().equals("success")) return false;
 		
 		String weatherDateStr = weatherInfo.getDate();
 		
-		List<WeatherResult> results = weatherInfo.getResults();
-		WeatherResult result = results.get(0);
+		List<WeatherResultVo> results = weatherInfo.getResults();
+		WeatherResultVo result = results.get(0);
 		String pm25 = result.getPm25();
-		List<WeatherIndex> weatherIndexs = result.getIndex();
+		List<WeatherIndexVo> weatherIndexs = result.getIndex();
 		String weatherIndex = GsonUtil.GsonString(weatherIndexs);
 		
-		List<WeatherData> weatherDatas = result.getWeather_data();
+		List<WeatherDataVo> weatherDatas = result.getWeather_data();
 		
-		Date weatherDate = DateUtil.parse(weatherDateStr);
-
-		String nowDateStr = DateUtil.getToday();
-		for (int i =0; i < weatherDatas.size(); i++) {
-			
-			WeatherData item = weatherDatas.get(i);
-			String curDateStr = DateUtil.addDay(weatherDate, i, Calendar.DATE, "yyyy-MM-dd");
-			Date curDate = DateUtil.parse(curDateStr);
-						
-			Weathers record = selectByCityIdAndDate(cityId, curDate);
-			if (record == null) {
-				record = initWeather();
-			}
-			record.setWeatherDate(curDate);
-			record.setCityId(cityId);
-			record.setCityName(cityName);
-			record.setDayPictureUrl(item.getDayPictureUrl());
-			record.setNightPictureUrl(item.getNightPictureUrl());
-			record.setWeather(item.getWeather());
-			record.setPm25(pm25);
-			record.setWind(item.getWind());
-			record.setTemperature(item.getTemperature());
-			
-			record.setRealTemp("");
-			
-			if (curDateStr.equals(nowDateStr)) {
-				String realTemp = item.getDate();
-
-				realTemp = realTemp.substring(realTemp.indexOf("(") + 1, realTemp.indexOf(")"));
-				realTemp = realTemp.substring(realTemp.indexOf("：") + 1);
-				record.setRealTemp(realTemp);
-				
-				record.setWeatherIndex(weatherIndex);
-			}
-			
-			if (record.getId().equals(0L)) {
-				this.insert(record);
-			} else {
-				this.updateByPrimaryKeySelective(record);
-			}
+		String weatherData = GsonUtil.GsonString(weatherDatas);
+		
+		Date curDate = DateUtil.parse(weatherDateStr);
+		Weathers record = selectByCityIdAndDate(cityId, curDate);
+		if (record == null) {
+			record = initWeather();
+		}		
+		
+		record.setWeatherDate(curDate);
+		record.setCityId(cityId);
+		record.setCityName(cityName);
+		record.setPm25(pm25);
+		record.setWeatherIndex(weatherIndex);
+		record.setWeatherData(weatherData);
+		record.setLastTime(DateUtil.getNow("HH:mm"));
+		if (record.getId().equals(0L)) {
+			this.insert(record);
+		} else {
+			this.updateByPrimaryKeySelective(record);
 		}
+		
+//		Date weatherDate = DateUtil.parse(weatherDateStr);
+
+//		String nowDateStr = DateUtil.getToday();
+//		for (int i =0; i < weatherDatas.size(); i++) {
+//			
+//			WeatherDataVo item = weatherDatas.get(i);
+//			String curDateStr = DateUtil.addDay(weatherDate, i, Calendar.DATE, "yyyy-MM-dd");
+//			Date curDate = DateUtil.parse(curDateStr);
+//						
+//			Weathers record = selectByCityIdAndDate(cityId, curDate);
+//			if (record == null) {
+//				record = initWeather();
+//			}
+//			record.setWeatherDate(curDate);
+//			record.setCityId(cityId);
+//			record.setCityName(cityName);
+//			record.setDayPictureUrl(item.getDayPictureUrl());
+//			record.setNightPictureUrl(item.getNightPictureUrl());
+//			record.setWeather(item.getWeather());
+//			record.setPm25(pm25);
+//			record.setWind(item.getWind());
+//			record.setTemperature(item.getTemperature());
+//			
+//			record.setRealTemp("");
+//			
+//			if (curDateStr.equals(nowDateStr)) {
+//				String realTemp = item.getDate();
+//
+//				realTemp = realTemp.substring(realTemp.indexOf("(") + 1, realTemp.indexOf(")"));
+//				realTemp = realTemp.substring(realTemp.indexOf("：") + 1);
+//				record.setRealTemp(realTemp);
+//				
+//				record.setWeatherIndex(weatherIndex);
+//			}
+//			
+//			if (record.getId().equals(0L)) {
+//				this.insert(record);
+//			} else {
+//				this.updateByPrimaryKeySelective(record);
+//			}
+//		}
 		
 		return true;
 	}

@@ -1,9 +1,12 @@
 package com.simi.service.impl.card;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +14,9 @@ import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
+import com.simi.service.data.WeatherService;
 import com.simi.service.dict.CityService;
+import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
@@ -19,14 +24,20 @@ import com.simi.vo.card.CardZanViewVo;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.data.Weathers;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.BaiduMapUtil;
+import com.meijia.utils.weather.WeatherDataVo;
+import com.meijia.utils.weather.WeatherIndexVo;
 import com.simi.po.dao.card.CardImgsMapper;
 import com.simi.po.dao.card.CardsMapper;
 
@@ -52,6 +63,9 @@ public class CardsServiceImpl implements CardService {
 	
 	@Autowired
 	private CityService cityService;
+	
+	@Autowired
+	private WeatherService weatherService;	
 		
 	@Override
 	public Cards initCards() {
@@ -82,6 +96,51 @@ public class CardsServiceImpl implements CardService {
 
 		return record;
 	}
+	
+	@Override
+	public CardViewVo initCardView() {
+		CardViewVo record = new CardViewVo();
+		record.setCardId(0L);
+		record.setCreateUserId(0L);
+		record.setUserId(0L);
+		record.setCardType((short) 0);
+		record.setServiceTime(0L);
+		record.setServiceContent("");
+		record.setSetRemind((short) 0);
+		record.setSetNowSend((short) 0);
+		record.setSetSecDo((short) 0);
+		record.setSetSecRemarks("");
+		record.setTicketType((short) 0);
+		record.setTicketFromCityId(0L);
+		record.setTicketToCityId(0L);
+		record.setStatus((short) 1);
+		record.setSecRemarks("");
+		record.setTitle("");
+		record.setPoiLat("");
+		record.setPoiLng("");
+		record.setPoiName("");
+		record.setSetFriendView((short) 0);
+		
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		record.setUpdateTime(TimeStampUtil.getNowSecond());
+		
+		record.setName("");
+		record.setAttends(new ArrayList<CardAttend>());
+		record.setCardImgsList(new ArrayList<CardImgs>());
+		record.setCreateUserName("");
+		record.setUserName("");
+		record.setUserHeadImg("");
+		record.setTotalZan(0);
+		record.setTotalComment(0);
+		record.setZanTop10(new ArrayList<CardZanViewVo>());
+		record.setCardTypeName("");
+		record.setAddTimeStr("");
+		record.setTicketFromCityName("");
+		record.setTicketToCityName("");
+		record.setCardExtra("");
+
+		return record;
+	}	
 	
 	/**
 	 * 转换card 对象为 cardViewVo对象
@@ -384,5 +443,72 @@ public class CardsServiceImpl implements CardService {
 		return cardsMapper.selectListByAddtimeThirty();
 	}
 
+	
+	@Override
+	public CardViewVo getWeatherCard(String serviceDate, String lat, String lng) {
+		
+		Cards card = initCards();
+
+		CardViewVo result = new CardViewVo();
+
+		BeanUtilsExp.copyPropertiesIgnoreNull(card, result);
+		//如果没有地理位置信息，默认则为北京市
+		String cityName = "北京市";
+		if (StringUtil.isEmpty(lat) || StringUtil.isEmpty(lng)) {
+			cityName = "北京市";
+		} else {
+			cityName = BaiduMapUtil.getCityByPoi(lat, lng);
+		}
+		
+		if (StringUtil.isEmpty(cityName)) cityName = "北京市";
+		
+		Long cityId = 0L;
+		cityId = DictUtil.getCityId(cityName);
+		
+		if (cityId.equals(0L)) cityId = 2L;
+		
+		Date weatherDate = DateUtil.parse(serviceDate);
+		Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, weatherDate);
+		
+		String lastTime = weatherInfo.getLastTime();
+		if (weatherInfo == null) return result;
+		
+		List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
+		
+//		for (WeatherDataVo item : weatherDatas) {
+//			System.out.println(item.getDate());
+//		}
+		
+		
+		WeatherIndexVo weatherIndex = null;
+		List<WeatherIndexVo> weatherIndexs =GsonUtil.GsonToList(weatherInfo.getWeatherIndex(), WeatherIndexVo.class);
+		for (WeatherIndexVo item : weatherIndexs) {
+			System.out.println(item.getTitle());
+			
+			if (item.getTitle().equals("穿衣")) {
+				weatherIndex = item;
+				break;
+			}
+			
+		}
+		result.setTicketFromCityName(cityName);
+		result.setCardTypeName("天气预报");
+		result.setCardType((short) 99);
+		result.setAddTimeStr(lastTime);
+		
+		Map<String, Object> cardExtraMap = new HashMap<String, Object>();
+		
+		cardExtraMap.put("weatherDatas",weatherDatas);
+		cardExtraMap.put("weatherIndex", weatherIndex);
+		
+		String cardExtra = GsonUtil.GsonString(cardExtraMap);
+		
+		result.setCardExtra(cardExtra);
+		
+		
+//		result.setServiceContent(serviceContent);
+		
+		return result;
+	}
 
 }

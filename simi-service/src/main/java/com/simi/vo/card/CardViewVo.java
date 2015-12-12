@@ -10,10 +10,7 @@ public class CardViewVo extends Cards {
 
 	//用户姓名
 	private String name ;
-	
-	private String cartTypeName;
-	
-	
+		
 	private List<CardAttend> attends;
 	
 	private  List<CardImgs> cardImgsList;
@@ -37,6 +34,8 @@ public class CardViewVo extends Cards {
 	private String ticketFromCityName;
 	
 	private String ticketToCityName;
+	
+	private String cardExtra;
 	
 	public List<CardAttend> getAttends() {
 		return attends;
@@ -134,20 +133,20 @@ public class CardViewVo extends Cards {
 		this.name = name;
 	}
 
-	public String getCartTypeName() {
-		return cartTypeName;
-	}
-
-	public void setCartTypeName(String cartTypeName) {
-		this.cartTypeName = cartTypeName;
-	}
-
 	public List<CardImgs> getCardImgsList() {
 		return cardImgsList;
 	}
 
 	public void setCardImgsList(List<CardImgs> cardImgsList) {
 		this.cardImgsList = cardImgsList;
+	}
+
+	public String getCardExtra() {
+		return cardExtra;
+	}
+
+	public void setCardExtra(String cardExtra) {
+		this.cardExtra = cardExtra;
 	}
 	
 }

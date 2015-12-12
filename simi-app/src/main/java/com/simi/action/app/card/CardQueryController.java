@@ -16,6 +16,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.BaiduMapUtil;
 import com.meijia.utils.push.PushUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
@@ -23,12 +24,15 @@ import com.simi.common.Constants;
 import com.simi.po.model.card.CardComment;
 import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.data.Weathers;
 import com.simi.po.model.user.Users;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardLogService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
+import com.simi.service.data.WeatherService;
+import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
@@ -65,7 +69,7 @@ public class CardQueryController extends BaseController {
 	
 	@Autowired
 	private UserRef3rdService userRef3rdService;
-	
+		
 	// 卡片详情接口
 	/**
 	 *  @param card_id				卡片ID,  0 表示新增
@@ -108,7 +112,9 @@ public class CardQueryController extends BaseController {
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "service_date", required = false, defaultValue = "") String serviceDate,
 			@RequestParam(value = "card_from", required = false, defaultValue = "0") Short cardFrom,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "lat", required = false, defaultValue = "") String lat,
+			@RequestParam(value = "lng", required = false, defaultValue = "") String lng
 			) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -147,13 +153,32 @@ public class CardQueryController extends BaseController {
 		
 		PageInfo  pageInfo = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<Cards> cards = pageInfo.getList();
+		List<CardViewVo> cardViewList = new ArrayList<CardViewVo>();
 		if (!cards.isEmpty()) {
-			List<CardViewVo> cardViewList = cardService.changeToCardViewVoBat(cards);
+			cardViewList = cardService.changeToCardViewVoBat(cards);
+			result.setData(cardViewList);
+		}
+		
+		//处理天气类卡片的问题
+		
+		//1. 如果不是第一页，则不需要天气类卡片
+		if (page !=1 ) return result;
+		
+		//2. 如果不是当天，则不需要天气类卡片
+		String today = DateUtil.getToday();
+		if (!StringUtil.isEmpty(serviceDate) ) {
+			if (!serviceDate.equals(today)) return result;
+		}
+		
+		CardViewVo weatherCard = cardService.getWeatherCard(serviceDate, lat, lng);
+		
+		if (weatherCard != null && weatherCard.getCardType().equals((short)99)) {
+			cardViewList.add(0, weatherCard);
 			result.setData(cardViewList);
 		}
 		
 		return result;
-	}	
+	}
 
 	// 卡片评论列表接口
 	/**

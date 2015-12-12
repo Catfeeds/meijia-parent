@@ -1,6 +1,7 @@
 package com.meijia.utils.weather;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,25 +36,25 @@ public class WeatherUtil {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		
-		String repo = WeatherUtil.getWeathInfo("安康市");
+		String repo = WeatherUtil.getWeathInfo("北京市");
 		System.out.println(repo);
-		WeatherInfo weatherInfo = GsonUtil.GsonToObject(repo, WeatherInfo.class);
+		WeatherInfoVo weatherInfo = GsonUtil.GsonToObject(repo, WeatherInfoVo.class);
 		
 //		if (weatherInfo == null) return false;
 //		if (!weatherInfo.getStatus().equals("success")) return false;
 		
 		String date = weatherInfo.getDate();
-		List<WeatherResult> results = weatherInfo.getResults();
-		WeatherResult result = results.get(0);
+		List<WeatherResultVo> results = weatherInfo.getResults();
+		WeatherResultVo result = results.get(0);
 		
-		List<WeatherData> weatherDatas = result.getWeather_data();
-		List<WeatherIndex> weatherIndexs = result.getIndex();
+		List<WeatherDataVo> weatherDatas = result.getWeather_data();
+		List<WeatherIndexVo> weatherIndexs = result.getIndex();
 		
 		System.out.println("weatherDatas count = " + weatherDatas.size());
 		System.out.println("weatherIndexs count = " + weatherIndexs.size());
 		
 		String realTemp = "";
-		WeatherData curData = weatherDatas.get(0);
+		WeatherDataVo curData = weatherDatas.get(0);
 		realTemp = curData.getDate();
 
 		realTemp = realTemp.substring(realTemp.indexOf("(") + 1, realTemp.indexOf(")"));
@@ -61,5 +62,14 @@ public class WeatherUtil {
 		System.out.println("realTemp = " +realTemp);
 		
 		System.out.println(GsonUtil.GsonString(weatherIndexs));
+		
+		
+		List<WeatherIndexVo> weatherIndexsObj = GsonUtil.GsonToList(GsonUtil.GsonString(weatherIndexs), WeatherIndexVo.class);
+		
+		for (Iterator it = weatherIndexsObj.iterator(); it.hasNext();) {
+			WeatherIndexVo option = (WeatherIndexVo) it.next();
+		    System.out.println(option.getTitle());
+		}
+
 	}
 }

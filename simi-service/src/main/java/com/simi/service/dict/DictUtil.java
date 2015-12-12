@@ -2,6 +2,7 @@ package com.simi.service.dict;
 
 import java.util.List;
 
+import com.meijia.utils.StringUtil;
 import com.simi.service.impl.dict.DictServiceImpl;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictProvince;
@@ -79,6 +80,28 @@ public class DictUtil {
 		}
 		return cityName;
 	}
+	
+	/**
+	 * 通过城市id获取城市名称
+	 * @return
+	 */
+	public static Long getCityId(String cityName) {
+
+		Long cityId = 0L;
+		if (StringUtil.isEmpty(cityName)) return cityId;
+
+		List<DictCity> listCity = DictServiceImpl.memDictMap.get("listCity");
+
+		DictCity item = null;
+		for (int i = 0 ; i < listCity.size(); i++) {
+			item = listCity.get(i);
+			if (item.getName().equals(cityName)) {
+				cityId = item.getCityId();
+				break;
+			}
+		}
+		return cityId;
+	}	
 	
 	/**
 	 * 通过区县id获取区县名称
