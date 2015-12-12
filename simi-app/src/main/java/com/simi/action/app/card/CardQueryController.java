@@ -39,6 +39,7 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardCommentViewVo;
+import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardRemindVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
@@ -153,10 +154,10 @@ public class CardQueryController extends BaseController {
 		
 		PageInfo  pageInfo = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<Cards> cards = pageInfo.getList();
-		List<CardViewVo> cardViewList = new ArrayList<CardViewVo>();
+		List<CardListVo> cardList = new ArrayList<CardListVo>();
 		if (!cards.isEmpty()) {
-			cardViewList = cardService.changeToCardViewVoBat(cards);
-			result.setData(cardViewList);
+			cardList = cardService.changeToCardListVo(cards);
+			result.setData(cardList);
 		}
 		
 		//处理天气类卡片的问题
@@ -170,11 +171,11 @@ public class CardQueryController extends BaseController {
 			if (!serviceDate.equals(today)) return result;
 		}
 		
-		CardViewVo weatherCard = cardService.getWeatherCard(serviceDate, lat, lng);
+		CardListVo weatherCard = cardService.getWeatherCard(serviceDate, lat, lng);
 		
 		if (weatherCard != null && weatherCard.getCardType().equals((short)99)) {
-			cardViewList.add(0, weatherCard);
-			result.setData(cardViewList);
+			cardList.add(0, weatherCard);
+			result.setData(cardList);
 		}
 		
 		return result;

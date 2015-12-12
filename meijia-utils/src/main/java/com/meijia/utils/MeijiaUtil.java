@@ -537,31 +537,33 @@ public class MeijiaUtil {
 		return list;
 	}
 	
-	public static String getCardTypeName(Short status) {
-		String statusName = "";
-		switch (status) {
+	public static String getCardTypeName(Short cardType) {
+		String cardTypeName = "";
+		switch (cardType) {
 			case 0:
-				statusName = "通用";
+				cardTypeName = "通用";
 				break;
 			case 1:
-				statusName = "会议安排";
+				cardTypeName = "会议安排";
 				break;
 			case 2:
-				statusName = "秘书叫早";
+				cardTypeName = "秘书叫早";
 				break;
 			case 3:
-				statusName = "事务提醒";
+				cardTypeName = "事务提醒";
 				break;
 			case 4:
-				statusName = "邀约通知";
+				cardTypeName = "邀约通知";
 				break;
 			case 5:
-				statusName = "差旅规划";
+				cardTypeName = "差旅规划";
 				break;
+			case 99:
+				cardTypeName = "天气预报";
 			default:
-				statusName = "";
+				cardTypeName = "";
 		}
-		return statusName;
+		return cardTypeName;
 	}	
 	
 	//服务响应时间

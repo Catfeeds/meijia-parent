@@ -18,6 +18,7 @@ import com.simi.service.data.WeatherService;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UsersService;
+import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
@@ -142,6 +143,22 @@ public class CardsServiceImpl implements CardService {
 		return record;
 	}	
 	
+	@Override
+	public CardListVo initCardListVo() {
+		CardListVo record = new CardListVo();
+		record.setCardId(0L);
+		record.setCardType((short) 0);
+		record.setServiceTime(0L);
+		record.setServiceContent("");
+		record.setTotalZan(0);
+		record.setTotalComment(0);
+		record.setCardTypeName("");
+		record.setAddTimeStr("");
+		record.setCardExtra("");
+		record.setTitle("");
+		return record;
+	}		
+	
 	/**
 	 * 转换card 对象为 cardViewVo对象
 	 * @param card
@@ -222,31 +239,15 @@ public class CardsServiceImpl implements CardService {
 	 * @return
 	 */
 	@Override
-	public List<CardViewVo> changeToCardViewVoBat(List<Cards> cards) {
-		List<CardViewVo> result = new ArrayList<CardViewVo>();
+	public List<CardListVo> changeToCardListVo(List<Cards> cards) {
+		List<CardListVo> result = new ArrayList<CardListVo>();
 		if (cards.isEmpty()) return result;
 		
 		List<Long> cardIds = new ArrayList<Long>();
-		List<Long> createUserIds = new ArrayList<Long>();
-		List<Long> userIds = new ArrayList<Long>();
-		
 		for (Cards item : cards) {
 			cardIds.add(item.getCardId());
-			createUserIds.add(item.getCreateUserId());
-			userIds.add(item.getUserId());
 		}
-		
-		List<Users> createUsers = new ArrayList<Users>();
-		if (!createUserIds.isEmpty()) {
-			createUsers = usersService.selectByUserIds(createUserIds);
-		}
-		
-		List<Users> users = new ArrayList<Users>();
-		if (!userIds.isEmpty()) {
-			users = usersService.selectByUserIds(userIds);
-		}
-		
-		
+
 		List<CardAttend> cardAttends = new ArrayList<CardAttend>();
 		List<HashMap> totalCardZans = new ArrayList<HashMap>();
 		List<HashMap> totalCardComments = new ArrayList<HashMap>();
@@ -262,34 +263,34 @@ public class CardsServiceImpl implements CardService {
 		Cards item = null;
 		for (int i = 0; i < cards.size(); i++) {
 			item = cards.get(i);
-			CardViewVo vo = new CardViewVo();
-			//进行对象复制.
-			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			CardListVo vo = this.initCardListVo();
 			
-			//获取到参会、参与人员列表
-			List<CardAttend> cardAttendItems = new ArrayList<CardAttend>();
-			for (CardAttend cardAttend : cardAttends) {
-				if (cardAttend.getCardId().equals(vo.getCardId())) {
-					cardAttendItems.add(cardAttend);
-				}
-			}
-			vo.setAttends(cardAttendItems);
+			vo.setCardId(item.getCardId());
+			vo.setCardType(item.getCardType());
 			
-			//获取创建用户名称
-			for (Users u : users) {
-				if (u.getId().equals(vo.getUserId())) {
-					vo.setCreateUserName(u.getName());
-					break;
-				}
+			//卡片类型名称
+			String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());
+			vo.setCardTypeName(cardTypeName);
+			
+			vo.setServiceTime(item.getServiceTime());
+			
+			if (!StringUtil.isEmpty(item.getServiceContent())) {
+				vo.setServiceContent(StringUtil.subStringByByte(item.getServiceContent(), 200));
 			}
 			
-			//获取创建用户名称
-			for (Users createUser : createUsers) {
-				if (createUser.getId().equals(vo.getCreateUserId())) {
-					vo.setCreateUserName(createUser.getName());
-					break;
+			//服务时间字符串
+			Date addTimeDate = TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, null);
+			String addTimeStr = DateUtil.fromToday(addTimeDate);
+			vo.setAddTimeStr(addTimeStr);			
+			
+			//统计赞的数量
+			vo.setTotalZan(0);
+			for (HashMap totalCardZan : totalCardZans) {
+				Long tmpCardId = Long.valueOf(totalCardZan.get("card_id").toString());
+				if (tmpCardId.equals(vo.getCardId())) {
+					vo.setTotalZan(Integer.parseInt(totalCardZan.get("total").toString()));
 				}
-			}			
+			}
 			
 			//统计评论的数量
 			vo.setTotalComment(0);
@@ -299,44 +300,7 @@ public class CardsServiceImpl implements CardService {
 					vo.setTotalComment(Integer.parseInt(totalCardComment.get("total").toString()));
 				}
 			}
-			
-			//统计赞的数量
-			vo.setTotalZan(0);
-			for (HashMap totalCardZan : totalCardZans) {
-				Long tmpCardId = Long.valueOf(totalCardZan.get("card_id").toString());
-				if (tmpCardId.equals(vo.getCardId())) {
-					vo.setTotalZan(Integer.parseInt(totalCardZan.get("total").toString()));
-				}
-			}		
-			
-			//获得点赞前十个用户及头像.
-			vo.setZanTop10(new ArrayList<CardZanViewVo>());
-			
-			//卡片类型名称
-			String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());
-			vo.setCardTypeName(cardTypeName);
-			
-			//服务时间字符串
-			Date addTimeDate = TimeStampUtil.timeStampToDateFull(vo.getAddTime() * 1000, null);
-			String addTimeStr = DateUtil.fromToday(addTimeDate);
-			vo.setAddTimeStr(addTimeStr);
-			
-			
-			//城市名称
-			vo.setTicketFromCityName("");
-			vo.setTicketToCityName("");
-			if (vo.getTicketFromCityId() > 0L || vo.getTicketToCityId() > 0L) {
-				for (DictCity city : cityList) {
-					if (city.getCityId().equals(vo.getTicketFromCityId())) {
-						vo.setTicketFromCityName(city.getName());
-					}
-					
-					if (city.getCityId().equals(vo.getTicketToCityId())) {
-						vo.setTicketToCityName(city.getName());
-					}
-				}
-			}
-			
+
 			result.add(vo);
 		}
 		
@@ -445,11 +409,11 @@ public class CardsServiceImpl implements CardService {
 
 	
 	@Override
-	public CardViewVo getWeatherCard(String serviceDate, String lat, String lng) {
+	public CardListVo getWeatherCard(String serviceDate, String lat, String lng) {
 		
 		Cards card = initCards();
 
-		CardViewVo result = new CardViewVo();
+		CardListVo result = this.initCardListVo();
 
 		BeanUtilsExp.copyPropertiesIgnoreNull(card, result);
 		//如果没有地理位置信息，默认则为北京市
@@ -470,7 +434,7 @@ public class CardsServiceImpl implements CardService {
 		Date weatherDate = DateUtil.parse(serviceDate);
 		Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, weatherDate);
 		
-		String lastTime = weatherInfo.getLastTime();
+		
 		if (weatherInfo == null) return result;
 		
 		List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
@@ -491,13 +455,16 @@ public class CardsServiceImpl implements CardService {
 			}
 			
 		}
-		result.setTicketFromCityName(cityName);
-		result.setCardTypeName("天气预报");
-		result.setCardType((short) 99);
+		
+		Short cardType = 99;
+		result.setCardTypeName(MeijiaUtil.getCardTypeName(cardType));
+		result.setCardType(cardType);
+		
+		String lastTime = weatherInfo.getLastTime();
 		result.setAddTimeStr(lastTime);
 		
 		Map<String, Object> cardExtraMap = new HashMap<String, Object>();
-		
+		cardExtraMap.put("cityName", cityName);
 		cardExtraMap.put("weatherDatas",weatherDatas);
 		cardExtraMap.put("weatherIndex", weatherIndex);
 		

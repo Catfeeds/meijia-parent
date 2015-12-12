@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.card.Cards;
+import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 
@@ -30,8 +31,6 @@ public interface CardService {
 
 	PageInfo selectByListPage(CardSearchVo vo, int pageNo, int pageSize);
 
-	List<CardViewVo> changeToCardViewVoBat(List<Cards> cards);
-
 	List<HashMap> totalByMonth(CardSearchVo vo);
 
 	List<Cards> selectByReminds(CardSearchVo vo);
@@ -44,9 +43,13 @@ public interface CardService {
 
 	List<Cards> selectByRemindAll(CardSearchVo vo);
 
-	CardViewVo getWeatherCard(String serviceDate, String lat, String lng);
+	CardListVo getWeatherCard(String serviceDate, String lat, String lng);
 
 	CardViewVo initCardView();
+
+	CardListVo initCardListVo();
+
+	List<CardListVo> changeToCardListVo(List<Cards> cards);
 
 	
 
