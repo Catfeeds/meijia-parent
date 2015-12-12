@@ -281,7 +281,7 @@ public class CardController extends BaseController {
 			}
 		}
 		
-		CardViewVo vo = cardService.changeToCardViewVo(record);
+//		CardViewVo vo = cardService.changeToCardViewVo(record);
 		
 		//todo 1. 如果是立即给相关人员发送消息，则需要短信模板的通知.
 		cardAsyncService.cardNotification(record, true, true);
@@ -300,7 +300,7 @@ public class CardController extends BaseController {
 			}
 		}
 
-		result.setData(vo);
+//		result.setData(vo);
 		return result;
 	}		
 	
