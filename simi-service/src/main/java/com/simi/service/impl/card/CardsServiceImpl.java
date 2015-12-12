@@ -257,9 +257,7 @@ public class CardsServiceImpl implements CardService {
 			totalCardZans = cardZanService.totalByCardIds(cardIds);
 			totalCardComments = cardCommentService.totalByCardIds(cardIds);
 		}
-		
-		List<DictCity> cityList  = cityService.selectAll();
-		
+				
 		Cards item = null;
 		for (int i = 0; i < cards.size(); i++) {
 			item = cards.get(i);
@@ -277,6 +275,8 @@ public class CardsServiceImpl implements CardService {
 			if (!StringUtil.isEmpty(item.getServiceContent())) {
 				vo.setServiceContent(StringUtil.subStringByByte(item.getServiceContent(), 200));
 			}
+			
+			vo.setServiceAddr(item.getServiceAddr());
 			
 			//服务时间字符串
 			Date addTimeDate = TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, null);
