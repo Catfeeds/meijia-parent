@@ -20,6 +20,8 @@ public class CardListVo {
 	
 	private String serviceContent;
 	
+	private String serviceAddr;
+	
 	private String addTimeStr;
 	
 	private int totalZan;
@@ -114,6 +116,14 @@ public class CardListVo {
 
 	public void setAttends(List<CardAttend> attends) {
 		this.attends = attends;
+	}
+
+	public String getServiceAddr() {
+		return serviceAddr;
+	}
+
+	public void setServiceAddr(String serviceAddr) {
+		this.serviceAddr = serviceAddr;
 	}
 		
 }
