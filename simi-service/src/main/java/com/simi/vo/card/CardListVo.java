@@ -1,5 +1,9 @@
 package com.simi.vo.card;
 
+import java.util.List;
+
+import com.simi.po.model.card.CardAttend;
+
 public class CardListVo {
 	
 	private Long cardId;
@@ -7,6 +11,8 @@ public class CardListVo {
 	private Short cardType;
 	
 	private String cardTypeName;
+	
+	private List<CardAttend> attends;
 	
 	private String title;
 	
@@ -100,6 +106,14 @@ public class CardListVo {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public List<CardAttend> getAttends() {
+		return attends;
+	}
+
+	public void setAttends(List<CardAttend> attends) {
+		this.attends = attends;
 	}
 		
 }

@@ -300,6 +300,15 @@ public class CardsServiceImpl implements CardService {
 					vo.setTotalComment(Integer.parseInt(totalCardComment.get("total").toString()));
 				}
 			}
+			
+			//获取到参会、参与人员列表
+			List<CardAttend> cardAttendItems = new ArrayList<CardAttend>();
+			for (CardAttend cardAttend : cardAttends) {
+				if (cardAttend.getCardId().equals(vo.getCardId())) {
+					cardAttendItems.add(cardAttend);
+				}
+			}
+			vo.setAttends(cardAttendItems);
 
 			result.add(vo);
 		}
