@@ -61,69 +61,7 @@ public class PartnerRegisterController extends BaseController {
 	
 	@Autowired
 	private PartnerUserService partnerUserService;
-	/**
-	 * 店铺注册
-	 * 
-	 * @param request
-	 * @param mobile
-	 * @param smsToken
-	 * @param name
-	 * @param smsType
-	 * @param userType
-	 * @return
-	 */
-	
-	// 判断验证码是否正确，进入注册页面进行注册
-/*	@RequestMapping(value = "partnerRegister", method = RequestMethod.POST)
-	public AppResultData<Object> partnerRegister(
-			HttpServletRequest request,
-			@RequestParam("register_type") short registerType,
-			@RequestParam("mobile") String mobile,
-			@RequestParam("company_name") String companyName,
-			@RequestParam("service_type_id") String serviceTypeId) 
-			) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-		
-		
-		if (!mobile.equals("17090397828") && !mobile.equals("17090397818")
-				&& !mobile.equals("17090397822")
-				&& !mobile.equals("13701187136")
-				&& !mobile.equals("13810002890")
-				&& !mobile.equals("18610807136")
-				&& !mobile.equals("18612514665")
-				&& !mobile.equals("13146012753")
-				&& !mobile.equals("15727372986")) {
-
-			Users user = userService.selectByMobile(mobile);
-			// 如果秘书或用户存在
-			if (user != null) {
-				// 秘书已存在
-				if (user.getUserType() == 1) {
-					result.setStatus(Constants.ERROR_999);
-					result.setMsg(ConstantMsg.SEC_EXIST_MG);
-					return result;
-				}
-				// 已注册过，是否注册秘书
-				if (user.getUserType() == 0) {
-					result = new AppResultData<Object>(Constants.ERROR_999,
-							ConstantMsg.USER_EXIST_SEC_MG, user);
-
-					return result;
-				}
-			}
-		}
-		Users u = userService.initUsers();
-		u.setMobile(mobile);
-	//	u.setName(name);
-
-		// 注册为美家公司的一员.
-
-		result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, u);
-		return result;
-	}*/
 	/**
 	 * 店铺注册信息提交
 	 * @param request
