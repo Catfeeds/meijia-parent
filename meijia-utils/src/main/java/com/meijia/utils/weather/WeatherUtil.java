@@ -31,7 +31,59 @@ public class WeatherUtil {
     	return result;
 	}
 	
-	
+//	//根据百度天气图标，获取自定义图标
+//	public static String getCustomDayWeatherIcon(String imgUrl) {
+//		String customIconUrl = "";
+//		
+//		switch (imgUrl) {
+//			case "http://api.map.baidu.com/images/weather/day/baoxue.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/baoyu.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/2bc8a409900fb115889190c4f81611fd?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/baoyuzhuandabaoyu.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/dabaoyu.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/dabaoyuzhuantedabaoyu.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/daxue.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/01ade7d3938d139f405b4449286e3418?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/daxuezhuanbaoxue.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/01ade7d3938d139f405b4449286e3418?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/dayu.png" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;
+//			case "http://api.map.baidu.com/images/weather/day/" :
+//				customIconUrl = "http://img.51xingzheng.cn/dca0a8f334dd0c65ba4238fa434ca1c2?p=0";
+//				break;	
+//		}
+//		
+//		return customIconUrl;
+//	}
+//	
+//	
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {

@@ -50,7 +50,4 @@ public interface CardService {
 	CardListVo initCardListVo();
 
 	List<CardListVo> changeToCardListVo(List<Cards> cards);
-
-	
-
 }

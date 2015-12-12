@@ -3,6 +3,7 @@ package com.simi.service.impl.async;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -241,8 +243,10 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		String toCityName = "";
 		
 		if (card.getCardType().equals((short)5)) {
-			fromCityName = cityService.selectByCityId(card.getTicketFromCityId()).getName();
-			toCityName = cityService.selectByCityId(card.getTicketToCityId()).getName();
+			String cardExtra = card.getCardExtra();
+			Map<String, Object> cardExtraMap = GsonUtil.GsonToMaps(cardExtra);
+			fromCityName = cardExtraMap.get("ticket_from_city_name").toString();
+			toCityName = cardExtraMap.get("ticket_to_city_name").toString();
 		}
 		
 		String[] content;

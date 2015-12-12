@@ -8,6 +8,8 @@ public class Cards {
     private Long userId;
 
     private Short cardType;
+    
+    private String title;
 
     private Long serviceTime;
 
@@ -22,30 +24,18 @@ public class Cards {
     private Short setSecDo;
 
     private String setSecRemarks;
-
-    private Short ticketType;
-
-    private Long ticketFromCityId;
-
-    private Long ticketToCityId;
+    
+    private String secRemarks;
 
     private Short status;
     
-    private String secRemarks;
-    
-    private String title;
-    
     private Short setFriendView;
-    
-    private String poiLng;
-    
-    private String poiLat;
-    
-    private String poiName;
-    
+       
     private Long addTime;
 
     private Long updateTime;
+    
+    private String cardExtra;
 
     public Long getCardId() {
         return cardId;
@@ -135,30 +125,6 @@ public class Cards {
         this.setSecRemarks = setSecRemarks == null ? null : setSecRemarks.trim();
     }
 
-    public Short getTicketType() {
-        return ticketType;
-    }
-
-    public void setTicketType(Short ticketType) {
-        this.ticketType = ticketType;
-    }
-
-    public Long getTicketFromCityId() {
-        return ticketFromCityId;
-    }
-
-    public void setTicketFromCityId(Long ticketFromCityId) {
-        this.ticketFromCityId = ticketFromCityId;
-    }
-
-    public Long getTicketToCityId() {
-        return ticketToCityId;
-    }
-
-    public void setTicketToCityId(Long ticketToCityId) {
-        this.ticketToCityId = ticketToCityId;
-    }
-
     public Short getStatus() {
         return status;
     }
@@ -177,30 +143,6 @@ public class Cards {
 
 	public void setSetFriendView(Short setFriendView) {
 		this.setFriendView = setFriendView;
-	}
-
-	public String getPoiLng() {
-		return poiLng;
-	}
-
-	public void setPoiLng(String poiLng) {
-		this.poiLng = poiLng;
-	}
-
-	public String getPoiLat() {
-		return poiLat;
-	}
-
-	public void setPoiLat(String poiLat) {
-		this.poiLat = poiLat;
-	}
-
-	public String getPoiName() {
-		return poiName;
-	}
-
-	public void setPoiName(String poiName) {
-		this.poiName = poiName;
 	}
 
 	public void setStatus(Short status) {
@@ -229,5 +171,13 @@ public class Cards {
 
 	public void setSecRemarks(String secRemarks) {
 		this.secRemarks = secRemarks;
+	}
+
+	public String getCardExtra() {
+		return cardExtra;
+	}
+
+	public void setCardExtra(String cardExtra) {
+		this.cardExtra = cardExtra;
 	}
 }

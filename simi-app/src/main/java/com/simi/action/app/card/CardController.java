@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.SmsUtil;
@@ -39,6 +41,7 @@ import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardImgsService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
+import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
@@ -115,6 +118,7 @@ public class CardController extends BaseController {
 	public AppResultData<Object> postCard (
 			@RequestParam(value = "card_id", required = false, defaultValue = "0") Long cardId,
 			@RequestParam("card_type") Short cardType,
+			@RequestParam(value = "title", required = false, defaultValue = "") String title,
 			@RequestParam("create_user_id") Long createUserId,
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "attends", required = false, defaultValue = "") String attends,
@@ -125,9 +129,7 @@ public class CardController extends BaseController {
 			@RequestParam("set_now_send") Short setNowSend,
 			@RequestParam("set_sec_do") Short setSecDo,
 			@RequestParam(value = "set_sec_remarks", required = false, defaultValue = "") String setSecRemarks,
-			@RequestParam(value = "ticket_type", required = false, defaultValue = "0") Short ticketType,
-			@RequestParam(value = "ticket_from_city_id", required = false, defaultValue = "0") Long ticketFromCityId,
-			@RequestParam(value = "ticket_to_city_id", required = false, defaultValue = "0") Long ticketToCityId,
+			@RequestParam(value = "card_extra", required = false, defaultValue = "") String cardExtra,
 			@RequestParam(value = "status", required = false, defaultValue = "1") Short status
 			) {
 
@@ -151,6 +153,7 @@ public class CardController extends BaseController {
 		record.setCreateUserId(createUserId);
 		record.setUserId(userId);
 		record.setCardType(cardType);
+		record.setTitle(title);
 		record.setServiceTime(serviceTime);
 		record.setServiceAddr(serviceAddr);
 		record.setServiceContent(serviceContent);
@@ -158,10 +161,40 @@ public class CardController extends BaseController {
 		record.setSetNowSend(setNowSend);
 		record.setSetSecDo(setSecDo);
 		record.setSetSecRemarks(setSecRemarks);
-		record.setTicketType(ticketType);
-		record.setTicketFromCityId(ticketFromCityId);
-		record.setTicketToCityId(ticketToCityId);
 		
+
+		//卡片额外信息 - 差旅规划
+		if (cardType.equals((short) 5) && !StringUtil.isEmpty(cardExtra)) {
+			Map<String, Object> cardExtraMap = GsonUtil.GsonToMaps(cardExtra);
+			
+			String ticketType = cardExtraMap.get("ticket_type").toString();
+			Long ticketFromCityId = Long.valueOf(cardExtraMap.get("ticket_from_city_id").toString());
+			Long ticketToCityId = Long.valueOf(cardExtraMap.get("ticket_to_city_id").toString());
+			
+			cardExtraMap.put("ticket_type", ticketType);
+			cardExtraMap.put("ticket_from_city_id", ticketFromCityId);
+			cardExtraMap.put("ticket_to_city_id", ticketToCityId);
+			
+			String ticketFromCityName = DictUtil.getCityName(ticketFromCityId);
+			String ticketToCityName = DictUtil.getCityName(ticketToCityId);
+			cardExtraMap.put("ticket_from_city_name", ticketFromCityName);
+			cardExtraMap.put("ticket_to_city_name", ticketToCityName);
+			
+			cardExtra = GsonUtil.GsonString(cardExtraMap);
+		}
+		
+		//卡片额外信息 - 通用卡片
+//		if (cardType.equals((short) 0) && !StringUtil.isEmpty(cardExtra)) {
+//			Map<String, Object> cardExtraMap = GsonUtil.GsonToMaps(cardExtra);
+//			
+//			String poiLng = cardExtraMap.get("poi_lng").toString();
+//			String poiLat = cardExtraMap.get("poi_lat").toString();
+//			String poiName = cardExtraMap.get("poi_Name").toString();
+//			
+//			cardExtra = GsonUtil.GsonString(cardExtraMap);
+//		}
+		
+		record.setCardExtra(cardExtra);
 		if (!createUserId.equals(userId)) {
 			Users createUser = userService.selectByPrimaryKey(createUserId);
 			if (createUser.getUserType().equals((short)1)) {

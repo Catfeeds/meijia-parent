@@ -75,26 +75,19 @@ public class CardsServiceImpl implements CardService {
 		record.setCreateUserId(0L);
 		record.setUserId(0L);
 		record.setCardType((short) 0);
+		record.setTitle("");
 		record.setServiceTime(0L);
 		record.setServiceContent("");
+		record.setCardExtra("");
 		record.setSetRemind((short) 0);
 		record.setSetNowSend((short) 0);
 		record.setSetSecDo((short) 0);
 		record.setSetSecRemarks("");
-		record.setTicketType((short) 0);
-		record.setTicketFromCityId(0L);
-		record.setTicketToCityId(0L);
 		record.setStatus((short) 1);
 		record.setSecRemarks("");
-		record.setTitle("");
-		record.setPoiLat("");
-		record.setPoiLng("");
-		record.setPoiName("");
 		record.setSetFriendView((short) 0);
-		
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
-
 		return record;
 	}
 	
@@ -105,23 +98,17 @@ public class CardsServiceImpl implements CardService {
 		record.setCreateUserId(0L);
 		record.setUserId(0L);
 		record.setCardType((short) 0);
+		record.setTitle("");
 		record.setServiceTime(0L);
 		record.setServiceContent("");
+		record.setCardExtra("");
 		record.setSetRemind((short) 0);
 		record.setSetNowSend((short) 0);
 		record.setSetSecDo((short) 0);
 		record.setSetSecRemarks("");
-		record.setTicketType((short) 0);
-		record.setTicketFromCityId(0L);
-		record.setTicketToCityId(0L);
 		record.setStatus((short) 1);
 		record.setSecRemarks("");
-		record.setTitle("");
-		record.setPoiLat("");
-		record.setPoiLng("");
-		record.setPoiName("");
 		record.setSetFriendView((short) 0);
-		
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		
@@ -136,9 +123,7 @@ public class CardsServiceImpl implements CardService {
 		record.setZanTop10(new ArrayList<CardZanViewVo>());
 		record.setCardTypeName("");
 		record.setAddTimeStr("");
-		record.setTicketFromCityName("");
-		record.setTicketToCityName("");
-		record.setCardExtra("");
+
 
 		return record;
 	}	
@@ -208,24 +193,9 @@ public class CardsServiceImpl implements CardService {
 		String addTimeStr = DateUtil.fromToday(addTimeDate);
 		vo.setAddTimeStr(addTimeStr);
 		
-		
-		vo.setTicketFromCityName("");
-		vo.setTicketToCityName("");
-		if (vo.getTicketFromCityId() > 0L || vo.getTicketToCityId() > 0L) {
-			List<DictCity> cityList  = cityService.selectAll();
-			for (DictCity city : cityList) {
-				if (city.getCityId().equals(vo.getTicketFromCityId())) {
-					vo.setTicketFromCityName(city.getName());
-				}
-				
-				if (city.getCityId().equals(vo.getTicketToCityId())) {
-					vo.setTicketToCityName(city.getName());
-				}
-			}
-		}
 		//卡片图片
 		List<CardImgs> list = cardImgsMapper.selectByCardId(vo.getCardId());
-		System.out.println(list);
+
 		if (list != null) {
 			vo.setCardImgsList(list);
 		}
@@ -415,8 +385,7 @@ public class CardsServiceImpl implements CardService {
 		
 		return cardsMapper.selectListByAddtimeThirty();
 	}
-
-	
+		
 	@Override
 	public CardListVo getWeatherCard(String serviceDate, String lat, String lng) {
 		
