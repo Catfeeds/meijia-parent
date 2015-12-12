@@ -560,8 +560,10 @@ public class MeijiaUtil {
 				break;
 			case 99:
 				cardTypeName = "天气预报";
+				break;
 			default:
 				cardTypeName = "";
+				break;
 		}
 		return cardTypeName;
 	}	
