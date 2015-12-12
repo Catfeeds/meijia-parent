@@ -18,11 +18,11 @@
 		from partner_service_type
 		where service_type_id = #{id,jdbcType=NUMERIC}
 	</select>
-	<select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_type
-		where partner_id = #{partnerId,jdbcType=NUMERIC}
+		where parent_id = #{parentId,jdbcType=NUMERIC}
 	</select>
 	
 	

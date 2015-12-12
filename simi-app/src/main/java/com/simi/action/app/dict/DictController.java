@@ -127,19 +127,19 @@ public class DictController<T> {
 	
 	@RequestMapping(value = "get_service_type_list", method = RequestMethod.GET)
 	public AppResultData<Object> getTagsList(
-			@RequestParam("partner_id") Long partnerId) {
+			@RequestParam("parent_id") Long parentId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-	    List<PartnerServiceType> listBig = partnerServiceTypeService.selectByPartnerId(partnerId);
-		List<String> bigServiceTypeName = new ArrayList<String>();
+	    List<PartnerServiceType> listBig = partnerServiceTypeService.selectByParentId(parentId);
+		/*List<String> bigServiceTypeName = new ArrayList<String>();
 		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
 			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
 			bigServiceTypeName.add(partnerServiceType.getName());
-		}
+		}*/
 		
-		result.setData(bigServiceTypeName);
+		result.setData(listBig);
 
 		return result;
 	}

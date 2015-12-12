@@ -1,89 +1,31 @@
 if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
 }
-/*$.ajax({
+$.ajax({
 	type : "GET",
-	url : appRootUrl + "dict/get_service_type_list.json?partner_id=0",
+	url : appRootUrl + "dict/get_service_type_list.json?parent_id=0",
 	dataType : "json",
 	cache : true,
 	async : false,	
 	success : function(data) {
+	
 		if (data.status == "999") return false;
-		var serviceTypeId = data.data;
-		console.log(serviceTypeId);
+		var partnerServiceType = data.data;
+		console.log(partnerServiceType);
 		
-		$("#serviceTypeId").val(serviceTypeId);
+		var partnerServiceTypeHtml = "";
+		for(var i=0 ; i < partnerServiceType.length; i++){
+			var partnerServiceTypeId = partnerServiceType[i].id;
+			//console.log(partnerServiceTypeId);
+			var partnerServiceTypeName = partnerServiceType[i].name;
+			//console.log(partnerServiceTypeName);
+			partnerServiceTypeHtml +="<option value =\""+partnerServiceTypeId+"\" >"+partnerServiceTypeName+"</option>"
+		}	
+		$("#partnerServiceTypeId").val(partnerServiceTypeId);
+		$("#partnerServiceTypeName").append(partnerServiceTypeHtml);
+
 	}
-});*/
-
-/*function tagClick(tagId) {
-	// 如果未选中，则换class为选中
-	console.log("tagClick");
-	var tagIds = $("#tag_ids").val();
-	var obj = $('#'+tagId);
-	console.log(obj);
-	// am-btn-warning = 选中
-	if (obj.is(".am-btn-default")) {
-		obj.addClass("am-btn-warning");
-		obj.removeClass("am-btn-default");
-
-		if (tagIds.indexOf(tagId + ",") < 0) {
-			tagIds += tagId + ",";
-		}
-	// am-btn-default = 未选中
-	} else {
-		obj.removeClass("am-btn-warning");
-		obj.addClass("am-btn-default");
-		if (tagIds.indexOf(tagId + ",") >= 0) {
-			tagIds = tagIds.replace(tagId + ",", "");
-		}
-	}
-
-	$("#tag_ids").val(tagIds);
-
-	console.log($("#tag_ids").val());
-}*/
-
-/*var mobile=document.getElementById("mobile");
-mobile.onblur=function(){
-	//document.getElementById("mobile").value=mobile.value;
-};*/
-/*$("#mobile").on('blur', function(e) {
-	
-	//alert("失去焦点失去焦点！！");
-	var params = {};
-	params.mobile = $('#mobile').val();
-	$.ajax({
-		type : "POST",
-		url : appRootUrl + "/sec/register.json", // 发送给服务器的url
-		data : params,
-		dataType : "json",
-		async : false,
-		success : function(data) {
-
-			if (data.status == "999") {
-				alert(data.msg);
-				console.log(data);
-				console.log(data.data);
-				var user = data.data;
-					$("#mobile").val(user.mobile);
-					$("#name").val(user.name);
-					$("#real_name").val(user.real_name);
-					$("#id_card").val(user.id_card);
-					$("#sex").val(user.sex);
-					$("#major").val(user.major);
-					$("#degreeId").val(user.degree_id);
-				return false;
-			}
-		},
-		error : function() {
-			return false;
-		}
-	});
-	
-});*/
-
-
+});
 $('#store-form').validator({
 	validate : function(validity) {
 		// Ajax 验证
@@ -157,7 +99,7 @@ function companyRegSubmit() {
 	params.mobile = $('#mobile').val();
 	params.register_type = $('input:radio[name=registerType]:checked').val();
 	params.company_name = $('#companyName').val();
-	params.service_type_id = $('#serviceTypeId').val();
+	params.service_type_id = $('#partnerServiceTypeId').val();
 	// 提交数据，完成注册流程
 	$.ajax({
 		type : "POST",

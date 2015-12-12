@@ -125,9 +125,9 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 	}
 
 	@Override
-	public List<PartnerServiceType> selectByPartnerId(Long partnerId) {
+	public List<PartnerServiceType> selectByParentId(Long parentId) {
 		
-		return partnerServiceTypeMapper.selectByPartnerId(partnerId);
+		return partnerServiceTypeMapper.selectByParentId(parentId);
 	}
 	
 	

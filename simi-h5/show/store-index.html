@@ -68,32 +68,14 @@
 						type="text" id="companyName" name="companyName"
 						class="am-form-field" placeholder="企业用户输入公司名称" required>
 				</div>
-				<div class="am-form-group">
-					<label for="doc-select-1">您能提供的服务内容：</label> <select
-						id="serviceTypeId" name="serviceTypeId" class="am-form-field">
-						<option value="0">工商注册</option>
-						<option value="1">法律咨询</option>
-						<option value="2">财务会计</option>
-						<option value="3">商标专利</option>
-						<option value="4" selected="selected">技术服务</option>
-                        <option value="3">翻译/速记</option>
-                        <option value="3">设计印刷</option>
-                        <option value="3">云秘书</option>
-                        <option value="3">活动组织策划</option>
-                        <option value="3">云助理</option>
-                        <option value="3">社保公积金</option>
-                        <option value="3">音响灯光舞美</option>
-                        <option value="3">主持司仪模特</option>
-                        <option value="3">服装道具租售</option>
-                        <option value="3">公商业文艺表演</option>
-                        <option value="3">庆典展会策划</option>
-                        <option value="3">云前台</option>
-                        <option value="3">云人事</option>
-                        <option value="3">云顾问</option>
-                        <option value="3">保洁清洗养护</option>
-                        
-					</select> <span class="am-form-caret"></span>
-				</div>
+				
+				<input type="hidden" id="partnerServiceTypeId" name="partnerServiceTypeId" value="" />
+				<label for="doc-select-1">您能提供的服务内容：</label>
+				<select id="partnerServiceTypeName" name="partnerServiceTypeName" class="am-form-field">
+			   
+			    </select> 
+			    <span class="am-form-caret"></span>
+				
 				<div class="am-form-group">
 					<!--  <button type="button" id="information_btn" class="am-btn am-btn-primary am-radius">提&nbsp;&nbsp;&nbsp;&nbsp;交</button> -->
 					<button type="button" id="information_btn"
