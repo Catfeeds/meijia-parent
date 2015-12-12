@@ -417,11 +417,14 @@ public class CardsServiceImpl implements CardService {
 		
 		List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
 		
-//		for (WeatherDataVo item : weatherDatas) {
-//			System.out.println(item.getDate());
-//		}
+		String nowDateStr = DateUtil.getToday();
 		
+		WeatherDataVo curItem = weatherDatas.get(0);
+		String realTemp = curItem.getDate();
 		
+		realTemp = realTemp.substring(realTemp.indexOf("(") + 1, realTemp.indexOf(")"));
+		realTemp = realTemp.substring(realTemp.indexOf("：") + 1);
+
 		WeatherIndexVo weatherIndex = null;
 		List<WeatherIndexVo> weatherIndexs =GsonUtil.GsonToList(weatherInfo.getWeatherIndex(), WeatherIndexVo.class);
 		for (WeatherIndexVo item : weatherIndexs) {
@@ -445,11 +448,11 @@ public class CardsServiceImpl implements CardService {
 		cardExtraMap.put("cityName", cityName);
 		cardExtraMap.put("weatherDatas",weatherDatas);
 		cardExtraMap.put("weatherIndex", weatherIndex);
+		cardExtraMap.put("real_temp", realTemp);
 		
 		String cardExtra = GsonUtil.GsonString(cardExtraMap);
 		
 		result.setCardExtra(cardExtra);
-		
 		
 //		result.setServiceContent(serviceContent);
 		
