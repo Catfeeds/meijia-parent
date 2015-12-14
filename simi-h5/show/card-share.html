@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/wap.css?2">
+    <title>卡片分享</title>
+</head>
+<body>
+
+<div class="pet_mian" id="top">
+  <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}' >
+  <ul class="am-slides">
+      <li>
+            <img src="images/fl01.png">
+            <div class="pet_slider_font">
+                <span class="pet_slider_emoji"></span>
+                <span>来自好友的分享</span>
+            </div>
+            <div class="pet_slider_shadow"></div>
+      </li>
+      
+  </ul>
+</div>
+
+<div class="pet_content_main">
+  <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+  <div class="am-list-news-bd">
+  <ul class="am-list">
+     <!--缩略图在标题右边-->
+      
+      <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_list_one_block">
+        <div class="pet_list_one_info">
+            <div class="pet_list_one_info_l">
+                <div class="pet_list_one_info_ico"><img src="images/a2.png" alt=""></div>
+                <div class="pet_list_one_info_name">张三疯</div>
+            </div>
+            <div class="pet_list_one_info_r">
+                <div class="pet_list_tag pet_list_tag_zzs">会议安排</div>
+            </div>
+        </div>
+        <div class=" am-u-sm-8 am-list-main pet_list_one_nr">
+            <h3 class="am-list-item-hd pet_list_one_bt"><a href="###" class="">今天下午三点在会议室开会，讨论年会事宜。</a></h3>
+            <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe617;</i>2015.10.26 9:00～10:30</div>
+            <div class="pet_article_user_time pet_hd_con_map"><i class="iconfont">&#xe632;</i>海淀区成府路优盛大厦B座8层</div>
+            
+            
+        </div>
+          <div class="am-u-sm-4 am-list-thumb">
+            <a href="###" class="">
+              <img src="images/q5.jpg" class="pet_list_one_img" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
+            </a>
+          </div>
+      </li>
+      
+    </ul>
+  </div>
+
+    </div>
+
+</div>
+<div class="pet_article_dowload pet_dowload_more_top_off">
+      <div class="pet_article_dowload_title">大家都在用，就差你了~~</div>
+      <div class="pet_article_dowload_content pet_dowload_more_top_bg"><div class="pet_article_dowload_triangle pet_dowload_more_top_san"></div>
+      <div class="pet_article_dowload_ico"><img src="img/footdon.png" alt=""></div>
+      <div class="pet_article_dowload_content_font">
+如何才能过好每一天？有序、轻松、高效的一天会给生活与工作质量带来根本性改变，快来试试吧。 </div>
+      <div class="pet_article_dowload_all">
+        <a href="http://51xingzheng.cn/d" class="pet_article_dowload_Az am-icon-apple"> App store</a>
+        <a href="http://51xingzheng.cn/d" class="pet_article_dowload_Pg am-icon-android"> Android</a>
+      </div>
+      </div>
+      <div class="pet_article_footer_info">Copyright(c)2015 云行政 All Rights Reserved</div>
+</div>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script>
+$(function(){
+
+    // 动态计算新闻列表文字样式
+    auto_resize();
+    $(window).resize(function() {
+        auto_resize();
+    });
+    $('.am-list-thumb img').load(function(){
+        auto_resize();
+    });
+
+    $('.am-list > li:last-child').css('border','none');
+    function auto_resize(){
+        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
+
+    }
+        $('.pet_nav_gengduo').on('click',function(){
+            $('.pet_more_list').addClass('pet_more_list_show');
+       });
+        $('.pet_more_close').on('click',function(){
+            $('.pet_more_list').removeClass('pet_more_list_show');
+        });
+});
+
+</script>
+</body>
+</html>
