@@ -30,22 +30,19 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
-			用户管理 </header>
+			消息管理 </header>
 
 			<hr
 				style="width: 100%; color: black; height: 1px; background-color: black;" />
 
 			<div class="panel-body">
-				<form:form modelAttribute="msgModel"
-								class="form-horizontal" method="POST" action="msgForm"
+				<form:form modelAttribute="contentModel"
+								class="form-horizontal" method="POST" action="saveMsgForm"
 								id="msg-form">
 
-								<form:hidden path="id" />
+								<form:hidden path="msgId" />
 								<input type="hidden" name="type" id="type"/>
-								<div class="form-body">
-
 									<div class="form-group required">
-
 										<label class="col-md-2 control-label">标题</label>
 										<div class="col-md-5">
 											<form:input path="title" class="form-control" placeholder="标题" id="title"
@@ -53,10 +50,7 @@
 											<form:errors path="title" class="field-has-error"></form:errors>
 										</div>
 									</div>
-								</div>
-
 								<div class="form-group required">
-
 									<label class="col-md-2 control-label">摘要</label>
 									<div class="col-md-5">
 										<form:input path="summary" class="form-control" id="summary"
@@ -64,67 +58,74 @@
 										<form:errors path="summary" class="field-has-error"></form:errors>
 									</div>
 								</div>
-
+								
 								<div class="form-group required">
-
-									<label class="col-md-2 control-label">全文</label>
+									<label class="col-md-2 control-label">消息详细内容</label>
 									<div class="col-md-9">
 									<form:textarea  class="textarea" id="some-textarea" path="content"  placeholder="全文"></form:textarea>
 									<form:errors path="content" class="field-has-error"></form:errors>
 									</div>
 								</div>
-								<div class="form-group required">
-
-									<!-- Text input-->
-									<label class="col-md-2 control-label">用户群</label>
-									<div class="col-md-10">
-
-										<div class="row">
-											<div class="col-md-2" align="right">
-												<label class="radio"> <input value="0" name="sendGroup" type="radio"> 全部用户</label>
-											</div>
-											<div class="col-md-2" align="right">
-												<label class="radio"> <input value="1" name="sendGroup" type="radio"> 未下单用户</label>
-											</div>
-											<div class="col-md-2" align="left">
-												<label class="radio"> <input checked="checked" value="2" name="sendGroup" type="radio"> 已下单用户</label>
-											</div>
+									<div class="form-group required">
+										<label class="col-md-2 control-label">跳转url</label>
+										<div class="col-md-5">
+											<form:input path="gotoUrl" class="form-control" placeholder="跳转url" id="gotoUrl"
+												maxLength="32" />
+											<form:errors path="gotoUrl" class="field-has-error"></form:errors>
 										</div>
-                                     </div>
-                                    </div>
-
-								<div class="form-group required">
-
-									<!-- Text input-->
-									<label class="col-md-2 control-label">是否有效</label>
-									<div class="col-md-10">
-
-										<div class="row">
-											<div class="col-md-2" align="right">
-												<label class="radio">
-												<input value="0" name="isEnable" type="radio"> 无效</label>
-											</div>
-											<div class="col-md-2" align="left">
-												<label class="radio">
-												 <input checked="checked" value="1" name="isEnable" type="radio"> 有效</label>
-											</div>
+									</div>
+								
+									<div class="form-group required">
+										<label class="col-md-2 control-label">用户类型</label>
+										<div class=col-md-5>
+												<form:select path="userType" class="form-control">
+												<form:option value="" label="请选择用户类型"/>  
+												<form:option value="0" label="普通用户"/>  
+												<form:option value="1" label="秘书"/>  
+												<form:option value="2" label="服务商"/>  
+												</form:select>
 										</div>
-                                     </div>
-                                    </div>
+									</div>
+								
+									<div class="form-group required">
+										<label class="col-md-2 control-label">发送时间</label>
+										
+										<div class="col-md-5">
+										<!-- <div class="input-group date"> -->
+
+									<%-- <fmt:formatDate var='formattedDate' value='${contentModel.sendTime}' type='both'
+										pattern="yyyy-MM-dd" /> --%>
+									<form:input path="sendTime" class="form-control form_datetime" style="width:110px;" readonly="true"  />
+									<%-- <input type="text" path="sendTime" id="sendTime" name="sendTime"
+										value="${formattedDate}" readonly class="form-control"><span
+										class="input-group-addon"><i
+										class="glyphicon glyphicon-th"></i></span>
+								     </div> --%>
+										</div>
+								</div>
+									<div class="form-group required">
+										<label class="col-md-2 control-label">应用类型</label>
+										<div class=col-md-5>
+												<form:select path="appType" class="form-control">
+												<form:option value="" label="请选择应用类型"/>  
+												<form:option value="0" label="jhj-am"/>  
+												<form:option value="1" label="jhj-u"/>  
+												</form:select>
+										</div>
+									</div>
+								
 								<div class="form-group required">
-
 									<!-- Text input-->
-									<label class="col-md-2 control-label">是否发送</label>
+									<label class="col-md-2 control-label">是否可用</label>
 									<div class="col-md-10">
-
 										<div class="row">
 											<div class="col-md-2" align="right">
 												<label class="radio">
-												<input value="0" name="isSended" type="radio"> 发送</label>
+												<input value="0" name="isEnable" type="radio">不可用</label>
 											</div>
 											<div class="col-md-2" align="left">
 												<label class="radio">
-												 <input checked="checked" value="1" name="isSended" type="radio"> 不发送</label>
+												 <input checked="checked" value="1" name="isEnable" type="radio">可用</label>
 											</div>
 										</div>
                                      </div>
@@ -133,21 +134,19 @@
 										<div class="row">
 											<div class="col-md-6">
 												<div class="col-md-offset-7">
-													<button type="submit"  id="editMsg_btn" class="btn btn-success">保存</button>
+													<button type="submit" id="editMsg_btn" class="btn btn-success">保存</button>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="col-md-offset-0">
-													<button type="button"   id="previewMsg_btn" class="btn btn-success">预览</button>
-
+													<button type="button" id="previewMsg_btn" class="btn btn-success">预览</button>
 												</div>
 											</div>
 										</div>
 									</div>
-
 							</form:form>
-			</div>
-			</section>
+							</div>
+						</section>
 		</div>
 	</div>
 	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> <%@ include
@@ -170,8 +169,8 @@
 	<script type="text/javascript"
 		src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>"></script>
 
-	<script src="<c:url value='/js/simi/sec/listForm.js'/>"
-		type="text/javascript"></script>
+	<%-- <script src="<c:url value='/js/simi/sec/listForm.js'/>"
+		type="text/javascript"></script> --%>
 
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
 

@@ -49,10 +49,34 @@ import="com.simi.oa.common.UrlHelper"%>
       <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
-				<%@ include file="../common/msg/msgSearch.jsp"%>
+				<%-- <%@ include file="../common/msg/msgSearch.jsp"%> --%>
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
+                         <form:form modelAttribute="searchVoModel" action="list" method="GET">
+				<header class="panel-heading">
+				<h4>数据搜索</h4>
+				<div>
+					标题：
+					<form:input path="title" />
+					用户类型：
+					<form:select path="userType">
+						<option value="">全部</option>
+							<form:option value="0" label="普通用户"/>  
+							<form:option value="1" label="秘书"/>  
+							<form:option value="2" label="服务商"/>
+					</form:select>
+					发送类型：
+					<form:select path="isSend">
+						<option value=""> 请选择发送类型</option>
+							<form:option value="0" label="未发送"/>  
+							<form:option value="1" label="已发送"/> 
+					</form:select>
+
+					<input type="submit" value="搜索">
+				</div>
+				</header>
+			</form:form>
                           <header class="panel-heading">
                           	消息管理
                           	
@@ -89,8 +113,7 @@ import="com.simi.oa.common.UrlHelper"%>
 							            	<statusTag:status status="${ item.isEnable }"/>
 							            </td>
 							            <td>
-							                <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-	                                  		<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
+							                <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.msgId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 							            </td>
 							            <%-- <td>
 							            	<c:if test="${item.sendStatus==1}">

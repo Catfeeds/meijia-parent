@@ -65,6 +65,26 @@ $("#editMsg_btn").click(function() {
 	}
 });
 
+$('.input-group.date').datepicker({
+	format : "yyyy-mm-dd",
+	language : "zh-CN",
+	autoclose : true,
+	startView : 1,
+	defaultViewDate : {
+		year : 1980,
+		month : 0,
+		day : 1
+	}
+});
+/*$('.form_datetime').datepicker({
+	format: "yyyy-mm-dd",
+	language: "zh-CN",
+	autoclose: true,
+	startView: 1,
+	todayBtn:true,
+	pickerPosition: "bottom-left"
+
+});*/
 $("#previewMsg_btn").click(function() {
 	
 	var title = $("#title").val();
