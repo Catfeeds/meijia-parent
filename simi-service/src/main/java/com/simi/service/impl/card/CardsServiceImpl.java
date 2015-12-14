@@ -18,6 +18,7 @@ import com.simi.service.data.WeatherService;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UsersService;
+import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
@@ -199,6 +200,9 @@ public class CardsServiceImpl implements CardService {
 		if (list != null) {
 			vo.setCardImgsList(list);
 		}
+		
+		//卡片log
+		vo.setCardLogo(CardUtil.getCardLogo(vo.getCardType()));
 		
 		return vo;
 	}

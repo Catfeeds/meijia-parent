@@ -1,6 +1,7 @@
 package com.simi.utils;
 
 import com.meijia.utils.TimeStampUtil;
+import com.simi.common.Constants;
 
 /**
  * 卡片的常用静态方法
@@ -152,5 +153,41 @@ public class CardUtil {
 	
 		return remindContent;
 	}	
+	
+	
+	public static String getCardLogo(Short cardType) {
+		
+		String imgUrl = "";
+		
+		switch (cardType) {
+			case 0:
+				imgUrl = Constants.IMG_SERVER_HOST + "/cb5e6bc8f19eddc3081909b6f9ae69df";
+				break;
+			case 1:
+//				cardTypeName = "会议安排";
+				imgUrl = Constants.IMG_SERVER_HOST + "/cb5e6bc8f19eddc3081909b6f9ae69df";
+				break;
+			case 2:
+//				cardTypeName = "秘书叫早";
+				imgUrl = Constants.IMG_SERVER_HOST + "/092a77928064df50c56faa5f25a78f8c";
+				break;
+			case 3:
+//				cardTypeName = "事务提醒";
+				imgUrl = Constants.IMG_SERVER_HOST + "/46d444bb6ee1bb611d82bdf7d766381f";
+				break;
+			case 4:
+//				cardTypeName = "邀约通知";
+				imgUrl = Constants.IMG_SERVER_HOST + "/bf0fbd4fc52904ab17b57c0be802097e";
+				break;
+			case 5:
+//				cardTypeName = "差旅规划";
+				imgUrl = Constants.IMG_SERVER_HOST + "/6aceede35dbd350a3b094b8b64629bce";
+				break;
+			default:
+				imgUrl = "";
+		}		
+	
+		return imgUrl;
+	}		
 	
 }

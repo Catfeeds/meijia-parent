@@ -33,6 +33,8 @@ public class CardViewVo extends Cards {
 		
 	private String cardExtra;
 	
+	private String cardLogo;
+	
 	public List<CardAttend> getAttends() {
 		return attends;
 	}
@@ -127,6 +129,14 @@ public class CardViewVo extends Cards {
 
 	public void setCardExtra(String cardExtra) {
 		this.cardExtra = cardExtra;
+	}
+
+	public String getCardLogo() {
+		return cardLogo;
+	}
+
+	public void setCardLogo(String cardLogo) {
+		this.cardLogo = cardLogo;
 	}
 	
 }
