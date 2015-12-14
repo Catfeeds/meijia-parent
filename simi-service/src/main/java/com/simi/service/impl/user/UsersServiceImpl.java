@@ -192,8 +192,26 @@ public class UsersServiceImpl implements UsersService {
 		vo.setTotalCoupon(0);
 		List<UserCoupons> list = userCouponService.selectByUserId(viewUser
 				.getId());
-		if (!list.isEmpty())
+		if (!list.isEmpty()) {
+			
+			UserCoupons item = null;
+			List<Long> couponsIds  = new ArrayList<Long>();
+			Long now = TimeStampUtil.getNow();
+			for(int i = 0; i < list.size(); i++) {
+				item = list.get(i);
+				//已经使用过的
+				//优惠券已经过期的，都不显示
+				if (item.getIsUsed().equals((short)0) &&
+					item.getExpTime() > (now/1000) ||item.getExpTime() == 0) {
+					couponsIds.add(item.getCouponId());
+				} else {
+					list.remove(i);
+				}
+			}
 			vo.setTotalCoupon(list.size());
+			
+		}
+			
 
 		// 计算好友个数
 		vo.setTotalFriends(0);
