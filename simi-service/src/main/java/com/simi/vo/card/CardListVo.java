@@ -29,6 +29,8 @@ public class CardListVo {
 	private int totalComment;	
 	
 	private String cardExtra;
+	
+	private Short status;
 
 	public Long getCardId() {
 		return cardId;
@@ -124,6 +126,14 @@ public class CardListVo {
 
 	public void setServiceAddr(String serviceAddr) {
 		this.serviceAddr = serviceAddr;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 		
 }

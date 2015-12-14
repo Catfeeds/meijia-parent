@@ -279,6 +279,8 @@ public class CardsServiceImpl implements CardService {
 				}
 			}
 			vo.setAttends(cardAttendItems);
+			
+			vo.setStatus(item.getStatus());
 
 			result.add(vo);
 		}
