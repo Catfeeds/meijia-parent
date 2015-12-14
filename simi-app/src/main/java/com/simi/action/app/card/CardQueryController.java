@@ -81,10 +81,11 @@ public class CardQueryController extends BaseController {
 	@RequestMapping(value = "get_detail", method = RequestMethod.GET)
 	public AppResultData<Object> getDetail(
 			@RequestParam("card_id") Long cardId,
-			@RequestParam("user_id") Long userId
+			@RequestParam(value = "user_id",required = false,defaultValue = "") Long userId
 			) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		if (userId != null) {
 		Users u = userService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
@@ -93,7 +94,7 @@ public class CardQueryController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
-		
+		}
 		Cards record = cardService.selectByPrimaryKey(cardId);
 		if (record == null) return result;
 		CardViewVo vo = cardService.changeToCardViewVo(record);

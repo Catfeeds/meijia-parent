@@ -65,7 +65,7 @@ $("#mobile").on('blur', function(e) {
 		async : false,
 		success : function(data) {
 
-			if (data.status == "999") {
+			if (data.status == "0") {
 				alert(data.msg);
 				console.log(data);
 				console.log(data.data);

@@ -9,6 +9,8 @@ public class MsgSearchVo {
 	private short isSend;
 	
 	private short userType;
+	
+	private String isSendStr;
 
 	
 	public String getTitle() {
@@ -41,7 +43,13 @@ public class MsgSearchVo {
 	public void setIsSend(short isSend) {
 		this.isSend = isSend;
 	}
-	
-	
+
+	public String getIsSendStr() {
+		return isSendStr;
+	}
+
+	public void setIsSendStr(String isSendStr) {
+		this.isSendStr = isSendStr;
+	}
 	
 }

@@ -95,7 +95,7 @@
 
 									<%-- <fmt:formatDate var='formattedDate' value='${contentModel.sendTime}' type='both'
 										pattern="yyyy-MM-dd" /> --%>
-									<form:input path="sendTime" class="form-control form_datetime" style="width:110px;" readonly="true"  />
+									<form:input path="isSend" class="form-control form_datetime" style="width:110px;" readonly="true"  />
 									<%-- <input type="text" path="sendTime" id="sendTime" name="sendTime"
 										value="${formattedDate}" readonly class="form-control"><span
 										class="input-group-addon"><i
@@ -137,11 +137,7 @@
 													<button type="submit" id="editMsg_btn" class="btn btn-success">保存</button>
 												</div>
 											</div>
-											<div class="col-md-6">
-												<div class="col-md-offset-0">
-													<button type="button" id="previewMsg_btn" class="btn btn-success">预览</button>
-												</div>
-											</div>
+										
 										</div>
 									</div>
 							</form:form>

@@ -35,23 +35,24 @@
       <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_list_one_block">
         <div class="pet_list_one_info">
             <div class="pet_list_one_info_l">
-                <div class="pet_list_one_info_ico"><img src="images/a2.png" alt=""></div>
-                <div class="pet_list_one_info_name">张三疯</div>
+                <div class="pet_list_one_info_ico"><img src="" id = "userHeadImg" alt=""></div>
+                <div class="pet_list_one_info_name" id="userName" ></div>
             </div>
+            
             <div class="pet_list_one_info_r">
-                <div class="pet_list_tag pet_list_tag_zzs">会议安排</div>
+                <div class="pet_list_tag pet_list_tag_zzs" id = "cardTypeName"></div>
             </div>
         </div>
         <div class=" am-u-sm-8 am-list-main pet_list_one_nr">
-            <h3 class="am-list-item-hd pet_list_one_bt"><a href="###" class="">今天下午三点在会议室开会，讨论年会事宜。</a></h3>
-            <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe617;</i>2015.10.26 9:00～10:30</div>
-            <div class="pet_article_user_time pet_hd_con_map"><i class="iconfont">&#xe632;</i>海淀区成府路优盛大厦B座8层</div>
+            <h3 class="am-list-item-hd pet_list_one_bt" id = "serviceContent"><a href="###" class="">今天下午三点在会议室开会，讨论年会事宜。</a></h3>
+            <div class="pet_article_user_time pet_hd_con_time" id = "addTimeStr"><i class="iconfont">&#xe617;</i></div>
+            <div class="pet_article_user_time pet_hd_con_map" id = "serviceAddr" ><i class="iconfont">&#xe632;</i>海淀区成府路优盛大厦B座8层</div>
             
             
         </div>
           <div class="am-u-sm-4 am-list-thumb">
             <a href="###" class="">
-              <img src="images/q5.jpg" class="pet_list_one_img" alt="我很囧，你保重....晒晒旅行中的那些囧！"/>
+              <img src="" id ="cardLogo" class="pet_list_one_img" alt=""/>
             </a>
           </div>
       </li>
@@ -65,7 +66,7 @@
 <div class="pet_article_dowload pet_dowload_more_top_off">
       <div class="pet_article_dowload_title">大家都在用，就差你了~~</div>
       <div class="pet_article_dowload_content pet_dowload_more_top_bg"><div class="pet_article_dowload_triangle pet_dowload_more_top_san"></div>
-      <div class="pet_article_dowload_ico"><img src="img/footdon.png" alt=""></div>
+      <div class="pet_article_dowload_ico"><img src="images/footdon.png" alt=""></div>
       <div class="pet_article_dowload_content_font">
 如何才能过好每一天？有序、轻松、高效的一天会给生活与工作质量带来根本性改变，快来试试吧。 </div>
       <div class="pet_article_dowload_all">
@@ -77,8 +78,20 @@
 </div>
 </div>
 
+ <script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+	
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/countdown.js"></script>
+
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/company/card-share.js"></script>
 <script>
 $(function(){
 

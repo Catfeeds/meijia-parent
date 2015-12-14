@@ -16,6 +16,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -120,7 +121,8 @@ public class MsgController extends AdminController {
      */
     //@AuthPassport
 	@RequestMapping(value = "/msgForm",method = RequestMethod.GET)
-	public String  orderDetail(HttpServletRequest request,Long msgId ,Model model){
+	public String  orderDetail(HttpServletRequest request,
+			@RequestParam(value = "msg_id") Long msgId,Model model){
 		
     	//Long msgIdsss = Long.valueOf(request.getParameter("msgId"));
     	
