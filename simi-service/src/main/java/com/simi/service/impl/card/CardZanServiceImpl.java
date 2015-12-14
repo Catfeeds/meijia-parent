@@ -81,8 +81,11 @@ public class CardZanServiceImpl implements CardZanService {
 				Users u = null;
 				for (int j = 0; j < userList.size(); j++) {
 					u = userList.get(j);
-					vo.setName(u.getName());
-					vo.setHeadImg(u.getHeadImg());
+					if (vo.getUserId().equals(u.getId())) {
+						vo.setName(u.getName());
+						vo.setHeadImg(u.getHeadImg());
+						break;
+					}
 				}
 				result.add(vo);
 			}
