@@ -1,15 +1,11 @@
 
-var params = {};
-params.card_id = $('#card_id').val();
-
-//params.card_id = 2;
+var cardId = getUrlParam("card_id");
 $.ajax({
 	type : "GET",
-	url : appRootUrl + "/card/get_detail.json",
+	url : appRootUrl + "/card/get_detail.json?card_id="+cardId,
 	dataType : "json",
 	cache : true,
 	async : false,	
-	data : params,
 	success : function(data) {
 
 		if (data.status == "0") {
