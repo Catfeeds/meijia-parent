@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <%@ include file="../shared/taglib.jsp"%>
-
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -10,72 +8,69 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-<link href="<c:url value='/css/xcloud/login.css'/>" rel="stylesheet" />
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+</style>
 </head>
 
-<body class="login-page">
+<body>
+	<div class="header">
+		<div class="am-g">
+			<h1>云行政</h1>
+			<p>
+				 一句话描述云行政
+			</p>
+		</div>
+		<hr />
+	</div>
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<h3>登录</h3>
+			<hr>
+			<div class="am-btn-group">
+				<a href="#" class="am-btn am-btn-secondary am-btn-sm"><i class="am-icon-github am-icon-sm"></i> 立即注册</a> 
+				<a href="#" class="am-btn am-btn-success am-btn-sm"><i class="am-icon-google-plus-square am-icon-sm"></i> 加入公司</a>
+			</div>
+			<br> <br>
 
+			<form:form method="post" modelAttribute="contentModel" id="login-form" class="am-form" >
+				<label for="email">用户名:</label> 
+					<form:input path="username" class="js-pattern-mobile"  autocomplete="off" placeholder="用户名" required="required"/> 
+					
+				<br> 
+				<label for="password">密码:</label> <form:password path="password"  autocomplete="off" placeholder="密码"  required="required"/> 
+				<br> 
 
-<div class="ch-container">
-    <div class="row">
-        
-    <div class="row">
-        <div class="col-md-12 center login-header">
-            <h2>云行政</h2>
-        </div>
-        <!--/span-->
-    </div><!--/row-->
+				<div class="am-center"><form:errors path="username" class="am-alert am-alert-danger center"></form:errors></div>
+				<br />
+				
+				<div class="am-cf">
+					<input type="button" id="login-btn" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl"> 
+					<input type="button" value="忘记密码? " class="am-btn am-btn-default am-btn-sm am-fr">
+				</div>
+			</form:form>
+			<hr>
+			<p>© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+		</div>
+	</div>
 
-    <div class="row">
-        <div class="well col-md-5 center login-box">
-			<div class="alert alert-info">
-                没有账号，请点击这里注册.
-            </div>
-            <form:form modelAttribute="contentModel" class="form-horizontal" method="post">
-                <fieldset>
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
-                   		<form:input path="username" class="form-control placeholder-no-fix" autocomplete="off" placeholder="手机号/邮箱"/>
-                    </div>
-                    <div class="clearfix"></div><br>
-
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                
-                        <form:password path="password" class="form-control placeholder-no-fix" autocomplete="off" placeholder="密码(8-20位)"/>
-			
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <div class="row">
-                    
-                    	<p class="col-md-9 col-md-12 col-xs-12 copyright">
-                    		
-                    	</p>
-
-        				<p class="col-md-3 col-sm-3 col-xs-12 powered-by">
-        					<a href="#">忘记密码</a>
-        				</p>
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <p class="center col-md-5">
-                        <button type="submit" class="btn btn-primary">登陆</button>
-                    </p>
-                </fieldset>
-            </form:form>
-        </div>
-        <!--/span-->
-    </div><!--/row-->
-</div><!--/fluid-row-->
-
-</div><!--/.fluid-container-->
 	<!-- js placed at the end of the document so the pages load faster -->
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-	<script src="<c:url value='/js/vendor/jquery.validate.min.js'/>" type="text/javascript"></script>
-	<script src="<c:url value='/js/xcloud/home/login.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/assets/js/xcloud/home/login.js'/>" type="text/javascript"></script>
 </body>
 </html>

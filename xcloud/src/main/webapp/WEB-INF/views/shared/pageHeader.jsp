@@ -1,47 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<header class="navbar navbar-fixed-top ">
-	<div class="container top-header">
-		<div class="navbar-header">
-
-			<a class="navbar-brand" href="/">
-				<img src="<c:url value='/img/logo_header.png'/>"  alt="云行政"> 
-				<span class="text" style="color: #fff">云行政-智慧行政服务平台</span>
+<header class="am-topbar am-topbar-inverse">
+	<div class="amz-container">
+		<h1 class="am-topbar-brand">
+			<a href="#" class="am-topbar-logo"> <img src="img/logo.png?1" alt="">
 			</a>
-		</div>
-		
-		<div class="navbar-collapse collapse">
+		</h1>
+		<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+			data-am-collapse="{target: '#doc-topbar-collapse-5'}">
+			<span class="am-sr-only"> 导航切换 </span> <span class="am-icon-bars"> </span>
+		</button>
+		<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse-5">
+			<ul class="am-nav am-nav-pills am-topbar-nav">
+				<li class="am-active"><a href="#"> 工作台 </a></li>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-						<a href="#" style="color: #fff;">美家生活<b
-						class="caret"></b>
-						</a>
-					<ul class="dropdown-menu">
-						<li><a href="#"><i class="fa fa-edit"></i>公司信息</a></li>
-						<li><a href="#"><i class="fa fa-signout"></i>登出</a></li>
+				<li class=""><a href="#"> 通讯录 </a></li>
+				<li class=""><a href="#"> 工作日程 </a></li>
+				<li class="am-dropdown" data-am-dropdown=""><a class="am-dropdown-toggle" data-am-dropdown-toggle=""
+					href="javascript:;"> 考勤 <span class="am-icon-caret-down"> </span>
+				</a>
+					<ul class="am-dropdown-content">
+						<li><a href="#"> 考勤设备 </a></li>
+						<li><a href="#"> 考勤列表 </a></li>
+						<li><a href="#"> 考勤统计 </a></li>
+
 					</ul>
 				</li>
 			</ul>
 		</div>
 	</div>
-
-	<div class="worker">
-		<div class="apps apps-hover ui-tab ui-tab-hover">
-			<div class="nav_shadow">
-				<div class="ui-tab-title apps-title ">
-					<label class="ui-item ui-tab-item "><a href="/xcloud/index/"><div>
-								<i class="fa fa-desktop"></i>工作台
-							</div></a></label>
-							 <label class="ui-item ui-tab-item"><a href="/xcloud/staff/list"><div><i class="fa fa-desktop"></i>通讯录
-							</div></a></label>
-							 
-							 <label class="ui-item ui-tab-item"><div>日程安排</div></label>
-					<!-- <label class=" ui-tab-item ui-item ui-hide"><a id ="tongxunlua1" href="/xcloud/staff/list"><div>通讯录</div></a></label> -->
-				</div>
-			</div>
-		</div>
-	</div>
-
-	
 </header>
 

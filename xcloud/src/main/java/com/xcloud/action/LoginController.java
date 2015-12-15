@@ -49,21 +49,21 @@ public class LoginController extends BaseController {
 
 	@RequestMapping(value="/login", method = {RequestMethod.POST})
 	public String login(HttpServletRequest request, Model model, 
-			@Valid @ModelAttribute("contentModel") LoginVo loginVol ,
+			@Valid @ModelAttribute("contentModel") LoginVo loginVo ,
 			BindingResult result) throws NoSuchAlgorithmException{
 		//如果有验证错误 返回到form页面
         if (result.hasErrors())
             return login(model);
 
-        String userName = request.getParameter("username").trim();
-        String password = request.getParameter("password").trim();
+        String userName = loginVo.getUsername().trim();
+        String password = loginVo.getPassword().trim();
         
         String passwordMd5 = StringUtil.md5(password.trim());
         Xcompany xCompany = xCompanyService.selectByUserNameAndPass(userName, passwordMd5);
         
         if ( xCompany == null ) {
         	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
-        	result.addError(new FieldError("contentModel","password","用户名或密码错误。"));
+//        	result.addError(new FieldError("contentModel","password","用户名或密码错误。"));
         	return login(model);
     	}
         

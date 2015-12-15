@@ -1,14 +1,9 @@
 	<!--common script for all pages-->
 
-	<script src="<c:url value='/js/vendor/jquery.min.js'/>" ></script>
+	<script src="<c:url value='/assets/js/jquery.min.js'/>" ></script>
 	
-	<script src="<c:url value='/js/vendor/bootstrap.min.js'/>" ></script>
+	<script src="<c:url value='/assets/js/amazeui.min.js'/>" ></script>
 	
-	<script src="<c:url value='/js/vendor/jquery-ui.js'/>" ></script>
-		
-	<script src="<c:url value='/js/vendor/jquery.cookie.js'/>"></script>
-	
-	<script src="<c:url value='/js/xcloud/common/common.js'/>"></script>
-	
-	<script src="<c:url value='/js/xcloud/common/validate-ajax.js'/>"></script>
+	<script src="<c:url value='/assets/js/amazeui.lazyload.min.js'/>" ></script>
+
 	

@@ -1,82 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description"
-	content="HTML5 Admin is an HTML5 Administration template easy to modify and maintain based on Bootstrap 3">
-<meta name="author" content="HTML5 Admin">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="shortcut icon" href="images/favicon.png">
-<title>HTML5 Admin</title>
-<link rel="stylesheet" href="../css/vendor/bootstrap.css?ver=1.1">
-<link rel="stylesheet" href="../css/vendor/font-awesome.css?ver=1.1">
-<link rel="stylesheet" href="../css/overrides/bootstrap-overrides.css?ver=1.1">
-<link rel="stylesheet" href="../css/HTML5admin.css?ver=1.1">
-<!--[if lt IE 9]><script src="../js/utils/html5shiv.js?ver=1.1"></script>
-          <script src="../js/utils/respond.min.js?ver=1.1"></script><![endif]-->
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>Login Page | Amaze UI Example</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+</style>
 </head>
 <body>
-	<header class="navbar navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="icon icon-bar"></span> <span class="icon icon-bar"></span> <span class="icon icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/"><img src="../images/logo_A_black.png" alt="Brand Name Here"> <span
-					class="text"></span></a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="13"
-							width="20" src="http://www.geonames.org/flags/x/uk.gif" style="display: inline" class=""><b class="caret"></b></a>
-					<ul class="dropdown-menu">
-							<li class="dropdown-header">icons: GeoNames.org</li>
-							<li><a href="#"><img height="13" width="20" src="http://www.geonames.org/flags/x/es.gif"
-									style="display: inline" class=""> Español</a></li>
-							<li><a href="#"><img height="13" width="20" src="http://www.geonames.org/flags/x/it.gif"
-									style="display: inline" class=""> Italiano</a></li>
-							<li><a href="#"><img height="13" width="20" src="http://www.geonames.org/flags/x/de.gif"
-									style="display: inline" class=""> Deutsch</a></li>
-							<li><a href="#"><img height="13" width="20" src="http://www.geonames.org/flags/x/fr.gif"
-									style="display: inline" class=""> Français</a></li>
-						</ul></li>
-				</ul>
-			</div>
+	<div class="header">
+		<div class="am-g">
+			<h1>Web ide</h1>
+			<p>
+				Integrated Development Environment<br />代码编辑，代码生成，界面设计，调试，编译
+			</p>
 		</div>
-	</header>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<h1>
-					LOGIN <small>or</small> <a href="signup.html">sign up</a>
-				</h1>
-				<p>
-					<i class="fa fa-warning-sign"></i> <strong>Click "SIGN UP"</strong> to see <em>another possible template</em>.<br>
-				<form>
-					<div class="form-group">
-						<input type="email" class="form-control required email" id="exampleInputEmail1" placeholder="Enter email">
-					</div>
-					<div class="form-group">
-						<input minlength="6" type="password" class="form-control required" id="exampleInputPassword1"
-							placeholder="Password"><label class="pull-right" for="exampleInputPassword1"><small><a
-								role="button" class="popover-test" title="" data-placement="bottom"
-								data-content="Password must be at least 6 alphanumeric character" data-original-title="Password"><i
-									class="fa fa-question-circle"></i> Help</a></small></label>
-					</div>
-				</form>
-				<div class="btn-group">
-					<a class="btn h5a-btn btn-success" href="errors.html"><i class="fa fa-backward"></i> Go back</a> <a
-						class="btn h5a-btn btn-default" href="../"><i class="fa fa-dashboard"></i> Go to the Dashboard</a>
-				</div>
-				</p>
+		<hr />
+	</div>
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<h3>登录</h3>
+			<hr>
+			<div class="am-btn-group">
+				<a href="#" class="am-btn am-btn-secondary am-btn-sm"><i class="am-icon-github am-icon-sm"></i> Github</a> <a
+					href="#" class="am-btn am-btn-success am-btn-sm"><i class="am-icon-google-plus-square am-icon-sm"></i> Google+</a>
+				<a href="#" class="am-btn am-btn-primary am-btn-sm"><i class="am-icon-stack-overflow am-icon-sm"></i>
+					stackOverflow</a>
 			</div>
-			<div class="col-md-4"></div>
+			<br> <br>
+
+			<form method="post" id="login-form" class="am-form">
+				<label for="email">邮箱:</label> <input type="email" name="" id="email" value=""> <br> <label
+					for="password">密码:</label> <input type="password" name="" id="password" value=""> <br> <label
+					for="remember-me"> <input id="remember-me" type="checkbox"> 记住密码
+				</label> <br />
+				<div class="am-cf">
+					<input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl"> <input
+						type="submit" name="" value="忘记密码 ^_^? " class="am-btn am-btn-default am-btn-sm am-fr">
+				</div>
+			</form>
+			<hr>
+			<p>© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
 		</div>
 	</div>
-	<script src="../js/vendor/jquery.min.js?ver=1.1"></script>
-	<script src="../js/vendor/bootstrap.min.js?ver=1.1"></script>
-	<script src="../js/pages/boilerplate.js?ver=1.1"></script>
 </body>
 </html>
