@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.op.AppToolsMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.op.AppTools" >
+    <id column="t_id" property="tId" jdbcType="NUMERIC" />
+    <result column="no" property="No" jdbcType="NUMERIC" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="app_type" property="appType" jdbcType="VARCHAR" />
+    <result column="open_type" property="openType" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="is_partner" property="isPartner" jdbcType="NUMERIC" />
+    <result column="auth_url" property="authUrl" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t_id, no, name, logo, app_type, open_type, url, is_partner, auth_url, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_tools
+    where t_id = #{tId,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByListPage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from app_tools
+    order by no asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from app_tools
+    where t_id = #{tId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.op.AppTools" >
+    insert into app_tools (t_id, no, name, 
+      logo, app_type, open_type, 
+      url, is_partner, auth_url, 
+      add_time)
+    values (#{tId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
+      #{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{isPartner,jdbcType=NUMERIC}, #{authUrl,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.op.AppTools" >
+    insert into app_tools
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        t_id,
+      </if>
+      <if test="No != null" >
+        no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="appType != null" >
+        app_type,
+      </if>
+      <if test="openType != null" >
+        open_type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="isPartner != null" >
+        is_partner,
+      </if>
+      <if test="authUrl != null" >
+        auth_url,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tId != null" >
+        #{tId,jdbcType=NUMERIC},
+      </if>
+      <if test="No != null" >
+        #{No,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="openType != null" >
+        #{openType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isPartner != null" >
+        #{isPartner,jdbcType=NUMERIC},
+      </if>
+      <if test="authUrl != null" >
+        #{authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.AppTools" >
+    update app_tools
+    <set >
+      <if test="No != null" >
+        no = #{No,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null" >
+        app_type = #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="openType != null" >
+        open_type = #{openType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isPartner != null" >
+        is_partner = #{isPartner,jdbcType=NUMERIC},
+      </if>
+      <if test="authUrl != null" >
+        auth_url = #{authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where t_id = #{tId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.AppTools" >
+    update app_tools
+    set no = #{No,jdbcType=NUMERIC},
+      name = #{name,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      app_type = #{appType,jdbcType=VARCHAR},
+      open_type = #{openType,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      is_partner = #{isPartner,jdbcType=NUMERIC},
+      auth_url = #{authUrl,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where t_id = #{tId,jdbcType=NUMERIC}
+  </update>
+</mapper>
