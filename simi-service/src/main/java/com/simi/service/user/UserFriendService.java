@@ -30,7 +30,7 @@ public interface UserFriendService {
 
 	UserFriends selectByIsFirend(UserFriendSearchVo searchVo);
 
-	void addFriends(Users u, Users friendUser);
+	Boolean addFriends(Users u, Users friendUser);
 
 	List<UserFriendViewVo> changeToUserFriendViewVos(List<UserFriends> userFriends);
 

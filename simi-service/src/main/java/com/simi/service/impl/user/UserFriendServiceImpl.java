@@ -145,7 +145,10 @@ public class UserFriendServiceImpl implements UserFriendService {
 	}	
 	
 	@Override
-	public void addFriends(Users u, Users friendUser) {
+	public Boolean addFriends(Users u, Users friendUser) {
+		
+		
+		if (u.getId().equals(friendUser.getId())) return true;
 		
 		UserFriendSearchVo searchVo = new UserFriendSearchVo();
 		searchVo.setUserId(u.getId());
@@ -172,6 +175,8 @@ public class UserFriendServiceImpl implements UserFriendService {
 			userFriend.setUpdateTime(TimeStampUtil.getNowSecond());
 			this.insert(userFriend);
 		}
+		
+		return true;
 	}
 	
 }
