@@ -21,6 +21,8 @@ public interface AppToolsService {
 
 	PageInfo selectByListPage(int pageNo, int pageSize);
 
+	List<AppTools> selectByAppType(String appType);
+
 //	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
 
 

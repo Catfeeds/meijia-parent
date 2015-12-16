@@ -18,4 +18,6 @@ public interface AppToolsMapper {
     int updateByPrimaryKey(AppTools record);
 
 	List<AppTools> selectByListPage();
+
+	List<AppTools> selectByAppType(String appType);
 }

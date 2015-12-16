@@ -133,6 +133,7 @@ public class AppToolsController extends BaseController {
 		} else {
 
 			appTools.setAddTime(TimeStampUtil.getNow() / 1000);
+			appTools.setLogo(imgUrl);
 			appToolsService.insertSelective(appTools);
 		}
 

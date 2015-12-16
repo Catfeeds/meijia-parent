@@ -89,5 +89,12 @@ public class AppToolsServiceImpl implements AppToolsService {
 		
 		return result;
 	}
+
+
+	@Override
+	public List<AppTools> selectByAppType(String appType) {
+		
+		return appToolsMapper.selectByAppType(appType);
+	}
 	
 }
