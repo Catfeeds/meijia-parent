@@ -83,6 +83,10 @@ public class OController extends BaseController {
 				url = "http://123.57.173.36/simi-h5/show/order-checkin.html";
 				url = url + "?uid="+uid;
 				break;
+			case "store-my" :
+				url = "http://123.57.173.36/simi-h5/show/store-my-index.html";
+				url = url + "?uid="+uid;
+				break;
 		}
 
 		return "redirect:"+url;
