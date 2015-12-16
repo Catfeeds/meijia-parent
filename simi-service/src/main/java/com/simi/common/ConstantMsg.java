@@ -2,6 +2,7 @@ package com.simi.common;
 
 public class ConstantMsg {
 
+
 	//服务类型 1 = 做饭 2 = 洗衣 3 = 家电清洗 4 = 保洁 5 = 擦玻璃 6 = 管道疏通 7 = 新居开荒
 	public static String SERVICE_TYPE_1_DINNER ="做饭";
 	public static String SERVICE_TYPE_2_WASH ="洗衣";
@@ -43,6 +44,9 @@ public class ConstantMsg {
 
 	//用户地址不存在
 	public static String USER_NOT_EXIST_MG = "用户不存在";
+	
+	//服务人员不存在
+	public static String PARTNER_NOT_EXIST_MG = "服务人员不存在";
 	
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
