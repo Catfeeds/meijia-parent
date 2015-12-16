@@ -274,21 +274,21 @@ public class PushUtil {
 		
 			//************APN高级推送*******************//
 			APNPayload apnpayload = new APNPayload();
-			apnpayload.setBadge(4);
+			apnpayload.setBadge(1);
 //			apnpayload.setSound("");
 			apnpayload.setContentAvailable(1);
-			apnpayload.setCategory("ACTIONABLE");
+//			apnpayload.setCategory("ACTIONABLE");
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
-			alertMsg.setBody("body");
-			alertMsg.setActionLocKey("ActionLockey");
-			alertMsg.setLocKey("LocKey");
-			alertMsg.addLocArg("loc-args");
-			alertMsg.setLaunchImage("launch-image");
-//			// IOS8.2以上版本支持
-			alertMsg.setTitle("Title");
-			alertMsg.setTitleLocKey("TitleLocKey");
-			alertMsg.addTitleLocArg("TitleLocArg");
-
+//			alertMsg.setBody("body");
+//			alertMsg.setActionLocKey("ActionLockey");
+//			alertMsg.setLocKey("LocKey");
+//			alertMsg.addLocArg("loc-args");
+//			alertMsg.setLaunchImage("launch-image");
+////			// IOS8.2以上版本支持
+//			alertMsg.setTitle("Title");
+//			alertMsg.setTitleLocKey("TitleLocKey");
+//			alertMsg.addTitleLocArg("TitleLocArg");
+//
 			apnpayload.setAlertMsg(alertMsg);
 			template.setAPNInfo(apnpayload);
 		
@@ -302,7 +302,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "b10510a6a8d000fb024af47271f8a49f";
+		String clientId = "332bda4d3c673c04d3aac45ccc603475";
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);
 		
@@ -319,7 +319,7 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-11-02 14:53:00");
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-16 11:32:00");
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
 		 tranParams.put("card_id", "6");
@@ -327,7 +327,7 @@ public class PushUtil {
 		 tranParams.put("service_time", timeStr);
 		 tranParams.put("remind_time", timeStr);
 		 tranParams.put("remind_title", "会议安排");
-		 tranParams.put("remind_content", "请参加华北区电话会议,请提前10分钟进入会议室B11");
+		 tranParams.put("remind_content", "2222");
 
 //		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 		 
