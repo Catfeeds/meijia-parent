@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
@@ -149,7 +152,8 @@ public class PartnerServicePriceController extends AdminController {
 			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
+			
+			imgUrl = DwzUtil.dwzApi(imgUrl);
 			record.setImgUrl(imgUrl);
 
 		}

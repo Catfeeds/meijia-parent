@@ -27,6 +27,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
@@ -313,7 +314,8 @@ public class SecController extends AdminController {
 					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 					String headImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
+					
+					headImg = DwzUtil.dwzApi(headImg);
 					userApplyVo.setHeadImg(headImg);
 
 				}

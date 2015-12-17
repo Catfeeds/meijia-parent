@@ -22,6 +22,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
@@ -149,7 +150,8 @@ public class OpAdController extends BaseController {
 			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
+			
+			imgUrl = DwzUtil.dwzApi(imgUrl);
 		}
 		
 		String gotoType = opAd.getGotoType();

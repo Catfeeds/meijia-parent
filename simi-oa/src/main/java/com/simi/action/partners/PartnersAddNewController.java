@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
@@ -36,6 +38,7 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.meijia.utils.common.extension.ArrayHelper;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.BaseController;
@@ -289,7 +292,10 @@ public class PartnersAddNewController extends BaseController{
 					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 					String companyDescImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
+					
+					companyDescImg = ImgServerUtil.getImgSize(companyDescImg, "100", "100");
+					companyDescImg = DwzUtil.dwzApi(companyDescImg);
+					
 					partners.setCompanyDescImg(companyDescImg);
 
 						}

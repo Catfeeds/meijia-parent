@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
@@ -97,7 +98,7 @@ public class DictAdController extends BaseController {
 					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
 					fileType = fileType.toLowerCase();
 					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-
+					
 					ObjectMapper mapper = new ObjectMapper();
 
 					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
@@ -108,6 +109,7 @@ public class DictAdController extends BaseController {
 
 					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 
+					imgUrl = DwzUtil.dwzApi(imgUrl);
 					dictAd.setImgUrl(imgUrl);
 
 				}
