@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,7 @@ import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.QrCodeUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -95,8 +97,9 @@ public class UserImageController extends BaseController {
 
 			String imgUrl = Constants.IMG_SERVER_HOST + "/"
 					+ info.get("md5").toString();
-
-			u.setHeadImg(ImgServerUtil.getImgSize(imgUrl, "100", "100"));
+			imgUrl = ImgServerUtil.getImgSize(imgUrl, "100", "100");
+			imgUrl = DwzUtil.dwzApi(imgUrl);
+			u.setHeadImg(imgUrl);
 
 			userService.updateByPrimaryKeySelective(u);
 
@@ -157,6 +160,7 @@ public class UserImageController extends BaseController {
 				String imgUrl = Constants.IMG_SERVER_HOST + "/"
 						+ info.get("md5").toString();
 
+				imgUrl = DwzUtil.dwzApi(imgUrl);
 				UserImgs userImg = new UserImgs();
 				userImg.setImgId(0L);
 				userImg.setImgUrl(imgUrl);
@@ -307,6 +311,7 @@ public class UserImageController extends BaseController {
 
 		String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();		
 		
+		imgUrl = DwzUtil.dwzApi(imgUrl);
 		u.setQrCode(imgUrl);
 		userService.updateByPrimaryKeySelective(u);
 		

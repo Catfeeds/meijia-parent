@@ -25,6 +25,7 @@ import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.QrCodeUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -167,7 +168,8 @@ public class CompanyController extends BaseController {
 			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 			String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();				
-			
+
+			imgUrl = DwzUtil.dwzApi(imgUrl);
 			xCompany.setQrCode(imgUrl);
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		}

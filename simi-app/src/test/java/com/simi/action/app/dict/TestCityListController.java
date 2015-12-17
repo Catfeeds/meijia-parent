@@ -19,7 +19,7 @@ public class TestCityListController extends JUnitActionBase  {
 	 */
 	@Test
     public void testList() throws Exception {
-		String url = "/app/city/get_list.json";
+		String url = "/app/city/get_list.json?t=1441036800";
 		
 		String params = "";
 		MockHttpServletRequestBuilder getRequest = get(url );
