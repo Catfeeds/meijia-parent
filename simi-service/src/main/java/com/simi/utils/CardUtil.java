@@ -119,7 +119,7 @@ public class CardUtil {
 		
 		String remindContent = "";
 		
-		String timeStr = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "yyyy年MM月dd日HH:00");
+		String timeStr = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "MM月dd日HH:mm");
 		
 		String cardTypeName = getCardTypeName(cardType);
 		
