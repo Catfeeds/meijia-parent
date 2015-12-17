@@ -1,88 +1,84 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <link rel="stylesheet" href="assets/css/amazeui.min.css">
-  <link rel="stylesheet" href="assets/css/store.css">
-  <title>订单列表</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="assets/css/amazeui.min.css">
+<link rel="stylesheet" href="assets/css/store.css">
+<title>订单列表</title>
 </head>
-<body style="background:#ececec">
-  
-      <div class="pet_article_like">
-        <div class="pet_content_main pet_article_like_delete">
-          <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
-          
-            <div class="am-list-news-bd card-am-list" id ="order-am-list-part">
-              <ul class="am-list">
-                <!--缩略图在标题右边-->
-           
-                <li class="am-g am-list-item-desced pet_list_one_block">
-                  <div class="pet_list_one_info">
-                    <div class="pet_list_one_info_l">
-                      <div class="pet_list_one_info_ico"><img src="" id = "partnerUserHeadImg" alt=""></div>
-                      <div class="pet_list_one_info_name" id="partnerUserName"></div>
-                    </div>
-                    <div class="pet_list_one_info_r">
-                        <div class="pet_list_tag pet_list_tag_zzs" id="orderStatusName"></div>
-                    </div>
-                  </div>
-                  <div class=" am-list-main">
-                    <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
-                      <h3 class="am-list-item-hd pet_list_one_bt">价格：<a href="###" id="orderMoney" class="">元</a></h3>
+<body style="background: #ececec">
 
-                      <div class="am-list-item-text pet_list_two_text" id ="serviceTypeName"></div>
-                      <div class="pet_article_user_time pet_hd_con_time" id="addTimeStr"><i class="iconfont">&#xe617;</i></div>
-                      <div class="pet_article_user_time pet_hd_con_map" id="addrName"><i class="iconfont">&#xe632;</i></div>
-                      <div class="pet_article_user_time pet_hd_con_map" id="name"><i class="iconfont">&#xe615;</i></div>
+	<div class="pet_article_like">
+		<div class="pet_content_main pet_article_like_delete">
+			<div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
 
-                  </div>
-                </li>
-             <!--    <li class="am-g am-list-item-desced pet_list_one_block">
-                  <div class="pet_list_one_info">
-                    <div class="pet_list_one_info_l">
-                      <div class="pet_list_one_info_ico"><img src="images/a2.png" alt=""></div>
-                      <div class="pet_list_one_info_name">刘德华</div>
-                    </div>
-                    <div class="pet_list_one_info_r">
-                        <div class="pet_list_tag pet_list_tag_stj">已支付</div>
-                    </div>
-                  </div>
-                  <div class=" am-list-main">
-                    <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
-                      <h3 class="am-list-item-hd pet_list_one_bt"><a href="###" class="">价格：600元</a></h3>
+				<div class="am-list-news-bd card-am-list" id="wrapper">
+					<div>
+						<ul id="scroller">
+						
+						</ul>
+					
+					</div>
+					
+					
+				</div>
+			</div>
+			
+			<div id="order-list-part" class="display:none">
+				<li class="am-g am-list-item-desced pet_list_one_block">
+							<div class="pet_list_one_info">
+								<div class="pet_list_one_info_l">
+									<div class="pet_list_one_info_ico">
+										{partnerUserHeadImg}
+									</div>
+									<div class="pet_list_one_info_name" >{partnerUserName}</div>
+								</div>
+								<div class="pet_list_one_info_r">
+									<div class="pet_list_tag pet_list_tag_zzs" >{orderStatusName}</div>
+								</div>
+							</div>
+							<div class=" am-list-main">
+								<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
+								<h3 class="am-list-item-hd pet_list_one_bt">
+									价格：<a href="###" class="">{orderMoney}元</a>
+								</h3>
 
+								<div class="am-list-item-text pet_list_two_text" id="serviceTypeName">{serviceTypeName}</div>
+								<div class="pet_article_user_time pet_hd_con_time" id="addTimeStr">{addTimeStr}
+									<i class="iconfont">&#xe617;</i>
+								</div>
+								<div class="pet_article_user_time pet_hd_con_map" id="addrName">{addrName}
+									<i class="iconfont">&#xe632;</i>
+								</div>
+								<div class="pet_article_user_time pet_hd_con_map" id="name">{name}
+									<i class="iconfont">&#xe615;</i>
+								</div>
 
-                      <div class="am-list-item-text pet_list_two_text">内资企业注册，并赠送3个月的代理记账</div>
-                      <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe617;</i>2015年10月26日 9:00 ～ 17:30</div>
-                      <div class="pet_article_user_time pet_hd_con_map"><i class="iconfont">&#xe632;</i>北京市海淀区成府路28号 优盛大厦B座8层</div>
-                      <div class="pet_article_user_time pet_hd_con_map"><i class="iconfont">&#xe615;</i>客户姓名：张学友</div>
-                  </div>
-                </li> -->
-
-                </ul>
-
-              </div>
-            </div>
-          </div>
-        </div>
- <script src="assets/js/jquery.min.js"></script>
+							</div>
+						</li>
+			
+			</div>
+			
+			
+		</div>
+	</div>
+	<script src="assets/js/jquery.min.js"></script>
 	<!--<![endif]-->
 	<script src="assets/js/amazeui.min.js"></script>
 	<script src="assets/js/app.js"></script>
 	<script src="assets/js/common/common.js"></script>
-	
-	<!--本页面使用的js-->
-	<script src="assets/js/common/validate-methods.js"></script>
-	<script src="assets/js/countdown.js"></script>
 
+	<!--本页面使用的js-->
 
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/amazeui.min.js"></script>
-	<script src="assets/js/company/store-order-list.js"></script>
- <script>
+	<script src="assets/js/iscroll-infinite.min.js"></script>
+	<script src="assets/js/partner/store-order-list.js"></script>
+	<script>
 $(function(){
 
     // 动态计算新闻列表文字样式
@@ -116,4 +112,4 @@ $(function(){
 
 </script>
 </body>
-  </html>
+</html>
