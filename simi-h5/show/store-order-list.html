@@ -29,8 +29,18 @@
 				<button type="button" id="btn-get-more" class="am-btn am-btn-primary am-btn-block" style="display:none">加载更多</button>
 			</div>
 			
+			
+       	    
+       	    
+			
 			<div id="order-list-part" style="display:none">
+			{partnerUserId}
+			----{orderId}
+
+       	    
+			 <a href="store-order-detail.html?partner_user_id={partnerUserId}&order_id={orderId}"> 
 				<li class="am-g am-list-item-desced pet_list_one_block">
+				
 							<div class="pet_list_one_info">
 								<div class="pet_list_one_info_l">
 									<div class="pet_list_one_info_ico">
@@ -43,7 +53,7 @@
 								</div>
 							</div>
 							<div class=" am-list-main">
-								<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
+								
 								<h3 class="am-list-item-hd pet_list_one_bt">
 									价格：<a href="###" class="">{orderMoney}元</a>
 								</h3>
@@ -58,11 +68,13 @@
 								<div class="pet_article_user_time pet_hd_con_map" id="name">{name}
 									<i class="iconfont">&#xe615;</i>
 								</div>
-
+								
+								<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
 							</div>
 							
 						</li>
-			
+						
+			</a>
 			</div>
 			
 			

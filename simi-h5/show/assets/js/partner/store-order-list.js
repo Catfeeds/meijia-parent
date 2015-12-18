@@ -18,16 +18,17 @@ function orderGetList (page) {
 			
 			if (data.status == "999") return false;
 			var orderListVo = data.data;
-			
+			console.log(orderListVo);
 			var html = $('#order-list-part').html();
-			var resultHtml = '';
+			//var resultHtml = '';
 
 			var partnerServiceTypeHtml = "";
 			for(var i=0 ; i < orderListVo.length; i++){
 				
 				var htmlPart = html;
 				var partnerUserHeadImg = '<img alt="" src="'+orderListVo[i].partner_user_head_img+'"></p>';
-				console.log(partnerUserHeadImg);
+				htmlPart = htmlPart.replace('{orderId}',orderListVo[i].order_id);
+				htmlPart = htmlPart.replace('{partnerUserId}',orderListVo[i].partner_user_id);
 				htmlPart = htmlPart.replace('{partnerUserHeadImg}', partnerUserHeadImg);
 				htmlPart = htmlPart.replace('{partnerUserName}',orderListVo[i].partner_user_name);
 				htmlPart = htmlPart.replace('{name}',orderListVo[i].name);
@@ -37,10 +38,12 @@ function orderGetList (page) {
 				htmlPart = htmlPart.replace('{orderStatusName}',orderListVo[i].order_status_name);
 				htmlPart = htmlPart.replace('{addTimeStr}',orderListVo[i].add_time_str);
 				htmlPart = htmlPart.replace('{orderMoney}',orderListVo[i].order_money);
-				htmlPart = htmlPart.replace('{orderId}',orderListVo[i].order_id);
-
+				
 				partnerServiceTypeHtml += htmlPart;
-				console.log(partnerServiceTypeHtml);
+				console.log("0001000000000000000");
+				console.log(""+htmlPart);
+				console.log("111111111111111111");
+			
 			}	
 			$("#scroller").append(partnerServiceTypeHtml);
 			
@@ -66,6 +69,10 @@ $("#btn-get-more").on('click', function(e) {
 	orderGetList($partnerListPage);
 });
 
+function clickJieDanList (partnerUserId) {
+	alert(partnerUserId.partnerUserId);
+	console.log(partnerUserId.partnerUserId);
+};
 
 
 
