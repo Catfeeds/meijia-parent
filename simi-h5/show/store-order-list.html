@@ -28,53 +28,44 @@
 				</div>
 				<button type="button" id="btn-get-more" class="am-btn am-btn-primary am-btn-block" style="display:none">加载更多</button>
 			</div>
-			
-			
-       	    
-       	    
-			
+
 			<div id="order-list-part" style="display:none">
-			{partnerUserId}
-			----{orderId}
-
-       	    
-			 <a href="store-order-detail.html?partner_user_id={partnerUserId}&order_id={orderId}"> 
-				<li class="am-g am-list-item-desced pet_list_one_block">
 				
-							<div class="pet_list_one_info">
-								<div class="pet_list_one_info_l">
-									<div class="pet_list_one_info_ico">
-										{partnerUserHeadImg}
-									</div>
-									<div class="pet_list_one_info_name" >{partnerUserName}</div>
-								</div>
-								<div class="pet_list_one_info_r">
-									<div class="pet_list_tag pet_list_tag_zzs" >{orderStatusName}</div>
-								</div>
+				<li class="am-g am-list-item-desced pet_list_one_block">
+					
+					<div class="pet_list_one_info">
+						<div class="pet_list_one_info_l">
+							<div class="pet_list_one_info_ico">
+								{partnerUserHeadImg}
 							</div>
-							<div class=" am-list-main">
-								
-								<h3 class="am-list-item-hd pet_list_one_bt">
-									价格：<a href="###" class="">{orderMoney}元</a>
-								</h3>
-
-								<div class="am-list-item-text pet_list_two_text" id="serviceTypeName">{serviceTypeName}</div>
-								<div class="pet_article_user_time pet_hd_con_time" id="addTimeStr">{addTimeStr}
-									<i class="iconfont">&#xe617;</i>
-								</div>
-								<div class="pet_article_user_time pet_hd_con_map" id="addrName">{addrName}
-									<i class="iconfont">&#xe632;</i>
-								</div>
-								<div class="pet_article_user_time pet_hd_con_map" id="name">{name}
-									<i class="iconfont">&#xe615;</i>
-								</div>
-								
-								<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
-							</div>
-							
-						</li>
+							<div class="pet_list_one_info_name" >{partnerUserName}</div>
+						</div>
+						<div class="pet_list_one_info_r">
+							<div class="pet_list_tag pet_list_tag_zzs" >{orderStatusName}</div>
+						</div>
+					</div>
+					<div class=" am-list-main">
 						
-			</a>
+						<h3 class="am-list-item-hd pet_list_one_bt">
+							价格：<a href="###" class="">{orderMoney}元</a>
+						</h3>
+
+						<div class="am-list-item-text pet_list_two_text" id="serviceTypeName">{serviceTypeName}</div>
+						<div class="pet_article_user_time pet_hd_con_time" id="addTimeStr">{addTimeStr}
+							<i class="iconfont">&#xe617;</i>
+						</div>
+						<div class="pet_article_user_time pet_hd_con_map" id="addrName">{addrName}
+							<i class="iconfont">&#xe632;</i>
+						</div>
+						<div class="pet_article_user_time pet_hd_con_map" id="name">{name}
+							<i class="iconfont">&#xe615;</i>
+						</div>
+						
+						<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
+					</div>
+					
+				</li>
+				</a>
 			</div>
 			
 			
@@ -87,9 +78,6 @@
 	<script src="assets/js/common/common.js"></script>
 
 	<!--本页面使用的js-->
-
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/amazeui.min.js"></script>
 
 	<script src="assets/js/partner/store-order-list.js"></script>
 

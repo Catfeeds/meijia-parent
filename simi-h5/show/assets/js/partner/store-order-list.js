@@ -26,7 +26,7 @@ function orderGetList (page) {
 			for(var i=0 ; i < orderListVo.length; i++){
 				
 				var htmlPart = html;
-				var partnerUserHeadImg = '<img alt="" src="'+orderListVo[i].partner_user_head_img+'"></p>';
+				var partnerUserHeadImg = '<img alt="" src="'+orderListVo[i].partner_user_head_img+'">';
 				htmlPart = htmlPart.replace('{orderId}',orderListVo[i].order_id);
 				htmlPart = htmlPart.replace('{partnerUserId}',orderListVo[i].partner_user_id);
 				htmlPart = htmlPart.replace('{partnerUserHeadImg}', partnerUserHeadImg);
@@ -39,9 +39,11 @@ function orderGetList (page) {
 				htmlPart = htmlPart.replace('{addTimeStr}',orderListVo[i].add_time_str);
 				htmlPart = htmlPart.replace('{orderMoney}',orderListVo[i].order_money);
 				
+				htmlPart = "<a href=\"store-order-detail.html?partner_user_id="+orderListVo[i].partner_user_id+"&order_id="+orderListVo[i].order_id+"\"> " + htmlPart + "</a>";
+				
 				partnerServiceTypeHtml += htmlPart;
 				console.log("0001000000000000000");
-				console.log(""+htmlPart);
+				console.log(htmlPart);
 				console.log("111111111111111111");
 			
 			}	
