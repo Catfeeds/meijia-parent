@@ -280,7 +280,7 @@ public class PushUtil {
 
 //			apnpayload.setCategory("cardView");
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
-//			alertMsg.setBody("body");
+			alertMsg.setBody("body");
 //			alertMsg.setActionLocKey("ActionLockey");
 //			alertMsg.setLocKey("LocKey");
 //			alertMsg.addLocArg("loc-args");
@@ -297,13 +297,19 @@ public class PushUtil {
 		return template;
 	}	
 	
+//	public static void getUserStatus() {
+//	    IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+//	    IQueryResult abc = push.getClientIdStatus(appId, cid);
+//	    System.out.println(abc.getResponse());
+//	｝	
+	
 	
 	
 	
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "ba1547d1b1ce7bdeced0ab1bb277da16";
+		String clientId = "258634f3185056713c07be809fd03646";
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);
 		
@@ -320,7 +326,7 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-17 16:06:00");
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-18 16:11:00");
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
 		 tranParams.put("card_id", "6");
