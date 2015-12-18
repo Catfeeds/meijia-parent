@@ -5,5 +5,8 @@
 	<script src="<c:url value='/assets/js/amazeui.min.js'/>" ></script>
 	
 	<script src="<c:url value='/assets/js/amazeui.lazyload.min.js'/>" ></script>
+	
+	
+	<script src="<c:url value='/assets/js/xcloud/common/common.js'/>" ></script>
 
 	

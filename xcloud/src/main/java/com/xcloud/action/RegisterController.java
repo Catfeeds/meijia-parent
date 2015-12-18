@@ -76,12 +76,13 @@ public class RegisterController extends BaseController {
     						 BindingResult result) throws NoSuchAlgorithmException, WriterException, IOException {
         
 		String mobile = xCompanyVo.getUserName();
-		String smsToken = request.getParameter("sendToken");
+		String smsToken = request.getParameter("sms_token");
 		
 		AppResultData<Object> validateResult = smsTokenService.validateSmsToken(mobile, smsToken, (short) 3);
 		
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
-			result.addError(new FieldError("contentModel","sendToken","验证码错误"));
+			result.addError(new FieldError("contentModel","userName","验证码错误"));
+			model.addAttribute("contentModel", xCompanyVo);
 			return register(model);
 		}
 		
@@ -170,7 +171,12 @@ public class RegisterController extends BaseController {
 			xCompanyDeptService.insert(dept);
 		}
 		
-		return "redirect:/home/login";
+		return "redirect:/register-ok";
+    }	
+	
+	@RequestMapping(value="/register-ok", method = {RequestMethod.GET})
+    public String registerOk(Model model) {
+        return "/home/register-ok";
     }	
 	
 }

@@ -356,15 +356,15 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-17 17:10:00");
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-18 18:15:00");
 		 String timeStr = time1.toString();
-		 tranParams.put("is_show", "true");		 
+		 tranParams.put("is_show", "false");		 
 		 tranParams.put("card_id", "6");
 		 tranParams.put("card_type", "1");
 		 tranParams.put("service_time", timeStr);
 		 tranParams.put("remind_time", timeStr);
 		 tranParams.put("remind_title", "会议安排");
-		 tranParams.put("remind_content", "测试ios后台通知2");
+		 tranParams.put("remind_content", "测试ios后台通知4");
 
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);

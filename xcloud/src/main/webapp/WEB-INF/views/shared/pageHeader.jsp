@@ -16,7 +16,7 @@
 				<li class=""><a href="#"> 通讯录 </a></li>
 				<li class=""><a href="#"> 工作日程 </a></li>
 				<li class="am-dropdown" data-am-dropdown=""><a class="am-dropdown-toggle" data-am-dropdown-toggle=""
-					href="javascript:;"> 考勤 <span class="am-icon-caret-down"> </span>
+					href="javascript:;"> 考勤管理 <span class="am-icon-caret-down"> </span>
 				</a>
 					<ul class="am-dropdown-content">
 						<li><a href="#"> 考勤设备 </a></li>
@@ -25,6 +25,32 @@
 
 					</ul>
 				</li>
+				
+				<li class="am-dropdown" data-am-dropdown=""><a class="am-dropdown-toggle" data-am-dropdown-toggle=""
+					href="javascript:;"> 办公用品 <span class="am-icon-caret-down"> </span>
+				</a>
+					<ul class="am-dropdown-content">
+						<li><a href="#"> 办公用品情况 </a></li>
+						<li><a href="#"> 办公用品市场 </a></li>
+						<li><a href="#"> 零食 & 下午茶 </a></li>
+					</ul>
+				</li>
+				
+				<li class=""><a href="#"> 服务市场 </a></li>
+				
+				<li class="am-dropdown" data-am-dropdown=""><a class="am-dropdown-toggle" data-am-dropdown-toggle=""
+					href="javascript:;"> 会议室 <span class="am-icon-caret-down"> </span>
+				</a>
+					<ul class="am-dropdown-content">
+						<li><a href="#"> 会议室列表 </a></li>
+						<li><a href="#"> 使用情况 </a></li>
+					</ul>
+				</li>
+				
+				<li class=""><a href="#"> 合同管理 </a></li>
+				<li class=""><a href="#">  </a></li>
+				
+				
 			</ul>
 		</div>
 	</div>

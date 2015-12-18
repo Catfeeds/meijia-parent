@@ -53,56 +53,24 @@ $('#company-reg-form').validator({
 
 $("#reg-submit").on('click', function(e) {
 	console.log("reg-submit click");
-	var $form = $('#company-reg-form');
-	var validator = $form.data('amui.validator');
+	var form = $('#company-reg-form');
+	var validator = form.data('amui.validator');
 	var formValidity = validator.isFormValid()
 	$.when(formValidity).then(function() {
 		// done, submit form
-		companyRegSubmit()
+		console.log("ok");
+		form.submit();
 	}, function() {
 		// fail
+		console.log("fail");
 	});
 });
-
-function companyRegSubmit() {
-	var userName = $('#mobile').val();
-	var companyName = $('#company_name').val();
-
-	var params = {};
-	params.user_name = userName;
-	params.password = $('#password').val();
-	params.sms_token = $('#sms_token').val();
-	params.company_name = companyName;
-	params.short_name = $('#short_name').val();
-	// 提交数据，完成注册流程
-	$.ajax({
-		type : "POST",
-		url : appRootUrl + "/company/reg.json", // 发送给服务器的url
-		data : params,
-		dataType : "json",
-		async : false,
-		success : function(data) {
-
-			if (data.status == "999") {
-				alert(data.msg);
-				return false;
-			}
-
-			if (data.status == 0) {
-				location.href = "company-reg-ok.html";
-			}
-		},
-		error : function() {
-			return false;
-		}
-	});
-}
 
 // 获取验证码功能
 $("#btn_sms_token").click(
 		function() {
 			console.log("btn-get-sms click");
-			var mobile = $('#mobile').val();
+			var mobile = $('#userName').val();
 			if (mobile == undefined || mobile == "") {
 				alert("请输入手机号!");
 				return false;
