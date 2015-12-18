@@ -1,20 +1,16 @@
 
 
 var partnerUserId = getUrlParam("partner_user_id");
-var orderScroll = new IScroll('#wrapper', {
-		mouseWheel: true,
-		infiniteElements: '#scroller ',
-		//infiniteLimit: 2000,
-		dataset: requestData,
-		dataFiller: updateContent,
-		cacheSize: 1000
-});
 
+var $partnerListPage = 1;
 
-function requestData (start, count) {
+function orderGetList (page) {
+	var ajaxUrl = appRootUrl + "order/get_partner_list.json?partner_user_id="+partnerUserId;
+	ajaxUrl = ajaxUrl + "&page="+page;
+	
 	$.ajax({
 		type : "GET",
-		url : appRootUrl + "order/get_partner_list.json?partner_user_id="+partnerUserId,
+		url : ajaxUrl,
 		dataType : "json",
 		cache : true,
 		async : false,	
@@ -41,23 +37,34 @@ function requestData (start, count) {
 				htmlPart = htmlPart.replace('{orderStatusName}',orderListVo[i].order_status_name);
 				htmlPart = htmlPart.replace('{addTimeStr}',orderListVo[i].add_time_str);
 				htmlPart = htmlPart.replace('{orderMoney}',orderListVo[i].order_money);
+				htmlPart = htmlPart.replace('{orderId}',orderListVo[i].order_id);
 
 				partnerServiceTypeHtml += htmlPart;
 				console.log(partnerServiceTypeHtml);
 			}	
 			$("#scroller").append(partnerServiceTypeHtml);
-			orderScroll.refresh();
+			
+			//如果第一页并且返回数据等于10条，则可以显示加载更多按钮
+			if (page == 1 && orderListVo.length >= 10) {
+				$("#btn-get-more").css('display','block'); 
+			}
+			
+			//如果为第二页以上，并且返回数据小于10条，则不显示加载更多按钮
+			if (page > 1 && orderListVo.length < 10) {
+				$("#btn-get-more").css('display','none'); 
+			}
 		}
 	});
 }
 
-function updateContent (el, data) {
-	el.innerHTML = data;
-}
-
-document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+//默认加载第一页
+orderGetList(1);
 
 
+$("#btn-get-more").on('click', function(e) {
+	$partnerListPage = $partnerListPage + 1;
+	orderGetList($partnerListPage);
+});
 
 
 
