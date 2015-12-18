@@ -40,8 +40,8 @@
 			<h3>登录</h3>
 			<hr>
 			<div class="am-btn-group">
-				<a href="#" class="am-btn am-btn-secondary am-btn-sm"><i class="am-icon-github am-icon-sm"></i> 立即注册</a> 
-				<a href="#" class="am-btn am-btn-success am-btn-sm"><i class="am-icon-google-plus-square am-icon-sm"></i> 加入公司</a>
+				<a href="/xcloud/register" class="am-btn am-btn-secondary am-btn-sm"><i class="am-icon-github am-icon-sm"></i> 立即注册</a> 
+				
 			</div>
 			<br> <br>
 
@@ -51,7 +51,7 @@
 					
 				<br> 
 				<label for="password">密码:</label> <form:password path="password"  autocomplete="off" placeholder="密码"  required="required"/> 
-				<br> 
+				<br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 
 				<div class="am-center"><form:errors path="username" class="am-alert am-alert-danger center"></form:errors></div>
 				<br />

@@ -277,7 +277,8 @@ public class PushUtil {
 			apnpayload.setBadge(1);
 //			apnpayload.setSound("");
 			apnpayload.setContentAvailable(1);
-//			apnpayload.setCategory("ACTIONABLE");
+
+//			apnpayload.setCategory("cardView");
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
 //			alertMsg.setBody("body");
 //			alertMsg.setActionLocKey("ActionLockey");
@@ -302,7 +303,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "332bda4d3c673c04d3aac45ccc603475";
+		String clientId = "ba1547d1b1ce7bdeced0ab1bb277da16";
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);
 		
@@ -319,7 +320,7 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-16 11:32:00");
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-17 16:06:00");
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
 		 tranParams.put("card_id", "6");
@@ -327,7 +328,7 @@ public class PushUtil {
 		 tranParams.put("service_time", timeStr);
 		 tranParams.put("remind_time", timeStr);
 		 tranParams.put("remind_title", "会议安排");
-		 tranParams.put("remind_content", "2222");
+		 tranParams.put("remind_content", "测试安卓会议安排");
 
 //		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 		 
@@ -336,9 +337,9 @@ public class PushUtil {
 		 System.out.println(jsonParams);
 		 
 		params.put("transmissionContent", jsonParams);
-//		PushUtil.AndroidPushToSingle(params);
+		PushUtil.AndroidPushToSingle(params);
 		
-		PushUtil.IOSPushToSingle(params);
+//		PushUtil.IOSPushToSingle(params);
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);

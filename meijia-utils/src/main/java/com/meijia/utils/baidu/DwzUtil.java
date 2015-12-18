@@ -29,7 +29,7 @@ public class DwzUtil {
 
  
     public static void main(String[] args) throws Exception{
-        String longUrl = "http://yougeguanjia.com/onecare-oa/d/ty-sz1";
+        String longUrl = "http://img.51xingzheng.cn/9e8a9bf9b3f6b10fed1e86d891e8e57a?w=100&h=100";
         System.out.println(dwzApi(longUrl));
         
 
