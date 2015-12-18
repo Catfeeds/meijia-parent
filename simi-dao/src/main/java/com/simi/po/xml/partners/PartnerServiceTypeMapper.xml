@@ -149,7 +149,7 @@
 		parent_id = #{parentId, jdbcType=NUMERIC},
 		view_type = #{viewType, jdbcType=NUMERIC},
 		no = #{no,jdbcType=NUMERIC},
-		partner_id = #{partner_id, jdbcType=NUMERIC}
+		partner_id = #{partnerId, jdbcType=NUMERIC}
 		where service_type_id = #{id,jdbcType=NUMERIC}
 	</update>
 </mapper>

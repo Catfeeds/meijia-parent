@@ -1,5 +1,6 @@
 if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
+
 }
 $.ajax({
 	type : "GET",

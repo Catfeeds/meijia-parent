@@ -52,7 +52,15 @@ function verifyMobile(mobile){
 		return false;
 	}
 }
-
+//验证价钱的方法
+function verifyPrice(price){
+	$pattern =/^\d{4}\.\d{2}$/;
+	if(price.match($pattern)){
+		return true;
+	}else{
+		return false;
+	}
+}
 //验证邮箱的方法
 function isEmail(str){ 
 	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
