@@ -16,8 +16,9 @@ import com.gexin.rp.sdk.base.payload.APNPayload;
 import com.gexin.rp.sdk.exceptions.RequestException;
 import com.gexin.rp.sdk.http.IGtPush;
 import com.gexin.rp.sdk.template.TransmissionTemplate;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.TimeStampUtil;
-
+import com.gexin.rp.sdk.base.IQueryResult;
 /**
  * 百度配置文件
  *
@@ -76,9 +77,10 @@ public class PushUtil {
 		
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
-		TransmissionTemplate template = TransmissionTemplateIos();
-		template.setTransmissionContent(transmissionContent);
+		String userStatus = getUserStatus(cid);
 		
+		TransmissionTemplate template = TransmissionTemplateIos(userStatus, transmissionContent);
+				
 		SingleMessage message = new SingleMessage();
 		message.setOffline(true);
 		message.setOfflineExpireTime(2 * 1000 * 3600);
@@ -103,46 +105,46 @@ public class PushUtil {
 		return true;
 	}	
 	
-	/**
-	 * 推送android 多个设备透传消息推送
-	 * @Param map<String, String> Params
-	 *     key = transmissionContent
-	 * 
-	 */
-	public static boolean IosPushToMulti(List<String> clientIds, HashMap<String, String> params) throws Exception {
-		
-		String transmissionContent = "";
-
-		if (params.containsKey("transmissionContent")) 
-			transmissionContent = params.get("transmissionContent").toString();
-		
-		
-		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
-		
-		TransmissionTemplate template = TransmissionTemplateIos();
-
-		template.setTransmissionContent(transmissionContent);
-		
-		ListMessage message = new ListMessage();
-		message.setOffline(true);
-		message.setOfflineExpireTime(2 * 1000 * 3600);
-		message.setData(template);
-		
-		List<Target> targets = new ArrayList<Target>();
-		
-		for (String cid : clientIds) {
-			Target target1 = new Target();
-			target1.setAppId(appId);
-			target1.setClientId(cid);
-			targets.add(target1);
-		}
-		
-		String taskId = push.getContentId(message);
-		IPushResult ret = push.pushMessageToList(taskId, targets);
-		System.out.println("正常：" + ret.getResponse().toString());
-				
-		return true;
-	}				
+//	/**
+//	 * 推送android 多个设备透传消息推送
+//	 * @Param map<String, String> Params
+//	 *     key = transmissionContent
+//	 * 
+//	 */
+//	public static boolean IosPushToMulti(List<String> clientIds, HashMap<String, String> params) throws Exception {
+//		
+//		String transmissionContent = "";
+//
+//		if (params.containsKey("transmissionContent")) 
+//			transmissionContent = params.get("transmissionContent").toString();
+//		
+//		
+//		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+//		
+//		TransmissionTemplate template = TransmissionTemplateIos();
+//
+//		template.setTransmissionContent(transmissionContent);
+//		
+//		ListMessage message = new ListMessage();
+//		message.setOffline(true);
+//		message.setOfflineExpireTime(2 * 1000 * 3600);
+//		message.setData(template);
+//		
+//		List<Target> targets = new ArrayList<Target>();
+//		
+//		for (String cid : clientIds) {
+//			Target target1 = new Target();
+//			target1.setAppId(appId);
+//			target1.setClientId(cid);
+//			targets.add(target1);
+//		}
+//		
+//		String taskId = push.getContentId(message);
+//		IPushResult ret = push.pushMessageToList(taskId, targets);
+//		System.out.println("正常：" + ret.getResponse().toString());
+//				
+//		return true;
+//	}				
 	
 	/**
 	 * 推送android 单个设备透传消息推送
@@ -252,13 +254,19 @@ public class PushUtil {
 		return template;
 	}	
 	
-	public static TransmissionTemplate TransmissionTemplateIos()
+	@SuppressWarnings("unchecked")
+	public static TransmissionTemplate TransmissionTemplateIos(String userStatus, String transmissionContent)
 			throws Exception {
 		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(appId);
 		template.setAppkey(appKey);
 		template.setTransmissionType(1);
 		template.setTransmissionContent("");
+		//在线的情况
+		if (userStatus.equals("Online")) {
+			template.setTransmissionContent(transmissionContent);
+		}
+
 		// template.setDuration("2015-01-16 11:40:00", "2015-01-16 12:24:00");
 //		template.setPushInfo("", 1, "", "", "", "", "", "");
 		
@@ -277,10 +285,24 @@ public class PushUtil {
 			apnpayload.setBadge(1);
 //			apnpayload.setSound("");
 			apnpayload.setContentAvailable(1);
-
 //			apnpayload.setCategory("cardView");
+			
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
-			alertMsg.setBody("body");
+			
+			
+			if (userStatus.equals("Offline")) {
+				apnpayload.addCustomMsg("a", transmissionContent);
+				
+				HashMap<String, String> tranParams = GsonUtil.GsonToObject(transmissionContent, HashMap.class);
+				String isShow = tranParams.get("is_show").toString().trim();
+				String remindContent = tranParams.get("remind_content").toString();
+				if (isShow.equals("true")) {
+					alertMsg.setBody(remindContent);
+				}
+			}
+			
+			
+			
 //			alertMsg.setActionLocKey("ActionLockey");
 //			alertMsg.setLocKey("LocKey");
 //			alertMsg.addLocArg("loc-args");
@@ -297,19 +319,27 @@ public class PushUtil {
 		return template;
 	}	
 	
-//	public static void getUserStatus() {
-//	    IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
-//	    IQueryResult abc = push.getClientIdStatus(appId, cid);
-//	    System.out.println(abc.getResponse());
-//	｝	
+	public static String getUserStatus(String cid) {
+		String status = "";
+	    IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+	    IQueryResult abc = push.getClientIdStatus(appId, cid);
+	    status = abc.getResponse().get("result").toString().trim();
+	    return status;
+	}
 	
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) 
 			throws Exception {
 		
 		String clientId = "258634f3185056713c07be809fd03646";
+		
+		getUserStatus(clientId);
+		
+		
+		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);
 		
@@ -326,7 +356,7 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-18 16:11:00");
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-17 17:10:00");
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
 		 tranParams.put("card_id", "6");
@@ -334,18 +364,20 @@ public class PushUtil {
 		 tranParams.put("service_time", timeStr);
 		 tranParams.put("remind_time", timeStr);
 		 tranParams.put("remind_title", "会议安排");
-		 tranParams.put("remind_content", "测试安卓会议安排");
+		 tranParams.put("remind_content", "测试ios后台通知2");
 
-//		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 		 
-		 ObjectMapper objectMapper = new ObjectMapper();
-		 String jsonParams = objectMapper.writeValueAsString(tranParams);
-		 System.out.println(jsonParams);
+		 String jsonParams = GsonUtil.GsonString(tranParams);
 		 
+//		 tranParams = GsonUtil.GsonToObject(jsonParams, HashMap.class);
+//		 
+//		 System.out.println("is_show=" + tranParams.get("is_show").toString());
+
+//		 
 		params.put("transmissionContent", jsonParams);
-		PushUtil.AndroidPushToSingle(params);
+//		PushUtil.AndroidPushToSingle(params);
 		
-//		PushUtil.IOSPushToSingle(params);
+		PushUtil.IOSPushToSingle(params);
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);
