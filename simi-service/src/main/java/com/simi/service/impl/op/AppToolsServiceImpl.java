@@ -41,6 +41,7 @@ public class AppToolsServiceImpl implements AppToolsService {
 		    record.setName("");
 		    record.setLogo("");
 		    record.setAppType("");
+		    record.setMenuType("");
 		    record.setOpenType("");
 		    record.setUrl("");
 		    record.setIsPartner((short)0L);

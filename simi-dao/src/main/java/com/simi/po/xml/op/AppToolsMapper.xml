@@ -7,6 +7,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="logo" property="logo" jdbcType="VARCHAR" />
     <result column="app_type" property="appType" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="VARCHAR" />
     <result column="open_type" property="openType" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="is_partner" property="isPartner" jdbcType="NUMERIC" />
@@ -14,7 +15,7 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    t_id, no, name, logo, app_type, open_type, url, is_partner, auth_url, add_time
+    t_id, no, name, logo, app_type, menu_type,open_type, url, is_partner, auth_url, add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -40,11 +41,11 @@
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.op.AppTools" >
     insert into app_tools (t_id, no, name, 
-      logo, app_type, open_type, 
+      logo, app_type,menu_type, open_type, 
       url, is_partner, auth_url, 
       add_time)
     values (#{tId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
-      #{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, 
+      #{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{isPartner,jdbcType=NUMERIC}, #{authUrl,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=NUMERIC})
   </insert>
@@ -65,6 +66,9 @@
       </if>
       <if test="appType != null" >
         app_type,
+      </if>
+      <if test="menuType != null" >
+        menu_type,
       </if>
       <if test="openType != null" >
         open_type,
@@ -98,6 +102,9 @@
       <if test="appType != null" >
         #{appType,jdbcType=VARCHAR},
       </if>
+      <if test="menuType != null" >
+        #{menuType,jdbcType=VARCHAR},
+      </if>
       <if test="openType != null" >
         #{openType,jdbcType=VARCHAR},
       </if>
@@ -130,6 +137,10 @@
       <if test="appType != null" >
         app_type = #{appType,jdbcType=VARCHAR},
       </if>
+      
+      <if test="menuType != null" >
+        menu_type = #{menuType,jdbcType=VARCHAR},
+      </if>
       <if test="openType != null" >
         open_type = #{openType,jdbcType=VARCHAR},
       </if>
@@ -154,6 +165,7 @@
       name = #{name,jdbcType=VARCHAR},
       logo = #{logo,jdbcType=VARCHAR},
       app_type = #{appType,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=VARCHAR},
       open_type = #{openType,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       is_partner = #{isPartner,jdbcType=NUMERIC},

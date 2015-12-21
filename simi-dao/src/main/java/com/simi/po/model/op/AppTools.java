@@ -10,6 +10,8 @@ public class AppTools {
     private String logo;
 
     private String appType;
+    
+    private String menuType;
 
     private String openType;
 
@@ -61,7 +63,15 @@ public class AppTools {
         this.appType = appType == null ? null : appType.trim();
     }
 
-    public String getOpenType() {
+    public String getMenuType() {
+		return menuType;
+	}
+
+	public void setMenuType(String menuType) {
+		this.menuType = menuType;
+	}
+
+	public String getOpenType() {
         return openType;
     }
 
