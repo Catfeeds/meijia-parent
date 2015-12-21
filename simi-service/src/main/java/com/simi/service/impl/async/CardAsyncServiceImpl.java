@@ -81,10 +81,14 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 	
 	/**
 	 * 卡片发送推送消息和短信消息.
+	 * @param card 卡片对象
+	 * @param pushToApp  是否给app发送消息
+	 * @param pushToSms  是否发送sms短信消息
+	 * @param pushToIos  是否给app发送离线消息，此场景应用为当ios app被杀死的情况下，ios无法设定闹钟，则进行后台推送提醒。
 	 */
 	@Async
 	@Override
-	public Future<Boolean> cardNotification(Cards card, Boolean pushToApp, Boolean pushToSms) {
+	public Future<Boolean> cardNotification(Cards card, Boolean pushToApp, Boolean pushToSms, Boolean pushToIos) {
 		
 		//1找出所有需要通知的用户集合 users
 		Long cardId = card.getCardId();
@@ -110,6 +114,10 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			//进行消息推送.
 			if (pushToApp) {
 				pushToApp(card, userPushBinds);
+			}
+			
+			if (pushToIos) {
+				pushToIos(card, userPushBinds);
 			}
 		}
 		
@@ -207,6 +215,74 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 
 		return true;
 	}
+	
+	/**
+	 * 因为ios在后台进程被杀死的情况下，无法设定闹钟，所以必须后台定时提醒
+	 * 1. 后台做相应检测，如果为离线状态则需要发送
+	 * @param card
+	 * @param userPushBinds
+	 * @return
+	 */
+	private boolean pushToIos(Cards card, List<UserPushBind> userPushBinds) {
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		
+		HashMap<String, String> tranParams = new HashMap<String, String>();
+
+		Short cardType = card.getCardType();
+		Long serviceTime = card.getServiceTime();
+		String cardTypeName = CardUtil.getCardTypeName(cardType);
+		String pushContent = CardUtil.getRemindContent(cardType, serviceTime);
+		
+		//获得提醒时间
+		Short setRemind = card.getSetRemind();
+		int remindMin = CardUtil.getRemindMin(setRemind);
+		
+		Long remindTime = serviceTime - remindMin * 60;
+		
+		serviceTime = serviceTime * 1000;
+		remindTime = remindTime * 1000;
+		
+		String isShow = "true";		
+		tranParams.put("is_show", isShow);
+		tranParams.put("card_id", card.getCardId().toString());
+		tranParams.put("card_type", card.getCardType().toString());
+		tranParams.put("service_time", serviceTime.toString());
+		tranParams.put("remind_time", remindTime.toString());
+		tranParams.put("remind_title", cardTypeName);
+		tranParams.put("remind_content", pushContent);
+
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		String jsonParams = "";
+		try {
+			jsonParams = objectMapper.writeValueAsString(tranParams);
+		} catch (JsonProcessingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		
+		for (UserPushBind p : userPushBinds) {
+						
+			params.put("transmissionContent", jsonParams);
+			params.put("cid", p.getClientId());
+			
+			if (p.getDeviceType().equals("ios")) {
+				try {
+					String userStatus = PushUtil.getUserStatus(p.getClientId());
+					if (userStatus.equals("Offline")) {
+						PushUtil.IOSPushToSingle(params);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return true;
+	}	
 	
 	
 	private boolean pushToSms(Cards card, List<Long> userSmsIds) {

@@ -190,7 +190,7 @@ public class JobCardController extends BaseController {
 //			System.out.println("setRemind = " + setRemind.toString() + "----remindMin =" + remindMin);
 //			System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime,DateUtil.DEFAULT_FULL_PATTERN));
 			if (nowMin.equals(remindTime)) {
-				cardAsyncService.cardNotification(vo, false, true);
+				cardAsyncService.cardNotification(vo, false, true, true);
 			}
 		}
 		
