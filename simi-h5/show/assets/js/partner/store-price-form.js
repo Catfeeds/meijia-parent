@@ -10,11 +10,11 @@ $('#partner-form').validator({
 			// 异步操作必须返回 Deferred 对象
 			var price = $('#price').val();
 			
-			if (!verifyPrice(price)) {
+			/*if (!verifyPrice(price)) {
 				alert("请输入正确的钱数price!");
 				validity.valid = false;
 				return validity;
-			}
+			}*/
 			/*var disPrice = $('#disPrice').val();
 			if (disPrice == undefined || disPrice == "") {
 				validity.valid = false;
@@ -74,7 +74,9 @@ function companyRegSubmit() {
 	params.no = $('#no').val();
 	params.name = $('#name').val();
 	params.imgUrlFile = $('#imgUrlFile').val();
-	//params.imgUrlFile = $('#file-list').val();
+	//params.imgUrlFile = document.getElementById("imgUrlFile").value();
+	console.log(11111111111111111111111111111111111111111);
+	console.log($('#imgUrlFile').val());
 	params.title = $('#title').val();
 	params.price = $('#price').val();
 	params.dis_price = $('#disPrice').val();
@@ -99,7 +101,7 @@ function companyRegSubmit() {
 			}
 
 			if (data.status == 0) {
-				location.href = "store-price-add-ok.html";
+				location.href = "store-price-ok.html";
 			}
 		},
 		error : function() {
@@ -114,8 +116,10 @@ $(function() {
         fileNames += '<span class="am-badge">' + this.name + '</span> ';
       });
       $('#file-list').html(fileNames);
+      $('#file-list').attr("src",fileNames);
     });
   });
 $('#imgUrl').change(function(){
 	 $("#img_url_new").val($("#imgUrl").val());
 });
+ 

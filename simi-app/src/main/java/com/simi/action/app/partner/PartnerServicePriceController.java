@@ -85,7 +85,7 @@ public class PartnerServicePriceController extends BaseController {
 				@RequestParam("content_standard") String contentStandard,//服务标准
 				@RequestParam("content_desc") String contentDesc,//服务说明
 				@RequestParam("content_flow") String contentFlow,//服务流程
-				@RequestParam("imgUrlFile") MultipartFile file,
+				@RequestParam(value = "imgUrlFile", required = false) MultipartFile file,
 				@RequestParam(value = "partner_id", required = false, defaultValue = "0") Long partnerId,
 				@RequestParam(value = "order_duration", required = false, defaultValue = "0") short orderDuration,
 				@RequestParam(value = "id", required = false, defaultValue = "0") Long id,

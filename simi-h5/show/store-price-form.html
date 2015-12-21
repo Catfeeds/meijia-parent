@@ -11,6 +11,7 @@
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
 <link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="assets/css/fileinput.css" />
 
 
 <style>
@@ -34,7 +35,7 @@
 	<div class="am-g" >
 		<img src="images/invist-bg.jpg" class="am-img-responsive" alt="" />
 		<div class="am-u-md-centered">
-		<form action="" id="partner-form" class="am-forml">
+		<form action="" id="partner-form" class="am-forml" enctype="multipart/form-data">
 
         <!-- <form:hidden path="partner_id" /> -->
         <input type="hidden" id="parent_id" name="parent_id" value="0"/>
@@ -79,13 +80,13 @@
 			<div class="am-form-group">
 			<label for="doc-ipt-email-1">原价</label>
 			<input type="text"
-					id="price" name="price" class="am-form-field js-ajax-validate" placeholder="原价" maxLength="18" required>
+					id="price" name="price" class="am-form-field js-ajax-validate" placeholder="请输入正确类型的金额" maxLength="18" required>
 			</div>
 			
 			<div class="am-form-group">
 			<label for="doc-ipt-email-1">现价</label>
 			<input type="text"
-					id="disPrice" name="disPrice" class="am-form-field js-ajax-validate" placeholder="现价" maxLength="18" required>
+					id="disPrice" name="disPrice" class="am-form-field js-ajax-validate" placeholder="请输入正确类型的金额" maxLength="18" required>
 			</div>
 
 		 	<div class="am-form-group">
@@ -126,15 +127,15 @@
 			</div> -->
 			 <div class="am-form-group">
 			      <label for="doc-ipt-email-1">服务标准：</label>
-			      <textarea id="contentStandard" name="contentStandard" minlength="10" maxlength="100" class="am-form-field"></textarea>
+			      <textarea id="contentStandard" name="contentStandard" minlength="1" maxlength="100" class="am-form-field"></textarea>
 			 </div>
 			  <div class="am-form-group">
 			      <label for="doc-ipt-email-1">服务说明：</label>
-			      <textarea id="contentDesc" name="contentDesc" minlength="10" maxlength="100" class="am-form-field"></textarea>
+			      <textarea id="contentDesc" name="contentDesc" minlength="1" maxlength="100" class="am-form-field"></textarea>
 			 </div>
 			  <div class="am-form-group">
 			      <label for="doc-ipt-email-1">服务流程：</label>
-			      <textarea id="contentFlow" name="contentFlow" minlength="10" maxlength="100" class="am-form-field"></textarea>
+			      <textarea id="contentFlow" name="contentFlow" minlength="1" maxlength="100" class="am-form-field"></textarea>
 			 </div>
 			
 			<div class="am-form-group">
@@ -164,7 +165,9 @@
 	<!--本页面使用的js-->
 	<script src="assets/js/common/validate-methods.js"></script>
 	<script src="assets/js/countdown.js"></script>
-
+	
+    <script src="assets/js/ajaxfileupload.js"></script>
+    <script src="assets/js/fileinput.min.js"></script>
 	<!--[if (gte IE 9)|!(IE)]><!-->
 	<!--<![endif]-->
 	<!--<![endif]-->

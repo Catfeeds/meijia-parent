@@ -54,7 +54,8 @@ function verifyMobile(mobile){
 }
 //验证价钱的方法
 function verifyPrice(price){
-	$pattern =/^\d{4}\.\d{2}$/;
+//	$pattern =/^\d{4}\.\d{2}$/;
+	$pattern =/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
 	if(price.match($pattern)){
 		return true;
 	}else{
