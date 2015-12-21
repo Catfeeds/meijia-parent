@@ -383,7 +383,7 @@ public class CardQueryController extends BaseController {
 		params.put("transmissionContent", jsonParams);
 
 		if (deviceType.equals("ios")) {
-			PushUtil.IOSPushToSingle(params);
+			PushUtil.IOSPushToSingle(params, "notification");
 		}
 		
 		if (deviceType.equals("android")) {

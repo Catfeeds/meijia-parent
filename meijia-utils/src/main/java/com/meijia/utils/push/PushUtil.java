@@ -62,8 +62,9 @@ public class PushUtil {
 	 *     key = transmissionType
 	 *     key = transmissionContent
 	 * 
+	 * @param pushType   notification or  alertClock   是发生消息和闹钟提醒， 区别为设置的声音不一样.
 	 */
-	public static boolean IOSPushToSingle(HashMap<String, String> params) throws Exception {
+	public static boolean IOSPushToSingle(HashMap<String, String> params, String pushType) throws Exception {
 		
 		String cid = "";
 		String transmissionContent = "";
@@ -79,7 +80,7 @@ public class PushUtil {
 		
 		String userStatus = getUserStatus(cid);
 		
-		TransmissionTemplate template = TransmissionTemplateIos(userStatus, transmissionContent);
+		TransmissionTemplate template = TransmissionTemplateIos(userStatus, transmissionContent, pushType);
 				
 		SingleMessage message = new SingleMessage();
 		message.setOffline(true);
@@ -254,8 +255,16 @@ public class PushUtil {
 		return template;
 	}	
 	
+	/**
+	 * 
+	 * @param userStatus           用户状态  Online   Offline
+	 * @param transmissionContent  透传消息内容
+	 * @param pushType   notification or  alertClock   是发生消息和闹钟提醒， 区别为设置的声音不一样.
+	 * @return
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unchecked")
-	public static TransmissionTemplate TransmissionTemplateIos(String userStatus, String transmissionContent)
+	public static TransmissionTemplate TransmissionTemplateIos(String userStatus, String transmissionContent, String pushType)
 			throws Exception {
 		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(appId);
@@ -287,6 +296,9 @@ public class PushUtil {
 			apnpayload.setContentAvailable(1);
 //			apnpayload.setCategory("cardView");
 			
+			if (pushType.equals("alertClock")) {
+				apnpayload.setSound("simivoice.caf");
+			}
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
 			
 			
@@ -334,7 +346,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "258634f3185056713c07be809fd03646";
+		String clientId = "ba1547d1b1ce7bdeced0ab1bb277da16";
 		
 		getUserStatus(clientId);
 		
@@ -356,15 +368,15 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-18 18:15:00");
+		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-21 14:43:00");
 		 String timeStr = time1.toString();
-		 tranParams.put("is_show", "false");		 
+		 tranParams.put("is_show", "true");		 
 		 tranParams.put("card_id", "6");
 		 tranParams.put("card_type", "1");
 		 tranParams.put("service_time", timeStr);
 		 tranParams.put("remind_time", timeStr);
 		 tranParams.put("remind_title", "会议安排");
-		 tranParams.put("remind_content", "测试ios后台通知4");
+		 tranParams.put("remind_content", "测试ios后台通知5");
 
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);
@@ -377,7 +389,7 @@ public class PushUtil {
 		params.put("transmissionContent", jsonParams);
 //		PushUtil.AndroidPushToSingle(params);
 		
-		PushUtil.IOSPushToSingle(params);
+		PushUtil.IOSPushToSingle(params, "notification");
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);

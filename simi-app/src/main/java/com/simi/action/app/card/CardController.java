@@ -284,7 +284,7 @@ public class CardController extends BaseController {
 //		CardViewVo vo = cardService.changeToCardViewVo(record);
 		
 		//todo 1. 如果是立即给相关人员发送消息，则需要短信模板的通知.
-		cardAsyncService.cardNotification(record, true, true, false);
+		cardAsyncService.cardNotification(record);
 
 		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
 		if (record.getSetSecDo().equals((short)1)) {

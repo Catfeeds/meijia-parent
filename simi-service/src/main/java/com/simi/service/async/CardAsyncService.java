@@ -8,6 +8,8 @@ public interface CardAsyncService {
 
 	Future<Boolean> cardLog(Long userId, Long cardId, String remarks);
 
-	Future<Boolean> cardNotification(Cards card, Boolean pushToApp, Boolean pushToSms, Boolean pushToAppIos);
+	Future<Boolean> cardNotification(Cards card);
+
+	Future<Boolean> cardAlertClock(Cards card);
 	
 }

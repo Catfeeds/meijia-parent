@@ -88,7 +88,61 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 	 */
 	@Async
 	@Override
-	public Future<Boolean> cardNotification(Cards card, Boolean pushToApp, Boolean pushToSms, Boolean pushToIos) {
+	public Future<Boolean> cardNotification(Cards card) {
+		
+		//1找出所有需要通知的用户集合 users
+		Long cardId = card.getCardId();
+		List<CardAttend> attends = cardAttendService.selectByCardId(cardId);
+		
+		if (attends.isEmpty()) return new AsyncResult<Boolean>(true);
+		
+		List<Long> userIds = new ArrayList<Long>();
+		for (CardAttend item : attends) {
+			if (!userIds.equals(item.getUserId())) userIds.add(item.getUserId());
+		}
+				
+		//2.找出可以发推送消息的用户集合 userPushBinds
+		List<UserPushBind> userPushBinds = userPushBindService.selectByUserIds(userIds);
+		List<Long> userPushIds = new ArrayList<Long>();
+		if (!userPushBinds.isEmpty()) {
+			for (UserPushBind p : userPushBinds) {
+				if (!userPushIds.contains(p.getUserId())) {
+					userPushIds.add(p.getUserId());
+				}
+			}
+			//进行消息推送.
+			pushToApp(card, userPushBinds);
+		}
+		
+		//如果不需要立即推送，则不需要发送短信了
+		if (card.getSetNowSend().equals((short)0)) {
+			return new AsyncResult<Boolean>(true);
+		}
+		
+		
+		//3.根据集合users 和集合userPushBinds，找出不能推送，只能发短信的用户集合C
+		List<Long> userSmsIds = new ArrayList<Long>();
+		userSmsIds  = userIds;
+		if (!userPushBinds.isEmpty()) {
+			userSmsIds.removeAll(userPushIds);
+		} 
+		
+		if (!userSmsIds.isEmpty() && card.getSetNowSend().equals((short)1)) {
+			//进行短信发送
+			pushToSms(card, userSmsIds);
+		}
+		
+		return new AsyncResult<Boolean>(true);
+	}
+	
+	/**
+	 * 卡片发送推送消息和短信消息.
+	 * @param card 卡片对象
+  	 * 给ios app发送离线消息，此场景应用为当ios app被杀死的情况下，ios无法设定闹钟，则进行后台推送提醒。
+	 */
+	@Async
+	@Override
+	public Future<Boolean> cardAlertClock(Cards card) {
 		
 		//1找出所有需要通知的用户集合 users
 		Long cardId = card.getCardId();
@@ -111,21 +165,9 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 				}
 			}
 			
-			//进行消息推送.
-			if (pushToApp) {
-				pushToApp(card, userPushBinds);
-			}
-			
-			if (pushToIos) {
-				pushToIos(card, userPushBinds);
-			}
+			//进行闹钟消息推送.
+			pushToIos(card, userPushBinds);
 		}
-		
-		//如果不需要立即推送，则不需要发送短信了
-		if (card.getSetNowSend().equals((short)0)) {
-			return new AsyncResult<Boolean>(true);
-		}
-		
 		
 		//3.根据集合users 和集合userPushBinds，找出不能推送，只能发短信的用户集合C
 		List<Long> userSmsIds = new ArrayList<Long>();
@@ -136,13 +178,11 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		if (!userSmsIds.isEmpty() && card.getSetNowSend().equals((short)1)) {
 			//进行短信发送
-			if (pushToSms) {
-				pushToSms(card, userSmsIds);
-			}
+			pushToSms(card, userSmsIds);
 		}
 		
 		return new AsyncResult<Boolean>(true);
-	}
+	}	
 	
 	private boolean pushToApp(Cards card, List<UserPushBind> userPushBinds) {
 		
@@ -196,7 +236,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			
 			if (p.getDeviceType().equals("ios")) {
 				try {
-					PushUtil.IOSPushToSingle(params);
+					PushUtil.IOSPushToSingle(params, "notification");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -272,7 +312,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 				try {
 					String userStatus = PushUtil.getUserStatus(p.getClientId());
 					if (userStatus.equals("Offline")) {
-						PushUtil.IOSPushToSingle(params);
+						PushUtil.IOSPushToSingle(params, "alertClock");
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
