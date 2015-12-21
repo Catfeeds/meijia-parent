@@ -86,19 +86,8 @@ public class JobWeatherController extends BaseController {
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
 			Date curDate = DateUtil.getNowOfDate();
 			
+			weatherService.getWeather(cityId, "北京市");
 			
-			Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, curDate);
-			
-			List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
-			
-			for (WeatherDataVo item : weatherDatas) {
-				System.out.println(item.getDate());
-			}
-			
-			List<WeatherIndexVo> weatherIndexs =GsonUtil.GsonToList(weatherInfo.getWeatherIndex(), WeatherIndexVo.class);
-			for (WeatherIndexVo item : weatherIndexs) {
-				System.out.println(item.getTitle());
-			}
 		}
 		return result;
 	}	

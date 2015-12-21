@@ -110,11 +110,18 @@ public class WeatherServiceImpl implements WeatherService {
 		for (int i =0; i < weatherDatas.size(); i++) {
 			WeatherDataVo vo = weatherDatas.get(i);
 			String dayPictureUrl = vo.getDayPictureUrl();
-			dayPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
+
+			dayPictureUrl = dayPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
+			dayPictureUrl = dayPictureUrl.replace("png", "jpg");
+			
 			vo.setDayPictureUrl(dayPictureUrl);
 			
 			String nightPictureUrl = vo.getNightPictureUrl();
-			nightPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
+
+			nightPictureUrl = nightPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
+			nightPictureUrl = nightPictureUrl.replace("png", "jpg");
+			
+			
 			vo.setNightPictureUrl(nightPictureUrl);
 			weatherDatas.set(i, vo);
 		}

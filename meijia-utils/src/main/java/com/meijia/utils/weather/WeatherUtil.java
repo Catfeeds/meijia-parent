@@ -102,7 +102,10 @@ public class WeatherUtil {
 	
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
-		
+		String dayPictureUrl = "http://api.map.baidu.com/images/weather/day/mai.png";
+		dayPictureUrl = dayPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
+		dayPictureUrl = dayPictureUrl.replace("png", "jpg");
+		System.out.println(dayPictureUrl);
 //		String repo = WeatherUtil.getWeathInfo("北京市");
 //		System.out.println(repo);
 //		WeatherInfoVo weatherInfo = GsonUtil.GsonToObject(repo, WeatherInfoVo.class);
