@@ -94,10 +94,14 @@ function companyRegSubmit() {
 		dataType : "json",
 		async : false,
 		success : function(data) {
-
+			
+			
+			
 			if (data.status == "999") {
+				
 				alert(data.msg);
 				return false;
+			    
 			}
 
 			if (data.status == 0) {
@@ -117,9 +121,41 @@ $(function() {
       });
       $('#file-list').html(fileNames);
       $('#file-list').attr("src",fileNames);
+      ajaxFileUpload();
     });
   });
 $('#imgUrl').change(function(){
 	 $("#img_url_new").val($("#imgUrl").val());
 });
- 
+/*$(function(){
+    //上传图片
+    $("#btnUpload").click(function() {
+            alert(ajaxFileUpload());
+    });
+ });*/
+ function ajaxFileUpload() {
+     // 开始上传文件时显示一个图片
+     $("#wait_loading").ajaxStart(function() {
+         $(this).show();
+     // 文件上传完成将图片隐藏起来
+     }).ajaxComplete(function() {
+         $(this).hide();
+     });
+     var elementIds=["img_url_new"]; //flag为id、name属性名
+     $.ajaxFileUpload({
+        // url: 'store-frice-form.html', 
+    	  url: 'uploadAjax.htm',
+         type: 'post',
+         secureuri: false, //一般设置为false
+         fileElementId: 'imgUrlFile', // 上传文件的id、name属性名
+         dataType: 'text', //返回值类型，一般设置为json、application/json
+         elementIds: elementIds, //传递参数到服务器
+         success: function(data, status){  
+             alert(data);
+         },
+         error: function(data, status, e){ 
+             alert(e);
+         }
+     });
+     //return false;
+ }
