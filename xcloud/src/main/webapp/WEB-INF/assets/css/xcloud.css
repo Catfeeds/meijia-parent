@@ -72,3 +72,17 @@ footer .tr-telemail h2 { margin-bottom: 0px; font-weight: normal; }
 .tr-yunpan-login-container .tr-yunpan-btn-block:hover, .tr-yunpan-login-container .tr-yunpan-btn-block:visited { background-color: rgb(161, 161, 161); border-color: rgb(161, 161, 161); }
 .tr-yunpan-login-container .checkbox label { color: rgb(189, 189, 189) ! important; }
 .tr-yunpan-register-container { height: auto; background-color: rgb(255, 255, 255); }
+
+.tr-banner { background: rgb(42, 118, 193) url('banner-bg.png') repeat scroll left top; overflow-y: hidden; padding: 30px 0px; color: rgb(255, 255, 255); }
+.tr-docs { counter-reset: header3; }
+.tr-docs h3 { counter-increment: header3; counter-reset: header4; }
+.tr-docs h4 { counter-increment: header4; }
+.tr-docs h3::before { content: counter(header3, decimal) ". "; }
+.tr-docs h4::before { content: counter(header3, decimal) "." counter(header4, decimal) " "; }
+.tr-article-list h3 { border-left: 3px solid rgb(89, 115, 110); padding: 0px 1em; font-size: 1.2em; }
+.tr-article-list h4 { padding: 0px; margin: 0.5em 0px; font-size: 1.05em; color: rgb(89, 115, 110); }
+.tr-nav-doc-header { border-left: 3px solid rgb(89, 115, 110); padding: 0px 0.8em; margin-top: 0.4em; margin-bottom: 0.4em; text-transform: uppercase; font-weight: 700; font-size: 90%; color: rgb(85, 85, 85); }
+.tr-nav-doc-children { margin-top: 0px; }
+.tr-nav-doc-children a { color: rgb(119, 119, 119); transition: all 0.15s ease 0s; font-size: 85%; padding: 0.4em 1em; cursor: pointer; display: block; }
+.tr-nav-doc-children a:hover, .tr-nav-doc-children .am-active { background-color: rgb(238, 238, 238); }
+#vld-tooltip::before { position: absolute; top: 40%; left: 0px; width: 0px; height: 0px; margin-left: -8px; content: ""; border-width: 8px 0px 8px 8px; border-color: transparent transparent rgb(215, 52, 46); border-style: none inset solid; }

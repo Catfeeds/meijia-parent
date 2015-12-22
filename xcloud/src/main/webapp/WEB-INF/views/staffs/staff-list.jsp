@@ -11,7 +11,7 @@
 
 <!--css for this page-->
 
-<link rel="stylesheet" href="<c:url value='/js/vendor/zTree/css/awesomeStyle/awesome.css'/>" type="text/css">
+<link rel="stylesheet" href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" type="text/css">
 <style type="text/css">
 </style>
 
@@ -118,9 +118,9 @@
 		<%@ include file="../shared/importJs.jsp"%>
 
 		<!--script for this page-->
-		<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.excheck-3.5.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/vendor/zTree/js/jquery.ztree.exedit-3.5.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/assets/js/zTree/js/jquery.ztree.core-3.5.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/assets/js/zTree/js/jquery.ztree.excheck-3.5.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/assets/js/zTree/js/jquery.ztree.exedit-3.5.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/xcloud/common/dept-tree.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/xcloud/staffs/staff-list.js'/>"></script>
 		<%-- <script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
