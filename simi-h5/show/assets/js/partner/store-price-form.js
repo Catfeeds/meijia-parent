@@ -54,12 +54,12 @@ function ajaxFileUpload() {
      });
      
      var params = {};
- 	params.parent_id =$('#parent_id').val();
- 	params.service_price_id = $('#service_price_id').val();
- 	params.user_id = $('#user_id').val();
+ 	params.parent_id =0;//$('#parent_id').val();
+ 	params.service_price_id =0;// $('#service_price_id').val();
+ 	params.user_id =0;// $('#user_id').val();
  	params.partner_id = 653;//$('#partner_id').val();
  	
- 	params.id = $('#id').val();
+ 	params.id = 0;//$('#id').val();
  	
  	params.no = $('#no').val();
  	params.name = $('#name').val();
