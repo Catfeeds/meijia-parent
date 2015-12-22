@@ -46,6 +46,7 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
+
 	
 			
 		<!--运营广告配置表 -->
@@ -81,7 +82,7 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
 		</table> -->
 		<!-- 工具表 -->
-		<table schema="simi" tableName="app_tools"
+		<!-- <table schema="simi" tableName="app_tools"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -94,6 +95,25 @@
 
             <columnOverride  column="no" property="No" javaType="java.lang.Short" jdbcType="NUMERIC"/>
             <columnOverride  column="is_partner" property="isPartner" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
+		</table> -->
+
+
+		<!-- app卡片类型表 -->
+		<table schema="simi" tableName="app_card_type"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="card_type_id" property="cardTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+            <columnOverride  column="no" property="No" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            <columnOverride  column="card_type" property="cardType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
             
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
 		</table>

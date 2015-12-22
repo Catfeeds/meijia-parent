@@ -15,7 +15,7 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    t_id, no, name, logo, app_type, menu_type,open_type, url, is_partner, auth_url, add_time
+    t_id,no,name,logo,app_type,menu_type,open_type,url,is_partner,auth_url,add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -32,7 +32,8 @@
   <select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from app_tools where app_type = #{appType,jdbcType=VARCHAR}
+		from app_tools 
+		where app_type = #{appType,jdbcType=VARCHAR}
 		order by no asc
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

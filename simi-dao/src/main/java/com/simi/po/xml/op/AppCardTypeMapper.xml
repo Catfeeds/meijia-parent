@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.op.AppCardTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.op.AppCardType" >
+    <id column="card_type_id" property="cardTypeId" jdbcType="NUMERIC" />
+    <result column="no" property="No" jdbcType="NUMERIC" />
+    <result column="app_type" property="appType" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="NUMERIC" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="card_icon" property="cardIcon" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    card_type_id, no, app_type, card_type, name, card_icon, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_card_type
+    where card_type_id = #{cardTypeId,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from app_card_type where app_type = #{appType,jdbcType=VARCHAR}
+		order by no asc
+	</select>
+	  <select id="selectByListPage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from app_card_type
+    order by no asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from app_card_type
+    where card_type_id = #{cardTypeId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.op.AppCardType" >
+    insert into app_card_type (card_type_id, no, app_type, 
+      card_type, name, card_icon, 
+      add_time)
+    values (#{cardTypeId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{appType,jdbcType=VARCHAR}, 
+      #{cardType,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{cardIcon,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.op.AppCardType" >
+    insert into app_card_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cardTypeId != null" >
+        card_type_id,
+      </if>
+      <if test="No != null" >
+        no,
+      </if>
+      <if test="appType != null" >
+        app_type,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="cardIcon != null" >
+        card_icon,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cardTypeId != null" >
+        #{cardTypeId,jdbcType=NUMERIC},
+      </if>
+      <if test="No != null" >
+        #{No,jdbcType=NUMERIC},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardIcon != null" >
+        #{cardIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.AppCardType" >
+    update app_card_type
+    <set >
+      <if test="No != null" >
+        no = #{No,jdbcType=NUMERIC},
+      </if>
+      <if test="appType != null" >
+        app_type = #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardIcon != null" >
+        card_icon = #{cardIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where card_type_id = #{cardTypeId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.AppCardType" >
+    update app_card_type
+    set no = #{No,jdbcType=NUMERIC},
+      app_type = #{appType,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=NUMERIC},
+      name = #{name,jdbcType=VARCHAR},
+      card_icon = #{cardIcon,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where card_type_id = #{cardTypeId,jdbcType=NUMERIC}
+  </update>
+</mapper>

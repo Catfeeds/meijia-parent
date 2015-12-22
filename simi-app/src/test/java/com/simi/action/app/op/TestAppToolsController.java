@@ -11,7 +11,7 @@ import com.simi.action.app.JUnitActionBase;
 
 public class TestAppToolsController extends JUnitActionBase{
 	
-	@Test
+	/*@Test
     public void getChannels() throws Exception {
 
 		String url = "/app/op/get_channels.json";
@@ -45,6 +45,41 @@ public class TestAppToolsController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }	
+    }	*/
 
+	/*@Test
+    public void getAppTools() throws Exception {
+
+		String url = "/app/op/get_appTools.json?app_type=timechick";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+
+	  
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }*/
+	@Test
+    public void getAppCardType() throws Exception {
+
+		String url = "/app/op/get_appCardType.json?app_type=timechick";
+
+     	MockHttpServletRequestBuilder postRequest = get(url);
+
+	  
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
+	
 }

@@ -85,8 +85,6 @@
 								</c:choose></td>
 
 							<td><timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}" /></td>
-
-
 							<td>
 								<button id="btn_update" onClick="btn_update('/op/adForm?id=${item.id}')" class="btn btn-primary btn-xs"
 									title="修改">

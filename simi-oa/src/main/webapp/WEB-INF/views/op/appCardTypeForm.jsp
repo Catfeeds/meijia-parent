@@ -37,11 +37,10 @@
 
 				<form:form modelAttribute="contentModel"
 					enctype="multipart/form-data" class="form-horizontal" method="POST"
-					id="app-form">
-					<form:hidden path="tId" />
+					id="appCardType-form">
+					<form:hidden path="cardTypeId" />
 
 					<div class="form-body">
-
 
 						<div class="form-group required">
 
@@ -64,28 +63,40 @@
 						</div>
 
 						<c:if
-							test="${contentModel.logo != null && contentModel.logo != '' }">
+							test="${contentModel.cardIcon != null && contentModel.cardIcon != '' }">
 							<div class="form-group ">
 
 								<label class="col-md-2 control-label">图片</label>
 								<div class="col-md-5">
-									<img src="${ contentModel.logo }" />
+									<img src="${ contentModel.cardIcon }" />
 								</div>
 							</div>
 						</c:if>
 
 						<input type="hidden" name="img_url_new" id="img_url_new"
-							value="${ contentModel.logo }" />
+							value="${ contentModel.cardIcon }" />
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">图片地址</label>
 							<div class="col-md-5">
-								<input id="logoFile" type="file" name="logoFile"
+								<input id="cardIconFile" type="file" name="cardIconFile"
 									accept="image/*" data-show-upload="false">
-								<form:errors path="logo" class="field-has-error"></form:errors>
+								<form:errors path="cardIcon" class="field-has-error"></form:errors>
 							</div>
 						</div>
-
+						<div class="form-group required">
+							<label class="col-md-2 control-label">卡片类型</label>
+							<div class="col-md-5">
+								<form:select path="cardType" class="form-control">
+									<form:option value="0" selected="selected">通用</form:option>
+									<form:option value="1">会议安排</form:option>
+									<form:option value="2">秘书叫早</form:option>
+									<form:option value="3">事务提醒</form:option>
+									<form:option value="4">邀约通知</form:option>
+									<form:option value="5">行程规划</form:option>
+								</form:select>
+							</div>
+						</div>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">应用类型</label>
@@ -97,70 +108,6 @@
 								</form:select>
 							</div>
 						</div>
-						
-						<div class="form-group required">
-							<label class="col-md-2 control-label">菜单类型</label>
-							<div class="col-md-5">
-								<form:select path="menuType" class="form-control">
-									<form:option value="t" selected="selected">工具与服务</form:option>
-									<form:option value="d">成长与赚钱   </form:option>
-								</form:select>
-							</div>
-						</div>
-
-						<div class="form-group required">
-							<label class="col-md-2 control-label">跳转类型</label>
-							<div class="col-md-5">
-								<form:select path="openType" class="form-control">
-								    <option value="">请选择</option>
-									<form:option value="h5">h5</form:option>
-									<form:option value="app">app</form:option>
-								</form:select>
-							</div>
-						</div>
-
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">跳转地址</label>
-							<div class="col-md-5">
-								<form:input path="url" class="form-control" placeholder="跳转url"
-									maxLength="32" />
-								<form:errors path="url" class="field-has-error"></form:errors>
-							</div>
-						</div>
-
-						
-
-						<div class="form-group required">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">必须为服务商</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-2" align="right">
-										<label class="radio"> <form:radiobutton
-												path="isPartner" value="1" />是
-										</label>
-									</div>
-									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton
-												path="isPartner" value="0" />否
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">不满足条件时跳转页面</label>
-							<div class="col-md-5">
-								<form:input path="authUrl" class="form-control" placeholder="不满足条件时跳转页面"
-									maxLength="32" />
-								<form:errors path="authUrl" class="field-has-error"></form:errors>
-							</div>
-						</div>
-
 						<div class="form-actions fluid">
 							<div class="col-md-offset-6 col-md-6">
 								<button type="button" id="adForm_btn" class="btn btn-success">保存</button>
@@ -190,7 +137,7 @@
 	<script
 		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/op/appToolsForm.js'/>"
+	<script src="<c:url value='/js/simi/op/appCardTypeForm.js'/>"
 		type="text/javascript"></script>
 
 
