@@ -1,0 +1,52 @@
+ul, ol { list-style: outside none none; }
+li { list-style: outside none none; }
+.am-icon-xl::before { font-size: 400%; vertical-align: -22%; }
+.am-with-topbar-fixed-top { padding-top: 80px ! important; }
+header { margin-bottom: 0px ! important; border: medium none ! important; }
+header .tr-login-topbar { height: 30px; line-height: 30px; background-color: rgb(0, 0, 0); }
+header .tr-login-topbar, header .tr-login-topbar a { color: rgb(255, 255, 255); }
+header .tr-topbar { background-color: rgb(78, 78, 78); }
+header .tr-nav { margin-top: 0.4rem; }
+header .tr-nav > .am-dropdown .am-dropdown-content { margin-top: 0px; background-color: rgb(110, 110, 110); min-width: 100px; left: -32%; }
+header .tr-nav > .am-dropdown .am-dropdown-content::before { left: 40px; }
+header .tr-nav > .am-dropdown .am-dropdown-content::after { border-bottom-color: rgb(110, 110, 110); left: 40px; }
+header .tr-nav > .am-dropdown .am-dropdown-content li { width: 100%; }
+header .tr-nav > .am-dropdown .am-dropdown-content li:hover { background-color: rgb(78, 78, 78); }
+header .tr-nav > .am-dropdown .am-dropdown-content li a { font-size: 1.4rem; }
+header .tr-nav > .am-dropdown:hover .am-dropdown-content { display: block; }
+header .tr-nav li { margin-top: 0px; float: left; }
+header .tr-nav li, header .tr-nav li a { color: rgb(255, 255, 255); }
+header .tr-nav li.am-active a, header .tr-nav li.am-active a:hover { background: transparent none repeat scroll 0% 0%; }
+header .tr-nav li a:hover, header .tr-nav li a:visited, header .tr-nav li a:active, header .tr-nav li a:link { color: rgb(204, 204, 204); background: transparent none repeat scroll 0% 0%; }
+header .tr-topbar-form { margin-top: 10px; }
+header .tr-form-icon { position: relative; }
+header .tr-form-icon [class*="am-icon-"] { position: absolute; right: 1em; top: 50%; display: block; margin-top: -0.5em; line-height: 1; z-index: 2; }
+header .tr-search { padding: 0.4rem; border-radius: 10px; background-color: rgb(0, 0, 0); border: medium none; color: rgb(255, 255, 255); }
+header .tr-search:focus { background-color: rgb(0, 0, 0); }
+header .tr-topbar-form .am-icon-search { color: rgb(255, 255, 255); }
+.tr-slider { height: auto; position: relative; }
+.tr-slider .am-control-nav { bottom: 15px; }
+.tr-slider .am-control-nav li a { height: 14px; width: 14px; background: transparent none repeat scroll 0% 0%; box-shadow: none; border: 1px solid rgb(255, 255, 255); }
+.tr-slider .am-control-nav li a:hover { background-color: rgb(255, 255, 255); }
+.tr-slider .am-control-nav li a.am-active { background-color: rgb(255, 255, 255); }
+.tr-slider .tr-slider-title { position: absolute; top: 0px; width: 100%; left: 18px; height: 120px; background-color: rgb(255, 255, 255); opacity: 0.6; z-index: 99; }
+.tr-slider .tr-slider-title li { display: none; }
+.tr-slider .tr-slider-title h1, .tr-banner h1 { font-size: 200%; }
+.tr-slider2 { box-shadow: 0px 8px 8px rgb(204, 204, 204); }
+.tr-slider2-bottom { z-index: -1; }
+.tr-slider2-top { position: absolute; top: 0px; z-index: 999; width: 100%; }
+.tr-main-container { padding: 10px 0px; min-height: 320px; }
+#home .am-icon-xl { color: rgb(153, 153, 153); }
+#home h2 { font-size: 150%; font-weight: normal; margin-top: 1em; }
+footer { color: rgb(102, 102, 102); }
+footer .tr-telemail {  }
+footer .tr-telemail h2 { margin-bottom: 0px; font-weight: normal; }
+.footer1 .tr-footer-nav h5 { font-weight: normal; }
+.footer1 .tr-links h6 { font-weight: normal; }
+.footer1 .tr-links li { float: left; }
+.footer1 .tr-links a { padding: 0px 10px; color: rgb(198, 194, 185); }
+.footer1 .tr-links a:hover { padding: 0px 10px; color: rgb(102, 102, 102); }
+#tr-gotop a { display: block; background-color: rgb(245, 245, 245); border-radius: 1000px; height: 26px; width: 26px; }
+.tr-docs h3::before { content: counter(header3, decimal) ". "; }
+.tr-docs h4::before { content: counter(header3, decimal) "." counter(header4, decimal) " "; }
+#vld-tooltip::before { position: absolute; top: 40%; left: 0px; width: 0px; height: 0px; margin-left: -8px; content: ""; border-width: 8px 0px 8px 8px; border-color: transparent transparent rgb(215, 52, 46); border-style: none inset solid; }
