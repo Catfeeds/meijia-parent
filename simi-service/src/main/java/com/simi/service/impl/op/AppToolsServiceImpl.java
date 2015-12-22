@@ -12,6 +12,7 @@ import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
 import com.simi.vo.op.OpAdVo;
 import com.simi.vo.po.AdSearchVo;
+import com.simi.vo.po.AppToolsVo;
 import com.simi.po.dao.op.AppToolsMapper;
 import com.simi.po.dao.op.OpAdMapper;
 import com.simi.po.model.op.AppTools;
@@ -96,6 +97,19 @@ public class AppToolsServiceImpl implements AppToolsService {
 	public List<AppTools> selectByAppType(String appType) {
 		
 		return appToolsMapper.selectByAppType(appType);
+	}
+
+
+	@Override
+	public AppToolsVo getAppToolsVo(AppTools item) {
+		
+		AppToolsVo vo = new AppToolsVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		//添加时间返回‘yyyy-mm-dd’
+		Long addTime = item.getAddTime()*1000;
+		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-MM-dd"));
+		
+		return vo;
 	}
 	
 }
