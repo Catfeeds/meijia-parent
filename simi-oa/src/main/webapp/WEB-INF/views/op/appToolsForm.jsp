@@ -124,8 +124,7 @@
 
 							<label class="col-md-2 control-label">跳转地址</label>
 							<div class="col-md-5">
-								<form:input path="url" class="form-control" placeholder="跳转url"
-									maxLength="32" />
+								<form:input path="url" class="form-control" placeholder="跳转url"/>
 								<form:errors path="url" class="field-has-error"></form:errors>
 							</div>
 						</div>
