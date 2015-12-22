@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -75,7 +76,6 @@ public class PartnerServicePriceController extends BaseController {
 				@RequestParam("parent_id") Long parentId,//服务商id
 				@RequestParam("service_price_id") Long servicePriceId,// 服务类别
 				@RequestParam("user_id") Long userId,//用户id
-				
 				@RequestParam("no") Integer no,
 				@RequestParam("name") String name,
 				@RequestParam("title") String title,
@@ -85,12 +85,11 @@ public class PartnerServicePriceController extends BaseController {
 				@RequestParam("content_standard") String contentStandard,//服务标准
 				@RequestParam("content_desc") String contentDesc,//服务说明
 				@RequestParam("content_flow") String contentFlow,//服务流程
-				@RequestParam(value = "imgUrlFile", required = false) MultipartFile file,
 				@RequestParam(value = "partner_id", required = false, defaultValue = "0") Long partnerId,
 				@RequestParam(value = "order_duration", required = false, defaultValue = "0") short orderDuration,
 				@RequestParam(value = "id", required = false, defaultValue = "0") Long id,
-				@RequestParam(value = "is_addr", required = false, defaultValue = "0") short isAddr
-				
+				@RequestParam(value = "is_addr", required = false, defaultValue = "0") short isAddr,
+				@RequestParam(value = "imgUrlFile", required = false) MultipartFile file
 				) throws IOException{
 			
 			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
@@ -146,7 +145,7 @@ public class PartnerServicePriceController extends BaseController {
 				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
+				imgUrl = DwzUtil.dwzApi(imgUrl);
 				record.setImgUrl(imgUrl);
 
 			}

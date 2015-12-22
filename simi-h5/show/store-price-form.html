@@ -11,7 +11,7 @@
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
 <link rel="stylesheet" href="assets/css/amazeui.min.css" />
-<link rel="stylesheet" href="assets/css/fileinput.css" />
+
 
 
 <style>
@@ -71,11 +71,7 @@
 			  <input id="imgUrlFile" type="file" name="imgUrlFile" multiple>
 		</div>
 		 <div id="file-list"></div>
-		
-		<!--		<input type="file" id="file" name="file"><br/>
-        <input type="hidden" id="imgUrlFile" name="imgUrlFile"/> -->
-      <!--   <input type="button" id="btnUpload" value="上传图片" /> -->
-		 
+				 
 			<div class="am-form-group">
 			<label for="doc-ipt-email-1">请输入副标题</label>
 			<input type="text" id="title" name="title" class="am-form-field " placeholder="请输入副标题" required>
@@ -117,11 +113,11 @@
 			<div class="am-form-group">
 			<label for="doc-ipt-email-1">是否需要用户地址</label><br>
 				<label class="am-radio-inline">
-					<input type="radio" value="0" id = "sex" name="sex"> 不需要
+					<input type="radio" value="0" id = "isAddr" name="isAddr" checked="checked"> 不需要
 					
 				</label>
 				<label class="am-radio-inline">
-					<input type="radio" value="1"  id = "sex" name="sex" checked="checked"> 需要
+					<input type="radio" value="1"  id = ""isAddr"" name="isAddr" > 需要
 				</label>
 			</div><br>
 			
@@ -169,7 +165,7 @@
 	<script src="assets/js/countdown.js"></script>
 	
     <script src="assets/js/ajaxfileupload.js"></script>
-    <script src="assets/js/fileinput.min.js"></script>
+
 	<!--[if (gte IE 9)|!(IE)]><!-->
 	<!--<![endif]-->
 	<!--<![endif]-->

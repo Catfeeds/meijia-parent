@@ -1,8 +1,12 @@
+
 if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
 	$.AMUI.validator.patterns.price = /^\d{4}\.\d{2}$/;
 	$.AMUI.validator.patterns.disPrice = /^\d{4}\.\d{2}$/;
 }
+
+var parentId = getUrlParam("parent_id");
+$("#parent_id").val(parentId);
 $('#partner-form').validator({
 	validate : function(validity) {
 		// Ajax 验证
@@ -56,84 +60,13 @@ $("#add_btn").on('click', function(e) {
 	var validator = $form.data('amui.validator');
 	var formValidity = validator.isFormValid()
 	$.when(formValidity).then(function() {
-		companyRegSubmit()
+		ajaxFileUpload()
 	}, function() {
 		
 	});
 });
-//提交
-function companyRegSubmit() {
 
-	var params = {};
-	params.parent_id = $('#parent_id').val();
-	params.service_price_id = $('#service_price_id').val();
-	params.user_id = $('#user_id').val();
-	params.partner_id = $('#partner_id').val();
-	params.id = $('#id').val();
-	
-	params.no = $('#no').val();
-	params.name = $('#name').val();
-	params.imgUrlFile = $('#imgUrlFile').val();
-	//params.imgUrlFile = document.getElementById("imgUrlFile").value();
-	console.log(11111111111111111111111111111111111111111);
-	console.log($('#imgUrlFile').val());
-	params.title = $('#title').val();
-	params.price = $('#price').val();
-	params.dis_price = $('#disPrice').val();
-	params.order_type = $('#orderType').val();
-	params.content_standard = $('#contentStandard').val();
-	params.is_addr = $('input:radio[name=isAddr]:checked').val();
-	params.content_standard = $('#contentStandard').val();
-	params.content_desc =  $('#contentDesc').val()
-	params.content_flow = $('#contentFlow').val();
-	// 提交数据，完成注册流程
-	$.ajax({
-		type : "POST",
-		url : appRootUrl + "/partner/post_partner_service_price_add.json", // 发送给服务器的url
-		data : params,
-		dataType : "json",
-		async : false,
-		success : function(data) {
-			
-			
-			
-			if (data.status == "999") {
-				
-				alert(data.msg);
-				return false;
-			    
-			}
-
-			if (data.status == 0) {
-				location.href = "store-price-ok.html";
-			}
-		},
-		error : function() {
-			return false;
-		}
-	});
-}
-$(function() {
-    $('#imgUrlFile').on('change', function() {
-      var fileNames = '';
-      $.each(this.files, function() {
-        fileNames += '<span class="am-badge">' + this.name + '</span> ';
-      });
-      $('#file-list').html(fileNames);
-      $('#file-list').attr("src",fileNames);
-      ajaxFileUpload();
-    });
-  });
-$('#imgUrl').change(function(){
-	 $("#img_url_new").val($("#imgUrl").val());
-});
-/*$(function(){
-    //上传图片
-    $("#btnUpload").click(function() {
-            alert(ajaxFileUpload());
-    });
- });*/
- function ajaxFileUpload() {
+function ajaxFileUpload() {
      // 开始上传文件时显示一个图片
      $("#wait_loading").ajaxStart(function() {
          $(this).show();
@@ -141,15 +74,36 @@ $('#imgUrl').change(function(){
      }).ajaxComplete(function() {
          $(this).hide();
      });
-     var elementIds=["img_url_new"]; //flag为id、name属性名
+     
+     var params = {};
+ 	params.parent_id = $('#parent_id').val();
+ 	params.service_price_id = $('#service_price_id').val();
+ 	params.user_id = $('#user_id').val();
+ 	params.partner_id = $('#partner_id').val();
+ 	params.id = $('#id').val();
+ 	
+ 	params.no = $('#no').val();
+ 	params.name = $('#name').val();
+ 	params.title = $('#title').val();
+ 	params.price = $('#price').val();
+ 	params.dis_price = $('#disPrice').val();
+ 	params.order_type = $('#orderType').val();
+ 	params.content_standard = $('#contentStandard').val();
+ 	params.is_addr = $('input:radio[name=isAddr]:checked').val();
+ 	params.content_standard = $('#contentStandard').val();
+ 	params.content_desc =  $('#contentDesc').val()
+ 	params.content_flow = $('#contentFlow').val();     
+    params.parent_id = 1;
+    console.log("priceFormSumit");
+    console.log(params);
+    
      $.ajaxFileUpload({
-        // url: 'store-frice-form.html', 
-    	  url: 'uploadAjax.htm',
-         type: 'post',
+    	 type : "POST",
+ 		 url : appRootUrl + "/partner/post_partner_service_price_add.json", // 发送给服务器的url
          secureuri: false, //一般设置为false
          fileElementId: 'imgUrlFile', // 上传文件的id、name属性名
-         dataType: 'text', //返回值类型，一般设置为json、application/json
-         elementIds: elementIds, //传递参数到服务器
+         dataType: 'json', //返回值类型，一般设置为json、application/json
+         data: params, //传递参数到服务器
          success: function(data, status){  
              alert(data);
          },
