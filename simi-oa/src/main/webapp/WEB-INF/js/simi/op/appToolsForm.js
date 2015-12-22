@@ -106,7 +106,7 @@ $("#adForm_btn").click(function() {
 					return false;
 				}
 			}
-			
+			/*
 			var isPartner = $('input:radio[name=isPartner]:checked').val();
 				if (isPartner== 1) {
 					if($("#authUrl").val() == null || $("#authUrl").val() == ""){
@@ -115,7 +115,7 @@ $("#adForm_btn").click(function() {
 					formVal.showErrors(errors);
 					return false;
 					}
-				}
+				}*/
 				
 			$('#app-form').submit();
 		}
