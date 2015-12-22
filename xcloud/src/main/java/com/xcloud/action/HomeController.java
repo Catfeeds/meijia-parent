@@ -11,12 +11,19 @@ import com.xcloud.auth.AuthPassport;
 @RequestMapping(value = "/")
 public class HomeController extends BaseController {
 
-    @AuthPassport
+//    @AuthPassport
     @RequestMapping(value = "/index")
     public String index() {
 
         return "/home/index";
     }
+    
+    @AuthPassport
+    @RequestMapping(value = "/main")
+    public String main() {
+
+        return "/home/main";
+    }    
 
     @RequestMapping(value = "/notfound")
     public ModelAndView notfound() {

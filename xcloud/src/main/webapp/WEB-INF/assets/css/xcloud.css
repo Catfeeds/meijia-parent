@@ -2,6 +2,9 @@ ul, ol { list-style: outside none none; }
 li { list-style: outside none none; }
 .am-icon-xl::before { font-size: 400%; vertical-align: -22%; }
 .am-with-topbar-fixed-top { padding-top: 80px ! important; }
+.am-popover { background: rgb(209, 209, 209) none repeat scroll 0% 0% ! important; border: 1px solid rgb(209, 209, 209) ! important; }
+.am-popover-inner { background: rgb(209, 209, 209) none repeat scroll 0% 0% ! important; }
+.am-popover-caret { border-bottom: 8px solid rgb(209, 209, 209) ! important; }
 header { margin-bottom: 0px ! important; border: medium none ! important; }
 header .tr-login-topbar { height: 30px; line-height: 30px; background-color: rgb(0, 0, 0); }
 header .tr-login-topbar, header .tr-login-topbar a { color: rgb(255, 255, 255); }
@@ -16,7 +19,6 @@ header .tr-nav > .am-dropdown .am-dropdown-content li a { font-size: 1.4rem; }
 header .tr-nav > .am-dropdown:hover .am-dropdown-content { display: block; }
 header .tr-nav li { margin-top: 0px; float: left; }
 header .tr-nav li, header .tr-nav li a { color: rgb(255, 255, 255); }
-header .tr-nav li.am-active a, header .tr-nav li.am-active a:hover { background: transparent none repeat scroll 0% 0%; }
 header .tr-nav li a:hover, header .tr-nav li a:visited, header .tr-nav li a:active, header .tr-nav li a:link { color: rgb(204, 204, 204); background: transparent none repeat scroll 0% 0%; }
 header .tr-topbar-form { margin-top: 10px; }
 header .tr-form-icon { position: relative; }
@@ -38,15 +40,34 @@ header .tr-topbar-form .am-icon-search { color: rgb(255, 255, 255); }
 .tr-main-container { padding: 10px 0px; min-height: 320px; }
 #home .am-icon-xl { color: rgb(153, 153, 153); }
 #home h2 { font-size: 150%; font-weight: normal; margin-top: 1em; }
+
+
+
 footer { color: rgb(102, 102, 102); }
+.footer2 { background-color: rgb(233, 234, 235); }
+.footer2 hr { border-color: rgb(102, 102, 102); }
 footer .tr-telemail {  }
 footer .tr-telemail h2 { margin-bottom: 0px; font-weight: normal; }
-.footer1 .tr-footer-nav h5 { font-weight: normal; }
-.footer1 .tr-links h6 { font-weight: normal; }
-.footer1 .tr-links li { float: left; }
-.footer1 .tr-links a { padding: 0px 10px; color: rgb(198, 194, 185); }
-.footer1 .tr-links a:hover { padding: 0px 10px; color: rgb(102, 102, 102); }
 #tr-gotop a { display: block; background-color: rgb(245, 245, 245); border-radius: 1000px; height: 26px; width: 26px; }
 .tr-docs h3::before { content: counter(header3, decimal) ". "; }
 .tr-docs h4::before { content: counter(header3, decimal) "." counter(header4, decimal) " "; }
+.am-container-collapse { padding-left: 0px; padding-right: 0px; }
+.tr-yunpan { height: 520px; background-color: rgb(26, 161, 255); }
+.tr-yunpan-bg-container { position: relative; z-index: 1; }
+.tr-yunpan-bg-slider { position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; box-shadow: none; }
+.tr-yunpan-bg-slider .am-control-nav { display: none; }
+.tr-yunpan-container { position: relative; z-index: 2; height: 100%; }
+.tr-yunpan-container h2, .tr-yunpan-container h3, .tr-yunpan-container h4, .am-modal { color: rgb(87, 87, 87) ! important; font-weight: normal ! important; }
+.tr-yunpan-container, .tr-yunpan-container a { color: rgb(189, 189, 189); }
+.tr-yunpan-container label { font-weight: normal; }
+.tr-yunpan-container .am-input-group-label i, #yunpan-forgotpassword-modal .am-input-group-label i { width: 16px ! important; }
+.tr-yunpan-mutidevice { background-color: rgb(233, 234, 235); }
+.tr-yunpan-mutidevice a { color: rgb(58, 62, 70); }
+.tr-yunpan-mutidevice a:hover { color: rgb(42, 62, 70); }
+#vld-tooltip { position: absolute; z-index: 1111; padding: 5px 10px; background: rgb(215, 52, 46) none repeat scroll 0% 0%; min-width: 150px; color: rgb(255, 255, 255); transition: all 0.15s ease 0s; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15); display: none; }
 #vld-tooltip::before { position: absolute; top: 40%; left: 0px; width: 0px; height: 0px; margin-left: -8px; content: ""; border-width: 8px 0px 8px 8px; border-color: transparent transparent rgb(215, 52, 46); border-style: none inset solid; }
+.tr-yunpan-login-container { height: auto; background-color: rgb(255, 255, 255); }
+.tr-yunpan-login-container .tr-yunpan-btn-block-container { padding: 0px; }
+.tr-yunpan-login-container .tr-yunpan-btn-block { background-color: rgb(173, 173, 173); border-color: rgb(173, 173, 173); color: rgb(255, 255, 255); }
+.tr-yunpan-login-container .tr-yunpan-btn-block:hover, .tr-yunpan-login-container .tr-yunpan-btn-block:visited { background-color: rgb(161, 161, 161); border-color: rgb(161, 161, 161); }
+.tr-yunpan-login-container .checkbox label { color: rgb(189, 189, 189) ! important; }
