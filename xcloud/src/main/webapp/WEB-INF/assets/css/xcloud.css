@@ -71,3 +71,4 @@ footer .tr-telemail h2 { margin-bottom: 0px; font-weight: normal; }
 .tr-yunpan-login-container .tr-yunpan-btn-block { background-color: rgb(173, 173, 173); border-color: rgb(173, 173, 173); color: rgb(255, 255, 255); }
 .tr-yunpan-login-container .tr-yunpan-btn-block:hover, .tr-yunpan-login-container .tr-yunpan-btn-block:visited { background-color: rgb(161, 161, 161); border-color: rgb(161, 161, 161); }
 .tr-yunpan-login-container .checkbox label { color: rgb(189, 189, 189) ! important; }
+.tr-yunpan-register-container { height: auto; background-color: rgb(255, 255, 255); }

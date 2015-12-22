@@ -35,10 +35,10 @@ var appRootUrl = "http://" + host + "/" + appName + "/app/";
 	}
 })(jQuery);
 
-$.ajaxSetup({
-	dataType : "json",
-	beforeSend : function(xhr, settings) {
-		var csrftoken = $.AMUI.utils.cookie.get('csrftoken');
-		xhr.setRequestHeader("X-CSRFToken", csrftoken);
-	},
-});
+//$.ajaxSetup({
+//	dataType : "json",
+//	beforeSend : function(xhr, settings) {
+//		var csrftoken = $.AMUI.utils.cookie.get('csrftoken');
+//		xhr.setRequestHeader("X-CSRFToken", csrftoken);
+//	},
+//});

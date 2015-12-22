@@ -25,14 +25,17 @@
 				<div style="overflow: hidden; position: relative;" class="am-viewport">
 					<ul style="width: 800%; transition-duration: 0s; transform: translate3d(-1000px, 0px, 0px);"
 						class="am-slides">
-						<li style="width: 1000px; float: left; display: block;" aria-hidden="true" class="clone"><img
-							draggable="false" src="assets/img/netdisk-slider-p2.png"></li>
+						<li style="width: 1000px; float: left; display: block;" aria-hidden="true" class="clone">
+							<img draggable="false" src="<c:url value='/assets/img/netdisk-slider-p2.png'/>"></li>
 						<li class="am-active-slide" style="width: 1000px; float: left; display: block;"><img
-							draggable="false" src="assets/img/netdisk-slider-p1.png"></li>
-						<li class="" style="width: 1000px; float: left; display: block;"><img draggable="false"
-							src="assets/img/netdisk-slider-p2.png"></li>
-						<li aria-hidden="true" class="clone" style="width: 1000px; float: left; display: block;"><img
-							draggable="false" src="assets/img/netdisk-slider-p1.png"></li>
+							draggable="false" src="<c:url value='/assets/img/netdisk-slider-p1.png'/>"></li>
+						<li class="" style="width: 1000px; float: left; display: block;">
+							
+							<img draggable="false" src="<c:url value='/assets/img/netdisk-slider-p2.png'/>">
+							
+							</li>
+						<li aria-hidden="true" class="clone" style="width: 1000px; float: left; display: block;">
+							<img draggable="false" src="<c:url value='/assets/img/netdisk-slider-p1.png'/>"></li>
 					</ul>
 				</div>
 				<ol class="am-control-nav am-control-paging">
@@ -54,11 +57,11 @@
 						<div class="am-g am-padding-sm">
 							<div class="am-form-group am-form-icon">
 								<span class="am-icon-user"></span> 
-								<form:input path="username" class="js-pattern-mobile am-form-field am-radius"  placeholder="用户名" required=""/> 	
+								<form:input path="username" class="js-pattern-mobile am-form-field am-radius"  placeholder="用户名" required="required"/> 	
 							</div>
 							<div class="am-form-group am-form-icon">
 								<span class="am-icon-lock"></span>
-									<form:password path="password" class="am-form-field am-radius"  autocomplete="off" minlength="6" placeholder="密码"  required=""/> 
+									<form:password path="password" class="am-form-field am-radius"  autocomplete="off" minlength="6" placeholder="密码"  required="required"/> 
 							</div>
 							<button type="submit" id="login-btn" class="am-btn am-btn-danger am-btn-block am-radius">登
 								录</button>
@@ -97,13 +100,13 @@
 					<div class="am-form-group am-input-group">
 						<span class="am-input-group-label"><i class="am-icon am-icon-phone"></i></span> <input
 							value="" pattern="^1((3|5|8){1}\d{1}|70|77)\d{8}$" id="fp_phone" name="phone"
-							class="am-form-field am-radius js-pattern-mobile" placeholder="手机号码" required="" type="text">
+							class="am-form-field am-radius js-pattern-mobile" placeholder="手机号码" required="required" type="text">
 					</div>
 					<div class="am-form-group am-input-group">
 						<span class="am-input-group-label"><i class="am-icon am-icon-suitcase"></i></span> <input
 							value="" pattern="^\d{4}$" id="fp_validate_code" name="valiate_code"
 							class="am-form-field am-radius js-pattern-valitecode" placeholder="手机短信验证码"
-							data-validation-message="验证失败" required="" type="text"> <span
+							data-validation-message="验证失败" required="required" type="text"> <span
 							class="am-input-group-btn">
 							<button id="getValidateCodeBtn" class="am-btn am-btn-default" type="button">获取验证码</button>
 						</span>
@@ -111,12 +114,12 @@
 					<div class="am-form-group am-input-group">
 						<span class="am-input-group-label"><i class="am-icon am-icon-lock"></i></span> <input
 							id="fp_new_password" name="new_password" class="am-form-field am-radius" placeholder="密码"
-							minlength="6" required="" type="password">
+							minlength="6" required="required" type="password">
 					</div>
 					<div class="am-form-group am-input-group">
 						<span class="am-input-group-label"><i class="am-icon am-icon-lock"></i></span> <input
 							id="fp_confirm_password" name="confirm_password" class="am-form-field am-radius"
-							placeholder="确认密码" data-validation-message="请确认前后输入密码一致" required=""
+							placeholder="确认密码" data-validation-message="请确认前后输入密码一致" required="required"
 							data-equal-to="#fp_new_password" type="password">
 					</div>
 					<p>
@@ -144,7 +147,7 @@
 						<p class="am-text-sm">使用手机上的二维码扫描软件扫描，直接下载泰然云云盘。</p>
 					</div>
 					<div class="am-u-sm-5">
-						<img src="assets/img/netdisk-app-ios.jpg" alt="二维码" class="am-img-thumbnail am-radius">
+						<img src="<c:url value='/assets/img/netdisk-app-ios.jpg'/>" alt="二维码" class="am-img-thumbnail am-radius">
 					</div>
 				</li>
 			</ul>
@@ -179,7 +182,7 @@
 			</div>
 			<div class="am-modal-bd">
 				<p>
-					<img src="assets/img/netdisk-app-android.jpg" alt="Android客户端"
+					<img src="<c:url value='/assets/img/netdisk-app-android.jpg'/>" alt="Android客户端"
 						class="am-img-thumbnail am-radius">
 				</p>
 				<hr>
@@ -195,7 +198,7 @@
 			</div>
 			<div class="am-modal-bd">
 				<p>
-					<img src="assets/img/netdisk-app-ios.jpg" alt="iOS客户端" class="am-img-thumbnail am-radius">
+					<img src="<c:url value='/assets/img/netdisk-app-ios.jpg'/>" alt="iOS客户端" class="am-img-thumbnail am-radius">
 				</p>
 				<hr>
 				<a href="https://itunes.apple.com/app/id1022310125" target="_top" title="App Store"
@@ -206,14 +209,14 @@
 
 	<div style="top: 381.95px; left: 403.35px;" id="am-popover-aar3a" class="am-popover am-popover-top">
 		<div class="am-popover-inner">
-			<img src="assets/img/netdisk-app-android.jpg">
+			<img src="<c:url value='/assets/img/netdisk-app-android.jpg'/>">
 		</div>
 		<div class="am-popover-caret"></div>
 	</div>
 	<div style="top: 381.95px; left: 559.383px;" id="am-popover-nqxeg"
 		class="am-popover am-popover-top">
 		<div class="am-popover-inner">
-			<img src="assets/img/netdisk-app-ios.jpg">
+			<img src="<c:url value='/assets/img/netdisk-app-ios.jpg'/>">
 		</div>
 		<div class="am-popover-caret"></div>
 	</div>

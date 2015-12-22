@@ -12,7 +12,7 @@
   <div class="am-g tr-topbar">
     <div class="am-container">
       <h1 class="am-topbar-brand">
-        <a href="#"><img src="assets/img/logo-sm.png" alt="云行政"></a>
+        <a href="#"><img src="<c:url value='/assets/img/logo-sm.png'/>" alt="云行政"></a>
       </h1>
       
     </div>

@@ -32,13 +32,13 @@
 			<div style="overflow: hidden; position: relative;" class="am-viewport">
 				<ul style="width: 800%; transition-duration: 0s; transform: translate3d(-2530px, 0px, 0px);" class="am-slides">
 					<li style="width: 1265px; float: left; display: block;" aria-hidden="true" class="clone"><img
-						draggable="false" src="assets/img/slider-2.jpg"></li>
-					<li class="" style="width: 1265px; float: left; display: block;"><img draggable="false" src="assets/img/slider-1.jpg">
+						draggable="false" src="<c:url value='/assets/img/slider-2.jpg'/>"></li>
+					<li class="" style="width: 1265px; float: left; display: block;"><img draggable="false" src="<c:url value='/assets/img/slider-1.jpg'/>">
 					</li>
 					<li class="am-active-slide" style="width: 1265px; float: left; display: block;"><img draggable="false"
-						src="assets/img/slider-2.jpg"></li>
+						src="<c:url value='/assets/img/slider-2.jpg'/>"></li>
 					<li aria-hidden="true" class="clone" style="width: 1265px; float: left; display: block;"><img
-						draggable="false" src="assets/img/slider-1.jpg"></li>
+						draggable="false" src="<c:url value='/assets/img/slider-1.jpg'/>"></li>
 				</ul>
 			</div>
 			<ol class="am-control-nav am-control-paging">
@@ -88,18 +88,18 @@
 		</div>
 		<div class="tr-slider am-g tr-slider2">
 			<div class="tr-slider2-top am-text-center">
-				<img src="assets/img/slider2-top.png" alt="云盘">
+				<img src="<c:url value='/assets/img/slider2-top.png'/>" alt="云盘">
 			</div>
 			<div data-am-widget="slider" class="am-slider am-slider-a1 am-no-layout"
 				data-am-slider="{animation:'fade',directionNav:false}">
 				<ul class="am-slides">
 					<li class=""
 						style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;">
-						<img draggable="false" src="assets/img/slider2-1.jpg" alt="云化你的生活">
+						<img draggable="false" src="<c:url value='/assets/img/slider2-1.jpg'/>" alt="云化你的生活">
 					</li>
 					<li class="am-active-slide"
 						style="width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;">
-						<img draggable="false" src="assets/img/slider2-2.jpg" alt="随时随地安全可控">
+						<img draggable="false" src="<c:url value='/assets/img/slider2-2.jpg'/>" alt="随时随地安全可控">
 					</li>
 				</ul>
 				<ol class="am-control-nav am-control-paging">
@@ -109,7 +109,7 @@
 			</div>
 		</div>
 		<div class="tr-slider2-bottom am-g">
-			<img src="assets/img/slider2-bottom.png" alt="云化你的生活">
+			<img src="<c:url value='/assets/img/slider2-bottom.png'/>" alt="云化你的生活">
 		</div>
 	</div>
 
