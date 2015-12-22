@@ -9,30 +9,8 @@ var parentId = getUrlParam("parent_id");
 $("#parent_id").val(parentId);
 $('#partner-form').validator({
 	validate : function(validity) {
-		// Ajax 验证
-		if ($(validity.field).is('.js-ajax-validate')) {
-			// 异步操作必须返回 Deferred 对象
-			var price = $('#price').val();
-			
-			/*if (!verifyPrice(price)) {
-				alert("请输入正确的钱数price!");
-				validity.valid = false;
-				return validity;
-			}*/
-			/*var disPrice = $('#disPrice').val();
-			if (disPrice == undefined || disPrice == "") {
-				validity.valid = false;
-				return validity;
-			}
-			if (!verifyMobile(disPrice)) {
-				alert("请输入正确的钱数disprice!");
-				validity.valid = false;
-				return validity;
-			}*/
-
-		}
-		
-		//身份证ID校验
+	
+		//钱数校验
 		if ($(validity.field).is('.js-ajax-validate')) {
 			var  price = $('#price').val();  
 			validity.valid = verifyPrice(price);
@@ -90,7 +68,7 @@ function ajaxFileUpload() {
  	params.order_type = $('#orderType').val();
  	params.content_standard = $('#contentStandard').val();
  	params.is_addr = $('input:radio[name=isAddr]:checked').val();
- 	params.content_standard = $('#contentStandard').val();
+ 	params.order_duration = $('#orderDuration').val();
  	params.content_desc =  $('#contentDesc').val()
  	params.content_flow = $('#contentFlow').val();     
     params.parent_id = 1;
@@ -106,6 +84,7 @@ function ajaxFileUpload() {
          data: params, //传递参数到服务器
          success: function(data, status){  
              alert(data);
+             location.href = "store-price-ok.html";
          },
          error: function(data, status, e){ 
              alert(e);
@@ -113,3 +92,13 @@ function ajaxFileUpload() {
      });
      //return false;
  }
+$("#orderType").change(function(){ 
+	var sel = $(this).children('option:selected').val();
+	if (sel == "0") {
+		$("#orderDurationSelectBox").css('display', 'none');
+	}
+	
+	if (sel == "1") {
+		$("#orderDurationSelectBox").css('display', 'block');
+	}
+});

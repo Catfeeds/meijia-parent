@@ -47,7 +47,7 @@
         
 		 <div class="am-form-group">
 		      <label for="doc-ipt-email-1">请输入序号</label>
-		      <input type="number" type="text" id="no" name = "no" class="am-form-field" placeholder="输入年龄  0-225" min="0" max="225" required>
+		      <input type="number" type="text" id="no" name = "no" class="am-form-field" placeholder="输入序号  0-225" min="0" max="225" required>
 		 </div>
 
 		 <div class="am-form-group">
@@ -97,9 +97,9 @@
 				</select> <span class="am-form-caret"></span>
 			</div>
 			
-			<div class="am-form-group">
+			<div class="am-form-group"  id="orderDurationSelectBox" style="display:none">
 				<label for="doc-select-1">订单时长</label>
-				<select id="orderType" name="orderType"  class="am-form-field">
+				<select id="orderDuration" name="orderDuration"  class="am-form-field">
 					<option value="1">一天</option>
 					<option value="2">一周</option>
 					<option value="3">一个月</option>
