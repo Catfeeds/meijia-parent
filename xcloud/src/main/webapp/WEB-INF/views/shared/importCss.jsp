@@ -46,7 +46,6 @@
 <link href="<c:url value='/assets/css/animate.min.css'/>" rel="stylesheet" />
 
 <!-- Custom styles for this template -->
+<link href="<c:url value='/assets/css/admin.css'/>" rel="stylesheet" />
 
 <link href="<c:url value='/assets/css/xcloud.css'/>" rel="stylesheet" />
-
-<link href="<c:url value='/assets/css/petshow.css?6'/>" rel="stylesheet" />
