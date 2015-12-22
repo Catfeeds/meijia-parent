@@ -54,10 +54,11 @@ function ajaxFileUpload() {
      });
      
      var params = {};
- 	params.parent_id = $('#parent_id').val();
+ 	params.parent_id =$('#parent_id').val();
  	params.service_price_id = $('#service_price_id').val();
  	params.user_id = $('#user_id').val();
- 	params.partner_id = $('#partner_id').val();
+ 	params.partner_id = 653;//$('#partner_id').val();
+ 	
  	params.id = $('#id').val();
  	
  	params.no = $('#no').val();
