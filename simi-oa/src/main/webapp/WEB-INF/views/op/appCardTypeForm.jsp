@@ -39,7 +39,8 @@
 					enctype="multipart/form-data" class="form-horizontal" method="POST"
 					id="appCardType-form">
 					<form:hidden path="cardTypeId" />
-
+					<form:hidden path="addTime" />
+					
 					<div class="form-body">
 
 						<div class="form-group required">
@@ -51,7 +52,16 @@
 								<form:errors path="No" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						<%-- <div class="form-group required">
 
+							<label class="col-md-2 control-label">时间</label>
+							<div class="col-md-5">
+								<form:input path="addTime" class="form-control" placeholder="序号"
+									maxLength="32" />
+								<form:errors path="addTime" class="field-has-error"></form:errors>
+							</div>
+						</div> --%>
+						
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">名称</label>

@@ -94,6 +94,7 @@ public class AppCradTypeController extends BaseController {
 			) throws IOException {
 
 		Long id = appCardType.getCardTypeId();
+		//Long addTime = Long.valueOf(request.getParameter("addTime"));
 
 		// 更新头像
 		String imgUrl = "";
@@ -118,10 +119,12 @@ public class AppCradTypeController extends BaseController {
 		}
 		if (!StringUtil.isEmpty(imgUrl)) {
 			appCardType.setCardIcon(imgUrl);
+		}else {
+			appCardType.setCardIcon("");
 		}
 		// 更新或者新增
 		if (id != null && id > 0) {
-			appCardType.setAddTime(TimeStampUtil.getNow() / 1000);
+			//appCardType.setAddTime(addTime);
 			appCardTypeService.updateByPrimaryKeySelective(appCardType);
 		} else {
 

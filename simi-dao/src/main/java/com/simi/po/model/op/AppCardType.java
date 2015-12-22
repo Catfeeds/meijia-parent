@@ -63,11 +63,13 @@ public class AppCardType {
         this.cardIcon = cardIcon == null ? null : cardIcon.trim();
     }
 
-    public long getAddTime() {
-        return addTime;
-    }
+	public long getAddTime() {
+		return addTime;
+	}
 
-    public void setAddTime(long addTime) {
-        this.addTime = addTime;
-    }
+	public void setAddTime(long addTime) {
+		this.addTime = addTime;
+	}
+
+
 }

@@ -39,6 +39,7 @@
 					enctype="multipart/form-data" class="form-horizontal" method="POST"
 					id="app-form">
 					<form:hidden path="tId" />
+					<form:hidden path="addTime" />
 
 					<div class="form-body">
 
