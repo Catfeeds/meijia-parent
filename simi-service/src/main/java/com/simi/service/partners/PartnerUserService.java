@@ -27,6 +27,9 @@ public interface PartnerUserService {
 	PageInfo selectByListPage(PartnerUserSearchVo partnersSearchVo, int pageNo, int pageSize);
 
 	PartnerUsers selectByUserId(Long userId);
+
+	PartnerUsers selectByServiceTypeIdAndPartnerId(Long serviceTypeId,
+			Long partnerId);
 	
 
 	

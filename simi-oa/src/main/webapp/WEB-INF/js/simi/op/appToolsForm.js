@@ -106,17 +106,6 @@ $("#adForm_btn").click(function() {
 					return false;
 				}
 			}
-			/*
-			var isPartner = $('input:radio[name=isPartner]:checked').val();
-				if (isPartner== 1) {
-					if($("#authUrl").val() == null || $("#authUrl").val() == ""){
-					alert("请填写不满足条件时跳转页面名称或路径");
-					errors.serviceTypeIds = "请填写不满足条件时跳转页面名称或路径";
-					formVal.showErrors(errors);
-					return false;
-					}
-				}*/
-				
 			$('#app-form').submit();
 		}
 	}

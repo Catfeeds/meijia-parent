@@ -47,10 +47,10 @@ public class TestAppToolsController extends JUnitActionBase{
 
     }	*/
 
-	/*@Test
+	@Test
     public void getAppTools() throws Exception {
 
-		String url = "/app/op/get_appTools.json?app_type=timechick";
+		String url = "/app/op/get_appTools.json?app_type=xcloud";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 
@@ -63,8 +63,8 @@ public class TestAppToolsController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }*/
-	@Test
+    }
+	/*@Test
     public void getAppCardType() throws Exception {
 
 		String url = "/app/op/get_appCardType.json?app_type=timechick";
@@ -80,6 +80,6 @@ public class TestAppToolsController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
+    }*/
 	
 }

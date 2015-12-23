@@ -2,6 +2,7 @@ package com.simi.service.impl.partners;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -176,6 +177,13 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 		
 		return result;
 		
+	}
+
+	@Override
+	public PartnerUsers selectByServiceTypeIdAndPartnerId(Long serviceTypeId,
+			Long partnerId) {
+
+		return partnerUsersMapper.selectByServiceTypeIdAndPartnerId(serviceTypeId,partnerId);
 	}
 	
 }

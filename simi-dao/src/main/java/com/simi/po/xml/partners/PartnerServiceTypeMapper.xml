@@ -25,6 +25,12 @@
 		where parent_id = #{parentId,jdbcType=NUMERIC}
 	</select>
 	
+	<select id="selectByPartnerIdIn" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_type
+		where partner_id = 0 or partner_id = #{partnerId,jdbcType=NUMERIC}
+	</select>
 	
 	<select id="selectByIds" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select

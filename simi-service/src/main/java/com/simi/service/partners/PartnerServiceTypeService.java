@@ -3,6 +3,8 @@ package com.simi.service.partners;
 import java.util.List;
 
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.vo.partners.PartnerServicePriceDetailVo;
+import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
 
@@ -31,5 +33,9 @@ public interface PartnerServiceTypeService {
 	List<PartnerServiceType> selectBySearchVo(PartnerServiceTypeSearchVo searchVo);
 
 	List<PartnerServiceType> selectByParentId(Long parentId);
+
+	List<PartnerServiceType> selectByPartnerIdIn(Long partnerId);
+
+	PartnerServicePriceDetailVoAll getPartnerPriceList(PartnerServiceType item);
 	
 }

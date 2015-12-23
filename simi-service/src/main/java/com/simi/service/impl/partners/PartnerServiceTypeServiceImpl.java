@@ -8,9 +8,14 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.meijia.utils.BeanUtilsExp;
 import com.simi.po.dao.partners.PartnerServiceTypeMapper;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.vo.partners.PartnerServicePriceDetailVo;
+import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
 
@@ -19,6 +24,9 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 
 	@Autowired
 	private PartnerServiceTypeMapper partnerServiceTypeMapper;
+	
+	@Autowired
+	private PartnerServicePriceDetailService partnerServicePriceDetailService;
 	
 	@Override
 	public int deleteByPrimaryKey(Long serviceTypeId) {
@@ -128,6 +136,31 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 	public List<PartnerServiceType> selectByParentId(Long parentId) {
 		
 		return partnerServiceTypeMapper.selectByParentId(parentId);
+	}
+
+	@Override
+	public List<PartnerServiceType> selectByPartnerIdIn(Long partnerId) {
+		
+		return partnerServiceTypeMapper.selectByPartnerIdIn(partnerId);
+	}
+
+	@Override
+	public PartnerServicePriceDetailVoAll getPartnerPriceList(
+			PartnerServiceType item) {
+		PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
+		PartnerServicePriceDetail priceDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+		PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(item.getId());
+	
+		if (detail== null) {
+			detail = priceDetail;
+		}
+		BeanUtilsExp.copyPropertiesIgnoreNull(detail, vo);
+		vo.setPartnerId(item.getPartnerId());
+		vo.setName(item.getName());
+		vo.setNo(item.getNo());
+		vo.setParentId(item.getParentId());
+
+		return vo;
 	}
 	
 	

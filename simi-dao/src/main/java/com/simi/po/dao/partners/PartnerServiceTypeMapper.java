@@ -24,4 +24,6 @@ public interface PartnerServiceTypeMapper {
 
 	List<PartnerServiceType> selectByParentId(Long parentId);
 
+	List<PartnerServiceType> selectByPartnerIdIn(Long partnerId);
+
 }

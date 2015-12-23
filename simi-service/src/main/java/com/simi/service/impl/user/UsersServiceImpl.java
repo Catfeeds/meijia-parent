@@ -101,7 +101,7 @@ public class UsersServiceImpl implements UsersService {
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
 	@Override
-	public Users genUser(String introduction, String mobile, String name,
+	public Users genUsers(String introduction, String mobile, String name,
 			short addFrom) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
@@ -110,6 +110,29 @@ public class UsersServiceImpl implements UsersService {
 			u.setAddFrom(addFrom);
 			u.setName(name);
 			u.setIntroduction(introduction);
+			this.insertSelective(u);
+
+			//检测用户所在地，异步操作
+			userAsyncService.userMobileCity(u.getId());
+			
+			//新用户注册通知运营人员
+			userAsyncService.newUserNotice(u.getId());
+			
+			//默认加固定客服用户为好友
+			userAsyncService.addDefaultFriends(u.getId());
+		}
+		return u;
+	}
+	
+	@Override
+	public Users genUser(String mobile, String name,
+			short addFrom) {
+		Users u = selectByMobile(mobile);
+		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+			u = this.initUsers();
+			u.setMobile(mobile);
+			u.setAddFrom(addFrom);
+			u.setName(name);
 			this.insertSelective(u);
 
 			//检测用户所在地，异步操作

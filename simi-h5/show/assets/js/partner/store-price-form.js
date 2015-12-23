@@ -54,13 +54,11 @@ function ajaxFileUpload() {
      });
      
      var params = {};
- 	params.parent_id =0;//$('#parent_id').val();
- 	params.service_price_id =0;// $('#service_price_id').val();
- 	params.user_id =0;// $('#user_id').val();
- 	params.partner_id = 653;//$('#partner_id').val();
- 	
- 	params.id = 0;//$('#id').val();
- 	
+    //参数
+ 	params.user_id = $('#user_id').val();
+ 	params.partner_id = $('#partner_id').val();
+ 	params.service_type_id = $('#service_type_id').val();
+
  	params.no = $('#no').val();
  	params.name = $('#name').val();
  	params.title = $('#title').val();
@@ -72,7 +70,7 @@ function ajaxFileUpload() {
  	params.order_duration = $('#orderDuration').val();
  	params.content_desc =  $('#contentDesc').val()
  	params.content_flow = $('#contentFlow').val();     
-    params.parent_id = 1;
+ //   params.parent_id = 1;
     console.log("priceFormSumit");
     console.log(params);
     
@@ -84,7 +82,7 @@ function ajaxFileUpload() {
          dataType: 'json', //返回值类型，一般设置为json、application/json
          data: params, //传递参数到服务器
          success: function(data, status){  
-             alert(data);
+            // alert(data);
              location.href = "store-price-ok.html";
          },
          error: function(data, status, e){ 

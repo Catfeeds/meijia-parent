@@ -156,7 +156,7 @@
 							<label class="col-md-2 control-label">不满足条件时跳转页面</label>
 							<div class="col-md-5">
 								<form:input path="authUrl" class="form-control" placeholder="不满足条件时跳转页面"
-									maxLength="32" />
+									/>
 								<form:errors path="authUrl" class="field-has-error"></form:errors>
 							</div>
 						</div>

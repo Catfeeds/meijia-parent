@@ -22,7 +22,10 @@ public interface UsersService {
 	
 	int updateByPrimaryKeySelective(Users user) ;
 	
-	Users genUser(String introduction, String mobile, String name, short addFrom);
+	//卡片提交接口
+	Users genUser(String mobile, String name, short addFrom);
+	
+	Users genUsers(String introduction, String mobile, String name, short addFrom);
 	
 	Users selectByPrimaryKey(Long id);
 	

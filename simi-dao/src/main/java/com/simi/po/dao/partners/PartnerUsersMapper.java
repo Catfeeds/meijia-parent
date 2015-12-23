@@ -21,4 +21,7 @@ public interface PartnerUsersMapper {
 	List<PartnerUsers> selectByListPage(PartnerUserSearchVo partnersSearchVo);
 
 	PartnerUsers selectByUserId(Long userId);
+
+	PartnerUsers selectByServiceTypeIdAndPartnerId(Long serviceTypeId,
+			Long partnerId);
 }
