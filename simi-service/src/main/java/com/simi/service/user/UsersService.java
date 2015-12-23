@@ -21,8 +21,8 @@ public interface UsersService {
 	Long insertSelective(Users u);
 	
 	int updateByPrimaryKeySelective(Users user) ;
-		
-	Users genUser(String mobile, String name, Short addFrom);
+	
+	Users genUser(String introduction, String mobile, String name, short addFrom);
 	
 	Users selectByPrimaryKey(Long id);
 	
@@ -70,4 +70,6 @@ public interface UsersService {
 	Boolean userOrderAmPushSms(Users users);
 
 	Boolean userSecToUserPushSms(Users users);
+
+
 }

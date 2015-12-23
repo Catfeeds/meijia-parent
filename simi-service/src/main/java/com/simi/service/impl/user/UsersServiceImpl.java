@@ -101,13 +101,15 @@ public class UsersServiceImpl implements UsersService {
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
 	@Override
-	public Users genUser(String mobile, String name, Short addFrom) {
+	public Users genUser(String introduction, String mobile, String name,
+			short addFrom) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers();
 			u.setMobile(mobile);
 			u.setAddFrom(addFrom);
 			u.setName(name);
+			u.setIntroduction(introduction);
 			this.insertSelective(u);
 
 			//检测用户所在地，异步操作
@@ -121,7 +123,7 @@ public class UsersServiceImpl implements UsersService {
 		}
 		return u;
 	}
-
+	
 	@Override
 	public List<Users> selectByAll() {
 		return usersMapper.selectByAll();
@@ -703,5 +705,7 @@ public class UsersServiceImpl implements UsersService {
 		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
 		return lists;
 	}
+
+
 	
 }
