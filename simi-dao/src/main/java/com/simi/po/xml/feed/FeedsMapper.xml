@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.feed.FeedsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.feed.Feeds">
+		<id column="fid" property="fid" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="lat" property="lat" jdbcType="VARCHAR" />
+		<result column="lng" property="lng" jdbcType="VARCHAR" />
+		<result column="poi_name" property="poiName" jdbcType="VARCHAR" />
+		<result column="total_view" property="totalView" jdbcType="NUMERIC" />
+		<result column="feed_extra" property="feedExtra" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		fid, user_id, title, lat, lng, poi_name, total_view, feed_extra, add_time
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from feeds
+		where fid = #{fid,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from feeds
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="userIds != null">
+			and user_id in
+			<foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by add_time desc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from feeds
+		where fid = #{fid,jdbcType=NUMERIC}
+	</delete>
+	
+	<insert id="insert" parameterType="com.simi.po.model.feed.Feeds">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fid">
+			SELECT LAST_INSERT_ID() AS fid
+		</selectKey>
+		insert into feeds (fid, user_id, title,
+		lat, lng, poi_name, total_view, feed_extra,
+		add_time)
+		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
+		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
+		#{totalView,jdbcType=NUMERIC}, #{feed_extra,jdbcType=VARCHAR}, 
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.feed.Feeds">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fid">
+			SELECT LAST_INSERT_ID() AS fid
+		</selectKey>
+		insert into feeds
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fid != null">
+				fid,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="lat != null">
+				lat,
+			</if>
+			<if test="lng != null">
+				lng,
+			</if>
+			<if test="poiName != null">
+				poi_name,
+			</if>
+			<if test="totalView != null">
+				total_view,
+			</if>
+			<if test="feedExtra != null">
+				feed_extra,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="fid != null">
+				#{fid,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="lat != null">
+				#{lat,jdbcType=VARCHAR},
+			</if>
+			<if test="lng != null">
+				#{lng,jdbcType=VARCHAR},
+			</if>
+			<if test="poiName != null">
+				#{poiName,jdbcType=VARCHAR},
+			</if>
+			<if test="totalView != null">
+				#{totalView,jdbcType=NUMERIC},
+			</if>
+			<if test="feedExtra != null">
+				#{feedExtra,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.feed.Feeds">
+		update feeds
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="lat != null">
+				lat = #{lat,jdbcType=VARCHAR},
+			</if>
+			<if test="lng != null">
+				lng = #{lng,jdbcType=VARCHAR},
+			</if>
+			<if test="poiName != null">
+				poi_name = #{poiName,jdbcType=VARCHAR},
+			</if>
+			<if test="totalView != null">
+				total_view = #{totalView,jdbcType=NUMERIC},
+			</if>
+			<if test="feedExtra != null">
+				feed_extra = #{feedExtra,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where fid = #{fid,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.feed.Feeds">
+		update feeds
+		set user_id = #{userId,jdbcType=NUMERIC},
+		title = #{title,jdbcType=VARCHAR},
+		lat = #{lat,jdbcType=VARCHAR},
+		lng = #{lng,jdbcType=VARCHAR},
+		poi_name = #{poiName,jdbcType=VARCHAR},
+		total_view = #{totalView,jdbcType=NUMERIC},
+		feed_extra = #{feedExtra,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where fid = #{fid,jdbcType=NUMERIC}
+	</update>
+	
+	<update id="updateByTotalView" parameterType="java.lang.Long">
+		update feeds
+		set total_view = total_view + 1
+		where fid = #{fid,jdbcType=NUMERIC}
+	</update>
+</mapper>

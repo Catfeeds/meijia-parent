@@ -48,7 +48,6 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
-import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.LinkManVo;
 
 @Controller

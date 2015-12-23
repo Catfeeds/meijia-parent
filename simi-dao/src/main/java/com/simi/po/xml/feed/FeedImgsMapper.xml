@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.feed.FeedImgsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.feed.FeedImgs">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="fid" property="fid" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="img_middle" property="imgMiddle" jdbcType="VARCHAR" />
+		<result column="img_small" property="imgSmall" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, fid, user_id, img_url, img_middle, img_small, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from feed_imgs
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByFid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from feed_imgs
+		where fid = #{fid,jdbcType=NUMERIC}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from feed_imgs
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	
+	<delete id="deleteByFid" parameterType="java.lang.Long">
+		delete from feed_imgs
+		where fid = #{fid,jdbcType=NUMERIC}
+	</delete>
+	
+	<insert id="insert" parameterType="com.simi.po.model.feed.FeedImgs">
+		insert into feed_imgs (id, fid, user_id,
+		img_url, img_middle, img_small,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{imgUrl,jdbcType=VARCHAR}, #{imgMiddle,jdbcType=VARCHAR}, #{imgSmall,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedImgs">
+	insert into feed_imgs
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null">
+			id,
+		</if>
+		<if test="fid != null">
+			fid,
+		</if>
+		<if test="userId != null">
+			user_id,
+		</if>
+		<if test="imgUrl != null">
+			img_url,
+		</if>
+		<if test="imgMiddle != null">
+			img_middle,
+		</if>
+		<if test="imgSmall != null">
+			img_small,
+		</if>
+		<if test="addTime != null">
+			add_time,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null">
+			#{id,jdbcType=NUMERIC},
+		</if>
+		<if test="fid != null">
+			#{fid,jdbcType=NUMERIC},
+		</if>
+		<if test="userId != null">
+			#{userId,jdbcType=NUMERIC},
+		</if>
+		<if test="imgUrl != null">
+			#{imgUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="imgMiddle != null">
+			#{imgMiddle,jdbcType=VARCHAR},
+		</if>
+		<if test="imgSmall != null">
+			#{imgSmall,jdbcType=VARCHAR},
+		</if>
+		<if test="addTime != null">
+			#{addTime,jdbcType=NUMERIC},
+		</if>
+	</trim>
+</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.feed.FeedImgs">
+		update feed_imgs
+		<set>
+			<if test="fid != null">
+				fid = #{fid,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="imgMiddle != null">
+				img_middle = #{imgMiddle,jdbcType=VARCHAR},
+			</if>
+			<if test="imgSmall != null">
+				img_small = #{imgSmall,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.feed.FeedImgs">
+		update feed_imgs
+		set fid = #{fid,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		img_url = #{imgUrl,jdbcType=VARCHAR},
+		img_middle = #{imgMiddle,jdbcType=VARCHAR},
+		img_small = #{imgSmall,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

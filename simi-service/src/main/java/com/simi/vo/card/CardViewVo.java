@@ -123,10 +123,12 @@ public class CardViewVo extends Cards {
 		this.cardImgsList = cardImgsList;
 	}
 
+	@Override
 	public String getCardExtra() {
 		return cardExtra;
 	}
 
+	@Override
 	public void setCardExtra(String cardExtra) {
 		this.cardExtra = cardExtra;
 	}

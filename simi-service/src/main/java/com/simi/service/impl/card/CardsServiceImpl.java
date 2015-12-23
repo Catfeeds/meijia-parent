@@ -1,7 +1,6 @@
 package com.simi.service.impl.card;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,6 @@ import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.data.Weathers;
-import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
