@@ -346,7 +346,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "ba1547d1b1ce7bdeced0ab1bb277da16";
+		String clientId = "135e0a0990ae293a23675f717e3517e7";
 		
 		getUserStatus(clientId);
 		
@@ -371,12 +371,12 @@ public class PushUtil {
 		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-21 14:43:00");
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
-		 tranParams.put("card_id", "6");
-		 tranParams.put("card_type", "1");
-		 tranParams.put("service_time", timeStr);
-		 tranParams.put("remind_time", timeStr);
-		 tranParams.put("remind_title", "会议安排");
-		 tranParams.put("remind_content", "测试ios后台通知5");
+		 tranParams.put("card_id", "0");
+		 tranParams.put("card_type", "0");
+		 tranParams.put("service_time", "0");
+		 tranParams.put("remind_time", "0");
+		 tranParams.put("remind_title", "新用户注册");
+		 tranParams.put("remind_content", "小白新注册了3");
 
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);

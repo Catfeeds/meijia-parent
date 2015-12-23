@@ -14,14 +14,17 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.MobileUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
+import com.meijia.utils.push.PushUtil;
 import com.simi.common.Constants;
 import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.user.UserLogined;
+import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
@@ -46,57 +49,56 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 
 	@Autowired
 	public UserPushBindService userPushBindService;
-	
+
 	@Autowired
 	public UserLoginedService userLoginedService;
-	
+
 	@Autowired
 	public AdminAccountService adminAccountService;
-		
+
 	/**
 	 * 第三方登录，注册绑定环信账号,异步操作
 	 */
 	@Async
 	@Override
 	public Future<Boolean> genImUser(Long userId) {
-		
-		
+
 		Users user = usersService.selectByPrimaryKey(userId);
-		
+
 		UserRef3rd record = new UserRef3rd();
-		
-		if (user == null) return new AsyncResult<Boolean>(true);
-		
+
+		if (user == null)
+			return new AsyncResult<Boolean>(true);
+
 		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userId);
 		if (userRef3rd != null) {
 			return new AsyncResult<Boolean>(true);
 		}
-		
+
 		String uuid = "";
 		// 如果不存在则新增.并且存入数据库
 		String username = "simi-user-" + user.getId().toString();
 		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
-		
-		//1. 先去环信查找是否有用户:
-	    ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
-		
-	    JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
-	    if (statusCode.toString().equals("404")) {
+
+		// 1. 先去环信查找是否有用户:
+		ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
+
+		JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
+		if (statusCode.toString().equals("404")) {
 			ObjectNode datanode = JsonNodeFactory.instance.objectNode();
 			datanode.put("username", username);
 			datanode.put("password", defaultPassword);
 			if (user.getName() != null && user.getName().length() > 0) {
 				datanode.put("nickname", user.getName());
 			}
-			ObjectNode createNewIMUserSingleNode = EasemobIMUsers
-					.createNewIMUserSingle(datanode);
-			
+			ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
+
 			JsonNode entity = createNewIMUserSingleNode.get("entities");
 			uuid = entity.get(0).get("uuid").toString();
-	    } else {
-	    	JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
-	    	uuid = entity.get(0).get("uuid").toString();
-	    }
+		} else {
+			JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
+			uuid = entity.get(0).get("uuid").toString();
+		}
 
 		// username = entity.get(0).get("username").toString();
 
@@ -110,43 +112,45 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		userRef3rdService.insert(record);
 		return new AsyncResult<Boolean>(true);
-	}	
-	
+	}
+
 	/**
 	 * 记录用户登录状态
 	 */
 	@Async
 	@Override
 	public Future<Boolean> userLogined(Long userId, Short loginFrom, Long ip) {
-		
-		
+
 		Users u = usersService.selectByPrimaryKey(userId);
-		
-		if (u == null) return new AsyncResult<Boolean>(true);
-		
+
+		if (u == null)
+			return new AsyncResult<Boolean>(true);
+
 		UserLogined record = userLoginedService.initUserLogined();
-		
+
 		record.setUserId(u.getId());
 		record.setMobile(u.getMobile());
 		record.setLoginFrom(loginFrom);
 		record.setLoginIp(ip);
 		userLoginedService.insert(record);
-		
+
 		return new AsyncResult<Boolean>(true);
 	}
-	
+
 	/**
-	 *  用户手机号所在地
+	 * 用户手机号所在地
 	 */
 	@Async
 	@Override
-	public Future<Boolean> userMobileCity(Long userId) {	
+	public Future<Boolean> userMobileCity(Long userId) {
 		Users u = usersService.selectByPrimaryKey(userId);
-		
-		if (u == null) return new AsyncResult<Boolean>(true);
-		
+
+		if (u == null)
+			return new AsyncResult<Boolean>(true);
+
 		String mobile = u.getMobile();
-		if (StringUtil.isEmpty(mobile)) return new AsyncResult<Boolean>(true);
+		if (StringUtil.isEmpty(mobile))
+			return new AsyncResult<Boolean>(true);
 		String provinceName = "";
 		try {
 			provinceName = MobileUtil.calcMobileCity(mobile);
@@ -159,71 +163,118 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		usersService.updateByPrimaryKeySelective(u);
 		return new AsyncResult<Boolean>(true);
 	}
-	
+
 	/**
-	 *  新用户注册通知运营人员.
+	 * 新用户注册通知运营人员.
 	 */
 	@Async
 	@Override
 	public Future<Boolean> newUserNotice(Long userId) {
-		
+
 		Users u = usersService.selectByPrimaryKey(userId);
-		
-		if (u == null) return new AsyncResult<Boolean>(true);
-		
+
+		if (u == null)
+			return new AsyncResult<Boolean>(true);
+
 		String name = u.getName();
-		
-		if (StringUtil.isEmpty(name)) name = u.getMobile();
-		//新用户注册通知运营人员
+
+		if (StringUtil.isEmpty(name))
+			name = u.getMobile();
+		// 新用户注册通知运营人员
 		long addTime = u.getAddTime();
-		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime*1000);
-		
-	//	List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
-		//查出所有运营部的人员（roleId=3）
+		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000, "MM-dd HH:mm");
+
+		// List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+		// 查出所有运营部的人员（roleId=3）
 		Long roleId = 3L;
 		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
 		List<String> mobileList = new ArrayList<String>();
-		for (AdminAccount item: adminAccounts) {
+
+		HashMap<String, String> tranParams = new HashMap<String, String>();
+
+		tranParams.put("is_show", "true");
+		tranParams.put("card_id", "0");
+		tranParams.put("card_type", "0");
+		tranParams.put("service_time", "0");
+		tranParams.put("remind_time", "0");
+		tranParams.put("remind_title", "新用户注册");
+		tranParams.put("remind_content", "新用户:" + name + "在" + addTimeStr + "注册成功");
+
+		String jsonParams = GsonUtil.GsonString(tranParams);
+
+		HashMap<String, String> params = new HashMap<String, String>();
+		for (AdminAccount item : adminAccounts) {
 			if (!StringUtil.isEmpty(item.getMobile())) {
 				mobileList.add(item.getMobile());
 			}
+
+			Users uu = usersService.selectByMobile(item.getMobile());
+
+			if (uu == null)
+				continue;
+
+			UserPushBind p = userPushBindService.selectByUserId(uu.getId());
+
+			if (p == null)
+				continue;
+			
+			params.put("transmissionContent", jsonParams);
+			params.put("cid", p.getClientId());
+			
+			if (p.getDeviceType().equals("ios")) {
+				try {
+					PushUtil.IOSPushToSingle(params, "notification");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if (p.getDeviceType().equals("android")) {
+				try {
+					PushUtil.AndroidPushToSingle(params);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
-		String[] content = new String[] { name,addTimeStr };
-		for (int i = 0; i < mobileList.size(); i++) {
-			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
-					Constants.SEC_REGISTER_ID, content);
-			System.out.println(sendSmsResult + "00000000000000");
-		}		
-		
+		// String[] content = new String[] { name,addTimeStr };
+		// for (int i = 0; i < mobileList.size(); i++) {
+		// HashMap<String, String> sendSmsResult =
+		// SmsUtil.SendSms(mobileList.get(i),
+		// Constants.SEC_REGISTER_ID, content);
+		// System.out.println(sendSmsResult + "00000000000000");
+		// }
+
 		return new AsyncResult<Boolean>(true);
 	}
-	
+
 	/**
-	 *  用户相互加为好友
-	 */	
+	 * 用户相互加为好友
+	 */
 	@Async
 	@Override
 	public Future<Boolean> addFriends(Users u, Users friendUser) {
-		
+
 		userFriendService.addFriends(u, friendUser);
-		
+
 		return new AsyncResult<Boolean>(true);
 	}
-	
+
 	/**
-	 *  默认加固定账号为好友.
-	 */	
+	 * 默认加固定账号为好友.
+	 */
 	@Async
 	@Override
 	public Future<Boolean> addDefaultFriends(Long userId) {
-		
+
 		Users u = usersService.selectByPrimaryKey(userId);
 		if (u != null) {
 			Users friendUser = usersService.selectByMobile("18888888888");
 			userFriendService.addFriends(u, friendUser);
 		}
 		return new AsyncResult<Boolean>(true);
-	}	
-	
-	
+	}
+
 }

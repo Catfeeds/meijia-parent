@@ -145,17 +145,17 @@ $("#imgUrlFile").fileinput({
 	msgSizeTooLarge: "上传文件大小超过8mb"
 });
 
-$("#introduction").keyup(function(){
-	   var len = $(this).val().length;
-
-	   if(len > 200){
-		   $(this).val($(this).val().substring(0,200));
-	   }
-	   var num = 200 - len;
-	   $("#introduction").text(num);
-	   
-//	   $("#introduction_limit").text(len + "/200");
-});
+//$("#introduction").keyup(function(){
+//	   var len = $(this).val().length;
+//
+//	   if(len > 200){
+//		   $(this).val($(this).val().substring(0,200));
+//	   }
+//	   var num = 200 - len;
+//	   $("#introduction").text(num);
+//	   
+////	   $("#introduction_limit").text(len + "/200");
+//});
 
 //处理标签选中的样式.
 $("input[name='tagName']").click(function() {
