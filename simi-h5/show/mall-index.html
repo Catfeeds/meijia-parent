@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/store.css">
+    <title>商城</title>
+</head>
+<body>
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+    <a href="#top" title="">
+        <img class="am-gotop-icon-custom" src="images/goTop.png" />
+    </a>
+</div>
+
+<div class="pet_mian" id="top">
+  <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}' >
+  <ul class="am-slides">
+      <li>
+            <img src="images/fl01.png">
+            <div class="pet_slider_font">
+                <span class="pet_slider_emoji">服务市场分析</span>
+                <span>企业服务市场呼唤智能化的“大白”出现</span>
+            </div>
+            <div class="pet_slider_shadow"></div>
+      </li>
+      <li>
+            <img src="images/fl02.png">
+            <div class="pet_slider_font">
+                <span class="pet_slider_emoji">户外服务升温</span>
+                <span>各类团建户外互动活动日渐增多</span>
+            </div>
+            <div class="pet_slider_shadow"></div>
+      </li>
+      
+  </ul>
+</div>
+
+<div class="am-g">
+  <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+  am-avg-md-3 am-avg-lg-4 am-gallery-bordered" data-am-gallery="{  }" >
+      <li>
+        <div class="am-gallery-item">
+            <a href="mall-p-detail.html" class="">
+              <img src="images/p3.jpg"  alt="商品名称提示"/>
+                <h3 class="am-gallery-title">新员工入职体检</h3>
+                <div class="am-gallery-desc"><span class="am-text-danger">300元/人</span></div>
+            </a>
+        </div>
+      </li>
+      <li>
+        <div class="am-gallery-item">
+            <a href="mall-p-detail.html" class="">
+              <img src="images/p3.jpg"  alt="商品名称提示"/>
+                <h3 class="am-gallery-title">商务英语培训</h3>
+                <div class="am-gallery-desc"><span class="am-text-danger">1300元/人</span></div>
+            </a>
+        </div>
+      </li>
+      <li>
+        <div class="am-gallery-item">
+            <a href="mall-p-detail.html" class="">
+              <img src="images/p3.jpg"  alt="商品名称提示"/>
+                <h3 class="am-gallery-title">下午茶套餐</h3>
+                <div class="am-gallery-desc"><span class="am-text-danger">300元</span></div>
+            </a>
+        </div>
+      </li>
+      <li>
+        <div class="am-gallery-item">
+            <a href="mall-p-detail.html" class="">
+              <img src="images/p3.jpg"  alt="商品名称提示"/>
+                <h3 class="am-gallery-title">员工生日礼物</h3>
+                <div class="am-gallery-desc"><span class="am-text-danger">300元</span></div>
+            </a>
+        </div>
+      </li>
+      <li>
+        <div class="am-gallery-item">
+            <a href="mall-p-detail.html" class="">
+              <img src="images/p3.jpg"  alt="商品名称提示"/>
+                <h3 class="am-gallery-title">健身打折卡</h3>
+                <div class="am-gallery-desc"><span class="am-text-danger">300元</span></div>
+            </a>
+        </div>
+      </li>
+      <li>
+        <div class="am-gallery-item">
+            <a href="mall-p-detail.html" class="">
+              <img src="images/p3.jpg"  alt="商品名称提示"/>
+                <h3 class="am-gallery-title">员工团建活动</h3>
+                <div class="am-gallery-desc"><span class="am-text-danger">300元</span></div>
+            </a>
+        </div>
+      </li>
+  </ul>
+</div>
+<div class="pet_article_dowload pet_dowload_more_top_off">
+  <div class="pet_article_footer_info">Copyright(c)2015 云行政 All Rights Reserved</div>
+</div>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script>
+$(function(){
+
+    // 动态计算新闻列表文字样式
+    auto_resize();
+    $(window).resize(function() {
+        auto_resize();
+    });
+    $('.am-list-thumb img').load(function(){
+        auto_resize();
+    });
+
+    $('.am-list > li:last-child').css('border','none');
+    function auto_resize(){
+        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
+
+    }
+        $('.pet_nav_gengduo').on('click',function(){
+            $('.pet_more_list').addClass('pet_more_list_show');
+       });
+        $('.pet_more_close').on('click',function(){
+            $('.pet_more_list').removeClass('pet_more_list_show');
+        });
+});
+
+</script>
+</body>
+</html>
