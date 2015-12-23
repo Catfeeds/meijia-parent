@@ -101,12 +101,15 @@ function addHoverDom(treeId, treeNode) {
     	$('#tree_tid_modal').val(treeNode.tId);
     	$('#parent_id_modal').val(treeNode.id);
     	$('#parent_name_modal').html(treeNode.name);
-    	$('#deptAddModal').modal('show');
+    	$('#dept-modal').modal();
     });
 };
 
 
-$('#deptAddModal').on('hide.bs.modal', function(e) {
+
+
+
+$('#dept-modal').on('close.modal.amui', function(e) {
 
    var deptParentId = $('#parent_id_modal').val();
    var deptName = $('#dept_name_modal').val();
@@ -120,7 +123,6 @@ $('#deptAddModal').on('hide.bs.modal', function(e) {
 	params.paernt_id = deptParentId;
 	params.name = deptName;
 	
-	console.log(params);
 	$.ajax({
        type : "post",
        url : "/xcloud/company/add_dept.json",
@@ -160,8 +162,8 @@ function onClick(event, treeId, treeNode, clickFlag) {
 //	showLog("[ "+getTime()+" onClick ]&nbsp;&nbsp;clickFlag = " + clickFlag + " (" + (clickFlag===1 ? "普通选中": (clickFlag===0 ? "<b>取消选中</b>" : "<b>追加选中</b>")) + ")");
 	console.log(treeNode.dept_id);
 	console.log("11111111111111");
-	var dept_id = treeNode.dept_id;
-	location.href = "/xcloud/staff/list?dept_id="+dept_id;
+//	var dept_id = treeNode.dept_id;
+//	location.href = "/xcloud/staff/list?dept_id="+dept_id;
 }	
 
 function zTreeOnRename(event, treeId, treeNode, isCancel) {
