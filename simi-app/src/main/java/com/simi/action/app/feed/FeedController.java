@@ -256,7 +256,8 @@ public class FeedController extends BaseController {
 		}
 
 		Feeds feed = feedService.selectByPrimaryKey(fid);
-
+		if (feed == null) return null;
+		
 		FeedComment record = feedCommentService.selectByPrimaryKey(commentId);
 		if (record == null)
 			return result;
@@ -266,6 +267,10 @@ public class FeedController extends BaseController {
 		if (feed.getUserId().equals(userId) || record.getUserId().equals(userId)) {
 			// 删除卡片相应的评论
 			feedCommentService.deleteByPrimaryKey(commentId);
+		} else {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("只有发布者和评论人本身能删除评论");
+			return result;
 		}
 		return result;
 	}

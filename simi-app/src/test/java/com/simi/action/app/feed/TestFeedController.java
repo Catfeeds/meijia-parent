@@ -31,21 +31,23 @@ public class TestFeedController extends JUnitActionBase  {
 	@Test
     public void testPostFeed() throws Exception {
 
-		String url = "/app/feed/post_feed.json";
+		String url = "/app/feed/post_feed.json?user_id=1&title=动态测试1&lat=31.156731&lng=121.810487&poi_name=上海浦东国际机场";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
-     	//新增
-     	postRequest = postRequest.param("user_id", "1");
-	    postRequest = postRequest.param("title", "动态测试1");
-	    postRequest = postRequest.param("lat", "31.156731");
-	    postRequest = postRequest.param("lng", "121.810487");
-	    postRequest = postRequest.param("poi_name", "上海浦东国际机场");
+     	HashMap<String, String> contentTypeParams = new HashMap<String, String>();
+     	contentTypeParams.put("boundary", "265001916915724");
 	   
 	    MockMultipartFile image = new MockMultipartFile("feed_imgs", "1.png", "", imageToByteArray("/Users/lnczx/Desktop/tmp/1.png"));
 	    
-	    ResultActions resultActions = mockMvc.perform(postRequest);
+	    MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
 
+		ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.fileUpload(url)
+                .file(image)        
+                .contentType(mediaType))
+                .andExpect(status().isOk());
+	    
 	    resultActions.andExpect(content().contentType(this.mediaType));
 	    resultActions.andExpect(status().isOk());
 
@@ -62,9 +64,8 @@ public class TestFeedController extends JUnitActionBase  {
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//新增
-     	postRequest = postRequest.param("feed_id", "1");
-	    postRequest = postRequest.param("user_id", "93");
-	    
+     	postRequest = postRequest.param("fid", "2");
+	    postRequest = postRequest.param("user_id", "18");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
@@ -84,9 +85,9 @@ public class TestFeedController extends JUnitActionBase  {
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//新增
-     	postRequest = postRequest.param("feed_id", "2");
-	    postRequest = postRequest.param("user_id", "93");
-	    postRequest = postRequest.param("comment", "还不错");
+     	postRequest = postRequest.param("fid", "2");
+	    postRequest = postRequest.param("user_id", "278");
+	    postRequest = postRequest.param("comment", "还不错278");
 	    
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -98,6 +99,50 @@ public class TestFeedController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }	
+	
+	@Test
+    public void testPostFeedDel() throws Exception {
+
+		String url = "/app/feed/del.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("fid", "1");
+	    postRequest = postRequest.param("user_id", "1");
+	    
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
+	
+	@Test
+    public void testPostCommentDel() throws Exception {
+
+		String url = "/app/feed/del_comment.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("fid", "2");
+	    postRequest = postRequest.param("user_id", "1");
+	    postRequest = postRequest.param("comment_id", "3");
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
 	
 	public static byte[] imageToByteArray(String imgPath) {
 		BufferedInputStream in;

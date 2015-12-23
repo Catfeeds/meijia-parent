@@ -63,7 +63,7 @@ public class FeedZanServiceImpl implements FeedZanService {
 
 		List<FeedZan> feedzans = feedZanMapper.getByTop10(fid);
 
-		if (!feedzans.isEmpty()) return result;
+		if (feedzans.isEmpty()) return result;
 
 		List<Long> userIds = new ArrayList<Long>();
 
