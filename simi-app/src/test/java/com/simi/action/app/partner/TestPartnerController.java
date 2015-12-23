@@ -28,7 +28,7 @@ public class TestPartnerController extends JUnitActionBase  {
     public void testGetUserList() throws Exception {
 
 		String url = "/app/partner/get_user_list.json";
-		String params = "?user_id=1&service_type_ids=75,180";
+		String params = "?user_id=472&service_type_ids=204";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -39,7 +39,7 @@ public class TestPartnerController extends JUnitActionBase  {
 
     }	
 	
-	@Test
+	/*@Test
     public void testGetUserDetail() throws Exception {
 
 		String url = "/app/partner/get_user_detail.json";
@@ -124,5 +124,5 @@ public class TestPartnerController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
-    }
+    }*/
 }

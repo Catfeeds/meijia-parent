@@ -42,6 +42,7 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderListVo;
 import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/partner")
@@ -79,17 +80,28 @@ public class PartnerServicePriceController extends BaseController {
 			return result;
 		}
 		Long partnerId = partnerUsers.getPartnerId();
-		//Long serviceTypeId = partnerUsers.getServiceTypeId();
+		Long serviceTypeId = partnerUsers.getServiceTypeId();
 
-		List<PartnerServiceType> list = partnerServiceTypeService.selectByPartnerIdIn(partnerId);
+		//List<PartnerServiceType> list = partnerServiceTypeService.selectByPartnerIdIn(partnerId);
+		//服务价格
+		List<Long> partnerIds = new ArrayList<Long>();
+		partnerIds.add(0L);
+		partnerIds.add(partnerId);
+		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+		searchVo.setParentId(serviceTypeId);
+		searchVo.setViewType((short) 1);
+		searchVo.setPartnerIds(partnerIds);
+		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
+		
+		
 		if (list !=null) {
 		for (int i = 0; i < list.size(); i++) {
 			PartnerServiceType partnerServiceType = list.get(i);
 			//PartnerUsers pusers = partnerUserService.selectByServiceTypeIdAndPartnerId(partnerServiceType.getId(), partnerServiceType.getPartnerId());
 			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(partnerServiceType.getId());
 			if (detail !=null) {
-				
-			if (detail.getUserId() != userId ) {
+				//detail.getUserId() != 0 &&
+			if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
 				list.remove(i);
 			}
 			}
