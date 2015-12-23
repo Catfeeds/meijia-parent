@@ -57,7 +57,7 @@
 		add_time)
 		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
 		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
-		#{totalView,jdbcType=NUMERIC}, #{feed_extra,jdbcType=VARCHAR}, 
+		#{totalView,jdbcType=NUMERIC}, #{feedExtra,jdbcType=VARCHAR}, 
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.Feeds">
