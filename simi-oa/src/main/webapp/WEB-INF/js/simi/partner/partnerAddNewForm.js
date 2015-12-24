@@ -184,7 +184,7 @@ $(document).on('click','.btn-add', function(e) {
 /**
  * 显示服务商对应的城市和地区
  */
-/*$(function(){
+$(function(){
 	var partnerCityId = $("#partnerCityList").val();
 	var parnerRegionId = $("#partnerRegionList").val();
 
@@ -206,11 +206,8 @@ $(document).on('click','.btn-add', function(e) {
 				$(this).attr("checked","checked");
 			}
 		}
-	}); */
-/*
-	
-	
-	
+	}); 
+
 	var cityStr = "";
 	var cityName = "";
 	$("input[name='cityId']:checkbox:checked").each(function() {
@@ -265,7 +262,7 @@ $(document).on('click','.btn-add', function(e) {
 		cityHtml=cityHtml+reg+"</div>";
 	}
 	$("#cityAndRegion").append(cityHtml);
-});*/
+});
 $("#companyDescImg").fileinput({
 	previewFileType: "image",
 	browseClass: "btn btn-success",
