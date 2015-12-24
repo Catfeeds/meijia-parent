@@ -218,6 +218,21 @@ public class PartnersAddNewController extends BaseController{
 		}
 		
 		/**
+		 * 获取提供商对应的城市
+		 */
+		String cityId = "";
+		List<PartnerRefCity> partnerRefCity = partnerRefCityService.selectByPartnerId(partnerFormVo.getPartnerId());
+		if(partnerRefCity !=null && partnerRefCity.size()>0){
+			for (int i = 0; i < partnerRefCity.size();i++) {
+				cityId += partnerRefCity.get(i).getCityId().toString();
+					if(i !=(partnerRefCity.size()-1)){
+						cityId +=",";
+					}
+			}
+		}
+		partnerFormVo.setPartnerCityId(cityId);;
+		
+		/**
 		 * 获取北,上,广,深等城市和地区字典信息
 		 */
 		List<Long> cityIds = new ArrayList<Long>();
