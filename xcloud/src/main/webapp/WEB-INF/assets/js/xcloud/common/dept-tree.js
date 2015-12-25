@@ -70,7 +70,7 @@ function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
     		parent : item.dept_id
     	});
     }
-    console.log(subTreeNodes);
+
     var zTree = $.fn.zTree.getZTreeObj("detpTree");
     zTree.removeChildNodes(treeNode);
     zTree.addNodes(treeNode, subTreeNodes);
@@ -89,20 +89,20 @@ var newCount = 1;
 function addHoverDom(treeId, treeNode) {
 
     var sObj = $("#" + treeNode.tId + "_span");
-    if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
-    var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-        + "' title='添加' onfocus='this.blur();'></span>";
-    sObj.after(addStr);
-    var btn = $("#addBtn_"+treeNode.tId);
-    if (btn) btn.bind("click", function(){
+//    if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+//    var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+//        + "' title='添加' onfocus='this.blur();'></span>";
+//    sObj.after(addStr);
+//    var btn = $("#addBtn_"+treeNode.tId);
+//    if (btn) btn.bind("click", function(){
 //        var zTree = $.fn.zTree.getZTreeObj("detpTree");
 //        zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
 //        return false;
-    	$('#tree_tid_modal').val(treeNode.tId);
-    	$('#parent_id_modal').val(treeNode.id);
-    	$('#parent_name_modal').html(treeNode.name);
-    	$('#dept-modal').modal();
-    });
+//    	$('#tree_tid_modal').val(treeNode.tId);
+//    	$('#parent_id_modal').val(treeNode.id);
+//    	$('#parent_name_modal').html(treeNode.name);
+//    	$('#dept-modal').modal();
+//    });
 };
 
 
@@ -159,10 +159,8 @@ function removeHoverDom(treeId, treeNode) {
 };
 
 function onClick(event, treeId, treeNode, clickFlag) {
-	console.log("Tree onClick");
-	console.log(treeNode.dept_id);
+
 	$("#dept_id").val(treeNode.dept_id);
-	console.log($("#dept_id").val());
 	TreeNodeClick();
 }	
 
@@ -173,7 +171,6 @@ function zTreeOnRename(event, treeId, treeNode, isCancel) {
 	params.dept_id = treeNode.dept_id;
 	params.name = treeNode.name;
 	
-	console.log(params);
 	$.ajax({
         type : "post",
         url : "/xcloud/company/edit_dept.json",
@@ -203,7 +200,6 @@ function beforeRemove(treeId, treeNode) {
 		params.company_id = companyId;
 		params.dept_id = treeNode.dept_id;
 		
-		console.log(params);
 		$.ajax({
 	        type : "post",
 	        url : "/xcloud/company/del_dept.json",
@@ -226,6 +222,16 @@ function beforeRemove(treeId, treeNode) {
 	}
 	
 }
+
+$("#btn-dept-add").click(function() {
+  var zTree = $.fn.zTree.getZTreeObj("detpTree");
+  var treeNode = zTree.getNodesByFilter(function (node) { return node.level == 0 }, true);
+//  zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+
+	$('#tree_tid_modal').val(treeNode.tId);
+	$('#parent_id_modal').val(0);
+	$('#dept-modal').modal();	
+});
 
 $(document).ready(function() {
 	$.fn.zTree.init($("#detpTree"), setting, zNodes);

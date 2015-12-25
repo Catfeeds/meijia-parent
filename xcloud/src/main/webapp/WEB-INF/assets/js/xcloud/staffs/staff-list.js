@@ -30,6 +30,11 @@ $("#list-table").dataTable({
     
     
     "columns": [
+		{ "data": "id",
+		    "render": function ( data, type, full, meta ) {
+		  	    return '<input type="checkbox" id="staff_id" name="staff_id" value="' + data + '"\>';
+		    }
+		},
         { "data": "job_number" },
         { "data": "name" },
         { "data": "mobile" },
@@ -38,7 +43,7 @@ $("#list-table").dataTable({
         { "data": "staff_type_name" },
         { "data": "id",
           "render": function ( data, type, full, meta ) {
-        	  	  console.log(data);
+
         	      return '<a href="/xcloud/staff/'+data+'"><i class="am-icon-edit am-icon-md"></i></a>';
           }
         },
@@ -50,3 +55,48 @@ $("#list-table").dataTable({
 function TreeNodeClick() {
 	$("#list-table").DataTable().ajax.reload();
 }
+
+//Handle click on "Select all" control
+
+//表格全选
+$("#select_all").click(function() {
+	
+	var table = $("#list-table").DataTable();
+	 // Get all rows with search applied
+    var rows = table.rows({ 'search': 'applied' }).nodes();
+    // Check/uncheck checkboxes for all rows in the table
+    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+});
+
+//表格全选
+$("#btn-change-dept").click(function() {
+	console.log("btn-change-dept click");
+	var table = $("#list-table").DataTable();
+	
+	var selectStaffNames = "";
+	var selectStaffIds = "";
+	table.$('input[type="checkbox"]').each(function(){
+        // If checkbox doesn't exist in DOM
+		   console.log($(this).val());
+           if(this.checked){
+        	   
+        	   var $row = this.closest('tr');
+        	   var data = table.row($row).data();
+        	   console.log(data.name);
+        	   console.log(data.id);
+        	   console.log("this.name = " + this.name);
+        	   selectStaffNames += data.name + ",";
+        	   selectStaffIds += data.id + ","
+           }
+    });
+	console.log("staffNames = " + selectStaffNames);
+	console.log("selectStaffIds = " + selectStaffIds);
+	if (selectStaffIds == "") {
+		alert("请选择需要分配部门的员工.");
+		return false;
+	}
+	$("")
+	
+	
+	
+});

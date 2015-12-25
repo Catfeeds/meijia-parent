@@ -39,6 +39,13 @@
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
 					<strong class="am-text-primary am-text-lg">通讯录</strong>
+					
+					
+				</div>
+				<div class="am-fr">
+									<button type="button" class="am-btn am-btn-success">导入通讯录</button>
+									<button type="button" class="am-btn am-btn-warning">添加员工</button>
+									<button type="button" class="am-btn am-btn-danger" id="btn-change-dept">分配部门</button>
 				</div>
 			</div>
 
@@ -61,10 +68,7 @@
 								</div>
 							</div>
 							<div class="am-u-sm-6">
-								<div id="sorting-chinese_filter" class="dataTables_filter am-datatable-filter">
-									<button type="button" class="am-btn am-btn-success">导入通讯录</button>
-									<button type="button" class="am-btn am-btn-warning">添加员工</button>
-								</div>
+								
 							</div>
 
 						</div>
@@ -75,11 +79,12 @@
 									aria-describedby="sorting-chinese_info">
 									<thead>
 										<tr>
+											<th width="10%"><input type="checkbox" name="select_all" id="select_all" value="1" /></th>
 											<th width="5%">工号</th>
-											<th width="20%">姓名</th>
+											<th width="15%">姓名</th>
 											<th width="15%">手机</th>
-											<th width="15%">职位</th>
-											<th width="20%">部门</th>
+											<th width="10%">职位</th>
+											<th width="15%">部门</th>
 											<th width="10%">类型</th>
 											<th width="15%">操作</th>
 										</tr>
@@ -92,6 +97,23 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="am-modal am-modal-confirm" tabindex="-1" id="change-dept-modal">
+			<div class="am-modal-dialog">
+				<div class="am-modal-hd">员工分配部门</div>
+				<div class="am-modal-bd">
+			      选择员工:<label id="select_staff_names"></label>
+			      <input type="hidden" id="select_staff_ids" name="select_staff_ids" value=""/>
+			      <input type="text" class="am-modal-prompt-input" name="dept_name_modal" id="dept_name_modal" maxLength="32"/>
+			    </div>
+				<div class="am-modal-footer">
+					<span class="am-modal-btn" data-am-modal-cancel>取消</span> <span class="am-modal-btn"
+						data-am-modal-confirm>确定</span>
+				</div>
+				<input type="hidden" id="tree_tid_modal" value="0" />
+				<input type="hidden" id="parent_id_modal" value="0" />
+			</div>
+		</div>
 
 		</div>
 	</div>
