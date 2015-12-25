@@ -57,18 +57,17 @@
 						<div class="am-g am-datatable-hd">
 							<div class="am-u-sm-6">
 								<div class="dataTables_length am-form-group am-datatable-length" id="sorting-chinese_length">
-									<label>显示 <select name="sorting-chinese_length" aria-controls="sorting-chinese"
+									<!-- <label>显示 <select name="sorting-chinese_length" aria-controls="sorting-chinese"
 										class="am-form-select am-input-sm"><option value="10">10</option>
 											<option value="25">25</option>
 											<option value="50">50</option>
 											<option value="100">100</option></select> 项结果
-									</label>
+									</label> -->
 								</div>
 							</div>
 							<div class="am-u-sm-6">
 								<div id="sorting-chinese_filter" class="dataTables_filter am-datatable-filter">
-									<label>搜索：<input type="search" class="am-form-field am-input-sm"
-										aria-controls="sorting-chinese"></label>
+									
 								</div>
 							</div>
 
@@ -85,7 +84,7 @@
 											<th>手机</th>
 											<th>职位</th>
 											<th>部门</th>
-											<th>户口所在地</th>
+											<th>员工类型</th>
 										</tr>
 									</thead>
 

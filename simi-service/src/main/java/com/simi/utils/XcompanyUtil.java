@@ -1,8 +1,5 @@
 package com.simi.utils;
 
-import com.meijia.utils.TimeStampUtil;
-import com.simi.common.Constants;
-
 /**
  * 公司的常用静态方法
  *
@@ -22,7 +19,7 @@ public class XcompanyUtil {
 				staffTypeName = "实习";
 				break;
 			default:
-				staffTypeName = "";
+				staffTypeName = "全职";
 		}
 		return staffTypeName;
 	}

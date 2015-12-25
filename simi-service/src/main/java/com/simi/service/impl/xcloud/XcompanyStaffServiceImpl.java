@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.StringUtil;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
@@ -48,7 +49,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		record.setCompanyFax("");
 		record.setStaffType((short)0L);
 		record.setJobName("");
-		record.setJobNumber("");
+		record.setJobNumber("0001");
 		record.setJoinDate(new Date());
 		record.setRegularDate(new Date());
 		
@@ -152,6 +153,18 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		
 		return xCompanyStaffMapper.updateByPrimaryKeySelective(xcompanyStaff);
 	}
+	
+	//获得最大的员工编号
+	@Override
+	public String getMaxJobNumber(Long companyId) {
+		
+		String jobNumber = "0001";
+		String maxJobNumber =  xCompanyStaffMapper.getMaxJobNumber(companyId);
+		if (StringUtil.isEmpty(maxJobNumber)) {
+			maxJobNumber = maxJobNumber + 1;
+		}
+		return jobNumber;
+	}	
 
 	
 

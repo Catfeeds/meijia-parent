@@ -33,6 +33,8 @@ public interface XcompanyStaffService {
 
 	StaffListVo changeToStaffLisVo(XcompanyStaff item);
 
+	String getMaxJobNumber(Long companyId);
+
 
 	
 

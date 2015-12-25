@@ -184,8 +184,6 @@ public class CompanyController extends BaseController {
 			xCompanyDeptService.insert(dept);
 		}
 
-		
-		
 		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
 		Long deptId = 0L;
 		if (defaultDept != null) {
@@ -196,6 +194,7 @@ public class CompanyController extends BaseController {
 		record.setUserId(u.getId());
 		record.setCompanyId(companyId);
 		record.setDeptId(deptId);
+		record.setJobNumber(xCompanyStaffService.getMaxJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
 		
 		return result;
