@@ -93,6 +93,8 @@ public class PushUtil {
 
 		try {
 			IPushResult ret = push.pushMessageToSingle(message, target1);
+			System.out.println("================推送信息====================");
+			System.out.println("push cid = " + cid);
 			System.out.println("正常：" + ret.getResponse().toString());
 			
 		} catch (RequestException e) {
