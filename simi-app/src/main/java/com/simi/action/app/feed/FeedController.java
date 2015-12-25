@@ -51,7 +51,8 @@ public class FeedController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_feed", method = RequestMethod.POST)
 	public AppResultData<Object> postFeed(@RequestParam("title") String title, @RequestParam("user_id") Long userId,
-			@RequestParam("feed_imgs") MultipartFile[] feedImgs, @RequestParam(value = "lat", required = false, defaultValue = "") String lat,
+			@RequestParam(value = "feed_imgs", required = false) MultipartFile[] feedImgs, 
+			@RequestParam(value = "lat", required = false, defaultValue = "") String lat,
 			@RequestParam(value = "lng", required = false, defaultValue = "") String lng,
 			@RequestParam(value = "poi_name", required = false, defaultValue = "") String poiName,
 			@RequestParam(value = "feed_extra", required = false, defaultValue = "") String feedExtra) throws IOException {
