@@ -159,11 +159,11 @@ function removeHoverDom(treeId, treeNode) {
 };
 
 function onClick(event, treeId, treeNode, clickFlag) {
-//	showLog("[ "+getTime()+" onClick ]&nbsp;&nbsp;clickFlag = " + clickFlag + " (" + (clickFlag===1 ? "普通选中": (clickFlag===0 ? "<b>取消选中</b>" : "<b>追加选中</b>")) + ")");
+	console.log("Tree onClick");
 	console.log(treeNode.dept_id);
-	console.log("11111111111111");
-//	var dept_id = treeNode.dept_id;
-//	location.href = "/xcloud/staff/list?dept_id="+dept_id;
+	$("#dept_id").val(treeNode.dept_id);
+	console.log($("#dept_id").val());
+	TreeNodeClick();
 }	
 
 function zTreeOnRename(event, treeId, treeNode, isCancel) {

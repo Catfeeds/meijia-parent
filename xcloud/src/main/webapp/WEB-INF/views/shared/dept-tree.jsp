@@ -4,7 +4,12 @@
 <input type="hidden" id="shortName" value="${shortName}" />
 <%-- <input type="hidden" id="deptId" value="${deptId}" /> --%>
 
-
+		<div class="am-cf am-padding">
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-lg">部门列表</strong>
+				</div>
+			</div>
+			<hr />
 		<%-- <a href="/xcloud/staff/list?dept_id=${deptId}"> --%>
 		<ul id="detpTree" class="ztree"></ul>
 

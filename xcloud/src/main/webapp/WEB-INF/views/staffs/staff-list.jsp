@@ -24,14 +24,10 @@
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
 		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
-			<div class="am-cf am-padding">
-				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">部门列表</strong>
-				</div>
-			</div>
-			<hr />
+			
 			<ul class="am-list admin-sidebar-list">
 				<li><%@ include file="../shared/dept-tree.jsp"%></li>
+				<input type="hidden" id="dept_id" value="0"/>
 			</ul>
 
 

@@ -1,10 +1,10 @@
-var tables = $("#list-table").dataTable({
+$("#list-table").dataTable({
     "processing": true,
     "serverSide": true,
     "ordering":  false,
     "bPaginate": true, // Pagination True 
     "aLengthMenu" : false,
-    "pageLength": 1,
+    "pageLength": 10,
     "searching": false,
     "scrollY": "300px",
     "language": {
@@ -13,7 +13,8 @@ var tables = $("#list-table").dataTable({
             "previous": "前一页",
             "next": "下一页"
           },
-        "zeroRecords": "没有员工",
+        "zeroRecords": "",
+        "sEmptyTable": "",
         "info": "显示_START_到_END_, 共有_TOTAL_条数据"
       },
     "ajax": {
@@ -21,12 +22,9 @@ var tables = $("#list-table").dataTable({
         "type": "GET",
         "data": function ( d ) {
         	var info = $('#list-table').DataTable().page.info();
-        	console.log(info.page);
         	d.page = info.page + 1;
-
-        	
-//        	var dept_id = $("#dept_id");
-//            d.dept_id = dept_id;
+        	var dept_id = $("#dept_id").val();
+            d.dept_id = dept_id;
         }
     },
     
@@ -47,3 +45,8 @@ var tables = $("#list-table").dataTable({
 
     ]
 } );
+
+
+function TreeNodeClick() {
+	$("#list-table").DataTable().ajax.reload();
+}
