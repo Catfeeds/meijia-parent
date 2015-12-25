@@ -5,11 +5,16 @@
 <%-- <input type="hidden" id="deptId" value="${deptId}" /> --%>
 
 		<div class="am-cf am-padding">
-				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">部门列表</strong>
-				</div>
+			<div class="am-fl am-cf">
+				<strong class="am-text-primary am-text-lg">部门列表</strong>
 			</div>
-			<hr />
+			
+			<div class="am-fr">
+				<button type="button" class="am-btn am-btn-warning" id="btn-dept-add">添加部门</button>
+			</div>
+		</div>
+		<hr />
+		
 		<%-- <a href="/xcloud/staff/list?dept_id=${deptId}"> --%>
 		<ul id="detpTree" class="ztree"></ul>
 
@@ -17,7 +22,7 @@
 			<div class="am-modal-dialog">
 				<div class="am-modal-hd">添加部门</div>
 				<div class="am-modal-bd">
-			      上级部门:<label id="parent_name_modal"></label>
+			      
 			      
 			      <input type="text" class="am-modal-prompt-input" name="dept_name_modal" id="dept_name_modal" maxLength="32"/>
 			    </div>
