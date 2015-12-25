@@ -5,7 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.UserCompanySearchVo;
-import com.simi.vo.xcloud.UserCompanyFormVo;
+import com.simi.vo.xcloud.StaffListVo;
 
 public interface XcompanyStaffService {
 
@@ -31,7 +31,7 @@ public interface XcompanyStaffService {
 
 	PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize);
 
-	UserCompanyFormVo getUserCompany(XcompanyStaff item);
+	StaffListVo changeToStaffLisVo(XcompanyStaff item);
 
 
 	

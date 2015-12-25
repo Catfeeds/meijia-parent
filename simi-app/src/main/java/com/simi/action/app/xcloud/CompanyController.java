@@ -186,7 +186,7 @@ public class CompanyController extends BaseController {
 
 		
 		
-		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未提交");
+		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
 		Long deptId = 0L;
 		if (defaultDept != null) {
 			deptId = defaultDept.getDeptId();
@@ -256,7 +256,7 @@ public class CompanyController extends BaseController {
 		}
 		
 
-		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未提交");
+		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
 		Long deptId = 0L;
 		if (defaultDept != null) {
 			deptId = defaultDept.getDeptId();

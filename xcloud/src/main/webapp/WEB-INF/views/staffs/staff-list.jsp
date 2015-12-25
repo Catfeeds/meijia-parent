@@ -82,9 +82,9 @@
 										<tr>
 											<th>工号</th>
 											<th>姓名</th>
-											<th>性别</th>
 											<th>手机</th>
-											<th>出生年月</th>
+											<th>职位</th>
+											<th>部门</th>
 											<th>户口所在地</th>
 										</tr>
 									</thead>
@@ -117,14 +117,8 @@
 	<script src="<c:url value='/assets/js/zTree/js/jquery.ztree.excheck-3.5.js'/>"></script>
 	<script src="<c:url value='/assets/js/zTree/js/jquery.ztree.exedit-3.5.js'/>"></script>
 	<script src="<c:url value='/assets/js/xcloud/common/dept-tree.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/staffs/staff-list.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
-
-
-	<%-- <script  src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
-	    <script  src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script> --%>
-	<%-- <script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" ></script>
-	    <script src="<c:url value='/js/vendor/jquery.dataTables.min.js'/>" ></script> --%>
+	<script src="<c:url value='/assets/js/xcloud/staffs/staff-list.js'/>"></script>
 </body>
 </html>

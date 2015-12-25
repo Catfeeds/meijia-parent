@@ -29,4 +29,6 @@ public interface XcompanyDeptService {
 
 	XcompanyDept selectByXcompanyIdAndDeptName(Long parentId, String name);
 
+	XcompanyDept selectByXcompanyIdAndDeptId(Long companyId, Long deptId);
+
 }

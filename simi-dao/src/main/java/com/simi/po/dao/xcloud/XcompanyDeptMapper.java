@@ -25,4 +25,6 @@ public interface XcompanyDeptMapper {
 			Long xcompanyId);
 
 	XcompanyDept selectByXcompanyIdAndDeptName(Long parentId, String name);
+
+	XcompanyDept selectByXcompanyIdAndDeptId(Long companyId, Long deptId);
 }

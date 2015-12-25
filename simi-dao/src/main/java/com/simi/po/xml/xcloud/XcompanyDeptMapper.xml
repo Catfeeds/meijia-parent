@@ -47,6 +47,14 @@
 		and name = #{1}
 	</select>
 	
+	<select id="selectByXcompanyIdAndDeptId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_dept
+		where company_id = #{0}
+		and dept_id = #{1}
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from xcompany_dept
 		where dept_id = #{deptId,jdbcType=NUMERIC}

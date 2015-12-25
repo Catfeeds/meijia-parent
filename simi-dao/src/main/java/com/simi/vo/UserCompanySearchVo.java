@@ -7,7 +7,7 @@ public class UserCompanySearchVo{
 	private Long deptId;
 	
 	private Long userId;
-	
+		
 /*	private String companyName;
 	
 	private String name;

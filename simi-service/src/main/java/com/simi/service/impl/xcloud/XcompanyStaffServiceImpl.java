@@ -16,8 +16,9 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.utils.XcompanyUtil;
 import com.simi.vo.UserCompanySearchVo;
-import com.simi.vo.xcloud.UserCompanyFormVo;
+import com.simi.vo.xcloud.StaffListVo;
 
 @Service
 public class XcompanyStaffServiceImpl implements XcompanyStaffService {
@@ -63,7 +64,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		if (!list.isEmpty()) {
 			for (int i = 0; i < list.size(); i++) {
 				XcompanyStaff item = list.get(i);
-				UserCompanyFormVo vo = getUserCompany(item);
+				StaffListVo vo = changeToStaffLisVo(item);
 				list.set(i, vo);
 			}
 	}	
@@ -97,36 +98,26 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public UserCompanyFormVo getUserCompany(XcompanyStaff item) {
+	public StaffListVo changeToStaffLisVo(XcompanyStaff item) {
 
-		UserCompanyFormVo vo = new UserCompanyFormVo();
+		StaffListVo vo = new StaffListVo();
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
 		
 		Users users = usersService.selectByPrimaryKey(item.getUserId());
-
+		
+		Long companyId = item.getCompanyId();
+		Long deptId = item.getDeptId();
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
 		
-		// 员工类型
-		XcompanyStaff xcompanyStaff = xCompanyStaffMapper.selectByCompanyIdAndUserId(item.getCompanyId(), item.getUserId());
-
-		vo.setStaffType(xcompanyStaff.getStaffType());
-		if (xcompanyStaff.getStaffType() == 0) {
-			vo.setStaffName("全职");
-		}
-		if (xcompanyStaff.getStaffType() == 1) {
-			vo.setStaffName("兼职");
-		}
-		if (xcompanyStaff.getStaffType() == 2) {
-			vo.setStaffName("实习");
-		}
+		vo.setStaffType(item.getStaffType());
+		vo.setStaffTypeName(XcompanyUtil.getStaffTypeName(item.getStaffType()));
 		// 部门名称
-		XcompanyDept xcompanyDept = xcompanyDeptService
-				.selectByPrimaryKey(xcompanyStaff.getDeptId());
+		XcompanyDept xcompanyDept = xcompanyDeptService.selectByXcompanyIdAndDeptId(companyId, deptId);
 		if (xcompanyDept != null) {
 			vo.setDeptName(xcompanyDept.getName());
 		} else {
-			vo.setDeptName("");
+			vo.setDeptName("未分配");
 		}
 		return vo;
 	}

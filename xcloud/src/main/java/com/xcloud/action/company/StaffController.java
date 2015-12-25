@@ -1,5 +1,9 @@
 package com.xcloud.action.company;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +25,13 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.UserCompanySearchVo;
-import com.simi.vo.xcloud.UserCompanyFormVo;
+import com.simi.vo.xcloud.StaffListVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
 import com.xcloud.auth.AuthPassport;
 import com.xcloud.common.Constant;
+
 
 @Controller
 @RequestMapping(value = "/staff")
@@ -41,6 +46,44 @@ public class StaffController extends BaseController {
 	@Autowired
 	private XCompanyService xCompanyService;
 
+	
+	@AuthPassport
+	@RequestMapping(value = "/get-by-dept", method = { RequestMethod.GET })
+	public Map<String, Object> getByDpt(HttpServletRequest request,
+			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("recordsTotal", 0);
+		result.put("recordsFiltered", 0);		
+		result.put("data", "");
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long companyId = accountAuth.getCompanyId();
+
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		
+		if (deptId > 0L) {
+			searchVo.setDeptId(deptId);
+		}
+		
+		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+
+		List<StaffListVo> list = plist.getList();
+		
+		if (!list.isEmpty()) {
+			result.put("recordsTotal", plist.getTotal());
+			result.put("recordsFiltered", plist.getTotal());		
+			result.put("data", list);
+		}
+
+		return result;
+	}	
+	
+	
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String staffTreeAndList(HttpServletRequest request, Model model,
