@@ -31,6 +31,8 @@ $("#list-table").dataTable({
 //            d.dept_id = dept_id;
         }
     },
+    
+    
     "columns": [
         { "data": "job_number" },
         { "data": "name" },
@@ -38,5 +40,12 @@ $("#list-table").dataTable({
         { "data": "job_name" },
         { "data": "dept_name" },
         { "data": "staff_type_name" },
+        { "data": "id",
+          "render": function ( data, type, full, meta ) {
+        	  	  console.log(data);
+        	      return '<a href="'+data+'"><i class="am-icon-edit am-icon-md"></i></a>';
+          }
+        },
+
     ]
 } );

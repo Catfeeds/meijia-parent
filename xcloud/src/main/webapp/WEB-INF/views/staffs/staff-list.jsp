@@ -12,9 +12,7 @@
 <!--css for this page-->
 
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
-	rel="stylesheet">
-
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
 
 </head>
 
@@ -63,11 +61,13 @@
 											<option value="50">50</option>
 											<option value="100">100</option></select> 项结果
 									</label> -->
+									
 								</div>
 							</div>
 							<div class="am-u-sm-6">
 								<div id="sorting-chinese_filter" class="dataTables_filter am-datatable-filter">
-									
+									<button type="button" class="am-btn am-btn-success">导入通讯录</button>
+									<button type="button" class="am-btn am-btn-warning">添加员工</button>
 								</div>
 							</div>
 
@@ -85,6 +85,7 @@
 											<th>职位</th>
 											<th>部门</th>
 											<th>员工类型</th>
+											<th>操作</th>
 										</tr>
 									</thead>
 

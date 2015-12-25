@@ -102,14 +102,18 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	public StaffListVo changeToStaffLisVo(XcompanyStaff item) {
 
 		StaffListVo vo = new StaffListVo();
-		
-		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		Long deptId = item.getDeptId();
 		
 		Users users = usersService.selectByPrimaryKey(item.getUserId());
 		
-		Long companyId = item.getCompanyId();
-		Long deptId = item.getDeptId();
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		vo.setId(item.getId());
+		
+		Long companyId = item.getCompanyId();
+
 		
 		vo.setStaffType(item.getStaffType());
 		vo.setStaffTypeName(XcompanyUtil.getStaffTypeName(item.getStaffType()));
