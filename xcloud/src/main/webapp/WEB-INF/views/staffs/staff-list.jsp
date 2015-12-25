@@ -79,13 +79,13 @@
 									aria-describedby="sorting-chinese_info">
 									<thead>
 										<tr>
-											<th>工号</th>
-											<th>姓名</th>
-											<th>手机</th>
-											<th>职位</th>
-											<th>部门</th>
-											<th>员工类型</th>
-											<th>操作</th>
+											<th width="5%">工号</th>
+											<th width="20%">姓名</th>
+											<th width="15%">手机</th>
+											<th width="15%">职位</th>
+											<th width="20%">部门</th>
+											<th width="10%">类型</th>
+											<th width="15%">操作</th>
 										</tr>
 									</thead>
 

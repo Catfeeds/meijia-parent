@@ -44,11 +44,14 @@ public class StaffController extends BaseController {
 	private XCompanyService xCompanyService;
 
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@AuthPassport
 	@RequestMapping(value = "/get-by-dept", method = { RequestMethod.GET })
 	public Map<String, Object> getByDpt(HttpServletRequest request,
 			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "length", required = false, defaultValue = "10") int length
+			) {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("recordsTotal", 0);
@@ -67,7 +70,7 @@ public class StaffController extends BaseController {
 			searchVo.setDeptId(deptId);
 		}
 		
-		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, length);
 
 		List<StaffListVo> list = plist.getList();
 		

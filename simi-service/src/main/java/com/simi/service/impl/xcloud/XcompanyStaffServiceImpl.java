@@ -32,12 +32,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 	@Autowired
 	UsersService usersService;
-	
+
 	@Override
 	public XcompanyStaff initXcompanyStaff() {
-		
+
 		XcompanyStaff record = new XcompanyStaff();
-		
+
 		record.setId(0L);
 		record.setUserId(0L);
 		record.setCompanyId(0L);
@@ -47,15 +47,15 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		record.setTelExt("");
 		record.setCompanyEmail("");
 		record.setCompanyFax("");
-		record.setStaffType((short)0L);
+		record.setStaffType((short) 0L);
 		record.setJobName("");
 		record.setJobNumber("0001");
 		record.setJoinDate(new Date());
 		record.setRegularDate(new Date());
-		
+
 		return record;
 	}
-	
+
 	@Override
 	public PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize) {
 
@@ -68,11 +68,11 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 				StaffListVo vo = changeToStaffLisVo(item);
 				list.set(i, vo);
 			}
-	}	
+		}
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
-	
+
 	@Override
 	public List<XcompanyStaff> selectBySearchVo(Long companyId, Long deptId) {
 
@@ -85,12 +85,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		return xCompanyStaffMapper.selectByCompanyIdAndDeptId(companyId, deptId);
 	}
-	
+
 	@Override
 	public XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId) {
 
 		return xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
-	}	
+	}
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -103,18 +103,17 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		StaffListVo vo = new StaffListVo();
 		Long deptId = item.getDeptId();
-		
+
 		Users users = usersService.selectByPrimaryKey(item.getUserId());
-		
+
 		BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
-		
+
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-		
+
 		vo.setId(item.getId());
-		
+
 		Long companyId = item.getCompanyId();
 
-		
 		vo.setStaffType(item.getStaffType());
 		vo.setStaffTypeName(XcompanyUtil.getStaffTypeName(item.getStaffType()));
 		// 部门名称
@@ -129,47 +128,45 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 	@Override
 	public List<XcompanyStaff> selectByCompanyId(Long companyId) {
-		
+
 		return xCompanyStaffMapper.selectByCompanyId(companyId);
 	}
 
 	@Override
 	public int insertSelective(XcompanyStaff xcompanyStaff) {
 
-	    return xCompanyStaffMapper.insertSelective(xcompanyStaff);
+		return xCompanyStaffMapper.insertSelective(xcompanyStaff);
 	}
 
 	@Override
 	public XcompanyStaff selectByPrimarykey(Long id) {
 
 		return xCompanyStaffMapper.selectByPrimaryKey(id);
-		
+
 	}
 
 	@Override
 	public List<XcompanyStaff> selectByUserId(Long userId) {
-		
+
 		return xCompanyStaffMapper.selectByUserId(userId);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(XcompanyStaff xcompanyStaff) {
-		
+
 		return xCompanyStaffMapper.updateByPrimaryKeySelective(xcompanyStaff);
 	}
-	
-	//获得最大的员工编号
+
+	// 获得最大的员工编号
 	@Override
 	public String getMaxJobNumber(Long companyId) {
-		
+
 		String jobNumber = "0001";
-		String maxJobNumber =  xCompanyStaffMapper.getMaxJobNumber(companyId);
+		String maxJobNumber = xCompanyStaffMapper.getMaxJobNumber(companyId);
 		if (StringUtil.isEmpty(maxJobNumber)) {
 			maxJobNumber = maxJobNumber + 1;
 		}
 		return jobNumber;
-	}	
-
-	
+	}
 
 }
