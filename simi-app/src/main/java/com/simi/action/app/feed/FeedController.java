@@ -111,6 +111,8 @@ public class FeedController extends BaseController {
 
 			}
 		}
+		
+		result.setData(fid);
 
 		return result;
 	}
