@@ -114,6 +114,77 @@ public class FeedController extends BaseController {
 
 		return result;
 	}
+	
+	
+	// 动态图片上传接口
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "post_feed_imgs", method = RequestMethod.POST)
+	public AppResultData<Object> postFeedImg(
+			@RequestParam("fid") Long fid, @RequestParam("user_id") Long userId,
+			@RequestParam("feed_imgs") MultipartFile[] feedImgs
+		) throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		Feeds record = feedService.selectByPrimaryKey(fid);
+		
+		if (record == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("动态不存在");
+			return result;
+		}
+		
+		if (!userId.equals(record.getUserId())) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("只能修改自己发布的动态");
+			return result;
+		}
+		
+		// 处理图片问题
+
+		if (feedImgs != null && feedImgs.length > 0) {
+
+			for (int i = 0; i < feedImgs.length; i++) {
+				String url = Constants.IMG_SERVER_HOST + "/upload/";
+				String fileName = feedImgs[i].getOriginalFilename();
+				String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+				fileType = fileType.toLowerCase();
+				String sendResult = ImgServerUtil.sendPostBytes(url, feedImgs[i].getBytes(), fileType);
+
+				ObjectMapper mapper = new ObjectMapper();
+
+				HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+
+				String ret = o.get("ret").toString();
+
+				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+				String imgMiddel = ImgServerUtil.getImgSize(imgUrl, "600", "300");
+				String imgSmall = ImgServerUtil.getImgSize(imgUrl, "300", "300");
+				FeedImgs feedImg = feedImgsService.initFeedImgs();
+				feedImg.setFid(fid);
+				feedImg.setUserId(userId);
+				feedImg.setImgUrl(DwzUtil.dwzApi(imgUrl));
+				feedImg.setImgMiddle(DwzUtil.dwzApi(imgMiddel));
+				feedImg.setImgSmall(DwzUtil.dwzApi(imgSmall));
+
+				feedImgsService.insert(feedImg);
+
+			}
+		}
+
+		return result;
+	}	
 
 	// 卡片点赞接口
 	/**
