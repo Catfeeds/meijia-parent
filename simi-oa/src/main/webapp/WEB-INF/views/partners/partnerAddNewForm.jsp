@@ -81,13 +81,14 @@
 							<input type="button" value="选择服务区域" class="btn btn-primary " class="btn btn-primary " data-toggle="modal"
 									data-target="#region">
 								
+							
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-2 control-label">服务类别&nbsp;*</label>
 							<div class="col-md-5">
-							<input type="button" value="选择服务类别" id="partnerType"class="btn btn-primary " data-toggle="modal"
+							<input type="button" value="选择服务类别" id="partnerType" class="btn btn-primary " data-toggle="modal"
 								data-target="#myModal">
 							
 							<p class="help-block"></p>
@@ -475,7 +476,10 @@
 								<div class="col-md-8 ">
 											&nbsp;&nbsp;&nbsp;&nbsp;
 									<c:forEach items="${dictReigionList}" var="items">
+									<%-- item:<input value="${item.cityId}"/>
+										items:<input value="${items.cityId}"/> --%>
 										<c:if test="${item.cityId ==items.cityId }">
+										
 											<input type="hidden" value="${items.name}"/>
 											<input name ="regionId" type="checkbox" value="${items.regionId}">${items.name}
 										<input type="hidden" value="${items.cityId}"/>
