@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
 import com.github.pagehelper.PageInfo;
+import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.StaffListVo;
@@ -43,6 +47,8 @@ public class StaffController extends BaseController {
 	@Autowired
 	private XCompanyService xCompanyService;
 
+	@Autowired
+	private XcompanyDeptService xcompanyDeptService;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@AuthPassport
@@ -90,13 +96,6 @@ public class StaffController extends BaseController {
 			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
-		/*model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
-*/
-		/*int pageNo = ServletRequestUtils.getIntParameter(request,
-				Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);*/
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 		// 获取登录的用户
@@ -109,18 +108,9 @@ public class StaffController extends BaseController {
 		model.addAttribute("companyName", accountAuth.getCompanyName());
 		model.addAttribute("shortName", accountAuth.getShortName());
 		
-		
-		UserCompanySearchVo searchVo = new UserCompanySearchVo();
-		searchVo.setCompanyId(companyId);
-		
-		if (deptId > 0L) {
-			searchVo.setDeptId(deptId);
-		}
-		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		List<XcompanyDept> deptList = xcompanyDeptService.selectByXcompanyId(companyId);
 
-		model.addAttribute("contentModel", plist);
-		
-
+		model.addAttribute("deptList", deptList);
 	//	result.setData(plist);
 		return "/staffs/staff-list";
 		//return result;
@@ -260,6 +250,32 @@ public class StaffController extends BaseController {
 			}
 		}
 		return path;
+	}
+	
+	@RequestMapping(value = "/change-dept", method = RequestMethod.POST)
+	public AppResultData<Object> changeDept(HttpServletRequest request,
+			@RequestParam("company_id") Long companyId,
+			@RequestParam("select_staff_ids") String selectStaffIds,
+			@RequestParam("select_dept_id") Long deptId
+			) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, null);
+		
+		if (StringUtil.isEmpty(selectStaffIds)) return result;
+		
+		String[] staffAry = StringUtil.convertStrToArray(selectStaffIds);
+		
+		for (int i = 0; i < staffAry.length; i++) {
+			String staffId = staffAry[i];
+			if (StringUtil.isEmpty(staffId)) continue;
+
+			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByPrimarykey(Long.valueOf(staffId));
+			if (xcompanyStaff == null) continue;
+			
+			xcompanyStaff.setDeptId(deptId);
+			xcompanyStaffService.updateByPrimaryKeySelective(xcompanyStaff);
+		}
+		
+		return result;
 	}
 
 }

@@ -99,20 +99,59 @@
 			</div>
 			
 			<div class="am-modal am-modal-confirm" tabindex="-1" id="change-dept-modal">
+			
 			<div class="am-modal-dialog">
 				<div class="am-modal-hd">员工分配部门</div>
+				
+				
+				
+				
+				
+				
 				<div class="am-modal-bd">
-			      选择员工:<label id="select_staff_names"></label>
-			      <input type="hidden" id="select_staff_ids" name="select_staff_ids" value=""/>
-			      <input type="text" class="am-modal-prompt-input" name="dept_name_modal" id="dept_name_modal" maxLength="32"/>
+				
+				
+					<form class="am-form">
+		          <div class="am-g am-margin-top">
+		            <div class="am-u-sm-4">
+		              已选择员工:
+		            </div>
+		           
+		            <div class="am-u-sm-8 am-text-left">
+		              <label id="select_staff_names"></label>
+		                <input type="hidden" id="select_staff_ids" name="select_staff_ids" value=""/>
+		            </div>
+		            
+		          </div>
+		
+		          <div class="am-g am-margin-top">
+		            <div class="am-u-sm-4">
+		              分配部门
+		            </div>
+		            <div class="am-u-sm-8">
+		              <select id="dept-id-select">
+					    		<c:forEach items="${deptList}" var="item">
+					    			<option value="${ item.deptId}">${ item.name}</option>
+					    		</c:forEach>
+					    	</select>
+		            </div>
+		          </div>
+		
+		        </form>				
+				
+				
+				
+			      
+			     
+			     
 			    </div>
+				
 				<div class="am-modal-footer">
 					<span class="am-modal-btn" data-am-modal-cancel>取消</span> <span class="am-modal-btn"
 						data-am-modal-confirm>确定</span>
 				</div>
-				<input type="hidden" id="tree_tid_modal" value="0" />
-				<input type="hidden" id="parent_id_modal" value="0" />
 			</div>
+			
 		</div>
 
 		</div>
