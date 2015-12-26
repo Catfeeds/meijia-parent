@@ -53,6 +53,13 @@ public class ConstantMsg {
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
 	
+	//您是用户，不允许注册商品。
+	public static String USERS_NOT_REGIETER_STORE = "您是用户，不允许注册商品！！";
+	
+	//您是秘书，不允许注册商品。
+	public static String SEC_NOT_REGIETER_STORE = "您是秘书，不允许注册商品！！";
+		
+	
 	//公司名称已存在
 	public static String XCOMPANY_NAME_EXIST = "公司名称已存在";
 	

@@ -4,7 +4,29 @@ if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.price = /^\d{4}\.\d{2}$/;
 	$.AMUI.validator.patterns.disPrice = /^\d{4}\.\d{2}$/;
 }
+var userId = getUrlParam("user_id");
+$.ajax({
+	type : "GET",
+	url : appRootUrl + "partner/get_partnerId_by_user_id.json?user_id="+userId,
+	dataType : "json",
+	cache : true,
+	async : false,	
+	success : function(data) {
+	
+		if (data.status == "999") return false;
+		var partnerUsers = data.data;
+		console.log(partnerUsers);
+		var partnerId = partnerUsers.partner_id;
+		console.log(partnerId+"+++++++++++++++++++partnerId");
+		var serviceTypeId = partnerUsers.service_type_id;
+		console.log(serviceTypeId+"))))))))))))))))))serviceTypeId");
+		$("#partner_id").val(partnerId);
+		$("#user_id").val(userId);
+		$("#service_type_id").html(serviceTypeId);
 
+	}
+});
+getUrlParam("parent_id");
 var parentId = getUrlParam("parent_id");
 $("#parent_id").val(parentId);
 $('#partner-form').validator({
@@ -56,11 +78,13 @@ function ajaxFileUpload() {
      var params = {};
     //参数
  	params.user_id = getUrlParam("user_id");
- 	console.log(getUrlParam("user_id")+"ffhgfhgfhghuser_id");
- 	params.partner_id = getUrlParam("partner_id");
- 	console.log(getUrlParam("partner_id")+"partner_id");
- 	params.service_type_id = getUrlParam("service_price_id");
- 	console.log(getUrlParam("service_price_id")+"service_type_id+____________++++++++++++++++++++++++++");
+ //	console.log(getUrlParam("user_id")+"ffhgfhgfhghuser_id");
+ 	//params.partner_id = getUrlParam("partner_id");
+ 	params.partner_id = $('#partner_id').val();
+ 	params.service_type_id = $('#service_type_id').val();
+ 	console.log($('#partner_id').val()+"----------partner_id");
+ 	//params.service_type_id = getUrlParam("service_price_id");
+ 	console.log($('#service_type_id').val()+"service_type_id+____________++++++++++++++++++++++++++");
 
  	params.no = $('#no').val();
  	params.name = $('#name').val();
@@ -86,7 +110,10 @@ function ajaxFileUpload() {
          data: params, //传递参数到服务器
          success: function(data, status){  
             // alert(data);
-             location.href = "store-price-ok.html";
+            // location.href = "store-price-ok.html";
+        	 var userId = getUrlParam("user_id");
+        	 console.log(userId+"ZXCVBMNBVC!@#$%^&*()(*&^%$#@!@#$%!!!!!!!!!!!!!!!!!");
+        	 location.href = "store-price-list.html?user_id="+userId;
          },
          error: function(data, status, e){ 
              alert(e);

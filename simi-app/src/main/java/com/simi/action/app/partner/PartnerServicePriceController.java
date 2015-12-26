@@ -37,6 +37,8 @@ import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
+import com.simi.service.partners.PartnersService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderListVo;
@@ -59,6 +61,12 @@ public class PartnerServicePriceController extends BaseController {
 	@Autowired 
 	private PartnerUserService partnerUserService;
 	
+	@Autowired
+	private PartnersService partnersService;
+	
+	@Autowired
+	private UsersService usersService;
+	
 	/**
 	 * 服务报价列表接口
 	 * @param partnerUserId
@@ -70,15 +78,32 @@ public class PartnerServicePriceController extends BaseController {
 	public AppResultData<Object> list(
 			@RequestParam("user_id") Long userId
 	) {
+		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		Users users = usersService.selectByPrimaryKey(userId);
+			if (users == null) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.PARTNERS_NOT_EXIST_MG);
+				return result;
+			}
+			if (users != null && users.getUserType() == 0) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.USERS_NOT_REGIETER_STORE);
+				return result;
+			}
+			if (users != null && users.getUserType() == 1) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.SEC_NOT_REGIETER_STORE);
+				return result;
+			}
+			
 		PartnerUsers partnerUsers = partnerUserService.selectByUserId(userId);
 		
-		if (partnerUsers == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.PARTNER_NOT_EXIST_MG);
+		/*if (partnerUsers == null) {
 			return result;
-		}
+		}*/
+		
 		Long partnerId = partnerUsers.getPartnerId();
 		Long serviceTypeId = partnerUsers.getServiceTypeId();
 
@@ -88,11 +113,10 @@ public class PartnerServicePriceController extends BaseController {
 		partnerIds.add(0L);
 		partnerIds.add(partnerId);
 		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
-		searchVo.setParentId(serviceTypeId);
+		searchVo.setParentId(0L);
 		searchVo.setViewType((short) 1);
 		searchVo.setPartnerIds(partnerIds);
 		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
-		
 		
 		if (list !=null) {
 		for (int i = 0; i < list.size(); i++) {
@@ -117,6 +141,22 @@ public class PartnerServicePriceController extends BaseController {
 		
 		return result;
 
+	}
+	/**
+	 * 通过userId在关联表里面获得partnerId和serviceTypeId
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "get_partnerId_by_user_id", method = RequestMethod.GET)
+	public AppResultData<Object> getPartnerId(@RequestParam("user_id") Long userId) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		PartnerUsers partnerUsers = partnerUserService.selectByUserId(userId);
+		
+		result.setData(partnerUsers);
+		
+		return result;
 	}
 	/**
 	 * 获取服务价格详情接口
@@ -171,32 +211,33 @@ public class PartnerServicePriceController extends BaseController {
 			
 			PartnerServiceType partnerServiceType = partnerServiceTypeService.initPartnerServiceType();
 			
-			if (serviceTypeId > 0L) {
+			/*if (serviceTypeId > 0L) {
 				partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-			}
+			}*/
 		//	partnerServiceType.setParentId(parentId);
 			partnerServiceType.setName(name);
 			partnerServiceType.setViewType((short) 1);
 			partnerServiceType.setNo(no);
 			partnerServiceType.setPartnerId(partnerId);
-			if (serviceTypeId.equals(0L)) {
+		//	if (serviceTypeId.equals(0L)) {
 				partnerServiceTypeService.insertSelective(partnerServiceType);
 				serviceTypeId = partnerServiceType.getId();
-			} else {
-				partnerServiceTypeService.updateByPrimaryKey(partnerServiceType);
-			}
+		//	} else {
+		//		partnerServiceTypeService.updateByPrimaryKey(partnerServiceType);
+		//	}
 			//先删除后增加
 			PartnerServicePriceDetail record = partnerServicePriceDetailService.initPartnerServicePriceDetail();
-			PartnerUsers partnerUsers = partnerUserService.selectByServiceTypeIdAndPartnerId(serviceTypeId,partnerId);
+			//PartnerUsers partnerUsers = partnerUserService.selectByServiceTypeIdAndPartnerId(serviceTypeId,partnerId);
 			
 			/*if (serviceTypeId > 0L) {
 				record = partnerServicePriceDetailService.selectByServicePriceId(serviceTypeId);
 			}*/
-			if (partnerUsers !=null) {
+		/*	if (partnerUsers !=null) {
 				record.setUserId(partnerUsers.getUserId());
 			}else {
 				record.setUserId(0L);
-			}
+			}*/
+			record.setUserId(userId);
 			record.setServicePriceId(serviceTypeId);
 			record.setServiceTitle(title);
 			

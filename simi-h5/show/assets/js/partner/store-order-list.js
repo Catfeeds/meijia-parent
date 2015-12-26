@@ -16,7 +16,11 @@ function orderGetList (page) {
 		async : false,	
 		success : function(data) {
 			
-			if (data.status == "999") return false;
+			if (data.status == "999")// return false;
+			{
+				myApp.alert(result.msg);
+				return;
+			}
 			var orderListVo = data.data;
 			console.log(orderListVo);
 			var html = $('#order-list-part').html();

@@ -172,9 +172,9 @@ public class PartnersAddNewController extends BaseController{
 			partnerUserIdList.add(partnerUsers.getUserId());
 			
 		}
-		if (partnerUserIdList.size() < 2) {
+		/*if (partnerUserIdList.size() < 2) {
 			return "partners/partnerOrderList";
-		}
+		}*/
 		List<Orders> orderList = orderQueryService.selectByUserIdsListPageList(
 				partnerUserIdList, pageNo, pageSize);
 
