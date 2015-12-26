@@ -1,7 +1,7 @@
 
 
 var partnerUserId = getUrlParam("partner_user_id");
-alert(partnerUserId+"00000000000000000000");
+alert(window.location.href);
 var $partnerListPage = 1;
 
 function orderGetList (page) {
