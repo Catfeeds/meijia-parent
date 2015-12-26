@@ -101,8 +101,8 @@ public class FeedController extends BaseController {
 				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-				String imgMiddel = ImgServerUtil.getImgSize(imgUrl, "600", "300");
-				String imgSmall = ImgServerUtil.getImgSize(imgUrl, "300", "300");
+				String imgMiddel = ImgServerUtil.getImgSize(imgUrl, "600", "600");
+				String imgSmall = ImgServerUtil.getImgSize(imgUrl, "600", "300");
 				FeedImgs feedImg = feedImgsService.initFeedImgs();
 				feedImg.setFid(fid);
 				feedImg.setUserId(userId);
@@ -174,8 +174,8 @@ public class FeedController extends BaseController {
 				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-				String imgMiddel = ImgServerUtil.getImgSize(imgUrl, "600", "300");
-				String imgSmall = ImgServerUtil.getImgSize(imgUrl, "300", "300");
+				String imgMiddel = ImgServerUtil.getImgSize(imgUrl, "600", "600");
+				String imgSmall = ImgServerUtil.getImgSize(imgUrl, "600", "600");
 				FeedImgs feedImg = feedImgsService.initFeedImgs();
 				feedImg.setFid(fid);
 				feedImg.setUserId(userId);
