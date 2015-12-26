@@ -61,46 +61,60 @@
 				<div class="am-tabs-bd">
 
 					<div class="am-tab-panel am-fade am-in am-active" id="tab1">
-						<form:form class="form-horizontal" modelAttribute="contentModel" method="POST" id="staff-form"
-							enctype="multipart/form-data">
 
+						<form:form modelAttribute="contentModel" method="POST" id="staff-form"
+							class="am-form am-container am-padding-xl am-padding-bottom" enctype="multipart/form-data">
+							<form:hidden path="companyId" />
+							<form:hidden path="id" />
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">员工编号:</div>
 								<div class="am-u-sm-8 am-u-md-4">${contentModel.jobNumber }</div>
 								<div class="am-hide-sm-only am-u-md-6"></div>
 							</div>
 
+							<div class="am-g am-margin-top ">
+								<div class="am-u-sm-4 am-u-md-2 am-text-right">手机号码:</div>
+								<div class="am-u-sm-8 am-u-md-4 ">
+									<form:input path="mobile" class="am-form-field am-radius js-pattern-mobile"
+										data-validation-message="" placeholder="手机号" required="required" />
+								</div>
+								<div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
+							</div>
+
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">姓名:</div>
 								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="name" class="am-form-field am-radius" placeholder="" maxLength="64" required="required" />
-								
+									<form:input path="name" class="am-form-field am-radius" placeholder="" maxLength="64"
+										required="required" />
+
 								</div>
 								<div class="am-hide-sm-only am-u-md-6">*必填</div>
 							</div>
 
 							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">手机号码:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="mobile" class="am-form-field am-radius js-pattern-mobile" autocomplete="off"
-									data-validation-message="" placeholder="手机号" required="required" />
-								</div>
-								<div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
-							</div>
-							
-							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">公司邮箱:</div>
 								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="companyEmail" class="am-form-field am-radius" required="required" maxLength="64" />
-								
+									<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email" required="required"
+										maxLength="64" />
+
 								</div>
 								<div class="am-u-sm-12 am-u-md-6">*必填，不可重复</div>
 							</div>
-							
+
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">何时加入公司:</div>
 								<div class="am-u-sm-8 am-u-md-4">
-									
+									<fmt:formatDate var='formattedDate' value='${contentModel.joinDate}' type='both'
+										pattern="yyyy-MM-dd" />
+									<div class="am-input-group am-datepicker-date"
+										data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+										<input type="text" id="joinDate" name="joinDate" value="${formattedDate}" class="am-form-field"
+											placeholder="" readonly> <span class="am-input-group-btn am-datepicker-add-on">
+											<button class="am-btn am-btn-default" type="button">
+												<span class="am-icon-calendar"></span>
+											</button>
+										</span>
+									</div>
 								</div>
 								<div class="am-u-sm-12 am-u-md-6"></div>
 							</div>
@@ -108,39 +122,47 @@
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">职位:</div>
 								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="jobName" class="am-form-field am-radius" placeholder="输入公司全称" maxLength="64" />
-								
+									<form:input path="jobName" class="am-form-field am-radius" placeholder="" maxLength="64" />
+
 								</div>
 								<div class="am-u-sm-12 am-u-md-6"></div>
 							</div>
 
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">所在部门:</div>
-								<div class="am-u-sm-8 am-u-md-4"></div>
+								<div class="am-u-sm-8 am-u-md-4">
+									<form:select path="deptId" class="am-form-field am-radius">
+										<form:options items="${deptList}" itemValue="deptId" itemLabel="name" />
+									</form:select>
+
+								</div>
 								<div class="am-u-sm-12 am-u-md-6"></div>
 							</div>
 
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">员工类型:</div>
-								<div class="am-u-sm-8 am-u-md-4"></div>
+								<div class="am-u-sm-8 am-u-md-4">
+									<form:select path="staffType" class="am-form-field am-radius">
+										<form:option value="0">全职</form:option>
+										<form:option value="1">兼职</form:option>
+										<form:option value="2">实习</form:option>
+									</form:select>
+
+
+								</div>
 								<div class="am-u-sm-12 am-u-md-6"></div>
 							</div>
 
-							</form:form>
-					</div>
-
-
+							<form:errors path="mobile" class="am-alert am-alert-danger center"></form:errors>
 
 				</div>
 			</div>
 
 			<div class="am-margin">
-				<button type="button" class="am-btn am-btn-primary am-btn-xs">提交保存</button>
-				<button type="button" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+				<button type="button" class="am-btn am-btn-danger" id="btn-staff-submit">保存</button>
+				<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 			</div>
-
-
-
+			</form:form>
 		</div>
 
 	</div>
@@ -159,6 +181,7 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
+	<script src="<c:url value='/assets/js/xcloud/common/validate-methods.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/xcloud/staffs/staff-form.js'/>"></script>
 </body>
 </html>

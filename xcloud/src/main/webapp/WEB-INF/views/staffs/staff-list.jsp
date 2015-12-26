@@ -79,11 +79,11 @@
 									aria-describedby="sorting-chinese_info">
 									<thead>
 										<tr>
-											<th width="10%"><input type="checkbox" name="select_all" id="select_all" value="1" /></th>
-											<th width="5%">工号</th>
+											<th width="5%"><input type="checkbox" name="select_all" id="select_all" value="1" /></th>
+											<th width="10%">工号</th>
 											<th width="15%">姓名</th>
 											<th width="15%">手机</th>
-											<th width="10%">职位</th>
+											<th width="15%">职位</th>
 											<th width="15%">部门</th>
 											<th width="10%">类型</th>
 											<th width="15%">操作</th>

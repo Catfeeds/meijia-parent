@@ -9,16 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
 import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
@@ -90,6 +95,45 @@ public class StaffController extends BaseController {
 		return result;
 	}	
 	
+	@AuthPassport
+	@RequestMapping(value = "/get-by-mobile", method = { RequestMethod.GET })
+	public AppResultData<Object> getByMobile(HttpServletRequest request,
+			@RequestParam(value = "mobile", required = false, defaultValue = "") String mobile
+			) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (StringUtil.isEmpty(mobile)) return result;
+		
+		Users u = usersService.selectByMobile(mobile);
+		
+		if (u == null) return result;
+		
+		Long userId = u.getId();
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long companyId = accountAuth.getCompanyId();
+		
+		XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+		
+		if (xcompanyStaff == null) {
+			xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
+		}
+		
+		StaffListVo vo = new StaffListVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+		//注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
+		vo.setId(xcompanyStaff.getId());
+		result.setData(vo);
+		
+		return result;
+	}
+	
 	
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
@@ -116,136 +160,142 @@ public class StaffController extends BaseController {
 		return "/staffs/staff-list";
 		//return result;
 	}
-
+	
+	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
 	public String staffUserForm(Model model, HttpServletRequest request,
 			@RequestParam(value = "staff_id", required = false) Long staffId) {
-
 		
-		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
-		StaffListVo vo = new StaffListVo();
-		
-		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
-		
-		Users u = usersService.initUsers();
 		
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-
+		
 		Long companyId = accountAuth.getCompanyId();
 		
-		Long userId = 0L;
 		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
 		
-		String jobNumber = xcompanyStaffService.getMaxJobNumber(companyId);
-		vo.setJobNumber(jobNumber);
-		
-		if (staffId > 0L) {
-
-			xcompanyStaff = xcompanyStaffService.selectByPrimarykey(staffId);
+		if (!model.containsAttribute("contentModel")) {
+		  
+			XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
+			StaffListVo vo = new StaffListVo();
 			
-			userId = xcompanyStaff.getUserId();
-			
-			u = usersService.selectByPrimaryKey(userId);
-
 			BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+			
+			Users u = usersService.initUsers();
 
-			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+			Long userId = 0L;
 
+			String jobNumber = xcompanyStaffService.getMaxJobNumber(companyId);
+			vo.setJobNumber(jobNumber);
+			
+			if (staffId > 0L) {
+	
+				xcompanyStaff = xcompanyStaffService.selectByPrimarykey(staffId);
+				
+				userId = xcompanyStaff.getUserId();
+				
+				u = usersService.selectByPrimaryKey(userId);
+	
+				BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+	
+				BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+				
+				
+	
+			}
+			//注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
+			vo.setId(xcompanyStaff.getId());
+			vo.setCompanyId(companyId);
+			
+			model.addAttribute("contentModel", vo);
 		}
 		
-		vo.setCompanyId(companyId);
-		
-		model.addAttribute("contentModel", vo);
 		model.addAttribute("xCompany", xCompany);
+		
+		List<XcompanyDept> deptList = xcompanyDeptService.selectByXcompanyId(companyId);
+
+		model.addAttribute("deptList", deptList);
+		
 		return "/staffs/staff-form";
 	}
 
 	/**
-	 * 新增员工提交
-	 * 
-	 * @param request
-	 * @param name
-	 * @param idCard
-	 * @param companyEmail
-	 * @param companyName
-	 * @param companyFax
-	 * @param tel
-	 * @param staffType
-	 * @param jobNumber
-	 * @param deptId
-	 * @param jobName
-	 * @return
+	 * 员工修改
 	 */
-	@RequestMapping(value = "/postUserForm", method = RequestMethod.POST)
+	@AuthPassport
+	@RequestMapping(value = "/staff-form", method = RequestMethod.POST)
 	public String saveUserForm(HttpServletRequest request,
-			@RequestParam("company_id") Long companyId,
-			@RequestParam("name") String name,
-			@RequestParam("idCard") String idCard,
-			@RequestParam("companyEmail") String companyEmail,
-			@RequestParam("companyName") String companyName,
-			@RequestParam("companyFax") String companyFax,
-			@RequestParam("tel") String tel,
-			@RequestParam("telExt") String telExt,
-			@RequestParam("cityId") Long cityId,
-			@RequestParam("staffType") short staffType,
-			@RequestParam("jobNumber") String jobNumber,
-			@RequestParam("deptId") Long deptId,
-			@RequestParam("jobName") String jobName,
-			@RequestParam(value = "id", required = false,defaultValue = "0") Long userId) {
+			 Model model, @ModelAttribute("contentModel") StaffListVo vo, BindingResult result) {
 
-		// Long id = Long.valueOf(request.getParameter("id"));
-
-		 Xcompany xcompany = xCompanyService.selectByCompanyName(companyName);
-		 if (userId > 0L) {
-			Users users = usersService.selectByPrimaryKey(userId);
-			users.setName(name);
-			users.setIdCard(idCard);
-			usersService.updateByPrimaryKeySelective(users);
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = vo.getCompanyId();
+		
+		Long staffId = 0L;
+		if (vo.getId() != null)
+			staffId = vo.getId();
+		
+		String mobile = vo.getMobile();
+		String name = vo.getName();
+		
+		if (StringUtil.isEmpty(mobile) || StringUtil.isEmpty(name)) {
+        	result.addError(new FieldError("contentModel","mobile","手机号或姓名不能为空"));
+        	return staffUserForm(model, request, staffId);
+		}
+		
+		Users u = usersService.selectByMobile(mobile);
+		Long userId = 0L;
+		// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+		if (u == null) {
+			u = usersService.genUser(mobile, vo.getName(), Constants.User_XCOULD);
 			
-			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
-			if (xcompany != null) {
-			xcompanyStaff.setCompanyId(xcompany.getCompanyId());
-			xcompanyStaff.setUserId(users.getId());
-			xcompanyStaff.setDeptId(deptId);
-			xcompanyStaff.setTel(tel);
-			xcompanyStaff.setTelExt(telExt);
-			xcompanyStaff.setCityId(cityId);
-			xcompanyStaff.setCompanyEmail(companyEmail);
-			xcompanyStaff.setCompanyFax(companyFax);
-			xcompanyStaff.setStaffType(staffType);
-			xcompanyStaff.setJobNumber(jobNumber);
-			xcompanyStaff.setJobName(jobName);
-			xcompanyStaffService.updateByPrimaryKeySelective(xcompanyStaff);
-			
+		}
+		userId = u.getId();
+		if (!u.getName().equals(vo.getName())) {
+			u.setName(name);
+			usersService.updateByPrimaryKeySelective(u);
+		}
+		
+		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
+		
+		//新增要判断员工是否重复
+		if (staffId.equals(0L)) {
+			XcompanyStaff xcompanyStaffExist = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+			if (xcompanyStaffExist != null) {
+				result.addError(new FieldError("contentModel","mobile","该用户已经为贵司员工,不需要重复添加."));
+	        	return staffUserForm(model, request, staffId);
 			}
-		}else {
-			
-		Users users = usersService.initUsers();
-		users.setName(name);
-		users.setIdCard(idCard);
-		usersService.insertSelective(users);
-
-		if (xcompany != null) {
-			XcompanyStaff xcompanyStaff = xcompanyStaffService
-					.initXcompanyStaff();
-			xcompanyStaff.setCompanyId(xcompany.getCompanyId());
-			xcompanyStaff.setUserId(users.getId());
-			xcompanyStaff.setDeptId(deptId);
-			xcompanyStaff.setTel(tel);
-			xcompanyStaff.setTelExt(telExt);
-			xcompanyStaff.setCityId(cityId);
-			xcompanyStaff.setCompanyEmail(companyEmail);
-			xcompanyStaff.setCompanyFax(companyFax);
-			xcompanyStaff.setStaffType(staffType);
-			xcompanyStaff.setJobNumber(jobNumber);
-			xcompanyStaff.setJobName(jobName);
-
+		}
+		
+		if (staffId > 0L) {
+			xcompanyStaff = xcompanyStaffService.selectByPrimarykey(staffId);
+		}
+		xcompanyStaff.setId(staffId);
+		xcompanyStaff.setCompanyId(companyId);
+		xcompanyStaff.setUserId(userId);
+		xcompanyStaff.setCompanyEmail(vo.getCompanyEmail());
+		
+		String joinDate = request.getParameter("joinDate");
+		xcompanyStaff.setJoinDate(DateUtil.parse(joinDate));
+		
+		xcompanyStaff.setJobName(vo.getJobName());
+		xcompanyStaff.setDeptId(vo.getDeptId());
+		xcompanyStaff.setStaffType(vo.getStaffType());
+		
+		if (staffId > 0L) {
+			xcompanyStaffService.updateByPrimaryKeySelective(xcompanyStaff);
+		} else {
+			xcompanyStaff.setJobNumber(xcompanyStaffService.getMaxJobNumber(companyId));
 			xcompanyStaffService.insertSelective(xcompanyStaff);
-		}}
+		}
+		
+		//todo 给相应的用户进行通知
+		
 		return "redirect:list";
 	}
-
+	
+	@AuthPassport
 	@RequestMapping(value = "/deleteById", method = { RequestMethod.GET })
 	public String deleteByRechargeCouponId(@RequestParam(value = "id") Long id) {
 

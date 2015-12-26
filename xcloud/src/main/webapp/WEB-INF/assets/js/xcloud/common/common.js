@@ -31,6 +31,7 @@ var appRootUrl = "http://" + host + "/" + appName + "/app/";
 	if ($.AMUI && $.AMUI.validator) {
 		$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
 		$.AMUI.validator.patterns.sms_token = /^\d{4}$/;
+		$.AMUI.validator.patterns.email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 
 	}
 })(jQuery);
@@ -42,3 +43,8 @@ var appRootUrl = "http://" + host + "/" + appName + "/app/";
 //		xhr.setRequestHeader("X-CSRFToken", csrftoken);
 //	},
 //});
+
+
+$("#btn-return").on('click', function(e) {
+	history.go(-1);
+});

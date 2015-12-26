@@ -39,8 +39,8 @@ public class LoginController extends BaseController {
     public String login(Model model){
 		if(!model.containsAttribute("contentModel")) {
 			LoginVo vo = new LoginVo();
-			vo.setUsername("13810002890");
-			vo.setPassword("000000");
+//			vo.setUsername("13810002890");
+//			vo.setPassword("000000");
 			model.addAttribute("contentModel", vo);
 		}
             
