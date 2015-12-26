@@ -50,7 +50,9 @@ public class FeedController extends BaseController {
 	// 动态添加接口
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_feed", method = RequestMethod.POST)
-	public AppResultData<Object> postFeed(@RequestParam("title") String title, @RequestParam("user_id") Long userId,
+	public AppResultData<Object> postFeed(
+			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "title", required = false, defaultValue = "") String title, 
 			@RequestParam(value = "feed_imgs", required = false) MultipartFile[] feedImgs, 
 			@RequestParam(value = "lat", required = false, defaultValue = "") String lat,
 			@RequestParam(value = "lng", required = false, defaultValue = "") String lng,
