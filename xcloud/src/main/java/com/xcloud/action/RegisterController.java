@@ -34,10 +34,12 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
+import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
+import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 
 @Controller
@@ -55,6 +57,9 @@ public class RegisterController extends BaseController {
 	
 	@Autowired
 	private XcompanyDeptService xCompanyDeptService;
+	
+	@Autowired
+	private XcompanyStaffService xCompanyStaffService;
 	
 	@RequestMapping(value="/register", method = {RequestMethod.GET})
     public String register(Model model) {
@@ -86,6 +91,23 @@ public class RegisterController extends BaseController {
 			return register(model);
 		}
 		
+		//然后判断用户是否已经存在，不存在则添加新用户
+		Users u = usersService.selectByMobile(mobile);
+		
+		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+			u = usersService.genUser(mobile, "", Constants.User_XCOULD);
+		}
+		Long userId = u.getId();
+		
+		String companyName = xCompanyVo.getCompanyName().trim();
+		//验证公司与用户是否已经存在
+		Xcompany xCompanyExist = xCompanyService.selectByCompanyNameAndUserName(companyName, mobile);
+		
+		if (xCompanyExist != null) {
+			result.addError(new FieldError("contentModel","userName","您已经注册过此公司."));
+//			model.addAttribute("contentModel", xCompanyVo);
+			return register(model);
+		}
 		
 		//获得注册的form信息
 		Long companyId = xCompanyVo.getCompanyId();
@@ -154,12 +176,7 @@ public class RegisterController extends BaseController {
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		}
 		
-		//然后判断用户是否已经存在，不存在则添加新用户
-		Users u = usersService.selectByMobile(mobile);
 		
-		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = usersService.genUser(mobile, "", Constants.User_XCOULD);
-		}
 		
 		//公司部门预置信息.
 		List<String> defaultDepts = MeijiaUtil.getDefaultDept();
@@ -170,6 +187,24 @@ public class RegisterController extends BaseController {
 			dept.setParentId(0L);
 			xCompanyDeptService.insert(dept);
 		}
+		
+		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
+		Long deptId = 0L;
+		if (defaultDept != null) {
+			deptId = defaultDept.getDeptId();
+		}
+		
+		
+		//将用户加入公司员工中
+		XcompanyStaff record = xCompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+		if (record == null) {
+			record = xCompanyStaffService.initXcompanyStaff();
+		}
+		record.setUserId(userId);
+		record.setCompanyId(companyId);
+		record.setDeptId(deptId);
+		record.setJobNumber(xCompanyStaffService.getMaxJobNumber(companyId));
+		xCompanyStaffService.insertSelective(record);
 		
 		return "redirect:/register-ok";
     }	

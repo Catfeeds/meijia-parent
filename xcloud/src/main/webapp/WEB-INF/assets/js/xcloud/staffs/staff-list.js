@@ -44,7 +44,8 @@ $("#list-table").dataTable({
         { "data": "id",
           "render": function ( data, type, full, meta ) {
 
-        	      return '<a href="/xcloud/staff/staff-form?staff_id='+data+'"><i class="am-icon-edit am-icon-md"></i></a>';
+		    return '<a href="/xcloud/staff/staff-form?staff_id=' + data + '"><i class="am-icon-edit am-icon-md"></i></a> ' 
+		    + '<a href="#" onclick="staffDel('+ data + ')"><i class="am-icon-remove am-icon-md"></i></a>';
           }
         },
 
@@ -139,4 +140,36 @@ $('#change-dept-modal').on('close.modal.amui', function(e) {
 //添加员工
 $("#btn-staff-add").click(function() {
 	location.href = "/xcloud/staff/staff-form?staff_id=0";
+});
+
+//删除员工
+function staffDel(staffId) {
+	 if(confirm("确定要删除员工吗")){
+		 $.ajax({
+		       type : "post",
+		       url : "/xcloud/staff/del.json?staff_id="+staffId,
+//		       data : params,
+		       dataType : "json",
+		       async : false,
+		       success : function(rdata, textStatus) {
+		          if (rdata.status == "999") {
+		       	   		alert(rdata.msg);
+		       	   		return true;
+		          }
+		          
+		          if (rdata.status == "0") {
+		        	  TreeNodeClick();
+		          }
+		       },
+		       error : function(XMLHttpRequest, textStatus, errorThrown) {
+		           
+		       },
+		       
+		   });   
+	 }
+}
+
+//批量导入员工
+$("#btn-staff-import").click(function() {
+	location.href = "/xcloud/staff/staff-import";
 });

@@ -162,9 +162,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	public String getMaxJobNumber(Long companyId) {
 
 		String maxJobNumber = "0001";
-		maxJobNumber = xCompanyStaffMapper.getMaxJobNumber(companyId);
-		if (!StringUtil.isEmpty(maxJobNumber)) {
-			int num = Integer.parseInt(maxJobNumber) + 1;
+		String curJobNumber = xCompanyStaffMapper.getMaxJobNumber(companyId);
+		if (!StringUtil.isEmpty(curJobNumber)) {
+			int num = Integer.parseInt(curJobNumber) + 1;
 			maxJobNumber = String.format("%04d", num);
 		}
 		return maxJobNumber;

@@ -23,7 +23,6 @@ import com.simi.vo.AppResultData;
 import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
@@ -296,19 +295,22 @@ public class StaffController extends BaseController {
 	}
 	
 	@AuthPassport
-	@RequestMapping(value = "/deleteById", method = { RequestMethod.GET })
-	public String deleteByRechargeCouponId(@RequestParam(value = "id") Long id) {
-
-		String path = "redirect:list";
-		if (id != null) {
-			int result = xcompanyStaffService.deleteByPrimaryKey(id);
-			if (result > 0) {
-				path = "redirect:list";
-			} else {
-				path = "error";
+	@RequestMapping(value = "/del", method = { RequestMethod.POST })
+	public AppResultData<Object> deleteByRechargeCouponId(HttpServletRequest request,
+			@RequestParam(value = "staff_id") Long staffId) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		if (staffId != null) {
+			
+			// 获取登录的用户
+			AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+			XcompanyStaff vo = xcompanyStaffService.selectByPrimarykey(staffId);
+			Long companyId = accountAuth.getCompanyId();			
+			if (vo.getCompanyId().equals(companyId)) {
+				xcompanyStaffService.deleteByPrimaryKey(staffId);
 			}
 		}
-		return path;
+		return result;
 	}
 	
 	@RequestMapping(value = "/change-dept", method = RequestMethod.POST)
@@ -336,5 +338,21 @@ public class StaffController extends BaseController {
 		
 		return result;
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/staff-import", method = { RequestMethod.GET })
+	public String staffImport(Model model, HttpServletRequest request) {
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);		
+		
+		model.addAttribute("xCompany", xCompany);
+		
+		return "/staffs/staff-import";
+	}	
 
 }
