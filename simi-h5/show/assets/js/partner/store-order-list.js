@@ -1,7 +1,7 @@
 
 
 var partnerUserId = getUrlParam("partner_user_id");
-
+alert(partnerUserId+"00000000000000000000");
 var $partnerListPage = 1;
 
 function orderGetList (page) {
@@ -25,7 +25,7 @@ function orderGetList (page) {
 			console.log(orderListVo);
 			var html = $('#order-list-part').html();
 			//var resultHtml = '';
-
+            
 			var partnerServiceTypeHtml = "";
 			for(var i=0 ; i < orderListVo.length; i++){
 				
