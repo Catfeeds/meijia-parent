@@ -83,8 +83,8 @@
 											<th width="10%">工号</th>
 											<th width="15%">姓名</th>
 											<th width="15%">手机</th>
-											<th width="15%">职位</th>
 											<th width="15%">部门</th>
+											<th width="15%">职位</th>
 											<th width="10%">类型</th>
 											<th width="15%">操作</th>
 										</tr>

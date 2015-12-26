@@ -38,8 +38,8 @@ $("#list-table").dataTable({
         { "data": "job_number" },
         { "data": "name" },
         { "data": "mobile" },
-        { "data": "job_name" },
         { "data": "dept_name" },
+        { "data": "job_name" },
         { "data": "staff_type_name" },
         { "data": "id",
           "render": function ( data, type, full, meta ) {
