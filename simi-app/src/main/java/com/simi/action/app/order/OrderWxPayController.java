@@ -116,7 +116,7 @@ public class OrderWxPayController extends BaseController {
 			wxPay = orderPayNow.toString();
 			
 			//测试一分钱
-			wxPay = "1";
+//			wxPay = "1";
 			body = "订单号:"+orderNo;
 		}
 		
