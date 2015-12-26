@@ -1,6 +1,6 @@
 
 
-var partnerUserId = getUrlParam("partner_user_id");
+var partnerUserId = getUrlParam("user_id");
 alert(window.location.href);
 var $partnerListPage = 1;
 
