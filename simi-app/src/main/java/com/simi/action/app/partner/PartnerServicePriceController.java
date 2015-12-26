@@ -214,7 +214,7 @@ public class PartnerServicePriceController extends BaseController {
 			/*if (serviceTypeId > 0L) {
 				partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 			}*/
-		//	partnerServiceType.setParentId(parentId);
+			partnerServiceType.setParentId(serviceTypeId);
 			partnerServiceType.setName(name);
 			partnerServiceType.setViewType((short) 1);
 			partnerServiceType.setNo(no);
