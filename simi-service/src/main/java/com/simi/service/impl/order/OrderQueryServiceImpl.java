@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -513,6 +515,21 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setOrderPay(new BigDecimal(0));
 		
 		return vo;
-	}	
+	}
+ /*   public int getStudentCount(List<String> studentNameList){  
+        //把参数手动封装在Map中  
+        Map<String, Object> map = new HashMap<String, Object>();  
+        map.put("studentNameList", studentNameList);  
+        return super.count("getStudentCount", map);  
+    } */ 
+	@Override
+	public List<Orders> selectByUserIdsListPageList(
+			List<Long> partnerUserIdList, int pageNo, int pageSize) {
+		
+		 PageHelper.startPage(pageNo, pageSize);
+         List<Orders> list = ordersMapper.selectIdsByListPage(partnerUserIdList);
+         return list;
+ 
+}	
 
 }

@@ -35,5 +35,7 @@ public interface OrdersMapper {
 	List<Orders> selectByorder1Hour();
 
 	int statTotalOrder(ChartSearchVo chartSearchVo);
+
+	List<Orders> selectIdsByListPage(List<Long> partnerUserIdList);
 	
 }

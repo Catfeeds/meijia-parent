@@ -77,6 +77,8 @@ public class OrdersController extends AdminController {
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		searchVo.setUserId(userId);
+		
+		
 		// 分页
 		PageHelper.startPage(pageNo, pageSize);
 

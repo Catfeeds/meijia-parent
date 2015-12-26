@@ -114,27 +114,22 @@
 								</form:select>
 							</div>
 						</div>
+			<div class="am-form-group">
+				<label for="doc-select-1">服务响应时间 </label>
+				<select id="responseTime" name="responseTime"  class="am-form-field">
+					<option value="" label="请选择服务响应时间"/>  
+					<option value="0" label="半个小时内响应"/>  
+					<option value="1" label="一个小时内响应"/>  
+					<option value="2" label="2个小时内响应"/>  
+				</select> <span class="am-form-caret"></span>
+			</div>
 
-						<div class="form-group">
-							<label class="col-md-2 control-label">服务响应时间 </label>
-							<div class=col-md-5>
-								<form:select path="responseTime" class="form-control">
-								<form:option value="" label="请选择服务响应时间"/>  
-								<form:option value="0" label="半个小时内响应"/>  
-								<form:option value="1" label="一个小时内响应"/>  
-								<form:option value="2" label="2个小时内响应"/>  
-								</form:select>
-							</div>
-						</div>
-
-
-							<div class="form-group">
-								<label class="col-md-2 control-label">个人简介</label>
-								<div class="col-md-5">
-									<form:textarea path="introduction" class="form-control" placeholder="个人简介" />
-								</div>
-								
-							</div>
+			<div class="am-form-group">
+				<label class="col-md-2 control-label">个人简介</label>
+					<div class="col-md-5">
+						<form:textarea path="introduction" class="form-control" placeholder="个人简介" />
+				</div>
+			</div>
 							
 							<div class="form-group required">
 								<label class="col-md-2 control-label">标签</label>

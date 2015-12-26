@@ -16,10 +16,15 @@ function orderGetList () {
 			
 			if (data.status == "999") return false;
 			var partnerServicePriceDetailVo = data.data;
+			//console.log("^^&&&&&&&&&&&&&&***********");
 			console.log(partnerServicePriceDetailVo);
+			//console.log(partnerServicePriceDetailVo[0].partner_id);
 			var html = $('#store-price-list-part').html();
-			//var resultHtml = '';
-
+			
+			//给新增按钮的href赋值
+            $("#hrefAdd").attr("href","store-price-form.html?partner_id="+partnerServicePriceDetailVo[0].partner_id+"&service_price_id="+partnerServicePriceDetailVo[0].service_price_id
+						+"&user_id="+partnerServicePriceDetailVo[0].user_id);
+            
 			var partnerServiceTypeHtml = "";
 			for(var i=0 ; i < partnerServicePriceDetailVo.length; i++){
 				
@@ -33,6 +38,8 @@ function orderGetList () {
 				htmlPart = htmlPart.replace('{partnerId}',partnerServicePriceDetailVo[i].partner_id);
 				htmlPart = htmlPart.replace('{serviceTypeId}',partnerServicePriceDetailVo[i].service_price_id);
 				htmlPart = htmlPart.replace('{userId}',partnerServicePriceDetailVo[i].user_id);
+				console.log(partnerServicePriceDetailVo[i].user_id+"~~~~~~~~~~~~~~~~~~~");
+				
 				
 				
 				/*htmlPart = htmlPart.replace('{partnerUserHeadImg}', partnerUserHeadImg);
@@ -45,16 +52,18 @@ function orderGetList () {
 				htmlPart = htmlPart.replace('{addTimeStr}',orderListVo[i].add_time_str);
 				htmlPart = htmlPart.replace('{orderMoney}',orderListVo[i].order_money);*/
 			//	partner_id  service_type_id  user_id  传递的三个参数
-				//htmlPart = "<a href=\"store-order-detail.html?partner_user_id="+orderListVo[i].partner_user_id+"&order_id="+orderListVo[i].order_id+"\"> " + htmlPart + "</a>";
+			//	htmlPart = "<a href=\"store-order-detail.html?partner_user_id="+orderListVo[i].partner_user_id+"&order_id="+orderListVo[i].order_id+"\"> " + htmlPart + "</a>";
 				
 				partnerServiceTypeHtml += htmlPart;
+			//	ahrefHtml += arefPart;
 				//console.log("0001000000000000000");
 				//console.log(htmlPart);
 				//console.log("111111111111111111");
 			
 			}	
 			$("#scroller").append(partnerServiceTypeHtml);
-			
+			//$("#hrefScroller").append(partnerServiceTypeHtml);
+			//$("#buttonScroller").append(partnerServiceTypeHtml);
 			//如果第一页并且返回数据等于10条，则可以显示加载更多按钮
 			/*if (page == 1 && orderListVo.length >= 10) {
 				$("#btn-get-more").css('display','block'); 
@@ -82,5 +91,11 @@ function clickJieDanList (partnerUserId) {
 	console.log(partnerUserId.partnerUserId);
 };
 
+/*function doTest(){
 
+    var value = $("input[name='dizhi'][type='radio']:checked").val();//获得选中项的值
+
+    $('#a1').attr('href','shoppeisong.php?addid='+value+'');
+
+    }*/
 

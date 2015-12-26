@@ -59,8 +59,8 @@ function ajaxFileUpload() {
  	console.log(getUrlParam("user_id")+"ffhgfhgfhghuser_id");
  	params.partner_id = getUrlParam("partner_id");
  	console.log(getUrlParam("partner_id")+"partner_id");
- 	params.service_type_id = getUrlParam("service_type_id");
- 	console.log(getUrlParam("service_type_id")+"service_type_id");
+ 	params.service_type_id = getUrlParam("service_price_id");
+ 	console.log(getUrlParam("service_price_id")+"service_type_id+____________++++++++++++++++++++++++++");
 
  	params.no = $('#no').val();
  	params.name = $('#name').val();

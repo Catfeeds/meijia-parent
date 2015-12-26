@@ -31,7 +31,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 
 
+
+
+
+
+
+import com.alibaba.druid.support.logging.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
@@ -51,20 +58,26 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
+import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerLinkMan;
 import com.simi.po.model.partners.PartnerRefCity;
 import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.RegionService;
+import com.simi.service.order.OrderQueryService;
 import com.simi.service.partners.PartnerLinkManService;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.partners.SpiderPartnerService;
+import com.simi.vo.OrderSearchVo;
+import com.simi.vo.OrdersListVo;
 import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;
 
@@ -103,6 +116,12 @@ public class PartnersAddNewController extends BaseController{
 	@Autowired
 	private RegionService regionService;
 	
+	@Autowired
+	private PartnerUserService partnerUserService;
+	
+	@Autowired
+	private OrderQueryService orderQueryService;
+	
 	/**
 	 * 服务提供商列表 
 	 * @param request
@@ -127,6 +146,49 @@ public class PartnersAddNewController extends BaseController{
 
 		model.addAttribute("contentModel", result);
 		return "partners/partnersList";
+	}
+//	@AuthPassport
+	@RequestMapping(value = "/partnerOrderlist", method = { RequestMethod.GET })
+	public String partnerOrderlist(HttpServletRequest request, Model model,
+			//,OrderSearchVo searchVo,
+			@RequestParam(value = "partnerId", required = false) Long partnerId) {
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+		//model.addAttribute("searchModel", searchVo);
+		int pageNo = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request,
+				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		// 分页
+		PageHelper.startPage(pageNo, pageSize);
+		
+		List<PartnerUsers> puList = partnerUserService.selectByPartnerId(partnerId);
+        //获得userId列表
+		List<Long> partnerUserIdList = new ArrayList<Long>();
+		for (int i = 0; i < puList.size(); i++) {
+			
+			PartnerUsers partnerUsers = puList.get(i);
+			partnerUserIdList.add(partnerUsers.getUserId());
+			
+		}
+		if (partnerUserIdList.size() < 2) {
+			return "partners/partnerOrderList";
+		}
+		List<Orders> orderList = orderQueryService.selectByUserIdsListPageList(
+				partnerUserIdList, pageNo, pageSize);
+
+		Orders orders = null;
+		for (int i = 0; i < orderList.size(); i++) {
+			orders = orderList.get(i);
+			OrdersListVo ordersListVo = orderQueryService.completeVo(orders);
+			orderList.set(i, ordersListVo);
+		}
+		PageInfo result = new PageInfo(orderList);
+
+		model.addAttribute("contentModel", result);
+		//model.addAttribute("oaOrderSearchVoModel", searchVo);
+		return "partners/partnerOrderList";
 	}
 
 	/**

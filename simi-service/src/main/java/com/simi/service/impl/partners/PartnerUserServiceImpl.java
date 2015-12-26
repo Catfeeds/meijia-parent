@@ -185,5 +185,11 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 
 		return partnerUsersMapper.selectByServiceTypeIdAndPartnerId(serviceTypeId,partnerId);
 	}
+
+	@Override
+	public List<PartnerUsers> selectByPartnerId(Long partnerId) {
+
+		return partnerUsersMapper.selectByPartnerId(partnerId);
+	}
 	
 }

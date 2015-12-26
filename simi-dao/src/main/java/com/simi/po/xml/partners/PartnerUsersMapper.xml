@@ -29,6 +29,12 @@
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>
 	
+	<select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_users
+		where partner_id = #{partnerId,jdbcType=NUMERIC}
+	</select>
 	<select id="selectByServiceTypeIdAndPartnerId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />

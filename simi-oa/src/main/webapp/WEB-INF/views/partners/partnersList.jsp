@@ -88,7 +88,10 @@
 							            <td>
 							            	<button id="btn_update"  onClick="btn_update('partners/partnerAddNewForm?partnerId=${ item.partnerId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 	                                  		<button id="btn_view" onClick="btn_update('partners/user_list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="查看服务人员"><i class="icon-search "></i></button>
-	                                  		<button id="btn_view" onClick="btn_update('partnerServicePrice/list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="商品管理"><i class="icon-shopping-cart "></i></button>
+	                                  		<%-- <button id="btn_view" onClick="btn_update('partnerServicePrice/list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="商品管理"><i class="icon-shopping-cart "></i></button> --%>
+							                <button id="btn_view" onClick="btn_update('partners/partnerOrderlist?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="商品管理"><i class="icon-shopping-cart "></i></button>
+							               
+							                 <!-- //simi-h5/show/store-order-list.html?partner_user_id=274 -->
 							            </td>
                               </tr>
                               </c:forEach>

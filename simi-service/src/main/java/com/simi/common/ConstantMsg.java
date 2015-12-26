@@ -48,6 +48,8 @@ public class ConstantMsg {
 	//服务人员不存在
 	public static String PARTNER_NOT_EXIST_MG = "服务人员不存在";
 	
+	//服务商不存在
+	public static String PARTNERS_NOT_EXIST_MG = "服务人员不存在";
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
 	

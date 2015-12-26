@@ -32,4 +32,7 @@ public interface OrderQueryService {
 
 	OrdersListVo completeVo(Orders orders);
 
+	List<Orders> selectByUserIdsListPageList(List<Long> partnerUserIdList,
+			int pageNo, int pageSize);
+
 }

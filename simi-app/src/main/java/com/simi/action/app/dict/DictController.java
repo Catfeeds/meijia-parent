@@ -15,15 +15,22 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCardType;
+import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.dict.DictProvince;
 import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.dict.DictTrade;
+import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Tags;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.CardTypeService;
+import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictSeniorTypeService;
+import com.simi.service.dict.ProvinceService;
+import com.simi.service.dict.RegionService;
 import com.simi.service.dict.TradeService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.partners.PartnersService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.UsersService;
 
@@ -38,6 +45,9 @@ public class DictController<T> {
 	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
+	private PartnersService partnersService;
+	
+	@Autowired
 	private UsersService userService;
 	
 	@Autowired
@@ -45,6 +55,15 @@ public class DictController<T> {
 	
 	@Autowired
 	private DictSeniorTypeService seniorTypeService;	
+	
+	@Autowired
+	private ProvinceService provinceService;	
+	
+	@Autowired
+	private CityService cityService;	
+	
+	@Autowired
+	private RegionService regionService;
 	
 	@Autowired
 	private TagsService tagsService;
@@ -126,7 +145,7 @@ public class DictController<T> {
 	}
 	
 	@RequestMapping(value = "get_service_type_list", method = RequestMethod.GET)
-	public AppResultData<Object> getTagsList(
+	public AppResultData<Object> getServiceTypeList(
 			@RequestParam("parent_id") Long parentId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
@@ -143,6 +162,56 @@ public class DictController<T> {
 
 		return result;
 	}
+	@RequestMapping(value = "get_service_type_by_partnerId_list", method = RequestMethod.GET)
+	public AppResultData<Object> getServiceTypeByPartnerIdList(
+			@RequestParam("partner_id") Long partnerId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		//服务大类，该公司的服务大类
+		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
+		
+		
+		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+		
+		if (!partnerRefServiceType.isEmpty()) {
+	    	List<Long> serviceTypeIds = new ArrayList<Long>();
+	    	
+	    	for (PartnerRefServiceType item : partnerRefServiceType) {
+	    		if (!serviceTypeIds.contains(item.getServiceTypeId())) {
+	    			serviceTypeIds.add(item.getServiceTypeId());
+	    		}
+	    	}
+	    	
+	    	partnerServiceType =   partnerServiceTypeService.selectByIds(serviceTypeIds);
+		}
+		result.setData(partnerServiceType);
+
+		return result;
+	}
+	
+	/**
+	 * 获得全部省份
+	 * @return
+	 */
+	@RequestMapping(value = "get_dict_province_list", method = RequestMethod.GET)
+	public AppResultData<Object> getProvinceList() {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+	   List<DictProvince> list = provinceService.selectAll();
+		/*List<String> bigServiceTypeName = new ArrayList<String>();
+		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
+			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
+			bigServiceTypeName.add(partnerServiceType.getName());
+		}*/
+		result.setData(list);
+
+		return result;
+	}
+
 	
 	
 	

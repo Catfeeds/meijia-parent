@@ -146,7 +146,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 
 	@Override
 	public PartnerServicePriceDetailVoAll getPartnerPriceList(
-			PartnerServiceType item) {
+			PartnerServiceType item,Long userId) {
 		PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
 		PartnerServicePriceDetail priceDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
 		PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(item.getId());
@@ -159,7 +159,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		vo.setName(item.getName());
 		vo.setNo(item.getNo());
 		vo.setParentId(item.getParentId());
-
+		vo.setUserId(userId);
 		return vo;
 	}
 	

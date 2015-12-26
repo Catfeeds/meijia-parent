@@ -36,6 +36,7 @@ public interface PartnerServiceTypeService {
 
 	List<PartnerServiceType> selectByPartnerIdIn(Long partnerId);
 
-	PartnerServicePriceDetailVoAll getPartnerPriceList(PartnerServiceType item);
+	PartnerServicePriceDetailVoAll getPartnerPriceList(PartnerServiceType item, Long userId);
+
 	
 }

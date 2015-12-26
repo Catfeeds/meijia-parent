@@ -110,7 +110,7 @@ public class PartnerServicePriceController extends BaseController {
 	    List<PartnerServicePriceDetailVoAll> listVo = new ArrayList<PartnerServicePriceDetailVoAll>();
 		for (PartnerServiceType item : list) {
 			PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
-			vo = partnerServiceTypeService.getPartnerPriceList(item);
+			vo = partnerServiceTypeService.getPartnerPriceList(item,userId);
 			listVo.add(vo);  
 		}
 		result.setData(listVo);

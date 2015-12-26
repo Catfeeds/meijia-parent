@@ -88,6 +88,17 @@
 		<![CDATA[and add_time < unix_timestamp(now()) ]]>   
 
 	</select>
+	
+	<select id="selectIdsByListPage" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders where partner_user_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by add_time desc
+	</select>
+
 	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
 
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.OrderSearchVo">
