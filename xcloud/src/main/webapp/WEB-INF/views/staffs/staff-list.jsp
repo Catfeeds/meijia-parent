@@ -43,9 +43,9 @@
 					
 				</div>
 				<div class="am-fr">
-									<button type="button" class="am-btn am-btn-success">导入通讯录</button>
-									<button type="button" class="am-btn am-btn-warning">添加员工</button>
-									<button type="button" class="am-btn am-btn-danger" id="btn-change-dept">分配部门</button>
+					<button type="button" class="am-btn am-btn-success">导入通讯录</button>
+					<button type="button" class="am-btn am-btn-warning" id="btn-staff-add">添加员工</button>
+					<button type="button" class="am-btn am-btn-danger" id="btn-change-dept">分配部门</button>
 				</div>
 			</div>
 

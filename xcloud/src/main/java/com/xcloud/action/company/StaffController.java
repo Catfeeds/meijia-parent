@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
 import com.github.pagehelper.PageInfo;
@@ -116,41 +117,49 @@ public class StaffController extends BaseController {
 		//return result;
 	}
 
-	/*@RequestMapping(value = "/userForm", method = { RequestMethod.GET })
+	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
 	public String staffUserForm(Model model, HttpServletRequest request,
-			@RequestParam(value = "id", required = false) Long userId) {
+			@RequestParam(value = "staff_id", required = false) Long staffId) {
 
-		UserCompanyFormVo vo = new UserCompanyFormVo();
+		
+		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
+		StaffListVo vo = new StaffListVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+		
+		Users u = usersService.initUsers();
 		
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
 		Long companyId = accountAuth.getCompanyId();
 		
+		Long userId = 0L;
 		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
-				
-		if (userId > 0L) {
+		
+		String jobNumber = xcompanyStaffService.getMaxJobNumber(companyId);
+		vo.setJobNumber(jobNumber);
+		
+		if (staffId > 0L) {
 
-			XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
-
-			Users users = usersService.selectByPrimaryKey(userId);
+			xcompanyStaff = xcompanyStaffService.selectByPrimarykey(staffId);
+			
+			userId = xcompanyStaff.getUserId();
+			
+			u = usersService.selectByPrimaryKey(userId);
 
 			BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
 
-			BeanUtilsExp.copyPropertiesIgnoreNull(users, vo);
-			
-			Xcompany xcompany = xCompanyService.selectByPrimaryKey(xcompanyStaff.getCompanyId());
-
-			vo.setCompanyName(xcompany.getCompanyName());
-			vo.setDeptName("");
-			vo.setStaffName("");
+			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 
 		}
-
+		
+		vo.setCompanyId(companyId);
+		
 		model.addAttribute("contentModel", vo);
-
-		return "/staffs/userForm";
-	}*/
+		model.addAttribute("xCompany", xCompany);
+		return "/staffs/staff-form";
+	}
 
 	/**
 	 * 新增员工提交

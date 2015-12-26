@@ -161,12 +161,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	@Override
 	public String getMaxJobNumber(Long companyId) {
 
-		String jobNumber = "0001";
-		String maxJobNumber = xCompanyStaffMapper.getMaxJobNumber(companyId);
-		if (StringUtil.isEmpty(maxJobNumber)) {
-			maxJobNumber = maxJobNumber + 1;
+		String maxJobNumber = "0001";
+		maxJobNumber = xCompanyStaffMapper.getMaxJobNumber(companyId);
+		if (!StringUtil.isEmpty(maxJobNumber)) {
+			int num = Integer.parseInt(maxJobNumber) + 1;
+			maxJobNumber = String.format("%04d", num);
 		}
-		return jobNumber;
+		return maxJobNumber;
 	}
 
 }

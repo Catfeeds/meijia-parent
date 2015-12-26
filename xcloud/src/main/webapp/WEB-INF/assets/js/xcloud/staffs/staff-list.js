@@ -44,7 +44,7 @@ $("#list-table").dataTable({
         { "data": "id",
           "render": function ( data, type, full, meta ) {
 
-        	      return '<a href="/xcloud/staff/'+data+'"><i class="am-icon-edit am-icon-md"></i></a>';
+        	      return '<a href="/xcloud/staff/staff-form?staff_id='+data+'"><i class="am-icon-edit am-icon-md"></i></a>';
           }
         },
 
@@ -101,7 +101,7 @@ $("#btn-change-dept").click(function() {
 	$('#change-dept-modal').modal();
 });
 
-
+//弹出框体form表单提交处理
 $('#change-dept-modal').on('close.modal.amui', function(e) {
 
 	   var selectStaffIds = $('#select_staff_ids').val();
@@ -135,3 +135,8 @@ $('#change-dept-modal').on('close.modal.amui', function(e) {
 	   });   
 	   return true;
 	});
+
+//添加员工
+$("#btn-staff-add").click(function() {
+	location.href = "/xcloud/staff/staff-form?staff_id=0";
+});
