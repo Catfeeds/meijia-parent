@@ -105,7 +105,7 @@ public class RegisterController extends BaseController {
 		
 		if (xCompanyExist != null) {
 			result.addError(new FieldError("contentModel","userName","您已经注册过此公司."));
-//			model.addAttribute("contentModel", xCompanyVo);
+			model.addAttribute("contentModel", xCompanyVo);
 			return register(model);
 		}
 		

@@ -51,17 +51,18 @@
 						<form:hidden path="companyId" />
 						<div class="am-g am-container">
 							<h2>注册云行政公司账号</h2>
+							<form:errors path="userName" class="am-alert am-alert-danger center"></form:errors>
 						</div>
 						<div class="am-g am-padding-sm">
 
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-phone"></i></span>
-								<form:input path="userName" class="js-pattern-mobile" autocomplete="off"
+								<form:input path="userName" class="am-form-field js-pattern-mobile" autocomplete="off"
 									data-validation-message="请填写正确的手机号" placeholder="手机号" required="required" />
 							</div>
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-suitcase"></i></span> <input
-									type="text" id="sms_token" name="sms_token" class="js-pattern-sms_token js-ajax-validate"
+									type="text" id="sms_token" name="sms_token" class="am-form-field js-pattern-sms_token js-ajax-validate"
 									placeholder="短信验证码" required="required" data-validation-message="验证失败" /> <span
 									class="am-input-group-btn">
 									<button id="btn_sms_token" class="am-btn am-btn-warning" type="button">
