@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -117,8 +118,23 @@ public class PartnerServicePriceController extends BaseController {
 		searchVo.setViewType((short) 1);
 		searchVo.setPartnerIds(partnerIds);
 		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
-
-	     /*   Iterator<PartnerServiceType> listIterator = list.iterator();  
+		
+		/*if (list != null) {
+		for (PartnerServiceType item : list) {  
+			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
+			if (detail !=null) {
+				
+			if (detail.getUserId() != 0 && detail.getUserId() != userId) {  
+	            list.remove(item);  
+	           // break;  
+	        }  
+			
+			}
+	    }  }*/
+		
+		
+		/*if (list != null) {
+	        Iterator<PartnerServiceType> listIterator = list.iterator();  
 	        while (listIterator.hasNext()) {  
 	        	PartnerServiceType partnerServiceType = listIterator.next();  
 	        	PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(partnerServiceType.getId());
@@ -127,7 +143,10 @@ public class PartnerServicePriceController extends BaseController {
 						listIterator.remove();  
 					}
 	        } 
-	        }*/
+	        }
+		}*/
+		/*if (list != null) {
+			
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			
 			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
@@ -139,27 +158,32 @@ public class PartnerServicePriceController extends BaseController {
 				}
 				}
 		}
+		}*/
 		
-		
-		
-		/*if (list !=null) {
-			//synchronized(this){
+		List<PartnerServiceType> listNew = new ArrayList<PartnerServiceType>();
+		if (list !=null) {
 		for (int i = 0; i < list.size(); i++) {
 			PartnerServiceType partnerServiceType = list.get(i);
-			//PartnerUsers pusers = partnerUserService.selectByServiceTypeIdAndPartnerId(partnerServiceType.getId(), partnerServiceType.getPartnerId());
-			//PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(partnerServiceType.getId());
 			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(partnerServiceType.getId());
 			if (detail !=null) {
-			if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
+				if (detail.getUserId() != 0 && detail.getUserId().equals(userId)){
+					listNew.add(partnerServiceType);
+				}
+			/*if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
 				list.remove(i);
+				
+			}*/
 			}
-			}
-		}//}
-		}*/
+		}
+		}
+		
+		
+		
 	    List<PartnerServicePriceDetailVoAll> listVo = new ArrayList<PartnerServicePriceDetailVoAll>();
-		for (PartnerServiceType item : list) {
+		for (PartnerServiceType item : listNew) {
 			PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
 			vo = partnerServiceTypeService.getPartnerPriceList(item,userId);
+
 			listVo.add(vo);  
 		}
 		result.setData(listVo);
@@ -216,15 +240,15 @@ public class PartnerServicePriceController extends BaseController {
 				@RequestParam("service_type_id") Long serviceTypeId,// 服务类别
 				@RequestParam("user_id") Long userId,//用户id
 				
-				@RequestParam("no") Integer no,
+				
 				@RequestParam("name") String name,
 				@RequestParam("title") String title,
 				@RequestParam("price") BigDecimal price,
 				@RequestParam("dis_price") BigDecimal disPrice,
 				@RequestParam("order_type") short orderType,
-				@RequestParam("content_standard") String contentStandard,//服务标准
-				@RequestParam("content_desc") String contentDesc,//服务说明
-				@RequestParam("content_flow") String contentFlow,//服务流程
+				@RequestParam(value = "content_standard" , required = false, defaultValue = "") String contentStandard,//服务标准
+				@RequestParam(value = "content_desc" , required = false, defaultValue = "") String contentDesc,//服务说明
+				@RequestParam(value = "content_flow" , required = false, defaultValue = "") String contentFlow,//服务流程
 				@RequestParam(value = "order_duration", required = false, defaultValue = "0") short orderDuration,
 				@RequestParam(value = "id", required = false, defaultValue = "0") Long id,
 				@RequestParam(value = "is_addr", required = false, defaultValue = "0") short isAddr,
@@ -242,7 +266,6 @@ public class PartnerServicePriceController extends BaseController {
 			partnerServiceType.setParentId(serviceTypeId);
 			partnerServiceType.setName(name);
 			partnerServiceType.setViewType((short) 1);
-			partnerServiceType.setNo(no);
 			partnerServiceType.setPartnerId(partnerId);
 		//	if (serviceTypeId.equals(0L)) {
 				partnerServiceTypeService.insertSelective(partnerServiceType);

@@ -30,8 +30,9 @@ public class PartnersInterface extends BaseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "check-companyName-dumplicate", method = RequestMethod.GET)
     public AppResultData<List> getRegions(
-    		
-    		@RequestParam(value = "companyName") String companyName) {
+    		//@RequestParam("name") String name,
+    	//	@RequestParam(value = "start", required = true, defaultValue = "" )
+    		@RequestParam(value = "companyName" , required = true, defaultValue = "") String companyName) {
 
 		List<Partners> listPartners = partnersService.selectByCompanyName(companyName);
 

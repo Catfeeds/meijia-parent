@@ -1,7 +1,8 @@
 $.validator.addMethod("uniqueName", function(value, element) {
   var response;
+  console.log(value);
   $.ajax({
-      type: "POST",
+      type: "GET",
       url:"/simi-oa/interface-partners/check-companyName-dumplicate.json", //发送给服务器的url
       data: "companyName="+value,
       dataType:"json",
@@ -25,7 +26,7 @@ $('#partner-new-form').validate({
 	rules : {
 		companyName : {
 			required : true,
-			//uniqueName : true
+			uniqueName : true
 		},
 		companySize : {
 			required : true,
@@ -65,7 +66,7 @@ $('#partner-new-form').validate({
 	messages : { 
 		companyName : {
 			required : "请输入名称。",
-			//uniqueName : "名称已经存在"
+			uniqueName : "名称已经存在"
 		},
 		companySize : {
 			required : true,

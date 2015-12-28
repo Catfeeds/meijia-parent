@@ -86,7 +86,7 @@ function ajaxFileUpload() {
  	//params.service_type_id = getUrlParam("service_price_id");
  	console.log($('#service_type_id').val()+"service_type_id+____________++++++++++++++++++++++++++");
 
- 	params.no = $('#no').val();
+ 	//params.no = $('#no').val();
  	params.name = $('#name').val();
  	params.title = $('#title').val();
  	params.price = $('#price').val();
