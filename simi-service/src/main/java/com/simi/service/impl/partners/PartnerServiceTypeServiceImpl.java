@@ -149,7 +149,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 			PartnerServiceType item,Long userId) {
 		PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
 		PartnerServicePriceDetail priceDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
-		PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(item.getId());
+		PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
 	
 		if (detail== null) {
 			detail = priceDetail;
@@ -161,6 +161,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		vo.setParentId(item.getParentId());
 		vo.setUserId(userId);
 		return vo;
+		
 	}
 	
 	

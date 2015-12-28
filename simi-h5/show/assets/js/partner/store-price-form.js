@@ -22,7 +22,7 @@ $.ajax({
 		console.log(serviceTypeId+"))))))))))))))))))serviceTypeId");
 		$("#partner_id").val(partnerId);
 		$("#user_id").val(userId);
-		$("#service_type_id").html(serviceTypeId);
+		$("#service_type_id").val(serviceTypeId);
 
 	}
 });
