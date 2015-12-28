@@ -315,7 +315,6 @@ public class SecController extends AdminController {
 
 					String headImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 					
-					headImg = DwzUtil.dwzApi(headImg);
 					userApplyVo.setHeadImg(headImg);
 
 				}

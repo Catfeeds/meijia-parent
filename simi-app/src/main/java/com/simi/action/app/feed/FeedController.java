@@ -106,9 +106,9 @@ public class FeedController extends BaseController {
 				FeedImgs feedImg = feedImgsService.initFeedImgs();
 				feedImg.setFid(fid);
 				feedImg.setUserId(userId);
-				feedImg.setImgUrl(DwzUtil.dwzApi(imgUrl));
-				feedImg.setImgMiddle(DwzUtil.dwzApi(imgMiddel));
-				feedImg.setImgSmall(DwzUtil.dwzApi(imgSmall));
+				feedImg.setImgUrl(imgUrl);
+				feedImg.setImgMiddle(imgMiddel);
+				feedImg.setImgSmall(imgSmall);
 
 				feedImgsService.insert(feedImg);
 
@@ -179,9 +179,9 @@ public class FeedController extends BaseController {
 				FeedImgs feedImg = feedImgsService.initFeedImgs();
 				feedImg.setFid(fid);
 				feedImg.setUserId(userId);
-				feedImg.setImgUrl(DwzUtil.dwzApi(imgUrl));
-				feedImg.setImgMiddle(DwzUtil.dwzApi(imgMiddel));
-				feedImg.setImgSmall(DwzUtil.dwzApi(imgSmall));
+				feedImg.setImgUrl(imgUrl);
+				feedImg.setImgMiddle(imgMiddel);
+				feedImg.setImgSmall(imgSmall);
 
 				feedImgsService.insert(feedImg);
 

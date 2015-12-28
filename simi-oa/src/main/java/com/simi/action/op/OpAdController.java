@@ -151,7 +151,6 @@ public class OpAdController extends BaseController {
 
 			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 			
-			imgUrl = DwzUtil.dwzApi(imgUrl);
 		}
 		
 		String gotoType = opAd.getGotoType();

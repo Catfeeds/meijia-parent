@@ -115,7 +115,6 @@ public class AppCradTypeController extends BaseController {
 
 			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 
-			imgUrl = DwzUtil.dwzApi(imgUrl);
 		}
 		if (!StringUtil.isEmpty(imgUrl)) {
 			appCardType.setCardIcon(imgUrl);

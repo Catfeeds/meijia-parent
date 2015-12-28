@@ -169,7 +169,6 @@ public class CompanyController extends BaseController {
 
 			String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();				
 
-			imgUrl = DwzUtil.dwzApi(imgUrl);
 			xCompany.setQrCode(imgUrl);
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		}

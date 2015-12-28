@@ -371,7 +371,6 @@ public class PartnersAddNewController extends BaseController{
 					String companyDescImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 					
 					companyDescImg = ImgServerUtil.getImgSize(companyDescImg, "100", "100");
-					companyDescImg = DwzUtil.dwzApi(companyDescImg);
 					
 					partners.setCompanyDescImg(companyDescImg);
 

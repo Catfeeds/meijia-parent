@@ -153,7 +153,6 @@ public class PartnerServicePriceController extends AdminController {
 
 			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 			
-			imgUrl = DwzUtil.dwzApi(imgUrl);
 			record.setImgUrl(imgUrl);
 
 		}

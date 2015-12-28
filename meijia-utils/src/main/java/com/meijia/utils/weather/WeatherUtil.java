@@ -68,11 +68,11 @@ public class WeatherUtil {
 
 			String imgUrl = imgServerUrl + "/" + info.get("md5").toString();
 			
-			String imgShortUrl  = DwzUtil.dwzApi(imgUrl);
+			String imgShortUrl  = imgUrl;
 			
 			String imgMinUrl = imgUrl + "?w=100&h=100";
 			
-			String imgMinShortUrl = DwzUtil.dwzApi(imgMinUrl);
+			String imgMinShortUrl = imgMinUrl;
 			System.out.println("-------------------------------start");
 			System.out.println(fileName);
 			

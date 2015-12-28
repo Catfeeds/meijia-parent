@@ -98,7 +98,6 @@ public class UserImageController extends BaseController {
 			String imgUrl = Constants.IMG_SERVER_HOST + "/"
 					+ info.get("md5").toString();
 			imgUrl = ImgServerUtil.getImgSize(imgUrl, "100", "100");
-			imgUrl = DwzUtil.dwzApi(imgUrl);
 			u.setHeadImg(imgUrl);
 
 			userService.updateByPrimaryKeySelective(u);
@@ -160,7 +159,6 @@ public class UserImageController extends BaseController {
 				String imgUrl = Constants.IMG_SERVER_HOST + "/"
 						+ info.get("md5").toString();
 
-				imgUrl = DwzUtil.dwzApi(imgUrl);
 				UserImgs userImg = new UserImgs();
 				userImg.setImgId(0L);
 				userImg.setImgUrl(imgUrl);
@@ -311,7 +309,6 @@ public class UserImageController extends BaseController {
 
 		String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();		
 		
-		imgUrl = DwzUtil.dwzApi(imgUrl);
 		u.setQrCode(imgUrl);
 		userService.updateByPrimaryKeySelective(u);
 		

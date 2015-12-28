@@ -109,7 +109,6 @@ public class DictAdController extends BaseController {
 
 					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 
-					imgUrl = DwzUtil.dwzApi(imgUrl);
 					dictAd.setImgUrl(imgUrl);
 
 				}
