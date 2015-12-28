@@ -291,7 +291,6 @@ public class PartnerServicePriceController extends BaseController {
 				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-				imgUrl = DwzUtil.dwzApi(imgUrl);
 				record.setImgUrl(imgUrl);
 
 			}
