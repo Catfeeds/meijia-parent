@@ -142,6 +142,11 @@ public class PartnerController extends BaseController {
 			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
 			PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
 			
+			//排除掉不是此大类默认的报价和不是此服务人员自己添加的报价
+			if (!servicePriceDetail.getUserId().equals(0L))  {
+				if(!servicePriceDetail.getUserId().equals(partnerUserId)) continue;
+			}
+			
 			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetail, servicePriceVo);
 			servicePriceVo.setName(item.getName());
 			
