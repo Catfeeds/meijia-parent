@@ -117,20 +117,45 @@ public class PartnerServicePriceController extends BaseController {
 		searchVo.setViewType((short) 1);
 		searchVo.setPartnerIds(partnerIds);
 		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
+
+	     /*   Iterator<PartnerServiceType> listIterator = list.iterator();  
+	        while (listIterator.hasNext()) {  
+	        	PartnerServiceType partnerServiceType = listIterator.next();  
+	        	PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(partnerServiceType.getId());
+	        	if (detail !=null) {
+					if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
+						listIterator.remove();  
+					}
+	        } 
+	        }*/
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			
+			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
+			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(partnerServiceType.getId());
+			
+			if (detail !=null) {
+				if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
+					iterator.remove();
+				}
+				}
+		}
 		
-		if (list !=null) {
+		
+		
+		/*if (list !=null) {
+			//synchronized(this){
 		for (int i = 0; i < list.size(); i++) {
 			PartnerServiceType partnerServiceType = list.get(i);
 			//PartnerUsers pusers = partnerUserService.selectByServiceTypeIdAndPartnerId(partnerServiceType.getId(), partnerServiceType.getPartnerId());
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(partnerServiceType.getId());
+			//PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByPrimaryKey(partnerServiceType.getId());
+			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(partnerServiceType.getId());
 			if (detail !=null) {
-				//detail.getUserId() != 0 &&
 			if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
 				list.remove(i);
 			}
 			}
-		}
-		}
+		}//}
+		}*/
 	    List<PartnerServicePriceDetailVoAll> listVo = new ArrayList<PartnerServicePriceDetailVoAll>();
 		for (PartnerServiceType item : list) {
 			PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
