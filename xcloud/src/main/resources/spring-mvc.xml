@@ -35,7 +35,7 @@
 	<mvc:resources mapping="/fonts/**" location="/WEB-INF/fonts/" />
 	<mvc:resources mapping="/assets/**" location="/WEB-INF/assets/" />
 	<mvc:resources mapping="/img/**" location="/WEB-INF/img/" />
-	<mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" />
+	<mvc:resources mapping="/attach/**" location="/WEB-INF/attach/" />
 
 
 	<!-- 开启controller注解支持 -->

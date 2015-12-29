@@ -59,7 +59,7 @@
 					<div class="am-g am-margin-top">
 						<div class="am-u-sm-2">步骤1:</div>
 						<div class="am-u-md-10">
-							请先点此<a href="">下载Excel模版</a>并按模板填写员工信息
+							请先点此<a href="/xcloud/attach/批量导入员工模板文件.xlsx">下载Excel模版</a>并按模板填写员工信息
 						</div>
 					</div>
 
