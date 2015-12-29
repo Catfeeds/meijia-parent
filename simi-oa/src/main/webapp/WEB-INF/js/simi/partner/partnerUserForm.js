@@ -7,6 +7,12 @@ var formVal = $('#partner-user-form').validate({
 		name : {
 			required : true
 		},
+		weightNo: {
+			required: true,
+     		digits:true,
+			range:[0,65535]
+
+		},
 		
 		mobile: {
 			required: true,
@@ -48,7 +54,12 @@ var formVal = $('#partner-user-form').validate({
 		name : {
 			required : "请输入姓名."
 		},
-		
+		weightNo: {
+			required: "请输入编号。",
+			digits:"请输入整数",
+			range:"输入值必须介于 0 和 65535之间"
+
+		},
 		mobile: {
 			required: "请输入手机号.",
 			isMobile : "请输入正确的手机号"

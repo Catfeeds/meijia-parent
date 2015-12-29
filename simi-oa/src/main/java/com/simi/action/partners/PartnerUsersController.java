@@ -179,6 +179,13 @@ public class PartnerUsersController extends BaseController{
     	vo.setProvinceId(partnerUser.getProvinceId());
     	vo.setCityId(partnerUser.getCityId());
     	vo.setRegionId(partnerUser.getRegionId());
+    	vo.setWeightType(partnerUser.getWeightType());
+    	vo.setWeightNo(partnerUser.getWeightNo());
+    	vo.setTotalOrder(partnerUser.getTotalOrder());
+    	vo.setTotalRate(partnerUser.getTotalRate());
+    	vo.setTotalRateResponse(partnerUser.getTotalRateResponse());
+    	vo.setTotalRateAttitude(partnerUser.getTotalRateAttitude());
+    	vo.setTotalRateMajor(partnerUser.getTotalRateMajor());
     	
     	model.addAttribute("contentModel", vo);
     	model.addAttribute("tags", tags);
@@ -299,6 +306,8 @@ public class PartnerUsersController extends BaseController{
 		partnerUser.setProvinceId(partnerUserVo.getProvinceId());
 		partnerUser.setCityId(partnerUserVo.getCityId());
 		partnerUser.setRegionId(partnerUserVo.getRegionId());
+		partnerUser.setWeightNo(partnerUserVo.getWeightNo());
+		partnerUser.setWeightType(partnerUserVo.getWeightType());
 		if (id > 0L) {
 			partnerUserService.updateByPrimaryKey(partnerUser);
 		} else {
