@@ -49,15 +49,15 @@ public class ConstantMsg {
 	public static String PARTNER_NOT_EXIST_MG = "服务人员不存在";
 	
 	//服务商不存在
-	public static String PARTNERS_NOT_EXIST_MG = "服务人员不存在";
+	public static String PARTNERS_NOT_EXIST_MG = "服务人员不存在,请先进登陆！";
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
 	
 	//您是用户，不允许注册商品。
-	public static String USERS_NOT_REGIETER_STORE = "您是用户，不允许注册商品！！";
+	public static String USERS_NOT_REGIETER_STORE = "您已经是用户,若想要继续，请注册店铺！";
 	
 	//您是秘书，不允许注册商品。
-	public static String SEC_NOT_REGIETER_STORE = "您是秘书，不允许注册商品！！";
+	public static String SEC_NOT_REGIETER_STORE = "您已经是秘书,若想要继续，请注册店铺！";
 		
 	
 	//公司名称已存在

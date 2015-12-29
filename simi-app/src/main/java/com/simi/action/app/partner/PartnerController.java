@@ -87,7 +87,6 @@ public class PartnerController extends BaseController {
 					serviceTypeIds.add(serviceTypeId);
 				}
 			}
-			
 			PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
 			searchVo.setServiceTypeIds(serviceTypeIds);
 			PageInfo pageList = partnerUserService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);

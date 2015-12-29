@@ -6,14 +6,26 @@
 		<result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
+		
+		<result column="weight_type" property="weightType" jdbcType="NUMERIC" />
+		<result column="weight_no" property="weightNo" jdbcType="NUMERIC" />
+		<result column="total_order" property="totalOrder" jdbcType="NUMERIC" />
+		<result column="total_rate" property="totalRate" jdbcType="DECIMAL" />
+		<result column="total_rate_response" property="totalRateResponse" jdbcType="DECIMAL" />
+		<result column="total_rate_attitude" property="totalRateAttitude" jdbcType="DECIMAL" />
+		<result column="total_rate_major" property="totalRateMajor" jdbcType="DECIMAL" />
+		
 		<result column="response_time" property="responseTime" jdbcType="NUMERIC" />
 		<result column="province_id" property="provinceId" jdbcType="NUMERIC" />
 		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
 		<result column="region_id" property="regionId" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
+
 	<sql id="Base_Column_List">
-		id, partner_id, user_id, service_type_id, response_time, province_id, city_id, region_id, add_time
+		id, partner_id, user_id, service_type_id,weight_type,weight_no,total_order,total_rate,
+		total_rate_response,total_rate_attitude,total_rate_major,
+		response_time, province_id, city_id, region_id, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -68,7 +80,7 @@
 			and user_id in (select id from users where  mobile like CONCAT('%','${mobile}','%' ) )
 		</if>
 
-		order by add_time desc
+		order by weight_type desc, weight_no asc, add_time desc 
 	</select>
 
 
@@ -76,12 +88,17 @@
 		delete from partner_users
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
+
 	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerUsers">
-		insert into partner_users (id, partner_id, user_id, service_type_id, response_time,
+		insert into partner_users (id, partner_id, user_id, service_type_id,weight_type,weight_no,total_order,
+		total_rate,total_rate_response,total_rate_attitude,total_rate_major, response_time,
 		province_id, city_id, region_id,
 		add_time)
 		values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC},
-		#{userId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC}, #{responseTime,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC}, 
+		#{weightType,jdbcType=NUMERIC},#{weightNo,jdbcType=NUMERIC},#{totalOrder,jdbcType=NUMERIC},
+		#{totalRate,jdbcType=DECIMAL},#{totalRateResponse,jdbcType=DECIMAL},#{totalRateAttitude,jdbcType=DECIMAL},#{totalRateMajor,jdbcType=DECIMAL},
+		#{responseTime,jdbcType=NUMERIC},
 		#{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{regionId,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
@@ -99,6 +116,28 @@
 			</if>
 			<if test="serviceTypeId != null">
 				service_type_id,
+			</if>
+			<if test="weightType != null">
+				weight_type,
+			</if>
+			<if test="weightNo != null">
+				weight_no,
+			</if>
+			
+			<if test="totalOrder != null">
+				total_order,
+			</if>
+			<if test="totalRate != null">
+				total_rate,
+			</if>
+			<if test="totalRateResponse != null">
+				total_rate_response,
+			</if>
+			<if test="totalRateAttitude != null">
+				total_rate_attitude,
+			</if>	
+			<if test="totalRateMajor != null">
+				total_rate_major,
 			</if>
 
 			<if test="responseTime != null">
@@ -134,6 +173,29 @@
 			<if test="serviceTypeId != null">
 				#{serviceTypeId,jdbcType=NUMERIC},
 			</if>
+			<if test="weightType != null">
+				#{weightType,jdbcType=NUMERIC},
+			</if>
+			<if test="weightNo != null">
+				#{weightNo,jdbcType=NUMERIC},
+			</if>
+			
+			<if test="totalOrder != null">
+				#{totalOrder,jdbcType=NUMERIC},
+			</if>
+			<if test="totalRate != null">
+				#{totalRate,jdbcType=DECIMAL},
+			</if>
+			<if test="totalRateResponse != null">
+				#{totalRateResponse,jdbcType=DECIMAL},
+			</if>
+			<if test="totalRateAttitude != null">
+				#{totalRateAttitude,jdbcType=DECIMAL},
+			</if>	
+			<if test="totalRateMajor != null">
+				#{totalRateMajor,jdbcType=DECIMAL},
+			</if>
+			
 			<if test="responseTime != null">
 				#{responseTime,jdbcType=NUMERIC},
 			</if>
@@ -167,6 +229,30 @@
 			<if test="serviceTypeId != null">
 				service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
 			</if>
+
+		<if test="weightType != null">
+				weight_type = #{weightType,jdbcType=NUMERIC},
+			</if>
+			<if test="weightNo != null">
+				weight_no = #{weightNo,jdbcType=NUMERIC},
+			</if>
+			
+			<if test="totalOrder != null">
+			   total_order = #{totalOrder,jdbcType=NUMERIC},
+			</if>
+			<if test="totalRate != null">
+				total_rate = #{totalRate,jdbcType=DECIMAL},
+			</if>
+			<if test="totalRateResponse != null">
+				total_rate_response =#{totalRateResponse,jdbcType=DECIMAL},
+			</if>
+			<if test="totalRateAttitude != null">
+				total_rate_attitude = #{totalRateAttitude,jdbcType=DECIMAL},
+			</if>	
+			<if test="totalRateMajor != null">
+				total_rate_major = #{totalRateMajor,jdbcType=DECIMAL},
+			</if>
+		
 			<if test="responseTime != null">
 				response_time = #{responseTime,jdbcType=NUMERIC},
 			</if>
@@ -193,10 +279,16 @@
 		set partner_id = #{partnerId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+		weight_type = #{weightType,jdbcType=NUMERIC},
+		weight_no = #{weightNo,jdbcType=NUMERIC},
+		total_order = #{totalOrder,jdbcType=NUMERIC},
+		total_rate = #{totalRate,jdbcType=DECIMAL},
+		total_rate_response = #{totalRateResponse,jdbcType=DECIMAL},
+		total_rate_attitude = #{totalRateAttitude,jdbcType=DECIMAL},
+		total_rate_major = #{totalRateMajor,jdbcType=DECIMAL},
 		response_time = #{responseTime,jdbcType=NUMERIC},
 		province_id = #{provinceId,jdbcType=NUMERIC},
-		city_id =
-		#{cityId,jdbcType=NUMERIC},
+		city_id = #{cityId,jdbcType=NUMERIC},
 		region_id = #{regionId,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}

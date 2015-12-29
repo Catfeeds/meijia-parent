@@ -69,6 +69,38 @@ public class PartnerServicePriceController extends BaseController {
 	private UsersService usersService;
 	
 	/**
+	 * 根据用户id判断用户是否为服务商（未完待续）
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "get_userType_by_user_id", method = RequestMethod.GET)
+	public AppResultData<Object> getUserType(@RequestParam("user_id") Long userId) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users users = usersService.selectByPrimaryKey(userId);
+		if (users == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.PARTNERS_NOT_EXIST_MG);
+			return result;
+		}
+		if (users != null && users.getUserType() == 0) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USERS_NOT_REGIETER_STORE);
+			return result;
+		}
+		if (users != null && users.getUserType() == 1) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.SEC_NOT_REGIETER_STORE);
+			return result;
+		}
+		
+		//result.setData(user);
+		
+		return result;
+	}
+	
+	/**
 	 * 服务报价列表接口
 	 * @param partnerUserId
 	 * @param page
@@ -82,22 +114,7 @@ public class PartnerServicePriceController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		Users users = usersService.selectByPrimaryKey(userId);
-			if (users == null) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg(ConstantMsg.PARTNERS_NOT_EXIST_MG);
-				return result;
-			}
-			if (users != null && users.getUserType() == 0) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg(ConstantMsg.USERS_NOT_REGIETER_STORE);
-				return result;
-			}
-			if (users != null && users.getUserType() == 1) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg(ConstantMsg.SEC_NOT_REGIETER_STORE);
-				return result;
-			}
+		
 			
 		PartnerUsers partnerUsers = partnerUserService.selectByUserId(userId);
 		

@@ -1,5 +1,6 @@
 package com.simi.service.impl.partners;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +63,13 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 		vo.setPartnerId(0L);
 		vo.setUserId(0L);
 		vo.setServiceTypeId(0L);
+		vo.setWeightType((short)0);
+		vo.setWeightNo((short)0);
+		vo.setTotalOrder((short)0);
+		vo.setTotalRate(new BigDecimal(0));
+		vo.setTotalRateResponse(new BigDecimal(0));
+		vo.setTotalRateAttitude(new BigDecimal(0));
+		vo.setTotalRateMajor(new BigDecimal(0));
 		vo.setResponseTime((short) 0);
 		vo.setProvinceId(0L);
 		vo.setCityId(0L);
@@ -145,7 +153,19 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 		result.setName(u.getName());
 		result.setMobile(u.getMobile());
 		result.setHeadImg(u.getHeadImg());
-		
+		//权重类型名称
+		if (result.getWeightType() == 0) {
+			result.setWeightTypeName("默认");
+		}
+		if (result.getWeightType() == 1) {
+			result.setWeightTypeName("推荐");
+		}
+		if (result.getWeightType() == 2) {
+			result.setWeightTypeName("优惠");
+		}
+		if (result.getWeightType() == 3) {
+			result.setWeightTypeName("新人");
+		}
 		result.setResponseTime(partnerUser.getResponseTime());
 		result.setResponseTimeName(MeijiaUtil.getResponseTimeName(partnerUser.getResponseTime()));
 		result.setIntroduction(u.getIntroduction());

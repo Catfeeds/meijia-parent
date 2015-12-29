@@ -6,8 +6,12 @@ import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.Tags;
 
 public class PartnerUserVo extends PartnerUsers {
-	
 
+	//权重类型 0 = 默认 1 = 推荐  2 = 优惠 3 = 新人
+    private Short weightType;
+	//权重类型名称
+	private String weightTypeName;
+	
 	private String companyName;
 
 	private String serviceTypeName;
@@ -27,6 +31,22 @@ public class PartnerUserVo extends PartnerUsers {
 	private List<Tags> userTags;
 	
 	private Long addTime;
+
+	public Short getWeightType() {
+		return weightType;
+	}
+
+	public void setWeightType(Short weightType) {
+		this.weightType = weightType;
+	}
+
+	public String getWeightTypeName() {
+		return weightTypeName;
+	}
+
+	public void setWeightTypeName(String weightTypeName) {
+		this.weightTypeName = weightTypeName;
+	}
 
 	public String getName() {
 		return name;
