@@ -75,7 +75,7 @@
 								<button type="button" class="am-btn am-btn-danger am-btn-sm">
 									<i class="am-icon-cloud-upload"></i> 选择要上传的文件
 								</button>
-								<input id="doc-form-file" type="file" multiple>
+								<input id="doc-form-file" type="file" <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
 							</div>
 							<div id="file-list"></div>
 						</div>
