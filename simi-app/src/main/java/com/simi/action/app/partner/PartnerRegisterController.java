@@ -127,7 +127,16 @@ public class PartnerRegisterController extends BaseController {
 				partnerUsers.setPartnerId(partners.getPartnerId());
 				partnerUsers.setServiceTypeId(serviceTypeId);
 				partnerUserService.insert(partnerUsers);
-		
+				
+				//将死和之前寻得的服务大类增加一条破纪录，在partner_ref_service_type 表
+				PartnerRefServiceType pRefServiceType = partnerRefServiceTypeService.initPartnerRefServiceType();
+				pRefServiceType.setPartnerId(partners.getPartnerId());
+				pRefServiceType.setServiceTypeId(serviceTypeId);
+				PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+				pRefServiceType.setName(serviceType.getName());
+				partnerRefServiceTypeService.insert(pRefServiceType);
+				
+				
 			return result;
 }
 		//进入店铺注册页面是，先查询是否是已有用户，若是，就将信息查出来，放到表单中

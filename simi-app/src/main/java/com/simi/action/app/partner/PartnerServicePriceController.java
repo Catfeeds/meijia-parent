@@ -34,6 +34,7 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
+import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -73,17 +74,40 @@ public class PartnerServicePriceController extends BaseController {
 	 * @param userId
 	 * @return
 	 */
-
+//1.普通用户进入我的，点击店铺，系统判断其是否归属某个服务商，且此服务商是否已经通过我方后台审核，即状态是“已认证”。
 	@RequestMapping(value = "get_userType_by_user_id", method = RequestMethod.GET)
 	public AppResultData<Object> getUserType(@RequestParam("user_id") Long userId) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		if (userId == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_LOGIN);
-			return result;
+		//先判断用户是否有对应的服务商
+		PartnerUsers pUsers = partnerUserService.selectByUserId(userId);
+		
+		//若有对应的服务商,判断该服务商是否已验证
+		if (pUsers != null) {
+			Partners partners = partnersService.selectByPrimaryKey(pUsers.getPartnerId());
+			if (partners.getStatus()==4) {
+				//若服务商验证已通过====》直接进入店铺
+				return result;
+			}else {
+				//此服务商还未认证通过，则提示
+				result.setStatus(Constants.ERROR_100);
+				result.setMsg(ConstantMsg.PARTNERS_NOT_THROUGH);
+				return result;
+				
+			}
+			
 		}
+		/**
+		 * 若没有对应的服务商，
+		 * 1则查用户是否存在====》若不存在则让她注册   提示本业务只想服务商提供，您还未注册店铺，是否要注册店铺？
+		 * 2.若用户存在但是user_type=0,则让它注册
+		 */
+		//1.普通用户进入我的，点击店铺，系统判断其是否归属某个服务商，且此服务商是否已经通过我方后台审核，即状态是“已认证”。
+		//2.若不满足以上条件，则跳到店铺注册页面，完成店铺申请注册。
+		//3.注册提交后，且我方后台审核通过后，此用户可以顺利进入店铺首页，从而进行商品管理。
+	//	4.在商品管理中发布商品，则在发现中此人的服务商品列表中出现。
+	//	5.某人购买了此服务人员刚发布的商品，则订单流程可走完。
 		Users users = usersService.selectByPrimaryKey(userId);
 		if (users == null) {
 			result.setStatus(Constants.ERROR_999);

@@ -24,6 +24,10 @@ $.ajax({
 			location.href = "store-index.html?user_id="+userId;
 			return;
 			}
+		if (data.status == "100") {
+			alert(data.msg);	
+			return false;
+			}
 		var partnerUsers = data.data;
 		console.log(partnerUsers);
 		var partnerId = partnerUsers.partner_id;

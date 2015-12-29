@@ -263,8 +263,6 @@ public class PartnerUsersController extends BaseController{
 			u.setUserType((short) 1);
 		}
 		
-		
-		
 		u.setIsApproval((short) 2);
 		//更新头像 
 		if (file != null && !file.isEmpty()) {

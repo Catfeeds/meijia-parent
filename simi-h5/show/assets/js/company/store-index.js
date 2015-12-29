@@ -17,7 +17,7 @@ $.ajax({
 		var partnerServiceTypeHtml = "";
 		for(var i=0 ; i < partnerServiceType.length; i++){
 			var partnerServiceTypeId = partnerServiceType[i].id;
-			//console.log(partnerServiceTypeId);
+			console.log(partnerServiceTypeId+"$$$$$$$$$$$$$$$$$$$$$$$$444");
 			var partnerServiceTypeName = partnerServiceType[i].name;
 			//console.log(partnerServiceTypeName);
 			partnerServiceTypeHtml +="<option value =\""+partnerServiceTypeId+"\" >"+partnerServiceTypeName+"</option>"
