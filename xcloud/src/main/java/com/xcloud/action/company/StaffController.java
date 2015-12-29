@@ -1,6 +1,10 @@
 package com.xcloud.action.company;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +19,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.ExcelUtil;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -54,112 +64,7 @@ public class StaffController extends BaseController {
 
 	@Autowired
 	private XcompanyDeptService xcompanyDeptService;
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@AuthPassport
-	@RequestMapping(value = "/get-by-dept", method = { RequestMethod.GET })
-	public Map<String, Object> getByDpt(HttpServletRequest request,
-			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-			@RequestParam(value = "length", required = false, defaultValue = "10") int length
-			) {
 		
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("recordsTotal", 0);
-		result.put("recordsFiltered", 0);		
-		result.put("data", "");
-		
-		// 获取登录的用户
-		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-
-		Long companyId = accountAuth.getCompanyId();
-
-		UserCompanySearchVo searchVo = new UserCompanySearchVo();
-		searchVo.setCompanyId(companyId);
-		
-		if (deptId > 0L) {
-			searchVo.setDeptId(deptId);
-		}
-		
-		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, length);
-
-		List<StaffListVo> list = plist.getList();
-		
-		if (!list.isEmpty()) {
-			result.put("recordsTotal", plist.getTotal());
-			result.put("recordsFiltered", plist.getTotal());		
-			result.put("data", list);
-		}
-
-		return result;
-	}	
-	
-	@AuthPassport
-	@RequestMapping(value = "/get-by-mobile", method = { RequestMethod.GET })
-	public AppResultData<Object> getByMobile(HttpServletRequest request,
-			@RequestParam(value = "mobile", required = false, defaultValue = "") String mobile
-			) {
-		
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
-		if (StringUtil.isEmpty(mobile)) return result;
-		
-		Users u = usersService.selectByMobile(mobile);
-		
-		if (u == null) return result;
-		
-		Long userId = u.getId();
-		
-		// 获取登录的用户
-		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-
-		Long companyId = accountAuth.getCompanyId();
-		
-		XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
-		
-		if (xcompanyStaff == null) {
-			xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
-		}
-		
-		StaffListVo vo = new StaffListVo();
-		
-		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
-		
-		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
-		//注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
-		vo.setId(xcompanyStaff.getId());
-		result.setData(vo);
-		
-		return result;
-	}
-	
-	
-	@AuthPassport
-	@RequestMapping(value = "/list", method = { RequestMethod.GET })
-	public String staffTreeAndList(HttpServletRequest request, Model model,
-			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-
-		
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
-		// 获取登录的用户
-		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-
-		Long companyId = accountAuth.getCompanyId();
-		
-		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
-		model.addAttribute("companyId", accountAuth.getCompanyId());
-		model.addAttribute("companyName", accountAuth.getCompanyName());
-		model.addAttribute("shortName", accountAuth.getShortName());
-		
-		List<XcompanyDept> deptList = xcompanyDeptService.selectByXcompanyId(companyId);
-
-		model.addAttribute("deptList", deptList);
-	//	result.setData(plist);
-		return "/staffs/staff-list";
-		//return result;
-	}
-	
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
 	public String staffUserForm(Model model, HttpServletRequest request,
@@ -354,5 +259,45 @@ public class StaffController extends BaseController {
 		
 		return "/staffs/staff-import";
 	}	
+	
+	@AuthPassport
+	@RequestMapping(value = "/staff-import", method = { RequestMethod.POST })
+	public String doStaffImport(Model model, HttpServletRequest request) throws Exception {
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);		
+		
+		// 创建一个通用的多部分解析器.
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		List<Object> list = new ArrayList<Object>();
+		if (multipartResolver.isMultipart(request)) {
+			// 判断 request 是否有文件上传,即多部分请求...
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
+			Iterator<String> iter = multiRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile file = multiRequest.getFile(iter.next());
+				if (file != null && !file.isEmpty()) {
+					
+					String fileName = file.getOriginalFilename();
+					InputStream in = file.getInputStream();
+					list = ExcelUtil.readToList(fileName, in, 0, 0);
+				}
+			}
+		}
+		
+		//下面要做几种判断 
+		//1.  表头是否正确
+		//2.  验证必填项是否正确填写
+		//3.  验证数据是否大于9999条记录.
+		//4.  验证数据是否有重复.(姓名 +  手机号)
+		if ()
+		
+		
+		return "/staffs/staff-import";
+	}		
 
 }
