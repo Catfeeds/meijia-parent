@@ -10,7 +10,7 @@ $("#orderControll").attr("href","store-order-list.html?user_id="+userId);
 $("#userControll").attr("href","invite-index.html");
 
 //判断用户是否是服务商
-/*$.ajax({
+$.ajax({
 	type : "GET",
 	url : appRootUrl + "partner/get_userType_by_user_id.json?user_id="+userId,
 	dataType : "json",
@@ -21,8 +21,8 @@ $("#userControll").attr("href","invite-index.html");
 		//if (data.status == "999") return false;
 		if (data.status == "999") {
 			alert(data.msg);	
-			location.href = "store-price-list.html?user_id="+userId;
-				return;
+			location.href = "store-index.html?user_id="+userId;
+			return;
 			}
 		var partnerUsers = data.data;
 		console.log(partnerUsers);
@@ -35,4 +35,4 @@ $("#userControll").attr("href","invite-index.html");
 		$("#service_type_id").val(serviceTypeId);
 
 	}
-});*/
+});

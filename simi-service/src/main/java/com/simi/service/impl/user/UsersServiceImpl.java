@@ -109,6 +109,7 @@ public class UsersServiceImpl implements UsersService {
 			u.setMobile(mobile);
 			u.setAddFrom(addFrom);
 			u.setName(name);
+			u.setUserType((short)2);
 			u.setIntroduction(introduction);
 			this.insertSelective(u);
 

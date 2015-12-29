@@ -62,6 +62,9 @@ public class PartnerRegisterController extends BaseController {
 	@Autowired
 	private PartnerUserService partnerUserService;
 
+	
+	
+	
 	/**
 	 * 店铺注册信息提交
 	 * @param request
@@ -81,7 +84,8 @@ public class PartnerRegisterController extends BaseController {
 				@RequestParam("register_type") short registerType,
 				@RequestParam("mobile") String mobile,
 				@RequestParam("company_name") String companyName,
-				@RequestParam("service_type_id") Long serviceTypeId) {
+				@RequestParam("service_type_id") Long serviceTypeId,
+				@RequestParam(value = "user_id",required = false, defaultValue = "0") Long userId) {
 			
 			AppResultData<Object> result = new AppResultData<Object>(
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
@@ -105,8 +109,14 @@ public class PartnerRegisterController extends BaseController {
 				if (users == null) {
 					
 					users = usersService.initUsers();
+					users.setUserType((short)2);
 					users.setMobile(mobile);
 					usersService.insert(users);
+				}
+				if (users != null && users.getUserType()==0) {
+					
+					users.setUserType((short)2);
+					usersService.updateByPrimaryKeySelective(users);
 				}
 				//更新后的partnes表
 				partners = partnersService.selectByCompanyNames(companyName);
@@ -120,4 +130,18 @@ public class PartnerRegisterController extends BaseController {
 		
 			return result;
 }
+		//进入店铺注册页面是，先查询是否是已有用户，若是，就将信息查出来，放到表单中
+		@RequestMapping(value = "get_exist_by_user_id", method = RequestMethod.GET)
+		public AppResultData<Object> getPartnerId(@RequestParam("user_id") Long userId) {
+			
+			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+			
+			Users users = usersService.selectByPrimaryKey(userId);
+			
+			if (users != null) {
+			result.setData(users);
+			}
+			
+			return result;
+		}
 }

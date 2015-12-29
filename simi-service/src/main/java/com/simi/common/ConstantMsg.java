@@ -48,13 +48,17 @@ public class ConstantMsg {
 	//服务人员不存在
 	public static String PARTNER_NOT_EXIST_MG = "服务人员不存在";
 	
+	//用户未登陆
+	public static String USER_NOT_LOGIN ="你还未登陆，请先进行登陆，再进行此操作";
+	
 	//服务商不存在
-	public static String PARTNERS_NOT_EXIST_MG = "服务人员不存在,请先进登陆！";
+	public static String PARTNERS_NOT_EXIST_MG = "本业务只向服务商提供，您还未注册店铺，是否要注册店铺？";
+	
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
 	
 	//您是用户，不允许注册商品。
-	public static String USERS_NOT_REGIETER_STORE = "您已经是用户,若想要继续，请注册店铺！";
+	public static String USERS_NOT_REGIETER_STORE = "本业务只向服务商提供，您已注册测过用户，是否要注册店铺？";
 	
 	//您是秘书，不允许注册商品。
 	public static String SEC_NOT_REGIETER_STORE = "您已经是秘书,若想要继续，请注册店铺！";

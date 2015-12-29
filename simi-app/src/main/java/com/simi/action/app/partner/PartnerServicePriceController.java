@@ -73,11 +73,17 @@ public class PartnerServicePriceController extends BaseController {
 	 * @param userId
 	 * @return
 	 */
+
 	@RequestMapping(value = "get_userType_by_user_id", method = RequestMethod.GET)
 	public AppResultData<Object> getUserType(@RequestParam("user_id") Long userId) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		if (userId == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_LOGIN);
+			return result;
+		}
 		Users users = usersService.selectByPrimaryKey(userId);
 		if (users == null) {
 			result.setStatus(Constants.ERROR_999);
@@ -89,13 +95,6 @@ public class PartnerServicePriceController extends BaseController {
 			result.setMsg(ConstantMsg.USERS_NOT_REGIETER_STORE);
 			return result;
 		}
-		if (users != null && users.getUserType() == 1) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.SEC_NOT_REGIETER_STORE);
-			return result;
-		}
-		
-		//result.setData(user);
 		
 		return result;
 	}

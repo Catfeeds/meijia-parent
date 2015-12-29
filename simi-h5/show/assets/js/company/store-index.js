@@ -1,6 +1,7 @@
 if ($.AMUI && $.AMUI.validator) {
 	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
 }
+
 $.ajax({
 	type : "GET",
 	url : appRootUrl + "dict/get_service_type_list.json?parent_id=0",
@@ -23,6 +24,28 @@ $.ajax({
 		}	
 		$("#partnerServiceTypeId").val(partnerServiceTypeId);
 		$("#partnerServiceTypeName").append(partnerServiceTypeHtml);
+
+	}
+});
+//判断用户是否存在，存在则带出信息
+var userId = getUrlParam("user_id");
+$.ajax({
+	type : "GET",
+	url : appRootUrl + "partner/get_exist_by_user_id.json?user_id="+userId,
+	dataType : "json",
+	cache : true,
+	async : false,	
+	success : function(data) {
+	
+		if (data.status == "999") return false;
+		console.log("+++++++++++++++++++");
+		
+		users = data.data;
+		console.log(users)
+		$("#mobile").val(users.mobile);
+		$("#user_id").val(users.id);
+		
+	//	$("#partnerServiceTypeName").append(partnerServiceTypeHtml);
 
 	}
 });
@@ -94,12 +117,13 @@ $("#information_btn").on('click', function(e) {
 });
 //提交
 function companyRegSubmit() {
-
+	var userId = getUrlParam("user_id");
 	var params = {};
 	params.mobile = $('#mobile').val();
 	params.register_type = $('input:radio[name=registerType]:checked').val();
 	params.company_name = $('#companyName').val();
 	params.service_type_id = $('#partnerServiceTypeId').val();
+	params.user_id = $('#userId').val();
 	// 提交数据，完成注册流程
 	$.ajax({
 		type : "POST",
