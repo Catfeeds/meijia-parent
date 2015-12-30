@@ -1,4 +1,4 @@
-$.validator.addMethod("uniqueName", function(value, element) {
+/*$.validator.addMethod("uniqueName", function(value, element) {
   var response;
   console.log(value);
   $.ajax({
@@ -18,7 +18,7 @@ $.validator.addMethod("uniqueName", function(value, element) {
   //如果存在，则返回false;
   return false;
 
-}, "");
+}, "");*/
 $('#partner-new-form').validate({
 	errorElement : 'span', // default input error message container
 	errorClass : 'help-block', // default input error message class
@@ -26,7 +26,7 @@ $('#partner-new-form').validate({
 	rules : {
 		companyName : {
 			required : true,
-			uniqueName : true
+			//uniqueName : true
 		},
 		companySize : {
 			required : true,
@@ -58,15 +58,15 @@ $('#partner-new-form').validate({
 		},
 		discout : {
 			range:[0,1]
-		},
+		}/*,
 		addr : {
 			required:true
-		},
+		},*/
 	},
 	messages : { 
 		companyName : {
 			required : "请输入名称。",
-			uniqueName : "名称已经存在"
+			//uniqueName : "名称已经存在"
 		},
 		companySize : {
 			required : true,
@@ -98,10 +98,10 @@ $('#partner-new-form').validate({
 		},
 		discout : {
 			range : "请输入折扣价在0到1之间"
-		},
+		}/*,
 		addr : {
 			required : "请输入详细地址"
-		},
+		},*/
 	},
 
 	invalidHandler : function(event, validator) { // display error alert on

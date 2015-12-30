@@ -19,7 +19,7 @@ var formVal = $('#partner-user-form').validate({
 			isMobile : true
 		},
 						
-		provinceId : {
+		/*provinceId : {
 			required: true,
 			isIntGtZero : true,
 		}, 
@@ -32,14 +32,15 @@ var formVal = $('#partner-user-form').validate({
 		regionId : {
 			required: true,
 			isIntGtZero : true,
-		}, 
+		}, */
 		serviceTypeId: {
 			required: true,
 		},
 		
 		responseTime: {
 			required: true,
-		},
+		}
+		/*,
 		
 		introduction: {
 			required: true,
@@ -47,7 +48,7 @@ var formVal = $('#partner-user-form').validate({
 		
 		tagIds: {
 			required: true,
-		},
+		},*/
 	},
 
 	messages : {
@@ -66,7 +67,7 @@ var formVal = $('#partner-user-form').validate({
 		},
 				
 		
-		provinceId : {
+		/*provinceId : {
 			required: "请选择所在省份",
 			isIntGtZero : "请选择所在省份"
 		}, 
@@ -79,7 +80,7 @@ var formVal = $('#partner-user-form').validate({
 		regionId : {
 			required: "请选择所在区县",
 			isIntGtZero : "请选择所在区县"
-		}, 
+		}, */
 
 		serviceTypeId: {
 			required: "请选择服务类别.",
@@ -89,13 +90,13 @@ var formVal = $('#partner-user-form').validate({
 			required: "请选择服务响应时间.",
 		},
 		
-		introduction: {
+		/*introduction: {
 			required: "请输入个人简介",
 		},
 		
 		tagIds: {
 			required: "请选择标签",
-		},
+		},*/
 	},
 
 	invalidHandler : function(event, validator) { //display error alert on form submit
