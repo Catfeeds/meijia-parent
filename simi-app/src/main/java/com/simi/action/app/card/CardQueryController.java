@@ -468,7 +468,7 @@ public class CardQueryController extends BaseController {
 		 
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
-		 tranParams.put("action", "setclock");	
+		 tranParams.put("action", "msg");	
 		 tranParams.put("card_id", "0");
 		 tranParams.put("card_type", "0");
 		 tranParams.put("service_time", "");
