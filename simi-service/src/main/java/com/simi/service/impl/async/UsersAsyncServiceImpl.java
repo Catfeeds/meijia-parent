@@ -193,6 +193,7 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
 		tranParams.put("is_show", "true");
+		tranParams.put("action", "msg");
 		tranParams.put("card_id", "0");
 		tranParams.put("card_type", "0");
 		tranParams.put("service_time", "0");

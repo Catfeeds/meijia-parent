@@ -344,8 +344,8 @@ public class CardQueryController extends BaseController {
 	}	
 	
 	
-	@RequestMapping(value = "push_test", method = RequestMethod.GET)	
-	public AppResultData<Object> pushTest(
+	@RequestMapping(value = "push-setclock", method = RequestMethod.GET)	
+	public AppResultData<Object> pushSetClock(
 			@RequestParam("card_id") Long cardId,
 			@RequestParam(value = "clinet_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
 			
@@ -367,6 +367,7 @@ public class CardQueryController extends BaseController {
 		 
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
+		 tranParams.put("action", "setclock");	
 		 tranParams.put("card_id", cardId.toString());
 		 tranParams.put("card_type", "1");
 		 tranParams.put("service_time", timeStr);
@@ -393,4 +394,105 @@ public class CardQueryController extends BaseController {
 		
 		return result;
 	}		
+	
+	@RequestMapping(value = "push-alarm", method = RequestMethod.GET)	
+	public AppResultData<Object> pushAlarm(
+			@RequestParam("card_id") Long cardId,
+			@RequestParam(value = "clinet_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
+			
+			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType
+			) throws Exception {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("cid", clientId);
+		
+		HashMap<String, String> tranParams = new HashMap<String, String>();
+		 
+
+		
+		 Long time1 = TimeStampUtil.getNow();
+		 
+		 String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
+		 
+		 String timeStr = time1.toString();
+		 tranParams.put("is_show", "true");		 
+		 tranParams.put("action", "setclock");	
+		 tranParams.put("card_id", cardId.toString());
+		 tranParams.put("card_type", "1");
+		 tranParams.put("service_time", timeStr);
+		 tranParams.put("remind_time", timeStr);
+		 tranParams.put("remind_title", "会议安排");
+		 tranParams.put("remind_content", timeStr1 + "请参加华北区电话会议,请提前10分钟进入会议室B11");
+
+//		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
+		 
+		 ObjectMapper objectMapper = new ObjectMapper();
+		 String jsonParams = objectMapper.writeValueAsString(tranParams);
+		 System.out.println(jsonParams);
+		 
+		params.put("transmissionContent", jsonParams);
+
+		if (deviceType.equals("ios")) {
+			PushUtil.IOSPushToSingle(params, "notification");
+		}
+		
+		if (deviceType.equals("android")) {
+			PushUtil.AndroidPushToSingle(params);
+		}
+		
+		
+		return result;
+	}		
+	
+	@RequestMapping(value = "push-msg", method = RequestMethod.GET)	
+	public AppResultData<Object> pushMsg(
+			@RequestParam(value = "clinet_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
+			
+			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType
+			) throws Exception {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("cid", clientId);
+		
+		HashMap<String, String> tranParams = new HashMap<String, String>();
+		 
+
+		
+		 Long time1 = TimeStampUtil.getNow();
+		 
+		 String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
+		 
+		 String timeStr = time1.toString();
+		 tranParams.put("is_show", "true");		 
+		 tranParams.put("action", "setclock");	
+		 tranParams.put("card_id", "0");
+		 tranParams.put("card_type", "0");
+		 tranParams.put("service_time", "");
+		 tranParams.put("remind_time", "");
+		 tranParams.put("remind_title", "新消息");
+		 tranParams.put("remind_content", "你在" + timeStr + "有一条新的消息");
+
+//		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
+		 
+		 ObjectMapper objectMapper = new ObjectMapper();
+		 String jsonParams = objectMapper.writeValueAsString(tranParams);
+		 System.out.println(jsonParams);
+		 
+		params.put("transmissionContent", jsonParams);
+
+		if (deviceType.equals("ios")) {
+			PushUtil.IOSPushToSingle(params, "notification");
+		}
+		
+		if (deviceType.equals("android")) {
+			PushUtil.AndroidPushToSingle(params);
+		}
+		
+		
+		return result;
+	}			
 }

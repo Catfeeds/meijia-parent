@@ -166,7 +166,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			}
 			
 			//进行闹钟消息推送.
-			pushToIos(card, userPushBinds);
+			pushToAlarm(card, userPushBinds);
 		}
 		
 		//3.根据集合users 和集合userPushBinds，找出不能推送，只能发短信的用户集合C
@@ -214,6 +214,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		if (card.getSetNowSend().equals((short)1)) isShow = "true";
 		
 		tranParams.put("is_show", isShow);
+		tranParams.put("action", "setclock");
 		tranParams.put("card_id", card.getCardId().toString());
 		tranParams.put("card_type", card.getCardType().toString());
 		tranParams.put("service_time", serviceTime.toString());
@@ -260,13 +261,13 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 	}
 	
 	/**
-	 * 因为ios在后台进程被杀死的情况下，无法设定闹钟，所以必须后台定时提醒
+	 * 因为app后台进程被杀死的情况下，无法设定闹钟，所以必须后台定时提醒
 	 * 1. 后台做相应检测，如果为离线状态则需要发送
 	 * @param card
 	 * @param userPushBinds
 	 * @return
 	 */
-	private boolean pushToIos(Cards card, List<UserPushBind> userPushBinds) {
+	private boolean pushToAlarm(Cards card, List<UserPushBind> userPushBinds) {
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		
@@ -291,6 +292,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		String isShow = "true";		
 		tranParams.put("is_show", isShow);
+		tranParams.put("action", "alarm");
 		tranParams.put("card_id", card.getCardId().toString());
 		tranParams.put("card_type", card.getCardType().toString());
 		tranParams.put("service_time", serviceTime.toString());
@@ -314,11 +316,22 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", p.getClientId());
 			
+			String userStatus = PushUtil.getUserStatus(p.getClientId());
 			if (p.getDeviceType().equals("ios")) {
 				try {
-					String userStatus = PushUtil.getUserStatus(p.getClientId());
 					if (userStatus.equals("Offline")) {
 						PushUtil.IOSPushToSingle(params, "alertClock");
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if (p.getDeviceType().equals("android")) {
+				try {
+					if (userStatus.equals("Offline")) {
+						PushUtil.AndroidPushToSingle(params);
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
