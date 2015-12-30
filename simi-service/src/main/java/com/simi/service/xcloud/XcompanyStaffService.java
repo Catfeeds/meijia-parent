@@ -1,9 +1,11 @@
 package com.simi.service.xcloud;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.vo.AppResultData;
 import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.StaffListVo;
 
@@ -34,6 +36,8 @@ public interface XcompanyStaffService {
 	StaffListVo changeToStaffLisVo(XcompanyStaff item);
 
 	String getMaxJobNumber(Long companyId);
+
+	AppResultData<Object> validateStaffImport(String fileName) throws Exception;
 
 
 	

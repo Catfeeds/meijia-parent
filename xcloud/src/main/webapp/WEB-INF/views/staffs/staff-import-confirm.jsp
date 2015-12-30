@@ -51,8 +51,7 @@
 			</div>
 
 			<hr />
-			<form method="POST" id="staff-import-form"
-			class="am-form am-container am-padding-xl am-padding-bottom" enctype="multipart/form-data">
+
 			<div class="am-tabs am-margin" data-am-tabs>
 
 				<div class="am-tabs-bd">
@@ -76,7 +75,7 @@
 								<button type="button" class="am-btn am-btn-danger am-btn-sm">
 									<i class="am-icon-cloud-upload"></i> 选择要上传的文件
 								</button>
-								<input id="doc-form-file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required />
+								<input id="doc-form-file" type="file" <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
 							</div>
 							<div id="file-list"></div>
 						</div>
@@ -86,12 +85,12 @@
 				</div>
 
 				<div class="am-margin">
-					<button type="submit" class="am-btn am-btn-danger" >确定</button>
+					<button type="button" class="am-btn am-btn-danger" id="btn-import-submit">确定</button>
 					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 				</div>
-			
+
 			</div>
-			</form>
+
 		</div>
 	</div>
 	</div>

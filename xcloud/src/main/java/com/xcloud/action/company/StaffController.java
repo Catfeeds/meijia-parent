@@ -1,5 +1,6 @@
 package com.xcloud.action.company;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.RandomUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -272,8 +275,11 @@ public class StaffController extends BaseController {
 		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);		
 		
 		// 创建一个通用的多部分解析器.
+		String path = "/data/attach/staff/";
+		String fileToken = RandomUtil.randomNumber(6);
+		String newFileName = "";
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		List<Object> list = new ArrayList<Object>();
+		
 		if (multipartResolver.isMultipart(request)) {
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
@@ -281,20 +287,32 @@ public class StaffController extends BaseController {
 			while (iter.hasNext()) {
 				MultipartFile file = multiRequest.getFile(iter.next());
 				if (file != null && !file.isEmpty()) {
-					
+					 // 存储的临时文件名 = 获取时间戳+随机六位数+"."图片扩展名
 					String fileName = file.getOriginalFilename();
-					InputStream in = file.getInputStream();
-					list = ExcelUtil.readToList(fileName, in, 0, 0);
+					String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+					
+					newFileName = companyId.toString() + "-" + fileToken + "." + ext;
+					
+					FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path,newFileName));
+					
 				}
 			}
 		}
 		
-		//下面要做几种判断 
-		//1.  表头是否正确
-		//2.  验证必填项是否正确填写
-		//3.  验证数据是否大于9999条记录.
-		//4.  验证数据是否有重复.(姓名 +  手机号)
-		if ()
+		if (StringUtil.isEmpty(newFileName)) {
+			model.addAttribute("errors", "表格数据为空，请下载模板后填写.");
+			return "/staffs/staff-import-error";
+		}
+		
+		AppResultData<Object> validateResult = xcompanyStaffService.validateStaffImport(path + newFileName);
+		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+			model.addAttribute("errors", validateResult.getMsg());
+			model.addAttribute("tableDatas", validateResult.getData());
+			return "/staffs/staff-import-error";
+		}
+
+		
+		
 		
 		
 		return "/staffs/staff-import";

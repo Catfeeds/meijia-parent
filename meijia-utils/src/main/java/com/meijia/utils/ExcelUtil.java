@@ -121,14 +121,21 @@ public class ExcelUtil {
 				if (null == row) {
 					break;
 				}
-				int cells = row.getPhysicalNumberOfCells();
+				int cells = row.getLastCellNum();
 				if (cells == 0) {
 					continue;
 				}
 				List<String> r = new ArrayList<String>(cells);
 				for (int c = 0; c < cells; c++) {
-					row.getCell(c).setCellType(Cell.CELL_TYPE_STRING);
-					r.add(row.getCell(c).getStringCellValue());
+
+					System.out.println(cells + "-----" + c + "----- " + row.getCell(c));
+					
+					if (row.getCell(c) != null) {
+						row.getCell(c).setCellType(Cell.CELL_TYPE_STRING);
+						r.add(row.getCell(c).getStringCellValue());
+					} else {
+						r.add("");
+					}
 				}
 				ls.add(r);
 			}
@@ -222,32 +229,19 @@ public class ExcelUtil {
 
 		return wb;
 	}
-
+		
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
-		// List<Object> rows = new ArrayList<Object>();
-		//
-		// List<Object> row = new ArrayList<Object>();
-		// row.add("字符串");
-		// row.add(11);
-		// row.add(new Date());
-		// row.add(1.0);
-		// rows.add(((Object) row));
-		//
-		// rows.add("中文");
-		// rows.add(new Date());
-		//
-		// listToWorkbook(rows, ExcelType.xls);
-		// listToWorkbook(rows, ExcelType.xlsx);
-		String path = "/Users/lnczx/Downloads/";
-		String fileName = "批量导入员工模板文件(3).xlsx";
+
+		String path = "/Users/lnczx/Desktop/tmp/staff-excel/";
+		String fileName = "批量导入员工模板文件-一条数据错误.xlsx";
 
 		InputStream in = new FileInputStream(path + fileName);
-		List<Object> list = ExcelUtil.readToList(fileName, in, 0, 0);
-		
-		for (int i = 0; i < list.size(); i++) {
-			List<String> item = (List<String>) list.get(i);
-			System.out.println(item.get(0));
+		List<Object> excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
+		for (int i = 0; i < excelDatas.size(); i++) {
+			List<String> b = (List<String>) excelDatas.get(i);
+			
+			System.out.println(b.size() + "-----" + excelDatas.get(i));
 		}
 
 	}

@@ -1,5 +1,9 @@
 package com.simi.service.impl.xcloud;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +13,12 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.ExcelUtil;
+import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
@@ -18,6 +27,7 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
+import com.simi.vo.AppResultData;
 import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.StaffListVo;
 
@@ -169,5 +179,153 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		}
 		return maxJobNumber;
 	}
+	
+	// 导入通讯录，校验方法
+	@SuppressWarnings("unchecked")
+	@Override
+	public AppResultData<Object> validateStaffImport(String fileName) throws Exception {
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		//先进行excel 解析
+		List<Object> excelDatas = new ArrayList<Object>();
+		
+		InputStream in = new FileInputStream(fileName);
+		excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
+		
+		//1. 检测数据是否为空
+		if (excelDatas.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("Excel表格数据为空，请下载模板后填写.");
+			return result;
+		}
+
+		//2. 检测表头是否正确
+		List<String> tableHeaderDatas = (List<String>) excelDatas.get(0);
+		String tableHeaderError = this.validateTableHeader(tableHeaderDatas);
+		if (!StringUtil.isEmpty(tableHeaderError)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(tableHeaderError);
+			return result;
+		}
+		
+		//3. 检测表格数据是否正确.
+		List<Object> validateDatas = this.validateDatas(excelDatas);
+		if (!validateDatas.isEmpty() && validateDatas.size() > 0) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("表格数据填写有误，请查看");
+			result.setData(validateDatas);
+			return result;
+		}
+		
+		
+		
+		return result;
+	}
+	
+	
+	private String validateTableHeader(List<String> datas) {
+		String error = "";
+
+		Boolean tableHeaderFalg = true;
+		
+		if (datas.isEmpty() || datas.size() < 7) {
+			tableHeaderFalg = false;
+			System.out.println("表格表头不对，请按照模板的格式填写.");
+		}
+		
+		for (int i = 0; i < datas.size(); i++) {
+			System.out.println(datas.get(i));
+		}
+		
+		
+		if (!datas.get(0).equals("*姓名")) tableHeaderFalg = false;
+		if (!datas.get(1).equals("*手机号")) tableHeaderFalg = false;
+		if (!datas.get(2).equals("*职位")) tableHeaderFalg = false;
+		if (!datas.get(3).equals("*员工类型")) tableHeaderFalg = false;
+		if (!datas.get(4).equals("身份证号")) tableHeaderFalg = false;
+		if (!datas.get(5).equals("工号")) tableHeaderFalg = false;
+		if (!datas.get(6).equals("入职时间(yyyy-mm-dd)")) tableHeaderFalg = false;
+		if (!datas.get(7).equals("邮箱")) tableHeaderFalg = false;
+		
+		if (!tableHeaderFalg) {
+			System.out.println("表格表头不对，请按照模板的格式填写.");
+			error = "表格表头不对，请按照模板的格式填写.";
+		}		
+		
+		return error;
+	}	
+	
+	@SuppressWarnings("unchecked")
+	private List<Object> validateDatas(List<Object> datas) {
+		List<Object> result = new ArrayList<Object>();
+
+//		int totalNum = 0;
+		for (int i = 1; i < datas.size(); i++) {
+			List<String> item = (List<String>) datas.get(i);
+			List<String> errorItem = item;
+			String error = "";
+			
+			//姓名为必填项
+			if (StringUtil.isEmpty(item.get(0))) error+= "姓名为必填项 ";		
+
+			//手机号为必填项
+			if (StringUtil.isEmpty(item.get(1))) {
+				error+= "手机号为必填项 ";
+			} else {
+				//手机号校验
+				if (!RegexUtil.isMobile(item.get(1))) {
+					error+= "手机号填写不正确 ";
+				}
+			}
+			
+			//职位为必填项
+			if (StringUtil.isEmpty(item.get(2))) error+= "职位为必填项 ";		
+			
+			//员工类型为必填项
+			if (StringUtil.isEmpty(item.get(3))) error+= "员工类型为必填项 ";		
+			
+			//如果身份证号不为空，则需要检测身份证是否正确
+			if (!StringUtil.isEmpty(item.get(4))) {
+				if (!RegexUtil.isIdCardNo(item.get(4))) {
+					error+= "身份证号填写不正确 ";		
+				}
+			}
+			
+			//如果工号不为空，则需要验证工号是否正确
+			if (!StringUtil.isEmpty(item.get(5))) {
+				if (!RegexUtil.isInteger(item.get(5))) {
+					error+= "工号填写不正确 ";		
+				} else {
+					int jobNumber = Integer.parseInt(item.get(5));
+					if (jobNumber < 1 || jobNumber > 9999) {
+						error+= "工号范围在 0001 - 9999区间 ";		
+					}
+				}
+			}
+			
+			//如果入职时间不为空，则需要判断是否是否为正确格式 yyyy-mm-dd
+			if (!StringUtil.isEmpty(item.get(6))) {
+				if (!DateUtil.isDate(item.get(6))) {
+					error+= "入职时间格式不正确 ";	
+				}
+			}
+			
+			//如果邮箱不为空,则检测邮箱是否正确
+			if (!StringUtil.isEmpty(item.get(7))) {
+				if (!RegexUtil.isEmail(item.get(7))) {
+					error+= "邮箱填写不正确 ";		
+				}
+			}
+			
+			if (!StringUtil.isEmpty(error)) {
+				errorItem.add(String.valueOf(i+1));
+				errorItem.add(error);
+				result.add(errorItem);
+			}
+			
+		}		
+		
+		return result;
+	}	
 
 }

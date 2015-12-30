@@ -51,47 +51,25 @@
 			</div>
 
 			<hr />
-			<form method="POST" id="staff-import-form"
-			class="am-form am-container am-padding-xl am-padding-bottom" enctype="multipart/form-data">
+
 			<div class="am-tabs am-margin" data-am-tabs>
 
 				<div class="am-tabs-bd">
 
 					<div class="am-g am-margin-top">
-						<div class="am-u-sm-2">步骤1:</div>
+						<div class="am-u-sm-2">导入错误</div>
 						<div class="am-u-md-10">
-							请先点此<a href="/xcloud/attach/批量导入员工模板文件.xlsx">下载Excel模版</a>并按模板填写员工信息
+							${errors}
 						</div>
 					</div>
-
-					<div class="am-g am-margin-top ">
-						<div class="am-u-sm-2">步骤2:</div>
-						<div class="am-u-md-10">请将填写好的Excel文档上传</div>
-					</div>
-
-					<div class="am-g am-margin-top ">
-						<div class="am-u-sm-2"></div>
-						<div class="am-u-md-10">
-							<div class="am-form-group am-form-file">
-								<button type="button" class="am-btn am-btn-danger am-btn-sm">
-									<i class="am-icon-cloud-upload"></i> 选择要上传的文件
-								</button>
-								<input id="doc-form-file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required />
-							</div>
-							<div id="file-list"></div>
-						</div>
-					</div>
-					<br />
-
 				</div>
 
 				<div class="am-margin">
-					<button type="submit" class="am-btn am-btn-danger" >确定</button>
 					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 				</div>
-			
+
 			</div>
-			</form>
+
 		</div>
 	</div>
 	</div>
