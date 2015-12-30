@@ -281,7 +281,7 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		if (userDetailPay.getAddTime() != null) {
 			Long addTime = userDetailPay.getAddTime()*1000;
 			//vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
-			vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-mm-dd"));
+			vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-MM-dd"));
 		}
 		
 		return vo;
