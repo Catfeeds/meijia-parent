@@ -100,9 +100,9 @@
 								<form:select path="cardType" class="form-control">
 									<form:option value="0" selected="selected">通用</form:option>
 									<form:option value="1">会议安排</form:option>
-									<form:option value="2">秘书叫早</form:option>
+									<form:option value="2">通知公告</form:option>
 									<form:option value="3">事务提醒</form:option>
-									<form:option value="4">邀约通知</form:option>
+									<form:option value="4">面试邀约</form:option>
 									<form:option value="5">行程规划</form:option>
 								</form:select>
 							</div>

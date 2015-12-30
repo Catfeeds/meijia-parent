@@ -231,11 +231,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		if (datas.isEmpty() || datas.size() < 7) {
 			tableHeaderFalg = false;
 			System.out.println("表格表头不对，请按照模板的格式填写.");
+			error = "表格表头不对，请按照模板的格式填写.";
+			return error;
 		}
 		
-		for (int i = 0; i < datas.size(); i++) {
-			System.out.println(datas.get(i));
-		}
+//		for (int i = 0; i < datas.size(); i++) {
+//			System.out.println(datas.get(i));
+//		}
 		
 		
 		if (!datas.get(0).equals("*姓名")) tableHeaderFalg = false;
@@ -266,39 +268,39 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String error = "";
 			
 			//姓名为必填项
-			if (StringUtil.isEmpty(item.get(0))) error+= "姓名为必填项 ";		
+			if (StringUtil.isEmpty(item.get(0))) error+= "姓名为必填项<br>";		
 
 			//手机号为必填项
 			if (StringUtil.isEmpty(item.get(1))) {
-				error+= "手机号为必填项 ";
+				error+= "手机号为必填项<br>";
 			} else {
 				//手机号校验
 				if (!RegexUtil.isMobile(item.get(1))) {
-					error+= "手机号填写不正确 ";
+					error+= "手机号填写不正确<br>";
 				}
 			}
 			
 			//职位为必填项
-			if (StringUtil.isEmpty(item.get(2))) error+= "职位为必填项 ";		
+			if (StringUtil.isEmpty(item.get(2))) error+= "职位为必填项<br>";		
 			
 			//员工类型为必填项
-			if (StringUtil.isEmpty(item.get(3))) error+= "员工类型为必填项 ";		
+			if (StringUtil.isEmpty(item.get(3))) error+= "员工类型为必填项<br>";		
 			
 			//如果身份证号不为空，则需要检测身份证是否正确
 			if (!StringUtil.isEmpty(item.get(4))) {
 				if (!RegexUtil.isIdCardNo(item.get(4))) {
-					error+= "身份证号填写不正确 ";		
+					error+= "身份证号填写不正确<br>";		
 				}
 			}
 			
 			//如果工号不为空，则需要验证工号是否正确
 			if (!StringUtil.isEmpty(item.get(5))) {
 				if (!RegexUtil.isInteger(item.get(5))) {
-					error+= "工号填写不正确 ";		
+					error+= "工号填写不正确<br>";		
 				} else {
 					int jobNumber = Integer.parseInt(item.get(5));
 					if (jobNumber < 1 || jobNumber > 9999) {
-						error+= "工号范围在 0001 - 9999区间 ";		
+						error+= "工号范围在 0001 - 9999区间<br>";		
 					}
 				}
 			}
@@ -306,20 +308,27 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			//如果入职时间不为空，则需要判断是否是否为正确格式 yyyy-mm-dd
 			if (!StringUtil.isEmpty(item.get(6))) {
 				if (!DateUtil.isDate(item.get(6))) {
-					error+= "入职时间格式不正确 ";	
+					error+= "入职时间格式不正确<br>";	
 				}
 			}
 			
 			//如果邮箱不为空,则检测邮箱是否正确
 			if (!StringUtil.isEmpty(item.get(7))) {
 				if (!RegexUtil.isEmail(item.get(7))) {
-					error+= "邮箱填写不正确 ";		
+					error+= "邮箱填写不正确<br>";		
 				}
 			}
 			
 			if (!StringUtil.isEmpty(error)) {
 				errorItem.add(String.valueOf(i+1));
 				errorItem.add(error);
+				
+				for (int j =0; j < errorItem.size(); j++) {
+					String v = errorItem.get(j);
+					v = StringUtil.setDoubleQuote(v);
+					errorItem.set(j, v);
+				}
+				
 				result.add(errorItem);
 			}
 			

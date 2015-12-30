@@ -201,5 +201,13 @@ public class StringUtil {
 		return shortBuffer.toString();
 
 	}
+	
+	public static String setDoubleQuote(String myText) {
+	    String quoteText = "";
+//	    if (!myText.isEmpty()) {
+	        quoteText = "\"" + myText + "\"";
+//	    }
+	    return quoteText;
+	}
     
 }

@@ -547,13 +547,13 @@ public class MeijiaUtil {
 				cardTypeName = "会议安排";
 				break;
 			case 2:
-				cardTypeName = "秘书叫早";
+				cardTypeName = "通知公告";
 				break;
 			case 3:
 				cardTypeName = "事务提醒";
 				break;
 			case 4:
-				cardTypeName = "邀约通知";
+				cardTypeName = "面试邀约";
 				break;
 			case 5:
 				cardTypeName = "差旅规划";

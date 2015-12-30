@@ -402,7 +402,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 				
 				break;
 			case 2:
-//				statusName = "秘书叫早";
+//				statusName = "通知公告";
 				content = new String[] { createUserName, createUserMobile,  serviceTimeStr, serviceContent};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44668", content);				
 				break;
@@ -412,7 +412,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 				sendSmsResult = SmsUtil.SendSms(mobile, "44666", content);						
 				break;
 			case 4:
-//				statusName = "邀约通知";
+//				statusName = "面试邀约";
 				content = new String[] { createUserName, createUserMobile,  serviceTimeStr, serviceContent};
 				sendSmsResult = SmsUtil.SendSms(mobile, "44667", content);		
 				break;

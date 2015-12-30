@@ -283,20 +283,19 @@ public class StaffController extends BaseController {
 		if (multipartResolver.isMultipart(request)) {
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-					 // 存储的临时文件名 = 获取时间戳+随机六位数+"."图片扩展名
-					String fileName = file.getOriginalFilename();
-					String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
-					
-					newFileName = companyId.toString() + "-" + fileToken + "." + ext;
-					
-					FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path,newFileName));
-					
-				}
+			
+			MultipartFile file = multiRequest.getFile("staff-file");
+			if (file != null && !file.isEmpty()) {
+				 // 存储的临时文件名 = 获取时间戳+随机六位数+"."图片扩展名
+				String fileName = file.getOriginalFilename();
+				String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+				
+				newFileName = companyId.toString() + "-" + fileToken + "." + ext;
+				
+				FileUtils.copyInputStreamToFile(file.getInputStream(), new File(path,newFileName));
+				
 			}
+			
 		}
 		
 		if (StringUtil.isEmpty(newFileName)) {

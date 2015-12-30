@@ -86,7 +86,7 @@ public class CardController extends BaseController {
 	// 卡片提交接口
 	/**
 	 *  @param card_id				卡片ID,  0 表示新增
-	 *  @param card_type			卡片类型 0 = 通用(保留) 1 = 会议安排 2 = 秘书叫早 3 = 事务提醒 4 = 邀约通知 5 = 行程规划
+	 *  @param card_type			卡片类型 0 = 通用(保留) 1 = 会议安排 2 = 通知公告 3 = 事务提醒 4 = 面试邀约 5 = 行程规划
 	 *	@param create_user_id		创建卡片的用户ID
 	 *  @param user_id  			用户ID
 	 *	@param attends				参与人员，格式为json [{mobile:xxxx, name:张三}, {mobile:xxxx, name:李四}]

@@ -19,13 +19,13 @@ public class CardUtil {
 				cardTypeName = "会议安排";
 				break;
 			case 2:
-				cardTypeName = "秘书叫早";
+				cardTypeName = "通知公告";
 				break;
 			case 3:
 				cardTypeName = "事务提醒";
 				break;
 			case 4:
-				cardTypeName = "邀约通知";
+				cardTypeName = "面试邀约";
 				break;
 			case 5:
 				cardTypeName = "差旅规划";
@@ -132,7 +132,7 @@ public class CardUtil {
 				remindContent = timeStr + "即将发生" + cardTypeName;
 				break;
 			case 2:
-//				cardTypeName = "秘书叫早";
+//				cardTypeName = "通知公告";
 				remindContent = "秘书叫您" + timeStr + "起床啦！";
 				break;
 			case 3:
@@ -140,7 +140,7 @@ public class CardUtil {
 				remindContent = timeStr + "即将发生" + cardTypeName;
 				break;
 			case 4:
-//				cardTypeName = "邀约通知";
+//				cardTypeName = "面试邀约";
 				remindContent = timeStr + "即将发生邀约安排";
 				break;
 			case 5:
@@ -168,7 +168,7 @@ public class CardUtil {
 				imgUrl = Constants.IMG_SERVER_HOST + "/cb5e6bc8f19eddc3081909b6f9ae69df";
 				break;
 			case 2:
-//				cardTypeName = "秘书叫早";
+//				cardTypeName = "通知公告";
 				imgUrl = Constants.IMG_SERVER_HOST + "/092a77928064df50c56faa5f25a78f8c";
 				break;
 			case 3:
@@ -176,7 +176,7 @@ public class CardUtil {
 				imgUrl = Constants.IMG_SERVER_HOST + "/46d444bb6ee1bb611d82bdf7d766381f";
 				break;
 			case 4:
-//				cardTypeName = "邀约通知";
+//				cardTypeName = "面试邀约";
 				imgUrl = Constants.IMG_SERVER_HOST + "/bf0fbd4fc52904ab17b57c0be802097e";
 				break;
 			case 5:

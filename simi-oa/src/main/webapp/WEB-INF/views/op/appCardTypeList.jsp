@@ -82,13 +82,13 @@
 														会议安排
 												</c:when>
 									<c:when test="${item.cardType  == 2}">
-														秘书叫早
+														通知公告
 												</c:when>
 									<c:when test="${item.cardType  == 3}">
 														事务提醒
 												</c:when>
 									<c:when test="${item.cardType  == 4}">
-														邀约通知
+														面试邀约
 												</c:when>
 									<c:when test="${item.cardType  == 5}">
 														形成规划
