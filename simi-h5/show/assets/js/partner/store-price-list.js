@@ -1,8 +1,25 @@
 
-
 var userId = getUrlParam("user_id");
-
 $("#hrefAdd").attr("href","store-price-form.html?user_id="+userId);
+
+$.ajax({
+	type : "GET",
+	url : appRootUrl + "partner/get_partnerStatus_by_user_id.json?user_id="+userId,
+	dataType : "json",
+	cache : true,
+	async : false,	
+	success : function(data) {
+		var partners = data.data;
+
+		var status = partners.status;
+		if(status != 4){
+
+			$('#hrefAdd').css('display','none'); 
+			
+		}
+	}
+});
+
 //var $partnerListPage = 1;
 function orderGetList () {
 	var ajaxUrl = appRootUrl + "partner/get_partner_service_price_list.json?user_id="+userId;
@@ -28,15 +45,11 @@ function orderGetList () {
 			var partnerServicePriceDetailVo = data.data;
 			console.log(partnerServicePriceDetailVo);
 			var html = $('#store-price-list-part').html();
-			
-			//给新增按钮的href赋值
-         //   $("#hrefAdd").attr("href","store-price-form.html?user_id="+partnerServicePriceDetailVo[0].user_id);
-            
+		
 			var partnerServiceTypeHtml = "";
 			for(var i=0 ; i < partnerServicePriceDetailVo.length; i++){
 				
 				var htmlPart = html;
-				//var partnerUserHeadImg = '<img alt="" src="'+orderListVo[i].partner_user_head_img+'">';
 				htmlPart = htmlPart.replace('{name}',partnerServicePriceDetailVo[i].name);
 				htmlPart = htmlPart.replace('{No}',partnerServicePriceDetailVo[i].no);
 				htmlPart = htmlPart.replace('{disPrice}',partnerServicePriceDetailVo[i].dis_price);
@@ -48,7 +61,6 @@ function orderGetList () {
 				console.log(partnerServicePriceDetailVo[i].user_id+"~~~~~~~~~~~~~~~~~~~");
 				
 				partnerServiceTypeHtml += htmlPart;
-				//console.log(htmlPart);
 			
 			}	
 			$("#scroller").append(partnerServiceTypeHtml);

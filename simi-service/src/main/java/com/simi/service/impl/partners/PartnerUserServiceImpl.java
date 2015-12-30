@@ -13,6 +13,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.partners.PartnerUsersMapper;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
@@ -119,10 +120,23 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 		PageHelper.startPage(pageNo, pageSize);
 		List<PartnerUsers> list = partnerUsersMapper.selectByListPage(partnersSearchVo);
 		
+		List<PartnerUsers> listNew = new ArrayList<PartnerUsers>();
+		if (list !=null) {
+		for (int i = 0; i < list.size(); i++) {
+			PartnerUsers partnerUsers = list.get(i);
+			Partners partners = partnersService.selectByPrimaryKey(partnerUsers.getPartnerId());
+			if (partners !=null) {
+				if (partners.getStatus() == 4){
+					listNew.add(partnerUsers);
+				}
+			}
+		}
+		}
+
 		List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
-		for (int i =0 ; i < list.size(); i++) {
+		for (int i =0 ; i < listNew.size(); i++) {
 			
-			PartnerUsers item = list.get(i);
+			PartnerUsers item = listNew.get(i);
 			PartnerUserVo vo = this.changeToVo(item) ;
 			list.set(i, vo);
 		}

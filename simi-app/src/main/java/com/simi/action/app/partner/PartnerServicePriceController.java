@@ -209,10 +209,6 @@ public class PartnerServicePriceController extends BaseController {
 				if (detail.getUserId() != 0 && detail.getUserId().equals(userId)){
 					listNew.add(partnerServiceType);
 				}
-			/*if (detail.getUserId() != 0 && detail.getUserId() != userId ) {
-				list.remove(i);
-				
-			}*/
 			}
 		}
 		}
@@ -364,5 +360,25 @@ public class PartnerServicePriceController extends BaseController {
 			//}
 			
 			return result;	
+		}
+		//判断商品列表是否显示新增按钮
+		@RequestMapping(value = "get_partnerStatus_by_user_id", method = RequestMethod.GET)
+		public AppResultData<Object> getPartnerStatus(@RequestParam("user_id") Long userId) {
+			
+			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+			PartnerUsers pUsers = partnerUserService.selectByUserId(userId);
+			if (pUsers == null) {
+				
+				return result;
+			}
+			Partners partners = partnersService.selectByPrimaryKey(pUsers.getPartnerId());
+			if (partners == null) {
+				
+				return result;
+			}
+		
+			result.setData(partners);
+			return result;
 		}
 }

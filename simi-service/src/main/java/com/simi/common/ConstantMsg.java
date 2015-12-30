@@ -55,7 +55,7 @@ public class ConstantMsg {
 	public static String PARTNERS_NOT_EXIST_MG = "本业务只向服务商提供，您还未注册店铺，是否要注册店铺？";
 	
 	//您所在店铺还未认证通过，请耐心等待或致电4001691615查询
-	public static String PARTNERS_NOT_THROUGH = "您所在店铺还未认证通过，请耐心等待或致电4001691615查询";
+	public static String PARTNERS_NOT_THROUGH = " 您申请的店铺还未审核通过，我们将会尽快处理，您也可直接致电4001691615问询，谢谢您的关注！";
 	
 	//公司不存在
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
