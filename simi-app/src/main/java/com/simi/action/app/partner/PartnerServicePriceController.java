@@ -282,10 +282,10 @@ public class PartnerServicePriceController extends BaseController {
 				
 				
 				@RequestParam("name") String name,
-				@RequestParam("title") String title,
 				@RequestParam("price") BigDecimal price,
 				@RequestParam("dis_price") BigDecimal disPrice,
 				@RequestParam("order_type") short orderType,
+				@RequestParam(value = "title" , required = false, defaultValue = "") String title,
 				@RequestParam(value = "content_standard" , required = false, defaultValue = "") String contentStandard,//服务标准
 				@RequestParam(value = "content_desc" , required = false, defaultValue = "") String contentDesc,//服务说明
 				@RequestParam(value = "content_flow" , required = false, defaultValue = "") String contentFlow,//服务流程

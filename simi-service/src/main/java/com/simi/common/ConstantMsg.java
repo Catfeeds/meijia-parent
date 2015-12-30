@@ -61,7 +61,7 @@ public class ConstantMsg {
 	public static String XCOMPANY_NOT_EXIST = "公司不存在";
 	
 	//您是用户，不允许注册商品。
-	public static String USERS_NOT_REGIETER_STORE = "本业务只向服务商提供，您已注册测过用户，是否要注册店铺？";
+	public static String USERS_NOT_REGIETER_STORE = "本业务只向服务商提供，您已注册过用户，是否要注册店铺？";
 	
 	//您是秘书，不允许注册商品。
 	public static String SEC_NOT_REGIETER_STORE = "您已经是秘书,若想要继续，请注册店铺！";
