@@ -31,4 +31,6 @@ public interface XcompanyStaffMapper {
 	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
 
 	String getMaxJobNumber(Long companyId);
+
+	String getNextJobNumber(Long companyId);
 }

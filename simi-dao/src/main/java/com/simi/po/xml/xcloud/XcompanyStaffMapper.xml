@@ -90,6 +90,16 @@
 		where
 		company_id = #{companyId,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="getNextJobNumber" resultType="java.lang.String" parameterType="java.lang.Long">
+	
+		select l.job_number + 1 as start
+		from xcompany_staff as l
+		left outer join xcompany_staff as r 
+		on l.company_id = r.company_id and l.job_number + 1 = r.job_number
+		where l.company_id = #{companyId,jdbcType=NUMERIC} and r.id is null
+		order by start limit 1	
+	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from xcompany_staff

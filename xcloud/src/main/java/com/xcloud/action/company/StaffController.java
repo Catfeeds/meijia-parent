@@ -1,6 +1,7 @@
 package com.xcloud.action.company;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class StaffController extends BaseController {
 
 			Long userId = 0L;
 
-			String jobNumber = xcompanyStaffService.getMaxJobNumber(companyId);
+			String jobNumber = xcompanyStaffService.getNextJobNumber(companyId);
 			vo.setJobNumber(jobNumber);
 			
 			if (staffId > 0L) {
@@ -193,7 +194,7 @@ public class StaffController extends BaseController {
 		if (staffId > 0L) {
 			xcompanyStaffService.updateByPrimaryKeySelective(xcompanyStaff);
 		} else {
-			xcompanyStaff.setJobNumber(xcompanyStaffService.getMaxJobNumber(companyId));
+			xcompanyStaff.setJobNumber(xcompanyStaffService.getNextJobNumber(companyId));
 			xcompanyStaffService.insertSelective(xcompanyStaff);
 		}
 		
@@ -303,15 +304,22 @@ public class StaffController extends BaseController {
 			return "/staffs/staff-import-error";
 		}
 		
-		AppResultData<Object> validateResult = xcompanyStaffService.validateStaffImport(path + newFileName);
+		List<Object> excelDatas = new ArrayList<Object>();
+		
+		InputStream in = new FileInputStream(path + newFileName);
+		excelDatas = ExcelUtil.readToList(path + newFileName, in, 0, 0);
+		
+		//校验表格是否正确.
+		AppResultData<Object> validateResult = xcompanyStaffService.validateStaffImport(companyId, excelDatas);
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
 			model.addAttribute("errors", validateResult.getMsg());
 			model.addAttribute("tableDatas", validateResult.getData());
 			return "/staffs/staff-import-error";
 		}
-
 		
-		
+//		//检测都有哪些重复数据
+//		AppResultData<Object> checkDuplication = xcompanyStaffService.validateStaffImport(path + newFileName);
+//		
 		
 		
 		return "/staffs/staff-import";
