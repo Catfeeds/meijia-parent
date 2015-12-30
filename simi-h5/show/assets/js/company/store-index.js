@@ -17,51 +17,14 @@ $.ajax({
 		var partnerServiceTypeHtml = "";
 		for(var i=0 ; i < partnerServiceType.length; i++){
 			var partnerServiceTypeId = partnerServiceType[i].id;
-			//console.log(partnerServiceTypeId+"$$$$$$$$$$$$$$$$$$$$$$$$444");
 			var partnerServiceTypeName = partnerServiceType[i].name;
-			//console.log(partnerServiceTypeName);
 			partnerServiceTypeHtml +="<option value =\""+partnerServiceTypeId+"\" >"+partnerServiceTypeName+"</option>"
-			//partnerServiceTypeHtml +="<option value =\""+partnerServiceTypeId+"\" type=\"button\" onClick=\"serviceTypeClick("+partnerServiceTypeId+")\" >"+partnerServiceTypeName+"</option>"
-			//onchange="gradeChange()"  onClick=\"serviceTypeClick("+partnerServiceTypeId+")
 		}	
-		//$("#partnerServiceTypeId").val(partnerServiceTypeId);
 		$("#partnerServiceTypeName").append(partnerServiceTypeHtml);
 
 	}
 });
 
-
-/*$("#selectId").click(function(){
-	id=\"selectId\"
-});*/
-function serviceTypeClick(partnerServiceTypeId) {
-	// 如果未选中，则换class为选中
-	console.log("serviceTypeClick");
-	var serviceTypeId = $("#partnerServiceTypeId").val();
-	/*var obj = $('#'+tagId);
-	console.log(obj);*/
-	// am-btn-warning = 选中
-	/*if (obj.is(".am-btn-default")) {
-		obj.addClass("am-btn-warning");
-		obj.removeClass("am-btn-default");
-
-		if (tagIds.indexOf(tagId + ",") < 0) {
-			tagIds += tagId + ",";
-		}*/
-	// am-btn-default = 未选中
-	/*} else {
-		obj.removeClass("am-btn-warning");
-		obj.addClass("am-btn-default");
-		if (tagIds.indexOf(tagId + ",") >= 0) {
-			tagIds = tagIds.replace(tagId + ",", "");
-		}
-	}*/
-
-	$("#partnerServiceTypeId").val(serviceTypeId);
-
-	console.log("1234567890987654322345678");
-	console.log($("#partnerServiceTypeId").val());
-}
 //判断用户是否存在，存在则带出信息
 var userId = getUrlParam("user_id");
 $.ajax({
@@ -78,6 +41,7 @@ $.ajax({
 		users = data.data;
 		console.log(users)
 		$("#mobile").val(users.mobile);
+		$("#name").val(users.name);
 		$("#user_id").val(users.id);
 		
 	//	$("#partnerServiceTypeName").append(partnerServiceTypeHtml);
@@ -157,6 +121,7 @@ function companyRegSubmit() {
 	console.log($('#partnerServiceTypeName').val());
 	var params = {};
 	params.mobile = $('#mobile').val();
+	params.name = $('#name').val();
 	params.register_type = $('input:radio[name=registerType]:checked').val();
 	params.company_name = $('#companyName').val();
 	params.service_type_id = $('#partnerServiceTypeName').val();

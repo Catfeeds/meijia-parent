@@ -84,6 +84,7 @@ public class PartnerRegisterController extends BaseController {
 				@RequestParam("register_type") short registerType,
 				@RequestParam("mobile") String mobile,
 				@RequestParam("company_name") String companyName,
+				@RequestParam("name") String name,
 				@RequestParam("service_type_id") Long serviceTypeId,
 				@RequestParam(value = "user_id",required = false, defaultValue = "0") Long userId) {
 			
@@ -111,11 +112,13 @@ public class PartnerRegisterController extends BaseController {
 					users = usersService.initUsers();
 					users.setUserType((short)2);
 					users.setMobile(mobile);
+					users.setName(name);
 					usersService.insert(users);
 				}
 				if (users != null && users.getUserType()==0) {
 					
 					users.setUserType((short)2);
+					users.setName(name);
 					usersService.updateByPrimaryKeySelective(users);
 				}
 				//更新后的partnes表
