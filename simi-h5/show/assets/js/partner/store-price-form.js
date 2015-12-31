@@ -26,6 +26,38 @@ $.ajax({
 
 	}
 });
+var servicePriceId = getUrlParam("service_price_id");
+console.log(servicePriceId+"@@@@@@@@@@@@@@@@@@servicePriceId");
+if(servicePriceId != 0){
+
+//获得商品详细信息放到form表单里面
+$.ajax({
+	type : "GET",
+	url : appRootUrl + "partner/get_partner_service_price_detail.json?service_price_id="+servicePriceId,
+	dataType : "json",
+	cache : true,
+	async : false,	
+	success : function(data) {
+	
+		if (data.status == "999") return false;
+		var vo = data.data;
+		console.log("999999999999999999999");
+		console.log(vo);
+		$("#name").val(vo.name);
+		$("#title").val(vo.service_title);
+		$("#price").val(vo.price);
+		
+		$("#disPrice").val(vo.dis_price);
+		$("#orderType").val(vo.order_type);
+		$("#orderDuration").val(vo.order_duration);
+		$("#isAddr").val(vo.is_addr);
+		$("#contentStandard").val(vo.content_standard);
+		$("#contentDesc").val(vo.content_desc);
+		$("#contentFlow").val(vo.content_flow);
+		$("#isEnable").val(vo.is_enable);
+
+	}
+});}
 getUrlParam("parent_id");
 var parentId = getUrlParam("parent_id");
 $("#parent_id").val(parentId);
@@ -78,15 +110,9 @@ function ajaxFileUpload() {
      var params = {};
     //参数
  	params.user_id = getUrlParam("user_id");
- //	console.log(getUrlParam("user_id")+"ffhgfhgfhghuser_id");
- 	//params.partner_id = getUrlParam("partner_id");
+ 	params.service_price_id = getUrlParam("service_price_id");
  	params.partner_id = $('#partner_id').val();
  	params.service_type_id = $('#service_type_id').val();
- 	console.log($('#partner_id').val()+"----------partner_id");
- 	//params.service_type_id = getUrlParam("service_price_id");
- 	console.log($('#service_type_id').val()+"service_type_id+____________++++++++++++++++++++++++++");
-
- 	//params.no = $('#no').val();
  	params.name = $('#name').val();
  	params.title = $('#title').val();
  	params.price = $('#price').val();
@@ -94,11 +120,14 @@ function ajaxFileUpload() {
  	params.order_type = $('#orderType').val();
  	params.content_standard = $('#contentStandard').val();
  	params.is_addr = $('input:radio[name=isAddr]:checked').val();
+ 	console.log("￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥");
+ 	console.log( $('input:radio[name=isAddr]:checked').val());
+ 	params.is_enable = $('input:radio[name=isEnable]:checked').val();
+ 	console.log("##################################################");
+ 	console.log( $('input:radio[name=isEnable]:checked').val());
  	params.order_duration = $('#orderDuration').val();
  	params.content_desc =  $('#contentDesc').val()
  	params.content_flow = $('#contentFlow').val();     
- //   params.parent_id = 1;
-    console.log("priceFormSumit");
     console.log(params);
     
      $.ajaxFileUpload({

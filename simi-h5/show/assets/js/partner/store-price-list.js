@@ -1,6 +1,6 @@
 
 var userId = getUrlParam("user_id");
-$("#hrefAdd").attr("href","store-price-form.html?user_id="+userId);
+$("#hrefAdd").attr("href","store-price-form.html?user_id="+userId+"&service_price_id="+0);
 
 $.ajax({
 	type : "GET",
@@ -58,7 +58,11 @@ function orderGetList () {
 				htmlPart = htmlPart.replace('{partnerId}',partnerServicePriceDetailVo[i].partner_id);
 				htmlPart = htmlPart.replace('{serviceTypeId}',partnerServicePriceDetailVo[i].service_price_id);
 				htmlPart = htmlPart.replace('{userId}',partnerServicePriceDetailVo[i].user_id);
+				htmlPart = htmlPart.replace('{isEnableName}',partnerServicePriceDetailVo[i].is_enable_name);
 				console.log(partnerServicePriceDetailVo[i].user_id+"~~~~~~~~~~~~~~~~~~~");
+				
+				htmlPart = "<a href=\"store-price-form.html?user_id="+partnerServicePriceDetailVo[i].user_id+"&service_price_id="+partnerServicePriceDetailVo[i].service_price_id+"\"> " + htmlPart + "</a>";
+				
 				
 				partnerServiceTypeHtml += htmlPart;
 			

@@ -13,6 +13,8 @@ public class PartnerServicePriceDetailVoAll extends PartnerServicePriceDetail {
 	private Long partnerId;
 	
 	private Integer no;
+	
+	private String isEnableName;
 		
 	public Long getParentId() {
 		return parentId;
@@ -37,6 +39,12 @@ public class PartnerServicePriceDetailVoAll extends PartnerServicePriceDetail {
 	}
 	public void setPartnerId(Long partnerId) {
 		this.partnerId = partnerId;
+	}
+	public String getIsEnableName() {
+		return isEnableName;
+	}
+	public void setIsEnableName(String isEnableName) {
+		this.isEnableName = isEnableName;
 	}
 
 

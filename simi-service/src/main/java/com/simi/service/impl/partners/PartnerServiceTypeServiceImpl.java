@@ -126,6 +126,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		partnerServiceType.setParentId(0L);
 		partnerServiceType.setName("");
 		partnerServiceType.setId(0L);
+		partnerServiceType.setIsEnable((short)1);
 		partnerServiceType.setViewType((short) 0);
 		partnerServiceType.setNo(0);
 		partnerServiceType.setPartnerId(0L);
@@ -160,6 +161,15 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		vo.setNo(item.getNo());
 		vo.setParentId(item.getParentId());
 		vo.setUserId(userId);
+		if (item != null) {
+			if (item.getIsEnable() != null && item.getIsEnable() == 0) {
+				vo.setIsEnableName("已下架");
+			}
+			if (item.getIsEnable() != null && item.getIsEnable() == 1) {
+				vo.setIsEnableName("未下架");
+			}
+			
+		}
 		return vo;
 		
 	}

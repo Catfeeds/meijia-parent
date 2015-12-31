@@ -8,6 +8,8 @@ public class PartnerServiceType {
 
     private Long parentId;
 
+    private Short isEnable;
+    
     private Short viewType;
     
     private Integer no;
@@ -38,6 +40,14 @@ public class PartnerServiceType {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
+
+	public Short getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Short isEnable) {
+		this.isEnable = isEnable;
+	}
 
 	public Short getViewType() {
 		return viewType;

@@ -164,7 +164,8 @@ function companyRegSubmit() {
 	params.realName = $('#real_name').val();
 	/*params.sex = $('#sex').val();*/
 	params.sex = $('input:radio[name=sex]:checked').val();
-	console.log($("#sex").val());
+	console.log("888888888888888888");
+	console.log($('input:radio[name=sex]:checked').val());
 	params.degreeId = $('#degreeId').val();
 	params.major = $('#major').val();
 	params.idCard =  $('#id_card').val()

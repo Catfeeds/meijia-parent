@@ -106,22 +106,22 @@
 				</select> <span class="am-form-caret"></span>
 			</div>
 
-			<div class="am-form-group">
-			<label for="doc-ipt-email-1">是否需要用户地址</label><br>
-				<label class="am-radio-inline">
-					<input type="radio" value="0" id = "isAddr" name="isAddr" checked="checked"> 不需要
-					
-				</label>
-				<label class="am-radio-inline">
-					<input type="radio" value="1"  id = ""isAddr"" name="isAddr" > 需要
-				</label>
+			<div class="am-input-group">
+				<label for="doc-ipt-email-1">是否需要用户地址</label><br>
+				<div class="item-xx">
+					<input type="radio" value="0" id ="isAddr" name="isAddr" checked="checked"> 不需要
+					<input type="radio" value="1" id ="isAddr" name="isAddr"> 需要
+				</div>
+
 			</div><br>
-			
-			<!-- <div class="am-form-group">
-				<label for="doc-ipt-email-1">服务标准</label>
-					<textarea type="text" id="contentStandard" name="contentStandard" class="am-form-field" ></textarea>
-			</div> -->
-			
+			<div class="am-input-group">
+				<label for="doc-ipt-email-1">是否上架</label><br>
+				<div class="item-xx">
+					<input type="radio" value="0" id ="isEnable" name="isEnable"> 下架
+					<input type="radio" value="1" id ="isEnable" name="isEnable" checked="checked"> 上架
+				</div>
+
+			</div><br>
 			 <div class="am-form-group">
 			      <label for="doc-ipt-email-1">服务标准：</label>
 			      <textarea id="contentStandard" name="contentStandard" minlength="0" maxlength="100" class="am-form-field"></textarea>

@@ -11,6 +11,9 @@ public class PartnerServicePriceDetailVo extends PartnerServicePriceDetail {
 	private Long parentId;
 	
 	private Integer no;
+	
+	private Short isEnable;
+	
 		
 	public Long getParentId() {
 		return parentId;
@@ -30,6 +33,11 @@ public class PartnerServicePriceDetailVo extends PartnerServicePriceDetail {
 	public void setNo(Integer no) {
 		this.no = no;
 	}
-
+	public Short getIsEnable() {
+		return isEnable;
+	}
+	public void setIsEnable(Short isEnable) {
+		this.isEnable = isEnable;
+	}
 
 }

@@ -5,12 +5,13 @@
 		<id column="service_type_id" property="id" jdbcType="NUMERIC" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="parent_id" property="parentId" jdbcType="NUMERIC" />
+		<result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
 		<result column="view_type" property="viewType" jdbcType="NUMERIC" />
 		<result column="no" property="no" jdbcType="NUMERIC" />
 		<result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		service_type_id, name, parent_id, view_type, no, partner_id
+		service_type_id, name, parent_id,is_enable, view_type, no, partner_id
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -77,9 +78,9 @@
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>	
-		insert into partner_service_type (service_type_id, name, parent_id, view_type, no, partner_id)
+		insert into partner_service_type (service_type_id, name, parent_id,is_enable, view_type, no, partner_id)
 		values (#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
-		#{parentId,jdbcType=NUMERIC}, #{viewType,jdbcType=NUMERIC}, #{no,jdbcType=NUMERIC},
+		#{parentId,jdbcType=NUMERIC}, #{isEnable,jdbcType=NUMERIC},#{viewType,jdbcType=NUMERIC}, #{no,jdbcType=NUMERIC},
 		#{partnerId,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServiceType">
@@ -96,6 +97,9 @@
 			</if>
 			<if test="parentId != null">
 				parent_id,
+			</if>
+			<if test="isEnable != null">
+				is_enable,
 			</if>
 			<if test="viewType != null">
 				view_type,
@@ -117,6 +121,9 @@
 			<if test="parentId != null">
 				#{parentId,jdbcType=NUMERIC},
 			</if>
+			<if test="isEnable != null">
+				#{is_enable,jdbcType=NUMERIC},
+			</if>
 			<if test="viewType != null">
 				#{viewType,jdbcType=NUMERIC},
 			</if>
@@ -137,6 +144,9 @@
 			<if test="parentId != null">
 				parent_id = #{parentId,jdbcType=NUMERIC},
 			</if>
+			<if test="isEnable != null">
+				is_enable = #{isEnable,jdbcType=NUMERIC},
+			</if>
 			<if test="viewType != null">
 				view_type = #{viewType,jdbcType=NUMERIC},
 			</if>
@@ -153,6 +163,7 @@
 		update partner_service_type
 		set name = #{name,jdbcType=VARCHAR},
 		parent_id = #{parentId, jdbcType=NUMERIC},
+		is_enable = #{isEnable, jdbcType=NUMERIC},
 		view_type = #{viewType, jdbcType=NUMERIC},
 		no = #{no,jdbcType=NUMERIC},
 		partner_id = #{partnerId, jdbcType=NUMERIC}
