@@ -144,5 +144,8 @@ public class WeatherUtil {
 		//测试用
 //		WeatherUtil.genWeatherIconList("/Users/lnczx/Downloads/3d_180/night");
 		
+		String temp = "4 ~ -6℃";
+		temp = temp.replace(" ~ ", "/");
+		System.out.println(temp);
 	}
 }

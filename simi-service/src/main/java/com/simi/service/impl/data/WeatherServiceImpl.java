@@ -121,7 +121,7 @@ public class WeatherServiceImpl implements WeatherService {
 			nightPictureUrl = nightPictureUrl.replace("png", "jpg");
 			
 			String temperature = vo.getTemperature();
-			temperature.replace("~", "/");
+			temperature = temperature.replace(" ~ ", "/");
 			vo.setTemperature(temperature);
 			
 			vo.setNightPictureUrl(nightPictureUrl);
