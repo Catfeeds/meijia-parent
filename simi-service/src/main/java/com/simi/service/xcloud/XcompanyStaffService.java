@@ -44,6 +44,8 @@ public interface XcompanyStaffService {
 
 	AppResultData<Object> staffImport(Long companyId, List<Object> datas) throws Exception;
 
+	XcompanyStaff selectByCompanyIdAndJobNumber(Long companyId, String jobNumber);
+
 	
 
 	

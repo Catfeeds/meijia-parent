@@ -32,19 +32,27 @@ var appRootUrl = "http://" + host + "/" + appName + "/app/";
 		$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
 		$.AMUI.validator.patterns.sms_token = /^\d{4}$/;
 		$.AMUI.validator.patterns.email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+		$.AMUI.validator.patterns.pinteger = /^[0-9]*[1-9][0-9]*$/;
 
 	}
 })(jQuery);
 
-//$.ajaxSetup({
-//	dataType : "json",
-//	beforeSend : function(xhr, settings) {
-//		var csrftoken = $.AMUI.utils.cookie.get('csrftoken');
-//		xhr.setRequestHeader("X-CSRFToken", csrftoken);
-//	},
-//});
-
+// $.ajaxSetup({
+// dataType : "json",
+// beforeSend : function(xhr, settings) {
+// var csrftoken = $.AMUI.utils.cookie.get('csrftoken');
+// xhr.setRequestHeader("X-CSRFToken", csrftoken);
+// },
+// });
 
 $("#btn-return").on('click', function(e) {
 	history.go(-1);
 });
+
+//位数不足补零
+function pad(num, n) {
+	var i = (num + "").length;
+	while (i++ < n)
+		num = "0" + num;
+	return num;
+}

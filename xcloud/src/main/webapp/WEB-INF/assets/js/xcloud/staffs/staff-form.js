@@ -1,3 +1,12 @@
+$("#jobNumber").on('blur', function(e) {
+	var v = $("#jobNumber").val();
+	
+	if (v != '') {
+		v = pad(v, 4);
+		$("#jobNumber").val(v);
+	}
+});
+
 
 $("#mobile").on('blur', function(e) {
 	
@@ -7,6 +16,10 @@ $("#mobile").on('blur', function(e) {
 		return false;
 	}
 	
+	var id = $("#id").val();
+	if (id != "" && id > 0) {
+		return false;
+	}
 	var params = {};
 	params.mobile = mobile;
 	// 发送验证码

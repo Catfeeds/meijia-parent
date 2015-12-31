@@ -68,8 +68,10 @@
 							<form:hidden path="id" />
 							<div class="am-g am-margin-top">
 								<div class="am-u-sm-4 am-u-md-2 am-text-right">员工编号:</div>
-								<div class="am-u-sm-8 am-u-md-4">${contentModel.jobNumber }</div>
-								<div class="am-hide-sm-only am-u-md-6"></div>
+								<div class="am-u-sm-8 am-u-md-4">
+									<form:input path="jobNumber" class="am-form-field am-radius js-pattern-pinteger" maxLength="4"
+										data-validation-message="" placeholder="" required="required" /></div>
+								<div class="am-hide-sm-only am-u-md-6">*必填，范围在 0001-9999之间</div>
 							</div>
 
 							<div class="am-g am-margin-top ">
@@ -102,14 +104,14 @@
 							</div>
 
 							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">何时加入公司:</div>
+								<div class="am-u-sm-4 am-u-md-2 am-text-right">入职时间:</div>
 								<div class="am-u-sm-8 am-u-md-4">
 									<fmt:formatDate var='formattedDate' value='${contentModel.joinDate}' type='both'
 										pattern="yyyy-MM-dd" />
 									<div class="am-input-group am-datepicker-date"
 										data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
 										<input type="text" id="joinDate" name="joinDate" value="${formattedDate}" class="am-form-field"
-											placeholder="" readonly> <span class="am-input-group-btn am-datepicker-add-on">
+											placeholder="" readonly required> <span class="am-input-group-btn am-datepicker-add-on">
 											<button class="am-btn am-btn-default" type="button">
 												<span class="am-icon-calendar"></span>
 											</button>
@@ -152,7 +154,7 @@
 								</div>
 								<div class="am-u-sm-12 am-u-md-6"></div>
 							</div>
-
+							<br/>
 							<form:errors path="mobile" class="am-alert am-alert-danger center"></form:errors>
 
 				</div>

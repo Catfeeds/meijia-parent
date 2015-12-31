@@ -33,4 +33,6 @@ public interface XcompanyStaffMapper {
 	String getMaxJobNumber(Long companyId);
 
 	String getNextJobNumber(Long companyId);
+
+	XcompanyStaff selectByCompanyIdAndJobNumber(Long companyId, String jobNumber);
 }

@@ -72,6 +72,15 @@
 		company_id = #{0}
 		and user_id = #{1}
 	</select>
+	
+	<select id="selectByCompanyIdAndJobNumber" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff
+		where
+		company_id = #{0}
+		and job_number = #{1}
+	</select>
 
 
 

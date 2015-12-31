@@ -101,6 +101,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		return xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
 	}
+	
+	@Override
+	public XcompanyStaff selectByCompanyIdAndJobNumber(Long companyId, String jobNumber) {
+
+		return xCompanyStaffMapper.selectByCompanyIdAndJobNumber(companyId, jobNumber);
+	}	
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -236,7 +242,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		String maxJobNumber = "0001";
 		String curJobNumber = xCompanyStaffMapper.getNextJobNumber(companyId);
 		if (!StringUtil.isEmpty(curJobNumber)) {
-			int num = Integer.parseInt(curJobNumber) + 1;
+			int num = Integer.parseInt(curJobNumber);
 			maxJobNumber = String.format("%04d", num);
 		}
 		return maxJobNumber;

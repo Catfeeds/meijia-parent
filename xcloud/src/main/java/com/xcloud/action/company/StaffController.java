@@ -146,6 +146,7 @@ public class StaffController extends BaseController {
 		
 		String mobile = vo.getMobile();
 		String name = vo.getName();
+		String jobNumber = vo.getJobNumber();
 		
 		if (StringUtil.isEmpty(mobile) || StringUtil.isEmpty(name)) {
         	result.addError(new FieldError("contentModel","mobile","手机号或姓名不能为空"));
@@ -157,7 +158,6 @@ public class StaffController extends BaseController {
 		// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 		if (u == null) {
 			u = usersService.genUser(mobile, vo.getName(), Constants.USER_XCOULD);
-			
 		}
 		userId = u.getId();
 		if (!u.getName().equals(vo.getName())) {
@@ -172,6 +172,12 @@ public class StaffController extends BaseController {
 			XcompanyStaff xcompanyStaffExist = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
 			if (xcompanyStaffExist != null) {
 				result.addError(new FieldError("contentModel","mobile","该用户已经为贵司员工,不需要重复添加."));
+	        	return staffUserForm(model, request, staffId);
+			}
+			//判断工号是否有重复
+			xcompanyStaffExist =  xcompanyStaffService.selectByCompanyIdAndJobNumber(companyId, jobNumber);
+			if (xcompanyStaffExist != null) {
+				result.addError(new FieldError("contentModel","mobile","工号有重复，请重新填写"));
 	        	return staffUserForm(model, request, staffId);
 			}
 		}
