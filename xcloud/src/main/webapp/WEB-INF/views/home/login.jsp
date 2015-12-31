@@ -57,11 +57,11 @@
 						<div class="am-g am-padding-sm">
 							<div class="am-form-group am-form-icon">
 								<span class="am-icon-user"></span> 
-								<form:input path="username" class="js-pattern-mobile am-form-field am-radius"  placeholder="用户名" required="required"/> 	
+								<form:input path="username" class="js-pattern-mobile am-form-field am-radius"  placeholder="用户名" data-validation-message="请输入用户名"  required="required"/> 	
 							</div>
 							<div class="am-form-group am-form-icon">
 								<span class="am-icon-lock"></span>
-									<form:password path="password" class="am-form-field am-radius"  autocomplete="off" minlength="6" placeholder="密码"  required="required"/> 
+									<form:password path="password" class="am-form-field am-radius"  autocomplete="off" minlength="6" placeholder="密码" data-validation-message="请输入密码"  required="required"/> 
 							</div>
 							<button type="submit" id="login-btn" class="am-btn am-btn-danger am-btn-block am-radius">登
 								录</button>
