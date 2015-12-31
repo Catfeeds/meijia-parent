@@ -13,7 +13,7 @@ public class Constants {
 	public static short USER_APP = 0;
 	public static short USER_WWZ = 1;
 	public static short USER_BACK = 2;
-	public static short User_XCOULD = 3;
+	public static short USER_XCOULD = 3;
 
 	//是否使用 0 = 未使用 1= 已使用
 	public static short IS_USER_0 = 0;

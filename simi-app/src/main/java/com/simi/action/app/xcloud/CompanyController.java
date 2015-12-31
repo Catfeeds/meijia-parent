@@ -104,7 +104,7 @@ public class CompanyController extends BaseController {
 		Users u = usersService.selectByMobile(mobile);
 		
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = usersService.genUser(mobile, "", Constants.User_XCOULD);
+			u = usersService.genUser(mobile, "", Constants.USER_XCOULD);
 		}		
 		
 		//验证是否出现重名的情况.
@@ -232,7 +232,7 @@ public class CompanyController extends BaseController {
 		Users u = usersService.selectByMobile(userName);
 		Long userId = 0L;
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = usersService.genUser(userName, "", Constants.User_XCOULD);
+			u = usersService.genUser(userName, "", Constants.USER_XCOULD);
 		}
 		userId = u.getId();
 		

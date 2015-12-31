@@ -288,35 +288,42 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	// 导入通讯录，校验方法
 	@SuppressWarnings("unchecked")
 	@Override
-	public AppResultData<Object> staffImport(String fileName) throws Exception {
-		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+	public List<Object> checkDuplication(Long companyId, List<Object> excelDatas) throws Exception {
 		
-		//先进行excel 解析
-		List<Object> excelDatas = new ArrayList<Object>();
-		
-		InputStream in = new FileInputStream(fileName);
-		excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
-		
+		List<Object> result = new ArrayList<Object>();
 		for (int i = 1; i < excelDatas.size(); i++) {
 			List<String> item = (List<String>) excelDatas.get(i);
 			
-			String name = item.get(0);
-			String mobile = item.get(1);
-			String jobName = item.get(2);
-
+//			String name = item.get(0);
+//			String mobile = item.get(1);
+			String jobNumber = item.get(2);
+			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
+			//公司所有的员工列表
+			List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
+			List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);			
 			
-//			Users u = usersService.selectByMobile(mobile);
-//			
-//			if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-//				u = usersService.genUser(mobile, "", Constants.USER_APP);
-//			}
-//			
-//			u.setName(name);
-			
-			
+			for (StaffListVo vo : existStaffs) {
+				if (vo.getJobNumber().equals(jobNumber)) {
+					
+					item.add(String.valueOf(i+1));
+					for (int j = 0; j < item.size(); j++) {
+						String v = item.get(j);
+						
+						if (j == 2) {
+							if (!StringUtil.isEmpty(v)) {
+								v = String.format("%04d", Integer.parseInt(v));
+							}
+						}
+						
+						v = StringUtil.setDoubleQuote(v);
+						
+						item.set(j, v);
+						
+						result.add(item);
+					}
+				}
+			}
 		}			
-		
-		
 		
 		return result;
 	}	
@@ -458,7 +465,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		for (int i = 1; i < datas.size(); i++) {
 			List<String> item = (List<String>) datas.get(i);
 			List<String> errorItem = item;
-			String error = "";
 			
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
@@ -481,6 +487,82 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 					}
 				}
 			}
+		}
+		
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public AppResultData<Object> staffImport(Long companyId, List<Object> datas) throws Exception {
+
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+				
+		//公司所有的员工列表
+		List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
+//		List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);
+		
+		for (int i = 1; i < datas.size(); i++) {
+			List<String> item = (List<String>) datas.get(i);
+			String name = item.get(0).trim();
+			String mobile = item.get(1).trim();
+			String jobNumber = item.get(2).trim();
+			String jobName = item.get(3).trim();
+			String staffTypeName = item.get(4).trim();
+			String idCard = item.get(5).trim();
+			String joinDateStr = item.get(6).trim();
+			String companyEmail = item.get(7).trim();
+			
+			
+			//先处理注册用户表的情况。
+			Users u = usersService.selectByMobile(mobile);
+
+			if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+				u = usersService.genUser(mobile, name, Constants.USER_XCOULD);
+			}
+			
+			Long userId = u.getId();
+			
+			if (!u.getName().equals(name)) {
+				u.setName(name);
+				
+			}			
+			if (StringUtil.isEmpty(idCard)) u.setIdCard(idCard);
+			
+			usersService.updateByPrimaryKeySelective(u);
+			
+			//再处理公司员工表的情况:
+			XcompanyStaff record = this.initXcompanyStaff();
+			for (XcompanyStaff vo : existLists) {
+				if (vo.getUserId().equals(userId)) {
+					record = vo;
+					break;
+				}
+			}
+			
+			record.setCompanyId(companyId);
+			record.setUserId(userId);
+			record.setJobNumber(jobNumber);
+			record.setJobName(jobName);
+			record.setStaffType(XcompanyUtil.getStaffType(staffTypeName));
+			
+			if (StringUtil.isEmpty(joinDateStr)) {
+				Date joinDate = DateUtil.parse(joinDateStr);
+				record.setJoinDate(joinDate);
+			}
+			
+			if (StringUtil.isEmpty(companyEmail)) {
+				record.setCompanyEmail(companyEmail);
+			}
+			
+			
+			
+			if (record.getId() > 0L) {
+				updateByPrimaryKeySelective(record);
+			} else {
+				insertSelective(record);
+			}
+			
 		}
 		
 		return result;

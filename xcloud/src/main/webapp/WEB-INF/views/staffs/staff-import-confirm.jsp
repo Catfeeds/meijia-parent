@@ -10,6 +10,7 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
 
 </head>
 
@@ -19,25 +20,7 @@
 	<!--header end-->
 
 	<div class="am-cf admin-main">
-		<!-- sidebar start -->
-		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 
-			<ul class="am-list admin-sidebar-list">
-				<div class="am-cf am-padding">
-					<div class="am-fl am-cf">
-						<strong class="am-text-primary am-text-lg">扫码加入</strong>
-					</div>
-
-				</div>
-
-
-
-				<li><img src="${xCompany.qrCode }" width="250" height="250" /></li>
-			</ul>
-
-
-		</div>
-		<!-- sidebar end -->
 
 		<!-- content start -->
 		<div class="admin-content">
@@ -51,45 +34,51 @@
 			</div>
 
 			<hr />
-
+			<form method="POST" id="staff-import-form" action="/xcloud/staff/staff-import-do"
+				class="am-form am-container am-padding-xl am-padding-bottom">
+				<input type="hidden" name="newFileName" value="${newFileName}"
 			<div class="am-tabs am-margin" data-am-tabs>
-
+			
 				<div class="am-tabs-bd">
 
 					<div class="am-g am-margin-top">
-						<div class="am-u-sm-2">步骤1:</div>
-						<div class="am-u-md-10">
-							请先点此<a href="/xcloud/attach/批量导入员工模板文件.xlsx">下载Excel模版</a>并按模板填写员工信息
-						</div>
+						<div class="am-u-sm-2"><font color="red">导入确认:</font></div>
+						<div class="am-u-md-10">本次导入，新增<font color="red">${totalNewCount}</font>条，更新<font color="red">${totalUpdateCount}</font>条.</div>
 					</div>
-
-					<div class="am-g am-margin-top ">
-						<div class="am-u-sm-2">步骤2:</div>
-						<div class="am-u-md-10">请将填写好的Excel文档上传</div>
-					</div>
-
-					<div class="am-g am-margin-top ">
-						<div class="am-u-sm-2"></div>
-						<div class="am-u-md-10">
-							<div class="am-form-group am-form-file">
-								<button type="button" class="am-btn am-btn-danger am-btn-sm">
-									<i class="am-icon-cloud-upload"></i> 选择要上传的文件
-								</button>
-								<input id="doc-form-file" type="file" <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-							</div>
-							<div id="file-list"></div>
-						</div>
-					</div>
-					<br />
-
 				</div>
 
+				<c:if test="${tableDatas != ''}">
+					<div class="am-tabs-bd">
+						<table id="error-table"
+							class="am-table am-table-bordered dataTable no-footer" >
+							<thead>
+								<tr>
+									
+									<th width="5%" nowrap>姓名</th>
+									<th width="5%" nowrap>手机</th>
+									<th width="5%" nowrap>工号</th>
+									<th width="10%" nowrap>职位</th>
+									<th width="10%" nowrap>员工类型</th>
+									<th width="10%" nowrap>身份证号</th>
+									<th width="5%" nowrap>入职时间</th>
+									<th width="10%">邮箱</th>
+									<th width="5%" nowrap>行数</th>
+									<th width="30%">错误信息</th>
+								</tr>
+							</thead>
+
+						</table>
+
+					</div>
+				</c:if>
 				<div class="am-margin">
-					<button type="button" class="am-btn am-btn-danger" id="btn-import-submit">确定</button>
+					<button type="submit" class="am-btn am-btn-danger" >确认导入</button>
 					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 				</div>
+				
 
 			</div>
+			</form>
 
 		</div>
 	</div>
@@ -107,6 +96,26 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
+	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>	
 	<script src="<c:url value='/assets/js/xcloud/staffs/staff-import.js'/>"></script>
+	
+	<c:if test="${tableDatas != ''}">
+	<script>
+	$(function() {
+
+		var data = ${tableDatas};
+
+		$('#confrim-table').dataTable( {
+			"lengthChange": false,
+			searching: false,
+		    ordering:  false,
+		    data: data
+		} );
+	});
+	</script>
+	</c:if>
+	
+	
 </body>
 </html>

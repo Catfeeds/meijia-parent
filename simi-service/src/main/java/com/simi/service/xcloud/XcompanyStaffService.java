@@ -36,11 +36,13 @@ public interface XcompanyStaffService {
 
 	List<StaffListVo> changeToStaffLisVos(Long companyId, List<XcompanyStaff> list);
 	
-	AppResultData<Object> staffImport(String fileName) throws Exception;
-
 	String getNextJobNumber(Long companyId);
 
 	AppResultData<Object> validateStaffImport(Long companyId, List<Object> excelDatas) throws Exception;
+
+	List<Object> checkDuplication(Long companyId, List<Object> excelDatas) throws Exception;
+
+	AppResultData<Object> staffImport(Long companyId, List<Object> datas) throws Exception;
 
 	
 

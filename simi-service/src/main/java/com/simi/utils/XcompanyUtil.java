@@ -23,4 +23,22 @@ public class XcompanyUtil {
 		}
 		return staffTypeName;
 	}
+	
+	public static Short getStaffType(String staffTypeName) {
+		Short staffType = 0;
+		switch (staffTypeName) {
+			case "全职":
+				staffType = 0;
+				break;
+			case "兼职":
+				staffType = 1;
+				break;
+			case "实习":
+				staffType = 2;
+				break;
+			default:
+				staffType =0;
+		}
+		return staffType;
+	}	
 }

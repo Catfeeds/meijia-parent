@@ -138,7 +138,7 @@ public class StaffController extends BaseController {
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		
-		Long companyId = vo.getCompanyId();
+		Long companyId = accountAuth.getCompanyId();
 		
 		Long staffId = 0L;
 		if (vo.getId() != null)
@@ -156,7 +156,7 @@ public class StaffController extends BaseController {
 		Long userId = 0L;
 		// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 		if (u == null) {
-			u = usersService.genUser(mobile, vo.getName(), Constants.User_XCOULD);
+			u = usersService.genUser(mobile, vo.getName(), Constants.USER_XCOULD);
 			
 		}
 		userId = u.getId();
@@ -250,7 +250,7 @@ public class StaffController extends BaseController {
 	
 	@AuthPassport
 	@RequestMapping(value = "/staff-import", method = { RequestMethod.GET })
-	public String staffImport(Model model, HttpServletRequest request) {
+	public String staffImportPre(Model model, HttpServletRequest request) {
 		
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
@@ -266,15 +266,13 @@ public class StaffController extends BaseController {
 	
 	@AuthPassport
 	@RequestMapping(value = "/staff-import", method = { RequestMethod.POST })
-	public String doStaffImport(Model model, HttpServletRequest request) throws Exception {
+	public String doStaffImportPre(Model model, HttpServletRequest request) throws Exception {
 		
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		
 		Long companyId = accountAuth.getCompanyId();
-		
-		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);		
-		
+				
 		// 创建一个通用的多部分解析器.
 		String path = "/data/attach/staff/";
 		String fileToken = RandomUtil.randomNumber(6);
@@ -317,12 +315,49 @@ public class StaffController extends BaseController {
 			return "/staffs/staff-import-error";
 		}
 		
-//		//检测都有哪些重复数据
-//		AppResultData<Object> checkDuplication = xcompanyStaffService.validateStaffImport(path + newFileName);
-//		
+		//检测都有哪些重复数据
+		List<Object> dupList = xcompanyStaffService.checkDuplication(companyId, excelDatas);
+		int totalNewCount = excelDatas.size();
 		
+		int totalUpdateCount = 0;
+		if (!dupList.isEmpty()) totalUpdateCount = dupList.size();
+		model.addAttribute("totalNewCount", totalNewCount);
+		model.addAttribute("totalUpdateCount", totalUpdateCount);
+		model.addAttribute("tableDatas", dupList);
+		model.addAttribute("newFileName", newFileName);
 		
-		return "/staffs/staff-import";
+		return "/staffs/staff-import-confirm";
 	}		
+	
+	@AuthPassport
+	@RequestMapping(value = "/staff-import-do", method = { RequestMethod.POST })
+	public String doStaffImport(Model model, HttpServletRequest request) throws Exception {
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+
+		
+		// 创建一个通用的多部分解析器.
+		String path = "/data/attach/staff/";
+		String newFileName = request.getParameter("newFileName").toString();
+		
+		if (StringUtil.isEmpty(newFileName)) {
+			model.addAttribute("errors", "表格数据为空，请下载模板后填写.");
+			return "/staffs/staff-import-error";
+		}
+		
+		List<Object> excelDatas = new ArrayList<Object>();
+		
+		InputStream in = new FileInputStream(path + newFileName);
+		excelDatas = ExcelUtil.readToList(path + newFileName, in, 0, 0);
+		
+		AppResultData<Object> validateResult = xcompanyStaffService.staffImport(companyId, excelDatas);
+		
+		return "/staffs/staff-import-ok";
+	}		
+			
 
 }
