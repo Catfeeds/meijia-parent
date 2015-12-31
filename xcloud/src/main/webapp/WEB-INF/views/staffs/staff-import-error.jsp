@@ -54,10 +54,10 @@
 									
 									<th width="5%" nowrap>姓名</th>
 									<th width="5%" nowrap>手机</th>
+									<th width="5%" nowrap>工号</th>
 									<th width="10%" nowrap>职位</th>
 									<th width="10%" nowrap>员工类型</th>
 									<th width="10%" nowrap>身份证号</th>
-									<th width="5%" nowrap>工号</th>
 									<th width="5%" nowrap>入职时间</th>
 									<th width="10%">邮箱</th>
 									<th width="5%" nowrap>行数</th>

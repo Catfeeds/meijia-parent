@@ -425,9 +425,17 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 				errorItem.add(String.valueOf(i+1));
 				errorItem.add(error);
 				
-				for (int j =0; j < errorItem.size(); j++) {
+				for (int j = 0; j < errorItem.size(); j++) {
 					String v = errorItem.get(j);
+					
+					if (j == 2) {
+						if (!StringUtil.isEmpty(v)) {
+							v = String.format("%04d", Integer.parseInt(v));
+						}
+					}
+					
 					v = StringUtil.setDoubleQuote(v);
+					
 					errorItem.set(j, v);
 				}
 				

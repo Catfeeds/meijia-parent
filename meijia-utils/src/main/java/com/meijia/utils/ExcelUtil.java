@@ -133,10 +133,11 @@ public class ExcelUtil {
 				List<String> r = new ArrayList<String>(cells);
 				for (int c = 0; c < cells; c++) {
 
-					System.out.println(cells + "-----" + c + "----- " + row.getCell(c).getCellType() + "----" + row.getCell(c));
-
-					String v = readCellValues(row.getCell(c));
-					
+//					System.out.println(cells + "-----" + c + "----- " + row.getCell(c).getCellType() + "----" + row.getCell(c));
+					String v = "";
+					if (row.getCell(c) != null) {
+						v = readCellValues(row.getCell(c));
+					}
 					
 					r.add(v);
 				}
@@ -304,7 +305,9 @@ public class ExcelUtil {
 
 			System.out.println(b.size() + "-----" + excelDatas.get(i));
 		}
-
+		String v  = "1";
+		v = String.format("%04d", Integer.parseInt(v));
+		System.out.println(v);
 	}
 
 }
