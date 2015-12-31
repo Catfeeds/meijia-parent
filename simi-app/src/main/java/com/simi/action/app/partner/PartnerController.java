@@ -140,10 +140,10 @@ public class PartnerController extends BaseController {
 		for (PartnerServiceType item : servicePrices) {
 			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
 			PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
-			
+			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(item.getId());
 			//排除掉不是此大类默认的报价和不是此服务人员自己添加的报价
 			if (!servicePriceDetail.getUserId().equals(0L))  {
-				if(!servicePriceDetail.getUserId().equals(partnerUserId)) continue;
+				if(!servicePriceDetail.getUserId().equals(partnerUserId)&&!partnerServiceType.getIsEnable().equals(0)) continue;
 			}
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetail, servicePriceVo);
