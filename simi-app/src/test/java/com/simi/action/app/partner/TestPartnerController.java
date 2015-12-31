@@ -24,7 +24,7 @@ public class TestPartnerController extends JUnitActionBase  {
 	/**
 	 * 	获取服务人员列表 单元测试
 	 */
-	@Test
+/*	@Test
     public void testGetUserList() throws Exception {
 
 		String url = "/app/partner/get_user_list.json";
@@ -37,13 +37,13 @@ public class TestPartnerController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }	
+    }	*/
 	
-	/*@Test
+	@Test
     public void testGetUserDetail() throws Exception {
 
 		String url = "/app/partner/get_user_detail.json";
-		String params = "?partner_user_id=569&service_type_id=52";
+		String params = "?partner_user_id=592&service_type_id=52";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -52,7 +52,7 @@ public class TestPartnerController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }	*/	
+    }		
 	/*
 	@Test
     public void testGetPartnerServicePriceDetail() throws Exception {

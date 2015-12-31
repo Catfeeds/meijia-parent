@@ -57,10 +57,14 @@
 			and parent_id = #{parentId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="isEnable != null ">
+			and is_enable = #{isEnable,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="viewType != null ">
 			and view_type = #{viewType,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="partnerIds != null and partnerIds.size > 0">
 	        and partner_id in 
 	        <foreach item="item" index="index" collection="partnerIds" open="(" separator="," close=")">
