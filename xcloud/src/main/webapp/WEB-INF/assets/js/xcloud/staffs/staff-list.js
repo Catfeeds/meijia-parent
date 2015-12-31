@@ -45,7 +45,7 @@ $("#list-table").dataTable({
           "render": function ( data, type, full, meta ) {
 
 		    return '<a href="/xcloud/staff/staff-form?staff_id=' + data + '"><i class="am-icon-edit am-icon-md"></i></a> ' 
-		    + '<a href="#" onclick="staffDel('+ data + ')"><i class="am-icon-remove am-icon-md"></i></a>';
+		    + '<a href="#" onclick="staffDel('+ data + ')"><i class="am-icon-share am-icon-md"></i></a>';
           }
         },
 
@@ -144,7 +144,7 @@ $("#btn-staff-add").click(function() {
 
 //删除员工
 function staffDel(staffId) {
-	 if(confirm("确定要删除员工吗")){
+	 if(confirm("确定要办理员工离职吗")){
 		 $.ajax({
 		       type : "post",
 		       url : "/xcloud/staff/del.json?staff_id="+staffId,

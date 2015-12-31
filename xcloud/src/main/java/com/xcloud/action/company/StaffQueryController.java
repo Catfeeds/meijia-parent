@@ -80,6 +80,7 @@ public class StaffQueryController extends BaseController {
 		if (deptId > 0L) {
 			searchVo.setDeptId(deptId);
 		}
+		searchVo.setStatus((short) 1);
 		
 		PageInfo plist = xcompanyStaffService.selectByListPage(searchVo, page, length);
 
@@ -115,7 +116,15 @@ public class StaffQueryController extends BaseController {
 
 		Long companyId = accountAuth.getCompanyId();
 		
-		XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> rsList = xcompanyStaffService.selectBySearchVo(searchVo);
+		XcompanyStaff xcompanyStaff = null;
+		if (!rsList.isEmpty()) {
+			xcompanyStaff = rsList.get(0);
+		}
 		
 		if (xcompanyStaff == null) {
 			xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
@@ -132,7 +141,6 @@ public class StaffQueryController extends BaseController {
 		
 		return result;
 	}
-	
 	
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })

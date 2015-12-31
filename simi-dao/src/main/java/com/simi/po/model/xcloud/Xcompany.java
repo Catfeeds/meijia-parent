@@ -2,6 +2,8 @@ package com.simi.po.model.xcloud;
 
 public class Xcompany {
     private Long companyId;
+    
+    private Short companyType;
 
     private String companyName;
     
@@ -209,5 +211,13 @@ public class Xcompany {
 
 	public void setQrCode(String qrCode) {
 		this.qrCode = qrCode;
+	}
+
+	public Short getCompanyType() {
+		return companyType;
+	}
+
+	public void setCompanyType(Short companyType) {
+		this.companyType = companyType;
 	}
 }

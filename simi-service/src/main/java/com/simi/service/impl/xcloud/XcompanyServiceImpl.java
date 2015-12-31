@@ -18,6 +18,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 	public Xcompany initXcompany() {
 		Xcompany record = new Xcompany();
 		record.setCompanyId(0L);
+		record.setCompanyType((short) 0);
 		record.setCompanyName("");
 		record.setCompanyTrade(0L);
 		record.setCompanySize((short) 0);

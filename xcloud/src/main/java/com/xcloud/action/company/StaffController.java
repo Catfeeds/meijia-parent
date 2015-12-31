@@ -169,13 +169,35 @@ public class StaffController extends BaseController {
 		
 		//新增要判断员工是否重复
 		if (staffId.equals(0L)) {
-			XcompanyStaff xcompanyStaffExist = xcompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+			
+			UserCompanySearchVo searchVo = new UserCompanySearchVo();
+			searchVo.setCompanyId(companyId);
+			searchVo.setUserId(userId);
+			searchVo.setStatus((short) 1);
+			
+			List<XcompanyStaff> rsList = xcompanyStaffService.selectBySearchVo(searchVo);
+			XcompanyStaff xcompanyStaffExist = null;
+			if (!rsList.isEmpty()) {
+				xcompanyStaffExist = rsList.get(0);
+			}
+			
+			
 			if (xcompanyStaffExist != null) {
 				result.addError(new FieldError("contentModel","mobile","该用户已经为贵司员工,不需要重复添加."));
 	        	return staffUserForm(model, request, staffId);
 			}
+			
 			//判断工号是否有重复
-			xcompanyStaffExist =  xcompanyStaffService.selectByCompanyIdAndJobNumber(companyId, jobNumber);
+			searchVo = new UserCompanySearchVo();
+			searchVo.setCompanyId(companyId);
+			searchVo.setJobNumber(jobNumber);
+			searchVo.setStatus((short) 1);
+			rsList =  xcompanyStaffService.selectBySearchVo(searchVo);
+			xcompanyStaffExist = null;
+			if (!rsList.isEmpty()) {
+				xcompanyStaffExist = rsList.get(0);
+			}
+			
 			if (xcompanyStaffExist != null) {
 				result.addError(new FieldError("contentModel","mobile","工号有重复，请重新填写"));
 	        	return staffUserForm(model, request, staffId);
@@ -222,7 +244,10 @@ public class StaffController extends BaseController {
 			XcompanyStaff vo = xcompanyStaffService.selectByPrimarykey(staffId);
 			Long companyId = accountAuth.getCompanyId();			
 			if (vo.getCompanyId().equals(companyId)) {
-				xcompanyStaffService.deleteByPrimaryKey(staffId);
+//				xcompanyStaffService.deleteByPrimaryKey(staffId);
+				vo.setStatus((short) 0);
+				vo.setJobNumber("0000");
+				xcompanyStaffService.updateByPrimaryKeySelective(vo);
 			}
 		}
 		return result;

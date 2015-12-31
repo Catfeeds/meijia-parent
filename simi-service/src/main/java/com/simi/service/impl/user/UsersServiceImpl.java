@@ -45,6 +45,7 @@ import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
@@ -90,44 +91,42 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private UserPushBindService userPushBindService;
-	
+
 	@Autowired
 	private UsersAsyncService userAsyncService;
-	
+
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
-		
+
 	/**
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
 	@Override
-	public Users genUsers(String introduction, String mobile, String name,
-			short addFrom) {
+	public Users genUsers(String introduction, String mobile, String name, short addFrom) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers();
 			u.setMobile(mobile);
 			u.setAddFrom(addFrom);
 			u.setName(name);
-			u.setUserType((short)2);
+			u.setUserType((short) 2);
 			u.setIntroduction(introduction);
 			this.insertSelective(u);
 
-			//检测用户所在地，异步操作
+			// 检测用户所在地，异步操作
 			userAsyncService.userMobileCity(u.getId());
-			
-			//新用户注册通知运营人员
+
+			// 新用户注册通知运营人员
 			userAsyncService.newUserNotice(u.getId());
-			
-			//默认加固定客服用户为好友
+
+			// 默认加固定客服用户为好友
 			userAsyncService.addDefaultFriends(u.getId());
 		}
 		return u;
 	}
-	
+
 	@Override
-	public Users genUser(String mobile, String name,
-			short addFrom) {
+	public Users genUser(String mobile, String name, short addFrom) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers();
@@ -136,18 +135,18 @@ public class UsersServiceImpl implements UsersService {
 			u.setName(name);
 			this.insertSelective(u);
 
-			//检测用户所在地，异步操作
+			// 检测用户所在地，异步操作
 			userAsyncService.userMobileCity(u.getId());
-			
-			//新用户注册通知运营人员
+
+			// 新用户注册通知运营人员
 			userAsyncService.newUserNotice(u.getId());
-			
-			//默认加固定客服用户为好友
+
+			// 默认加固定客服用户为好友
 			userAsyncService.addDefaultFriends(u.getId());
 		}
 		return u;
 	}
-	
+
 	@Override
 	public List<Users> selectByAll() {
 		return usersMapper.selectByAll();
@@ -167,7 +166,7 @@ public class UsersServiceImpl implements UsersService {
 		String seniorRange = "";
 		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-		if (! (seniorEndDate == null) ) {
+		if (!(seniorEndDate == null)) {
 			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
 		}
 		userInfo.setSeniorRange(seniorRange);
@@ -193,8 +192,7 @@ public class UsersServiceImpl implements UsersService {
 			vo.setRestMoney(viewUser.getRestMoney());
 		}
 
-		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(viewUser
-				.getId());
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(viewUser.getId());
 
 		if (userRef3rd != null) {
 			vo.setImUserName(userRef3rd.getUsername());
@@ -207,8 +205,7 @@ public class UsersServiceImpl implements UsersService {
 		searchVo.setCardFrom((short) 0);
 		searchVo.setUserId(viewUser.getId());
 
-		PageInfo pageInfo = cardService.selectByListPage(searchVo, 1,
-				Constants.PAGE_MAX_NUMBER);
+		PageInfo pageInfo = cardService.selectByListPage(searchVo, 1, Constants.PAGE_MAX_NUMBER);
 		if (pageInfo != null) {
 			Long totalCard = pageInfo.getTotal();
 			vo.setTotalCard(totalCard.intValue());
@@ -216,35 +213,31 @@ public class UsersServiceImpl implements UsersService {
 
 		// 计算优惠劵个数
 		vo.setTotalCoupon(0);
-		List<UserCoupons> list = userCouponService.selectByUserId(viewUser
-				.getId());
+		List<UserCoupons> list = userCouponService.selectByUserId(viewUser.getId());
 		if (!list.isEmpty()) {
-			
+
 			UserCoupons item = null;
-			List<Long> couponsIds  = new ArrayList<Long>();
+			List<Long> couponsIds = new ArrayList<Long>();
 			Long now = TimeStampUtil.getNow();
-			for(int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < list.size(); i++) {
 				item = list.get(i);
-				//已经使用过的
-				//优惠券已经过期的，都不显示
-				if (item.getIsUsed().equals((short)0) &&
-					item.getExpTime() > (now/1000) ||item.getExpTime() == 0) {
+				// 已经使用过的
+				// 优惠券已经过期的，都不显示
+				if (item.getIsUsed().equals((short) 0) && item.getExpTime() > (now / 1000) || item.getExpTime() == 0) {
 					couponsIds.add(item.getCouponId());
 				} else {
 					list.remove(i);
 				}
 			}
 			vo.setTotalCoupon(list.size());
-			
+
 		}
-			
 
 		// 计算好友个数
 		vo.setTotalFriends(0);
 		UserFriendSearchVo searchVo1 = new UserFriendSearchVo();
 		searchVo1.setUserId(viewUser.getId());
-		PageInfo userFriendPage = userFriendService.selectByListPage(searchVo1,
-				1, Constants.PAGE_MAX_NUMBER);
+		PageInfo userFriendPage = userFriendService.selectByListPage(searchVo1, 1, Constants.PAGE_MAX_NUMBER);
 		if (userFriendPage != null) {
 			Long totalFriends = userFriendPage.getTotal();
 			vo.setTotalFriends(totalFriends.intValue());
@@ -258,8 +251,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public PageInfo searchVoListPage(UserSearchVo searchVo, int pageNo,
-			int pageSize) {
+	public PageInfo searchVoListPage(UserSearchVo searchVo, int pageNo, int pageSize) {
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		String mobile = searchVo.getMobile();
@@ -283,7 +275,7 @@ public class UsersServiceImpl implements UsersService {
 		if (searchVo.getUserType() != null) {
 			conditions.put("userType", searchVo.getUserType());
 		}
-		
+
 		if (searchVo.getIsApproval() != null) {
 			conditions.put("isApproval", searchVo.getIsApproval());
 		}
@@ -301,7 +293,7 @@ public class UsersServiceImpl implements UsersService {
 	public UserViewVo getUserInfo(Long userId) {
 		UserViewVo vo = new UserViewVo();
 		Users u = usersMapper.selectByPrimaryKey(userId);
-	
+
 		if (u == null) {
 			return vo;
 		}
@@ -322,10 +314,8 @@ public class UsersServiceImpl implements UsersService {
 		vo.setSecId(0L);
 		if (userRefSec != null) {
 
-			Users secUser = usersMapper.selectByPrimaryKey(userRefSec
-					.getSecId());
-			UserRef3rd userRef3rd = userRef3rdService
-					.selectByUserIdForIm(userRefSec.getSecId());
+			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userRefSec.getSecId());
 
 			if (userRef3rd == null) {
 
@@ -346,8 +336,8 @@ public class UsersServiceImpl implements UsersService {
 
 		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
 
-		if (! (seniorEndDate == null) ) {
-			
+		if (!(seniorEndDate == null)) {
+
 			String endDateStr = DateUtil.formatDate(seniorEndDate);
 			String nowStr = DateUtil.getToday();
 			if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
@@ -356,9 +346,9 @@ public class UsersServiceImpl implements UsersService {
 			} else {
 				seniorRange = "已过期";
 			}
-			
+
 		}
-		
+
 		vo.setSeniorRange(seniorRange);
 
 		// 用户环信IM信息
@@ -367,28 +357,32 @@ public class UsersServiceImpl implements UsersService {
 			vo.setImUsername(userRef3rd.getUsername());
 			vo.setImPassword(userRef3rd.getPassword());
 		}
-		
-		//用户绑定推送设备信息
+
+		// 用户绑定推送设备信息
 		vo.setClientId("");
 		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
-		if (userPushBind != null) vo.setClientId(userPushBind.getClientId());
-		
-		
-		//用户是否为某个公司的职员
-		 vo.setHasCompany((short) 0);
-		 vo.setCompanyId(0L);
-		 vo.setCompanyCount(0);
-		 List<XcompanyStaff>  companyList = xcompanyStaffService.selectByUserId(userId);
-		 
-		 if (!companyList.isEmpty()) {
-			 vo.setHasCompany((short) 1);
-			 vo.setCompanyCount(companyList.size());
-			 if (companyList.size() == 1) {
-				 XcompanyStaff item = companyList.get(0);
-				 vo.setCompanyId(item.getCompanyId());
-			 }
-		 }
-		 
+		if (userPushBind != null)
+			vo.setClientId(userPushBind.getClientId());
+
+		// 用户是否为某个公司的职员
+		vo.setHasCompany((short) 0);
+		vo.setCompanyId(0L);
+		vo.setCompanyCount(0);
+
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> companyList = xcompanyStaffService.selectBySearchVo(searchVo);
+
+		if (!companyList.isEmpty()) {
+			vo.setHasCompany((short) 1);
+			vo.setCompanyCount(companyList.size());
+			if (companyList.size() == 1) {
+				XcompanyStaff item = companyList.get(0);
+				vo.setCompanyId(item.getCompanyId());
+			}
+		}
+
 		return vo;
 	}
 
@@ -396,13 +390,11 @@ public class UsersServiceImpl implements UsersService {
 	 * 获取用户账号详情接口
 	 */
 	@Override
-	public List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser,
-			UserRef3rd userRef3rd) {
+	public List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd) {
 		List<UserViewVo> result = new ArrayList<UserViewVo>();
 		List<Users> userList = usersMapper.selectByUserIds(userIds);
 
-		List<UserRef3rd> userRef3rds = userRef3rdMapper
-				.selectByUserIds(userIds);
+		List<UserRef3rd> userRef3rds = userRef3rdMapper.selectByUserIds(userIds);
 
 		Users u = null;
 		for (int i = 0; i < userList.size(); i++) {
@@ -432,8 +424,8 @@ public class UsersServiceImpl implements UsersService {
 
 			Date seniorEndDate = orderQueryService.getSeniorRangeDate(u.getId());
 
-			if (! (seniorEndDate == null) ) {
-				
+			if (!(seniorEndDate == null)) {
+
 				String endDateStr = DateUtil.formatDate(seniorEndDate);
 				String nowStr = DateUtil.getToday();
 				if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
@@ -442,9 +434,9 @@ public class UsersServiceImpl implements UsersService {
 				} else {
 					seniorRange = "已过期";
 				}
-				
-			}			
-			
+
+			}
+
 			// 去掉已经到期的用户
 			if (vo.getIsSenior().equals((short) 0))
 				continue;
@@ -484,8 +476,7 @@ public class UsersServiceImpl implements UsersService {
 		}
 
 		Long adminId = userRefSec.getSecId();
-		AdminAccount adminAccount = adminAccountService
-				.selectByPrimaryKey(adminId);
+		AdminAccount adminAccount = adminAccountService.selectByPrimaryKey(adminId);
 
 		String seniorImUsername = adminAccount.getImUsername();
 		String seniorImNickname = adminAccount.getNickname();
@@ -539,36 +530,32 @@ public class UsersServiceImpl implements UsersService {
 		if (userRef3rd != null) {
 			return userRef3rd;
 		}
-		
+
 		String uuid = "";
 		// 如果不存在则新增.并且存入数据库
 		String username = "simi-user-" + user.getId().toString();
 		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
-		
-		//1. 先去环信查找是否有用户:
-	    ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
-		
-	    JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
-	    if (statusCode.toString().equals("404")) {
+
+		// 1. 先去环信查找是否有用户:
+		ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
+
+		JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
+		if (statusCode.toString().equals("404")) {
 			ObjectNode datanode = JsonNodeFactory.instance.objectNode();
 			datanode.put("username", username);
 			datanode.put("password", defaultPassword);
 			if (user.getName() != null && user.getName().length() > 0) {
 				datanode.put("nickname", user.getName());
 			}
-			ObjectNode createNewIMUserSingleNode = EasemobIMUsers
-					.createNewIMUserSingle(datanode);
-			
+			ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
+
 			JsonNode entity = createNewIMUserSingleNode.get("entities");
 			uuid = entity.get(0).get("uuid").toString();
-	    } else {
-	    	JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
-	    	uuid = entity.get(0).get("uuid").toString();
-	    }
-		
-			
+		} else {
+			JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
+			uuid = entity.get(0).get("uuid").toString();
+		}
 
-		
 		// username = entity.get(0).get("username").toString();
 
 		record.setId(0L);
@@ -639,8 +626,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<Users> selectByListPage(UsersSearchVo usersSearchVo,
-			int pageNo, int pageSize) {
+	public List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		List<Users> lists = usersMapper.selectVoByListPage(usersSearchVo);
 		return lists;
@@ -684,52 +670,47 @@ public class UsersServiceImpl implements UsersService {
 		String name = users.getName();
 		String nameMobile = users.getMobile();
 		Long addTime = users.getAddTime();
-		String addTimeStr = TimeStampUtil
-				.timeStampToDateStr(addTime*1000);
-		
-		//	List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
-			//查出所有运营部的人员（roleId=3）
-			Long roleId = 3L;
-			List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
+		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000);
+
+		// List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+		// 查出所有运营部的人员（roleId=3）
+		Long roleId = 3L;
+		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
 		List<String> mobileList = new ArrayList<String>();
-		for (AdminAccount item: adminAccounts) {
+		for (AdminAccount item : adminAccounts) {
 			if (!StringUtil.isEmpty(item.getMobile())) {
-			mobileList.add(item.getMobile());
+				mobileList.add(item.getMobile());
 			}
 		}
-		String[] content = new String[] { name,nameMobile,addTimeStr };
+		String[] content = new String[] { name, nameMobile, addTimeStr };
 		for (int i = 0; i < mobileList.size(); i++) {
-			
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
-				Constants.SEC_REGISTER_ID, content);
-		System.out.println(sendSmsResult + "00000000000000");
+
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i), Constants.SEC_REGISTER_ID, content);
+			System.out.println(sendSmsResult + "00000000000000");
 		}
 		return true;
 	}
-	//秘书审核通过后给助理发送短信提醒
+
+	// 秘书审核通过后给助理发送短信提醒
 	@Override
 	public Boolean userSecToUserPushSms(Users users) {
 
 		String name = users.getName();
 		String mobile = users.getMobile();
 		String url = "";
-		
-		String [] content = new String[] {name,url};
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
-				Constants.SEC_REGISTER_USER_ID, content);
+
+		String[] content = new String[] { name, url };
+		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.SEC_REGISTER_USER_ID, content);
 		System.out.println(sendSmsResult + "00000000000000");
-		
+
 		return true;
 	}
-	
+
 	@Override
-	public List<Users> selectByListPageYes(UsersSearchVo usersSearchVo,
-			int pageNo, int pageSize) {
+	public List<Users> selectByListPageYes(UsersSearchVo usersSearchVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
 		return lists;
 	}
 
-
-	
 }

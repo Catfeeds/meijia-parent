@@ -7,13 +7,10 @@ public class UserCompanySearchVo{
 	private Long deptId;
 	
 	private Long userId;
-		
-/*	private String companyName;
 	
-	private String name;
+	private Short status;
 	
-	private String mobile;*/
-	
+	private String jobNumber;
 	
 	public Long getCompanyId() {
 		return companyId;
@@ -39,29 +36,19 @@ public class UserCompanySearchVo{
 		this.userId = userId;
 	}
 
-/*	public String getCompanyName() {
-		return companyName;
+	public Short getStatus() {
+		return status;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 
-	public String getName() {
-		return name;
+	public String getJobNumber() {
+		return jobNumber;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setJobNumber(String jobNumber) {
+		this.jobNumber = jobNumber;
 	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-*/
-	
 }

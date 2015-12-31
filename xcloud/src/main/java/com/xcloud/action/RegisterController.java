@@ -41,6 +41,7 @@ import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/")
@@ -73,6 +74,7 @@ public class RegisterController extends BaseController {
     }	
 	
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/register", method = {RequestMethod.POST})
     public String doRegister(HttpServletRequest request, 
     						 HttpServletResponse response,  
@@ -196,7 +198,15 @@ public class RegisterController extends BaseController {
 		
 		
 		//将用户加入公司员工中
-		XcompanyStaff record = xCompanyStaffService.selectByCompanyIdAndUserId(companyId, userId);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+
+		List<XcompanyStaff> rsList = xCompanyStaffService.selectBySearchVo(searchVo);
+		XcompanyStaff record = null;
+		if (!rsList.isEmpty()) {
+			record = rsList.get(0);
+		}
 		if (record == null) {
 			record = xCompanyStaffService.initXcompanyStaff();
 		}

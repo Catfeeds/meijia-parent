@@ -62,7 +62,7 @@ function companyJoinSubmit() {
 	
 	var params = {};
 	params.user_name = userName;
-	params.sms_token = $('#sms_token').val();
+	params.sms_token = $('#join_sms_token').val();
 	params.invitation_code = $('#invitation_code').val();
 	//提交数据，完成注册流程
 	$.ajax({

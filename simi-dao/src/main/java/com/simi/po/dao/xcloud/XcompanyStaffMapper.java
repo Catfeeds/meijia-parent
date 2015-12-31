@@ -18,15 +18,7 @@ public interface XcompanyStaffMapper {
 
     int updateByPrimaryKey(XcompanyStaff record);
 
-	List<XcompanyStaff> selectBySearchVo(Long companyId, Long deptId);
-
-	List<XcompanyStaff> selectByCompanyIdAndDeptId(Long companyId, Long deptId);
-
-	List<XcompanyStaff> selectByUserId(Long userId);
-
-	List<XcompanyStaff> selectByCompanyId(Long companyId);
-
-	XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId);
+	List<XcompanyStaff> selectBySearchVo(UserCompanySearchVo searchVo);
 
 	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
 
@@ -34,5 +26,4 @@ public interface XcompanyStaffMapper {
 
 	String getNextJobNumber(Long companyId);
 
-	XcompanyStaff selectByCompanyIdAndJobNumber(Long companyId, String jobNumber);
 }

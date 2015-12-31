@@ -5,6 +5,8 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="is_default" property="isDefault" jdbcType="NUMERIC" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
 		<result column="dept_id" property="deptId" jdbcType="NUMERIC" />
 		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
 		<result column="tel" property="tel" jdbcType="VARCHAR" />
@@ -18,9 +20,10 @@
 		<result column="regular_date" property="regularDate" jdbcType="DATE" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, user_id, dept_id, city_id, tel, tel_ext, company_email, company_fax,
+		id, company_id, user_id, is_default, status, dept_id, city_id, tel, tel_ext, company_email, company_fax,
 		staff_type, job_number, job_name, join_date, regular_date
 	</sql>
+	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
@@ -45,59 +48,51 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="jobNumber != null">
+			and job_number = #{jobNumber,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		
 		order by id desc
 	</select>
-
-	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany_staff
-		where user_id = #{userId,jdbcType=NUMERIC}
-	</select>
-
-	<select id="selectByCompanyIdAndDeptId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany_staff
-		where
-		company_id = #{0}
-		and dept_id = #{1}
-	</select>
-
-	<select id="selectByCompanyIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany_staff
-		where
-		company_id = #{0}
-		and user_id = #{1}
-	</select>
 	
-	<select id="selectByCompanyIdAndJobNumber" resultMap="BaseResultMap" >
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserCompanySearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_staff
-		where
-		company_id = #{0}
-		and job_number = #{1}
-	</select>
-
-
-
-	<select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany_staff
-		where
-		company_id = #{companyId,jdbcType=NUMERIC}
-
-	</select>
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="deptId != null">
+			and dept_id = #{deptId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="jobNumber != null">
+			and job_number = #{jobNumber,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		
+		order by id desc
+	</select>	
 
 	<select id="getMaxJobNumber" resultType="java.lang.String" parameterType="java.lang.Long">
 		select max(job_number) as total
 		from xcompany_staff
 		where
 		company_id = #{companyId,jdbcType=NUMERIC}
+		and status = 1;
 	</select>
 	
 	<select id="getNextJobNumber" resultType="java.lang.String" parameterType="java.lang.Long">
@@ -115,12 +110,13 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyStaff">
-		insert into xcompany_staff (id, company_id, user_id,
+		insert into xcompany_staff (id, company_id, user_id, is_default, status,
 		dept_id, city_id, tel,
 		tel_ext, company_email, company_fax,
 		staff_type, job_number, job_name,
 		join_date, regular_date)
 		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{isDefault,jdbcType=NUMERIC}, #{status,jdbcType=NUMERIC},
 		#{deptId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, #{tel,jdbcType=VARCHAR},
 		#{telExt,jdbcType=VARCHAR}, #{companyEmail,jdbcType=VARCHAR}, #{companyFax,jdbcType=VARCHAR},
 		#{staffType,jdbcType=NUMERIC}, #{jobNumber,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR},
@@ -137,6 +133,12 @@
 			</if>
 			<if test="userId != null">
 				user_id,
+			</if>
+			<if test="isDefault != null">
+				is_default,
+			</if>
+			<if test="status != null">
+				status,
 			</if>
 			<if test="deptId != null">
 				dept_id,
@@ -182,6 +184,12 @@
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="isDefault != null">
+				#{isDefault,jdbcType=NUMERIC},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
+			</if>
 			<if test="deptId != null">
 				#{deptId,jdbcType=NUMERIC},
 			</if>
@@ -226,6 +234,12 @@
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="isDefault != null">
+				is_default = #{isDefault,jdbcType=NUMERIC},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
+			</if>
 			<if test="deptId != null">
 				dept_id = #{deptId,jdbcType=NUMERIC},
 			</if>
@@ -266,6 +280,8 @@
 		update xcompany_staff
 		set company_id = #{companyId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
+		is_default = #{isDefault,jdbcType=NUMERIC},
+		status = #{status,jdbcType=NUMERIC},
 		dept_id = #{deptId,jdbcType=NUMERIC},
 		city_id = #{cityId,jdbcType=NUMERIC},
 		tel = #{tel,jdbcType=VARCHAR},

@@ -8,6 +8,10 @@ public class XcompanyStaff {
     private Long companyId;
 
     private Long userId;
+    
+    private Short isDefault;
+    
+    private Short status;
 
     private Long deptId;
 
@@ -142,4 +146,20 @@ public class XcompanyStaff {
     public void setRegularDate(Date regularDate) {
         this.regularDate = regularDate;
     }
+
+	public Short getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(Short isDefault) {
+		this.isDefault = isDefault;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
 }

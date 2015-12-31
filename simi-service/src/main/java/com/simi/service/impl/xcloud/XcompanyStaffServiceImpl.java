@@ -50,6 +50,8 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		record.setId(0L);
 		record.setUserId(0L);
+		record.setIsDefault((short) 0);
+		record.setStatus((short) 1);
 		record.setCompanyId(0L);
 		record.setDeptId(0L);
 		record.setCityId(0L);
@@ -84,29 +86,11 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public List<XcompanyStaff> selectBySearchVo(Long companyId, Long deptId) {
+	public List<XcompanyStaff> selectBySearchVo(UserCompanySearchVo searchVo) {
 
-		return xCompanyStaffMapper.selectBySearchVo(companyId, deptId);
+		return xCompanyStaffMapper.selectBySearchVo(searchVo);
 
 	}
-
-	@Override
-	public List<XcompanyStaff> selectByCompanyIdAndDeptId(Long companyId, Long deptId) {
-
-		return xCompanyStaffMapper.selectByCompanyIdAndDeptId(companyId, deptId);
-	}
-
-	@Override
-	public XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId) {
-
-		return xCompanyStaffMapper.selectByCompanyIdAndUserId(companyId, userId);
-	}
-	
-	@Override
-	public XcompanyStaff selectByCompanyIdAndJobNumber(Long companyId, String jobNumber) {
-
-		return xCompanyStaffMapper.selectByCompanyIdAndJobNumber(companyId, jobNumber);
-	}	
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -205,12 +189,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}	
 
 	@Override
-	public List<XcompanyStaff> selectByCompanyId(Long companyId) {
-
-		return xCompanyStaffMapper.selectByCompanyId(companyId);
-	}
-
-	@Override
 	public int insertSelective(XcompanyStaff xcompanyStaff) {
 
 		return xCompanyStaffMapper.insertSelective(xcompanyStaff);
@@ -221,12 +199,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		return xCompanyStaffMapper.selectByPrimaryKey(id);
 
-	}
-
-	@Override
-	public List<XcompanyStaff> selectByUserId(Long userId) {
-
-		return xCompanyStaffMapper.selectByUserId(userId);
 	}
 
 	@Override
@@ -297,7 +269,10 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	public List<Object> checkDuplication(Long companyId, List<Object> excelDatas) throws Exception {
 		
 		//公司所有的员工列表
-		List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> existLists = this.selectBySearchVo(searchVo);
 		List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);	
 		
 		List<Object> result = new ArrayList<Object>();
@@ -475,7 +450,10 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		List<Object> result = new ArrayList<Object>();
 		
 		//公司所有的员工列表
-		List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> existLists = this.selectBySearchVo(searchVo);
 		List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);
 //		int totalNum = 0;
 		for (int i = 1; i < datas.size(); i++) {
@@ -524,7 +502,10 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 				
 		//公司所有的员工列表
-		List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> existLists = this.selectBySearchVo(searchVo);
 //		List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);
 		
 		for (int i = 1; i < datas.size(); i++) {

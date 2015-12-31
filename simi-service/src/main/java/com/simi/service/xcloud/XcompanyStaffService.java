@@ -12,26 +12,19 @@ public interface XcompanyStaffService {
 
 	XcompanyStaff initXcompanyStaff();
 
-	List<XcompanyStaff> selectBySearchVo(Long companyId, Long deptId);
-
-	List<XcompanyStaff> selectByCompanyIdAndDeptId(Long companyId, Long deptId);
-	
 	int deleteByPrimaryKey(Long id);
 
-	List<XcompanyStaff> selectByCompanyId(Long companyId);
-
 	int insertSelective(XcompanyStaff xcompanyStaff);
+	
+	int updateByPrimaryKeySelective(XcompanyStaff xcompanyStaff);
 
 	XcompanyStaff selectByPrimarykey(Long id);
 
-	List<XcompanyStaff> selectByUserId(Long userId);
-
-	int updateByPrimaryKeySelective(XcompanyStaff xcompanyStaff);
-
-	XcompanyStaff selectByCompanyIdAndUserId(Long companyId, Long userId);
-
+	@SuppressWarnings("rawtypes")
 	PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize);
-
+	
+	List<XcompanyStaff> selectBySearchVo(UserCompanySearchVo searchVo);
+	
 	StaffListVo changeToStaffLisVo(XcompanyStaff item);
 
 	List<StaffListVo> changeToStaffLisVos(Long companyId, List<XcompanyStaff> list);
@@ -43,15 +36,5 @@ public interface XcompanyStaffService {
 	List<Object> checkDuplication(Long companyId, List<Object> excelDatas) throws Exception;
 
 	AppResultData<Object> staffImport(Long companyId, List<Object> datas) throws Exception;
-
-	XcompanyStaff selectByCompanyIdAndJobNumber(Long companyId, String jobNumber);
-
-	
-
-	
-
-
-	
-
 
 }
