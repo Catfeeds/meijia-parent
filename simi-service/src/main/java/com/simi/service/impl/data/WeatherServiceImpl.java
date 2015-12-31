@@ -120,6 +120,9 @@ public class WeatherServiceImpl implements WeatherService {
 			nightPictureUrl = nightPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
 			nightPictureUrl = nightPictureUrl.replace("png", "jpg");
 			
+			String temperature = vo.getTemperature();
+			temperature.replace("~", "/");
+			vo.setTemperature(temperature);
 			
 			vo.setNightPictureUrl(nightPictureUrl);
 			weatherDatas.set(i, vo);
