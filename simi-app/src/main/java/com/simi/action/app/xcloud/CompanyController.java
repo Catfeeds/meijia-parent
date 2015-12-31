@@ -25,7 +25,6 @@ import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.QrCodeUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -184,6 +183,7 @@ public class CompanyController extends BaseController {
 		record.setUserId(u.getId());
 		record.setCompanyId(companyId);
 		record.setDeptId(deptId);
+		record.setIsDefault((short) 1);
 		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
 
@@ -297,6 +297,8 @@ public class CompanyController extends BaseController {
 			Xcompany xCompany = xCompanyService.selectByPrimaryKey(item.getCompanyId());
 
 			vo.put("company_name", xCompany.getCompanyName());
+			
+			vo.put("is_default", item.getIsDefault().toString());
 			resultMap.add(vo);
 		}
 		result.setData(resultMap);
@@ -349,4 +351,116 @@ public class CompanyController extends BaseController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/set_default", method = { RequestMethod.GET })
+	public AppResultData<Object> setDefault(
+			@RequestParam("user_id") Long userId, 
+			@RequestParam("company_id") Long companyId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = usersService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> rsList = xCompanyStaffService.selectBySearchVo(searchVo);
+		
+		if (rsList.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("你不是该企业员工");
+			return result;
+		}
+		
+		XcompanyStaff record = rsList.get(0);
+		
+		if (!record.getCompanyId().equals(companyId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("你不是该企业员工");
+			return result;
+		}
+		
+		//把用户所属的其他的企业设为不默认
+		searchVo = new UserCompanySearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> list = xCompanyStaffService.selectBySearchVo(searchVo);
+		for (XcompanyStaff item : list) {
+			item.setIsDefault((short) 0);
+			xCompanyStaffService.updateByPrimaryKeySelective(item);
+		}
+		
+		
+		record.setIsDefault((short) 1);
+		xCompanyStaffService.updateByPrimaryKeySelective(record);
+		return result;
+	}
+	
+	@RequestMapping(value = "/get_detail", method = { RequestMethod.GET })
+	public AppResultData<Object> getDetail(
+			@RequestParam("user_id") Long userId, 
+			@RequestParam("company_id") Long companyId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = usersService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> rsList = xCompanyStaffService.selectBySearchVo(searchVo);
+		
+		if (rsList.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("你不是该企业员工");
+			return result;
+		}
+		
+		XcompanyStaff record = rsList.get(0);
+		
+		if (!record.getCompanyId().equals(companyId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("你不是该企业员工");
+			return result;
+		}
+		
+		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
+		
+		if (xCompany == null) return result;
+		
+		Map<String, Object> vo = new HashMap<String, Object>();
+
+		vo.put("companyId", companyId);
+
+		vo.put("companyName", xCompany.getCompanyName());
+		
+		vo.put("companyType", xCompany.getCompanyType());
+		
+		vo.put("shortName", xCompany.getShortName());
+		
+		vo.put("invitationCode", xCompany.getInvitationCode());
+		
+		vo.put("qrCode", xCompany.getQrCode());
+		
+		vo.put("addTimeStr", TimeStampUtil.timeStampToDateStr(xCompany.getAddTime() * 1000));
+		
+		result.setData(vo);
+		return result;
+	}	
 }

@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;

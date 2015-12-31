@@ -1,7 +1,6 @@
 package com.simi.action.app.dict;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCardType;
-import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictProvince;
 import com.simi.po.model.dict.DictSeniorType;
 import com.simi.po.model.dict.DictTrade;

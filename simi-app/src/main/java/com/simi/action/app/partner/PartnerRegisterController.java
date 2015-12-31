@@ -1,9 +1,5 @@
 package com.simi.action.app.partner;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageInfo;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
@@ -22,26 +16,13 @@ import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
-import com.simi.po.model.user.TagUsers;
-import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
-import com.simi.service.order.OrderQueryService;
 import com.simi.service.partners.PartnerRefServiceTypeService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
-import com.simi.service.sec.SecService;
-import com.simi.service.user.TagsUsersService;
-import com.simi.service.user.UserLoginedService;
-import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
-import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserSearchVo;
-import com.simi.vo.sec.SecViewVo;
-import com.simi.vo.user.UserViewVo;
 
 @Controller
 @RequestMapping(value = "/app/partner")

@@ -12,6 +12,7 @@ public class CreditConsumeResult {
 	}
 	
 	
+	@Override
 	public String toString(){
 		if(success){
 			return "{'status':'ok','errorMessage':'','bizId':'"+bizId+"','credits':'"+credits+"'}";

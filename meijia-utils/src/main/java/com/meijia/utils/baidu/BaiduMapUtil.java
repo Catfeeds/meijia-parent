@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.HttpClientUtil;
 import com.meijia.utils.StringUtil;
@@ -19,7 +18,6 @@ import com.meijia.utils.baidu.vo.BaiduGeoCoderAddressComponent;
 import com.meijia.utils.baidu.vo.BaiduGeoCoderResultVo;
 import com.meijia.utils.baidu.vo.BaiduGeoCoderVo;
 import com.meijia.utils.baidu.vo.BaiduPoiVo;
-import com.meijia.utils.weather.WeatherInfoVo;
 
 /**
  * 访问百度 API 的类
@@ -155,6 +153,7 @@ public class BaiduMapUtil {
 		
 		if(firstList.size() > 0){
 			Collections.sort(firstList, new Comparator<BaiduPoiVo>() {
+				@Override
 				public int compare(BaiduPoiVo s1, BaiduPoiVo s2) {
 					return Integer.valueOf(s1.getDistanceValue()).compareTo(s2.getDistanceValue());
 				}

@@ -2,8 +2,6 @@ package com.simi.action.op;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +20,12 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.op.AppCardType;
-import com.simi.po.model.op.AppTools;
-import com.simi.po.model.op.OpAd;
-import com.simi.po.model.op.OpChannel;
-import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.op.AppCardTypeService;
-import com.simi.service.op.AppToolsService;
-import com.simi.service.op.OpAdService;
-import com.simi.service.op.OpChannelService;
-import com.simi.service.partners.PartnerServiceTypeService;
-import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.po.AdSearchVo;
 
 @Controller
 @RequestMapping(value = "/op")

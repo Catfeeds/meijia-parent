@@ -1,7 +1,6 @@
 package com.meijia.utils;
 
 import java.awt.Font;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +21,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -165,9 +165,9 @@ public class ExcelUtil {
 				// 判断单元格类型
 				switch (cell.getCellType()) {
 				// 数字类型
-				case HSSFCell.CELL_TYPE_NUMERIC:
+				case Cell.CELL_TYPE_NUMERIC:
 					// 处理日期格式、时间格式
-					if (HSSFDateUtil.isCellDateFormatted(cell)) {
+					if (DateUtil.isCellDateFormatted(cell)) {
 						SimpleDateFormat sdf = null;
 						if (cell.getCellStyle().getDataFormat() == HSSFDataFormat.getBuiltinFormat("h:mm")) {
 							sdf = new SimpleDateFormat("HH:mm");
@@ -194,10 +194,10 @@ public class ExcelUtil {
 						result = format.format(value);
 					}
 					break;
-				case HSSFCell.CELL_TYPE_STRING:// String类型
+				case Cell.CELL_TYPE_STRING:// String类型
 					result = cell.getStringCellValue();
 					break;
-				case HSSFCell.CELL_TYPE_BLANK:
+				case Cell.CELL_TYPE_BLANK:
 					result = "";
 				default:
 					result = "";

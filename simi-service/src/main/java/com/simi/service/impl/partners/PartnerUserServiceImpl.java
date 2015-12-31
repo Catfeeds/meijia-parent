@@ -13,7 +13,6 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.partners.PartnerUsersMapper;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;

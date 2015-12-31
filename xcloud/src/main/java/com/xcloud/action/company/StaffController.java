@@ -2,14 +2,9 @@ package com.xcloud.action.company;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
@@ -29,12 +24,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.ExcelUtil;
-import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;

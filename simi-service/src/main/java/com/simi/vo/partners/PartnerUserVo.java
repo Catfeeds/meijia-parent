@@ -32,10 +32,12 @@ public class PartnerUserVo extends PartnerUsers {
 	
 	private Long addTime;
 
+	@Override
 	public Short getWeightType() {
 		return weightType;
 	}
 
+	@Override
 	public void setWeightType(Short weightType) {
 		this.weightType = weightType;
 	}

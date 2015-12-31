@@ -1,8 +1,5 @@
 package com.simi.service.impl.xcloud;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +11,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.common.ConstantMsg;

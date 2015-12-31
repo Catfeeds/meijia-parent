@@ -13,14 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.GsonUtil;
-import com.meijia.utils.weather.WeatherDataVo;
-import com.meijia.utils.weather.WeatherIndexVo;
-import com.meijia.utils.weather.WeatherInfoVo;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.data.Weathers;
 import com.simi.po.model.dict.DictCity;
 import com.simi.service.data.WeatherService;
 import com.simi.service.dict.DictService;

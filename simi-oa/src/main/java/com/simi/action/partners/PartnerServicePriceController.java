@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.baidu.DwzUtil;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;

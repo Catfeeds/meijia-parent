@@ -1,7 +1,5 @@
 package com.duiba.credits.sdk;
 
-import java.util.Date;
-
 /**
  * 开发者向兑吧发起请求，确认兑换成功失败的参数
  * 
