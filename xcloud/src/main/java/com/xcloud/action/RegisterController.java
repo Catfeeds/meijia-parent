@@ -203,7 +203,7 @@ public class RegisterController extends BaseController {
 		record.setUserId(userId);
 		record.setCompanyId(companyId);
 		record.setDeptId(deptId);
-		record.setJobNumber(xCompanyStaffService.getMaxJobNumber(companyId));
+		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
 		
 		return "redirect:/register-ok";

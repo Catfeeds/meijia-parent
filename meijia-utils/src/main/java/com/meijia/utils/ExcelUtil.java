@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -13,6 +15,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
@@ -128,20 +133,76 @@ public class ExcelUtil {
 				List<String> r = new ArrayList<String>(cells);
 				for (int c = 0; c < cells; c++) {
 
-					System.out.println(cells + "-----" + c + "----- " + row.getCell(c));
+					System.out.println(cells + "-----" + c + "----- " + row.getCell(c).getCellType() + "----" + row.getCell(c));
+
+					String v = readCellValues(row.getCell(c));
 					
-					if (row.getCell(c) != null) {
-						row.getCell(c).setCellType(Cell.CELL_TYPE_STRING);
-						r.add(row.getCell(c).getStringCellValue());
-					} else {
-						r.add("");
-					}
+					
+					r.add(v);
 				}
 				ls.add(r);
 			}
 		}
 
 		return ls;
+	}
+
+	public static String readCellValues(Cell cell) throws Exception {
+		// 用于返回结果
+		String result = new String();
+
+		try {
+			// 如果单元格为空，返回null
+			if (cell == null) {
+				result = "null";
+			} else {
+				// 判断单元格类型
+				switch (cell.getCellType()) {
+				// 数字类型
+				case HSSFCell.CELL_TYPE_NUMERIC:
+					// 处理日期格式、时间格式
+					if (HSSFDateUtil.isCellDateFormatted(cell)) {
+						SimpleDateFormat sdf = null;
+						if (cell.getCellStyle().getDataFormat() == HSSFDataFormat.getBuiltinFormat("h:mm")) {
+							sdf = new SimpleDateFormat("HH:mm");
+						} else {// 日期
+							sdf = new SimpleDateFormat("yyyy-MM-dd");
+						}
+						Date date = cell.getDateCellValue();
+						result = sdf.format(date);
+					} else if (cell.getCellStyle().getDataFormat() == 58) {
+						// 处理自定义日期格式：m月d日(通过判断单元格的格式id解决，id的值是58)
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						double value = cell.getNumericCellValue();
+						Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
+						result = sdf.format(date);
+					} else {
+						double value = cell.getNumericCellValue();
+						CellStyle style = cell.getCellStyle();
+						DecimalFormat format = new DecimalFormat();
+						String temp = style.getDataFormatString();
+						// 单元格设置成常规
+						if (temp.equals("General")) {
+							format.applyPattern("#");
+						}
+						result = format.format(value);
+					}
+					break;
+				case HSSFCell.CELL_TYPE_STRING:// String类型
+					result = cell.getStringCellValue();
+					break;
+				case HSSFCell.CELL_TYPE_BLANK:
+					result = "";
+				default:
+					result = "";
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	/**
@@ -229,18 +290,18 @@ public class ExcelUtil {
 
 		return wb;
 	}
-		
+
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 
 		String path = "/Users/lnczx/Desktop/tmp/staff-excel/";
-		String fileName = "批量导入员工模板文件-一条数据错误.xlsx";
+		String fileName = "批量导入员工模板文件-一条数据.xlsx";
 
 		InputStream in = new FileInputStream(path + fileName);
 		List<Object> excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
 		for (int i = 0; i < excelDatas.size(); i++) {
 			List<String> b = (List<String>) excelDatas.get(i);
-			
+
 			System.out.println(b.size() + "-----" + excelDatas.get(i));
 		}
 

@@ -538,7 +538,7 @@ public class DateUtil {
 		Date testDate = TimeStampUtil.timeStampToDateFull(1438159994000L , DEFAULT_FULL_PATTERN);
 		System.out.println(DateUtil.fromToday(testDate));
 		
-		String dateStr = "2015-1-11a";
+		String dateStr = "11-五月-2015";
 		System.out.println(DateUtil.isDate(dateStr));
 		
 	}

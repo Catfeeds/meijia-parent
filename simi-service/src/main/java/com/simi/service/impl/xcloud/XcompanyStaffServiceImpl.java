@@ -408,6 +408,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 			//如果入职时间不为空，则需要判断是否是否为正确格式 yyyy-mm-dd
 			if (!StringUtil.isEmpty(item.get(6))) {
+				System.out.println("入职时间 = " + item.get(6));
 				if (!DateUtil.isDate(item.get(6))) {
 					error+= "入职时间格式不正确<br>";	
 				}

@@ -193,7 +193,7 @@ public class CompanyController extends BaseController {
 		record.setUserId(u.getId());
 		record.setCompanyId(companyId);
 		record.setDeptId(deptId);
-		record.setJobNumber(xCompanyStaffService.getMaxJobNumber(companyId));
+		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
 		
 		return result;
@@ -264,7 +264,7 @@ public class CompanyController extends BaseController {
 		record.setUserId(u.getId());
 		record.setCompanyId(companyId);
 		record.setDeptId(deptId);
-		record.setJobNumber(xCompanyStaffService.getMaxJobNumber(companyId));
+		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
 		
 		return result;
