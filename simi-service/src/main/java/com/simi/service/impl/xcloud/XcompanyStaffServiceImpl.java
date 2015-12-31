@@ -301,6 +301,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 //			String name = item.get(0);
 //			String mobile = item.get(1);
 			String jobNumber = item.get(2);
+			jobNumber = jobNumber.replace(",", "");
 			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
 					
 			
@@ -313,6 +314,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 						
 						if (j == 2) {
 							if (!StringUtil.isEmpty(v)) {
+								v = v.replace(",", "");
 								v = String.format("%04d", Integer.parseInt(v));
 							}
 						}
@@ -395,11 +397,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			if (StringUtil.isEmpty(item.get(2))) {
 				error+= "工号为必填项<br>";		
 			} else {
-				if (!RegexUtil.isInteger(item.get(2))) {
+				String jobNumber = item.get(2);
+				jobNumber = jobNumber.replace(",", "");
+				if (!RegexUtil.isInteger(jobNumber)) {
 					error+= "工号填写不正确<br>";		
 				} else {
-					int jobNumber = Integer.parseInt(item.get(2));
-					if (jobNumber < 1 || jobNumber > 9999) {
+					int jobNum = Integer.parseInt(jobNumber);
+					if (jobNum < 1 || jobNum > 9999) {
 						error+= "工号范围在 0001 - 9999区间<br>";		
 					}
 				}
@@ -442,6 +446,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 					
 					if (j == 2) {
 						if (!StringUtil.isEmpty(v)) {
+							v = v.replace(",", "");
 							v = String.format("%04d", Integer.parseInt(v));
 						}
 					}
@@ -474,6 +479,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
 			String jobNumber = item.get(2).trim();
+			jobNumber = jobNumber.replace(",", "");
 			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
 			for (StaffListVo vo : existStaffs) {
 				if (vo.getJobNumber().equals(jobNumber)) {
@@ -486,6 +492,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 							
 							if (j == 2) {
 								if (!StringUtil.isEmpty(v)) {
+									v = v.replace(",", "");
 									v = String.format("%04d", Integer.parseInt(v));
 								}
 							}
@@ -519,6 +526,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
 			String jobNumber = item.get(2).trim();
+			jobNumber = jobNumber.replace(",", "");
 			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
 			String jobName = item.get(3).trim();
 			String staffTypeName = item.get(4).trim();

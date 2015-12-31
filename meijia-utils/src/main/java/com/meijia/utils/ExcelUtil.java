@@ -121,21 +121,26 @@ public class ExcelUtil {
 		if (null != wb) {
 			Sheet sh = wb.getSheetAt(sheetIndex);
 			int rows = sh.getPhysicalNumberOfRows();
+			int cells = 0;
+			cells = sh.getRow(0).getPhysicalNumberOfCells();
 			for (int i = skipRows; i < rows; i++) {
 				Row row = sh.getRow(i);
 				if (null == row) {
 					break;
 				}
-				int cells = row.getLastCellNum();
+				
+				if (row.getLastCellNum() > cells)
+					cells = row.getPhysicalNumberOfCells();
 				if (cells == 0) {
 					continue;
 				}
 				List<String> r = new ArrayList<String>(cells);
 				for (int c = 0; c < cells; c++) {
 
-//					System.out.println(cells + "-----" + c + "----- " + row.getCell(c).getCellType() + "----" + row.getCell(c));
+					
 					String v = "";
 					if (row.getCell(c) != null) {
+						System.out.println(cells + "-----" + c + "----- " + row.getCell(c).getCellType());
 						v = readCellValues(row.getCell(c));
 					}
 					
@@ -296,7 +301,7 @@ public class ExcelUtil {
 	public static void main(String[] args) throws Exception {
 
 		String path = "/Users/lnczx/Desktop/tmp/staff-excel/";
-		String fileName = "批量导入员工模板文件-一条数据.xlsx";
+		String fileName = "批量导入员工模板文件(5).xlsx";
 
 		InputStream in = new FileInputStream(path + fileName);
 		List<Object> excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
