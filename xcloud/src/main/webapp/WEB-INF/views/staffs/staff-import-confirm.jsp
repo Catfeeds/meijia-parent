@@ -39,17 +39,21 @@
 				<input type="hidden" name="newFileName" value="${newFileName}"
 			<div class="am-tabs am-margin" data-am-tabs>
 			
-				<div class="am-tabs-bd">
 
-					<div class="am-g am-margin-top">
-						<div class="am-u-sm-2"><font color="red">导入确认:</font></div>
-						<div class="am-u-md-10">本次导入，新增<font color="red">${totalNewCount}</font>条，更新<font color="red">${totalUpdateCount}</font>条.</div>
+
+				<div class="am-g am-margin-top">
+					<div class="am-u-sm-2"><font color="red">导入确认:</font></div>
+					<div class="am-u-md-10">本次导入，新增<font color="red">${totalNewCount}</font>条，更新<font color="red">${totalUpdateCount}</font>条.
+						<c:if test="${tableDatas != ''}">
+							以下为更新的列表:
+						</c:if>
+					
 					</div>
 				</div>
 
 				<c:if test="${tableDatas != ''}">
 					<div class="am-tabs-bd">
-						<table id="error-table"
+						<table id="confirm-table"
 							class="am-table am-table-bordered dataTable no-footer" >
 							<thead>
 								<tr>
@@ -63,7 +67,6 @@
 									<th width="5%" nowrap>入职时间</th>
 									<th width="10%">邮箱</th>
 									<th width="5%" nowrap>行数</th>
-									<th width="30%">错误信息</th>
 								</tr>
 							</thead>
 
@@ -106,7 +109,7 @@
 
 		var data = ${tableDatas};
 
-		$('#confrim-table').dataTable( {
+		$('#confirm-table').dataTable( {
 			"lengthChange": false,
 			searching: false,
 		    ordering:  false,

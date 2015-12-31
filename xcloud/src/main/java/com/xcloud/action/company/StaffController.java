@@ -317,13 +317,17 @@ public class StaffController extends BaseController {
 		
 		//检测都有哪些重复数据
 		List<Object> dupList = xcompanyStaffService.checkDuplication(companyId, excelDatas);
-		int totalNewCount = excelDatas.size();
+		int totalNewCount = excelDatas.size() - 1;
+		model.addAttribute("totalNewCount", totalNewCount);
 		
 		int totalUpdateCount = 0;
-		if (!dupList.isEmpty()) totalUpdateCount = dupList.size();
-		model.addAttribute("totalNewCount", totalNewCount);
+		model.addAttribute("tableDatas", "");
+		if (!dupList.isEmpty()) {
+			totalUpdateCount = dupList.size();
+			model.addAttribute("tableDatas", dupList);
+		}
+		
 		model.addAttribute("totalUpdateCount", totalUpdateCount);
-		model.addAttribute("tableDatas", dupList);
 		model.addAttribute("newFileName", newFileName);
 		
 		return "/staffs/staff-import-confirm";
@@ -337,9 +341,7 @@ public class StaffController extends BaseController {
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		
 		Long companyId = accountAuth.getCompanyId();
-		
 
-		
 		// 创建一个通用的多部分解析器.
 		String path = "/data/attach/staff/";
 		String newFileName = request.getParameter("newFileName").toString();

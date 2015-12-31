@@ -278,7 +278,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		if (!validateDataExist.isEmpty() && validateDataExist.size() > 0) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("表格数据填写有冲突，请查看");
-			result.setData(validateDatas);
+			result.setData(validateDataExist);
 			return result;
 		}
 		
@@ -290,6 +290,10 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	@Override
 	public List<Object> checkDuplication(Long companyId, List<Object> excelDatas) throws Exception {
 		
+		//公司所有的员工列表
+		List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
+		List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);	
+		
 		List<Object> result = new ArrayList<Object>();
 		for (int i = 1; i < excelDatas.size(); i++) {
 			List<String> item = (List<String>) excelDatas.get(i);
@@ -298,9 +302,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 //			String mobile = item.get(1);
 			String jobNumber = item.get(2);
 			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
-			//公司所有的员工列表
-			List<XcompanyStaff> existLists = this.selectByCompanyId(companyId);
-			List<StaffListVo> existStaffs = this.changeToStaffLisVos(companyId, existLists);			
+					
 			
 			for (StaffListVo vo : existStaffs) {
 				if (vo.getJobNumber().equals(jobNumber)) {
@@ -319,8 +321,11 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 						
 						item.set(j, v);
 						
-						result.add(item);
+						
+						
 					}
+					result.add(item);
+					break;
 				}
 			}
 		}			
@@ -469,7 +474,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
 			String jobNumber = item.get(2).trim();
-			
+			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
 			for (StaffListVo vo : existStaffs) {
 				if (vo.getJobNumber().equals(jobNumber)) {
 					if (!vo.getName().equals(name) || !vo.getMobile().equals(mobile)) {
@@ -478,6 +483,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 						
 						for (int j =0; j < errorItem.size(); j++) {
 							String v = errorItem.get(j);
+							
+							if (j == 2) {
+								if (!StringUtil.isEmpty(v)) {
+									v = String.format("%04d", Integer.parseInt(v));
+								}
+							}
+							
 							v = StringUtil.setDoubleQuote(v);
 							errorItem.set(j, v);
 						}
@@ -507,6 +519,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
 			String jobNumber = item.get(2).trim();
+			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
 			String jobName = item.get(3).trim();
 			String staffTypeName = item.get(4).trim();
 			String idCard = item.get(5).trim();
@@ -527,7 +540,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 				u.setName(name);
 				
 			}			
-			if (StringUtil.isEmpty(idCard)) u.setIdCard(idCard);
+			if (!StringUtil.isEmpty(idCard)) u.setIdCard(idCard);
 			
 			usersService.updateByPrimaryKeySelective(u);
 			
@@ -546,12 +559,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			record.setJobName(jobName);
 			record.setStaffType(XcompanyUtil.getStaffType(staffTypeName));
 			
-			if (StringUtil.isEmpty(joinDateStr)) {
+			if (!StringUtil.isEmpty(joinDateStr)) {
 				Date joinDate = DateUtil.parse(joinDateStr);
 				record.setJoinDate(joinDate);
 			}
 			
-			if (StringUtil.isEmpty(companyEmail)) {
+			if (!StringUtil.isEmpty(companyEmail)) {
 				record.setCompanyEmail(companyEmail);
 			}
 			

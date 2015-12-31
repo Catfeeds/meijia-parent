@@ -19,25 +19,7 @@
 	<!--header end-->
 
 	<div class="am-cf admin-main">
-		<!-- sidebar start -->
-		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 
-			<ul class="am-list admin-sidebar-list">
-				<div class="am-cf am-padding">
-					<div class="am-fl am-cf">
-						<strong class="am-text-primary am-text-lg">扫码加入</strong>
-					</div>
-
-				</div>
-
-
-
-				<li><img src="${xCompany.qrCode }" width="250" height="250" /></li>
-			</ul>
-
-
-		</div>
-		<!-- sidebar end -->
 
 		<!-- content start -->
 		<div class="admin-content">
@@ -67,7 +49,7 @@
 
 				<div class="am-margin">
 					
-					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+					<button type="button" class="am-btn am-btn-success" onclick="javascript:location.href='/xcloud/staff/list';">返回</button>
 				</div>
 
 			</div>
