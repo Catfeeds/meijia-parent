@@ -52,7 +52,7 @@ footer .tr-telemail h2 { margin-bottom: 0px; font-weight: normal; }
 .tr-docs h3::before { content: counter(header3, decimal) ". "; }
 .tr-docs h4::before { content: counter(header3, decimal) "." counter(header4, decimal) " "; }
 .am-container-collapse { padding-left: 0px; padding-right: 0px; }
-.tr-yunpan { height: 520px; background-color: rgb(26, 161, 255); }
+.tr-yunpan { height: 470px; background-color: rgb(26, 161, 255); }
 .tr-yunpan-bg-container { position: relative; z-index: 1; }
 .tr-yunpan-bg-slider { position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; box-shadow: none; }
 .tr-yunpan-bg-slider .am-control-nav { display: none; }
