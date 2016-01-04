@@ -9,9 +9,10 @@
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 
+<link href="<c:url value='/assets/css/xcloud.css'/>" rel="stylesheet" />
 </head>
 
-<body class="am-with-topbar-fixed-top">
+<body>
 	<!--header start-->
 	<%@ include file="../shared/pageSampleHeader.jsp"%>
 	<!--header end-->
@@ -131,96 +132,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="am-g am-padding-vertical-lg tr-yunpan-mutidevice">
-		<div class="am-container">
-			<ul class="am-text-center">
-				<li class="am-u-md-3 am-u-sm-12 am-padding-vertical"><a id="tr-app-desktop-qrcode"
-					href="javascript:void(0);"><span class="am-icon am-icon-lg am-icon-desktop"></span>&nbsp;&nbsp;Windows&nbsp;&amp;&nbsp;Mac</a></li>
-				<li class="am-u-md-2 am-u-sm-12 am-padding-vertical"><a id="tr-app-android-qrcode"
-					href="javascript:void(0);"><span class="am-icon am-icon-lg am-icon-android"></span>&nbsp;&nbsp;Android</a></li>
-				<li class="am-u-md-2 am-u-sm-12 am-padding-vertical"><a id="tr-app-ios-qrcode"
-					href="javascript:void(0);"><span class="am-icon am-icon-lg am-icon-apple"></span>&nbsp;&nbsp;iOS</a></li>
-				<li class="am-u-md-5 am-u-sm-12">
-					<div class="am-u-sm-7">
-						<h3>扫描二维码下载</h3>
-						<p class="am-text-sm">使用手机上的二维码扫描软件扫描，直接下载泰然云云盘。</p>
-					</div>
-					<div class="am-u-sm-5">
-						<img src="<c:url value='/assets/img/netdisk-app-ios.jpg'/>" alt="二维码" class="am-img-thumbnail am-radius">
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="am-modal am-modal-no-btn" tabindex="-1" id="tr-app-desktop-modal">
-			<div class="am-modal-dialog">
-				<div class="am-modal-hd">
-					<a href="javascript:%20void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a>
-				</div>
-				<div class="am-modal-bd">
-					<div class="am-g am-padding-top">
-						<div class="am-u-sm-6">
-							<a href="https://app.fangcloud.com/sync/EnterpriseSyncInstaller.exe" title="点击下载"
-								target="_top" class="am-icon am-icon-laptop am-icon-lg"></a>
-							<p>Windows客户端</p>
-						</div>
-						<div class="am-u-sm-6">
-							<a href="https://app.fangcloud.com/sync_mac/EnterpriseSync.pkg" title="点击下载" target="_top"
-								class="am-icon am-icon-apple am-icon-lg"></a>
-							<p>Mac客户端</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="am-modal am-modal-no-btn" tabindex="-1" id="tr-app-android-modal">
-		<div class="am-modal-dialog">
-			<div class="am-modal-hd">
-				下载Android客户端<a href="javascript:%20void(0)" class="am-close am-close-spin"
-					data-am-modal-close="">×</a>
-			</div>
-			<div class="am-modal-bd">
-				<p>
-					<img src="<c:url value='/assets/img/netdisk-app-android.jpg'/>" alt="Android客户端"
-						class="am-img-thumbnail am-radius">
-				</p>
-				<hr>
-				<a href="https://app.fangcloud.com/android/enterprise-android-latest.apk" title="Android客户端"
-					target="_top" class="am-btn am-btn-primary"><i class="am-icon-cloud-download"></i> 立即下载</a>
-			</div>
-		</div>
-	</div>
-	<div class="am-modal am-modal-no-btn" tabindex="-1" id="tr-app-ios-modal">
-		<div class="am-modal-dialog">
-			<div class="am-modal-hd">
-				下载iOS客户端<a href="javascript:%20void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a>
-			</div>
-			<div class="am-modal-bd">
-				<p>
-					<img src="<c:url value='/assets/img/netdisk-app-ios.jpg'/>" alt="iOS客户端" class="am-img-thumbnail am-radius">
-				</p>
-				<hr>
-				<a href="https://itunes.apple.com/app/id1022310125" target="_top" title="App Store"
-					class="am-btn am-btn-primary"><i class="am-icon-apple"></i> 前往App Store</a>
-			</div>
-		</div>
-	</div>
-
-	<div style="top: 381.95px; left: 403.35px;" id="am-popover-aar3a" class="am-popover am-popover-top">
-		<div class="am-popover-inner">
-			<img src="<c:url value='/assets/img/netdisk-app-android.jpg'/>">
-		</div>
-		<div class="am-popover-caret"></div>
-	</div>
-	<div style="top: 381.95px; left: 559.383px;" id="am-popover-nqxeg"
-		class="am-popover am-popover-top">
-		<div class="am-popover-inner">
-			<img src="<c:url value='/assets/img/netdisk-app-ios.jpg'/>">
-		</div>
-		<div class="am-popover-caret"></div>
-	</div>
-
 
 	<!--footer start-->
 	<%@ include file="../shared/pageFooter.jsp"%>

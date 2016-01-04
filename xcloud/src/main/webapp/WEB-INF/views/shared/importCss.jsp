@@ -40,12 +40,10 @@
 -->
 
 <!-- core CSS -->
-<link href="<c:url value='/assets/css/amazeui.min.css'/>" rel="stylesheet" />
+<link href="<c:url value='/assets/css/amazeui.css'/>" rel="stylesheet" />
 
 <!--external css-->
 <link href="<c:url value='/assets/css/animate.min.css'/>" rel="stylesheet" />
 
 <!-- Custom styles for this template -->
 <link href="<c:url value='/assets/css/admin.css'/>" rel="stylesheet" />
-
-<link href="<c:url value='/assets/css/xcloud.css'/>" rel="stylesheet" />
