@@ -1,6 +1,8 @@
 package com.simi.action.app.xcloud;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.user.UserFriendViewVo;
 import com.simi.vo.xcloud.StaffListVo;
 
 @Controller
@@ -38,14 +44,19 @@ public class StaffController extends BaseController {
 	@Autowired
 	private XcompanyStaffService xCompanyStaffService;	
 
-	@RequestMapping(value = "/get-staffs", method = { RequestMethod.GET })
-	public AppResultData<Object> getByDept(HttpServletRequest request,
-			@RequestParam("user_id") Long userId, 
+	@Autowired
+	private UserFriendService userFriendService;
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/get_staffs", method = { RequestMethod.GET })
+	public AppResultData<Object> getStaffs(@RequestParam("user_id") Long userId, 
 			@RequestParam("company_id") Long companyId,
-			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId
-			) {	
+			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "name", required = false, defaultValue = "") String name) {
+
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
+
 		Users u = usersService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
@@ -54,22 +65,36 @@ public class StaffController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
-				
+
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
-		searchVo.setStatus((short) 1);
-		
 		if (deptId > 0L) {
 			searchVo.setDeptId(deptId);
 		}
-		List<XcompanyStaff> list = xCompanyStaffService.selectBySearchVo(searchVo);
-		
-		List<StaffListVo> staffList = xCompanyStaffService.changeToStaffLisVos(companyId, list);	
-		
-		
-		result.setData(staffList);
-		
-		return result;
-	}
 
+		PageInfo list = xCompanyStaffService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+
+		List<XcompanyStaff> plist = list.getList();
+
+		if (plist.isEmpty())
+			return result;
+
+		List<UserFriends> userFriends = new ArrayList<UserFriends>();
+
+		for (XcompanyStaff item : plist) {
+			UserFriends vo = userFriendService.initUserFriend();
+			vo.setFriendId(item.getUserId());
+			vo.setId(0L);
+			vo.setUserId(userId);
+			vo.setAddTime(0L);
+			vo.setUpdateTime(0L);
+			userFriends.add(vo);
+		}
+
+		List<UserFriendViewVo> userList = userFriendService.changeToUserFriendViewVos(userFriends);
+
+		result.setData(userList);
+
+		return result;
+	}	
 }
