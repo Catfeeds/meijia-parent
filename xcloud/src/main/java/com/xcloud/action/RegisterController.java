@@ -39,6 +39,7 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserCompanySearchVo;
 
@@ -138,43 +139,11 @@ public class RegisterController extends BaseController {
 			companyId = xCompany.getCompanyId();
 			
 			//生成公司邀请二维码
-			String qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
-			Map<String, String> contents = new HashMap<String, String>();
-			
-			contents.put("tag", "xcloud");
-			contents.put("company_id", companyId.toString());
-			contents.put("company_name", xCompany.getCompanyName());
-			contents.put("invitation_code", xCompany.getInvitationCode());
-			
-			 ObjectMapper objectMapper = new ObjectMapper();
-			 String jsonContents = objectMapper.writeValueAsString(contents);
-			
-			BufferedImage qrCodeImg = QrCodeUtil.genBarcode(jsonContents, 800, 800, qrCodeLogo);
-			
-			ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
-	        try {  
-	            boolean resultWrite = ImageIO.write(qrCodeImg, "png", imageStream);  
-	        } catch (Exception e) {  
-	            e.printStackTrace();  
-	        }  
-	        imageStream.flush();  
-	        byte[] imgBytes = imageStream.toByteArray();  
-			
-	        String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String sendResult = ImgServerUtil.sendPostBytes(url, imgBytes, "png");
+			String imgUrl = XcompanyUtil.genQrCode(invitationCode);
 
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-			String ret = o.get("ret").toString();
-
-			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-			String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();				
-			
 			xCompany.setQrCode(imgUrl);
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
+			
 		}
 		
 		

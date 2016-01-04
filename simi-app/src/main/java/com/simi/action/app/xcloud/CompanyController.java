@@ -36,6 +36,7 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserCompanySearchVo;
 
@@ -122,35 +123,7 @@ public class CompanyController extends BaseController {
 			companyId = xCompany.getCompanyId();
 
 			// 生成公司邀请二维码
-			String qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
-
-			String contents = "xcloud://action=company-reg";
-			contents += "&company_id=" + companyId.toString();
-			contents += "&company_name=" + xCompany.getCompanyName().toString();
-
-			BufferedImage qrCodeImg = QrCodeUtil.genBarcode(contents, 800, 800, qrCodeLogo);
-
-			ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
-			try {
-				boolean resultWrite = ImageIO.write(qrCodeImg, "png", imageStream);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			imageStream.flush();
-			byte[] imgBytes = imageStream.toByteArray();
-
-			String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String sendResult = ImgServerUtil.sendPostBytes(url, imgBytes, "png");
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-			String ret = o.get("ret").toString();
-
-			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+			String imgUrl = XcompanyUtil.genQrCode(invitationCode);
 
 			xCompany.setQrCode(imgUrl);
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
@@ -354,7 +327,7 @@ public class CompanyController extends BaseController {
 	@RequestMapping(value = "/get_detail", method = { RequestMethod.GET })
 	public AppResultData<Object> getDetail(
 			@RequestParam("user_id") Long userId, 
-			@RequestParam("company_id") Long companyId) {
+			@RequestParam("company_id") Long companyId) throws WriterException, IOException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -401,8 +374,22 @@ public class CompanyController extends BaseController {
 		
 		vo.put("shortName", xCompany.getShortName());
 		
-		vo.put("invitationCode", xCompany.getInvitationCode());
 		
+		String invitationCode = xCompany.getInvitationCode();
+		if (StringUtil.isEmpty(invitationCode)) {
+			invitationCode = StringUtil.generateShortUuid();
+			xCompany.setInvitationCode(invitationCode);
+			xCompanyService.updateByPrimaryKey(xCompany);
+		}
+
+		String qrCode = xCompany.getQrCode();
+		if (StringUtil.isEmpty(qrCode)) {
+			qrCode = XcompanyUtil.genQrCode(xCompany.getInvitationCode());
+			xCompany.setQrCode(qrCode);
+			xCompanyService.updateByPrimaryKey(xCompany);
+		}
+
+		vo.put("invitationCode", xCompany.getInvitationCode());
 		vo.put("qrCode", xCompany.getQrCode());
 		
 		vo.put("addTimeStr", TimeStampUtil.timeStampToDateStr(xCompany.getAddTime() * 1000));

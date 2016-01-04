@@ -3,9 +3,14 @@ if ($.AMUI && $.AMUI.validator) {
 }
 
 var reqInvitationCode = getUrlParam("invitation_code");
+var mobile = getUrlParam("mobile");
 console.log("reqInvitationCode = " + reqInvitationCode);
 if (reqInvitationCode != undefined) {
 	$('#invitation_code').val(reqInvitationCode);
+}
+
+if (mobile != undefined) {
+	$('#join_mobile').val(mobile);
 }
 
 $('#company-join-form').validator({

@@ -39,7 +39,8 @@ public class OController extends BaseController {
 	public String redirectUrl(
 			@RequestParam(value = "t", required = false, defaultValue = "") String t,
 			@RequestParam(value = "a", required = false, defaultValue = "") String a,
-			@RequestParam(value = "uid", required = false, defaultValue = "") String uid
+			@RequestParam(value = "uid", required = false, defaultValue = "") String uid,
+			@RequestParam(value = "p", required = false, defaultValue = "") String p
 		) {
 		
 		if (StringUtil.isEmpty(t) || StringUtil.isEmpty(a) || StringUtil.isEmpty(uid)) {
@@ -53,13 +54,21 @@ public class OController extends BaseController {
 		if (users == null) {
 			return "";
 		}		
-		
+		String mobile = users.getMobile();
 		String url = "http://123.57.173.36/simi-h5/show/";
+		
+		//处理参数p;
 		
 		switch (t) {
 			case "company" :
 				url = "http://123.57.173.36/simi-h5/show/company-reg.html";
 				url = url + "?uid="+uid;
+				break;
+			case "company-reg" :
+				url = "http://123.57.173.36/simi-h5/show/company-reg.html#tab2";
+				url = url + "?uid="+uid;
+				url = url + "&mobile="+mobile;
+				url = url + "&invitation_code="+p;
 				break;
 			case "meeting" :
 				url = "http://123.57.173.36/simi-h5/show/order-meeting.html";
