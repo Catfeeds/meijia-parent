@@ -112,7 +112,12 @@ public class OrderWxPayController extends BaseController {
 			
 			
 			OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
-			BigDecimal orderPayNow = orderPrice.getOrderPay();
+			
+			BigDecimal orderPay = orderPrice.getOrderPay();
+			BigDecimal p1 = new BigDecimal(100);
+			BigDecimal p2 = MathBigDeciamlUtil.mul(orderPay, p1);
+			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
+			
 			wxPay = orderPayNow.toString();
 			
 			//测试一分钱
