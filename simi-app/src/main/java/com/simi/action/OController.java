@@ -65,7 +65,7 @@ public class OController extends BaseController {
 				url = url + "?uid="+uid;
 				break;
 			case "company-join" :
-				url = "http://123.57.173.36/simi-h5/show/company-reg.html#tab2";
+				url = "http://123.57.173.36/simi-h5/show/company-reg.html";
 				url = url + "?uid="+uid;
 				url = url + "&mobile="+mobile;
 				url = url + "&invitation_code="+p;

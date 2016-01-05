@@ -3,10 +3,12 @@ if ($.AMUI && $.AMUI.validator) {
 }
 
 var reqInvitationCode = getUrlParam("invitation_code");
+
 var mobile = getUrlParam("mobile");
 console.log("reqInvitationCode = " + reqInvitationCode);
 if (reqInvitationCode != undefined) {
 	$('#invitation_code').val(reqInvitationCode);
+	$('#href-tab2').click();
 }
 
 if (mobile != undefined) {
