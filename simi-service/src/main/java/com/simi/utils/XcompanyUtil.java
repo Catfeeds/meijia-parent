@@ -60,7 +60,7 @@ public class XcompanyUtil {
 		
 		String qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
 		
-		String contents = "xcloud-h5://action=company-reg";
+		String contents = "xcloud-h5://action=company-join";
 		contents += "&p=" + invitationCode;
 
 		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(contents, 800, 800, qrCodeLogo);
