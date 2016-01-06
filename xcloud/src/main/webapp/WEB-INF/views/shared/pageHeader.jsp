@@ -14,7 +14,7 @@
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 
 		<ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-			<li class="am-nav"><a href="http://123.57.173.36/xcloud/main" title="首页">首页</a></li>
+			<li class="am-nav"><a href="/xcloud/index" title="首页">首页</a></li>
 			<li><a href="/xcloud/staff/list" title="通讯录">日程</a></li>
 			<li><a href="/xcloud/staff/list" title="工作日程" target="_top">通讯录</a></li>
 			<li><a href="http://123.57.173.36/xcloud/" title="工作日程" target="_top">行政</a></li>

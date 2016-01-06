@@ -87,7 +87,7 @@ public class LoginController extends BaseController {
 
         String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
         if(returnUrl==null)
-        	returnUrl="/main";
+        	returnUrl="/index";
     	return "redirect:"+returnUrl;
 
 	}
