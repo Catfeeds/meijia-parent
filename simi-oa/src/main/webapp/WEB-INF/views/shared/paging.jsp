@@ -75,7 +75,7 @@
                         <li><a href="<%=pageUrl%>"><%=i %></a></li>
     				<%}
         			else if(i==pageCount-2){%>
-        				<span>...</span>
+        				<li><span>...</span></li>
         			<%}
         			else{
     					int pageNo=pageInfo.getPages()-(pageCount-i);
@@ -89,7 +89,7 @@
                         <li><a href="<%=pageUrl%>"><%=i %></a></li>
         			<%}
         			else if(i==3){%>
-        				<span>...</span>
+        				<li><span>...</span></li>
         			<%}
         			else{
         				int pageNo=pageInfo.getPages()-(pageCount-i);
@@ -108,7 +108,7 @@
                         <li><a href="<%=pageUrl%>"><%=i %></a></li>
         			<%}
         			else if(i==3 || i==pageCount-2){%>
-        				<span>...</span>
+        				<li><span>...</span></li>
         			<%}
         			else if(i>pageCount-2){
         				int pageNo=pageInfo.getPages()-(pageCount-i);
