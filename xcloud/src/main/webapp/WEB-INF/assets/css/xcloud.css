@@ -1,31 +1,45 @@
-ul, ol { list-style: outside none none; }
-li { list-style: outside none none; }
-.am-icon-xl::before { font-size: 400%; vertical-align: -22%; }
-.am-with-topbar-fixed-top { padding-top: 80px ! important; }
-.am-popover { background: rgb(209, 209, 209) none repeat scroll 0% 0% ! important; border: 1px solid rgb(209, 209, 209) ! important; }
-.am-popover-inner { background: rgb(209, 209, 209) none repeat scroll 0% 0% ! important; }
-.am-popover-caret { border-bottom: 8px solid rgb(209, 209, 209) ! important; }
-header { margin-bottom: 0px ! important; border: medium none ! important; }
-header .tr-login-topbar { height: 30px; line-height: 30px; background-color: rgb(0, 0, 0); }
-header .tr-login-topbar, header .tr-login-topbar a { color: rgb(255, 255, 255); }
-header .tr-topbar { background-color: rgb(78, 78, 78); }
-header .tr-nav { margin-top: 0.4rem; }
-header .tr-nav > .am-dropdown .am-dropdown-content { margin-top: 0px; background-color: rgb(110, 110, 110); min-width: 100px; left: -32%; }
+
+/* 下面设置顶部菜单颜色 */
+header .xcloud-topbar { background-color: rgb(48,131,235); }
+
+/* 下面设置顶部菜单-主菜单-左侧的效果等 */
+header .tl-nav { margin-top: 0.5rem; margin-left: 6rem; }
+header .tl-nav > .am-dropdown .am-dropdown-content { margin-top: 0px; background-color: rgb(26,111,217); min-width: 100px; left: 0%; }
+header .tl-nav > .am-dropdown .am-dropdown-content::before { left: 40px; }
+header .tl-nav > .am-dropdown .am-dropdown-content::after { border-bottom-color: rgb(110, 110, 110); left: 40px; }
+header .tl-nav > .am-dropdown .am-dropdown-content li { width: 100%; }
+header .tl-nav > .am-dropdown .am-dropdown-content li:hover { background-color: rgb(78, 78, 78); }
+header .tl-nav > .am-dropdown .am-dropdown-content li a { font-size: 1.4rem; }
+header .tr-nav > .am-dropdown .am-dropdown-content li a:hover { background-color: rgb(255, 255, 255); }
+header .tl-nav > .am-dropdown:hover .am-dropdown-content { display: block; }
+header .tl-nav li { margin-top: 0px; float: left; }
+header .tl-nav li, header .tl-nav li a { color: rgb(255, 255, 255); }
+header .tl-nav li a:hover, header .tl-nav li a:visited, header .tl-nav li a:active, header .tl-nav li a:link { color: rgb(255,255,255); background: transparent none repeat scroll 0% 0%; }
+
+
+
+/* 下面设置顶部菜单-主菜单-右侧的效果等 */
+header .tr-nav { margin-top: 0.5rem; position: absolute; right: 0em; }
+header .tr-nav > .am-dropdown .am-dropdown-content { margin-top: 0px; background-color: rgb(26,111,217); min-width: 100px; left: 0%; }
 header .tr-nav > .am-dropdown .am-dropdown-content::before { left: 40px; }
 header .tr-nav > .am-dropdown .am-dropdown-content::after { border-bottom-color: rgb(110, 110, 110); left: 40px; }
 header .tr-nav > .am-dropdown .am-dropdown-content li { width: 100%; }
 header .tr-nav > .am-dropdown .am-dropdown-content li:hover { background-color: rgb(78, 78, 78); }
 header .tr-nav > .am-dropdown .am-dropdown-content li a { font-size: 1.4rem; }
+header .tr-nav > .am-dropdown .am-dropdown-content li a:hover { background-color: rgb(110, 110, 110); }
 header .tr-nav > .am-dropdown:hover .am-dropdown-content { display: block; }
 header .tr-nav li { margin-top: 0px; float: left; }
 header .tr-nav li, header .tr-nav li a { color: rgb(255, 255, 255); }
-header .tr-nav li a:hover, header .tr-nav li a:visited, header .tr-nav li a:active, header .tr-nav li a:link { color: rgb(204, 204, 204); background: transparent none repeat scroll 0% 0%; }
+header .tr-nav li a:hover, header .tr-nav li a:visited, header .tr-nav li a:active, header .tr-nav li a:link { color: rgb(255,255,255); background: transparent none repeat scroll 0% 0%; }
+
+
 header .tr-topbar-form { margin-top: 10px; }
 header .tr-form-icon { position: relative; }
 header .tr-form-icon [class*="am-icon-"] { position: absolute; right: 1em; top: 50%; display: block; margin-top: -0.5em; line-height: 1; z-index: 2; }
 header .tr-search { padding: 0.4rem; border-radius: 10px; background-color: rgb(0, 0, 0); border: medium none; color: rgb(255, 255, 255); }
 header .tr-search:focus { background-color: rgb(0, 0, 0); }
 header .tr-topbar-form .am-icon-search { color: rgb(255, 255, 255); }
+
 .tr-slider { height: auto; position: relative; }
 .tr-slider .am-control-nav { bottom: 15px; }
 .tr-slider .am-control-nav li a { height: 14px; width: 14px; background: transparent none repeat scroll 0% 0%; box-shadow: none; border: 1px solid rgb(255, 255, 255); }
@@ -37,6 +51,7 @@ header .tr-topbar-form .am-icon-search { color: rgb(255, 255, 255); }
 .tr-slider2 { box-shadow: 0px 8px 8px rgb(204, 204, 204); }
 .tr-slider2-bottom { z-index: -1; }
 .tr-slider2-top { position: absolute; top: 0px; z-index: 999; width: 100%; }
+
 .tr-main-container { padding: 10px 0px; min-height: 320px; }
 #home .am-icon-xl { color: rgb(153, 153, 153); }
 #home h2 { font-size: 150%; font-weight: normal; margin-top: 1em; }
@@ -52,7 +67,7 @@ footer .tr-telemail h2 { margin-bottom: 0px; font-weight: normal; }
 .tr-docs h3::before { content: counter(header3, decimal) ". "; }
 .tr-docs h4::before { content: counter(header3, decimal) "." counter(header4, decimal) " "; }
 .am-container-collapse { padding-left: 0px; padding-right: 0px; }
-.tr-yunpan { height: 470px; background-color: rgb(26, 161, 255); }
+.tr-yunpan { height: 520px; background-color: rgb(26, 161, 255); }
 .tr-yunpan-bg-container { position: relative; z-index: 1; }
 .tr-yunpan-bg-slider { position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; box-shadow: none; }
 .tr-yunpan-bg-slider .am-control-nav { display: none; }

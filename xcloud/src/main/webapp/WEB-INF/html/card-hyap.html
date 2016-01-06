@@ -1,0 +1,236 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>云行政</title>
+  <meta name="description" content="云行政，企业行政人事综合服务平台">
+  <meta name="keywords" content="云行政">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="assets/css/amazeui.css"/>
+  <link rel="stylesheet" href="assets/css/admin.css">
+
+  <link rel="stylesheet" href="assets/css/amazeui.datetimepicker.css"/>
+
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar admin-header">
+  <div class="am-topbar-brand">
+    <img src="assets/img/logo.png" height="25" width="25"><a href="company-index.html"></i> | 北京美家生活科技有限公司 </a><a href="company-auth.html"> <span class="am-badge am-badge-danger am-radius">未认证</span></a>
+  </div>
+
+  <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+		<li class="am-nav"><a href="index.html" title="首页">首页</a></li>
+		<li><a href="schedule-index.html" title="通讯录">日程</a></li>
+		<li><a href="contact-index.html" title="工作日程" target="_top">通讯录</a></li>
+		<li><a href="adm-index.html" title="工作日程" target="_top">行政</a></li>
+		<li><a href="hr-index.html" title="合同管理" target="_top">人事</a></li>
+		<li><a href="app-index.html" title="合同管理" target="_top">应用中心</a></li>
+		<li><a href="partner-index.html" title="工作日程" target="_top">服务大厅</a></li>
+		<li><a href="mall-index.html" title="工作日程" target="_top">办公超市</a></li>
+      
+      	<li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+          <img src="assets/img/a1.png" class="am-img-thumbnail am-circle" width="30" height="30"> 莎拉波娃 <span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+          <li><a href="user-index.html"><span class="am-icon-user"></span> 资料</a></li>
+          <li><a href="setting.html"><span class="am-icon-cog"></span> 设置</a></li>
+          <li><a href="logout.html"><span class="am-icon-power-off"></span> 退出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+        <li><a href="schedule-index.html"><span class="am-icon-tags"></span> 日程管理</a></li>
+        <li class="admin-parent">
+          <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 工作卡片 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+          <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
+            <li><a href="card-tzgg.html"><span class="am-icon-th"></span> 通知公告<span class="am-badge am-badge-warning am-margin-right am-fr">24</span></a></li>
+            <li><a href="card-swtx.html" class="am-cf"><span class="am-icon-bell"></span> 事务提醒<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+            <li><a href="card-hyap.html"><span class="am-icon-users"></span> 会议安排</a></li>
+            <li><a href="card-msyy.html"><span class="am-icon-calendar"></span> 面试邀约</a></li>
+            <li><a href="card-clgh.html"><span class="am-icon-plane"></span> 差旅规划</a></li>
+          </ul>
+        </li>
+        <li><a href="admin-table.html"><span class="am-icon-tags"></span> 卡片商店</a></li>
+        
+      </ul>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 最新公告</p>
+          <p>新年将至，公司年会将在月球举办，点击查看详情。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- sidebar end -->
+
+<!-- content start -->
+  <div class="admin-content">
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">会议安排</strong> / <small>Meeting Alarm</small></div>
+    </div>
+
+    <hr/>
+
+    <div class="am-g">
+
+      <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+        <section class="am-panel am-panel-default">
+          <header class="am-panel-hd">
+            <img src="assets/img/a1.png" class="am-img-thumbnail am-circle" width="35" height="35"> 云小秘提示您
+          </header>
+          <div class="am-panel-bd">
+            发起会议通知同事，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~
+          </div>
+        </section>
+      </div>
+
+      <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+        <form class="am-form am-form-horizontal">
+          <div class="am-form-group">
+            <label for="user-name" class="am-u-sm-3 am-form-label">参会人员：</label>
+            <div class="am-u-sm-9">
+              <button type="button" class="am-btn am-btn-primary" data-am-modal="{target: '#my-popup'}">
+                点击选择人员
+              </button>
+
+              <div class="am-popup" id="my-popup">
+                <div class="am-popup-inner">
+                  <div class="am-popup-hd">
+                    <h4 class="am-popup-title">选择人员</h4>
+                    <span data-am-modal-close class="am-close">&times;</span>
+                  </div>
+                  <div class="am-popup-bd">
+                    建议放一个选人的列表，类似大类效果
+                  </div>
+                </div>
+              </div>
+
+              <small>选择此卡片需要发送与分享的好友</small>
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label for="user-email" class="am-u-sm-3 am-form-label">会议时间：</label>
+            <div class="am-u-sm-9">
+              <div class="am-input-group date form_datetime-5 form-datetime-lang" data-date="2015-02-14 14:45">
+                <input size="16" type="text" value="2015-02-14 14:45" class="am-form-field" readonly>
+                <span class="am-input-group-label add-on"><i class="icon-remove am-icon-close"></i></span>
+                <span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
+              </div>
+              <small>选择此卡片希望提醒的时间</small>
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label for="user-intro" class="am-u-sm-3 am-form-label">会议内容：</label>
+            <div class="am-u-sm-9">
+              <textarea class="" rows="5" id="user-intro" placeholder="输入具体需要提醒的内容"></textarea>
+              <small>250字以内展现你的信息...</small>
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label for="user-email" class="am-u-sm-3 am-form-label">提醒设置：</label>
+            <div class="am-u-sm-9">
+              <select data-am-selected="{btnSize: 'md'}">
+              <option value="option1">按时提醒</option>
+              <option value="option2">提前10分钟</option>
+              <option value="option3">提前30分钟</option>
+              <option value="option3">提前30分钟</option>
+              <option value="option3">不提醒</option>
+            </select>
+              <small>设置此卡片提醒的方式</small>
+            </div>
+          </div>
+          <hr>
+          <div class="am-form-group">
+            <div class="am-u-sm-9 am-u-sm-push-3">
+              <button type="button" class="am-btn am-btn-primary">保存修改</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+<footer>
+  <hr>
+  <p class="am-padding-left am-text-center">专注企业行政人事服务 | 版权所有 © <a href="http://www.51xingzheng.cn/">云行政</a></p>
+</footer>
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/amazeui.datetimepicker.min.js"></script>
+<!-- 日期时间选择框设置 -->
+  <script>
+  $(function() {
+    $('.form_datetime-5').datetimepicker({
+        format: 'yyyy-mm-dd HH:ii P',
+        showMeridian: true,
+        autoclose: true,
+        todayBtn: true
+    });
+  });
+  </script>
+<!-- 日期时间选择框的中文设置 -->
+  <script>
+(function($){
+  // 也可以在页面中引入 amazeui.datetimepicker.zh-CN.js
+  $.fn.datetimepicker.dates['zh-CN'] = {
+    days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+    daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+    daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
+    months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+    monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+    today: "今日",
+    suffix: [],
+    meridiem: ["上午", "下午"]
+  };
+
+  $('.form-datetime-lang').datetimepicker({
+    language:  'zh-CN',
+    format: 'yyyy-mm-dd hh:ii'
+  });
+}(jQuery));
+</script>
+
+</body>
+</html>
