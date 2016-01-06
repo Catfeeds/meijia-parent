@@ -73,14 +73,15 @@ public class PushUtil {
 		
 		if (params.containsKey("transmissionContent")) 
 			transmissionContent = params.get("transmissionContent").toString();
-		
-		
+		System.out.println("推送消息debug======================");
+		System.out.println(params.toString());
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
 		String userStatus = getUserStatus(cid);
 		
 		TransmissionTemplate template = TransmissionTemplateIos(userStatus, transmissionContent, pushType);
-				
+		
+		System.out.println(template.toString());
 		SingleMessage message = new SingleMessage();
 		message.setOffline(true);
 		message.setOfflineExpireTime(2 * 1000 * 3600);
@@ -347,7 +348,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "135e0a0990ae293a23675f717e3517e7";
+		String clientId = "d09d0297ad5457ac521316583d1368d0";
 		
 		getUserStatus(clientId);
 		
@@ -371,13 +372,14 @@ public class PushUtil {
 		 
 		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-21 14:43:00");
 		 String timeStr = time1.toString();
-		 tranParams.put("is_show", "true");		 
+		 tranParams.put("is_show", "true");		
+		 tranParams.put("action", "alarm");		
 		 tranParams.put("card_id", "0");
 		 tranParams.put("card_type", "0");
 		 tranParams.put("service_time", "0");
 		 tranParams.put("remind_time", "0");
-		 tranParams.put("remind_title", "新用户注册");
-		 tranParams.put("remind_content", "小白新注册了3");
+		 tranParams.put("remind_title", "事务提醒");
+		 tranParams.put("remind_content", "凯凯有一个新的事务1");
 
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);
@@ -388,9 +390,9 @@ public class PushUtil {
 
 //		 
 		params.put("transmissionContent", jsonParams);
-//		PushUtil.AndroidPushToSingle(params);
+		PushUtil.AndroidPushToSingle(params);
 		
-		PushUtil.IOSPushToSingle(params, "notification");
+//		PushUtil.IOSPushToSingle(params, "notification");
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);
