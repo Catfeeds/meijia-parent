@@ -278,7 +278,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String pushContent = "";
 		if (!StringUtil.isEmpty(card.getServiceContent())) {
-			StringUtil.subStringByByte(card.getServiceContent(), 20);
+			pushContent = StringUtil.subStringByByte(card.getServiceContent(), 20);
 		}
 		
 		//获得提醒时间
