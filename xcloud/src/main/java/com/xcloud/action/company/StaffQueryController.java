@@ -21,7 +21,6 @@ import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;

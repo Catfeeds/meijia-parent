@@ -21,21 +21,22 @@
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
 		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+			<div class="am-offcanvas-bar admin-offcanvas-bar">
+				<ul class="am-list admin-sidebar-list">
+					<li><a href="/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
 
-			<ul class="am-list admin-sidebar-list">
-				<div class="am-cf am-padding">
-					<div class="am-fl am-cf">
-						<strong class="am-text-primary am-text-lg">扫码加入</strong>
+				</ul>
+
+				<div class="am-panel am-panel-default admin-sidebar-panel">
+					<div class="am-panel-bd">
+						<p>
+							<span class="am-icon-bookmark"></span> 最新公告
+						</p>
+						<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
 					</div>
-
 				</div>
-
-
-
-				<li><img src="${xCompany.qrCode }" width="250" height="250" /></li>
-			</ul>
-
-
+			</div>
 		</div>
 		<!-- sidebar end -->
 
@@ -43,136 +44,138 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工管理</strong>
-
-
-				</div>
-				<div class="am-fr"></div>
-			</div>
-
-			<hr />
-
-			<div class="am-tabs am-margin" data-am-tabs>
-				<ul class="am-tabs-nav am-nav am-nav-tabs">
-					<li class="am-active"><a href="#tab1">基本信息</a></li>
-
-				</ul>
-
-				<div class="am-tabs-bd">
-
-					<div class="am-tab-panel am-fade am-in am-active" id="tab1">
-
-						<form:form modelAttribute="contentModel" method="POST" id="staff-form"
-							class="am-form am-container am-padding-xl am-padding-bottom" enctype="multipart/form-data">
-							<form:hidden path="companyId" />
-							<form:hidden path="id" />
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">员工编号:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="jobNumber" class="am-form-field am-radius js-pattern-pinteger" maxLength="4"
-										data-validation-message="" placeholder="" required="required" /></div>
-								<div class="am-hide-sm-only am-u-md-6">*必填，范围在 0001-9999之间</div>
-							</div>
-
-							<div class="am-g am-margin-top ">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">手机号码:</div>
-								<div class="am-u-sm-8 am-u-md-4 ">
-									<form:input path="mobile" class="am-form-field am-radius js-pattern-mobile"
-										data-validation-message="" placeholder="手机号" required="required" />
-								</div>
-								<div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
-							</div>
-
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">姓名:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="name" class="am-form-field am-radius" placeholder="" maxLength="64"
-										required="required" />
-
-								</div>
-								<div class="am-hide-sm-only am-u-md-6">*必填</div>
-							</div>
-
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">公司邮箱:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email" required="required"
-										maxLength="64" />
-
-								</div>
-								<div class="am-u-sm-12 am-u-md-6">*必填，不可重复</div>
-							</div>
-
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">入职时间:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<fmt:formatDate var='formattedDate' value='${contentModel.joinDate}' type='both'
-										pattern="yyyy-MM-dd" />
-									<div class="am-input-group am-datepicker-date"
-										data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-										<input type="text" id="joinDate" name="joinDate" value="${formattedDate}" class="am-form-field"
-											placeholder="" readonly required> <span class="am-input-group-btn am-datepicker-add-on">
-											<button class="am-btn am-btn-default" type="button">
-												<span class="am-icon-calendar"></span>
-											</button>
-										</span>
-									</div>
-								</div>
-								<div class="am-u-sm-12 am-u-md-6"></div>
-							</div>
-
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">职位:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:input path="jobName" class="am-form-field am-radius" placeholder="" maxLength="64" />
-
-								</div>
-								<div class="am-u-sm-12 am-u-md-6"></div>
-							</div>
-
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">所在部门:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:select path="deptId" class="am-form-field am-radius">
-										<form:options items="${deptList}" itemValue="deptId" itemLabel="name" />
-									</form:select>
-
-								</div>
-								<div class="am-u-sm-12 am-u-md-6"></div>
-							</div>
-
-							<div class="am-g am-margin-top">
-								<div class="am-u-sm-4 am-u-md-2 am-text-right">员工类型:</div>
-								<div class="am-u-sm-8 am-u-md-4">
-									<form:select path="staffType" class="am-form-field am-radius">
-										<form:option value="0">全职</form:option>
-										<form:option value="1">兼职</form:option>
-										<form:option value="2">实习</form:option>
-									</form:select>
-
-
-								</div>
-								<div class="am-u-sm-12 am-u-md-6"></div>
-							</div>
-							<br/>
-							<form:errors path="mobile" class="am-alert am-alert-danger center"></form:errors>
-
+					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>员工管理</small>
 				</div>
 			</div>
+			<hr>
 
-			<div class="am-margin">
-				<button type="button" class="am-btn am-btn-danger" id="btn-staff-submit">保存</button>
-				<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+			<div class="am-g">
+
+				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
+						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35">
+					云小秘提示您 </header>
+					<div class="am-panel-bd">可以扫码加入员工，快来试试吧</div>
+					<div class="am-panel-bd"><img src="${xCompany.qrCode }" width="250" height="250" /></div>
+					</section>
+				</div>
+
+				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+					<form:form modelAttribute="contentModel" method="POST" id="staff-form"
+						class="am-form am-form-horizontal" enctype="multipart/form-data">
+						<form:hidden path="companyId" />
+						<form:hidden path="id" />
+
+						<div class="am-form-group">
+							<label for="user-email" class="am-u-sm-3 am-form-label">员工编号:</label>
+							<div class="am-u-sm-9">
+								<form:input path="jobNumber" class="am-form-field am-radius js-pattern-pinteger"
+									maxLength="4" data-validation-message="" placeholder="" required="required" />
+								<small>*必填项，范围在 0001-9999之间</small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号码:</label>
+							<div class="am-u-sm-9">
+								<form:input path="mobile" class="am-form-field am-radius js-pattern-mobile" maxLength="11"
+									data-validation-message="" placeholder="手机号" required="required" />
+								<small>*必填项，不可重复</small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">姓名:</label>
+							<div class="am-u-sm-9">
+								<form:input path="name" class="am-form-field am-radius" placeholder="" maxLength="64"
+									required="required" />
+								<small>*必填项</small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">公司邮箱:</label>
+							<div class="am-u-sm-9">
+								<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email"
+									required="required" maxLength="64" />
+								<small></small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">入职时间:</label>
+							<div class="am-u-sm-9">
+								<fmt:formatDate var='formattedDate' value='${contentModel.joinDate}' type='both'
+									pattern="yyyy-MM-dd" />
+								<div class="am-input-group am-datepicker-date"
+									data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+									<input type="text" id="joinDate" name="joinDate" value="${formattedDate}"
+										class="am-form-field" placeholder="" readonly required> <span
+										class="am-input-group-btn am-datepicker-add-on">
+										<button class="am-btn am-btn-default" type="button">
+											<span class="am-icon-calendar"></span>
+										</button>
+									</span>
+								</div>
+								<small></small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">职位:</label>
+							<div class="am-u-sm-9">
+								<form:input path="jobName" class="am-form-field am-radius" placeholder="" maxLength="64" />
+								<small></small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">所在部门:</label>
+							<div class="am-u-sm-9">
+								<form:select path="deptId" class="am-form-field am-radius">
+									<form:options items="${deptList}" itemValue="deptId" itemLabel="name" />
+								</form:select>
+								<small></small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">员工类型:</label>
+							<div class="am-u-sm-9">
+								<form:select path="staffType" class="am-form-field am-radius">
+									<form:option value="0">全职</form:option>
+									<form:option value="1">兼职</form:option>
+									<form:option value="2">实习</form:option>
+								</form:select>
+								<small></small>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label"></label>
+							<div class="am-u-sm-9">
+								<form:errors path="mobile" class="am-alert am-alert-danger center"></form:errors>
+
+							</div>
+						</div>
+
+						<hr>
+						<div class="am-form-group">
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-danger" id="btn-staff-submit">保存</button>
+								<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+							</div>
+						</div>
+					</form:form>
+				</div>
 			</div>
-			</form:form>
 		</div>
+		<!-- content end -->
 
 	</div>
-	</div>
-	</div>
-	<!-- content end -->
 
-	</div>
+	<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
+		data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
 
 	<!--footer start-->
 	<%@ include file="../shared/pageFooter.jsp"%>
