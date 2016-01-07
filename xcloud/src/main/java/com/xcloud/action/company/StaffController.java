@@ -60,7 +60,7 @@ public class StaffController extends BaseController {
 
 	@Autowired
 	private XcompanyDeptService xcompanyDeptService;
-		
+
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
 	public String staffUserForm(Model model, HttpServletRequest request,
@@ -340,8 +340,7 @@ public class StaffController extends BaseController {
 		
 		//检测都有哪些重复数据
 		List<Object> dupList = xcompanyStaffService.checkDuplication(companyId, excelDatas);
-		int totalNewCount = excelDatas.size() - 1;
-		model.addAttribute("totalNewCount", totalNewCount);
+		
 		
 		int totalUpdateCount = 0;
 		model.addAttribute("tableDatas", "");
@@ -351,6 +350,10 @@ public class StaffController extends BaseController {
 		}
 		
 		model.addAttribute("totalUpdateCount", totalUpdateCount);
+		
+		int totalNewCount = excelDatas.size() - totalUpdateCount - 1;
+		model.addAttribute("totalNewCount", totalNewCount);
+		
 		model.addAttribute("newFileName", newFileName);
 		
 		return "/staffs/staff-import-confirm";

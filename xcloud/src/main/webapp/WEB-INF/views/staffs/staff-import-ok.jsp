@@ -10,6 +10,8 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
+	rel="stylesheet">
 
 </head>
 
@@ -20,40 +22,42 @@
 
 	<div class="am-cf admin-main">
 
+		<!-- sidebar start -->
+		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+			<div class="am-offcanvas-bar admin-offcanvas-bar">
+				<ul class="am-list admin-sidebar-list">
+					<li><a href="/xcloud/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/xcloud/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
+
+				</ul>
+
+				<div class="am-panel am-panel-default admin-sidebar-panel">
+					<div class="am-panel-bd">
+						<p>
+							<span class="am-icon-bookmark"></span> 最新公告
+						</p>
+						<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- sidebar end -->
 
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工批量导入</strong>
-
-
+					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>批量导入</small>
 				</div>
-				<div class="am-fr"></div>
 			</div>
-
-			<hr />
-
-			<div class="am-tabs am-margin" data-am-tabs>
-
-				<div class="am-tabs-bd">
-
-					<div class="am-g am-margin-top">
-						<div class="am-u-sm-2"></div>
-						<div class="am-u-md-10">
-							导入完成.
-						</div>
-					</div>
-
-				</div>
-
-				<div class="am-margin">
-					
-					<button type="button" class="am-btn am-btn-success" onclick="javascript:location.href='/xcloud/staff/list';">返回</button>
-				</div>
-
+			<hr>
+			
+			<div class="am-g">
+				<div class="am-u-sm-12" >
+					导入成功 <button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+				</div>				
 			</div>
-
+			
 		</div>
 	</div>
 	</div>
@@ -68,6 +72,8 @@
 	<!-- js placed at the end of the document so the pages load faster -->
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
+
+
 
 
 </body>
