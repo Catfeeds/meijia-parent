@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<!-- sidebar end -->
-		
+
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
@@ -52,55 +52,48 @@
 			</div>
 			<hr>
 
-			<form method="POST" id="staff-import-form" action="/xcloud/staff/staff-import-do"
-				class="am-form am-container am-padding-xl am-padding-bottom">
-				<input type="hidden" name="newFileName" value="${newFileName}"
-					<div class="am-tabs am-margin" data-am-tabs>
 			
-
-
-				<div class="am-g am-margin-top">
-					<div class="am-u-sm-2"><font color="red">导入确认:</font></div>
-					<div class="am-u-md-10">本次导入，新增<font color="red">${totalNewCount}</font>条，更新<font color="red">${totalUpdateCount}</font>条.
-						<c:if test="${tableDatas != ''}">
+			<div class="am-g">
+				<form method="POST" id="staff-import-form" action="/xcloud/staff/staff-import-do"
+				class="am-form am-container am-padding-xl am-padding-bottom">
+					<input type="hidden" name="newFileName" value="${newFileName}"
+						<div class="am-u-sm-12">
+					<font color="red">导入确认:</font>
+					本次导入，新增<font color="red">${totalNewCount}</font>条，更新<font color="red">${totalUpdateCount}</font>条.
+					<c:if test="${tableDatas != ''}">
 							以下为更新的列表:
-						</c:if>
-					
-					</div>
-		</div>
+					</c:if>
+				</div>
+						<c:if test="${tableDatas != ''}">
+				<div class="am-u-sm-12" >
+						<table id="confirm-table" class="am-table am-table-bordered dataTable no-footer">
+							<thead>
+								<tr>
+									<th class="table-name" nowrap>姓名</th>
+									<th class="table-author am-hide-sm-only">手机号</th>
+									<th class="table-id" nowrap>工号</th>
+									<th class="table-type" nowrap>职位</th>
+									<th class="table-title">员工类型</th>
+									<th class="table-title">身份证号</th>
+									<th class="table-title">入职时间</th>
+									<th class="table-date am-hide-sm-only">邮箱</th>
+									<th class="table-id" nowrap>行数</th>
+								</tr>
+							</thead>
 
-		<c:if test="${tableDatas != ''}">
-			<div class="am-tabs-bd">
-				<table id="confirm-table" class="am-table am-table-bordered dataTable no-footer">
-					<thead>
-						<tr>
+						</table>
 
-							<th width="5%" nowrap>姓名</th>
-							<th width="5%" nowrap>手机</th>
-							<th width="5%" nowrap>工号</th>
-							<th width="10%" nowrap>职位</th>
-							<th width="10%" nowrap>员工类型</th>
-							<th width="10%" nowrap>身份证号</th>
-							<th width="5%" nowrap>入职时间</th>
-							<th width="10%">邮箱</th>
-							<th width="5%" nowrap>行数</th>
-						</tr>
-					</thead>
-
-				</table>
-
+				</c:if>
+				</div>
+				<hr>
+				<div class="am-u-sm-12" >
+					<button type="submit" class="am-btn am-btn-danger">确认导入</button>
+					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+				</div>
+				</form>
 			</div>
-		</c:if>
-		<div class="am-margin">
-			<button type="submit" class="am-btn am-btn-danger">确认导入</button>
-			<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+			
 		</div>
-
-
-	</div>
-	</form>
-
-	</div>
 	</div>
 	</div>
 	<!-- content end -->
@@ -124,11 +117,7 @@
 		<script>
 			$(function() {
 
-				var data = $
-				{
-					tableDatas
-				}
-				;
+				var data = ${tableDatas};
 
 				$('#confirm-table').dataTable({
 					"lengthChange" : false,
