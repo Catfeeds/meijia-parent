@@ -70,7 +70,9 @@
 							<label for="user-email" class="am-u-sm-3 am-form-label">员工编号:</label>
 							<div class="am-u-sm-9">
 								<form:input path="jobNumber" class="am-form-field am-radius js-pattern-pinteger"
-									maxLength="4" data-validation-message="" placeholder="" required="required" />
+									maxLength="4" data-validation-message="" placeholder="" required="required" 
+									readOnly="${(contentModel.id > 0) ? 'readonly' : ''}"
+									/>
 								<small>*必填项，范围在 0001-9999之间</small>
 							</div>
 						</div>

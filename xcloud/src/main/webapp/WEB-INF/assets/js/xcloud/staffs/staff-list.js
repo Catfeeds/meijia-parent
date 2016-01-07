@@ -71,10 +71,12 @@ $("#btn-staff-add").click(function() {
 	location.href = "/xcloud/staff/staff-form?staff_id=0";
 });
 
-//删除员工
+//编辑员工
 function staffEdit(staffId) {
 	console.log("staffEdit");
-	location.href = "/xcloud/staff/staff-form?staff_id="+staffId;
+	location.href = "http://localhost:8080/xcloud/staff/staff-form?staff_id="+staffId;
+//	location.href = "http://www.baidu.com";
+//	alert("/xcloud/staff/staff-form?staff_id="+staffId);
 }
 
 //删除员工
