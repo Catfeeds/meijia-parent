@@ -23,8 +23,8 @@
 		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 			<div class="am-offcanvas-bar admin-offcanvas-bar">
 				<ul class="am-list admin-sidebar-list">
-					<li><a href="/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
-					<li><a href="/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
+					<li><a href="/xcloud/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/xcloud/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
 
 				</ul>
 

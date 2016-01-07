@@ -21,21 +21,22 @@
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
 		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+			<div class="am-offcanvas-bar admin-offcanvas-bar">
+				<ul class="am-list admin-sidebar-list">
+					<li><a href="/xcloud/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/xcloud/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
 
-			<ul class="am-list admin-sidebar-list">
-				<div class="am-cf am-padding">
-					<div class="am-fl am-cf">
-						<strong class="am-text-primary am-text-lg">扫码加入</strong>
+				</ul>
+
+				<div class="am-panel am-panel-default admin-sidebar-panel">
+					<div class="am-panel-bd">
+						<p>
+							<span class="am-icon-bookmark"></span> 最新公告
+						</p>
+						<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
 					</div>
-
 				</div>
-
-
-
-				<li><img src="${xCompany.qrCode }" width="250" height="250" /></li>
-			</ul>
-
-
+			</div>
 		</div>
 		<!-- sidebar end -->
 
@@ -43,57 +44,69 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工批量导入</strong>
-
-
+					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>批量导入</small>
 				</div>
-				<div class="am-fr"></div>
 			</div>
+			<hr>
 
-			<hr />
-			<form method="POST" id="staff-import-form"
-			class="am-form am-container am-padding-xl am-padding-bottom" enctype="multipart/form-data">
-			<div class="am-tabs am-margin" data-am-tabs>
+			<div class="am-g">
 
-				<div class="am-tabs-bd">
-
-					<div class="am-g am-margin-top">
-						<div class="am-u-sm-2">步骤1:</div>
-						<div class="am-u-md-10">
-							请先点此<a href="/xcloud/attach/批量导入员工模板文件.xlsx">下载Excel模版</a>并按模板填写员工信息
-						</div>
+				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
+						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35"
+						height="35"> 云小秘提示您 </header>
+					<div class="am-panel-bd">可以扫码加入员工，快来试试吧</div>
+					<div class="am-panel-bd">
+						<img src="${xCompany.qrCode }" width="250" height="250" />
 					</div>
+					</section>
+				</div>
 
-					<div class="am-g am-margin-top ">
-						<div class="am-u-sm-2">步骤2:</div>
-						<div class="am-u-md-10">请将填写好的Excel文档上传</div>
-					</div>
+				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+					<form method="POST" id="staff-import-form" class="am-form am-form-horizontal"
+						enctype="multipart/form-data">
 
-					<div class="am-g am-margin-top ">
-						<div class="am-u-sm-2"></div>
-						<div class="am-u-md-10">
-							<div class="am-form-group am-form-file">
-								<button type="button" class="am-btn am-btn-danger am-btn-sm">
-									<i class="am-icon-cloud-upload"></i> 选择要上传的文件
-								</button>
-								<input id="staff-file" name="staff-file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required />
+						<div class="am-form-group">
+							
+							<div class="am-u-sm-9">
+								步骤1:请先点此 <a href="/xcloud/attach/批量导入员工模板文件.xlsx">下载Excel模版</a> 并按模板填写员工信息
 							</div>
-							<div id="file-list"></div>
 						</div>
-					</div>
-					<br />
 
+						<div class="am-form-group">
+							
+							<div class="am-u-sm-9">步骤1:请将填写好的Excel文档上传</div>
+						</div>
+
+						<div class="am-form-group">
+							
+							<div class="am-u-sm-9">
+								<div class="am-form-group am-form-file">
+									<button type="button" class="am-btn am-btn-danger am-btn-sm">
+										<i class="am-icon-cloud-upload"></i> 选择要上传的文件
+									</button>
+									<input id="staff-file" name="staff-file" type="file"
+										accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required />
+								</div>
+								<div id="file-list"></div>
+							</div>
+						</div>
+
+
+
+						<hr>
+						<div class="am-form-group">
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="submit" class="am-btn am-btn-danger">确定</button>
+								<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+							</div>
+						</div>
+					</form>
 				</div>
 
-				<div class="am-margin">
-					<button type="submit" class="am-btn am-btn-danger" >确定</button>
-					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
-				</div>
-			
+
 			</div>
-			</form>
 		</div>
-	</div>
 	</div>
 	<!-- content end -->
 

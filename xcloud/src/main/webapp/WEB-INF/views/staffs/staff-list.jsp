@@ -27,8 +27,8 @@
 		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 			<div class="am-offcanvas-bar admin-offcanvas-bar">
 				<ul class="am-list admin-sidebar-list">
-					<li><a href="/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
-					<li><a href="/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
+					<li><a href="/xcloud/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/xcloud/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
 
 				</ul>
 
@@ -60,7 +60,7 @@
 							<button type="button" id="btn-staff-add" class="am-btn am-btn-default am-radius">
 								<span class="am-icon-plus"></span> 新增员工
 							</button>
-							<button type="button" class="am-btn am-btn-default">
+							<button type="button" id="btn-staff-import" class="am-btn am-btn-default">
 								<span class="am-icon-save"></span> 批量导入
 							</button>
 							<button type="button" class="am-btn am-btn-default">
@@ -75,7 +75,7 @@
 
 				<div class="am-u-sm-12 am-u-md-3">
 					<div class="am-input-group am-input-group-sm">
-						<input type="text" class="am-form-field" placeholder="姓名/身份证/手机号"> <span
+						<input type="text" class="am-form-field" placeholder="姓名/身份证/手机号" maxLength="18" size=18> <span
 							class="am-input-group-btn">
 							<button class="am-btn am-btn-default" type="button">搜索员工</button>
 						</span>

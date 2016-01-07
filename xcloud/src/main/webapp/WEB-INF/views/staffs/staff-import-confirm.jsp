@@ -10,7 +10,8 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
+	rel="stylesheet">
 
 </head>
 
@@ -21,23 +22,40 @@
 
 	<div class="am-cf admin-main">
 
+		<!-- sidebar start -->
+		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+			<div class="am-offcanvas-bar admin-offcanvas-bar">
+				<ul class="am-list admin-sidebar-list">
+					<li><a href="/xcloud/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/xcloud/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
 
+				</ul>
+
+				<div class="am-panel am-panel-default admin-sidebar-panel">
+					<div class="am-panel-bd">
+						<p>
+							<span class="am-icon-bookmark"></span> 最新公告
+						</p>
+						<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- sidebar end -->
+		
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工批量导入</strong>
-
-
+					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>批量导入</small>
 				</div>
-				<div class="am-fr"></div>
 			</div>
+			<hr>
 
-			<hr />
 			<form method="POST" id="staff-import-form" action="/xcloud/staff/staff-import-do"
 				class="am-form am-container am-padding-xl am-padding-bottom">
 				<input type="hidden" name="newFileName" value="${newFileName}"
-			<div class="am-tabs am-margin" data-am-tabs>
+					<div class="am-tabs am-margin" data-am-tabs>
 			
 
 
@@ -49,41 +67,40 @@
 						</c:if>
 					
 					</div>
-				</div>
+		</div>
 
-				<c:if test="${tableDatas != ''}">
-					<div class="am-tabs-bd">
-						<table id="confirm-table"
-							class="am-table am-table-bordered dataTable no-footer" >
-							<thead>
-								<tr>
-									
-									<th width="5%" nowrap>姓名</th>
-									<th width="5%" nowrap>手机</th>
-									<th width="5%" nowrap>工号</th>
-									<th width="10%" nowrap>职位</th>
-									<th width="10%" nowrap>员工类型</th>
-									<th width="10%" nowrap>身份证号</th>
-									<th width="5%" nowrap>入职时间</th>
-									<th width="10%">邮箱</th>
-									<th width="5%" nowrap>行数</th>
-								</tr>
-							</thead>
+		<c:if test="${tableDatas != ''}">
+			<div class="am-tabs-bd">
+				<table id="confirm-table" class="am-table am-table-bordered dataTable no-footer">
+					<thead>
+						<tr>
 
-						</table>
+							<th width="5%" nowrap>姓名</th>
+							<th width="5%" nowrap>手机</th>
+							<th width="5%" nowrap>工号</th>
+							<th width="10%" nowrap>职位</th>
+							<th width="10%" nowrap>员工类型</th>
+							<th width="10%" nowrap>身份证号</th>
+							<th width="5%" nowrap>入职时间</th>
+							<th width="10%">邮箱</th>
+							<th width="5%" nowrap>行数</th>
+						</tr>
+					</thead>
 
-					</div>
-				</c:if>
-				<div class="am-margin">
-					<button type="submit" class="am-btn am-btn-danger" >确认导入</button>
-					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
-				</div>
-				
+				</table>
 
 			</div>
-			</form>
-
+		</c:if>
+		<div class="am-margin">
+			<button type="submit" class="am-btn am-btn-danger">确认导入</button>
+			<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 		</div>
+
+
+	</div>
+	</form>
+
+	</div>
 	</div>
 	</div>
 	<!-- content end -->
@@ -100,25 +117,29 @@
 
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>	
+	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/xcloud/staffs/staff-import.js'/>"></script>
-	
+
 	<c:if test="${tableDatas != ''}">
-	<script>
-	$(function() {
+		<script>
+			$(function() {
 
-		var data = ${tableDatas};
+				var data = $
+				{
+					tableDatas
+				}
+				;
 
-		$('#confirm-table').dataTable( {
-			"lengthChange": false,
-			searching: false,
-		    ordering:  false,
-		    data: data
-		} );
-	});
-	</script>
+				$('#confirm-table').dataTable({
+					"lengthChange" : false,
+					searching : false,
+					ordering : false,
+					data : data
+				});
+			});
+		</script>
 	</c:if>
-	
-	
+
+
 </body>
 </html>

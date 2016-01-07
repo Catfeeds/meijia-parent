@@ -10,7 +10,8 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
+	rel="stylesheet">
 
 </head>
 
@@ -21,47 +22,59 @@
 
 	<div class="am-cf admin-main">
 
+		<!-- sidebar start -->
+		<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+			<div class="am-offcanvas-bar admin-offcanvas-bar">
+				<ul class="am-list admin-sidebar-list">
+					<li><a href="/xcloud/staff/list"><span class="am-icon-book"></span> 通讯录</a></li>
+					<li><a href="/xcloud/staff/dept"><span class="am-icon-sitemap"></span> 组织架构</a></li>
+
+				</ul>
+
+				<div class="am-panel am-panel-default admin-sidebar-panel">
+					<div class="am-panel-bd">
+						<p>
+							<span class="am-icon-bookmark"></span> 最新公告
+						</p>
+						<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- sidebar end -->
 
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工批量导入</strong>
-
-
+					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>批量导入</small>
 				</div>
-				<div class="am-fr"></div>
 			</div>
+			<hr>
 
-			<hr />
-
-			<div class="am-tabs am-margin" data-am-tabs>
-
-				<div class="am-tabs-bd">
-
-					<div class="am-g am-margin-top">
-						<div class="am-u-sm-2">导入错误</div>
-						<div class="am-u-md-10"><font color="red">${errors}</font></div>
-					</div>
+			<div class="am-g">
+				<div class="am-u-sm-12">
+					导入错误: <font color="red">${errors}</font>
 				</div>
 
 				<c:if test="${tableDatas != ''}">
-					<div class="am-tabs-bd">
-						<table id="error-table"
-							class="am-table am-table-bordered dataTable no-footer" >
+					<div class="am-u-sm-12" style="font-size:80%;">
+
+						<table id="error-table" class="am-table am-table-bordered dataTable no-footer">
 							<thead>
 								<tr>
+									<th class="table-name" nowrap>姓名</th>
+									<th class="table-author am-hide-sm-only">手机号</th>
+									<th class="table-id" nowrap>工号</th>
+									<th class="table-type" nowrap>职位</th>
+									<th class="table-title">员工类型</th>
+									<th class="table-title">身份证号</th>
+									<th class="table-title">入职时间</th>
+									<th class="table-date am-hide-sm-only">邮箱</th>
+									<th class="table-id" nowrap>行数</th>
+									<th class="table-set">错误信息</th>
 									
-									<th width="5%" nowrap>姓名</th>
-									<th width="5%" nowrap>手机</th>
-									<th width="5%" nowrap>工号</th>
-									<th width="10%" nowrap>职位</th>
-									<th width="10%" nowrap>员工类型</th>
-									<th width="10%" nowrap>身份证号</th>
-									<th width="5%" nowrap>入职时间</th>
-									<th width="10%">邮箱</th>
-									<th width="5%" nowrap>行数</th>
-									<th width="30%">错误信息</th>
+									
 								</tr>
 							</thead>
 
@@ -69,12 +82,11 @@
 
 					</div>
 				</c:if>
+				<hr>
 				<div class="am-margin">
 					<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 	</div>
@@ -92,25 +104,25 @@
 
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>	
-	<script src="<c:url value='/assets/js/xcloud/staffs/staff-import.js'/>"></script>
-	
+	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
+
+
 	<c:if test="${tableDatas != ''}">
-	<script>
-	$(function() {
+		<script>
+			$(function() {
 
-		var data = ${tableDatas};
+				var data = ${tableDatas};
 
-		$('#error-table').dataTable( {
-			"lengthChange": false,
-			searching: false,
-		    ordering:  false,
-		    data: data
-		} );
-	});
-	</script>
+				$('#error-table').dataTable({
+					"lengthChange" : false,
+					searching : false,
+					ordering : false,
+					data : data
+				});
+			});
+		</script>
 	</c:if>
-	
-	
+
+
 </body>
 </html>
