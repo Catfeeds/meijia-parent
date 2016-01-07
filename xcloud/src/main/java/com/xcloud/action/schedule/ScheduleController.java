@@ -1,7 +1,9 @@
 package com.xcloud.action.schedule;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +20,14 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.Users;
+import com.simi.service.card.CardService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
@@ -38,13 +43,10 @@ public class ScheduleController extends BaseController {
 	private UsersService usersService;
 
 	@Autowired
-	private XcompanyStaffService xcompanyStaffService;
-
-	@Autowired
 	private XCompanyService xCompanyService;
 
 	@Autowired
-	private XcompanyDeptService xcompanyDeptService;
+	private CardService cardService;
 		
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
@@ -60,12 +62,12 @@ public class ScheduleController extends BaseController {
 	
 //	@AuthPassport
 	@RequestMapping(value = "/get-card-list", method = { RequestMethod.GET })
-	public Map<String, Object> getCardList(HttpServletRequest request, Model model,
+	public List<Object> getCardList(HttpServletRequest request, Model model,
 			@RequestParam(value = "start", required = false, defaultValue = "") String start,
 			@RequestParam(value = "end", required = false, defaultValue = "") String end
 			) {
 		
-		Map<String, Object> result = new HashMap<String, Object>();
+		List<Object> result = new ArrayList<Object>();
 		
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		
@@ -96,7 +98,7 @@ public class ScheduleController extends BaseController {
 		endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
 		
 		CardSearchVo searchVo = new CardSearchVo();
-		searchVo.setCardId((long) 0);
+		searchVo.setCardFrom((short) 0);
 		searchVo.setUserId(userId);
 		searchVo.setUserType(u.getUserType());
 		
@@ -105,7 +107,22 @@ public class ScheduleController extends BaseController {
 			searchVo.setEndTime(endTime);
 		}
 		
+		List<Cards> cards = cardService.selectBySearchVo(searchVo);
 		
+		if (cards.isEmpty()) return result;
+		
+		for (Cards item : cards) {
+			Map<String, String> vo = new HashMap<String, String>();
+			vo.put("id", item.getCardId().toString());
+			vo.put("title", CardUtil.getCardTypeName(item.getCardType()));
+			vo.put("url", "");
+			
+			Long serviceTime = item.getServiceTime() * 1000;
+			
+			vo.put("start", TimeStampUtil.timeStampToDateStr(serviceTime, "yyyy-MM-dd HH:MM:ss"));
+			result.add(vo);
+		}
+
 		return result;
 	}	
 

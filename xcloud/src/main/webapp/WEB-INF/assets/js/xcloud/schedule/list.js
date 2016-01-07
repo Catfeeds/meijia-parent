@@ -10,9 +10,11 @@ function renderCalendar() {
 		},
 //		defaultDate : '2015-12-12',
 		lang : currentLangCode,
-		height: 450,
+		height: 550,
 		buttonIcons : true, // show the prev/next text
-		weekNumbers : true,
+		weekNumbers : false,
+		weekends : true,
+		weekMode:'liquid',
 		editable : false,
 		eventLimit : true, // allow "more" link when too many
 		axisFormat:'H:mm',
@@ -20,7 +22,7 @@ function renderCalendar() {
 
        // your event source
        {
-           url: '/myfeed.php', // use the `url` property
+           url: '/xcloud/schedule/get-card-list.json', // use the `url` property
            color: 'yellow',    // an option!
            textColor: 'black'  // an option!
        }],
@@ -29,7 +31,7 @@ function renderCalendar() {
 //		events : [ {
 //			title : '差旅规划',
 //			url : 'card-swtx.html',
-//			start : '2015-12-01T16:00:00'
+//			start : '2015-12-01 16:00:00'
 //		}, {
 //			title : '年会',
 //			start : '2015-12-07',
@@ -37,30 +39,30 @@ function renderCalendar() {
 //		}, {
 //			id : 999,
 //			title : '例会',
-//			start : '2015-12-09T16:00:00'
+//			start : '2015-12-09 16:00:00'
 //		}, {
 //			id : 999,
 //			title : '写周报',
-//			start : '2015-12-16T16:00:00'
+//			start : '2015-12-16 16:00:00'
 //		}, {
 //			title : '面试邀约',
 //			start : '2015-12-11',
 //			end : '2015-12-13'
 //		}, {
 //			title : '部门会议',
-//			start : '2015-12-12T10:30:00',
-//			end : '2015-12-12T12:30:00'
+//			start : '2015-12-12 10:30:00',
+//			end : '2015-12-12 12:30:00'
 //		}, {
 //			title : '通知公告',
-//			start : '2015-12-12T12:00:00'
+//			start : '2015-12-12 12:00:00'
 //		}, {
 //			title : '例会',
-//			start : '2015-12-12T14:30:00'
+//			start : '2015-12-12 14:30:00'
 //		}, {
 //			title : '访问官网',
 //			url : 'http://51xingzheng.cn/',
 //			start : '2015-12-28'
-//		} ],
+//		} ]
 	});
 }
 
