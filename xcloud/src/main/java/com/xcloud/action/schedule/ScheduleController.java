@@ -1,0 +1,112 @@
+package com.xcloud.action.schedule;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
+import com.simi.po.model.user.Users;
+import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyDeptService;
+import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.card.CardSearchVo;
+import com.xcloud.action.BaseController;
+import com.xcloud.auth.AccountAuth;
+import com.xcloud.auth.AuthHelper;
+import com.xcloud.auth.AuthPassport;
+
+
+@Controller
+@RequestMapping(value = "/schedule")
+public class ScheduleController extends BaseController {
+
+	@Autowired
+	private UsersService usersService;
+
+	@Autowired
+	private XcompanyStaffService xcompanyStaffService;
+
+	@Autowired
+	private XCompanyService xCompanyService;
+
+	@Autowired
+	private XcompanyDeptService xcompanyDeptService;
+		
+	@AuthPassport
+	@RequestMapping(value = "/list", method = { RequestMethod.GET })
+	public String list(HttpServletRequest request, Model model,
+			@RequestParam(value = "year", required = false, defaultValue = "0") int year,
+			@RequestParam(value = "month", required = false, defaultValue = "0") int month
+			) {
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		
+		return "/schedule/list";
+	}
+	
+//	@AuthPassport
+	@RequestMapping(value = "/get-card-list", method = { RequestMethod.GET })
+	public Map<String, Object> getCardList(HttpServletRequest request, Model model,
+			@RequestParam(value = "start", required = false, defaultValue = "") String start,
+			@RequestParam(value = "end", required = false, defaultValue = "") String end
+			) {
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		if (accountAuth == null) return result;
+		
+		Long userId = accountAuth.getUserId();
+		
+		if (userId.equals(0L)) return result;
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null)  return result;
+
+		//处理时间的问题
+		Long startTime = 0L;
+		Long endTime = 0L;
+		
+		if (StringUtil.isEmpty(start)) start = DateUtil.getToday();
+		if (StringUtil.isEmpty(end)) end = DateUtil.getToday();
+		
+		Date startDate = DateUtil.parse(start);
+		String startTimeStr = DateUtil.format(startDate, "yyyy-MM-dd 00:00:00");
+		startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
+		
+		Date endDate = DateUtil.parse(start);
+		String endTimeStr = DateUtil.format(endDate, "yyyy-MM-dd 23:59:59");
+		endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+		
+		CardSearchVo searchVo = new CardSearchVo();
+		searchVo.setCardId((long) 0);
+		searchVo.setUserId(userId);
+		searchVo.setUserType(u.getUserType());
+		
+		if (startTime > 0L && endTime > 0L) {
+			searchVo.setStartTime(startTime);
+			searchVo.setEndTime(endTime);
+		}
+		
+		
+		return result;
+	}	
+
+}

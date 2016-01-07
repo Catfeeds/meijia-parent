@@ -47,10 +47,8 @@
 		
 	</select>
 	
-	<!-- 卡片列表方法 某个用户所有的卡片 -->
-	<select id="selectByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
-		
+	
+	<sql id="selectAll">
 		select <include refid="Base_Column_List" />
 		from
 		(
@@ -91,11 +89,9 @@
 			</if>	
 		) as T
 		order by add_time desc
-	</select>	
+	</sql>
 	
-	<!-- 卡片列表方法 某个用户发布的卡片 -->
-	<select id="selectMineByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	<sql id="selectMine" >
 		select
 		<include refid="Base_Column_List" />
 		from cards
@@ -114,11 +110,9 @@
 		</if>			
 		
 		order by add_time desc
-	</select>
+	</sql>
 	
-	<!-- 卡片列表方法 某个用户参与的卡片 -->
-	<select id="selectAttendByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	<sql id="selectAttend">
 		select <include refid="Base_Column_List" />
 		from
 		(
@@ -147,7 +141,44 @@
 			</if>	
 		) as T
 		order by add_time desc
+	</sql>	
+	
+	
+	<!-- 卡片列表方法 某个用户所有的卡片 -分页 -->
+	<select id="selectByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		<include refid="selectAll" />
 	</select>	
+	
+	<!-- 卡片列表方法 某个用户所有的卡片 -->
+	<select id="selectBySearchVo" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		<include refid="selectAll" />
+	</select>	
+	
+	<!-- 卡片列表方法 某个用户发布的卡片 分页-->
+	<select id="selectMineByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		<include refid="selectMine" />
+	</select>
+	
+	<!-- 卡片列表方法 某个用户发布的卡片-->
+	<select id="selectMineBySearchVo" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		<include refid="selectMine" />
+	</select>	
+	
+	<!-- 卡片列表方法 某个用户参与的卡片 分页-->
+	<select id="selectAttendByListPage" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		<include refid="selectAttend" />
+	</select>	
+	
+	<!-- 卡片列表方法 某个用户参与的卡片 -->
+	<select id="selectAttendBySearchVo" resultMap="BaseResultMap"
+		parameterType="com.simi.vo.card.CardSearchVo">
+		<include refid="selectAttend" />
+	</select>		
 	
 	<!-- 统计某个时间点有卡片的日期和个数 -->
 	<select id="totalByMonth" resultType="java.util.HashMap"

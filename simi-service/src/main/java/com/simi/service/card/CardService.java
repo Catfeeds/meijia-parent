@@ -50,4 +50,6 @@ public interface CardService {
 	CardListVo initCardListVo();
 
 	List<CardListVo> changeToCardListVo(List<Cards> cards);
+
+	List<Cards> selectBySearchVo(CardSearchVo vo);
 }

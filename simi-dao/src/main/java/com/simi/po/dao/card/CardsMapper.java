@@ -23,6 +23,12 @@ public interface CardsMapper {
 	List<Cards> selectMineByListPage(CardSearchVo vo);
 	
 	List<Cards> selectAttendByListPage(CardSearchVo vo);
+	
+	List<Cards> selectBySearchVo(CardSearchVo vo);
+	
+	List<Cards> selectMineBySearchVo(CardSearchVo vo);
+	
+	List<Cards> selectAttendBySearchVo(CardSearchVo vo);	
 
 	List<HashMap> totalByMonth(CardSearchVo vo);
 

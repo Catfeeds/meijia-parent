@@ -313,6 +313,31 @@ public class CardsServiceImpl implements CardService {
 	}
 	
 	@Override
+	public List<Cards> selectBySearchVo(CardSearchVo vo) {
+		
+		List<Cards> list = new ArrayList<Cards>();
+		
+		Short cardFrom = vo.getCardFrom();
+		
+		//某个用户所有的卡片
+		if (cardFrom.equals((short)0)) {
+			list = cardsMapper.selectBySearchVo(vo);
+		}
+		
+		//某个用户发布的卡片
+		if (cardFrom.equals((short)1)) {
+			list = cardsMapper.selectMineBySearchVo(vo);
+		}
+		
+		//某个用户参与的卡片
+		if (cardFrom.equals((short)2)) {
+			list = cardsMapper.selectAttendBySearchVo(vo);
+		}
+		
+		return list;
+	}	
+	
+	@Override
 	public PageInfo selectByListPage(CardSearchVo vo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		
@@ -337,7 +362,7 @@ public class CardsServiceImpl implements CardService {
 		
 		PageInfo result = new PageInfo(list);
 		return result;
-	}	
+	}		
 
 	@Override
 	public int updateByPrimaryKey(Cards record) {

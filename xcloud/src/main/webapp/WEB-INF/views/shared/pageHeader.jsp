@@ -15,8 +15,8 @@
 
 		<ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
 			<li class="am-nav"><a href="/xcloud/index" title="首页">首页</a></li>
-			<li><a href="/xcloud/staff/list" title="通讯录">日程</a></li>
-			<li><a href="/xcloud/staff/list" title="工作日程" target="_top">通讯录</a></li>
+			<li><a href="/xcloud/schedule/list" title="工作日程">日程</a></li>
+			<li><a href="/xcloud/staff/list" title="通讯录" target="_top">通讯录</a></li>
 			<li><a href="http://123.57.173.36/xcloud/" title="工作日程" target="_top">行政</a></li>
 			<li><a href="http://123.57.173.36/xcloud/" title="合同管理" target="_top">人事</a></li>
 			<li><a href="http://123.57.173.36/xcloud/" title="合同管理" target="_top">应用中心</a></li>
