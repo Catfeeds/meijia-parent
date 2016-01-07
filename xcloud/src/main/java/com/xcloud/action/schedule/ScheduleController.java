@@ -93,7 +93,7 @@ public class ScheduleController extends BaseController {
 		String startTimeStr = DateUtil.format(startDate, "yyyy-MM-dd 00:00:00");
 		startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
 		
-		Date endDate = DateUtil.parse(start);
+		Date endDate = DateUtil.parse(end);
 		String endTimeStr = DateUtil.format(endDate, "yyyy-MM-dd 23:59:59");
 		endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
 		

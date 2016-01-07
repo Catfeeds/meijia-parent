@@ -9,6 +9,7 @@ function renderCalendar() {
 			right : 'month,agendaWeek,agendaDay'
 		},
 //		defaultDate : '2015-12-12',
+		firstHour: 8,
 		lang : currentLangCode,
 		height: 550,
 		buttonIcons : true, // show the prev/next text
@@ -18,12 +19,17 @@ function renderCalendar() {
 		editable : false,
 		eventLimit : true, // allow "more" link when too many
 		axisFormat:'H:mm',
+
+//		timeFormat: {
+//			  agenda: (settings.clock) ? 'HH:mm{ - HH:mm}' : settings.agenda,
+//			  ' ': (settings.clock) ? 'HH:mm' : 'h(:mm)t'
+//			},
 		eventSources: [
 
        // your event source
        {
            url: '/xcloud/schedule/get-card-list.json', // use the `url` property
-           color: 'yellow',    // an option!
+           color: 'white',    // an option!
            textColor: 'black'  // an option!
        }],
 		
