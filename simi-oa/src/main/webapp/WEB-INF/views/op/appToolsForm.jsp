@@ -103,8 +103,9 @@
 							<label class="col-md-2 control-label">菜单类型</label>
 							<div class="col-md-5">
 								<form:select path="menuType" class="form-control">
-									<form:option value="t" selected="selected">工具与服务</form:option>
+									<form:option value="t" selected="selected">应用与工具</form:option>
 									<form:option value="d">成长与赚钱   </form:option>
+									<form:option value="f">全部服务   </form:option>
 								</form:select>
 							</div>
 						</div>
