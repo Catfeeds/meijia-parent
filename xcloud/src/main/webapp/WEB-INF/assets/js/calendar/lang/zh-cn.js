@@ -92,8 +92,8 @@
 		}
 	}), a.fullCalendar.datepickerLang("zh-cn", "zh-CN", {
 		closeText : "关闭",
-		prevText : "&#x3C;上月",
-		nextText : "下月&#x3E;",
+		prevText : "&#x3C;<-",
+		nextText : "->&#x3E;",
 		currentText : "今天",
 		monthNames : [ "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月",
 				"十月", "十一月", "十二月" ],

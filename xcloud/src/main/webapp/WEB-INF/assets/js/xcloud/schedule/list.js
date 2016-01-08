@@ -6,8 +6,9 @@ function renderCalendar() {
 		header : {
 			left : 'prev,next today',
 			center : 'title',
-			right : 'month,agendaWeek,agendaDay'
+			right : 'month,basicWeek,agendaDay'
 		},
+		theme: true,
 //		defaultDate : '2015-12-12',
 		firstHour: 8,
 		lang : currentLangCode,
