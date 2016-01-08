@@ -190,4 +190,114 @@ public class CardUtil {
 		return imgUrl;
 	}		
 	
+	public static String getLabelAttendStr(Short cardType) {
+		String labelAttendStr = "";
+		switch (cardType) {
+			case 0:
+			case 2:
+			case 4:
+			case 5:
+//				cardTypeName = "通用";
+				labelAttendStr = "接收人";
+				break;
+			case 1:
+//				cardTypeName = "会议安排";
+				labelAttendStr = "参会人员";
+				break;
+			case 3:
+//				cardTypeName = "事务提醒";
+				labelAttendStr = "提醒人员";
+				break;
+			default:
+//				cardTypeName = "";
+				labelAttendStr = "接收人";
+		}
+		return labelAttendStr;
+	}		
+	
+	public static String getLabelTimeStr(Short cardType) {
+		String labelTimeStr = "";
+		switch (cardType) {
+			case 0:
+			case 2:
+			case 3:
+			case 4:
+//				cardTypeName = "通用";
+				labelTimeStr = "提醒时间";
+				break;
+			case 1:
+//				cardTypeName = "会议安排";
+				labelTimeStr = "会议时间";
+				break;
+			case 5:
+//				cardTypeName = "差旅规划";
+				labelTimeStr = "出发时间";
+				break;
+			default:
+//				cardTypeName = "";
+				labelTimeStr = "提醒时间";
+		}
+		return labelTimeStr;
+	}	
+	
+	public static String getLabelContentStr(Short cardType) {
+		String labelContentStr = "";
+		switch (cardType) {
+			case 0:
+			case 2:
+			case 3:
+			case 4:
+//				cardTypeName = "通用";
+				labelContentStr = "提醒内容";
+				break;
+			case 1:
+//				cardTypeName = "会议安排";
+				labelContentStr = "会议内容";
+				break;
+			case 5:
+//				cardTypeName = "差旅规划";
+				labelContentStr = "差旅内容";
+				break;
+			default:
+//				cardTypeName = "";
+				labelContentStr = "提醒内容";
+		}
+		return labelContentStr;
+	}		
+	
+	public static String getCardTips(Short cardType) {
+		
+		String tips = "";
+		
+		switch (cardType) {
+			case 0:
+				tips = "";
+				break;
+			case 1:
+//				cardTypeName = "会议安排";
+				tips = "发起会议通知同事，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
+				break;
+			case 2:
+//				cardTypeName = "通知公告";
+				tips = "发布公司日常的通知公告，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
+				break;
+			case 3:
+//				cardTypeName = "事务提醒";
+				tips = "重要的事情需要提醒，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
+				break;
+			case 4:
+//				cardTypeName = "面试邀约";
+				tips = "邀约面试者，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
+				break;
+			case 5:
+//				cardTypeName = "差旅规划";
+				tips = "商务差旅的安排与提醒，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
+				break;
+			default:
+				tips = "";
+		}		
+	
+		return tips;
+	}			
+	
 }

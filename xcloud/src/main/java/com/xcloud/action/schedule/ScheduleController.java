@@ -125,5 +125,26 @@ public class ScheduleController extends BaseController {
 
 		return result;
 	}	
+	
+	@RequestMapping(value = "/card-form", method = { RequestMethod.GET })
+	public String cardForm(HttpServletRequest request, Model model,
+			@RequestParam("card_type") Short cardType) {	
+		
+		String cardTypeName = CardUtil.getCardTypeName(cardType);
+		String cardTips = CardUtil.getCardTips(cardType);
+		String labelAttendStr = CardUtil.getLabelAttendStr(cardType);
+		String labelTimeStr = CardUtil.getLabelTimeStr(cardType);
+		String labelContentStr = CardUtil.getLabelContentStr(cardType);
+		
+		
+		model.addAttribute("cardType", cardType);
+		model.addAttribute("cardTypeName", cardTypeName);
+		model.addAttribute("cardTips", cardTips);
+		
+		model.addAttribute("labelAttendStr", labelAttendStr);
+		model.addAttribute("labelTimeStr", labelTimeStr);
+		model.addAttribute("labelContentStr", labelContentStr);
 
+		return "/schedule/card-form";
+	}
 }
