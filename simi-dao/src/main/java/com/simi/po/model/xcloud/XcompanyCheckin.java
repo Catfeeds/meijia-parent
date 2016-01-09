@@ -26,8 +26,12 @@ public class XcompanyCheckin {
     private Integer poiDistance;
 
     private String remarks;
+    
+    private Long benzTimeId;
 
     private Short checkinStatus;
+    
+    private String checkinRemarks;
 
     private String checkIn;
 
@@ -180,4 +184,20 @@ public class XcompanyCheckin {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Long getBenzTimeId() {
+		return benzTimeId;
+	}
+
+	public void setBenzTimeId(Long benzTimeId) {
+		this.benzTimeId = benzTimeId;
+	}
+
+	public String getCheckinRemarks() {
+		return checkinRemarks;
+	}
+
+	public void setCheckinRemarks(String checkinRemarks) {
+		this.checkinRemarks = checkinRemarks;
+	}
 }
