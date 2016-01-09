@@ -1,7 +1,7 @@
 package com.simi.po.model.xcloud;
 
 public class XcompanyBenzTime {
-    private Long id;
+    private Long benzTimeId;
 
     private Long companyId;
 
@@ -15,13 +15,6 @@ public class XcompanyBenzTime {
 
     private Long addTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getCompanyId() {
         return companyId;
@@ -70,4 +63,12 @@ public class XcompanyBenzTime {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Long getBenzTimeId() {
+		return benzTimeId;
+	}
+
+	public void setBenzTimeId(Long benzTimeId) {
+		this.benzTimeId = benzTimeId;
+	}
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simi.po.dao.xcloud.XcompanyBenzTimeMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyBenzTime">
-		<id column="id" property="id" jdbcType="NUMERIC" />
+		<id column="benz_time_id" property="benzTimeId" jdbcType="NUMERIC" />
 		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
 		<result column="benz_id" property="benzId" jdbcType="NUMERIC" />
 		<result column="check_in" property="checkIn" jdbcType="VARCHAR" />
@@ -11,37 +11,37 @@
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, benz_id, check_in, check_out, flexible_min, add_time
+		benz_time_id, company_id, benz_id, check_in, check_out, flexible_min, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_benz_time
-		where id = #{id,jdbcType=NUMERIC}
+		where benz_time_id = #{benzTimeId ,jdbcType=NUMERIC}
 	</select>
 	<select id="selectByBenzId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_benz_time
-		where benz_id = #{benzId,jdbcType=NUMERIC}
+		where benz_time_id = #{benzId,jdbcType=NUMERIC}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from xcompany_benz_time
-		where id = #{id,jdbcType=NUMERIC}
+		where benz_time_id = #{benzTimeId ,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyBenzTime">
-		insert into xcompany_benz_time (id, company_id, benz_id,
+		insert into xcompany_benz_time (benz_time_id, company_id, benz_id,
 		check_in, check_out, flexible_min,
 		add_time)
-		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{benzId,jdbcType=NUMERIC},
+		values (#{benzTimeId ,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{benzId,jdbcType=NUMERIC},
 		#{checkIn,jdbcType=VARCHAR}, #{checkOut,jdbcType=VARCHAR}, #{flexibleMin,jdbcType=SMALLINT},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyBenzTime">
 		insert into xcompany_benz_time
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
+			<if test="benzTimeId != null">
+				benz_time_id,
 			</if>
 			<if test="companyId != null">
 				company_id,
@@ -63,8 +63,8 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=NUMERIC},
+			<if test="benzTimeId != null">
+				#{benzTimeId ,jdbcType=NUMERIC},
 			</if>
 			<if test="companyId != null">
 				#{companyId,jdbcType=NUMERIC},
@@ -108,7 +108,7 @@
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
 		</set>
-		where id = #{id,jdbcType=NUMERIC}
+		where benz_time_id = #{benzTimeId ,jdbcType=NUMERIC}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyBenzTime">
 		update xcompany_benz_time
@@ -118,6 +118,6 @@
 		check_out = #{checkOut,jdbcType=VARCHAR},
 		flexible_min = #{flexibleMin,jdbcType=SMALLINT},
 		add_time = #{addTime,jdbcType=NUMERIC}
-		where id = #{id,jdbcType=NUMERIC}
+		where benz_time_id = #{benzTimeId ,jdbcType=NUMERIC}
 	</update>
 </mapper>

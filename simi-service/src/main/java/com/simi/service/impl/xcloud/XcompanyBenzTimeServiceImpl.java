@@ -16,11 +16,10 @@ public class XcompanyBenzTimeServiceImpl implements XcompanyBenzTimeService {
 	@Autowired
 	XcompanyBenzTimeMapper xCompanyBenzTimeMapper;		
 	
-	
 	@Override
 	public XcompanyBenzTime initXcompanyBenzTime() {
 		XcompanyBenzTime record = new XcompanyBenzTime();
-		record.setId(0L);
+		record.setBenzTimeId(0L);
 		record.setBenzId(0L);
 		record.setCompanyId(0L);
 		record.setCheckIn("");
