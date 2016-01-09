@@ -100,12 +100,15 @@ public class PartnerController extends BaseController {
 
 			List<PartnerUserVo> list = pageList.getList();
 			if (list !=null) {
-				for (int i = 0; i < list.size(); i++) {
+				int c = list.size();
+				for (int i = 0; i < c; i++) {
 					PartnerUsers partnerUsers = list.get(i);
 					Partners partners = partnersService.selectByPrimaryKey(partnerUsers.getPartnerId());
 					if (partners !=null) {
 						if (partners.getStatus() != 4){
 							list.remove(i);
+							i--;
+							c--;
 						}}
 				}}
 				List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
