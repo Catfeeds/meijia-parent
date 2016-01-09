@@ -22,4 +22,6 @@ public interface XcompanyBenzService {
 
 	List<XcompanyBenz> selectByXcompanyId(Long xcompanyId);
 
+	Long setDefaultBenz(Long companyId);
+
 }

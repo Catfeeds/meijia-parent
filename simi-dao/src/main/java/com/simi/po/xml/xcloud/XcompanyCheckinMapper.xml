@@ -10,23 +10,17 @@
 		<result column="checkin_type" property="checkinType" jdbcType="NUMERIC" />
 		<result column="checkin_device" property="checkinDevice" jdbcType="VARCHAR" />
 		<result column="checkin_sn" property="checkinSn" jdbcType="VARCHAR" />
+		<result column="checkin_net" property="checkinNet" jdbcType="VARCHAR" />
 		<result column="poi_name" property="poiName" jdbcType="VARCHAR" />
 		<result column="poi_lat" property="poiLat" jdbcType="VARCHAR" />
 		<result column="poi_lng" property="poiLng" jdbcType="VARCHAR" />
 		<result column="poi_distance" property="poiDistance" jdbcType="INTEGER" />
 		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
-		<result column="benz_time_id" property="benzTimeId" jdbcType="NUMERIC" />
-		<result column="checkin_status" property="checkinStatus" jdbcType="NUMERIC" />
-		<result column="checkin_remarks" property="checkinRemarks" jdbcType="VARCHAR" />
-		<result column="check_in" property="checkIn" jdbcType="VARCHAR" />
-		<result column="check_out" property="checkOut" jdbcType="VARCHAR" />
-		<result column="flexible_min" property="flexibleMin" jdbcType="SMALLINT" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, staff_id, user_id, checkin_from, checkin_type, checkin_device, checkin_sn,
-		poi_name, poi_lat, poi_lng, poi_distance, remarks, benz_time_id, checkin_status, checkin_remarks, check_in, check_out,
-		flexible_min, add_time
+		id, company_id, staff_id, user_id, checkin_from, checkin_type, checkin_device, checkin_sn, checkin_net,
+		poi_name, poi_lat, poi_lng, poi_distance, remarks, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -63,6 +57,14 @@
 		<if test="checkinStatus != null">
 			and checkin_status = #{checkinStatus,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="startTime != null">
+			and add_time >= #{startTime,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="endTime != null">
+			and add_time >= #{endTime,jdbcType=NUMERIC}
+		</if>
 				
 		order by id desc
 	</select>
@@ -74,19 +76,16 @@
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
 		insert into xcompany_checkin (id, company_id, staff_id,
 		user_id, checkin_from, checkin_type,
-		checkin_device, checkin_sn, poi_name,
+		checkin_device, checkin_sn, checkin_net, poi_name,
 		poi_lat, poi_lng, poi_distance,
-		remarks, benz_time_id, checkin_status, checkin_remarks, check_in,
-		check_out, flexible_min, add_time
+		remarks, add_time
 		)
 		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{staffId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{checkinFrom,jdbcType=NUMERIC}, #{checkinType,jdbcType=NUMERIC},
-		#{checkinDevice,jdbcType=VARCHAR}, #{checkinSn,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
+		#{checkinDevice,jdbcType=VARCHAR}, #{checkinSn,jdbcType=VARCHAR}, #{checkinNet,jdbcType=VARCHAR}, 
+		#{poiName,jdbcType=VARCHAR},
 		#{poiLat,jdbcType=VARCHAR}, #{poiLng,jdbcType=VARCHAR}, #{poiDistance,jdbcType=INTEGER},
-		#{remarks,jdbcType=VARCHAR}, #{benzTimeId,jdbcType=NUMERIC}, 
-		#{checkinStatus,jdbcType=NUMERIC}, #{checkinRemarks,jdbcType=VARCHAR}, 
-		#{checkIn,jdbcType=VARCHAR},
-		#{checkOut,jdbcType=VARCHAR}, #{flexibleMin,jdbcType=SMALLINT}, #{addTime,jdbcType=NUMERIC}
+		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
@@ -116,6 +115,9 @@
 			<if test="checkinSn != null">
 				checkin_sn,
 			</if>
+			<if test="checkinNet != null">
+				checkin_net,
+			</if>
 			<if test="poiName != null">
 				poi_name,
 			</if>
@@ -130,24 +132,6 @@
 			</if>
 			<if test="remarks != null">
 				remarks,
-			</if>
-			<if test="benzTimeId != null">
-				benz_time_id,
-			</if>
-			<if test="checkinStatus != null">
-				checkin_status,
-			</if>
-			<if test="checkinRemarks != null">
-				checkin_remarks,
-			</if>
-			<if test="checkIn != null">
-				check_in,
-			</if>
-			<if test="checkOut != null">
-				check_out,
-			</if>
-			<if test="flexibleMin != null">
-				flexible_min,
 			</if>
 			<if test="addTime != null">
 				add_time,
@@ -178,6 +162,9 @@
 			<if test="checkinSn != null">
 				#{checkinSn,jdbcType=VARCHAR},
 			</if>
+			<if test="checkinNet != null">
+				#{checkinNet,jdbcType=VARCHAR},
+			</if>
 			<if test="poiName != null">
 				#{poiName,jdbcType=VARCHAR},
 			</if>
@@ -192,24 +179,6 @@
 			</if>
 			<if test="remarks != null">
 				#{remarks,jdbcType=VARCHAR},
-			</if>
-			<if test="benzTimeId != null">
-				#{benzTimeId,jdbcType=NUMERIC},
-			</if>
-			<if test="checkinStatus != null">
-				#{checkinStatus,jdbcType=NUMERIC},
-			</if>
-			<if test="checkinRemarks != null">
-				#{checkinRemarks,jdbcType=VARCHAR},
-			</if>
-			<if test="checkIn != null">
-				#{checkIn,jdbcType=VARCHAR},
-			</if>
-			<if test="checkOut != null">
-				#{checkOut,jdbcType=VARCHAR},
-			</if>
-			<if test="flexibleMin != null">
-				#{flexibleMin,jdbcType=SMALLINT},
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
@@ -240,6 +209,9 @@
 			<if test="checkinSn != null">
 				checkin_sn = #{checkinSn,jdbcType=VARCHAR},
 			</if>
+			<if test="checkinNet != null">
+				checkin_net = #{checkinNet,jdbcType=VARCHAR},
+			</if>
 			<if test="poiName != null">
 				poi_name = #{poiName,jdbcType=VARCHAR},
 			</if>
@@ -254,24 +226,6 @@
 			</if>
 			<if test="remarks != null">
 				remarks = #{remarks,jdbcType=VARCHAR},
-			</if>
-			<if test="benzTimeId != null">
-				benz_time_id = #{benzTimeId,jdbcType=NUMERIC},
-			</if>
-			<if test="checkinStatus != null">
-				checkin_status = #{checkinStatus,jdbcType=NUMERIC},
-			</if>
-			<if test="checkinRemarks != null">
-				checkin_remarks = #{checkinRemarks,jdbcType=VARCHAR},
-			</if>
-			<if test="checkIn != null">
-				check_in = #{checkIn,jdbcType=VARCHAR},
-			</if>
-			<if test="checkOut != null">
-				check_out = #{checkOut,jdbcType=VARCHAR},
-			</if>
-			<if test="flexibleMin != null">
-				flexible_min = #{flexibleMin,jdbcType=SMALLINT},
 			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
@@ -288,17 +242,12 @@
 		checkin_type = #{checkinType,jdbcType=NUMERIC},
 		checkin_device = #{checkinDevice,jdbcType=VARCHAR},
 		checkin_sn = #{checkinSn,jdbcType=VARCHAR},
+		checkin_net = #{checkinNet,jdbcType=VARCHAR},
 		poi_name = #{poiName,jdbcType=VARCHAR},
 		poi_lat = #{poiLat,jdbcType=VARCHAR},
 		poi_lng = #{poiLng,jdbcType=VARCHAR},
 		poi_distance = #{poiDistance,jdbcType=INTEGER},
 		remarks = #{remarks,jdbcType=VARCHAR},
-		benz_time_id = #{benzTimeId,jdbcType=NUMERIC},
-		checkin_status = #{checkinStatus,jdbcType=NUMERIC},
-		checkin_remarks = #{checkinRemarks,jdbcType=VARCHAR},
-		check_in = #{checkIn,jdbcType=VARCHAR},
-		check_out = #{checkOut,jdbcType=VARCHAR},
-		flexible_min = #{flexibleMin,jdbcType=SMALLINT},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

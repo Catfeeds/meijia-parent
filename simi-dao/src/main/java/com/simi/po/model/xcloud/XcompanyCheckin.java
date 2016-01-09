@@ -16,6 +16,8 @@ public class XcompanyCheckin {
     private String checkinDevice;
 
     private String checkinSn;
+    
+    private String checkinNet;
 
     private String poiName;
 
@@ -27,18 +29,7 @@ public class XcompanyCheckin {
 
     private String remarks;
     
-    private Long benzTimeId;
-
-    private Short checkinStatus;
-    
-    private String checkinRemarks;
-
-    private String checkIn;
-
-    private String checkOut;
-
-    private Integer flexibleMin;
-
+ 
     private Long addTime;
 
     public Long getId() {
@@ -145,38 +136,6 @@ public class XcompanyCheckin {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
-    public Short getCheckinStatus() {
-        return checkinStatus;
-    }
-
-    public void setCheckinStatus(Short checkinStatus) {
-        this.checkinStatus = checkinStatus;
-    }
-
-    public String getCheckIn() {
-        return checkIn;
-    }
-
-    public void setCheckIn(String checkIn) {
-        this.checkIn = checkIn == null ? null : checkIn.trim();
-    }
-
-    public String getCheckOut() {
-        return checkOut;
-    }
-
-    public void setCheckOut(String checkOut) {
-        this.checkOut = checkOut == null ? null : checkOut.trim();
-    }
-
-    public Integer getFlexibleMin() {
-        return flexibleMin;
-    }
-
-    public void setFlexibleMin(Integer flexibleMin) {
-        this.flexibleMin = flexibleMin;
-    }
-
     public Long getAddTime() {
         return addTime;
     }
@@ -185,19 +144,11 @@ public class XcompanyCheckin {
         this.addTime = addTime;
     }
 
-	public Long getBenzTimeId() {
-		return benzTimeId;
+	public String getCheckinNet() {
+		return checkinNet;
 	}
 
-	public void setBenzTimeId(Long benzTimeId) {
-		this.benzTimeId = benzTimeId;
-	}
-
-	public String getCheckinRemarks() {
-		return checkinRemarks;
-	}
-
-	public void setCheckinRemarks(String checkinRemarks) {
-		this.checkinRemarks = checkinRemarks;
+	public void setCheckinNet(String checkinNet) {
+		this.checkinNet = checkinNet;
 	}
 }

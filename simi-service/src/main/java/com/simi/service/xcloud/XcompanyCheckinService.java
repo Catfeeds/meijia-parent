@@ -24,4 +24,8 @@ public interface XcompanyCheckinService {
 
 	Map<String, Object> getCheckOutStatus(Long benzTimeId, Long checkinTime, Short checkinType);
 
+	XcompanyCheckin getTodayCheckIn(Long companyId, Long userId, Long benzTimeId);
+
+	XcompanyCheckin getTodayCheckOut(Long companyId, Long userId, Long benzTimeId);
+
 }

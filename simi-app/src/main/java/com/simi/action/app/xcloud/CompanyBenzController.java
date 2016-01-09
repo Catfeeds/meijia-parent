@@ -16,15 +16,18 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyBenz;
 import com.simi.po.model.xcloud.XcompanyBenzTime;
+import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffBenz;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyBenzService;
 import com.simi.service.xcloud.XcompanyBenzTimeService;
+import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.service.xcloud.XcompanyStaffBenzService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
@@ -49,6 +52,8 @@ public class CompanyBenzController extends BaseController {
 	@Autowired
 	private XcompanyStaffBenzService xCompanyStaffBenzService;
 
+	@Autowired
+	private XcompanyCheckinService xCompanyCheckinService;
 
 	@RequestMapping(value = "/get_benz", method = { RequestMethod.GET })
 	public AppResultData<Object> getByBenz(
@@ -76,11 +81,12 @@ public class CompanyBenzController extends BaseController {
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
 		List<XcompanyStaff> staffList = xCompanyStaffService.selectBySearchVo(searchVo);
 		
 		if (staffList.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("公司不存在");
+			result.setMsg("数据有错误：公司与员工未绑定");
 			return result;
 		}
 
@@ -88,14 +94,18 @@ public class CompanyBenzController extends BaseController {
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
 		List<XcompanyStaffBenz> rsList = xCompanyStaffBenzService.selectBySearchVo(searchVo);
-
+		
+		Long benzId = 0L;
+		XcompanyStaffBenz staffBenz = null;
+		
 		if (rsList.isEmpty()) {
-			return result;
+			//如果没有班次，则默认设置一个班次。测试用.
+			benzId = xCompanyBenzService.setDefaultBenz(companyId);
+
+		} else {
+			staffBenz = rsList.get(0);
+			benzId = staffBenz.getBenzId();
 		}
-		
-		XcompanyStaffBenz staffBenz = rsList.get(0);
-		
-		Long benzId = staffBenz.getBenzId();
 		
 		XcompanyBenz benz = xCompanyBenzService.selectByPrimaryKey(benzId);
 		
@@ -105,6 +115,13 @@ public class CompanyBenzController extends BaseController {
 		resultMap.put("benzId", benzId);
 		resultMap.put("name", benz.getName());
 		resultMap.put("benzTime", benzTimeList);
+		
+		//找出今天的考勤记录,并且为签到和签退的记录.
+		CompanyCheckinSearchVo checkinSearchVo = new CompanyCheckinSearchVo();
+		checkinSearchVo.setCompanyId(companyId);
+		checkinSearchVo.setUserId(userId);
+		checkinSearchVo.setCheckinType((short) 1);
+		List<XcompanyCheckin> checkinVo = xCompanyCheckinService.selectBySearchVo(checkinSearchVo);
 		
 		result.setData(resultMap);
 

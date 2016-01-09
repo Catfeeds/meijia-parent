@@ -37,17 +37,12 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		record.setCheckinType((short) 0);
 		record.setCheckinDevice("");
 		record.setCheckinSn("");
+		record.setCheckinNet("");
 		record.setPoiName("");
 		record.setPoiLat("");
 		record.setPoiLng("");
 		record.setPoiDistance(0);
 		record.setRemarks("");
-		record.setBenzTimeId(0L);
-		record.setCheckinStatus((short) 0);
-		record.setCheckinRemarks("");
-		record.setCheckIn("");
-		record.setCheckOut("");
-		record.setFlexibleMin(0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;
@@ -139,8 +134,31 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		checkOutStartTimeStr = checkOutTimeStr + checkOutStartTimeStr + "00";
 		Long checkOutStartTime = TimeStampUtil.getMillisOfDayFull(checkOutStartTimeStr) / 1000;
 		
-		
-		
 		return result;
 	}	
+	
+	/**
+	 * 获取今天的打卡签到记录，
+	 * 1） 如果有标识为checkin_type = 1 签到，则拿签到
+	 * 2） 如果没有标识为签到的记录，则拿标识 checkin_type = 0 的 第一条记录（签到）并且时间点在签退之前的记录.
+	 */
+	@Override
+	public XcompanyCheckin getTodayCheckIn(Long companyId, Long userId, Long benzTimeId) {
+		XcompanyCheckin record = null;
+		
+		return record;
+	}
+	
+	/**
+	 * 获取今天的打卡签退记录，
+	 * 1） 如果有标识为checkin_type = 2 签退，则拿签退
+	 * 2） 如果没有标识为签退的记录，则拿标识 checkin_type = 0 的 最后一条记录（签到）并且时间点在签退之后的记录.
+	 */	
+	@Override
+	public XcompanyCheckin getTodayCheckOut(Long companyId, Long userId, Long benzTimeId) {
+		XcompanyCheckin record = null;
+		
+		return record;
+	}
+	
 }
