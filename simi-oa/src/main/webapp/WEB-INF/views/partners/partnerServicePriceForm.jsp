@@ -137,6 +137,13 @@
                               </div>
                            </div>
                            
+                           <div class="form-group">
+                              <label  class="col-md-2 control-label">是否下架</label>
+                              <div class="col-md-5">
+                                <form:radiobutton path="isEnable" value="0" />下架
+                                 <form:radiobutton path="isEnable" value="1" />上架
+                              </div>
+                           </div>
                            
                            <div class="form-group required">
 								<label class="col-md-2 control-label">服务标准</label>

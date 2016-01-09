@@ -107,6 +107,7 @@ public class PartnerServicePriceController extends AdminController {
 		partnerServiceType.setName(partnerServiceTypeDetailVo.getName());
 		partnerServiceType.setViewType((short) 1);
 		partnerServiceType.setNo(partnerServiceTypeDetailVo.getNo());
+		partnerServiceType.setIsEnable(partnerServiceTypeDetailVo.getIsEnable());
 		if (servicePriceId.equals(0L)) {
 			partnerServiceTypeService.insertSelective(partnerServiceType);
 			servicePriceId = partnerServiceType.getId();
@@ -197,7 +198,7 @@ public class PartnerServicePriceController extends AdminController {
 		} else {
 			vo.setParentId(partnerServiceType.getParentId());
 		}
-		
+		vo.setIsEnable(partnerServiceType.getIsEnable());
 		vo.setNo(partnerServiceType.getNo());
 		model.addAttribute("contentModel", vo);
 		

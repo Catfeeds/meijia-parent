@@ -10,7 +10,7 @@ import com.simi.base.model.models.ChainEntity;
 
 public class PartnerServiceTypeVo extends ChainEntity<Integer, PartnerServiceTypeVo> implements Serializable{
 
-
+	private String isEnableName;
 	private Long parentId;
 	private List<PartnerServiceTypeVo> childList = new ArrayList<PartnerServiceTypeVo>();
 	
@@ -26,8 +26,13 @@ public class PartnerServiceTypeVo extends ChainEntity<Integer, PartnerServiceTyp
 	public void setChildList(List<PartnerServiceTypeVo> childList) {
 		this.childList = childList;
 	}
-
-
+	public String getIsEnableName() {
+		return isEnableName;
+	}
+	public void setIsEnableName(String isEnableName) {
+		this.isEnableName = isEnableName;
+	}
+	
 	
 
 

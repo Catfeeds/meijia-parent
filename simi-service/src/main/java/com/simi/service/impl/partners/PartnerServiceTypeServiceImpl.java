@@ -66,7 +66,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		searchVo.setParentId(0L);
 		searchVo.setViewType((short) 0);
 		searchVo.setPartnerIds(partnerIds);
-		
+		//searchVo.setIsEnable((short)1);
 		
 		List<PartnerServiceType> list = selectBySearchVo(searchVo);
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
@@ -115,6 +115,14 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		for (PartnerServiceType partnerServiceType2 : child) {
 			PartnerServiceTypeVo vo =   ToTree(partnerServiceType2.getId().longValue(), viewType, partnerIds);
 			partnerServiceTypeVo.getChildren().add(vo);
+		}
+		if (partnerServiceType != null) {
+			if (partnerServiceType.getIsEnable() == 0) {
+				partnerServiceTypeVo.setIsEnableName("已下架");
+			}
+			if (partnerServiceType.getIsEnable() == 1) {
+				partnerServiceTypeVo.setIsEnableName("上架中");
+			}
 		}
 		return partnerServiceTypeVo;
 	}

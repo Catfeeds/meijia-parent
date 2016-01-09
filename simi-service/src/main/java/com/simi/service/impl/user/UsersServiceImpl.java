@@ -640,7 +640,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setProvinceName("");
 		u.setThirdType(" ");
 		u.setOpenid(" ");
-		u.setName(" ");
+		u.setName("");
 		u.setRealName("");
 		u.setBirthDay(new Date());
 		u.setIdCard("");
