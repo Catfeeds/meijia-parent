@@ -129,15 +129,15 @@
 						<div class="form-group">
 							<label class="col-md-2 control-label">服务响应时间 </label>
 							<div class="col-md-5">
-								<select id="responseTime" name="responseTime"
-									class="form-control">
-									<option value="">请选择服务响应时间</option>
-									<option value="0">半个小时内响应</option>
-									<option value="1">一个小时内响应</option>
-									<option value="2">2个小时内响应</option>
-								</select> <span class="am-form-caret"></span>
+								<form:select path="responseTime" class="form-control">
+									<form:option value="">请选择服务响应时间</form:option>
+									<form:option value="0">半个小时内响应</form:option>
+									<form:option value="1">一个小时内响应</form:option>
+									<form:option value="2">2个小时内响应</form:option>
+								</form:select>
 							</div>
 						</div>
+						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">权重类型</label>
 							<div class="col-md-5">

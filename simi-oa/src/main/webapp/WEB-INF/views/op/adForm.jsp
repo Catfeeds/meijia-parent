@@ -98,8 +98,8 @@
 						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">跳转类型</label>
-							<div class="col-md-10">
-								<form:select path="gotoType" >
+							<div class="col-md-5">
+								<form:select path="gotoType" class="form-control">
 									<form:option value="h5">h5</form:option>
 									<form:option value="app">app</form:option>
 									<form:option value="h5+list">h5再跳转人员列表</form:option>

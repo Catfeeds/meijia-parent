@@ -96,27 +96,10 @@ public class PartnerController extends BaseController {
 			searchVo.setServiceTypeIds(serviceTypeIds);
 			PageInfo pageList = partnerUserService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 			
-			List<PartnerUsers> listNew = new ArrayList<PartnerUsers>();
+			//List<PartnerUsers> listNew = new ArrayList<PartnerUsers>();
 
 			List<PartnerUserVo> list = pageList.getList();
-			if (list !=null) {
-				int c = list.size();
-				for (int i = 0; i < c; i++) {
-					PartnerUsers partnerUsers = list.get(i);
-					Partners partners = partnersService.selectByPrimaryKey(partnerUsers.getPartnerId());
-					if (partners !=null) {
-						if (partners.getStatus() != 4){
-							list.remove(i);
-							i--;
-							c--;
-						}}
-				}}
-				List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
-				for (int i =0 ; i < list.size(); i++) {
-					PartnerUsers item = list.get(i);
-					PartnerUserVo vo = partnerUserService.changeToVo(item) ;
-					list.set(i, vo);
-				}
+		
 			result.setData(list);
 			return result;
 	}

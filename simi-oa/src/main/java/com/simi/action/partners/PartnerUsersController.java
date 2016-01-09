@@ -117,8 +117,6 @@ public class PartnerUsersController extends BaseController{
 		
 		PageInfo result = partnerUserService.selectByListPage(searchVo, pageNo, pageSize);
 		
-		
-
 		model.addAttribute("contentModel", result);
 		return "partners/partnerUserList";
 	}
