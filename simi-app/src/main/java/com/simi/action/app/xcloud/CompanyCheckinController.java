@@ -59,7 +59,6 @@ public class CompanyCheckinController extends BaseController {
 	public AppResultData<Object> getByBenz(
 			@RequestParam("company_id") Long companyId,
 			@RequestParam("user_id") Long userId,
-			
 			@RequestParam("poi_name") String poiName,
 			@RequestParam("poi_lat") String poiLat,
 			@RequestParam("poi_lng") String poiLng,
@@ -119,7 +118,7 @@ public class CompanyCheckinController extends BaseController {
 		record.setAddTime(checkinTime);
 		
 		Map<String, String> datas = new HashMap<String, String>();
-		String checkinTimeStr = TimeStampUtil.timeStampToDateStr(checkinTime, "HH:mm");
+		String checkinTimeStr = TimeStampUtil.timeStampToDateStr(checkinTime * 1000, "HH:mm");
 		datas.put("checkinTime", checkinTimeStr);
 		datas.put("poiName", poiName);
 		
