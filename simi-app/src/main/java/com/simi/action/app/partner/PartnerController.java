@@ -19,11 +19,13 @@ import com.simi.common.Constants;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
+import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
+import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
@@ -47,6 +49,9 @@ public class PartnerController extends BaseController {
 	
 	@Autowired
 	private PartnerUserService partnerUserService;
+	
+	@Autowired
+	private PartnersService partnersService;
 	
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
@@ -91,7 +96,24 @@ public class PartnerController extends BaseController {
 			searchVo.setServiceTypeIds(serviceTypeIds);
 			PageInfo pageList = partnerUserService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 			
+			List<PartnerUsers> listNew = new ArrayList<PartnerUsers>();
+
 			List<PartnerUserVo> list = pageList.getList();
+			if (list !=null) {
+				for (int i = 0; i < list.size(); i++) {
+					PartnerUsers partnerUsers = list.get(i);
+					Partners partners = partnersService.selectByPrimaryKey(partnerUsers.getPartnerId());
+					if (partners !=null) {
+						if (partners.getStatus() != 4){
+							list.remove(i);
+						}}
+				}}
+				List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
+				for (int i =0 ; i < list.size(); i++) {
+					PartnerUsers item = list.get(i);
+					PartnerUserVo vo = partnerUserService.changeToVo(item) ;
+					list.set(i, vo);
+				}
 			result.setData(list);
 			return result;
 	}
