@@ -41,7 +41,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/")

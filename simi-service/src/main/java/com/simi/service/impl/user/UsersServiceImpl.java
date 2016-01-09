@@ -45,13 +45,13 @@ import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Service
 public class UsersServiceImpl implements UsersService {

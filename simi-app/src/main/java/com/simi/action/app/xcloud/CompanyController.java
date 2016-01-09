@@ -1,7 +1,5 @@
 package com.simi.action.app.xcloud;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -9,19 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.WriterException;
-import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MeijiaUtil;
-import com.meijia.utils.QrCodeUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -38,7 +31,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/app/company")

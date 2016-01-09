@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyStaffBenzMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyStaffBenz">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="benz_id" property="benzId" jdbcType="NUMERIC" />
+		<result column="staff_id" property="staffId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="dept_id" property="deptId" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, benz_id, staff_id, user_id, dept_id, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff_benz
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.UserCompanySearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff_benz
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="benzId != null">
+			and benz_id = #{benzId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="staffId != null">
+			and staff_id = #{staffId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="deptId != null">
+			and dept_id = #{deptId,jdbcType=NUMERIC}
+		</if>
+		
+		
+		order by id desc
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_staff_benz
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyStaffBenz">
+		insert into xcompany_staff_benz (id, company_id, benz_id,
+		staff_id, user_id, dept_id,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{benzId,jdbcType=NUMERIC},
+		#{staffId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{deptId,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyStaffBenz">
+		insert into xcompany_staff_benz
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="benzId != null">
+				benz_id,
+			</if>
+			<if test="staffId != null">
+				staff_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="deptId != null">
+				dept_id,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="benzId != null">
+				#{benzId,jdbcType=NUMERIC},
+			</if>
+			<if test="staffId != null">
+				#{staffId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="deptId != null">
+				#{deptId,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyStaffBenz">
+		update xcompany_staff_benz
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="benzId != null">
+				benz_id = #{benzId,jdbcType=NUMERIC},
+			</if>
+			<if test="staffId != null">
+				staff_id = #{staffId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="deptId != null">
+				dept_id = #{deptId,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyStaffBenz">
+		update xcompany_staff_benz
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		benz_id = #{benzId,jdbcType=NUMERIC},
+		staff_id = #{staffId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		dept_id = #{deptId,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

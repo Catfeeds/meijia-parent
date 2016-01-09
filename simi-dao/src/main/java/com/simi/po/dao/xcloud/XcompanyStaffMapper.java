@@ -3,7 +3,7 @@ package com.simi.po.dao.xcloud;
 import java.util.List;
 
 import com.simi.po.model.xcloud.XcompanyStaff;
-import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 public interface XcompanyStaffMapper {
     int deleteByPrimaryKey(Long id);

@@ -5,8 +5,8 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.StaffListVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 public interface XcompanyStaffService {
 

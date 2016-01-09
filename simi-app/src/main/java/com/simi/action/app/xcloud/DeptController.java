@@ -1,6 +1,7 @@
 package com.simi.action.app.xcloud;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserCompanySearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/app/company/")

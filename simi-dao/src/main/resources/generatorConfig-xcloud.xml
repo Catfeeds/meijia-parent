@@ -4,8 +4,8 @@
 	<!--  
 	  <classPathEntry location="C:\workspace\java\libs\mysql-connector-java-5.1.5-bin.jar" />
     -->
-	<!-- <classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" /> -->
- <classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" />
+	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
+<!--  <classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" /> -->
 
 
 	<!-- 数据库链接URL、用户名、密码 -->
@@ -18,7 +18,7 @@
 
 		<!-- 数据库链接URL、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/simi" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/simi?characterEncoding=utf8" userId="root"
 			password="root1qaz" />
 
 		<!-- 解决数字转换问题 -->
@@ -47,8 +47,8 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<!--省份表 -->
-		<!-- <table schema="simi" tableName="xcompany"
+
+		<table schema="simi" tableName="xcompany_checkin"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -57,50 +57,15 @@
 			enableDeleteByExample="false"
 			enableSelectByExample="false"
 			enableCountByExample="false">
-			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="company_trade" property="companyTrade" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="province_id" property="provinceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="region_id" property="regionId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
-			<columnOverride  column="company_size" property="companySize" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="poi_type" property="poiType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-		</table> -->
-		
-        <!--公司部门表 -->
-		<!-- <table schema="simi" tableName="xcompany_dept"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="dept_id" property="deptId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
-		</table> -->
-		<!--公司员工表 -->
-		<table schema="simi" tableName="xcompany_staff"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="staff_id" property="staffId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="dept_id" property="deptId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="staff_type" property="staffType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-</table>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="checkin_from" property="checkinFrom" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="checkin_type" property="checkinType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="checkin_status" property="checkinStatus" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
 	</context>
 </generatorConfiguration>

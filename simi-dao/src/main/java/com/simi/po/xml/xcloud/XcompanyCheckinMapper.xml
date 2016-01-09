@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyCheckinMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyCheckin">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="staff_id" property="staffId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="checkin_from" property="checkinFrom" jdbcType="NUMERIC" />
+		<result column="checkin_type" property="checkinType" jdbcType="NUMERIC" />
+		<result column="checkin_device" property="checkinDevice" jdbcType="VARCHAR" />
+		<result column="checkin_sn" property="checkinSn" jdbcType="VARCHAR" />
+		<result column="poi_name" property="poiName" jdbcType="VARCHAR" />
+		<result column="poi_lat" property="poiLat" jdbcType="VARCHAR" />
+		<result column="poi_lng" property="poiLng" jdbcType="VARCHAR" />
+		<result column="poi_distance" property="poiDistance" jdbcType="INTEGER" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="checkin_status" property="checkinStatus" jdbcType="NUMERIC" />
+		<result column="check_in" property="checkIn" jdbcType="VARCHAR" />
+		<result column="check_out" property="checkOut" jdbcType="VARCHAR" />
+		<result column="flexible_min" property="flexibleMin" jdbcType="SMALLINT" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, staff_id, user_id, checkin_from, checkin_type, checkin_device, checkin_sn,
+		poi_name, poi_lat, poi_lng, poi_distance, remarks, checkin_status, check_in, check_out,
+		flexible_min, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_checkin
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanyCheckinSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_checkin
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+				
+		<if test="staffId != null">
+			and staff_id = #{staffId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="checkinFrom != null">
+			and checkin_from = #{checkinFrom,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="checkinType != null">
+			and checkin_type = #{checkinType,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="checkinStatus != null">
+			and checkin_status = #{checkinStatus,jdbcType=NUMERIC}
+		</if>
+				
+		order by id desc
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_checkin
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
+		insert into xcompany_checkin (id, company_id, staff_id,
+		user_id, checkin_from, checkin_type,
+		checkin_device, checkin_sn, poi_name,
+		poi_lat, poi_lng, poi_distance,
+		remarks, checkin_status, check_in,
+		check_out, flexible_min, add_time
+		)
+		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{staffId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{checkinFrom,jdbcType=NUMERIC}, #{checkinType,jdbcType=NUMERIC},
+		#{checkinDevice,jdbcType=VARCHAR}, #{checkinSn,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
+		#{poiLat,jdbcType=VARCHAR}, #{poiLng,jdbcType=VARCHAR}, #{poiDistance,jdbcType=INTEGER},
+		#{remarks,jdbcType=VARCHAR}, #{checkinStatus,jdbcType=NUMERIC}, #{checkIn,jdbcType=VARCHAR},
+		#{checkOut,jdbcType=VARCHAR}, #{flexibleMin,jdbcType=SMALLINT}, #{addTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
+		insert into xcompany_checkin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="staffId != null">
+				staff_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="checkinFrom != null">
+				checkin_from,
+			</if>
+			<if test="checkinType != null">
+				checkin_type,
+			</if>
+			<if test="checkinDevice != null">
+				checkin_device,
+			</if>
+			<if test="checkinSn != null">
+				checkin_sn,
+			</if>
+			<if test="poiName != null">
+				poi_name,
+			</if>
+			<if test="poiLat != null">
+				poi_lat,
+			</if>
+			<if test="poiLng != null">
+				poi_lng,
+			</if>
+			<if test="poiDistance != null">
+				poi_distance,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="checkinStatus != null">
+				checkin_status,
+			</if>
+			<if test="checkIn != null">
+				check_in,
+			</if>
+			<if test="checkOut != null">
+				check_out,
+			</if>
+			<if test="flexibleMin != null">
+				flexible_min,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="staffId != null">
+				#{staffId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="checkinFrom != null">
+				#{checkinFrom,jdbcType=NUMERIC},
+			</if>
+			<if test="checkinType != null">
+				#{checkinType,jdbcType=NUMERIC},
+			</if>
+			<if test="checkinDevice != null">
+				#{checkinDevice,jdbcType=VARCHAR},
+			</if>
+			<if test="checkinSn != null">
+				#{checkinSn,jdbcType=VARCHAR},
+			</if>
+			<if test="poiName != null">
+				#{poiName,jdbcType=VARCHAR},
+			</if>
+			<if test="poiLat != null">
+				#{poiLat,jdbcType=VARCHAR},
+			</if>
+			<if test="poiLng != null">
+				#{poiLng,jdbcType=VARCHAR},
+			</if>
+			<if test="poiDistance != null">
+				#{poiDistance,jdbcType=INTEGER},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="checkinStatus != null">
+				#{checkinStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="checkIn != null">
+				#{checkIn,jdbcType=VARCHAR},
+			</if>
+			<if test="checkOut != null">
+				#{checkOut,jdbcType=VARCHAR},
+			</if>
+			<if test="flexibleMin != null">
+				#{flexibleMin,jdbcType=SMALLINT},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
+		update xcompany_checkin
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="staffId != null">
+				staff_id = #{staffId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="checkinFrom != null">
+				checkin_from = #{checkinFrom,jdbcType=NUMERIC},
+			</if>
+			<if test="checkinType != null">
+				checkin_type = #{checkinType,jdbcType=NUMERIC},
+			</if>
+			<if test="checkinDevice != null">
+				checkin_device = #{checkinDevice,jdbcType=VARCHAR},
+			</if>
+			<if test="checkinSn != null">
+				checkin_sn = #{checkinSn,jdbcType=VARCHAR},
+			</if>
+			<if test="poiName != null">
+				poi_name = #{poiName,jdbcType=VARCHAR},
+			</if>
+			<if test="poiLat != null">
+				poi_lat = #{poiLat,jdbcType=VARCHAR},
+			</if>
+			<if test="poiLng != null">
+				poi_lng = #{poiLng,jdbcType=VARCHAR},
+			</if>
+			<if test="poiDistance != null">
+				poi_distance = #{poiDistance,jdbcType=INTEGER},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="checkinStatus != null">
+				checkin_status = #{checkinStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="checkIn != null">
+				check_in = #{checkIn,jdbcType=VARCHAR},
+			</if>
+			<if test="checkOut != null">
+				check_out = #{checkOut,jdbcType=VARCHAR},
+			</if>
+			<if test="flexibleMin != null">
+				flexible_min = #{flexibleMin,jdbcType=SMALLINT},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
+		update xcompany_checkin
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		staff_id = #{staffId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		checkin_from = #{checkinFrom,jdbcType=NUMERIC},
+		checkin_type = #{checkinType,jdbcType=NUMERIC},
+		checkin_device = #{checkinDevice,jdbcType=VARCHAR},
+		checkin_sn = #{checkinSn,jdbcType=VARCHAR},
+		poi_name = #{poiName,jdbcType=VARCHAR},
+		poi_lat = #{poiLat,jdbcType=VARCHAR},
+		poi_lng = #{poiLng,jdbcType=VARCHAR},
+		poi_distance = #{poiDistance,jdbcType=INTEGER},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		checkin_status = #{checkinStatus,jdbcType=NUMERIC},
+		check_in = #{checkIn,jdbcType=VARCHAR},
+		check_out = #{checkOut,jdbcType=VARCHAR},
+		flexible_min = #{flexibleMin,jdbcType=SMALLINT},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

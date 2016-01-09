@@ -11,7 +11,6 @@
 
 <!--css for this page-->
 
-<link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
 <link href="<c:url value='/assets/js/calendar/lib/cupertino/jquery-ui.min.css'/>" rel="stylesheet">
 <link href="<c:url value='/assets/js/calendar/fullcalendar.min.css'/>" rel="stylesheet">
 <link href="<c:url value='/assets/js/calendar/fullcalendar.print.css'/>" media='print'>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyBenzMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyBenz">
+		<id column="benz_id" property="benzId" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		benz_id, company_id, name, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_benz
+		where benz_id = #{benzId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByXcompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_benz
+		where company_id = #{companyId,jdbcType=NUMERIC}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_benz
+		where benz_id = #{benzId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyBenz">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="deptId">
+			SELECT LAST_INSERT_ID() AS benz_id
+		</selectKey>
+		insert into xcompany_benz (benz_id, company_id, name,
+		add_time)
+		values (#{benzId,jdbcType=NUMERIC},
+		#{companyId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyBenz">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="deptId">
+			SELECT LAST_INSERT_ID() AS benz_id
+		</selectKey>
+		insert into xcompany_benz
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="benzId != null">
+				benz_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="benzId != null">
+				#{benzId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyBenz">
+		update xcompany_benz
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where benz_id = #{benzId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyBenz">
+		update xcompany_benz
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where benz_id = #{benzId,jdbcType=NUMERIC}
+	</update>
+</mapper>

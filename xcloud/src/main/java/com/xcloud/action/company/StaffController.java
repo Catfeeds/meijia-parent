@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
@@ -37,8 +38,8 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.UserCompanySearchVo;
 import com.simi.vo.xcloud.StaffListVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;

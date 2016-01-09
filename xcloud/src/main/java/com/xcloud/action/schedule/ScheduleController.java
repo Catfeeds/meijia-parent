@@ -22,6 +22,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.card.CardService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
@@ -29,6 +30,8 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.xcloud.StaffListVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
@@ -44,6 +47,9 @@ public class ScheduleController extends BaseController {
 
 	@Autowired
 	private XCompanyService xCompanyService;
+	
+	@Autowired
+	private XcompanyStaffService xcompanyStaffService;	
 
 	@Autowired
 	private CardService cardService;
@@ -126,9 +132,11 @@ public class ScheduleController extends BaseController {
 		return result;
 	}	
 	
+	@AuthPassport
 	@RequestMapping(value = "/card-form", method = { RequestMethod.GET })
 	public String cardForm(HttpServletRequest request, Model model,
-			@RequestParam("card_type") Short cardType) {	
+			@RequestParam("card_type") Short cardType,
+			@RequestParam(value = "card_id", required = false, defaultValue = "0") Long cardId) {	
 		
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String cardTips = CardUtil.getCardTips(cardType);
@@ -144,6 +152,27 @@ public class ScheduleController extends BaseController {
 		model.addAttribute("labelAttendStr", labelAttendStr);
 		model.addAttribute("labelTimeStr", labelTimeStr);
 		model.addAttribute("labelContentStr", labelContentStr);
+		
+		Cards record = cardService.initCards();
+		if (cardId > 0L) {
+			record = cardService.selectByPrimaryKey(cardId);
+		}
+		
+		record.setCardType(cardType);
+		
+		model.addAttribute("contentModel", record);
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long companyId = accountAuth.getCompanyId();
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> staffList = xcompanyStaffService.selectBySearchVo(searchVo);	
+		List<StaffListVo> staffListVos = xcompanyStaffService.changeToStaffLisVos(companyId, staffList);	
+		
+		model.addAttribute("staffList", staffListVos);
 
 		return "/schedule/card-form";
 	}

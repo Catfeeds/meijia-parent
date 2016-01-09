@@ -11,10 +11,8 @@
 
 <!--css for this page-->
 
-<link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/calendar/lib/cupertino/jquery-ui.min.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/calendar/fullcalendar.min.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/calendar/fullcalendar.print.css'/>" media='print'>
+<link href="<c:url value='/assets/js/chosen/amazeui.chosen.css'/>" rel="stylesheet">
+
 </head>
 
 <body>
@@ -80,14 +78,17 @@
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-					<form class="am-form am-form-horizontal">
+					<form:form modelAttribute="contentModel" method="POST" id="card-form"
+						class="am-form am-form-horizontal">
+						<form:hidden path="cardId" />
 						<div class="am-form-group">
 							<label for="user-name" class="am-u-sm-3 am-form-label">${labelAttendStr }：</label>
+
 							<div class="am-u-sm-9">
-								<button type="button" class="am-btn am-btn-primary" data-am-modal="{target: '#my-popup'}">
+								<button type="button" class="am-btn am-btn-primary" data-am-modal="{target: '#chosen-popup'}">
 									点击选择人员</button>
 
-								<div class="am-popup" id="my-popup">
+								<div class="am-popup" id="chosen-popup">
 									<div class="am-popup-inner">
 										<div class="am-popup-hd">
 											<h4 class="am-popup-title">选择人员</h4>
@@ -97,7 +98,8 @@
 									</div>
 								</div>
 
-								<small>选择此卡片需要发送与分享的好友</small>
+								<small>选择需要发送与分享的好友</small>
+
 							</div>
 						</div>
 
@@ -162,8 +164,7 @@
 
 	<!--script for this page-->
 
-	<script src="<c:url value='/assets/js/calendar/fullcalendar.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/calendar/lang/zh-cn.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/schedule/list.js'/>"></script>
+	<script src="<c:url value='/assets/js/chosen/amazeui.chosen.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/schedule/card-form.js'/>"></script>
 </body>
 </html>

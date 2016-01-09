@@ -31,7 +31,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UserCompanySearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.UserCompanySearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_staff
@@ -59,7 +59,7 @@
 		order by id desc
 	</select>
 	
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserCompanySearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.UserCompanySearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_staff
