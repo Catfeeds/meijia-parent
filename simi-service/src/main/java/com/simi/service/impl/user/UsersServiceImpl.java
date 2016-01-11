@@ -757,7 +757,7 @@ public class UsersServiceImpl implements UsersService {
 
 		byte[] imgUrlBytes = null;
 		if (StringUtil.isContainChinese(name)) {
-			imgUrlBytes = ImgServerUtil.ImgYin(headImgWord, Constants.DEFAULT_HEAD_IMG_BACK, -80, 20);
+			imgUrlBytes = ImgServerUtil.ImgYin(headImgWord, Constants.DEFAULT_HEAD_IMG_BACK, -82, 22);
 		} else {
 			imgUrlBytes = ImgServerUtil.ImgYin(headImgWord, Constants.DEFAULT_HEAD_IMG_BACK, -40, 20);
 		}

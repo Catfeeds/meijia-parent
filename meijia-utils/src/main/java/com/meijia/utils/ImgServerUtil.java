@@ -205,7 +205,7 @@ public class ImgServerUtil {
 //		System.out.println(info.get("size").toString());
 		
 		//中文两个字
-		ImgYin("马云" , "http://img.51xingzheng.cn/85ebd46f40d90977ee01ead3e71bd6fa",-80, 20); 
+		ImgYin("马云" , "http://img.51xingzheng.cn/85ebd46f40d90977ee01ead3e71bd6fa",-82, 22); 
 //		
 //		//英文两个字
 //		ImgYin("MC" , "/Users/lnczx/Downloads/b.jpg", "/Users/lnczx/Downloads/b2.jpg", -40 , 20); 
