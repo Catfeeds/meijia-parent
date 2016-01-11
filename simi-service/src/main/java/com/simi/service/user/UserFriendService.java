@@ -1,7 +1,10 @@
 package com.simi.service.user;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;

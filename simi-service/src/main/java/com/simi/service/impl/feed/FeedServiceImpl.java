@@ -1,9 +1,11 @@
 package com.simi.service.impl.feed;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import com.simi.vo.feed.FeedZanViewVo;
 import com.simi.po.model.feed.FeedImgs;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
@@ -63,6 +67,9 @@ public class FeedServiceImpl implements FeedService {
 	 * 转换card 对象为 cardViewVo对象
 	 * @param card
 	 * @return
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@Override
 	public FeedViewVo changeToFeedViewVo(Feeds feed) {
@@ -78,7 +85,7 @@ public class FeedServiceImpl implements FeedService {
 
 		if (u != null) {
 			vo.setName(u.getName());
-			vo.setHeadImg(u.getHeadImg());
+			vo.setHeadImg(usersService.getHeadImg(u));
 		}
 		
 		//统计赞的数量
@@ -117,6 +124,9 @@ public class FeedServiceImpl implements FeedService {
 	 * 批量转换card 对象为 cardViewVo对象
 	 * @param List<card>
 	 * @return
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -158,7 +168,7 @@ public class FeedServiceImpl implements FeedService {
 			for (Users u : userList) {
 				if (u.getId().equals(item.getUserId())) {
 					vo.setName(u.getName());
-					vo.setHeadImg(u.getHeadImg());
+					vo.setHeadImg(usersService.getHeadImg(u));
 				}
 			}
 

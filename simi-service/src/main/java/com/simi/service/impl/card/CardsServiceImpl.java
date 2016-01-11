@@ -1,5 +1,6 @@
 package com.simi.service.impl.card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +28,8 @@ import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.data.Weathers;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
@@ -147,9 +150,12 @@ public class CardsServiceImpl implements CardService {
 	 * 转换card 对象为 cardViewVo对象
 	 * @param card
 	 * @return
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@Override
-	public CardViewVo changeToCardViewVo(Cards card) {
+	public CardViewVo changeToCardViewVo(Cards card) throws JsonParseException, JsonMappingException, IOException {
 		CardViewVo vo = new CardViewVo();
 		if (card == null) return vo;
 		Long cardId = card.getCardId();
@@ -168,7 +174,7 @@ public class CardsServiceImpl implements CardService {
 		Users u = usersService.getUserInfo(vo.getUserId());
 		if (u != null) {
 			vo.setUserName(u.getName());
-			vo.setUserHeadImg(u.getHeadImg());
+			vo.setUserHeadImg(usersService.getHeadImg(u));
 		}
 		
 		//统计赞的数量
@@ -245,7 +251,7 @@ public class CardsServiceImpl implements CardService {
 			vo.setServiceTime(item.getServiceTime());
 			
 			if (!StringUtil.isEmpty(item.getServiceContent())) {
-				vo.setServiceContent(StringUtil.subStringByByte(item.getServiceContent(), 200));
+				vo.setServiceContent(item.getServiceContent().substring(0, 200));
 			}
 			
 			vo.setServiceAddr(item.getServiceAddr());

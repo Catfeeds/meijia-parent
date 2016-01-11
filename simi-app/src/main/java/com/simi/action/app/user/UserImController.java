@@ -144,11 +144,14 @@ public class UserImController extends BaseController {
 	 * 
 	 * @param user_id
 	 * @return
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 
 	@RequestMapping(value = "get_im_profile", method = RequestMethod.GET)
 	public AppResultData<Object> getImProfile(
-			@RequestParam("im_username") String imUserName) {
+			@RequestParam("im_username") String imUserName) throws JsonParseException, JsonMappingException, IOException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, "", "");
 
@@ -171,7 +174,7 @@ public class UserImController extends BaseController {
 		imProfile.put("sex", u.getSex());
 		imProfile.put("im_username", imUserName);
 		imProfile.put("name", StringUtil.isEmpty(u.getName()) ? u.getMobile() : u.getName());
-		imProfile.put("head_img", u.getHeadImg());
+		imProfile.put("head_img", userService.getHeadImg(u));
 		imProfile.put("user_type", u.getUserType().toString());
 		result.setData(imProfile);
 		

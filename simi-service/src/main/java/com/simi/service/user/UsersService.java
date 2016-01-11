@@ -1,8 +1,11 @@
 package com.simi.service.user;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
@@ -73,6 +76,8 @@ public interface UsersService {
 	Boolean userOrderAmPushSms(Users users);
 
 	Boolean userSecToUserPushSms(Users users);
+
+	String getHeadImg(Users u);
 
 
 }

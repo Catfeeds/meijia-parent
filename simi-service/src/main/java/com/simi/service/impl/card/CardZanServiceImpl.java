@@ -1,8 +1,10 @@
 package com.simi.service.impl.card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import com.simi.vo.card.CardZanViewVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.card.CardZanMapper;
@@ -83,7 +87,7 @@ public class CardZanServiceImpl implements CardZanService {
 					u = userList.get(j);
 					if (vo.getUserId().equals(u.getId())) {
 						vo.setName(u.getName());
-						vo.setHeadImg(u.getHeadImg());
+						vo.setHeadImg(usersService.getHeadImg(u));
 						break;
 					}
 				}

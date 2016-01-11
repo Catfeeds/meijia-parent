@@ -1,5 +1,6 @@
 package com.simi.action.app.card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
@@ -73,12 +76,15 @@ public class CardQueryController extends BaseController {
 	 *  @param user_id  			用户ID
 	 *
 	 *  @return  CardViewVo
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@RequestMapping(value = "get_detail", method = RequestMethod.GET)
 	public AppResultData<Object> getDetail(
 			@RequestParam("card_id") Long cardId,
 			@RequestParam(value = "user_id",required = false,defaultValue = "") Long userId
-			) {
+			) throws JsonParseException, JsonMappingException, IOException {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		if (userId != null) {
@@ -184,13 +190,16 @@ public class CardQueryController extends BaseController {
 	 *  @param user_id  			用户ID
 	 *
 	 *  @return  CardViewVo
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@RequestMapping(value = "get_comment_list", method = RequestMethod.GET)
 	public AppResultData<Object> getCommentList(
 			@RequestParam("card_id") Long cardId,
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page
-			) {
+			) throws JsonParseException, JsonMappingException, IOException {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		

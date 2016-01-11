@@ -1,5 +1,6 @@
 package com.simi.service.impl.feed;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,8 @@ import com.simi.vo.feed.FeedCommentViewVo;
 import com.simi.vo.feed.FeedSearchVo;
 import com.simi.po.model.feed.FeedComment;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageHelper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
@@ -80,7 +83,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			for (Users u : users) {
 				if (u.getId().equals(vo.getUserId())) {
 					vo.setName(u.getName());
-					vo.setHeadImg(u.getHeadImg());
+					vo.setHeadImg(usersService.getHeadImg(u));
 					break;
 				}
 			}

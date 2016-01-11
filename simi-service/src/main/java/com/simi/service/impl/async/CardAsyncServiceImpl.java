@@ -196,7 +196,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String pushContent = "";
 		if (!StringUtil.isEmpty(card.getServiceContent())) {
-			pushContent = StringUtil.subStringByByte(card.getServiceContent(), 20);
+			pushContent = pushContent.substring(0, 20);
 		}
 		
 		//获得提醒时间
@@ -278,7 +278,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String pushContent = "";
 		if (!StringUtil.isEmpty(card.getServiceContent())) {
-			pushContent = StringUtil.subStringByByte(card.getServiceContent(), 20);
+			pushContent = card.getServiceContent().substring(0, 20);	
 		}
 		
 		//获得提醒时间
@@ -371,7 +371,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		String serviceContent = card.getServiceContent();
 		
 		if (serviceContent.length() > 20) {
-			serviceContent = StringUtil.subStringByByte(serviceContent, 20) + "...";
+			serviceContent = serviceContent.substring(0, 20) + "...";
 		}
 		
 		String fromCityName = "";

@@ -1,5 +1,6 @@
 package com.simi.service.impl.card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,8 @@ import com.simi.vo.card.CardCommentViewVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.po.model.card.CardComment;
 import com.simi.po.model.user.Users;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageHelper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
@@ -56,7 +59,7 @@ public class CardCommentServiceImpl implements CardCommentService {
 	}	
 	
 	@Override
-	public List<CardCommentViewVo> changeToCardComments(List<CardComment> cardComments) {
+	public List<CardCommentViewVo>  changeToCardComments(List<CardComment> cardComments) {
 		
 		List<CardCommentViewVo> result = new ArrayList<CardCommentViewVo>();
 		
@@ -83,7 +86,7 @@ public class CardCommentServiceImpl implements CardCommentService {
 				u = users.get(j);
 				if (u.getId().equals(vo.getUserId())) {
 					vo.setName(u.getName());
-					vo.setHeadImg(u.getHeadImg());
+					vo.setHeadImg(usersService.getHeadImg(u));
 					break;
 				}
 			}

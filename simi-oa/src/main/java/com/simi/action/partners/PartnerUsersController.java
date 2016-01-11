@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.ImgServerUtil;
@@ -127,13 +129,15 @@ public class PartnerUsersController extends BaseController{
 	 * @param model
 	 * @param id
 	 * @return
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 * @throws IOException
 	 */
    // @AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.GET })
 	public String userForm(Model model, HttpServletRequest request,
 			@RequestParam("id") Long id, @RequestParam("partnerId") Long partnerId,
-			HttpServletRequest response)  {
+			HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException  {
     	
     	if (id == null) {
     		id = 0L;
@@ -167,7 +171,7 @@ public class PartnerUsersController extends BaseController{
     	vo.setCompanyName(partner.getCompanyName());
     	vo.setUserId(u.getId());
     	vo.setIntroduction(u.getIntroduction());
-    	vo.setHeadImg(u.getHeadImg().trim());
+    	vo.setHeadImg(userService.getHeadImg(u));
     	vo.setName(u.getName());
     	vo.setMobile(u.getMobile());
     	vo.setResponseTime(partnerUser.getResponseTime());

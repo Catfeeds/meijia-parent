@@ -130,5 +130,10 @@ public class Constants {
 	
 	//图片服务器地址
 	public static String IMG_SERVER_HOST = "http://img.51xingzheng.cn";
+	
+	//默认头像
+	public static String DEFAULT_HEAD_IMG = "http://img.51xingzheng.cn/6bf03aff8873e76bfa11e9a24f4df4c4";
 
+	//默认头像底图
+	public static String DEFAULT_HEAD_IMG_BACK = "http://img.51xingzheng.cn/85ebd46f40d90977ee01ead3e71bd6fa";
 }

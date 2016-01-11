@@ -1,5 +1,6 @@
 package com.meijia.utils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,18 +9,25 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 /**
- * String常用工具类..
- * 持续更新ing..
+ * String常用工具类.. 持续更新ing..
+ * 
  * @author dylan
  *
  */
 public class StringUtil {
-	
-	static String []bigNum={"零","一","二","三","四","五","六","七","八","九"};
+
+	static String[] bigNum = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+
 	/**
 	 * 判断字符串是否为空 or is NULL
+	 * 
 	 * @param str
 	 * @return
 	 */
@@ -32,6 +40,7 @@ public class StringUtil {
 
 	/**
 	 * 判断是否为空
+	 * 
 	 * @param str
 	 * @return
 	 */
@@ -40,57 +49,28 @@ public class StringUtil {
 	}
 
 	/**
-	* 首字母大写
-	* @param srcStr
-	* @return
-	*/
+	 * 首字母大写
+	 * 
+	 * @param srcStr
+	 * @return
+	 */
 	public static String firstCharacterToUpper(String srcStr) {
 		return srcStr.substring(0, 1).toUpperCase() + srcStr.substring(1);
 	}
 
-    /**
-     * 格式化字符串
-     * 如果为空，返回“”
-     * @param str
-     * @return
-     */
-    public static String formatString(String str) {
-        if(isEmpty(str)) {
-            return "";
-        } else {
-            return str;
-        }
-    }
-
-    /**
-     * 截取字符串，字母、汉字都可以，汉字不会截取半
-     * @param str 字符串
-     * @param n 截取的长度，字母数，如果为汉字，一个汉字等于两个字母数
-     * @return
-     */
-    public static String subStringByByte(String str, int n){
-        int num = 0;
-        try {
-            byte[] buf = str.getBytes("GBK");
-            if(n>=buf.length){
-                return str;
-            }
-            boolean bChineseFirstHalf = false;
-            for(int i=0;i<n;i++)
-            {
-                if(buf[i]<0 && !bChineseFirstHalf){
-                    bChineseFirstHalf = true;
-                }else{
-                    num++;
-                    bChineseFirstHalf = false;
-                }
-            }
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return str.substring(0,num);
-    }
+	/**
+	 * 格式化字符串 如果为空，返回“”
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String formatString(String str) {
+		if (isEmpty(str)) {
+			return "";
+		} else {
+			return str;
+		}
+	}
 
 	/**
 	 * MD5字符串加密
@@ -100,8 +80,7 @@ public class StringUtil {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public final static String md5(String str) throws NoSuchAlgorithmException {
-		final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8',
-				'9', 'a', 'b', 'c', 'd', 'e', 'f' };
+		final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 		byte[] btInput = str.getBytes();
 		// 获得MD5摘要算法的 MessageDigest 对象
 		MessageDigest md5Inst = MessageDigest.getInstance("MD5");
@@ -127,8 +106,7 @@ public class StringUtil {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public final static String sha1(String str) throws NoSuchAlgorithmException {
-		final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8',
-				'9', 'a', 'b', 'c', 'd', 'e', 'f' };
+		final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 		byte[] btInput = str.getBytes();
 		// 获得SHA-1摘要算法的 MessageDigest 对象
 		MessageDigest sha1Inst = MessageDigest.getInstance("SHA-1");
@@ -145,50 +123,49 @@ public class StringUtil {
 		}
 		return strResult.toString();
 	}
-	
-	
-	public static String[] clean(final String[] v) {
-	    List<String> list = new ArrayList<String>(Arrays.asList(v));
-	    list.removeAll(Collections.singleton(""));
-	    return list.toArray(new String[list.size()]);
-	}
-	
-	//逗号分割
-    public static String[] convertStrToArray(String str){
-        String[] strArray = null;
-        strArray = str.split(","); //拆分字符为"," ,然后把结果交给数组strArray
-        return strArray;
-    }
 
-    //下划线分割
-    public static String[] convertStrToArrayByUL(String str){
-        String[] strArray = null;
-        strArray = str.split("_"); //拆分字符为"," ,然后把结果交给数组strArray
-        return strArray;
-    }	
-	
-    /*
-     * 身份证号中间 用 * 显示
-     */
-    public static String replaceCardIdByStar(String cardId){
-    	//去除空格，数据库中记录有空格
-    	String cardNo = cardId.replaceAll(" ", "");
-    	
-    	String star = cardNo.substring(5,15);
-    	String replaceAll = cardNo.replaceAll(star, "**********");
-    	
-    	return replaceAll;
-    }
-    
+	public static String[] clean(final String[] v) {
+		List<String> list = new ArrayList<String>(Arrays.asList(v));
+		list.removeAll(Collections.singleton(""));
+		return list.toArray(new String[list.size()]);
+	}
+
+	// 逗号分割
+	public static String[] convertStrToArray(String str) {
+		String[] strArray = null;
+		strArray = str.split(","); // 拆分字符为"," ,然后把结果交给数组strArray
+		return strArray;
+	}
+
+	// 下划线分割
+	public static String[] convertStrToArrayByUL(String str) {
+		String[] strArray = null;
+		strArray = str.split("_"); // 拆分字符为"," ,然后把结果交给数组strArray
+		return strArray;
+	}
+
+	/*
+	 * 身份证号中间 用 * 显示
+	 */
+	public static String replaceCardIdByStar(String cardId) {
+		// 去除空格，数据库中记录有空格
+		String cardNo = cardId.replaceAll(" ", "");
+
+		String star = cardNo.substring(5, 15);
+		String replaceAll = cardNo.replaceAll(star, "**********");
+
+		return replaceAll;
+	}
+
 	public static String getZhNum(String str) {
 		int t = Integer.parseInt(str);
 		return bigNum[t];
 	}
-	
-	//生成八位唯一编码
-		public static String[] chars = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-				"w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
-				"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+	// 生成八位唯一编码
+	public static String[] chars = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+			"w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+			"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
 	public static String generateShortUuid() {
 		StringBuffer shortBuffer = new StringBuffer();
@@ -201,13 +178,34 @@ public class StringUtil {
 		return shortBuffer.toString();
 
 	}
-	
+
 	public static String setDoubleQuote(String myText) {
-	    String quoteText = "";
-//	    if (!myText.isEmpty()) {
-	        quoteText = "\"" + myText + "\"";
-//	    }
-	    return quoteText;
+		String quoteText = "";
+		// if (!myText.isEmpty()) {
+		quoteText = "\"" + myText + "\"";
+		// }
+		return quoteText;
 	}
-    
+
+	public static boolean isContainChinese(String str) {
+
+		Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+		Matcher m = p.matcher(str);
+		if (m.find()) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void main(String[] args) throws UnsupportedEncodingException {
+
+		String a = "董光明a是b一个编c外人员";
+		System.out.println((a.substring(0, 5)));
+		System.out.println((a.substring(a.length() - 4, a.length())));
+
+		String b = "mcccb";
+		System.out.println(b.substring(0, 2));
+		System.out.println(b.substring(b.length() - 2, b.length()));
+	}
+
 }

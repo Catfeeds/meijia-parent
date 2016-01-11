@@ -274,7 +274,7 @@ public class UserImageController extends BaseController {
 			return result;
 		}
 		
-		String qrCodeLogo = u.getHeadImg();
+		String qrCodeLogo = userService.getHeadImg(u);
 		if (StringUtil.isEmpty(qrCodeLogo)) {
 			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
 		}

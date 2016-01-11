@@ -1,12 +1,22 @@
 package com.meijia.utils;
 
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
+import javax.imageio.ImageIO;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.logging.Log;
@@ -14,8 +24,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.sun.image.codec.jpeg.*; 
 /**
  * HTTP工具类
  *
@@ -110,7 +119,8 @@ public class ImgServerUtil {
         return result;
     } 	
     
-    private static String macthContentType(String fileType){
+    @SuppressWarnings("unused")
+	private static String macthContentType(String fileType){
         String contentType = "image/jpeg";
         switch (fileType.toLowerCase()) {
         case "bmp":
@@ -139,23 +149,72 @@ public class ImgServerUtil {
     	return imgUrl + "?w="+ w + "&h=" + h;
     }
     
+    //文字加底图.
+    public static byte[] ImgYin(String s,String ImgName, int offsetWeight, int offsetHeight){
+        byte[] bytes = null;
+        try{
+            String str = s;
+            Image src = null;
+            
+            if (ImgName.indexOf("http://") >= 0) {
+            	URL url = new URL(ImgName);
+            	src = ImageIO.read(url);
+            } else {
+            	File _file = new File(ImgName);
+                src = ImageIO.read(_file);
+            }
+            
+            int wideth=src.getWidth(null);
+            int height=src.getHeight(null);
+            BufferedImage image=new BufferedImage(wideth,height,BufferedImage.TYPE_INT_RGB);
+            Graphics g=image.createGraphics();
+            g.drawImage(src,0,0,wideth,height,null);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("SimHei",Font.BOLD,80));
+            Font aa=new Font("SimHei",Font.BOLD,80);
+
+            g.drawString(str,wideth/2+offsetWeight,height/2+offsetHeight);
+            g.dispose();
+            ByteArrayOutputStream out1 = new ByteArrayOutputStream();
+            saveImage(image, out1);
+            bytes = out1.toByteArray();
+            out1.close();
+           
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return bytes;
+    }
+    @SuppressWarnings("restriction")
+	public static void saveImage(BufferedImage img, OutputStream out1) throws Exception {
+        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out1);
+        encoder.encode(img);
+    }     
+    
+    
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
 
-		String jsonStr = "{\"ret\":true,\"info\":{\"md5\":\"d2a771e58a0f93b92758260bc46c311a\",\"size\":17728}}";
-		ObjectMapper mapper = new ObjectMapper();
-		
-
-		
-		HashMap<String,Object> o = mapper.readValue(jsonStr, HashMap.class); 
-		
-		System.out.println(o.get("ret"));
-		System.out.println(o.get("info"));
-		
-		HashMap<String,String> info = (HashMap<String, String>) o.get("info");
-		
-		System.out.println(info.get("md5").toString());
+//		String jsonStr = "{\"ret\":true,\"info\":{\"md5\":\"d2a771e58a0f93b92758260bc46c311a\",\"size\":17728}}";
+//		ObjectMapper mapper = new ObjectMapper();
+//		
+//
+//		
+//		HashMap<String,Object> o = mapper.readValue(jsonStr, HashMap.class); 
+//		
+//		System.out.println(o.get("ret"));
+//		System.out.println(o.get("info"));
+//		
+//		HashMap<String,String> info = (HashMap<String, String>) o.get("info");
+//		
+//		System.out.println(info.get("md5").toString());
 //		System.out.println(info.get("size").toString());
 		
+		//中文两个字
+		ImgYin("马云" , "http://img.51xingzheng.cn/85ebd46f40d90977ee01ead3e71bd6fa",-80, 20); 
+//		
+//		//英文两个字
+//		ImgYin("MC" , "/Users/lnczx/Downloads/b.jpg", "/Users/lnczx/Downloads/b2.jpg", -40 , 20); 
 	}
 
 }

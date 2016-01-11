@@ -1,5 +1,6 @@
 package com.simi.service.impl.user;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +12,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -181,7 +186,7 @@ public class UsersServiceImpl implements UsersService {
 
 		vo.setId(viewUser.getId());
 		vo.setSex(viewUser.getSex());
-		vo.setHeadImg(viewUser.getHeadImg());
+		vo.setHeadImg(getHeadImg(viewUser));
 		vo.setProvinceName(viewUser.getProvinceName());
 		vo.setUserType(viewUser.getUserType());
 		vo.setName(viewUser.getName());
@@ -711,6 +716,79 @@ public class UsersServiceImpl implements UsersService {
 		PageHelper.startPage(pageNo, pageSize);
 		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
 		return lists;
+	}
+
+	/**
+	 * 获得用户头像的方法
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getHeadImg(Users u) {
+		String headImg = "";
+
+		if (!StringUtil.isEmpty(u.getHeadImg()))
+			return u.getHeadImg();
+
+		if (StringUtil.isEmpty(u.getName()))
+			return Constants.DEFAULT_HEAD_IMG;
+
+		String name = u.getName();
+
+		String headImgWord = "";
+		if (StringUtil.isContainChinese(name)) {
+			if (name.length() > 2) {
+				headImgWord = name.substring(name.length() - 2, name.length());
+			} else {
+				headImgWord = name;
+			}
+		} else {
+			if (name.length() > 2) {
+				headImgWord = name.substring(0, 2);
+			} else {
+				headImgWord = name;
+			}
+		}
+
+		if (StringUtil.isEmpty(headImgWord))
+			return Constants.DEFAULT_HEAD_IMG;
+
+		byte[] imgUrlBytes = null;
+		if (StringUtil.isContainChinese(name)) {
+			imgUrlBytes = ImgServerUtil.ImgYin(headImgWord, Constants.DEFAULT_HEAD_IMG_BACK, -80, 20);
+		} else {
+			imgUrlBytes = ImgServerUtil.ImgYin(headImgWord, Constants.DEFAULT_HEAD_IMG_BACK, -40, 20);
+		}
+
+		if (imgUrlBytes == null)
+			return Constants.DEFAULT_HEAD_IMG;
+		String url = Constants.IMG_SERVER_HOST + "/upload/";
+
+		String sendResult = ImgServerUtil.sendPostBytes(url, imgUrlBytes, "jpg");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		HashMap<String, Object> o = null;
+		try {
+			o = mapper.readValue(sendResult, HashMap.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(o.toString());
+		String ret = o.get("ret").toString();
+
+		HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+
+		String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+		imgUrl = ImgServerUtil.getImgSize(imgUrl, "100", "100");
+		u.setHeadImg(imgUrl);
+		headImg = imgUrl;
+		updateByPrimaryKeySelective(u);
+
+		return headImg;
 	}
 
 }
