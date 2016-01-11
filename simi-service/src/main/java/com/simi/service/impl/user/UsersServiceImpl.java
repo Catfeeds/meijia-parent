@@ -729,10 +729,10 @@ public class UsersServiceImpl implements UsersService {
 	public String getHeadImg(Users u) {
 		String headImg = "";
 
-		if (!StringUtil.isEmpty(u.getHeadImg()))
+		if (!StringUtil.isEmpty(u.getHeadImg().trim()))
 			return u.getHeadImg();
 
-		if (StringUtil.isEmpty(u.getName()))
+		if (StringUtil.isEmpty(u.getName().trim()))
 			return Constants.DEFAULT_HEAD_IMG;
 
 		String name = u.getName();
