@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -23,8 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.sun.image.codec.jpeg.*; 
+import com.fasterxml.jackson.databind.JsonMappingException; 
 /**
  * HTTP工具类
  *
@@ -176,7 +174,7 @@ public class ImgServerUtil {
             g.drawString(str,wideth/2+offsetWeight,height/2+offsetHeight);
             g.dispose();
             ByteArrayOutputStream out1 = new ByteArrayOutputStream();
-            saveImage(image, out1);
+            ImageIO.write(image, "jpg", out1);
             bytes = out1.toByteArray();
             out1.close();
            
@@ -186,11 +184,7 @@ public class ImgServerUtil {
         }
         return bytes;
     }
-    @SuppressWarnings("restriction")
-	public static void saveImage(BufferedImage img, OutputStream out1) throws Exception {
-        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out1);
-        encoder.encode(img);
-    }     
+     
     
     
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
