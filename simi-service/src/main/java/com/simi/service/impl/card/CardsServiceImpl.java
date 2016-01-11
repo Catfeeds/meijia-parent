@@ -155,7 +155,7 @@ public class CardsServiceImpl implements CardService {
 	 * @throws JsonParseException 
 	 */
 	@Override
-	public CardViewVo changeToCardViewVo(Cards card) throws JsonParseException, JsonMappingException, IOException {
+	public CardViewVo changeToCardViewVo(Cards card) {
 		CardViewVo vo = new CardViewVo();
 		if (card == null) return vo;
 		Long cardId = card.getCardId();
