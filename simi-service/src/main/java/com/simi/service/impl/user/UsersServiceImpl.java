@@ -736,7 +736,7 @@ public class UsersServiceImpl implements UsersService {
 			return Constants.DEFAULT_HEAD_IMG;
 
 		String name = u.getName();
-
+		name = name.replace(" ", "");
 		String headImgWord = "";
 		if (StringUtil.isContainChinese(name)) {
 			if (name.length() > 2) {
