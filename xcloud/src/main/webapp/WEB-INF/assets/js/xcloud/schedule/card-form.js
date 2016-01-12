@@ -65,6 +65,7 @@ $('#selected_users').tagsinput({
 	  maxChars: 8
 });
 
+//表格中checkbox 选择触发事件
 function setSelectTable(userId) {
 	var table = $("#list-table").DataTable();
 	console.log("userId = " + userId);
@@ -82,11 +83,11 @@ function setSelectTable(userId) {
 			name = data.name;
 			if (this.checked) {
 				console.log("add");
-				addSelectUser(userId);
+				addSelectUser(userId, name);
 				$('#selected_users').tagsinput('add', {id:userId, label:name});
 			} else {
 				console.log("remove");
-				removeSelectUser(userId);
+				removeSelectUser(userId, name);
 				$('#selected_users').tagsinput('remove', {id:userId, label:name});
 			}
 			
@@ -99,6 +100,7 @@ function setSelectTable(userId) {
 
 }
 
+//表格中 checkBox 未选中的事件处理
 function removeSelectTable(userId) {
 	var table = $("#list-table").DataTable();
 	console.log("userId = " + userId);
@@ -122,10 +124,13 @@ function removeSelectTable(userId) {
 
 }
 
-function addSelectUser(userId) {
+//hidden selectUserIds 和 selectUserNames 处理添加的情况
+function addSelectUser(userId, name) {
 	console.log("addSelectUser");
 	var selectUserIds = $("#selectUserIds").val();
-	console.log(selectUserIds);
+	var selectUserNames = $("#selectUserNames").html();
+	console.log("selectUserIds = " +selectUserIds);
+	console.log("selectUserNames = " +selectUserNames);
 	var hasExist = false;
 	if (selectUserIds != "") {
 		var selectUserAry = selectUserIds.split(',');
@@ -140,36 +145,51 @@ function addSelectUser(userId) {
 	
 	if (hasExist == false) {
 		selectUserIds = selectUserIds + userId + ",";
+		selectUserNames = selectUserNames + name + ",";
 		$("#selectUserIds").val(selectUserIds);
+		$("#selectUserNames").html(selectUserNames);
 	}
 	console.log($("#selectUserIds").val());
+	console.log($("#selectUserNames").html());
 };
 
-function removeSelectUser(userId) {
+//hidden selectUserIds 和 selectUserNames 处理移除的情况
+function removeSelectUser(userId, name) {
 	var selectUserIds = $("#selectUserIds").val();
+	var selectUserNames = $("#selectUserNames").html();
+	
+	console.log("selectUserIds = " +selectUserIds);
+	console.log("selectUserNames = " +selectUserNames);
+	
 	var hasExist = false;
 	var newSelectUserIds = "";
+	var newSelectNames = "";
 	if (selectUserIds != "") {
 		var selectUserAry = selectUserIds.split(',');
+		var selectNameAry = selectUserNames.split(',');
 		for (var i = 0; i < selectUserAry.length; i++) {
 	        if (selectUserAry[i] != userId && selectUserAry[i] != "") {
 	        	newSelectUserIds+= selectUserAry[i] + ",";
+	        	newSelectNames+= selectNameAry[i] + ",";
 	        }
 	    }
 	}
 	
 	$("#selectUserIds").val(newSelectUserIds);
+	$("#selectUserNames").html(newSelectNames);
 	
 	console.log($("#selectUserIds").val());
 };
 
+//tagsInput 删除元素完成后的触发事件
 $('#selected_users').on('itemRemoved', function(event) {
 	  // event.item: contains the item
 	console.log("itemRemoved");
 	var item = event.item;
 	var userId = item.id;
+	var name = item.label;
 	console.log("userId = " + userId);
-	removeSelectUser(userId);
+	removeSelectUser(userId, name);
 	
 	removeSelectTable(userId);
 	

@@ -89,11 +89,13 @@
 							<label for="user-name" class="am-u-sm-3 am-form-label">${labelAttendStr }：</label>
 
 							<div class="am-u-sm-9">
+								<div class="am-input-group">
 								<button type="button" class="am-btn am-btn-primary"
 									data-am-modal="{target: '#chosen-popup'}">点击选择人员</button>
 
 								<small>选择需要发送与分享的好友</small>
-
+								</div>
+								<small id="selectUserNames"></small>
 							</div>
 						</div>
 
