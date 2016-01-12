@@ -16,6 +16,10 @@
 <link href="<c:url value='/assets/js/tagsinput/amazeui.tagsinput.css'/>"
 	rel="stylesheet">	
 
+<link href="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.css'/>" rel="stylesheet">	
+	
+<link href="<c:url value='/assets/js/switch/amazeui.switch.css'/>" rel="stylesheet">	
+		
 </head>
 
 <body>
@@ -102,10 +106,9 @@
 						<div class="am-form-group">
 							<label for="user-email" class="am-u-sm-3 am-form-label">${labelTimeStr }：</label>
 							<div class="am-u-sm-9">
-								<div class="am-input-group date form_datetime-5 form-datetime-lang"
-									data-date="2015-02-14 14:45">
-									<input size="16" type="text" value="2015-02-14 14:45" class="am-form-field" readonly>
-									<span class="am-input-group-label add-on"><i class="icon-remove am-icon-close"></i></span>
+								<div class="am-input-group date form_datetime form-datetime-lang"
+									data-date="">
+									<input type="text" id="serviceTime" name="serviceTime" size="16"  value="" class="am-form-field" readonly>
 									<span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
 								</div>
 								<small>选择此卡片希望提醒的时间</small>
@@ -115,7 +118,7 @@
 						<div class="am-form-group">
 							<label for="user-intro" class="am-u-sm-3 am-form-label">${labelContentStr }：</label>
 							<div class="am-u-sm-9">
-								<textarea class="" rows="5" id="user-intro" placeholder="输入具体需要提醒的内容"></textarea>
+								<textarea id="serviceContent" name="serviceContent" class="" rows="5" id="user-intro" placeholder="输入具体内容" minlength="1" maxlength="250"></textarea>
 								<small>250字以内展现你的信息...</small>
 							</div>
 						</div>
@@ -123,13 +126,26 @@
 						<div class="am-form-group">
 							<label for="user-email" class="am-u-sm-3 am-form-label">提醒设置：</label>
 							<div class="am-u-sm-9">
-								<select data-am-selected="{btnSize: 'md'}">
-									<option value="option1">按时提醒</option>
-									<option value="option2">提前10分钟</option>
-									<option value="option3">提前30分钟</option>
-									<option value="option3">提前30分钟</option>
-									<option value="option3">不提醒</option>
+								<select id="setRemind" data-am-selected="{btnSize: 'md', btnStyle: 'warning', dropUp: 1}">
+									<option value="1">按时提醒</option>
+									<option value="2">提前5分钟</option>
+									<option value="3">提前15分钟</option>
+									<option value="4">提前30分钟</option>
+									<option value="5">提前1小时</option>
+									<option value="6">提前2小时</option>
+									<option value="5">提前6小时</option>
+									<option value="5">提前1天</option>
+									<option value="5">提前2天</option>
 								</select> <small>设置此卡片提醒的方式</small>
+							</div>
+						</div>
+						
+						<div class="am-form-group">
+							<label for="user-email" class="am-u-sm-3 am-form-label">立即给相关人员信息：</label>
+							<div class="am-u-sm-9">
+								
+								<input id="setNowSend" type="checkbox" checked data-on-color="success" >
+								<small></small>
 							</div>
 						</div>
 						<hr>
@@ -199,10 +215,12 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/tagsinput/amazeui.tagsinput.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.zh-CN.js'/>"></script>
+	<script src="<c:url value='/assets/js/switch/amazeui.switch.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/xcloud/schedule/card-form.js'/>"></script>
 </body>
 </html>

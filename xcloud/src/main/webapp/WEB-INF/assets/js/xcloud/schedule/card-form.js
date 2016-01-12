@@ -195,4 +195,15 @@ $('#selected_users').on('itemRemoved', function(event) {
 	
 });
 
+//console.log(moment().add('hours',1).format('YYYY-MM-DD HH:00'));
+var curFormDateTime = moment().add('m',5).format('YYYY-MM-DD HH:mm');
+$('.form_datetime').datetimepicker({
+    format: 'yyyy-mm-dd hh:ii',
+    autoclose: true,
+    todayBtn: true,
+    startDate: curFormDateTime,
+    minuteStep: 5
+});
+
+$('#setNowSend').not('[data-switch-no-init]').bootstrapSwitch();
 
