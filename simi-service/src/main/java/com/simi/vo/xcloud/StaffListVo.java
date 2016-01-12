@@ -6,6 +6,8 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 public class StaffListVo extends XcompanyStaff{
 
 	private Long id;
+	
+	private Long userId;
 
     private String mobile;
     
@@ -77,6 +79,14 @@ public class StaffListVo extends XcompanyStaff{
 
 	public void setStaffTypeName(String staffTypeName) {
 		this.staffTypeName = staffTypeName;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 }

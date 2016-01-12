@@ -11,7 +11,10 @@
 
 <!--css for this page-->
 
-<link href="<c:url value='/assets/js/chosen/amazeui.chosen.css'/>" rel="stylesheet">
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
+	rel="stylesheet">
+<link href="<c:url value='/assets/js/tagsinput/amazeui.tagsinput.css'/>"
+	rel="stylesheet">	
 
 </head>
 
@@ -61,42 +64,33 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">${cardTypeName }</strong> / <small>Notice Alarm</small>
+					<strong class="am-text-primary am-text-lg">${cardTypeName }</strong> / <small>Notice
+						Alarm</small>
 				</div>
 			</div>
 
 			<hr />
 
 			<div class="am-g">
-
 				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
 					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
-						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35">
-					云小秘提示您 </header>
+						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35"
+						height="35"> 云小秘提示您 </header>
 					<div class="am-panel-bd">${cardTips }</div>
 					</section>
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-					<form:form modelAttribute="contentModel" method="POST" id="card-form"
+					<form modelAttribute="contentModel" method="POST" id="card-form"
 						class="am-form am-form-horizontal">
-						<form:hidden path="cardId" />
+						<input type="hidden" id="cardId" value="" />
+						<input type="hidden" id="selectUserIds" value=""/>
 						<div class="am-form-group">
 							<label for="user-name" class="am-u-sm-3 am-form-label">${labelAttendStr }：</label>
 
 							<div class="am-u-sm-9">
-								<button type="button" class="am-btn am-btn-primary" data-am-modal="{target: '#chosen-popup'}">
-									点击选择人员</button>
-
-								<div class="am-popup" id="chosen-popup">
-									<div class="am-popup-inner">
-										<div class="am-popup-hd">
-											<h4 class="am-popup-title">选择人员</h4>
-											<span data-am-modal-close class="am-close">&times;</span>
-										</div>
-										<div class="am-popup-bd">建议放一个选人的列表，类似大类效果</div>
-									</div>
-								</div>
+								<button type="button" class="am-btn am-btn-primary"
+									data-am-modal="{target: '#chosen-popup'}">点击选择人员</button>
 
 								<small>选择需要发送与分享的好友</small>
 
@@ -145,7 +139,47 @@
 					</form>
 				</div>
 			</div>
+
+
+			<!-- select popup start -->
+			<div class="am-popup" id="chosen-popup">
+				<div class="am-popup-inner">
+					<div class="am-popup-hd">
+						<div class="am-popup-bd">请选择：
+						<input id="selected_users" type="text" value="" readonly data-role="tagsinput" /></div>
+						<span data-am-modal-close class="am-close">&times;</span>
+
+						<!-- table start -->
+						<div class="am-u-sm-12">
+							<table id="list-table" class="am-table am-table-bordered am-table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>工号</th>
+										<th>姓名</th>
+										<th>手机</th>
+										<th>部门</th>
+										<th>职位</th>
+										<th>类型</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<!-- table end -->
+					</div>
+
+				</div>
+			</div>
+			<!-- select popup end -->
+
+
+
+
 		</div>
+
+
+
+
 		<!-- content end -->
 
 	</div>
@@ -164,7 +198,9 @@
 
 	<!--script for this page-->
 
-	<script src="<c:url value='/assets/js/chosen/amazeui.chosen.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/tagsinput/amazeui.tagsinput.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/xcloud/schedule/card-form.js'/>"></script>
 </body>
 </html>

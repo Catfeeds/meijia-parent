@@ -251,7 +251,11 @@ public class CardsServiceImpl implements CardService {
 			vo.setServiceTime(item.getServiceTime());
 			
 			if (!StringUtil.isEmpty(item.getServiceContent())) {
-				vo.setServiceContent(item.getServiceContent().substring(0, 200));
+				if (item.getServiceContent().length() > 200) {
+					vo.setServiceContent(item.getServiceContent().substring(0, 200));
+				} else {
+					vo.setServiceContent(item.getServiceContent());
+				}
 			}
 			
 			vo.setServiceAddr(item.getServiceAddr());

@@ -196,7 +196,11 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String pushContent = "";
 		if (!StringUtil.isEmpty(card.getServiceContent())) {
-			pushContent = pushContent.substring(0, 20);
+			if (card.getServiceContent().length() > 20) {
+				pushContent = card.getServiceContent().substring(0, 20);
+			} else {
+				pushContent = card.getServiceContent();
+			}
 		}
 		
 		//获得提醒时间
@@ -277,8 +281,10 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		Long serviceTime = card.getServiceTime();
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String pushContent = "";
-		if (!StringUtil.isEmpty(card.getServiceContent())) {
-			pushContent = card.getServiceContent().substring(0, 20);	
+		if (card.getServiceContent().length() > 20) {
+			pushContent = card.getServiceContent().substring(0, 20);
+		} else {
+			pushContent = card.getServiceContent();
 		}
 		
 		//获得提醒时间
