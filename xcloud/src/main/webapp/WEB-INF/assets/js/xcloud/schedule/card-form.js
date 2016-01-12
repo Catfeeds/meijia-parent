@@ -207,3 +207,34 @@ $('.form_datetime').datetimepicker({
 
 $('#setNowSend').not('[data-switch-no-init]').bootstrapSwitch();
 
+
+//表单验证设置
+//$('#card-form').validator({
+//	allFields: ':input',
+//});
+
+
+//提交验证
+$("#btn-card-submit").on('click', function(e) {
+	
+	var selectUserIds = $("#selectUserIds").val();
+	
+	var selectFlag = true;
+	if (selectUserIds == "") {
+		selectFlag = false;
+		alert("请选择人员!");
+	}
+	
+	var form = $('#card-form');
+	
+	var formValidity = $('#card-form').validator().data('amui.validator').validateForm().valid
+	
+	if (formValidity && selectFlag) {
+		// done, submit form
+		console.log("ok");
+//		form.submit();
+	} else  {
+		// fail
+		console.log("fail");
+	};
+});

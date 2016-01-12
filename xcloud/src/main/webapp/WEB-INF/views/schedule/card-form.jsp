@@ -87,8 +87,8 @@
 				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
 					<form modelAttribute="contentModel" method="POST" id="card-form"
 						class="am-form am-form-horizontal">
-						<input type="hidden" id="cardId" value="" />
-						<input type="hidden" id="selectUserIds" value=""/>
+						<input type="hidden" id="cardId" value="0" />
+						
 						<div class="am-form-group">
 							<label for="user-name" class="am-u-sm-3 am-form-label">${labelAttendStr }：</label>
 
@@ -96,7 +96,7 @@
 								<div class="am-input-group">
 								<button type="button" class="am-btn am-btn-primary"
 									data-am-modal="{target: '#chosen-popup'}">点击选择人员</button>
-
+								<input type="hidden" id="selectUserIds" name="selectUserIds" value="" required class="am-form-field" minlength="1"/>
 								<small>选择需要发送与分享的好友</small>
 								</div>
 								<small id="selectUserNames"></small>
@@ -108,7 +108,7 @@
 							<div class="am-u-sm-9">
 								<div class="am-input-group date form_datetime form-datetime-lang"
 									data-date="">
-									<input type="text" id="serviceTime" name="serviceTime" size="16"  value="" class="am-form-field" readonly>
+									<input type="text" id="serviceTime" name="serviceTime" size="16"  value="" class="am-form-field" readonly minlength="1" maxlength="20">
 									<span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
 								</div>
 								<small>选择此卡片希望提醒的时间</small>
@@ -151,7 +151,7 @@
 						<hr>
 						<div class="am-form-group">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<button type="button" class="am-btn am-btn-primary">保存修改</button>
+								<button type="button" id="btn-card-submit" class="am-btn am-btn-primary">保存修改</button>
 							</div>
 						</div>
 					</form>
