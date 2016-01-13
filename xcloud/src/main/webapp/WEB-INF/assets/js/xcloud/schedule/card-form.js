@@ -295,8 +295,7 @@ function formValidation() {
 		// fail
 		console.log("fail");
 		return false;
-	}
-	;
+	};
 }
 
 // 根据提醒设置返回提前提醒的分钟数
