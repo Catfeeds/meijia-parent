@@ -177,7 +177,7 @@
 						<div class="am-popup-bd">请选择：
 						<input id="selected_users" type="text" value="" readonly data-role="tagsinput" 
 						style="border: 0px;" /></div>
-						<span data-am-modal-close class="am-close">&times;</span>
+						<a href="" class="am-close am-close-alt am-close-spin am-waring">&times;</a>
 
 						<!-- table start -->
 						<div class="am-u-sm-12">
