@@ -175,7 +175,8 @@
 				<div class="am-popup-inner">
 					<div class="am-popup-hd">
 						<div class="am-popup-bd">请选择：
-						<input id="selected_users" type="text" value="" readonly data-role="tagsinput" style="background-color: #f8f8f8;" /></div>
+						<input id="selected_users" type="text" value="" readonly data-role="tagsinput" 
+						style="border: 0px;" /></div>
 						<span data-am-modal-close class="am-close">&times;</span>
 
 						<!-- table start -->

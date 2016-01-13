@@ -58,7 +58,7 @@ public class StaffQueryController extends BaseController {
 	@RequestMapping(value = "/get-by-dept", method = { RequestMethod.GET })
 	public Map<String, Object> getByDpt(HttpServletRequest request,
 			@RequestParam(value = "dept_id", required = false, defaultValue = "0") Long deptId,
-			@RequestParam(value = "search[value]", required = false, defaultValue = "0") String keyword,
+			@RequestParam(value = "search[value]", required = false, defaultValue = "") String keyword,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "length", required = false, defaultValue = "10") int length
 			) {
