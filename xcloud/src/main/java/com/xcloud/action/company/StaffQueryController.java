@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
 import com.github.pagehelper.PageInfo;
@@ -168,6 +169,15 @@ public class StaffQueryController extends BaseController {
 			searchVo.setDeptId(deptId);
 		}
 		searchVo.setStatus((short) 1);
+		
+		//判断姓名或者手机号
+		if (!StringUtil.isEmpty(keyword)) {
+			if (RegexUtil.isDigits(keyword)) {
+				searchVo.setMobile(keyword);
+			} else {
+				searchVo.setName(keyword);
+			}
+		}
 		
 		PageInfo result = xcompanyStaffService.selectByListPage(searchVo, pageNo, pageSize);
 		

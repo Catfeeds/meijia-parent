@@ -56,6 +56,14 @@
 			and status = #{status,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="name != null">
+			and user_id in (select id from users where name like CONCAT('%','${name}','%' )  )
+		</if>
+		
+		<if test="mobile != null">
+			and user_id in (select id from users where mobile like CONCAT('%','${mobile}','%' )  )
+		</if>
+		
 		order by id desc
 	</select>
 	

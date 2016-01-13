@@ -8,6 +8,10 @@ public class UserCompanySearchVo{
 	
 	private Long userId;
 	
+	private String mobile;
+	
+	private String name;
+	
 	private Long staffId;
 	
 	private Long benzId;
@@ -70,5 +74,21 @@ public class UserCompanySearchVo{
 
 	public void setStaffId(Long staffId) {
 		this.staffId = staffId;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

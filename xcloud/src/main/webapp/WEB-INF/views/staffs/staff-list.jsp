@@ -74,12 +74,14 @@
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-3">
+					<form class="am-form" id="search-form">
 					<div class="am-input-group am-input-group-sm">
-						<input type="text" class="am-form-field" placeholder="姓名/身份证/手机号" maxLength="18" size=18> <span
+						<input type="text" id="keyword" name="keyword" class="am-form-field" placeholder="姓名/手机号" maxLength="18" size=18> <span
 							class="am-input-group-btn">
-							<button class="am-btn am-btn-default" type="button">搜索员工</button>
+							<button class="am-btn am-btn-default" type="submit">搜索员工</button>
 						</span>
 					</div>
+					</form>
 				</div>
 			</div>
 			<br>
