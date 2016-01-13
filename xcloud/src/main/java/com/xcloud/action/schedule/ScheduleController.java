@@ -20,9 +20,11 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
@@ -30,6 +32,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.card.CardViewVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.xcloud.action.BaseController;
@@ -53,6 +56,9 @@ public class ScheduleController extends BaseController {
 
 	@Autowired
 	private CardService cardService;
+	
+	@Autowired
+	CardAttendService cardAttendService;
 		
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
@@ -121,7 +127,7 @@ public class ScheduleController extends BaseController {
 			Map<String, String> vo = new HashMap<String, String>();
 			vo.put("id", item.getCardId().toString());
 			vo.put("title", CardUtil.getCardTypeName(item.getCardType()));
-			vo.put("url", "");
+			vo.put("url", "/xcloud/schedule/card-view?card_id="+item.getCardId());
 			
 			Long serviceTime = item.getServiceTime() * 1000;
 			
@@ -180,4 +186,43 @@ public class ScheduleController extends BaseController {
 
 		return "/schedule/card-form";
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/card-view", method = { RequestMethod.GET })
+	public String cardView(HttpServletRequest request, Model model,
+			@RequestParam("card_id") Long cardId) {	
+
+		Cards record = cardService.selectByPrimaryKey(cardId);
+		
+		if (record == null) {
+			return "";
+		}
+		Short cardType = record.getCardType();
+		String cardTypeName = CardUtil.getCardTypeName(cardType);
+		String cardTips = CardUtil.getCardTips(cardType);
+		String labelAttendStr = CardUtil.getLabelAttendStr(cardType);
+		String labelTimeStr = CardUtil.getLabelTimeStr(cardType);
+		String labelContentStr = CardUtil.getLabelContentStr(cardType);
+		
+		
+		model.addAttribute("cardType", cardType);
+		model.addAttribute("cardTypeName", cardTypeName);
+		model.addAttribute("cardTips", cardTips);
+		
+		model.addAttribute("labelAttendStr", labelAttendStr);
+		model.addAttribute("labelTimeStr", labelTimeStr);
+		model.addAttribute("labelContentStr", labelContentStr);		
+
+		
+		List<CardAttend> attends = cardAttendService.selectByCardId(cardId);
+		model.addAttribute("attends", attends);
+		
+		Long serviceTime = record.getServiceTime();
+		String serviceTimeStr = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "yyyy-MM-dd HH:mm");
+		model.addAttribute("serviceTimeStr", serviceTimeStr);
+		model.addAttribute("serviceAddr", record.getServiceAddr());
+		model.addAttribute("serviceContent", record.getServiceContent());
+		
+		return "/schedule/card-view";
+	}	
 }

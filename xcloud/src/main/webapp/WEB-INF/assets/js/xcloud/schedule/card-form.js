@@ -57,6 +57,7 @@ $("#list-table").DataTable(
 $('#selected_users').tagsinput({
 	itemValue : 'id',
 	itemText : 'label',
+	itemMobile : 'mobile',
 	allowDuplicates : false,
 	trimValue : true,
 	maxChars : 8
@@ -76,17 +77,20 @@ function setSelectTable(userId) {
 		if (data.user_id == userId) {
 
 			name = data.name;
+			mobile = data.mobile;
 			if (this.checked) {
-				addSelectUser(userId, name);
+				addSelectUser(userId, name, mobile);
 				$('#selected_users').tagsinput('add', {
 					id : userId,
-					label : name
+					label : name,
+					mobile : mobile,
 				});
 			} else {
-				removeSelectUser(userId, name);
+				removeSelectUser(userId, name, mobile);
 				$('#selected_users').tagsinput('remove', {
 					id : userId,
-					label : name
+					label : name,
+					mobile : mobile,
 				});
 			}
 
@@ -121,10 +125,11 @@ function removeSelectTable(userId) {
 }
 
 // hidden selectUserIds 和 selectUserNames 处理添加的情况
-function addSelectUser(userId, name) {
+function addSelectUser(userId, name, mobile) {
 
 	var selectUserIds = $("#selectUserIds").val();
 	var selectUserNames = $("#selectUserNames").html();
+	var selectUserMobiles = $("#selectUserMobiles").val();
 
 	var hasExist = false;
 	if (selectUserIds != "") {
@@ -140,33 +145,43 @@ function addSelectUser(userId, name) {
 	if (hasExist == false) {
 		selectUserIds = selectUserIds + userId + ",";
 		selectUserNames = selectUserNames + name + ",";
+		selectUserMobiles = selectUserMobiles + mobile + ",";
 		$("#selectUserIds").val(selectUserIds);
 		$("#selectUserNames").html(selectUserNames);
+		$("#selectUserMobiles").val(selectUserMobiles);
 	}
+	console.log($("#selectUserIds").val());
+	console.log($("#selectUserMobiles").val());
 };
 
 // hidden selectUserIds 和 selectUserNames 处理移除的情况
-function removeSelectUser(userId, name) {
+function removeSelectUser(userId, name, mobile) {
 	var selectUserIds = $("#selectUserIds").val();
 	var selectUserNames = $("#selectUserNames").html();
-
+	var selectUserMobiles = $("#selectUserMobiles").val();
 	var hasExist = false;
 	var newSelectUserIds = "";
 	var newSelectNames = "";
+	var newSelectMobiles = "";
 	if (selectUserIds != "") {
 		var selectUserAry = selectUserIds.split(',');
 		var selectNameAry = selectUserNames.split(',');
+		var selectMobileAry = selectUserMobiles.split(',');
 		for (var i = 0; i < selectUserAry.length; i++) {
 			if (selectUserAry[i] != userId && selectUserAry[i] != "") {
 				newSelectUserIds += selectUserAry[i] + ",";
 				newSelectNames += selectNameAry[i] + ",";
+				newSelectMobiles += selectMobileAry[i] + ",";
 			}
 		}
 	}
 
 	$("#selectUserIds").val(newSelectUserIds);
 	$("#selectUserNames").html(newSelectNames);
-
+	$("#selectUserMobiles").val(newSelectMobiles);
+	
+	console.log($("#selectUserIds").val());
+	console.log($("#selectUserMobiles").val());	
 };
 
 // tagsInput 删除元素完成后的触发事件
@@ -176,8 +191,9 @@ $('#selected_users').on('itemRemoved', function(event) {
 	var item = event.item;
 	var userId = item.id;
 	var name = item.label;
+	var mobiel = item.mobile;
 
-	removeSelectUser(userId, name);
+	removeSelectUser(userId, name, mobile);
 
 	removeSelectTable(userId);
 
@@ -232,6 +248,24 @@ $("#btn-card-submit").on('click', function(e) {
 	params.set_sec_remarks = "";
 	params.card_extra = "";
 	params.status = 1;
+	
+	//接收人
+	var attends = [];
+	
+	var selectUserIds = $("#selectUserIds").val();
+	var selectUserNames = $("#selectUserNames").html();
+	var selectUserMobiles = $("#selectUserMobiles").val();
+	var selectUserAry = selectUserIds.split(',');
+	var selectNameAry = selectUserNames.split(',');
+	var selectMobileAry = selectUserMobiles.split(',');
+	for (var i = 0; i < selectUserAry.length; i++) {
+		if (selectUserAry[i] != userId && selectUserAry[i] != "") {
+
+			attends.push({user_id:selectUserAry[i], mobile:selectMobileAry[i], name : selectNameAry[i] });
+		}
+	}	
+	params.attends = JSON.stringify(attends);
+	
 	
 	console.log(params);
 	

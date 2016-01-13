@@ -11,9 +11,7 @@
 
 <!--css for this page-->
 
-<link href="<c:url value='/assets/js/calendar/lib/cupertino/jquery-ui.min.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/calendar/fullcalendar.min.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/calendar/fullcalendar.print.css'/>" media='print'>
+		
 </head>
 
 <body>
@@ -60,10 +58,78 @@
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
-				<!-- 日历 -->
-				<div id='calendar'></div>
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-lg">${cardTypeName }</strong> / <small>Notice
+						Alarm</small>
+				</div>
+			</div>
+
+			<hr />
+
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
+						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35"
+						height="35"> 云小秘提示您 </header>
+					<div class="am-panel-bd">${cardTips }</div>
+					</section>
+				</div>
+
+				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+					<form modelAttribute="contentModel" method="POST" id="card-form"
+						class="am-form am-form-horizontal">
+						<input type="hidden" id="cardId" value="0" />
+							
+						<div class="am-form-group">
+							<label for="user-name" class="am-u-sm-3 am-form-label">${labelAttendStr }：</label>
+
+							<div class="am-u-sm-9">
+								<c:forEach items="${attends}" var="item">
+									${item.name},
+								</c:forEach>
+								
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="user-email" class="am-u-sm-3 am-form-label">${labelTimeStr }：</label>
+							<div class="am-u-sm-9">
+								${serviceTimeStr}
+								
+							</div>
+						</div>
+						
+						<c:if test="${cardType == 1}">
+							<div class="am-form-group">
+								<label for="user-intro" class="am-u-sm-3 am-form-label">会议地址：</label>
+								<div class="am-u-sm-9">
+									${serviceAddr}
+								</div>
+							</div>
+						</c:if>
+
+						<div class="am-form-group">
+							<label for="user-intro" class="am-u-sm-3 am-form-label">${labelContentStr }：</label>
+							<div class="am-u-sm-9">
+								${serviceContent}
+							</div>
+						</div>
+
+
+						<hr>
+						<div class="am-form-group">
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
+
+
+
+
 		<!-- content end -->
 
 	</div>
@@ -81,9 +147,6 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-
-	<script src="<c:url value='/assets/js/calendar/fullcalendar.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/calendar/lang/zh-cn.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/schedule/list.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/schedule/card-view.js'/>"></script>
 </body>
 </html>

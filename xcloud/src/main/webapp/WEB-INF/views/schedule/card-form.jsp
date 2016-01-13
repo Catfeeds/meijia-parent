@@ -37,16 +37,15 @@
 							class="am-icon-file"></span> 工作卡片 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
 						<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
 							<li><a href="/xcloud/schedule/card-form?card_type=2"><span class="am-icon-th"></span>
-									通知公告<span class="am-badge am-badge-warning am-margin-right am-fr">24</span></a></li>
+									通知公告</a></li>
 							<li><a href="/xcloud/schedule/card-form?card_type=3" class="am-cf"><span
-									class="am-icon-bell"></span> 事务提醒<span
-									class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+									class="am-icon-bell"></span> 事务提醒</a></li>
 							<li><a href="/xcloud/schedule/card-form?card_type=1"><span class="am-icon-users"></span>
 									会议安排</a></li>
 							<li><a href="/xcloud/schedule/card-form?card_type=4"><span class="am-icon-calendar"></span>
 									面试邀约</a></li>
-							<li><a href="/xcloud/schedule/card-form?card_type=5"><span class="am-icon-plane"></span>
-									差旅规划</a></li>
+<!-- 							<li><a href="/xcloud/schedule/card-form?card_type=5"><span class="am-icon-plane"></span>
+									差旅规划</a></li> -->
 						</ul></li>
 					<!-- <li><a href="admin-table.html"><span class="am-icon-tags"></span> 卡片商店</a></li> -->
 
@@ -98,6 +97,7 @@
 								<button type="button" class="am-btn am-btn-primary"
 									data-am-modal="{target: '#chosen-popup'}">点击选择人员</button>
 								<input type="hidden" id="selectUserIds" name="selectUserIds" value="" required class="am-form-field" minlength="1"/>
+								<input type="hidden" id="selectUserMobiles" name="selectUserMobiles" value=""/>
 								<small>选择需要发送与分享的好友</small>
 								</div>
 								<small id="selectUserNames"></small>
@@ -115,11 +115,21 @@
 								<small>选择此卡片希望提醒的时间</small>
 							</div>
 						</div>
+						
+						<c:if test="${cardType == 1}">
+							<div class="am-form-group">
+								<label for="user-intro" class="am-u-sm-3 am-form-label">会议地址：</label>
+								<div class="am-u-sm-9">
+									<input type="text" id="serviceAddr" name="serviceAddr" class=""  placeholder="输入会议地址" minlength="1" maxlength="32">
+									<small></small>
+								</div>
+							</div>
+						</c:if>
 
 						<div class="am-form-group">
 							<label for="user-intro" class="am-u-sm-3 am-form-label">${labelContentStr }：</label>
 							<div class="am-u-sm-9">
-								<textarea id="serviceContent" name="serviceContent" class="" rows="5" id="user-intro" placeholder="输入具体内容" minlength="1" maxlength="250"></textarea>
+								<textarea id="serviceContent" name="serviceContent" class="" rows="5"  placeholder="输入具体内容" minlength="1" maxlength="250"></textarea>
 								<small>250字以内展现你的信息...</small>
 							</div>
 						</div>
