@@ -64,6 +64,7 @@ public class CardUtil {
 			break;
 		case 2:
 			remindMin = 5;
+			break;
 		case 3:
 			remindMin = 15;	
 			break;

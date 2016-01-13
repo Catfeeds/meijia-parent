@@ -88,7 +88,8 @@
 					<form modelAttribute="contentModel" method="POST" id="card-form"
 						class="am-form am-form-horizontal">
 						<input type="hidden" id="cardId" value="0" />
-						
+						<input type="hidden" id="cardType" value="${cardType}" />
+						<input type="hidden" id="userId" value="${userId}" />
 						<div class="am-form-group">
 							<label for="user-name" class="am-u-sm-3 am-form-label">${labelAttendStr }：</label>
 
@@ -133,9 +134,9 @@
 									<option value="4">提前30分钟</option>
 									<option value="5">提前1小时</option>
 									<option value="6">提前2小时</option>
-									<option value="5">提前6小时</option>
-									<option value="5">提前1天</option>
-									<option value="5">提前2天</option>
+									<option value="7">提前6小时</option>
+									<option value="8">提前1天</option>
+									<option value="9">提前2天</option>
 								</select> <small>设置此卡片提醒的方式</small>
 							</div>
 						</div>

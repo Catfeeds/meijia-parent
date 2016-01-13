@@ -166,6 +166,10 @@ public class ScheduleController extends BaseController {
 
 		Long companyId = accountAuth.getCompanyId();
 		
+		Long userId = accountAuth.getUserId();
+		
+		model.addAttribute("userId", userId);
+		
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setStatus((short) 1);
