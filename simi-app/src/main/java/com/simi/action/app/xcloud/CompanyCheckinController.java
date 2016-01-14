@@ -179,7 +179,7 @@ public class CompanyCheckinController extends BaseController {
 		searchVo.setUserId(userId);
 		List<XcompanyStaffBenz> benzList = xCompanyStaffBenzService.selectBySearchVo(searchVo);
 		String benzName = "";
-		if (!staffList.isEmpty()) {
+		if (!benzList.isEmpty()) {
 			Long benzId = benzList.get(0).getBenzId();
 			
 			XcompanyBenz benz = xCompanyBenzService.selectByPrimaryKey(benzId);
