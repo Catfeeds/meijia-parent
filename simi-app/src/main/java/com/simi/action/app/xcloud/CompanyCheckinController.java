@@ -28,6 +28,7 @@ import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.service.xcloud.XcompanyStaffBenzService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
@@ -56,7 +57,7 @@ public class CompanyCheckinController extends BaseController {
 	private XcompanyCheckinService xCompanyCheckinService;
 	
 	@RequestMapping(value = "/checkin", method = { RequestMethod.POST })
-	public AppResultData<Object> getByBenz(
+	public AppResultData<Object> checkin(
 			@RequestParam("company_id") Long companyId,
 			@RequestParam("user_id") Long userId,
 			@RequestParam("poi_name") String poiName,
@@ -126,5 +127,76 @@ public class CompanyCheckinController extends BaseController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "/get_checkins", method = { RequestMethod.POST })
+	public AppResultData<Object> getList(
+			@RequestParam("company_id") Long companyId,
+			@RequestParam("user_id") Long userId
+			) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = usersService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		//判断员工是否为公司一员
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> staffList = xCompanyStaffService.selectBySearchVo(searchVo);
+		
+		if (staffList.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("公司不存在");
+			return result;
+		}
+		
+		Map<String, Object> datas = new HashMap<String, Object>();
+		
+		//先找出班次
+		searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		List<XcompanyStaffBenz> benzList = xCompanyStaffBenzService.selectBySearchVo(searchVo);
+		String benzName = "";
+		if (!staffList.isEmpty()) {
+			Long benzId = benzList.get(0).getBenzId();
+			
+			XcompanyBenz benz = xCompanyBenzService.selectByPrimaryKey(benzId);
+			
+			benzName = benz.getName();
+		}
+		datas.put("benz", benzName);
+		
+		CompanyCheckinSearchVo searchVo1 = new CompanyCheckinSearchVo();
+		searchVo1.setUserId(userId);
+		searchVo1.setCompanyId(companyId);
+		
+		Long startTime = TimeStampUtil.getBeginOfToday();
+		Long endTime = TimeStampUtil.getEndOfToday();
+		searchVo1.setStartTime(startTime);
+		searchVo1.setEndTime(endTime);
+
+		List<XcompanyCheckin> list = xCompanyCheckinService.selectBySearchVo(searchVo1);
+		
+		Map<String, String> checkinList = new HashMap<String, String>();
+		for (int i = 0; i < list.size(); i++) {
+			XcompanyCheckin item = list.get(i);
+			String checkinTimeStr = TimeStampUtil.timeStampToDateStr(item.getAddTime() * 1000, "HH:mm");
+			checkinList.put("checkinTime", checkinTimeStr);
+			checkinList.put("poiName", item.getPoiName());
+		}
+		datas.put("list", checkinList);
+		result.setData(datas);
+		
+		return result;
+	}	
 	
 }
