@@ -15,6 +15,7 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyBenz;
 import com.simi.po.model.xcloud.XcompanyBenzTime;
 import com.simi.po.model.xcloud.XcompanyCheckin;
@@ -130,7 +131,7 @@ public class CompanyCheckinController extends BaseController {
 	
 	@RequestMapping(value = "/get_checkins", method = { RequestMethod.POST })
 	public AppResultData<Object> getList(
-			@RequestParam("company_id") Long companyId,
+//			@RequestParam("company_id") Long companyId,
 			@RequestParam("user_id") Long userId
 			) {
 
@@ -145,9 +146,8 @@ public class CompanyCheckinController extends BaseController {
 			return result;
 		}
 		
-		//判断员工是否为公司一员
+		//找出用户的默认公司
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
-		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
 		searchVo.setStatus((short) 1);
 		List<XcompanyStaff> staffList = xCompanyStaffService.selectBySearchVo(searchVo);
@@ -158,7 +158,20 @@ public class CompanyCheckinController extends BaseController {
 			return result;
 		}
 		
+		Long companyId = staffList.get(0).getCompanyId();
+		for (XcompanyStaff item : staffList) {
+			if (item.getIsDefault().equals((short)1)) {
+				companyId = item.getCompanyId();
+				break;
+			}
+		}
+		
+		Xcompany company = xCompanyService.selectByPrimaryKey(companyId);
+		
 		Map<String, Object> datas = new HashMap<String, Object>();
+		
+		datas.put("companyId", companyId);
+		datas.put("companyName", company.getCompanyName());
 		
 		//先找出班次
 		searchVo = new UserCompanySearchVo();

@@ -20,6 +20,8 @@ public class UserCompanySearchVo{
 	
 	private String jobNumber;
 	
+	private Short isDefault;
+	
 	public Long getCompanyId() {
 		return companyId;
 	}
@@ -90,5 +92,13 @@ public class UserCompanySearchVo{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Short getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(Short isDefault) {
+		this.isDefault = isDefault;
 	}
 }
