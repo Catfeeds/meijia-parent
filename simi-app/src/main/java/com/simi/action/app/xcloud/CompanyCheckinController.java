@@ -119,6 +119,8 @@ public class CompanyCheckinController extends BaseController {
 		
 		record.setAddTime(checkinTime);
 		
+		xCompanyCheckinService.insertSelective(record);
+		
 		Map<String, String> datas = new HashMap<String, String>();
 		String checkinTimeStr = TimeStampUtil.timeStampToDateStr(checkinTime * 1000, "HH:mm");
 		datas.put("checkinTime", checkinTimeStr);
