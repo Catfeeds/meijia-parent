@@ -1,5 +1,6 @@
 package com.simi.action.app.xcloud;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,12 +202,14 @@ public class CompanyCheckinController extends BaseController {
 
 		List<XcompanyCheckin> list = xCompanyCheckinService.selectBySearchVo(searchVo1);
 		
-		Map<String, String> checkinList = new HashMap<String, String>();
+		List<Map> checkinList = new ArrayList<Map>();
 		for (int i = 0; i < list.size(); i++) {
 			XcompanyCheckin item = list.get(i);
 			String checkinTimeStr = TimeStampUtil.timeStampToDateStr(item.getAddTime() * 1000, "HH:mm");
-			checkinList.put("checkinTime", checkinTimeStr);
-			checkinList.put("poiName", item.getPoiName());
+			Map<String, String> checkinItem = new HashMap<String, String>();
+			checkinItem.put("checkinTime", checkinTimeStr);
+			checkinItem.put("poiName", item.getPoiName());
+			checkinList.add(checkinItem);
 		}
 		datas.put("list", checkinList);
 		result.setData(datas);
