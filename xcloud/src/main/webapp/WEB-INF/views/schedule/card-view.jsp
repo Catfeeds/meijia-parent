@@ -137,7 +137,7 @@
 								</header>
 								
 								<div class="am-comment-bd">
-									<textarea id="comment" placeholder="说点什么吧…" name="message" minLength=1 class="am-form-field am-radius" requried></textarea>
+									<textarea id="comment" placeholder="说点什么吧…" name="message" minLength=1 maxLength="140" class="am-form-field am-radius" requried></textarea>
 									
 								</div>
 							</div>
