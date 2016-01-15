@@ -214,15 +214,19 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		String isShow = "true";
 		
-		if (card.getSetNowSend().equals((short)0)) isShow = "false";
+		if (card.getSetNowSend().equals((short)0)) {
+			isShow = "false";
+			return true;
+		}
+		
 		if (card.getSetNowSend().equals((short)1)) isShow = "true";
 		
 		tranParams.put("is_show", isShow);
-		tranParams.put("action", "setclock");
-		tranParams.put("card_id", card.getCardId().toString());
-		tranParams.put("card_type", card.getCardType().toString());
-		tranParams.put("service_time", serviceTime.toString());
-		tranParams.put("remind_time", remindTime.toString());
+		tranParams.put("action", "msg");
+		tranParams.put("card_id", "0");
+		tranParams.put("card_type", "0");
+		tranParams.put("service_time", "");
+		tranParams.put("remind_time", "");
 		tranParams.put("remind_title", cardTypeName);
 		tranParams.put("remind_content", pushContent);
 
@@ -325,9 +329,9 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			String userStatus = PushUtil.getUserStatus(p.getClientId());
 			if (p.getDeviceType().equals("ios")) {
 				try {
-					if (userStatus.equals("Offline")) {
+//					 if (userStatus.equals("Offline")) {
 						PushUtil.IOSPushToSingle(params, "alertClock");
-					}
+//					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

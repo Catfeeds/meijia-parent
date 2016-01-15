@@ -274,9 +274,9 @@ public class PushUtil {
 		template.setTransmissionType(1);
 		template.setTransmissionContent("");
 		//在线的情况
-		if (userStatus.equals("Online")) {
+//		if (userStatus.equals("Online")) {
 			template.setTransmissionContent(transmissionContent);
-		}
+//		}
 
 		// template.setDuration("2015-01-16 11:40:00", "2015-01-16 12:24:00");
 //		template.setPushInfo("", 1, "", "", "", "", "", "");
@@ -304,7 +304,7 @@ public class PushUtil {
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
 			
 			
-			if (userStatus.equals("Offline")) {
+//			if (userStatus.equals("Offline")) {
 				apnpayload.addCustomMsg("a", transmissionContent);
 				
 				HashMap<String, String> tranParams = GsonUtil.GsonToObject(transmissionContent, HashMap.class);
@@ -313,7 +313,7 @@ public class PushUtil {
 				if (isShow.equals("true")) {
 					alertMsg.setBody(remindContent);
 				}
-			}
+//			}
 			
 			
 			
