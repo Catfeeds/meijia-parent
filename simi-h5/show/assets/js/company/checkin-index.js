@@ -27,7 +27,6 @@ $.ajax({
 			
 			var htmlPart = '<tr><td>{checkinDate}</td><td>{checkinInfo}</td><td class="am-success">{remarks}</td></tr>';
 			
-			
 			htmlPart = htmlPart.replace('{checkinDate}', checkinDate);
 			htmlPart = htmlPart.replace('{checkinInfo}', checkinTime + " " + poiName);
 			htmlPart = htmlPart.replace('{remarks}', remarks);
