@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
@@ -132,10 +133,14 @@ public class CompanyCheckinController extends BaseController {
 		return result;
 	}
 	
+	
 	@RequestMapping(value = "/get_checkins", method = { RequestMethod.POST })
 	public AppResultData<Object> getList(
 //			@RequestParam("company_id") Long companyId,
-			@RequestParam("user_id") Long userId
+			@RequestParam("user_id") Long userId,
+			
+			//date_range =  today  week month;
+			@RequestParam(value = "date_range", required = false, defaultValue = "today") String dateRange
 			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -195,8 +200,24 @@ public class CompanyCheckinController extends BaseController {
 		searchVo1.setUserId(userId);
 		searchVo1.setCompanyId(companyId);
 		
-		Long startTime = TimeStampUtil.getBeginOfToday();
+		//生成日期访问
+		
+		Long startTime = 0L;
 		Long endTime = TimeStampUtil.getEndOfToday();
+		
+		if (dateRange.equals("today")) {
+			startTime = TimeStampUtil.getBeginOfToday();
+		}
+		
+		if (dateRange.equals("week")) {
+			startTime = TimeStampUtil.getBeginOfWeek();
+		}	
+		
+		if (dateRange.equals("month")) {
+			startTime = TimeStampUtil.getBeginOfMonth(DateUtil.getYear(), DateUtil.getMonth());
+		}
+		
+		
 		searchVo1.setStartTime(startTime);
 		searchVo1.setEndTime(endTime);
 
@@ -209,6 +230,8 @@ public class CompanyCheckinController extends BaseController {
 			Map<String, String> checkinItem = new HashMap<String, String>();
 			checkinItem.put("checkinTime", checkinTimeStr);
 			checkinItem.put("poiName", item.getPoiName());
+			checkinItem.put("remarks", "");
+			checkinItem.put("addTime", item.getAddTime().toString());
 			checkinList.add(checkinItem);
 		}
 		datas.put("list", checkinList);

@@ -91,7 +91,17 @@ public class TimeStampUtil {
 	}
 	
 	/**
-	 * 今天开始时间戳，注意为精确到毫秒
+	 * 本周周一开始时间戳，注意为精确到毫秒
+	 * @return long
+	 */
+	public static Long getBeginOfWeek() {
+		String today = DateUtil.getFirstDayOfWeek();
+		Date d = DateUtil.parse(today);
+		return getMillisOfDate(d) / 1000;
+	}	
+	
+	/**
+	 * 昨天开始时间戳，注意为精确到毫秒
 	 * @return long
 	 */
 	public static Long getBeginOfYesterDay() {
@@ -99,6 +109,16 @@ public class TimeStampUtil {
 		Date d = DateUtil.parse(today);
 		return getMillisOfDate(d) / 1000;
 	}	
+	
+	/**
+	 * 本周周一开始时间戳，注意为精确到毫秒
+	 * @return long
+	 */
+	public static Long getBeginOfMonth(int year, int month) {
+		String today = DateUtil.getFirstDayOfMonth(year, month);
+		Date d = DateUtil.parse(today);
+		return getMillisOfDate(d) / 1000;
+	}		
 
 	/**
 	 *  根据时间戳 -> String yyyy-MM-dd HH:MM:ss
