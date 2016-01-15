@@ -37,8 +37,13 @@ public class UserPushBindServiceImpl implements UserPushBindService{
 	}	
 	
 	@Override
-	public UserPushBind selectByClientId(String clientId) {
+	public List<UserPushBind> selectByClientId(String clientId) {
 		return userPushBindMapper.selectByClientId(clientId);
+	}
+	
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		return userPushBindMapper.deleteByPrimaryKey(id);
 	}
 	
 }

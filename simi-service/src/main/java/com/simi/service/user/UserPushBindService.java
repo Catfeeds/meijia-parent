@@ -15,9 +15,11 @@ public interface UserPushBindService {
 
 	UserPushBind selectByUserId(Long userId);
 	
-	UserPushBind selectByClientId(String clientId);
+	List<UserPushBind> selectByClientId(String clientId);
 
 	List<UserPushBind> selectByUserIds(List<Long> userIds);
+
+	int deleteByPrimaryKey(Long id);
 
 
 }

@@ -1,5 +1,7 @@
 package com.simi.action.app.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,16 @@ public class UserPushBindController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
+		
+		//先找出此cid有记录，但是不属于此用户的数据
+		List<UserPushBind> exists = userPushBindService.selectByClientId(clientId);
+		
+		for (UserPushBind item : exists) {
+			if (!item.getUserId().equals(userId)) {
+				userPushBindService.deleteByPrimaryKey(item.getId());
+			}
+		}
+		
 		
 		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
 

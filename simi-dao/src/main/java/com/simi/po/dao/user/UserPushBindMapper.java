@@ -19,7 +19,7 @@ public interface UserPushBindMapper {
     
     UserPushBind selectByUserId(Long userId);
     
-    UserPushBind selectByClientId(String clientId);
+    List<UserPushBind> selectByClientId(String clientId);
 
 	List<UserPushBind> selectByUserIds(List<Long> userIds);
     

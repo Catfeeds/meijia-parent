@@ -33,7 +33,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from user_push_bind
-		where user_id = #{1,jdbcType=NUMERIC}
+		where client_id = #{clientId,jdbcType=VARCHAR}
 	</select>
 		
 	<!--根据Ids查询Users -->
