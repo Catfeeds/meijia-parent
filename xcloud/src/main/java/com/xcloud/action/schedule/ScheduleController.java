@@ -131,7 +131,7 @@ public class ScheduleController extends BaseController {
 			
 			Long serviceTime = item.getServiceTime() * 1000;
 			
-			vo.put("start", TimeStampUtil.timeStampToDateStr(serviceTime, "yyyy-MM-dd HH:MM:ss"));
+			vo.put("start", TimeStampUtil.timeStampToDateStr(serviceTime, "yyyy-MM-dd HH:mm:ss"));
 			result.add(vo);
 		}
 
@@ -197,6 +197,17 @@ public class ScheduleController extends BaseController {
 		if (record == null) {
 			return "";
 		}
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long userId = accountAuth.getUserId();
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		model.addAttribute("userId", userId);	
+		model.addAttribute("headImg", u.getHeadImg());
+		model.addAttribute("name", u.getName());
+		
 		Short cardType = record.getCardType();
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String cardTips = CardUtil.getCardTips(cardType);
@@ -204,7 +215,7 @@ public class ScheduleController extends BaseController {
 		String labelTimeStr = CardUtil.getLabelTimeStr(cardType);
 		String labelContentStr = CardUtil.getLabelContentStr(cardType);
 		
-		
+		model.addAttribute("cardId", cardId);
 		model.addAttribute("cardType", cardType);
 		model.addAttribute("cardTypeName", cardTypeName);
 		model.addAttribute("cardTips", cardTips);
