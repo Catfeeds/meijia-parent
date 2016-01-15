@@ -324,6 +324,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		for (UserPushBind p : userPushBinds) {
 			if (p.getUserId().equals(card.getCreateUserId())) continue;
 			
+			System.out.println("userId= " + p.getUserId() + "---cid = " + p.getClientId());
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", p.getClientId());
 			

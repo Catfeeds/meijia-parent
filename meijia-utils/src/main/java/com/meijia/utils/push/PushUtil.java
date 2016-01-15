@@ -348,7 +348,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "d09d0297ad5457ac521316583d1368d0";
+		String clientId = "7d413b1e8eb4b782604580f6f26f8220";
 		
 		getUserStatus(clientId);
 		
@@ -379,7 +379,7 @@ public class PushUtil {
 		 tranParams.put("service_time", "0");
 		 tranParams.put("remind_time", "0");
 		 tranParams.put("remind_title", "事务提醒");
-		 tranParams.put("remind_content", "凯凯有一个新的事务1");
+		 tranParams.put("remind_content", "测试响几次");
 
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);
@@ -390,9 +390,9 @@ public class PushUtil {
 
 //		 
 		params.put("transmissionContent", jsonParams);
-		PushUtil.AndroidPushToSingle(params);
+//		PushUtil.AndroidPushToSingle(params);
 		
-//		PushUtil.IOSPushToSingle(params, "notification");
+		PushUtil.IOSPushToSingle(params, "alertClock");
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);
