@@ -14,6 +14,8 @@ public class CardSearchVo {
 	
 	private Short userType;
 	
+	private Short cardType;
+	
 	public Long getCardId() {
 		return cardId;
 	}
@@ -60,6 +62,14 @@ public class CardSearchVo {
 
 	public void setUserType(Short userType) {
 		this.userType = userType;
+	}
+
+	public Short getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(Short cardType) {
+		this.cardType = cardType;
 	}
 
 

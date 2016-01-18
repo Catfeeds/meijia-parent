@@ -116,6 +116,7 @@ public class CardQueryController extends BaseController {
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "service_date", required = false, defaultValue = "") String serviceDate,
 			@RequestParam(value = "card_from", required = false, defaultValue = "0") Short cardFrom,
+			@RequestParam(value = "card_type", required = false, defaultValue = "0") Short cardType,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "lat", required = false, defaultValue = "") String lat,
 			@RequestParam(value = "lng", required = false, defaultValue = "") String lng
@@ -149,6 +150,11 @@ public class CardQueryController extends BaseController {
 		searchVo.setCardFrom(cardFrom);
 		searchVo.setUserId(userId);
 		searchVo.setUserType(u.getUserType());
+		
+		if (!cardType.equals((short)0)) {
+			searchVo.setCardType(cardType);
+		}
+		
 		
 		if (startTime > 0L && endTime > 0L) {
 			searchVo.setStartTime(startTime);
