@@ -298,9 +298,9 @@ public class PushUtil {
 			apnpayload.setContentAvailable(1);
 //			apnpayload.setCategory("cardView");
 			
-			if (pushType.equals("alertClock")) {
-				apnpayload.setSound("simivoice.caf");
-			}
+//			if (pushType.equals("alertClock")) {
+				apnpayload.setSound("1000");
+//			}
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
 			
 			
@@ -348,7 +348,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "7d413b1e8eb4b782604580f6f26f8220";
+		String clientId = "169c27156343d0780b48f2fb8e6e7c9d";
 		
 		getUserStatus(clientId);
 		
@@ -379,8 +379,9 @@ public class PushUtil {
 		 tranParams.put("service_time", "0");
 		 tranParams.put("remind_time", "0");
 		 tranParams.put("remind_title", "事务提醒");
-		 tranParams.put("remind_content", "测试响几次");
-
+		 tranParams.put("remind_content", "测试声音 	new-mail.caf");
+		 tranParams.put("sound", "new-mail");
+		 tranParams.put("sound_id", "1000");
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);
 		 
