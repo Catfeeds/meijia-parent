@@ -23,7 +23,7 @@
 
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
-		<%@ include file="../schedul/schedule-menu.jsp"%>
+		<%@ include file="../schedule/schedule-menu.jsp"%>
 		<!-- sidebar end -->
 
 		<!-- content start -->
