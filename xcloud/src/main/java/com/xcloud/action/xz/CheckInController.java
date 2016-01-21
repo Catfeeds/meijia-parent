@@ -62,23 +62,6 @@ public class CheckInController extends BaseController {
 	@Autowired
 	private XcompanyDeptService xcompanyDeptService;
 
-	@AuthPassport
-	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
-	public String staffUserForm(Model model, HttpServletRequest request,
-			@RequestParam(value = "staff_id", required = false) Long staffId) {
-		
-		
-		// 获取登录的用户
-		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-		
-		Long companyId = accountAuth.getCompanyId();
-		
-		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
-		
-
-		
-		return "/staffs/staff-form";
-	}
 
 
 }
