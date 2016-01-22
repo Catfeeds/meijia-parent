@@ -37,7 +37,7 @@
 
 			<div class="am-g">
 				<div class="am-u-sm-12">
-					<h2 class="am-text-center am-text-xxxl am-margin-top-lg">尽请期待</h2>
+					<h2 class="am-text-center am-text-xxxl am-margin-top-lg">敬请期待</h2>
 					<p class="am-text-center"></p>
 					<pre class="page-404">
           .----.
@@ -49,7 +49,7 @@
         `;_:    `"'
       .'"""""`.
      /,  ya ,\\
-    // 尽请期待!\\
+    // 敬请期待!\\
     `-._______.-'
     ___`. | .'___
    (______|______)
