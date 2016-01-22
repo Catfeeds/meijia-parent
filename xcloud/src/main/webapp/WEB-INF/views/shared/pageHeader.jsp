@@ -17,11 +17,11 @@
 			<li class="am-nav"><a href="/xcloud/index" title="首页">首页</a></li>
 			<li><a href="/xcloud/schedule/list" title="工作日程">日程</a></li>
 			<li><a href="/xcloud/staff/list" title="通讯录" target="_top">通讯录</a></li>
-			<li><a href="http://123.57.173.36/xcloud/" title="工作日程" target="_top">行政</a></li>
-			<li><a href="http://123.57.173.36/xcloud/" title="合同管理" target="_top">人事</a></li>
-			<li><a href="http://123.57.173.36/xcloud/" title="合同管理" target="_top">应用中心</a></li>
-			<li><a href="http://123.57.173.36/xcloud/" title="工作日程" target="_top">服务大厅</a></li>
-			<li><a href="http://123.57.173.36/xcloud/" title="工作日程" target="_top">办公超市</a></li>
+			<li><a href="/xcloud/xz/index" title="工作日程" target="_top">行政</a></li>
+			<li><a href="/xcloud/" title="合同管理" target="_top">人事</a></li>
+			<li><a href="/xcloud/" title="合同管理" target="_top">应用中心</a></li>
+			<li><a href="/xcloud/" title="工作日程" target="_top">服务大厅</a></li>
+			<li><a href="/xcloud/" title="工作日程" target="_top">办公超市</a></li>
 			<!--
       	<li><a href="javascript:;"><span class="am-icon-bell"></span> 消息 <span class="am-badge am-badge-warning">5</span></a></li>
       	-->
