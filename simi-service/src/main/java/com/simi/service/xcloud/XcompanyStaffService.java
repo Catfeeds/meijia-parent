@@ -37,4 +37,6 @@ public interface XcompanyStaffService {
 
 	AppResultData<Object> staffImport(Long companyId, List<Object> datas) throws Exception;
 
+	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
+
 }

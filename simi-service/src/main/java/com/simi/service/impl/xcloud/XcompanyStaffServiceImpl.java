@@ -93,7 +93,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		return xCompanyStaffMapper.deleteByPrimaryKey(id);
 	}
-
+	
+	@Override
+	public List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo) {
+		
+		return xCompanyStaffMapper.selectByListPage(searchVo);
+	}	
+	
 	@Override
 	public StaffListVo changeToStaffLisVo(XcompanyStaff item) {
 
@@ -570,7 +576,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		}
 		
 		return result;
-	}		
+	}
+
+		
 	
 	
 	

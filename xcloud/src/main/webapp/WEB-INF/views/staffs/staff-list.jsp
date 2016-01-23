@@ -46,7 +46,7 @@
 							<button type="button" id="btn-staff-import" class="am-btn am-btn-default">
 								<span class="am-icon-save"></span> 批量导入
 							</button>
-							<button type="button" class="am-btn am-btn-default">
+							<button type="button" id="btn-staff-export" class="am-btn am-btn-default">
 								<span class="am-icon-table"></span> 导出通讯录
 							</button>
 							<button type="button" id="btn-change-dept" class="am-btn am-btn-default am-radius">

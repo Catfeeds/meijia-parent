@@ -1,12 +1,21 @@
 package com.xcloud.action.company;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +30,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+
+
+
+
+
+
 
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
@@ -386,7 +402,96 @@ public class StaffController extends BaseController {
 		AppResultData<Object> validateResult = xcompanyStaffService.staffImport(companyId, excelDatas);
 		
 		return "/staffs/staff-import-ok";
-	}		
-			
+	}	
+	/**
+	 * 导出通讯录
+	 * @param request
+	 * @param response
+	 * @param searchVo
+	 * @throws IOException
+	 */
+	@AuthPassport
+	@RequestMapping(value = "/staff-download", method = { RequestMethod.GET })
+	public void download(HttpServletRequest request,HttpServletResponse response,UserCompanySearchVo searchVo) throws IOException{
+		    	
+		    String fileName="excel文件";    
 
+		    String companyId = request.getParameter("companyId");
+	     //   String startDate = request.getParameter("startDate");
+	    //    String endDate = request.getParameter("endDate");
+	        //填充projects数据
+		    searchVo.setCompanyId(Long.valueOf(companyId));
+	   //     List<DictCoupons> userses= couponService.selectBySearchVo(couponSearchVo);
+	        List<XcompanyStaff> xcompanyStaffs = xcompanyStaffService.selectByListPage(searchVo);
+	        List<Map<String,Object>> list= createExcelRecord(xcompanyStaffs);
+
+	        String columnNames[]={"姓名","手机号","工号","职位","员工类型","身份证号","入职时间(yyyy-mm-dd)","邮箱"};//列名
+	        String keys[] = {"name","mobile","jobNumber","jobName","staffTypeName","idCard","jobDate","companyEmail"};//map中的key
+	        ByteArrayOutputStream os = new ByteArrayOutputStream();
+	        try {
+	            ExcelUtil.createWorkBook(list,keys,columnNames).write(os);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        byte[] content = os.toByteArray();
+	        InputStream is = new ByteArrayInputStream(content);
+	        // 设置response参数，可以打开下载页面
+	        response.reset();
+	        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+	        response.setHeader("Content-Disposition", "attachment;filename="+ new String((fileName + ".xls").getBytes(), "iso-8859-1"));
+	        ServletOutputStream out = response.getOutputStream();
+	        BufferedInputStream bis = null;
+	        BufferedOutputStream bos = null;
+	        try {
+	            bis = new BufferedInputStream(is);
+	            bos = new BufferedOutputStream(out);
+	            byte[] buff = new byte[2048];
+	            int bytesRead;
+	            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+	                bos.write(buff, 0, bytesRead);
+	            }
+	        } catch (final IOException e) {
+	            throw e;
+	        } finally {
+	            if (bis != null)
+	                bis.close();
+	            if (bos != null)
+	                bos.close();
+	        }
+	//	return "/staffs/download-staff";
+	}
+	/**
+	 * 创建Excle模板
+	 */
+    private List<Map<String, Object>> createExcelRecord(List<XcompanyStaff> list) {
+        List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("sheetName", "sheet1");
+        listmap.add(map);
+        XcompanyStaff xcompanyStaff=xcompanyStaffService.initXcompanyStaff();
+        for (int j = 0; j < list.size(); j++) {
+        	xcompanyStaff=list.get(j);
+        	Users users = usersService.selectByPrimaryKey(xcompanyStaff.getUserId());
+            Map<String, Object> mapValue = new HashMap<String, Object>();
+            mapValue.put("name",users.getName());
+            mapValue.put("mobile",users.getMobile());
+            mapValue.put("jobNumber",xcompanyStaff.getJobNumber());
+            mapValue.put("jobName",xcompanyStaff.getJobName());
+            if (xcompanyStaff.getStaffType() == 0) {
+            	mapValue.put("staffTypeName","全职");	
+			}
+            if (xcompanyStaff.getStaffType() == 1) {
+            	mapValue.put("staffTypeName","兼职");	
+			}
+            if (xcompanyStaff.getStaffType() == 2) {
+            	mapValue.put("staffTypeName","实习");	
+			}
+         //   mapValue.put("staffTypeName",xcompanyStaff.getStaffType());
+            mapValue.put("idCard",users.getIdCard());
+            mapValue.put("jobDate",DateUtil.formatDate(xcompanyStaff.getJoinDate()));
+            mapValue.put("companyEmail",xcompanyStaff.getCompanyEmail());
+            listmap.add(mapValue);
+        }
+        return listmap;
+    }
 }
