@@ -316,9 +316,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		if (servicePrice != null) {
 			vo.setServicePriceName(servicePrice.getName());
 		}
-		
-		
-		
+
 		//用户地址
 		vo.setAddrId(order.getAddrId());
 		vo.setAddrName("");
