@@ -311,8 +311,13 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		//服务报价ID和名称
 		vo.setServicePriceId(orderPrice.getServicePriceId());
+		vo.setServicePriceName("");
 		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(orderPrice.getServicePriceId());
-		vo.setServicePriceName(servicePrice.getName());
+		if (servicePrice != null) {
+			vo.setServicePriceName(servicePrice.getName());
+		}
+		
+		
 		
 		//用户地址
 		vo.setAddrId(order.getAddrId());
