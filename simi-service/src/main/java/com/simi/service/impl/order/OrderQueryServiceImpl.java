@@ -316,7 +316,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		if (servicePrice != null) {
 			vo.setServicePriceName(servicePrice.getName());
 		}
-
+		
+		
+		
 		//用户地址
 		vo.setAddrId(order.getAddrId());
 		vo.setAddrName("");
@@ -340,7 +342,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setOrderPay(orderPrice.getOrderPay());
 		
 		//设置订单的是否需要地址.
-		vo.setIsAddr(partnerServicePriceDetail.getIsAddr());
+		vo.setIsAddr((short) 0);
+		if (partnerServicePriceDetail != null) {
+			vo.setIsAddr(partnerServicePriceDetail.getIsAddr());
+		}
 		
         return vo;
 	}	
