@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserMsg" >
+    <id column="msg_id" property="msgId" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="from_user_id" property="fromUserId" jdbcType="NUMERIC" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="action" property="action" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="VARCHAR" />
+    <result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    msg_id, user_id, from_user_id, category, action, params, goto_url, title, summary, 
+    img_url, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_msg
+    where msg_id = #{msgId,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_msg
+    where msg_id = #{msgId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserMsg" >
+    insert into user_msg (msg_id, user_id, from_user_id, 
+      category, action, params, 
+      goto_url, title, summary, 
+      img_url, add_time)
+    values (#{msgId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{fromUserId,jdbcType=NUMERIC}, 
+      #{category,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
+      #{gotoUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserMsg" >
+    insert into user_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        msg_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="params != null" >
+        params,
+      </if>
+      <if test="gotoUrl != null" >
+        goto_url,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        #{msgId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="gotoUrl != null" >
+        #{gotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserMsg" >
+    update user_msg
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=NUMERIC},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        params = #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="gotoUrl != null" >
+        goto_url = #{gotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where msg_id = #{msgId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserMsg" >
+    update user_msg
+    set user_id = #{userId,jdbcType=NUMERIC},
+      from_user_id = #{fromUserId,jdbcType=NUMERIC},
+      category = #{category,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR},
+      goto_url = #{gotoUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where msg_id = #{msgId,jdbcType=NUMERIC}
+  </update>
+</mapper>
