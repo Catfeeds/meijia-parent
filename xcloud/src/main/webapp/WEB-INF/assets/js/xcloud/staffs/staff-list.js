@@ -105,5 +105,5 @@ $("#btn-staff-import").click(function() {
 //导出通讯录
 $("#btn-staff-export").click(function() {
 	var companyId = $("#companyId").val();
-	location.href = "/staff/staff-download?companyId="+companyId;
+	location.href = "/xcloud/staff/staff-download?companyId="+companyId;
 });

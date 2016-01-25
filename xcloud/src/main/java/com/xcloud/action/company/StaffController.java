@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.ELState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 
 
 
@@ -415,18 +417,15 @@ public class StaffController extends BaseController {
 	public void download(HttpServletRequest request,HttpServletResponse response,UserCompanySearchVo searchVo) throws IOException{
 		    	
 		    String fileName="excel文件";    
-
 		    String companyId = request.getParameter("companyId");
-	     //   String startDate = request.getParameter("startDate");
-	    //    String endDate = request.getParameter("endDate");
+	   
 	        //填充projects数据
 		    searchVo.setCompanyId(Long.valueOf(companyId));
-	   //     List<DictCoupons> userses= couponService.selectBySearchVo(couponSearchVo);
 	        List<XcompanyStaff> xcompanyStaffs = xcompanyStaffService.selectByListPage(searchVo);
 	        List<Map<String,Object>> list= createExcelRecord(xcompanyStaffs);
 
 	        String columnNames[]={"姓名","手机号","工号","职位","员工类型","身份证号","入职时间(yyyy-mm-dd)","邮箱"};//列名
-	        String keys[] = {"name","mobile","jobNumber","jobName","staffTypeName","idCard","jobDate","companyEmail"};//map中的key
+	        String keys[] = {"name","mobile","jobNumber","jobName","staffType","idCard","jobDate","companyEmail"};//map中的key
 	        ByteArrayOutputStream os = new ByteArrayOutputStream();
 	        try {
 	            ExcelUtil.createWorkBook(list,keys,columnNames).write(os);
@@ -458,7 +457,6 @@ public class StaffController extends BaseController {
 	            if (bos != null)
 	                bos.close();
 	        }
-	//	return "/staffs/download-staff";
 	}
 	/**
 	 * 创建Excle模板
@@ -478,15 +476,15 @@ public class StaffController extends BaseController {
             mapValue.put("jobNumber",xcompanyStaff.getJobNumber());
             mapValue.put("jobName",xcompanyStaff.getJobName());
             if (xcompanyStaff.getStaffType() == 0) {
-            	mapValue.put("staffTypeName","全职");	
+            	mapValue.put("staffType","全职");	
 			}
             if (xcompanyStaff.getStaffType() == 1) {
-            	mapValue.put("staffTypeName","兼职");	
+            	mapValue.put("staffType","兼职");	
 			}
             if (xcompanyStaff.getStaffType() == 2) {
-            	mapValue.put("staffTypeName","实习");	
+            	mapValue.put("staffType","实习");	
 			}
-         //   mapValue.put("staffTypeName",xcompanyStaff.getStaffType());
+        //    mapValue.put("staffType",xcompanyStaff.getStaffType());
             mapValue.put("idCard",users.getIdCard());
             mapValue.put("jobDate",DateUtil.formatDate(xcompanyStaff.getJoinDate()));
             mapValue.put("companyEmail",xcompanyStaff.getCompanyEmail());

@@ -138,21 +138,21 @@ public class MeetingController extends BaseController {
 		return result;
 	}	
 	
-	
+	//会议一览
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request) {
 
 		return "xz/meeting-list";
 
 	}	
-	
+	//会议设置
 	@RequestMapping(value = "setting", method = RequestMethod.GET)
 	public String setting(HttpServletRequest request) {
 
 		return "xz/meeting-setting";
 
 	}
-	
+	//会展服务商
 	@RequestMapping(value = "service", method = RequestMethod.GET)
 	public String serviceList(HttpServletRequest request) {
 
