@@ -72,7 +72,7 @@ public class UserMsgController extends BaseController {
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
 		
-		PageInfo list = userMsgService.selectByListPage(searchVo, page, 20);
+		PageInfo list = userMsgService.selectByListPage(searchVo, page, 10);
 		List<UserMsg> msgList = list.getList();
 		
 		List<UserMsgVo> resultList = new ArrayList<UserMsgVo>();

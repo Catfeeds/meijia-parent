@@ -429,5 +429,46 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 
+		<!-- 用户请假表 -->
+		<table schema="simi" tableName="user_leave"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="leave_id" property="leaveId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="leave_type" property="leaveType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
+		
+		<!-- 用户请假审批表 -->
+		<table schema="simi" tableName="user_leave_pass"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="leave_id" property="leaveId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="pass_user_id" property="passUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="pass_status" property="passStatus" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			
+		</table>
+
 	</context>
 </generatorConfiguration>

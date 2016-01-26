@@ -535,11 +535,13 @@ public class DateUtil {
 //		
 //		System.out.println(result);
 		
-		Date testDate = TimeStampUtil.timeStampToDateFull(1438159994000L , DEFAULT_FULL_PATTERN);
-		System.out.println(DateUtil.fromToday(testDate));
+//		Date testDate = TimeStampUtil.timeStampToDateFull(1438159994000L , DEFAULT_FULL_PATTERN);
+//		System.out.println(DateUtil.fromToday(testDate));
+//		
+//		String dateStr = "11-五月-2015";
+//		System.out.println(DateUtil.isDate(dateStr));
 		
-		String dateStr = "11-五月-2015";
-		System.out.println(DateUtil.isDate(dateStr));
+		System.out.println(DateUtil.compare("2016-01-27", "2016-01-26"));
 		
 	}
 }
