@@ -41,11 +41,11 @@
 		</if>
 		
 		<if test="startTime != null">
-			and add_time >= #{startTime,jdbcType=NUMERIC}
+			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} ]]>
 		</if>
 		
 		<if test="endTime != null">
-			and add_time <= #{endTime,jdbcType=NUMERIC}
+			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
 
 		order by update_time desc
@@ -73,11 +73,11 @@
 		</if>
 		
 		<if test="startTime != null">
-			and add_time >= #{startTime,jdbcType=NUMERIC}
+			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} ]]>
 		</if>
 		
 		<if test="endTime != null">
-			and add_time <= #{endTime,jdbcType=NUMERIC}
+			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
 				
 		order by msg_id desc
