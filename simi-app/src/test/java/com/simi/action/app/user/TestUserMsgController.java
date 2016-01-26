@@ -25,20 +25,20 @@ public class TestUserMsgController extends JUnitActionBase{
 		resultActions.andExpect(status().isOk());
 		System.out.println("RestultActons:" + resultActions.andReturn().getResponse().getContentAsString());
 	}
-	@Test
-	public void getMsg() throws Exception{
-
-		String url="/app/user/get_msg.json";
-
-		String params = "?mobile=18500143331&page=1";
-		MockHttpServletRequestBuilder postRequest = get(url+params);
-
-
-		ResultActions resultActions=mockMvc.perform(postRequest);
-		resultActions.andExpect(content().contentType(this.mediaType));
-		resultActions.andExpect(status().isOk());
-		System.out.println("RestultActons:" + resultActions.andReturn().getResponse().getContentAsString());
-	}
+//	@Test
+//	public void getMsg() throws Exception{
+//
+//		String url="/app/user/get_msg.json";
+//
+//		String params = "?mobile=18500143331&page=1";
+//		MockHttpServletRequestBuilder postRequest = get(url+params);
+//
+//
+//		ResultActions resultActions=mockMvc.perform(postRequest);
+//		resultActions.andExpect(content().contentType(this.mediaType));
+//		resultActions.andExpect(status().isOk());
+//		System.out.println("RestultActons:" + resultActions.andReturn().getResponse().getContentAsString());
+//	}
 	@Test
 	public void testGetNewMsg() throws Exception{
 
@@ -52,4 +52,19 @@ public class TestUserMsgController extends JUnitActionBase{
 		System.out.println("RestultActons:" + resultActions.andReturn().getResponse().getContentAsString());
 	}
 
+	
+	@Test
+	public void testGetUserMsg() throws Exception{
+
+		String url="/app/user/get_msg.json";
+
+		String params = "?user_id=278&service_date=2016-01-26&page=1";
+		MockHttpServletRequestBuilder postRequest = get(url+params);
+
+
+		ResultActions resultActions=mockMvc.perform(postRequest);
+		resultActions.andExpect(content().contentType(this.mediaType));
+		resultActions.andExpect(status().isOk());
+		System.out.println("RestultActons:" + resultActions.andReturn().getResponse().getContentAsString());
+	}	
 }

@@ -12,7 +12,7 @@ public interface XcompanyCheckinService {
 
 	int deleteByPrimaryKey(Long id);
 
-	int insertSelective(XcompanyCheckin record);
+	Long insertSelective(XcompanyCheckin record);
 	
 	int updateByPrimaryKeySelective(XcompanyCheckin record);
 

@@ -12,6 +12,8 @@ public interface UserMsgAsyncService {
 
 	Future<Boolean> newImMsg(Long fromUserId, String fromUserName, Long toUserId, String toUserName, String imgContent);
 
+	Future<Boolean> newCheckinMsg(Long userId, Long checkId);
+
 
 	
 }

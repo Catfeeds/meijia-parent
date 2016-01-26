@@ -22,6 +22,7 @@ import com.simi.po.model.xcloud.XcompanyBenz;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffBenz;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyBenzService;
@@ -57,6 +58,9 @@ public class CompanyCheckinController extends BaseController {
 
 	@Autowired
 	private XcompanyCheckinService xCompanyCheckinService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 	
 	@RequestMapping(value = "/checkin", method = { RequestMethod.POST })
 	public AppResultData<Object> checkin(
@@ -128,6 +132,9 @@ public class CompanyCheckinController extends BaseController {
 		datas.put("poiName", poiName);
 		
 		result.setData(datas);
+		
+		//生成消息
+		userMsgAsyncService.newCheckinMsg(userId, record.getId());
 		
 		return result;
 	}

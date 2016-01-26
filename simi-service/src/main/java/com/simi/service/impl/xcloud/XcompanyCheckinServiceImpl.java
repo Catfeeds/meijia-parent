@@ -22,7 +22,9 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 	XcompanyCheckinMapper xcompanyCheckinMapper;
 	
 	@Autowired
-	private XcompanyBenzTimeService xCompanyBenzTimeService;		
+	private XcompanyBenzTimeService xCompanyBenzTimeService;	
+	
+
 
 	@Override
 	public XcompanyCheckin initXcompanyCheckin() {
@@ -60,7 +62,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 	}
 
 	@Override
-	public int insertSelective(XcompanyCheckin record) {
+	public Long insertSelective(XcompanyCheckin record) {
 		return xcompanyCheckinMapper.insertSelective(record);
 	}
 

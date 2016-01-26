@@ -10,7 +10,7 @@ public interface XcompanyCheckinMapper {
 
     int insert(XcompanyCheckin record);
 
-    int insertSelective(XcompanyCheckin record);
+    Long insertSelective(XcompanyCheckin record);
 
     XcompanyCheckin selectByPrimaryKey(Long id);
 

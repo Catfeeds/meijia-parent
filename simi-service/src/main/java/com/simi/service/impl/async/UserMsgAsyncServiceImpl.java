@@ -15,12 +15,14 @@ import com.simi.po.model.card.Cards;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.UserMsgSearchVo;
 
@@ -42,6 +44,9 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 	@Autowired
 	private FeedService feedService;	
 
+	@Autowired
+	private XcompanyCheckinService xcompanyCheckinService;
+	
 	/**
 	 * 新增用户时发送默认消息
 	 */
@@ -152,13 +157,13 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		
 		record.setSummary(title);
-		record.setIconUrl("http://123.57.173.36/images/icon/icon-baogao.png");
+		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
 		userMsgService.insert(record);				
 		
 		return new AsyncResult<Boolean>(true);
 	}		
 	
-//	@Async
+	@Async
 	@Override
 	public Future<Boolean> newImMsg(Long 	fromUserId, 
 									String 	fromUserName, 
@@ -233,6 +238,46 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		} else {
 			userMsgService.insert(toMsg);
 		}		
+		
+		return new AsyncResult<Boolean>(true);
+	}
+	
+	@Async
+	@Override
+	public Future<Boolean> newCheckinMsg(Long userId, Long checkId) {
+		
+		XcompanyCheckin checkin = xcompanyCheckinService.selectByPrimarykey(checkId);
+		
+		
+		UserMsgSearchVo searchVo = new UserMsgSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setCategory("app");
+		searchVo.setAction("checkin");
+		searchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+		searchVo.setEndTime(TimeStampUtil.getEndOfToday());
+		List<UserMsg> rsList = userMsgService.selectBySearchVo(searchVo);
+
+		UserMsg record = userMsgService.initUserMsg();
+		if (!rsList.isEmpty()) {
+			record = rsList.get(0);
+		}
+		
+		record.setUserId(userId);
+		record.setFromUserId(userId);
+		record.setToUserId(userId);
+		record.setCategory("app");
+		record.setAction("checkin");
+		record.setParams("");
+		record.setGotoUrl("");
+		record.setTitle("考勤");		
+		record.setSummary("完成一次考勤记录");
+		record.setIconUrl("http://123.57.173.36/images/icon/icon-kaoqin.png");
+		if (record.getMsgId() > 0L) {
+			record.setUpdateTime(TimeStampUtil.getNowSecond());
+			userMsgService.updateByPrimaryKey(record);
+		} else {
+			userMsgService.insert(record);
+		}				
 		
 		return new AsyncResult<Boolean>(true);
 	}

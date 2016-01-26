@@ -63,7 +63,7 @@
 		</if>
 		
 		<if test="endTime != null">
-			and add_time >= #{endTime,jdbcType=NUMERIC}
+			and add_time <= #{endTime,jdbcType=NUMERIC}
 		</if>
 				
 		order by id desc
@@ -89,6 +89,11 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyCheckin">
+	
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>	
+	
 		insert into xcompany_checkin
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
