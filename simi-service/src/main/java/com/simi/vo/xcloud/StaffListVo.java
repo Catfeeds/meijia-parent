@@ -81,10 +81,12 @@ public class StaffListVo extends XcompanyStaff{
 		this.staffTypeName = staffTypeName;
 	}
 
+	@Override
 	public Long getUserId() {
 		return userId;
 	}
 
+	@Override
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}

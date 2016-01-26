@@ -18,9 +18,9 @@ public interface UserMsgMapper {
 
     int updateByPrimaryKey(UserMsg record);
 
-	List<UserMsg> selectByListPage(Long userId);
-
 	List<UserMsg> selectByUserId(Long userId);
 
 	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
+
+	List<UserMsg> selectByListPage(UserMsgSearchVo searchVo);
 }

@@ -1,19 +1,20 @@
 package com.simi.vo;
 
-
 public class UserMsgSearchVo {
-	  
-	  private Long fromUserId;
-	  
-	  private Long toUserId;
-	  
-	  private String category;
-	  
-	  private String action;
-	  
-	  private Long startTime;
-	  
-	  private Long endTime;
+
+	private Long userId;
+	
+	private Long fromUserId;
+
+	private Long toUserId;
+
+	private String category;
+
+	private String action;
+
+	private Long startTime;
+
+	private Long endTime;
 
 	public Long getFromUserId() {
 		return fromUserId;
@@ -63,5 +64,12 @@ public class UserMsgSearchVo {
 		this.endTime = endTime;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 }

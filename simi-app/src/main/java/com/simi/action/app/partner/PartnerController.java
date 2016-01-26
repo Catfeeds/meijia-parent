@@ -19,7 +19,6 @@ import com.simi.common.Constants;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
-import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerServicePriceDetailService;

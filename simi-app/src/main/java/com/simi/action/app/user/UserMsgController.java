@@ -1,5 +1,6 @@
 package com.simi.action.app.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserMsgService;
-import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.user.UserMsgVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -34,6 +37,7 @@ public class UserMsgController extends BaseController {
 	@RequestMapping(value = "get_msg", method = RequestMethod.GET)
 	public AppResultData<Object> getMsg(
 			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "service_date", required = false, defaultValue = "") String serviceDate,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page
 			) {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -47,10 +51,28 @@ public class UserMsgController extends BaseController {
 			return result;
 		}
 		
-		PageInfo list = userMsgService.selectByListPage(userId, page, 20);
+		UserMsgSearchVo searchVo = new UserMsgSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+		searchVo.setEndTime(TimeStampUtil.getEndOfToday());
+		
+		PageInfo list = userMsgService.selectByListPage(searchVo, page, 20);
 		List<UserMsg> msgList = list.getList();
 		
-		result.setData(msgList);
+		List<UserMsgVo> resultList = new ArrayList<UserMsgVo>();
+		
+		for (int i = 0; i < msgList.size(); i++) {
+			UserMsg item = msgList.get(i);
+			UserMsgVo vo = new UserMsgVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			Long updateTime = item.getUpdateTime();
+			String msgTime = TimeStampUtil.timeStampToDateStr(updateTime, "HH:mm");
+			vo.setMsgTime(msgTime);
+			resultList.add(vo);
+		}
+		
+		result.setData(resultList);
 		return result;
 	}
 }

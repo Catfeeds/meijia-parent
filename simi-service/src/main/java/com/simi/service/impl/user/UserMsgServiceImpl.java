@@ -74,10 +74,10 @@ public class UserMsgServiceImpl implements UserMsgService {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public PageInfo selectByListPage(Long userId, int pageNo, int pageSize) {
+	public PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize) {
 
 		PageHelper.startPage(pageNo, pageSize);
-		List<UserMsg> list = userMsgMapper.selectByListPage(userId);
+		List<UserMsg> list = userMsgMapper.selectByListPage(searchVo);
 		PageInfo result = new PageInfo(list);
 		return result;
 	}

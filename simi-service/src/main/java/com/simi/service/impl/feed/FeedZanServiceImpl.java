@@ -1,6 +1,5 @@
 package com.simi.service.impl.feed;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +13,6 @@ import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.feed.FeedZanViewVo;
 import com.simi.po.model.feed.FeedZan;
 import com.simi.po.model.user.Users;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.feed.FeedZanMapper;

@@ -22,10 +22,10 @@ public interface UserMsgService {
 
 	UserMsg initUserMsg();
 
-	PageInfo selectByListPage(Long UserId, int pageNo, int pageSize);
-
 	List<UserMsg> selectByUserId(Long userId);
 
 	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
+
+	PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize);
 
 }

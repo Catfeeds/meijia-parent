@@ -3,12 +3,9 @@ package com.simi.service.impl.xcloud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
-import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.po.dao.xcloud.XcompanyMapper;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
 
 @Service

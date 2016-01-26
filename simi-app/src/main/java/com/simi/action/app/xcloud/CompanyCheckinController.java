@@ -19,7 +19,6 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyBenz;
-import com.simi.po.model.xcloud.XcompanyBenzTime;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffBenz;
