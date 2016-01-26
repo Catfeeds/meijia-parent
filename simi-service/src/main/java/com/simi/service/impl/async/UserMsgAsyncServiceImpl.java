@@ -218,7 +218,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		
 		toMsg.setUserId(toUserId);
-		toMsg.setFromUserId(fromUserId);
+		toMsg.setFromUserId(toUserId);
 		toMsg.setToUserId(fromUserId);
 		toMsg.setCategory("app");
 		toMsg.setAction("im");
