@@ -83,7 +83,7 @@ public class UserMsgController extends BaseController {
 			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
 			
 			Long updateTime = item.getUpdateTime();
-			String msgTime = TimeStampUtil.timeStampToDateStr(updateTime, "HH:mm");
+			String msgTime = TimeStampUtil.timeStampToDateStr(updateTime * 1000, "HH:mm");
 			vo.setMsgTime(msgTime);
 			resultList.add(vo);
 		}
