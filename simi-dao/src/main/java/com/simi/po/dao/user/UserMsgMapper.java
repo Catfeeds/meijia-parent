@@ -3,6 +3,7 @@ package com.simi.po.dao.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserMsg;
+import com.simi.vo.UserMsgSearchVo;
 
 public interface UserMsgMapper {
     int deleteByPrimaryKey(Long msgId);
@@ -20,4 +21,6 @@ public interface UserMsgMapper {
 	List<UserMsg> selectByListPage(Long userId);
 
 	List<UserMsg> selectByUserId(Long userId);
+
+	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
 }

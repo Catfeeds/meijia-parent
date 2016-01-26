@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.UserMsgSearchVo;
 import com.simi.po.dao.user.UserMsgMapper;
 import com.simi.po.model.user.UserMsg;
 import com.meijia.utils.TimeStampUtil;
@@ -58,13 +59,16 @@ public class UserMsgServiceImpl implements UserMsgService {
 		record.setMsgId(0L);
 		record.setUserId(0L);
 		record.setFromUserId(0L);
+		record.setToUserId(0L);
 		record.setCategory("");
 		record.setAction("");
 		record.setParams("");
 		record.setGotoUrl("");
 		record.setTitle("");
 		record.setSummary("");
+		record.setIconUrl("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
+		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		return record;
 	}	
 	
@@ -81,6 +85,12 @@ public class UserMsgServiceImpl implements UserMsgService {
 	@Override
 	public List<UserMsg> selectByUserId(Long userId) {
 		List<UserMsg> result = userMsgMapper.selectByUserId(userId);
+		return result;
+	}
+	
+	@Override
+	public List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo) {
+		List<UserMsg> result = userMsgMapper.selectBySearchVo(searchVo);
 		return result;
 	}
 		

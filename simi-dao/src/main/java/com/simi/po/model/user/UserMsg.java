@@ -6,6 +6,8 @@ public class UserMsg {
     private Long userId;
 
     private Long fromUserId;
+    
+    private Long toUserId;
 
     private String category;
 
@@ -18,8 +20,12 @@ public class UserMsg {
     private String title;
 
     private String summary;
+    
+    private String iconUrl;
 
     private Long addTime;
+    
+    private Long updateTime;
 
     public Long getMsgId() {
         return msgId;
@@ -100,4 +106,28 @@ public class UserMsg {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Long getToUserId() {
+		return toUserId;
+	}
+
+	public void setToUserId(Long toUserId) {
+		this.toUserId = toUserId;
+	}
+
+	public String getIconUrl() {
+		return iconUrl;
+	}
+
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserMsg;
+import com.simi.vo.UserMsgSearchVo;
 
 public interface UserMsgService {
 
@@ -24,5 +25,7 @@ public interface UserMsgService {
 	PageInfo selectByListPage(Long UserId, int pageNo, int pageSize);
 
 	List<UserMsg> selectByUserId(Long userId);
+
+	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
 
 }

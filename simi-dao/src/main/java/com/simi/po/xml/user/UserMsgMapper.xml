@@ -5,16 +5,19 @@
 		<id column="msg_id" property="msgId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="from_user_id" property="fromUserId" jdbcType="NUMERIC" />
+		<result column="to_user_id" property="toUserId" jdbcType="NUMERIC" />
 		<result column="category" property="category" jdbcType="VARCHAR" />
 		<result column="action" property="action" jdbcType="VARCHAR" />
 		<result column="params" property="params" jdbcType="VARCHAR" />
 		<result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="summary" property="summary" jdbcType="VARCHAR" />
+		<result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		msg_id, user_id, from_user_id, category, action, params, goto_url, title, summary, add_time
+		msg_id, user_id, from_user_id, to_user_id, category, action, params, goto_url, title, summary, icon_url, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -33,7 +36,39 @@
 		<include refid="Base_Column_List" />
 		from user_msg
 		where user_id = #{userId,jdbcType=NUMERIC}
-		order by add_time desc
+		order by update_time desc
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserMsgSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_msg
+		where 1=1
+		<if test="fromUserId != null">
+			and from_user_id = #{fromUserId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="toUserId != null">
+			and to_user_id = #{toUserId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="category != null">
+			and category = #{category,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="action != null">
+			and action = #{action,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="startTime != null">
+			and add_time >= #{startTime,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="endTime != null">
+			and add_time >= #{endTime,jdbcType=NUMERIC}
+		</if>
+				
+		order by id desc
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -41,13 +76,15 @@
 		where msg_id = #{msgId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.user.UserMsg">
-		insert into user_msg (msg_id, user_id, from_user_id,
+		insert into user_msg (msg_id, user_id, from_user_id, to_user_id,
 		category, action, params,
-		goto_url, title, summary, add_time)
+		goto_url, title, summary, icon_url, add_time, update_time)
 		values (#{msgId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{fromUserId,jdbcType=NUMERIC},
+		#{toUserId,jdbcType=NUMERIC},
 		#{category,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
 		#{gotoUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
-		#{addTime,jdbcType=NUMERIC})
+		#{iconUrl,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserMsg">
 		insert into user_msg
@@ -60,6 +97,9 @@
 			</if>
 			<if test="fromUserId != null">
 				from_user_id,
+			</if>
+			<if test="toUserId != null">
+				to_user_id,
 			</if>
 			<if test="category != null">
 				category,
@@ -79,8 +119,14 @@
 			<if test="summary != null">
 				summary,
 			</if>
+			<if test="iconUrl != null">
+				icon_url,
+			</if>
 			<if test="addTime != null">
 				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -92,6 +138,9 @@
 			</if>
 			<if test="fromUserId != null">
 				#{fromUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="toUserId != null">
+				#{toUserId,jdbcType=NUMERIC},
 			</if>
 			<if test="category != null">
 				#{category,jdbcType=VARCHAR},
@@ -111,8 +160,14 @@
 			<if test="summary != null">
 				#{summary,jdbcType=VARCHAR},
 			</if>
+			<if test="iconUrl != null">
+				#{iconUrl,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
 			</if>
 		</trim>
 	</insert>
@@ -124,6 +179,9 @@
 			</if>
 			<if test="fromUserId != null">
 				from_user_id = #{fromUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="toUserId != null">
+				to_user_id = #{toUserId,jdbcType=NUMERIC},
 			</if>
 			<if test="category != null">
 				category = #{category,jdbcType=VARCHAR},
@@ -143,8 +201,14 @@
 			<if test="summary != null">
 				summary = #{summary,jdbcType=VARCHAR},
 			</if>
+			<if test="iconUrl != null">
+				icon_url = #{iconUrl,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
 			</if>
 		</set>
 		where msg_id = #{msgId,jdbcType=NUMERIC}
@@ -153,13 +217,16 @@
 		update user_msg
 		set user_id = #{userId,jdbcType=NUMERIC},
 		from_user_id = #{fromUserId,jdbcType=NUMERIC},
+		to_user_id = #{toUserId,jdbcType=NUMERIC},
 		category = #{category,jdbcType=VARCHAR},
 		action = #{action,jdbcType=VARCHAR},
 		params = #{params,jdbcType=VARCHAR},
 		goto_url = #{gotoUrl,jdbcType=VARCHAR},
 		title = #{title,jdbcType=VARCHAR},
 		summary = #{summary,jdbcType=VARCHAR},
-		add_time = #{addTime,jdbcType=NUMERIC}
+		icon_url = #{iconUrl,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
 		where msg_id = #{msgId,jdbcType=NUMERIC}
 	</update>
 </mapper>

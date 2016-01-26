@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import com.meijia.utils.TimeStampUtil;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.feed.Feeds;
@@ -21,6 +22,7 @@ import com.simi.service.feed.FeedService;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
+import com.simi.vo.UserMsgSearchVo;
 
 @Service
 public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
@@ -52,12 +54,14 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		
 		record.setUserId(userId);
 		record.setFromUserId(defaultUser.getId());
+		record.setToUserId(userId);
 		record.setCategory("h5");
 		record.setAction("newuser");
 		record.setParams("");
 		record.setGotoUrl("http://eqxiu.com/s/5RaYy1wM");
 		record.setTitle("云行政小秘");
 		record.setSummary("欢迎来到云行政，新手必读，立刻体验");
+		record.setIconUrl("http://123.57.173.36/images/icon/icon-tixing.png");
 		userMsgService.insert(record);
 		return new AsyncResult<Boolean>(true);
 	}
@@ -100,14 +104,15 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 			
 			record.setUserId(uid);
 			record.setFromUserId(createUserId);
+			record.setToUserId(uid);
 			record.setCategory("app");
 			record.setAction("card");
 			record.setParams(cardId.toString());
 			record.setGotoUrl("");
 			record.setTitle(CardUtil.getCardTypeName(card.getCardType()));
-			
 
 			record.setSummary(serviceContent);
+			record.setIconUrl(CardUtil.getCardIcon(card.getCardType()));
 			userMsgService.insert(record);			
 		}
 		
@@ -129,6 +134,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		
 		record.setUserId(userId);
 		record.setFromUserId(userId);
+		record.setToUserId(userId);
 		record.setCategory("app");
 		record.setAction("feed");
 		record.setParams(fid.toString());
@@ -146,10 +152,89 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		
 		record.setSummary(title);
-		
+		record.setIconUrl("http://123.57.173.36/images/icon/icon-baogao.png");
 		userMsgService.insert(record);				
 		
 		return new AsyncResult<Boolean>(true);
 	}		
+	
+	@Async
+	@Override
+	public Future<Boolean> newImMsg(Long 	fromUserId, 
+									String 	fromUserName, 
+									Long 	toUserId, 
+									String 	toUserName, 
+									String 	imgContent) {	
+		
+		//需要分别往发送者和接收者都存储。
+		Users fromUser = usersService.selectByPrimaryKey(fromUserId);
+		Users toUser = usersService.selectByPrimaryKey(toUserId);
+		
+		//1. 往发送者存储消息
+		UserMsgSearchVo fromSearchVo = new UserMsgSearchVo();
+		fromSearchVo.setFromUserId(fromUserId);
+		fromSearchVo.setToUserId(toUserId);
+		fromSearchVo.setCategory("app");
+		fromSearchVo.setAction("im");
+		fromSearchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+		fromSearchVo.setEndTime(TimeStampUtil.getEndOfToday());
+		List<UserMsg> fromList = userMsgService.selectBySearchVo(fromSearchVo);
+		
+		UserMsg fromMsg = userMsgService.initUserMsg();
+		if (!fromList.isEmpty()) {
+			fromMsg = fromList.get(0);
+		}
+		
+		fromMsg.setUserId(fromUserId);
+		fromMsg.setFromUserId(fromUserId);
+		fromMsg.setToUserId(toUserId);
+		fromMsg.setCategory("app");
+		fromMsg.setAction("im");
+		fromMsg.setParams(toUserName);
+		fromMsg.setGotoUrl("");
+		fromMsg.setTitle(toUser.getName());		
+		fromMsg.setSummary(imgContent);
+		fromMsg.setIconUrl(toUser.getHeadImg());
+		if (fromMsg.getMsgId() > 0L) {
+			fromMsg.setUpdateTime(TimeStampUtil.getNowSecond());
+			userMsgService.updateByPrimaryKey(fromMsg);
+		} else {
+			userMsgService.insert(fromMsg);
+		}
+		
+		//2. 往接收者存储消息
+		UserMsgSearchVo toSearchVo = new UserMsgSearchVo();
+		toSearchVo.setFromUserId(toUserId);
+		toSearchVo.setToUserId(fromUserId);
+		toSearchVo.setCategory("app");
+		toSearchVo.setAction("im");
+		toSearchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+		toSearchVo.setEndTime(TimeStampUtil.getEndOfToday());
+		List<UserMsg> toList = userMsgService.selectBySearchVo(toSearchVo);
+		
+		UserMsg toMsg = userMsgService.initUserMsg();
+		if (!toList.isEmpty()) {
+			toMsg = toList.get(0);
+		}
+		
+		toMsg.setUserId(toUserId);
+		toMsg.setFromUserId(fromUserId);
+		toMsg.setToUserId(fromUserId);
+		toMsg.setCategory("app");
+		toMsg.setAction("im");
+		toMsg.setParams(fromUserName);
+		toMsg.setGotoUrl("");
+		toMsg.setTitle(fromUser.getName());		
+		toMsg.setSummary(imgContent);
+		toMsg.setIconUrl(fromUser.getHeadImg());
+		if (toMsg.getMsgId() > 0L) {
+			toMsg.setUpdateTime(TimeStampUtil.getNowSecond());
+			userMsgService.updateByPrimaryKey(toMsg);
+		} else {
+			userMsgService.insert(toMsg);
+		}		
+		
+		return new AsyncResult<Boolean>(true);
+	}
 
 }

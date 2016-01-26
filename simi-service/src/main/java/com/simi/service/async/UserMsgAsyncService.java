@@ -10,6 +10,8 @@ public interface UserMsgAsyncService {
 
 	Future<Boolean> newFeedMsg(Long fid);
 
+	Future<Boolean> newImMsg(Long fromUserId, String fromUserName, Long toUserId, String toUserName, String imgContent);
+
 
 	
 }

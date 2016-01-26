@@ -213,6 +213,9 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 	        	  userImLastService.updateByPrimaryKeySelective(toUserPo);
 	          }
 	          
+	          //生成消息记录
+	          
+	          
 	        }
 		} catch (Exception e) {
 			e.printStackTrace();
