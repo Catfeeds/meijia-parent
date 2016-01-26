@@ -1,6 +1,7 @@
 package com.simi.action.app.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
@@ -53,8 +56,21 @@ public class UserMsgController extends BaseController {
 		
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();
 		searchVo.setUserId(userId);
-		searchVo.setStartTime(TimeStampUtil.getBeginOfToday());
-		searchVo.setEndTime(TimeStampUtil.getEndOfToday());
+		
+		Long startTime = TimeStampUtil.getBeginOfToday();
+		Long endTime = TimeStampUtil.getEndOfToday();
+		if (!StringUtil.isEmpty(serviceDate) ) {
+			Date serviceDateObj = DateUtil.parse(serviceDate);
+			
+			String startTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 00:00:00");
+			String endTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 23:59:59");
+			startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
+			endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+		}
+		
+		
+		searchVo.setStartTime(startTime);
+		searchVo.setEndTime(endTime);
 		
 		PageInfo list = userMsgService.selectByListPage(searchVo, page, 20);
 		List<UserMsg> msgList = list.getList();
