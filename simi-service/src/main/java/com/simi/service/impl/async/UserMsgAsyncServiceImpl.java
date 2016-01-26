@@ -158,7 +158,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		return new AsyncResult<Boolean>(true);
 	}		
 	
-	@Async
+//	@Async
 	@Override
 	public Future<Boolean> newImMsg(Long 	fromUserId, 
 									String 	fromUserName, 

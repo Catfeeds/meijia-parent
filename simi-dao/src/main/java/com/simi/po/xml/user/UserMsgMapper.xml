@@ -80,7 +80,7 @@
 			and add_time >= #{endTime,jdbcType=NUMERIC}
 		</if>
 				
-		order by id desc
+		order by msg_id desc
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
