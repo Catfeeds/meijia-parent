@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserImHistoryService;
 import com.simi.service.user.UserImLastService;
 import com.simi.service.user.UserRef3rdService;
@@ -40,6 +41,9 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 
 	@Autowired
 	private UserImLastService userImLastService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;			
 	
 	@Override
 	public UserImHistory initUserImHistory() {
@@ -214,7 +218,7 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 	          }
 	          
 	          //生成消息记录
-	          
+	          userMsgAsyncService.newImMsg(fromUserId, fromImUser, toUserId, toImUser, imContent);
 	          
 	        }
 		} catch (Exception e) {
