@@ -39,6 +39,7 @@ import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.admin.AdminAccountService;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.DictCouponsService;
@@ -99,6 +100,9 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private UsersAsyncService userAsyncService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;	
 
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
@@ -126,6 +130,9 @@ public class UsersServiceImpl implements UsersService {
 
 			// 默认加固定客服用户为好友
 			userAsyncService.addDefaultFriends(u.getId());
+			
+			// 发送默认欢迎消息
+			userMsgAsyncService.newUserMsg(u.getId());
 		}
 		return u;
 	}

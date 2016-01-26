@@ -1,5 +1,7 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.UserMsg;
 
 public interface UserMsgMapper {
@@ -14,4 +16,8 @@ public interface UserMsgMapper {
     int updateByPrimaryKeySelective(UserMsg record);
 
     int updateByPrimaryKey(UserMsg record);
+
+	List<UserMsg> selectByListPage(Long userId);
+
+	List<UserMsg> selectByUserId(Long userId);
 }

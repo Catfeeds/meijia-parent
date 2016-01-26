@@ -19,8 +19,6 @@ public class UserMsg {
 
     private String summary;
 
-    private String imgUrl;
-
     private Long addTime;
 
     public Long getMsgId() {
@@ -93,14 +91,6 @@ public class UserMsg {
 
     public void setSummary(String summary) {
         this.summary = summary == null ? null : summary.trim();
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
     public Long getAddTime() {

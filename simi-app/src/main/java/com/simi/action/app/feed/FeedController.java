@@ -2,6 +2,7 @@ package com.simi.action.app.feed;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.simi.po.model.feed.FeedImgs;
 import com.simi.po.model.feed.FeedZan;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.feed.FeedCommentService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.feed.FeedZanService;
@@ -45,6 +47,9 @@ public class FeedController extends BaseController {
 
 	@Autowired
 	private FeedCommentService feedCommentService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;		
 
 	// 动态添加接口
 	@SuppressWarnings("unchecked")
@@ -113,6 +118,9 @@ public class FeedController extends BaseController {
 
 			}
 		}
+		
+		//生成动态消息
+		userMsgAsyncService.newFeedMsg(fid);
 		
 		result.setData(fid);
 
