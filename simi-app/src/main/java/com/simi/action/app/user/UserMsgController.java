@@ -85,6 +85,7 @@ public class UserMsgController extends BaseController {
 			vo.setUserId(userId);
 			vo.setCategory(item.getCategory());
 			vo.setAction(item.getAction());
+			vo.setParams(item.getParams());
 			vo.setGotoUrl(item.getGotoUrl());
 			vo.setTitle(item.getTitle());
 			vo.setSummary(item.getSummary());
