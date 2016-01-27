@@ -35,6 +35,8 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserLeaveSearchVo;
 import com.simi.vo.card.LinkManVo;
+import com.simi.vo.user.UserLeaveDetailVo;
+import com.simi.vo.user.UserLeaveListVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -228,7 +230,7 @@ public class UserLeaveController extends BaseController {
 	
 	// 用户请假列表接口
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "leave_list", method = RequestMethod.POST)
+	@RequestMapping(value = "leave_list", method = RequestMethod.GET)
 	public AppResultData<Object> list(
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "leave_type", required = false, defaultValue = "") String leaveTypeParam,
@@ -263,11 +265,46 @@ public class UserLeaveController extends BaseController {
 		PageInfo  pageInfo = userLeaveService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<UserLeave> list = pageInfo.getList();
 		
-		result.setData(list);
+		List<UserLeaveListVo> listVo = userLeaveService.changeToListVo(list);
 		
-		
+		result.setData(listVo);
 		
 		return result;
 	}
 	
+	// 用户请假详情接口
+	@RequestMapping(value = "leave_detail", method = RequestMethod.GET)
+	public AppResultData<Object> leaveDetail(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("leave_id") Long leaveId) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserLeave userLeave = userLeaveService.selectByPrimaryKey(leaveId);
+		
+		if (userLeave == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请假信息不存在!");
+			return result;
+		}
+		
+		if (!userLeave.getUserId().equals(userId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请假信息不存在!");
+			return result;
+		}
+		
+		UserLeaveDetailVo data = userLeaveService.changeToDetailVo(userLeave);
+		result.setData(data);
+		
+		return result;
+	}
 }

@@ -161,6 +161,23 @@ public class TimeStampUtil {
 		Date pDate = DateUtil.parse(str, format);
 		return getMillisOfDate(pDate);
 	}
+	
+    /**
+     * 如果当天则返回 HH:mm, 否则返回 yyyy-MM-dd HH:mm
+     * @param date
+     * @return
+     */
+    
+    public static String fromTodayStr(Long time) {
+        
+    	Long todayBegin = TimeStampUtil.getBeginOfToday();
+    	
+        if (time >= todayBegin) {
+        	return TimeStampUtil.timeStampToDateStr(time, "HH:mm");
+        } else {
+        	return TimeStampUtil.timeStampToDateStr(time, "yyyy-MM-dd HH:mm");
+        }
+    }	    
 
 	public static void main(String[] args) {
 		Long t = (long) 1427328056;

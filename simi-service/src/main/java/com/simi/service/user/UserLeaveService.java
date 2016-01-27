@@ -5,6 +5,8 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserLeave;
 import com.simi.vo.UserLeaveSearchVo;
+import com.simi.vo.user.UserLeaveDetailVo;
+import com.simi.vo.user.UserLeaveListVo;
 
 
 public interface UserLeaveService {
@@ -23,9 +25,14 @@ public interface UserLeaveService {
 
 	UserLeave initUserLeave();
 
+	@SuppressWarnings("rawtypes")
 	PageInfo selectByListPage(UserLeaveSearchVo searchVo, int pageNo, int pageSize);
 
 	List<UserLeave> selectBySearchVo(UserLeaveSearchVo searchVo);
+
+	List<UserLeaveListVo> changeToListVo(List<UserLeave> list);
+
+	UserLeaveDetailVo changeToDetailVo(UserLeave item);
 
 
 
