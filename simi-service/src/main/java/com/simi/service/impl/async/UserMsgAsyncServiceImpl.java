@@ -154,7 +154,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		Feeds feed = feedService.selectByPrimaryKey(fid);
 		if (feed == null) return new AsyncResult<Boolean>(true);
 		
-		Long userId = feed.getFid();
+		Long userId = feed.getUserId();
 		UserMsg record = userMsgService.initUserMsg();
 		
 		record.setUserId(userId);
