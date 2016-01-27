@@ -111,6 +111,7 @@ public class CardQueryController extends BaseController {
 	 *
 	 *  @return  CardViewVo
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
 	public AppResultData<Object> getCardList(
 			@RequestParam("user_id") Long userId,

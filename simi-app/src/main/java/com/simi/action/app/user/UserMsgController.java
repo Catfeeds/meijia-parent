@@ -80,8 +80,16 @@ public class UserMsgController extends BaseController {
 		for (int i = 0; i < msgList.size(); i++) {
 			UserMsg item = msgList.get(i);
 			UserMsgVo vo = new UserMsgVo();
-			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-			
+
+			vo.setMsgId(item.getMsgId());
+			vo.setUserId(userId);
+			vo.setCategory(item.getCategory());
+			vo.setAction(item.getAction());
+			vo.setGotoUrl(item.getGotoUrl());
+			vo.setTitle(item.getTitle());
+			vo.setSummary(item.getSummary());
+			vo.setIconUrl(item.getIconUrl());
+
 			Long updateTime = item.getUpdateTime();
 			String msgTime = TimeStampUtil.timeStampToDateStr(updateTime * 1000, "HH:mm");
 			vo.setMsgTime(msgTime);
