@@ -9,13 +9,14 @@
 		<result column="start_date" property="startDate" jdbcType="DATE" />
 		<result column="end_date" property="endDate" jdbcType="DATE" />
 		<result column="total_days" property="totalDays" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="imgs" property="imgs" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		leave_id, company_id, user_id, leave_type, start_date, end_date, total_days, imgs,
+		leave_id, company_id, user_id, leave_type, start_date, end_date, total_days, remarks, imgs,
 		status, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -24,7 +25,7 @@
 		from user_leave
 		where leave_id = #{leaveId,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UserLeaveSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -33,29 +34,33 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="passUserId != null">
+			and leave_id in (select leave_id from user_leave_pass where pass_user_id = #{userId,jdbcType=NUMERIC})
+		</if>
+
 		<if test="status != null">
 			and status in
 			<foreach item="item" index="index" collection="status" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
-				
+
 		<if test="startTime != null">
 			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} ]]>
 		</if>
-		
+
 		<if test="endTime != null">
 			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
 
-		order by leave_id desc
+		order by update_time desc
 	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserLeaveSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -64,17 +69,17 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="startDate != null">
 			<![CDATA[ and (  ( start_date >= #{startDate,jdbcType=NUMERIC} and end_date <= #{startDate,jdbcType=NUMERIC} ) OR
 							 ( start_date >= #{endDate,jdbcType=NUMERIC} and end_date <= #{endDate,jdbcType=NUMERIC}
 			 ]]>
 		</if>
-		
+
 		<if test="status != null">
 			and status in
 			<foreach item="item" index="index" collection="status" open="(" separator="," close=")">
@@ -83,9 +88,9 @@
 		</if>
 
 		order by leave_id desc
-	</select>	
-	
-	
+	</select>
+
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from user_leave
 		where leave_id = #{leaveId,jdbcType=NUMERIC}
@@ -94,22 +99,25 @@
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="leaveId">
 			SELECT LAST_INSERT_ID() AS leave_id
 		</selectKey>
-	
+
 		insert into user_leave (leave_id, company_id, user_id,
 		leave_type, start_date, end_date,
-		total_days, imgs, status,
+		total_days, remarks, imgs, status,
 		add_time, update_time)
-		values (#{leaveId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
-		#{leaveType,jdbcType=NUMERIC}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
-		#{totalDays,jdbcType=VARCHAR}, #{imgs,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC},
+		values
+		(#{leaveId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{leaveType,jdbcType=NUMERIC}, #{startDate,jdbcType=DATE},
+		#{endDate,jdbcType=DATE},
+		#{totalDays,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR},
+		#{imgs,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserLeave">
-	
+
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="leaveId">
 			SELECT LAST_INSERT_ID() AS leave_id
 		</selectKey>
-	
+
 		insert into user_leave
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="leaveId != null">
@@ -132,6 +140,9 @@
 			</if>
 			<if test="totalDays != null">
 				total_days,
+			</if>
+			<if test="remarks != null">
+				remarks,
 			</if>
 			<if test="imgs != null">
 				imgs,
@@ -168,6 +179,9 @@
 			<if test="totalDays != null">
 				#{totalDays,jdbcType=VARCHAR},
 			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
 			<if test="imgs != null">
 				#{imgs,jdbcType=VARCHAR},
 			</if>
@@ -203,6 +217,9 @@
 			<if test="totalDays != null">
 				total_days = #{totalDays,jdbcType=VARCHAR},
 			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
 			<if test="imgs != null">
 				imgs = #{imgs,jdbcType=VARCHAR},
 			</if>
@@ -225,10 +242,13 @@
 		leave_type = #{leaveType,jdbcType=NUMERIC},
 		start_date = #{startDate,jdbcType=DATE},
 		end_date = #{endDate,jdbcType=DATE},
-		total_days = #{totalDays,jdbcType=VARCHAR},
+		total_days =
+		#{totalDays,jdbcType=VARCHAR},
+		remarks = #{remarks,jdbcType=VARCHAR},
 		imgs = #{imgs,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC},
-		add_time = #{addTime,jdbcType=NUMERIC},
+		add_time =
+		#{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where leave_id = #{leaveId,jdbcType=NUMERIC}
 	</update>

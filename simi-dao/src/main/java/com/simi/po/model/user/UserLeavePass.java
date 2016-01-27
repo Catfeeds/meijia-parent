@@ -11,9 +11,7 @@ public class UserLeavePass {
 
     private Long passUserId;
 
-    private String mobile;
-
-    private String imUsername;
+    private String remarks;
 
     private Short passStatus;
 
@@ -61,22 +59,6 @@ public class UserLeavePass {
         this.passUserId = passUserId;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
-    }
-
-    public String getImUsername() {
-        return imUsername;
-    }
-
-    public void setImUsername(String imUsername) {
-        this.imUsername = imUsername == null ? null : imUsername.trim();
-    }
-
     public Short getPassStatus() {
         return passStatus;
     }
@@ -100,4 +82,12 @@ public class UserLeavePass {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 }

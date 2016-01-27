@@ -11,9 +11,9 @@ public interface UserLeaveService {
 
 	int deleteByPrimaryKey(Long id);
 
-	int insert(UserLeave record);
+	Long insert(UserLeave record);
 
-	int insertSelective(UserLeave record);
+	Long insertSelective(UserLeave record);
 
 	UserLeave selectByPrimaryKey(Long id);
 

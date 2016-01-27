@@ -14,6 +14,8 @@ public interface UserMsgAsyncService {
 
 	Future<Boolean> newCheckinMsg(Long userId, Long checkId);
 
+	Future<Boolean> newLeaveMsg(Long userId, Long leaveId);
+
 
 	
 }

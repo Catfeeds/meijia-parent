@@ -1,5 +1,7 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.UserLeavePass;
 
 public interface UserLeavePassMapper {
@@ -14,4 +16,6 @@ public interface UserLeavePassMapper {
     int updateByPrimaryKeySelective(UserLeavePass record);
 
     int updateByPrimaryKey(UserLeavePass record);
+
+	List<UserLeavePass> selectByLeaveId(Long leaveId);
 }

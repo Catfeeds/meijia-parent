@@ -1,153 +1,149 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.user.UserLeavePassMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserLeavePass" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="leave_id" property="leaveId" jdbcType="NUMERIC" />
-    <result column="company_id" property="companyId" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="pass_user_id" property="passUserId" jdbcType="NUMERIC" />
-    <result column="mobile" property="mobile" jdbcType="CHAR" />
-    <result column="im_username" property="imUsername" jdbcType="VARCHAR" />
-    <result column="pass_status" property="passStatus" jdbcType="NUMERIC" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, leave_id, company_id, user_id, pass_user_id, mobile, im_username, pass_status, 
-    add_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from user_leave_pass
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from user_leave_pass
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.user.UserLeavePass" >
-    insert into user_leave_pass (id, leave_id, company_id, 
-      user_id, pass_user_id, mobile, 
-      im_username, pass_status, add_time, 
-      update_time)
-    values (#{id,jdbcType=NUMERIC}, #{leaveId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, 
-      #{userId,jdbcType=NUMERIC}, #{passUserId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR}, 
-      #{imUsername,jdbcType=VARCHAR}, #{passStatus,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, 
-      #{updateTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserLeavePass" >
-    insert into user_leave_pass
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="leaveId != null" >
-        leave_id,
-      </if>
-      <if test="companyId != null" >
-        company_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="passUserId != null" >
-        pass_user_id,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="imUsername != null" >
-        im_username,
-      </if>
-      <if test="passStatus != null" >
-        pass_status,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="leaveId != null" >
-        #{leaveId,jdbcType=NUMERIC},
-      </if>
-      <if test="companyId != null" >
-        #{companyId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="passUserId != null" >
-        #{passUserId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="imUsername != null" >
-        #{imUsername,jdbcType=VARCHAR},
-      </if>
-      <if test="passStatus != null" >
-        #{passStatus,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserLeavePass" >
-    update user_leave_pass
-    <set >
-      <if test="leaveId != null" >
-        leave_id = #{leaveId,jdbcType=NUMERIC},
-      </if>
-      <if test="companyId != null" >
-        company_id = #{companyId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="passUserId != null" >
-        pass_user_id = #{passUserId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        mobile = #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="imUsername != null" >
-        im_username = #{imUsername,jdbcType=VARCHAR},
-      </if>
-      <if test="passStatus != null" >
-        pass_status = #{passStatus,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserLeavePass" >
-    update user_leave_pass
-    set leave_id = #{leaveId,jdbcType=NUMERIC},
-      company_id = #{companyId,jdbcType=NUMERIC},
-      user_id = #{userId,jdbcType=NUMERIC},
-      pass_user_id = #{passUserId,jdbcType=NUMERIC},
-      mobile = #{mobile,jdbcType=CHAR},
-      im_username = #{imUsername,jdbcType=VARCHAR},
-      pass_status = #{passStatus,jdbcType=NUMERIC},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+<mapper namespace="com.simi.po.dao.user.UserLeavePassMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserLeavePass">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="leave_id" property="leaveId" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="pass_user_id" property="passUserId" jdbcType="NUMERIC" />
+		<result column="pass_status" property="passStatus" jdbcType="NUMERIC" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, leave_id, company_id, user_id, pass_user_id, pass_status, remarks
+		add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_leave_pass
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByLeaveId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_leave_pass
+		where leave_id = #{leaveId,jdbcType=NUMERIC}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_leave_pass
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserLeavePass">
+		insert into user_leave_pass (id, leave_id, company_id,
+		user_id, pass_user_id, pass_status, remarks, add_time,
+		update_time)
+		values (#{id,jdbcType=NUMERIC}, #{leaveId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC},
+		#{passUserId,jdbcType=NUMERIC},
+		#{passStatus,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserLeavePass">
+		insert into user_leave_pass
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="leaveId != null">
+				leave_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="passUserId != null">
+				pass_user_id,
+			</if>
+			<if test="passStatus != null">
+				pass_status,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="leaveId != null">
+				#{leaveId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="passUserId != null">
+				#{passUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="passStatus != null">
+				#{passStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserLeavePass">
+		update user_leave_pass
+		<set>
+			<if test="leaveId != null">
+				leave_id = #{leaveId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="passUserId != null">
+				pass_user_id = #{passUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="passStatus != null">
+				pass_status = #{passStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserLeavePass">
+		update user_leave_pass
+		set leave_id = #{leaveId,jdbcType=NUMERIC},
+		company_id =
+		#{companyId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		pass_user_id = #{passUserId,jdbcType=NUMERIC},
+		pass_status = #{passStatus,jdbcType=NUMERIC},
+		remarks = #{remarks,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

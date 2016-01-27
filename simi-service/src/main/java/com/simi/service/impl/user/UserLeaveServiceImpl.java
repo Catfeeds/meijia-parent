@@ -32,12 +32,12 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 	}
 
 	@Override
-	public int insert(UserLeave record) {
+	public Long insert(UserLeave record) {
 		return userLeaveMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(UserLeave record) {
+	public Long insertSelective(UserLeave record) {
 		return userLeaveMapper.insertSelective(record);
 	}
 
@@ -66,6 +66,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		record.setStartDate(DateUtil.getNowOfDate());
 		record.setEndDate(DateUtil.getNowOfDate());
 		record.setTotalDays("0");
+		record.setRemarks("");
 		record.setImgs("");
 		record.setStatus((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());

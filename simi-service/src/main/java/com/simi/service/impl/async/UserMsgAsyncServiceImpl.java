@@ -1,6 +1,7 @@
 package com.simi.service.impl.async;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -9,18 +10,28 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.push.PushUtil;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.feed.Feeds;
+import com.simi.po.model.user.UserLeave;
+import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.UserMsg;
+import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;
 import com.simi.service.feed.FeedService;
+import com.simi.service.user.UserLeavePassService;
+import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UserMsgService;
+import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
@@ -31,6 +42,9 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 	@Autowired
 	public UsersService usersService;
+	
+	@Autowired
+	private UserPushBindService userPushBindService;	
 
 	@Autowired
 	private UserMsgService userMsgService;	
@@ -46,6 +60,12 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 	@Autowired
 	private XcompanyCheckinService xcompanyCheckinService;
+	
+	@Autowired
+	private UserLeaveService userLeaveService;	
+	
+	@Autowired
+	private UserLeavePassService userLeavePassService;			
 	
 	/**
 	 * 新增用户时发送默认消息
@@ -246,7 +266,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 	@Override
 	public Future<Boolean> newCheckinMsg(Long userId, Long checkId) {
 		
-		XcompanyCheckin checkin = xcompanyCheckinService.selectByPrimarykey(checkId);
+//		XcompanyCheckin checkin = xcompanyCheckinService.selectByPrimarykey(checkId);
 		
 		
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();
@@ -278,6 +298,107 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		} else {
 			userMsgService.insert(record);
 		}				
+		
+		return new AsyncResult<Boolean>(true);
+	}
+	
+	@Async
+	@Override
+	public Future<Boolean> newLeaveMsg(Long userId, Long leaveId) {
+		
+		
+		UserLeave userLeave = userLeaveService.selectByPrimaryKey(leaveId);
+		if (userLeave == null) return new AsyncResult<Boolean>(true);
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		//给自己发送消息
+		UserMsg record = userMsgService.initUserMsg();
+		record.setUserId(userId);
+		record.setFromUserId(userId);
+		record.setToUserId(userId);
+		record.setCategory("app");
+		record.setAction("leave");
+		record.setParams(leaveId.toString());
+		record.setTitle("请假申请");		
+		record.setSummary("你申请了" + userLeave.getTotalDays() + "天请假.");
+		record.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
+		userMsgService.insert(record);
+		
+		//给审批人都发送消息.
+		List<UserLeavePass> passUsers = userLeavePassService.selectByLeaveId(leaveId);
+
+		for (UserLeavePass item : passUsers) {
+			if (item.getPassUserId() == null || item.getPassUserId().equals(0L)) continue;
+
+			String msgContent = u.getName() + "申请" + userLeave.getTotalDays() + "天请假,请查看.";
+			
+			UserMsg passRecord = userMsgService.initUserMsg();
+			passRecord.setUserId(item.getPassUserId());
+			passRecord.setFromUserId(userId);
+			passRecord.setToUserId(item.getPassUserId());
+			passRecord.setCategory("app");
+			passRecord.setAction("leave_pass");
+			passRecord.setParams(leaveId.toString());
+			passRecord.setTitle("请假审批");		
+			passRecord.setSummary(msgContent);
+			passRecord.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
+			userMsgService.insert(passRecord);
+			
+			//发送推送消息
+			UserPushBind userPushBind = userPushBindService.selectByUserId(item.getPassUserId());
+			
+			if (userPushBind == null ) continue;
+			if (StringUtil.isEmpty(userPushBind.getClientId())) continue;
+			
+			HashMap<String, String> params = new HashMap<String, String>();
+			
+			HashMap<String, String> tranParams = new HashMap<String, String>();
+
+			tranParams.put("is_show", "true");
+			tranParams.put("action", "msg");
+			tranParams.put("card_id", "0");
+			tranParams.put("card_type", "0");
+			tranParams.put("service_time", "");
+			tranParams.put("remind_time", "");
+			tranParams.put("remind_title", "请假审批");
+			tranParams.put("remind_content", msgContent);
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			
+			String jsonParams = "";
+			try {
+				jsonParams = objectMapper.writeValueAsString(tranParams);
+			} catch (JsonProcessingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}	
+			
+			params.put("transmissionContent", jsonParams);
+			params.put("cid", userPushBind.getClientId());
+			
+			if (userPushBind.getDeviceType().equals("ios")) {
+				try {
+					PushUtil.IOSPushToSingle(params, "notification");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if (userPushBind.getDeviceType().equals("android")) {
+				try {
+					PushUtil.AndroidPushToSingle(params);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		
+		
 		
 		return new AsyncResult<Boolean>(true);
 	}

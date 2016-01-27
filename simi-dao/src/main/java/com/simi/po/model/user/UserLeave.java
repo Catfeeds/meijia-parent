@@ -16,6 +16,8 @@ public class UserLeave {
     private Date endDate;
 
     private String totalDays;
+    
+    private String remarks;
 
     private String imgs;
 
@@ -112,4 +114,12 @@ public class UserLeave {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 }

@@ -15,26 +15,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.BeanUtilsExp;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.feed.FeedImgs;
-import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.UserLeave;
-import com.simi.po.model.user.UserMsg;
+import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UsersAsyncService;
+import com.simi.service.user.UserLeavePassService;
 import com.simi.service.user.UserLeaveService;
-import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserLeaveSearchVo;
-import com.simi.vo.UserMsgSearchVo;
-import com.simi.vo.user.UserMsgVo;
+import com.simi.vo.card.LinkManVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -46,10 +46,19 @@ public class UserLeaveController extends BaseController {
 	@Autowired
 	private UserLeaveService userLeaveService;	
 	
+	@Autowired
+	private UserLeavePassService userLeavePassService;		
+	
+	@Autowired
+	private UsersAsyncService usersAsyncService;	
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
+	
 
 	// 用户请假接口
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "post_imgs", method = RequestMethod.POST)
+	@RequestMapping(value = "post_leave", method = RequestMethod.POST)
 	public AppResultData<Object> postImgs(
 			@RequestParam("compnay_id") Long companyId,
 			@RequestParam("user_id") Long userId,
@@ -58,7 +67,7 @@ public class UserLeaveController extends BaseController {
 			@RequestParam("end_date") String endDateStr,
 			@RequestParam("total_days") String totalDays,
 			@RequestParam("remarks") String remarks,
-			@RequestParam(value = "pass_users", required = false, defaultValue = "") String passUsers,
+			@RequestParam("pass_users") String passUsers,
 			@RequestParam(value = "imgs", required = false, defaultValue = "") MultipartFile[] files
 			) throws IOException {
 
@@ -93,9 +102,9 @@ public class UserLeaveController extends BaseController {
 		searchVo.setStartDate(startDate);
 		searchVo.setEndDate(endDate);
 		
-		List<Long> status = new ArrayList<Long>();
-		status.add(0L);
-		status.add(1L);
+		List<Short> status = new ArrayList<Short>();
+		status.add((short) 0);
+		status.add((short) 1);
 		searchVo.setStatus(status);
 		
 		List<UserLeave> rsList = userLeaveService.selectBySearchVo(searchVo);
@@ -117,8 +126,9 @@ public class UserLeaveController extends BaseController {
 		record.setStartDate(startDate);
 		record.setEndDate(endDate);
 		record.setTotalDays(totalDays);
+		record.setRemarks(remarks);
 		record.setStatus((short) 0);
-		
+				
 		// 处理图片问题
 		String imgs = "";
 		if (files != null && files.length > 0) {
@@ -151,16 +161,113 @@ public class UserLeaveController extends BaseController {
 		
 		userLeaveService.insert(record);
 		
-		//处理审批人员问题.
+		Long leaveId = record.getLeaveId();
+		//处理多个审批人员的问题
 		
+		if (!StringUtil.isEmpty(passUsers)) {
+			Gson gson = new Gson();
+			List<LinkManVo> linkManList = gson.fromJson(passUsers, new TypeToken<List<LinkManVo>>(){}.getType() ); 
+			System.out.println(linkManList.toString());
+			if (linkManList != null) {
+				
+				LinkManVo item = null;
+				for (int i = 0; i < linkManList.size(); i++) {
+					System.out.println(linkManList.get(i).toString());
+					item = linkManList.get(i);
+					String mobile = item.getMobile();
+					mobile = mobile.replaceAll(" ", "");  
+					
+					Long newUserId = 0L;
+					newUserId = item.getUser_id();
+					
+					if (newUserId == null || newUserId.equals(0L)) {
+						if (StringUtil.isEmpty(mobile)) continue;
+						if (!RegexUtil.isMobile(mobile)) continue;
+					}
+
+					
+					//根据手机号找出对应的userID, 如果没有则直接新增用户.
+					
+					Users newUser = null;
+					
+					if (newUserId != null && newUserId > 0L) {
+						newUser = userService.selectByPrimaryKey(newUserId);
+					} else {
+						newUser = userService.selectByMobile(mobile);
+					}
+					
+					if (newUser == null) {
+						newUser = userService.genUser(mobile, item.getName(), (short) 3);					
+						usersAsyncService.genImUser(newUser.getId());
+					}
+					
+					newUserId = newUser.getId();
+					
+
+					UserLeavePass userLeavePass =  userLeavePassService.initUserLeavePass();
+
+					userLeavePass.setLeaveId(leaveId);
+					userLeavePass.setCompanyId(companyId);
+					userLeavePass.setUserId(userId);
+					userLeavePass.setPassUserId(newUserId);
+					userLeavePass.setPassStatus((short) 0);
+					
+					userLeavePassService.insert(userLeavePass);
+
+				}
+			}
+		}
 		
+		//生成请假消息，审批人推送消息
+		userMsgAsyncService.newLeaveMsg(userId, leaveId);
 		
-		//生成动态消息
-//		userMsgAsyncService.newFeedMsg(fid);
-		
-//		result.setData(fid);
+		result.setData(leaveId);
 
 		return result;
 	}	
+	
+	// 用户请假列表接口
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "leave_list", method = RequestMethod.POST)
+	public AppResultData<Object> list(
+			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "leave_type", required = false, defaultValue = "") String leaveTypeParam,
+			@RequestParam(value = "status", required = false, defaultValue = "") String statusParam,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserLeaveSearchVo searchVo = new UserLeaveSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setPassUserId(userId);
+		if (!StringUtil.isEmpty(leaveTypeParam)) {
+			Short leaveType = Short.valueOf(leaveTypeParam);
+			searchVo.setLeaveType(leaveType);
+		}
+		
+		if (!StringUtil.isEmpty(statusParam)) {
+			Short status = Short.valueOf(statusParam);
+			List<Short> statusAry = new ArrayList<Short>();
+			statusAry.add(status);
+			searchVo.setStatus(statusAry);
+		}
+		
+		PageInfo  pageInfo = userLeaveService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		List<UserLeave> list = pageInfo.getList();
+		
+		result.setData(list);
+		
+		
+		
+		return result;
+	}
 	
 }

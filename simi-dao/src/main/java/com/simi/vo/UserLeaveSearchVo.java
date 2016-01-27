@@ -10,8 +10,12 @@ public class UserLeaveSearchVo {
 	private Long companyId;
 	
 	private Long userId;
+	
+	private Long passUserId;
 		
-	private List<Long> status;
+	private List<Short> status;
+	
+	private Short leaveType;
 	
 	private Date startDate;
 	
@@ -77,12 +81,28 @@ public class UserLeaveSearchVo {
 		this.endDate = endDate;
 	}
 
-	public List<Long> getStatus() {
+	public List<Short> getStatus() {
 		return status;
 	}
 
-	public void setStatus(List<Long> status) {
+	public void setStatus(List<Short> status) {
 		this.status = status;
+	}
+
+	public Short getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(Short leaveType) {
+		this.leaveType = leaveType;
+	}
+
+	public Long getPassUserId() {
+		return passUserId;
+	}
+
+	public void setPassUserId(Long passUserId) {
+		this.passUserId = passUserId;
 	}
 
 

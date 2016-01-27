@@ -8,9 +8,9 @@ import com.simi.vo.UserLeaveSearchVo;
 public interface UserLeaveMapper {
     int deleteByPrimaryKey(Long leaveId);
 
-    int insert(UserLeave record);
+    Long insert(UserLeave record);
 
-    int insertSelective(UserLeave record);
+    Long insertSelective(UserLeave record);
 
     UserLeave selectByPrimaryKey(Long leaveId);
 
