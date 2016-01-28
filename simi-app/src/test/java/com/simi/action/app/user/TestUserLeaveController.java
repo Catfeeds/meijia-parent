@@ -71,4 +71,34 @@ public class TestUserLeaveController extends JUnitActionBase{
 
     }	
 	
+	@Test
+    public void testGetList() throws Exception {
+
+		String url = "/app/user/leave_list.json";
+		String params = "?user_id=18&leave_from=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
+	
+	@Test
+    public void testGetDetail() throws Exception {
+
+		String url = "/app/user/leave_detail.json";
+		String params = "?user_id=278&leave_id=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
+	
 }

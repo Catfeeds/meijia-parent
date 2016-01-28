@@ -234,6 +234,7 @@ public class UserLeaveController extends BaseController {
 	@RequestMapping(value = "leave_list", method = RequestMethod.GET)
 	public AppResultData<Object> list(
 			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "leave_from", required = false, defaultValue = "0") String leaveFrom,
 			@RequestParam(value = "leave_type", required = false, defaultValue = "") String leaveTypeParam,
 			@RequestParam(value = "status", required = false, defaultValue = "") String statusParam,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
@@ -249,8 +250,13 @@ public class UserLeaveController extends BaseController {
 		}
 		
 		UserLeaveSearchVo searchVo = new UserLeaveSearchVo();
-		searchVo.setUserId(userId);
-		searchVo.setPassUserId(userId);
+		if (leaveFrom.equals("1")) {
+			searchVo.setPassUserId(userId);
+		} else {
+			searchVo.setUserId(userId);
+		}
+		
+		
 		if (!StringUtil.isEmpty(leaveTypeParam)) {
 			Short leaveType = Short.valueOf(leaveTypeParam);
 			searchVo.setLeaveType(leaveType);
