@@ -310,7 +310,7 @@ public class UserLeaveController extends BaseController {
 	}
 	
 	// 用户请假审批接口
-	@RequestMapping(value = "leave_pass", method = RequestMethod.GET)
+	@RequestMapping(value = "leave_pass", method = RequestMethod.POST)
 	public AppResultData<Object> leaveaPass(
 			@RequestParam("pass_user_id") Long userId,
 			@RequestParam("leave_id") Long leaveId,
@@ -387,7 +387,7 @@ public class UserLeaveController extends BaseController {
 	}	
 	
 	// 用户请假取消接口
-	@RequestMapping(value = "leave_cancel", method = RequestMethod.GET)
+	@RequestMapping(value = "leave_cancel", method = RequestMethod.POST)
 	public AppResultData<Object> leaveaPass(
 			@RequestParam("userId") Long userId,
 			@RequestParam("leave_id") Long leaveId
