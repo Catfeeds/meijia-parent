@@ -71,7 +71,7 @@ public class UserLeaveController extends BaseController {
 			@RequestParam("total_days") String totalDays,
 			@RequestParam("remarks") String remarks,
 			@RequestParam("pass_users") String passUsers,
-			@RequestParam(value = "imgs", required = false, defaultValue = "") MultipartFile[] files
+			@RequestParam(value = "imgs", required = false) MultipartFile[] files
 			) throws IOException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
