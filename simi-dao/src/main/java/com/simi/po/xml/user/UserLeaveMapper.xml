@@ -76,7 +76,8 @@
 
 		<if test="startDate != null">
 			<![CDATA[ and (  ( start_date >= #{startDate,jdbcType=NUMERIC} and end_date <= #{startDate,jdbcType=NUMERIC} ) OR
-							 ( start_date >= #{endDate,jdbcType=NUMERIC} and end_date <= #{endDate,jdbcType=NUMERIC}
+							 ( start_date >= #{endDate,jdbcType=NUMERIC} and end_date <= #{endDate,jdbcType=NUMERIC} )
+						  )
 			 ]]>
 		</if>
 
