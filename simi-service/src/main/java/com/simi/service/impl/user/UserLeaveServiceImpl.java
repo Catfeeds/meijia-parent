@@ -106,12 +106,15 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 	@Override
 	public List<UserLeaveListVo> changeToListVo(List<UserLeave> list) {
 		List<UserLeaveListVo> result = new ArrayList<UserLeaveListVo>();
-
+		
 		for (int i = 0; i < list.size(); i++) {
 			UserLeave item = list.get(i);
 			UserLeaveListVo vo = new UserLeaveListVo();
 			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-
+			
+			Long userId = item.getUserId();
+			Users u = userService.selectByPrimaryKey(userId);
+			
 			// 处理日期
 			vo.setStartDate(DateUtil.format(item.getStartDate(), "yyyy-MM-dd"));
 			vo.setEndDate(DateUtil.format(item.getEndDate(), "yyyy-MM-dd"));
@@ -120,6 +123,10 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 
 			// 处理状态中文名
 			vo.setStatusName(getStatusName(item.getStatus()));
+			
+			vo.setName(u.getName());
+			vo.setHeadImg(u.getHeadImg());
+			
 			result.add(vo);
 
 		}
@@ -133,6 +140,11 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		Long leaveId = item.getLeaveId();
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
 
+		Long userId = item.getUserId();
+		Users u = userService.selectByPrimaryKey(userId);
+		
+		vo.setName(u.getName());
+		vo.setHeadImg(u.getHeadImg());
 		// 处理日期
 		vo.setStartDate(DateUtil.format(item.getStartDate(), "yyyy-MM-dd"));
 		vo.setEndDate(DateUtil.format(item.getEndDate(), "yyyy-MM-dd"));

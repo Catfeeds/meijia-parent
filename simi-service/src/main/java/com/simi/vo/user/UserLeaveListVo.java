@@ -9,6 +9,10 @@ public class UserLeaveListVo {
     private Long companyId;
 
     private Long userId;
+    
+    private String name;
+    
+    private String headImg;
 
     private Short leaveType;
 
@@ -112,6 +116,22 @@ public class UserLeaveListVo {
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
 	}
 
 }
