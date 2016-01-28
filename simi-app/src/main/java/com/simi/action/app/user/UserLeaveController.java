@@ -63,7 +63,7 @@ public class UserLeaveController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_leave", method = RequestMethod.POST)
 	public AppResultData<Object> postImgs(
-			@RequestParam("compnay_id") Long companyId,
+			@RequestParam("company_id") Long companyId,
 			@RequestParam("user_id") Long userId,
 			@RequestParam("leave_type") Short leaveType,
 			@RequestParam("start_date") String startDateStr,
