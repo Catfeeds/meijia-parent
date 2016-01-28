@@ -21,6 +21,7 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -307,4 +308,121 @@ public class UserLeaveController extends BaseController {
 		
 		return result;
 	}
+	
+	// 用户请假审批接口
+	@RequestMapping(value = "leave_pass", method = RequestMethod.GET)
+	public AppResultData<Object> leaveaPass(
+			@RequestParam("pass_user_id") Long userId,
+			@RequestParam("leave_id") Long leaveId,
+			@RequestParam("status") Short status,
+			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks
+			) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserLeave userLeave = userLeaveService.selectByPrimaryKey(leaveId);
+		
+		if (userLeave == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请假信息不存在!");
+			return result;
+		}
+		
+		if (userLeave.getStatus().equals((short)3)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请假信息已撤销!");
+			return result;
+		}
+		
+		List<UserLeavePass> userLeavePass = userLeavePassService.selectByLeaveId(leaveId);
+		
+
+		UserLeavePass leavePass = null;
+		for (UserLeavePass item : userLeavePass) {
+			if (item.getPassUserId().equals(userId)) {
+				leavePass = item;
+				break;
+			}
+		}
+		
+		if (leavePass == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您不是请假审批人!");
+			return result;
+		}
+		
+		leavePass.setPassStatus(status);
+		leavePass.setRemarks(remarks);
+		leavePass.setUpdateTime(TimeStampUtil.getNowSecond());
+		userLeavePassService.updateByPrimaryKey(leavePass);
+		
+		
+		userLeavePass = userLeavePassService.selectByLeaveId(leaveId);
+		Boolean isDone = true;
+		Short passStatusAll = 1;
+		for (UserLeavePass item : userLeavePass) {
+			if (item.getPassStatus().equals((short)0)) {
+				isDone = false;
+			}
+			if (item.getPassStatus().equals((short)2)) {
+				passStatusAll = 2;
+			}
+		}
+		
+		if (isDone) {
+			userLeave.setStatus(passStatusAll);
+			userLeave.setUpdateTime(TimeStampUtil.getNowSecond());
+			userLeaveService.updateByPrimaryKey(userLeave);
+		}
+		
+		return result;
+	}	
+	
+	// 用户请假取消接口
+	@RequestMapping(value = "leave_cancel", method = RequestMethod.GET)
+	public AppResultData<Object> leaveaPass(
+			@RequestParam("userId") Long userId,
+			@RequestParam("leave_id") Long leaveId
+			) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		UserLeave userLeave = userLeaveService.selectByPrimaryKey(leaveId);
+		
+		if (userLeave == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请假信息不存在!");
+			return result;
+		}
+		
+		if (!userLeave.getStatus().equals((short)0)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请假信息目前状态不能取消!");
+			return result;
+		}
+		
+		
+		userLeave.setStatus((short) 3);
+		userLeave.setUpdateTime(TimeStampUtil.getNowSecond());
+		userLeaveService.updateByPrimaryKey(userLeave);
+		
+		
+		return result;
+	}		
 }
