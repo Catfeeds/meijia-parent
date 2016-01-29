@@ -37,56 +37,62 @@
 
 				<form:form modelAttribute="contentModel"
 					enctype="multipart/form-data" class="form-horizontal" method="POST"
-					id="app-form">
-					<form:hidden path="tId" />
+					id="appIndex-form">
+					<form:hidden path="id" />
 					<form:hidden path="addTime" />
-
+					
 					<div class="form-body">
-
 
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">序号</label>
 							<div class="col-md-5">
-								<form:input path="No" class="form-control" placeholder="序号"
+								<form:input path="serialNo" class="form-control" placeholder="序号"
 									maxLength="32" />
-								<form:errors path="No" class="field-has-error"></form:errors>
+								<form:errors path="serialNo" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						<%-- <div class="form-group required">
 
+							<label class="col-md-2 control-label">时间</label>
+							<div class="col-md-5">
+								<form:input path="addTime" class="form-control" placeholder="序号"
+									maxLength="32" />
+								<form:errors path="addTime" class="field-has-error"></form:errors>
+							</div>
+						</div> --%>
+						
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">名称</label>
+							<label class="col-md-2 control-label">标题</label>
 							<div class="col-md-5">
-								<form:input path="name" class="form-control" placeholder="名称"
+								<form:input path="title" class="form-control" placeholder="标题"
 									maxLength="32" />
-								<form:errors path="name" class="field-has-error"></form:errors>
+								<form:errors path="title" class="field-has-error"></form:errors>
 							</div>
 						</div>
 
-						<c:if
-							test="${contentModel.logo != null && contentModel.logo != '' }">
+						<c:if test="${contentModel.iconUrl != null && contentModel.iconUrl != '' }">
 							<div class="form-group ">
 
 								<label class="col-md-2 control-label">图片</label>
 								<div class="col-md-5">
-									<img src="${ contentModel.logo }" />
+									<img src="${ contentModel.iconUrl }" />
 								</div>
 							</div>
 						</c:if>
 
 						<input type="hidden" name="img_url_new" id="img_url_new"
-							value="${ contentModel.logo }" />
+							value="${ contentModel.iconUrl }" />
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">图片地址</label>
 							<div class="col-md-5">
-								<input id="logoFile" type="file" name="logoFile"
+								<input id="cardIconFile" type="file" name="cardIconFile"
 									accept="image/*" data-show-upload="false">
-								<form:errors path="logo" class="field-has-error"></form:errors>
+								<form:errors path="iconUrl" class="field-has-error"></form:errors>
 							</div>
 						</div>
-
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">应用类型</label>
@@ -98,73 +104,46 @@
 								</form:select>
 							</div>
 						</div>
-						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">菜单类型</label>
+							<label class="col-md-2 control-label">操作类别</label>
 							<div class="col-md-5">
-								<form:select path="menuType" class="form-control">
-									<form:option value="t" selected="selected">应用与工具</form:option>
-									<form:option value="d">成长与赚钱   </form:option>
-									<form:option value="f">全部服务   </form:option>
-								</form:select>
-							</div>
-						</div>
-
-						<div class="form-group required">
-							<label class="col-md-2 control-label">跳转类型</label>
-							<div class="col-md-5">
-								<form:select path="openType" class="form-control">
+								<form:select path="category" class="form-control">
 								    <option value="">请选择</option>
 									<form:option value="h5">h5</form:option>
 									<form:option value="app">app</form:option>
 								</form:select>
 							</div>
 						</div>
+						<div class="form-group required">
 
+							<label class="col-md-2 control-label">动作标识</label>
+							<div class="col-md-5">
+								<form:input path="action" class="form-control" placeholder="动作标识"
+									maxLength="32" />
+								<form:errors path="action" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">操作相关参数</label>
+							<div class="col-md-5">
+								<form:input path="params" class="form-control" placeholder="动作标识"
+									maxLength="32" />
+								<form:errors path="params" class="field-has-error"></form:errors>
+							</div>
+						</div>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">跳转地址</label>
 							<div class="col-md-5">
-								<form:input path="url" class="form-control" placeholder="跳转url"/>
-								<form:errors path="url" class="field-has-error"></form:errors>
+								<form:input path="gotoUrl" class="form-control" placeholder="跳转路径"/>
+								<form:errors path="gotoUrl" class="field-has-error"></form:errors>
 							</div>
 						</div>
-
-						
-
-						<div class="form-group required">
-
-							<!-- Text input-->
-							<label class="col-md-2 control-label">必须为服务商</label>
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-2" align="right">
-										<label class="radio"> <form:radiobutton
-												path="isPartner" value="1" />是
-										</label>
-									</div>
-									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton
-												path="isPartner" value="0" />否
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">不满足条件时跳转页面</label>
-							<div class="col-md-5">
-								<form:input path="authUrl" class="form-control" placeholder="不满足条件时跳转页面"
-									/>
-								<form:errors path="authUrl" class="field-has-error"></form:errors>
-							</div>
-						</div>
-
 						<div class="form-actions fluid">
 							<div class="col-md-offset-6 col-md-6">
 								<button type="button" id="adForm_btn" class="btn btn-success">保存</button>
+
 							</div>
 						</div>
 				</form:form>
@@ -190,7 +169,7 @@
 	<script
 		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
-	<script src="<c:url value='/js/simi/op/appToolsForm.js'/>"
+	<script src="<c:url value='/js/simi/op/appIndexForm.js'/>"
 		type="text/javascript"></script>
 
 
