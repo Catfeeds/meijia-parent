@@ -303,11 +303,11 @@ public class UserLeaveController extends BaseController {
 			return result;
 		}
 		
-		if (!userLeave.getUserId().equals(userId)) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("请假信息不存在!");
-			return result;
-		}
+//		if (!userLeave.getUserId().equals(userId)) {
+//			result.setStatus(Constants.ERROR_999);
+//			result.setMsg("请假信息不存在!");
+//			return result;
+//		}
 		
 		UserLeaveDetailVo data = userLeaveService.changeToDetailVo(userLeave);
 		result.setData(data);
