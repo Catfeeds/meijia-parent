@@ -46,6 +46,7 @@
 						<!-- <th>频道ID</th> -->
 						<th>频道名称</th>
 						<th>应用类型</th>
+						<th>频道位置</th>
 						<th>是否可用</th>
 						<th>添加时间</th>
 						<th>操作</th>
@@ -58,6 +59,7 @@
 
 							<td>${ item.name }</td>
 							<td>${ item.appType }</td>
+							<td>${ item.channelPosition }</td>
 							<td><c:choose>
 									<c:when test="${item.enable  == 0}">
 														不可用

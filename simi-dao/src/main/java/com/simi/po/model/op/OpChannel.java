@@ -6,6 +6,8 @@ public class OpChannel {
     private String appType;
 
     private String name;
+    
+    private String channelPosition;
 
     private Short enable;
 
@@ -25,6 +27,14 @@ public class OpChannel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getChannelPosition() {
+		return channelPosition;
+	}
+
+	public void setChannelPosition(String channelPosition) {
+		this.channelPosition = channelPosition;
 	}
 
 	public Short getEnable() {

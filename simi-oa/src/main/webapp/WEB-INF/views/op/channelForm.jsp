@@ -60,12 +60,25 @@
 									
 									<div class="form-group required">
 
-										<label class="col-md-2 control-label">频道名称</label>
+										<label class="col-md-2 control-label">应用类型</label>
 										<div class="col-md-5">
-											<form:select path="appType">
+											<form:select path="appType" class="form-control">
 												<form:option value="xlcoud">云行政</form:option>
 												<form:option value="timecheck">时光机</form:option>
 												<form:option value="simi">私秘</form:option>
+											</form:select>
+										</div>
+									</div>
+									
+									<div class="form-group required">
+
+										<label class="col-md-2 control-label">频道位置</label>
+										<div class="col-md-5">
+											<form:select path="channelPosition" class="form-control">
+												<form:option value="home">首页</form:option>
+												<form:option value="discovery">发现</form:option>
+												<form:option value="circle">圈子</form:option>
+												<form:option value="mine">我的</form:option>
 											</form:select>
 										</div>
 									</div>

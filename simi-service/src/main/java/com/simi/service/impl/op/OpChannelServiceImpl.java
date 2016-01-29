@@ -28,9 +28,14 @@ public class OpChannelServiceImpl implements OpChannelService {
 		
 		for (int i = 0 ; i < list.size(); i++) {
 			OpChannel item = list.get(i);
+			//应用类型名称
 			String appType = item.getAppType();
 			appType = MeijiaUtil.getAppTypeName(appType);
 			item.setAppType(appType);
+			//频道位置名称
+			String channelPosition = item.getChannelPosition();
+			channelPosition = MeijiaUtil.getChannelPositionName(channelPosition);
+			item.setChannelPosition(channelPosition);
 			list.set(i, item);
 		}
 		PageInfo result = new PageInfo(list);
@@ -45,6 +50,7 @@ public class OpChannelServiceImpl implements OpChannelService {
 		    
 			record.setChannelId(0L);
 			record.setName("");
+			record.setChannelPosition("");
 			record.setEnable((short)0);
 			record.setAddTime(TimeStampUtil.getNow()/1000);
 

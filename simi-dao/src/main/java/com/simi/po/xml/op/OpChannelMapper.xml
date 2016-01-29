@@ -5,11 +5,12 @@
 		<id column="channel_id" property="channelId" jdbcType="NUMERIC" />
 		<result column="add_type" property="appType" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="channel_position" property="channelPosition" jdbcType="VARCHAR" />
 		<result column="enable" property="enable" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		channel_id, app_type, name, enable, add_time
+		channel_id, app_type, name,channel_position, enable, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -42,9 +43,10 @@
 		where channel_id = #{channelId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.op.OpChannel">
-		insert into op_channel (channel_id, app_type, name, enable,
+		insert into op_channel (channel_id, app_type, name, channel_position,enable,
 		add_time)
-		values (#{channelId,jdbcType=NUMERIC}, #{appType,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enable,jdbcType=NUMERIC},
+		values (#{channelId,jdbcType=NUMERIC}, #{appType,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+		#{channelPosition,jdbcType=VARCHAR},#{enable,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.op.OpChannel">
@@ -58,6 +60,9 @@
 			</if>
 			<if test="name != null">
 				name,
+			</if>
+			<if test="channelPosition != null">
+				channel_position,
 			</if>
 			<if test="enable != null">
 				enable,
@@ -76,6 +81,9 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
+			<if test="channelPosition != null">
+				#{channelPosition,jdbcType=VARCHAR},
+			</if>
 			<if test="enable != null">
 				#{enable,jdbcType=NUMERIC},
 			</if>
@@ -93,6 +101,9 @@
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
+			<if test="channelPosition != null">
+				channel_position = #{channelPosition,jdbcType=VARCHAR},
+			</if>
 			<if test="enable != null">
 				enable = #{enable,jdbcType=NUMERIC},
 			</if>
@@ -106,6 +117,7 @@
 		update op_channel
 		set app_type = #{appType,jdbcType=VARCHAR},
 		set name = #{name,jdbcType=VARCHAR},
+		channel_position = #{channelPosition,jdbcType=VARCHAR},
 		enable = #{enable,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where channel_id = #{channelId,jdbcType=NUMERIC}

@@ -621,4 +621,27 @@ public class MeijiaUtil {
 		}
 		return appTypeName;		
 	}	
+	public static String getChannelPositionName(String channelPosition) {
+		
+		String channelPositionName = "首页";
+		
+		if (StringUtil.isEmpty(channelPosition)) return channelPositionName;
+		switch (channelPosition) {
+			case "home":
+				channelPositionName = "首页";
+				break;
+			case "discovery":
+				channelPositionName = "发现";
+				break;
+			case "circle":
+				channelPositionName = "圈子";
+				break;
+			case "mine":
+				channelPositionName = "我的";
+				break;
+			default:
+				channelPositionName = "首页";
+		}
+		return channelPositionName;		
+	}	
 }
