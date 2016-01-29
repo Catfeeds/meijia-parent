@@ -166,10 +166,11 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		// 处理状态中文名
 		vo.setStatusName(getStatusName(item.getStatus()));
 		
-		// 处理审批人信息
+		// 处理审批进度
 		List<UserLeavePass> userLeavePass = userLeavePassService.selectByLeaveId(leaveId);
 		List<UserLeavePassVo> passUsers = new ArrayList<UserLeavePassVo>();
 		
+		//审批人申请的
 		UserLeavePassVo passVo = new UserLeavePassVo();
 		passVo.setUserId(u.getId());
 		passVo.setName(u.getName());
@@ -178,29 +179,43 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		passVo.setStatusName("发起审批");
 		passVo.setRemarks("");
 		passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime() * 1000));
-
 		passUsers.add(passVo);
 		
-		for (int i = 0 ; i < userLeavePass.size(); i++) {
-			UserLeavePass pass = userLeavePass.get(i);
+		//如果审批已撤销，则输入撤销的
+		if (item.getStatus().equals((short)2)) {
 			passVo = new UserLeavePassVo();
-			
-			Long passUserId = pass.getPassUserId();
-			Short passStatus = pass.getPassStatus();
-			Users passUser = userService.selectByPrimaryKey(passUserId);
-			
-			passVo.setUserId(pass.getPassUserId());
-			passVo.setName(passUser.getName());
-			passVo.setHeadImg(passUser.getHeadImg());
-			passVo.setStatus(pass.getPassStatus());
-			passVo.setStatusName(getStatusName(passStatus));
-			passVo.setRemarks(pass.getRemarks());
-			
-			passVo.setAddTimeStr("");
-			if (passStatus.equals((short)1) || passStatus.equals((short)2)) {
-				passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(pass.getUpdateTime() * 1000));
-			}
+			passVo.setUserId(u.getId());
+			passVo.setName(u.getName());
+			passVo.setHeadImg(u.getHeadImg());
+			passVo.setStatus(item.getStatus());
+			passVo.setStatusName(getStatusName(item.getStatus()));
+			passVo.setRemarks("");
+			passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getUpdateTime() * 1000));
 			passUsers.add(passVo);
+		}
+		
+		if (!item.getStatus().equals((short)2)) {
+			for (int i = 0 ; i < userLeavePass.size(); i++) {
+				UserLeavePass pass = userLeavePass.get(i);
+				passVo = new UserLeavePassVo();
+				
+				Long passUserId = pass.getPassUserId();
+				Short passStatus = pass.getPassStatus();
+				Users passUser = userService.selectByPrimaryKey(passUserId);
+				
+				passVo.setUserId(pass.getPassUserId());
+				passVo.setName(passUser.getName());
+				passVo.setHeadImg(passUser.getHeadImg());
+				passVo.setStatus(pass.getPassStatus());
+				passVo.setStatusName(getStatusName(passStatus));
+				passVo.setRemarks(pass.getRemarks());
+				
+				passVo.setAddTimeStr("");
+				if (passStatus.equals((short)1) || passStatus.equals((short)2)) {
+					passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(pass.getUpdateTime() * 1000));
+				}
+				passUsers.add(passVo);
+			}
 		}
 		vo.setPassUsers(passUsers);
 		return vo;
@@ -220,7 +235,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 			statusName = "审批不通过";
 			break;
 		case 3:
-			statusName = "撤销";
+			statusName = "已撤销";
 			break;
 		default:
 			statusName = "";
