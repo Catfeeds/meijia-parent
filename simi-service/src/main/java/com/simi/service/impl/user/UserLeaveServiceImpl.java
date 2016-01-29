@@ -177,7 +177,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		passVo.setStatus((short) 0);
 		passVo.setStatusName("发起审批");
 		passVo.setRemarks("");
-		passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime()));
+		passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime() * 1000));
 
 		passUsers.add(passVo);
 		
@@ -198,7 +198,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 			
 			passVo.setAddTimeStr("");
 			if (passStatus.equals((short)1) || passStatus.equals((short)2)) {
-				passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(pass.getUpdateTime()));
+				passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(pass.getUpdateTime() * 1000));
 			}
 			passUsers.add(passVo);
 		}
