@@ -18,4 +18,6 @@ public interface AppIndexMapper {
     int updateByPrimaryKey(AppIndex record);
 
 	List<AppIndex> selectByListPage();
+
+	List<AppIndex> selectByAppType(String appType);
 }

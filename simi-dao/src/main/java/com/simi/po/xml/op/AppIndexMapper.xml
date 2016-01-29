@@ -32,6 +32,13 @@
     order by serial_no asc
   </select>
   
+  <select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_index
+    where app_type = #{appType,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from app_index
     where id = #{id,jdbcType=NUMERIC}

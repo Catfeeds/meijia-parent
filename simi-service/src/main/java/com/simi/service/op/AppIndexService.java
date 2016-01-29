@@ -1,6 +1,8 @@
 package com.simi.service.op;
 
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.op.AppIndex;
 
@@ -19,6 +21,8 @@ public interface AppIndexService {
 	int deleteByPrimaryKey(Long id);
 
 	PageInfo selectByListPage(int pageNo, int pageSize);
+
+	List<AppIndex> selectByAppType(String appType);
 
 
 }

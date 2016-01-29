@@ -91,4 +91,12 @@ public class AppIndexServiceImpl implements AppIndexService {
 
 	}
 
+
+	@Override
+	public List<AppIndex> selectByAppType(String appType) {
+		
+		return appIndexMapper.selectByAppType(appType);
+		
+	}
+
 }

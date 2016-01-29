@@ -12,9 +12,9 @@ import com.simi.action.app.JUnitActionBase;
 public class TestOpController extends JUnitActionBase{
 	
 	@Test
-    public void getAppTools() throws Exception {
+    public void getAppIndexList() throws Exception {
 
-		String url = "/app/op/get_appTools.json";
+		String url = "/app/op/get_appIndexList.json";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 
