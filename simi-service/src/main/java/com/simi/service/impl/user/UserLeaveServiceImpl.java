@@ -169,9 +169,21 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		// 处理审批人信息
 		List<UserLeavePass> userLeavePass = userLeavePassService.selectByLeaveId(leaveId);
 		List<UserLeavePassVo> passUsers = new ArrayList<UserLeavePassVo>();
+		
+		UserLeavePassVo passVo = new UserLeavePassVo();
+		passVo.setUserId(u.getId());
+		passVo.setName(u.getName());
+		passVo.setHeadImg(u.getHeadImg());
+		passVo.setStatus((short) 0);
+		passVo.setStatusName("发起审批");
+		passVo.setRemarks("");
+		passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime()));
+
+		passUsers.add(passVo);
+		
 		for (int i = 0 ; i < userLeavePass.size(); i++) {
 			UserLeavePass pass = userLeavePass.get(i);
-			UserLeavePassVo passVo = new UserLeavePassVo();
+			passVo = new UserLeavePassVo();
 			
 			Long passUserId = pass.getPassUserId();
 			Short passStatus = pass.getPassStatus();
