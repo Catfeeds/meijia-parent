@@ -119,7 +119,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 			vo.setStartDate(DateUtil.format(item.getStartDate(), "yyyy-MM-dd"));
 			vo.setEndDate(DateUtil.format(item.getEndDate(), "yyyy-MM-dd"));
 
-			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime()));
+			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime() * 1000));
 
 			// 处理状态中文名
 			vo.setStatusName(getStatusName(item.getStatus()));
