@@ -395,7 +395,7 @@ public class UserLeaveController extends BaseController {
 	// 用户请假取消接口
 	@RequestMapping(value = "leave_cancel", method = RequestMethod.POST)
 	public AppResultData<Object> leaveaPass(
-			@RequestParam("userId") Long userId,
+			@RequestParam("user_id") Long userId,
 			@RequestParam("leave_id") Long leaveId
 			) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
