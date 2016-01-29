@@ -182,7 +182,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		passUsers.add(passVo);
 		
 		//如果审批已撤销，则输入撤销的
-		if (item.getStatus().equals((short)2)) {
+		if (item.getStatus().equals((short)3)) {
 			passVo = new UserLeavePassVo();
 			passVo.setUserId(u.getId());
 			passVo.setName(u.getName());
@@ -194,7 +194,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 			passUsers.add(passVo);
 		}
 		
-		if (!item.getStatus().equals((short)2)) {
+		if (!item.getStatus().equals((short)3)) {
 			for (int i = 0 ; i < userLeavePass.size(); i++) {
 				UserLeavePass pass = userLeavePass.get(i);
 				passVo = new UserLeavePassVo();
