@@ -20,6 +20,12 @@
     where id = #{id,jdbcType=NUMERIC}
   </select>
   
+   <select id="selectByAction" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_help
+    where action = #{action,jdbcType=VARCHAR}
+  </select>
   <select id="selectByListPage" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />

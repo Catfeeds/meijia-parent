@@ -18,4 +18,6 @@ public interface AppHelpMapper {
     int updateByPrimaryKey(AppHelp record);
 
 	List<AppHelp> selectByListPage();
+
+	AppHelp selectByAction(String action);
 }

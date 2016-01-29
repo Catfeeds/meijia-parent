@@ -22,4 +22,6 @@ public interface AppHelpService {
 
 	PageInfo selectByListPage(int pageNo, int pageSize);
 
+	AppHelp selectByAction(String action);
+
 }

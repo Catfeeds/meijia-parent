@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.op.AppHelp;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
+import com.simi.service.impl.op.AppHelpServiceImpl;
+import com.simi.service.op.AppHelpService;
 import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
 import com.meijia.utils.StringUtil;
@@ -27,6 +30,9 @@ public class OpController extends BaseController {
 
 	@Autowired
 	private OpAdService opAdService;
+	
+	@Autowired
+	private AppHelpService appHelpService;
 
 
 	@RequestMapping(value = "get_channels", method = RequestMethod.GET)
@@ -64,5 +70,16 @@ public class OpController extends BaseController {
 		result.setData(list);
 		
 		return result;
-	}	
+	}
+	//帮助接口
+	@RequestMapping(value = "get_appHelp", method = RequestMethod.GET)
+	public AppResultData<Object> getAppHelp(
+			@RequestParam("action") String action) {
+		
+		AppHelp appHelp = appHelpService.selectByAction(action);
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appHelp);
+		return result;
+	}
 }

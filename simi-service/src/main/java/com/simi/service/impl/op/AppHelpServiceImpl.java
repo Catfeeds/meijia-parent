@@ -90,4 +90,11 @@ public class AppHelpServiceImpl implements AppHelpService {
 	}
 
 
+	@Override
+	public AppHelp selectByAction(String action) {
+		
+		return appHelpMapper.selectByAction(action);
+	}
+
+
 }
