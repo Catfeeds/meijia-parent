@@ -108,9 +108,9 @@ public class AppIndexController extends BaseController {
 		}
 		if (!StringUtil.isEmpty(imgUrl)) {
 			appIndex.setIconUrl(imgUrl+"?p=0");
-		}else {
+		}/*else {
 			appIndex.setIconUrl("");
-		}
+		}*/
 		// 更新或者新增
 		if (id != null && id > 0) {
 			//appCardType.setAddTime(addTime);

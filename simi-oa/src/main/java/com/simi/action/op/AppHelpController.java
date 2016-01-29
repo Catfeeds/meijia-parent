@@ -105,8 +105,6 @@ public class AppHelpController extends BaseController {
 		}
 		if (!StringUtil.isEmpty(imgUrl)) {
 			appHelp.setImgUrl(imgUrl+"?p=0");
-		}else {
-			appHelp.setImgUrl("");
 		}
 		// 更新或者新增
 		if (id != null && id > 0) {
