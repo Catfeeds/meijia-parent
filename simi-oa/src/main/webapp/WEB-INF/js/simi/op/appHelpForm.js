@@ -78,7 +78,7 @@ $("#cardIconFile").fileinput({
 	msgSizeTooLarge: "上传文件大小超过8mb"
 });
 
-$('#cardIcon').change(function(){
+$('#imgUrl').change(function(){
 	 $("#img_url_new").text($("#imgUrl").val());
 });
 
