@@ -46,7 +46,22 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-     <table schema="simi" tableName="app_index"
+             <!-- 用户消息表 -->
+     <table schema="simi" tableName="app_help"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+	</table>
+	<!-- app导航表 -->
+   <table schema="simi" tableName="app_index"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -61,7 +76,74 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 	</table>
-	
+	<!--运营广告配置表 -->
+		<!-- <table schema="simi" tableName="op_ad"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+            <columnOverride  column="enable" property="enable" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="no" property="No" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table> -->
+		<!-- 频道管理表 -->
+		<!-- <table schema="simi" tableName="op_channel"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="channel_id" property="channelId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+            <columnOverride  column="enable" property="enable" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
+		</table> -->
+		<!-- 工具表 -->
+		<!-- <table schema="simi" tableName="app_tools"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="t_id" property="tId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+            <columnOverride  column="no" property="No" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            <columnOverride  column="is_partner" property="isPartner" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
+		</table> -->
+
+
+		<!-- app卡片类型表 -->
+		<table schema="simi" tableName="app_card_type"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="card_type_id" property="cardTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+            <columnOverride  column="no" property="No" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            <columnOverride  column="card_type" property="cardType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
+		</table>
 			
 		
 
