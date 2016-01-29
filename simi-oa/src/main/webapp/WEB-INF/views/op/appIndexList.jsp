@@ -73,7 +73,7 @@
 						<tr>
 							<td>${ item.serialNo}</td>
 							<td>${ item.title}</td>
-							<td><img src="${ item.iconUrl }?w=100&h=100" /></td>
+							<td><img src="${ item.iconUrl }" /></td>
 							<td>${item.appType}</td>
 							<td>${item.gotoUrl}</td>
 							<td>${item.category}</td>

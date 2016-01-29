@@ -107,7 +107,7 @@ public class AppIndexController extends BaseController {
 
 		}
 		if (!StringUtil.isEmpty(imgUrl)) {
-			appIndex.setIconUrl(imgUrl);
+			appIndex.setIconUrl(imgUrl+"?p=0");
 		}else {
 			appIndex.setIconUrl("");
 		}

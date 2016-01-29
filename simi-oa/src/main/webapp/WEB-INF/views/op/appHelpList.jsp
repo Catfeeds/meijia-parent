@@ -69,7 +69,7 @@
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
 							
-							<td><img src="${ item.imgUrl }?w=100&h=100" /></td>
+							<td><img src="${ item.imgUrl }" /></td>
 							<td>${item.appType}</td>
 							<td>${item.action}</td>
 							<td>${item.gotoUrl}</td>
