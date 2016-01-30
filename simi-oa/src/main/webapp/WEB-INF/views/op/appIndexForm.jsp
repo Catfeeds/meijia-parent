@@ -140,6 +140,23 @@
 								<form:errors path="gotoUrl" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						<div class="form-group required">
+							<label class="col-md-2 control-label">是否上线</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2" align="right">
+										<label class="radio"> <form:radiobutton
+												path="isOnline" value="0" />上线
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton
+												path="isOnline" value="1" />下线
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="form-actions fluid">
 							<div class="col-md-offset-6 col-md-6">
 								<button type="button" id="adForm_btn" class="btn btn-success">保存</button>

@@ -14,6 +14,8 @@ public class AppIndex {
     private String params;
 
     private String gotoUrl;
+    
+    private Short isOnline;
 
     private String title;
 
@@ -79,7 +81,15 @@ public class AppIndex {
         this.gotoUrl = gotoUrl == null ? null : gotoUrl.trim();
     }
 
-    public String getTitle() {
+    public Short getIsOnline() {
+		return isOnline;
+	}
+
+	public void setIsOnline(Short isOnline) {
+		this.isOnline = isOnline;
+	}
+
+	public String getTitle() {
         return title;
     }
 

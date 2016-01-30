@@ -36,6 +36,7 @@ public class AppIndexServiceImpl implements AppIndexService {
 		    record.setAction("");
 		    record.setParams("");
 		    record.setGotoUrl("");
+		    record.setIsOnline((short) 0);
 		    record.setTitle("");
 		    record.setIconUrl("");
 		    record.setAddTime(TimeStampUtil.getNow()/1000);

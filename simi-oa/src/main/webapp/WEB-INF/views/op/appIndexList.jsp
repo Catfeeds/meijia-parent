@@ -63,6 +63,7 @@
 						<th>应用类型</th>
 						<th>跳转Url</th>
 						<th>操作类别</th>
+						<th>是否已上线</th>
 						<th>操作相关参数</th>
 						<th>添加时间</th>
 						<th>操作</th>
@@ -77,6 +78,14 @@
 							<td>${item.appType}</td>
 							<td>${item.gotoUrl}</td>
 							<td>${item.category}</td>
+							<td><c:choose>
+									<c:when test="${item.isOnline  == 0}">
+														上线
+												</c:when>
+									<c:when test="${item.isOnline  == 1}">
+														下线
+									</c:when>
+							</c:choose></td> 
 							<td>${item.params}</td>
 							<td><timestampTag:timestamp patten="yyyy-MM-dd"
 									t="${item.addTime * 1000}" /></td>
