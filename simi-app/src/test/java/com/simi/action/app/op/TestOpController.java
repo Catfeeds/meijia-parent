@@ -14,7 +14,7 @@ public class TestOpController extends JUnitActionBase{
 	@Test
     public void getAppIndexList() throws Exception {
 
-		String url = "/app/op/get_appIndexList.json";
+		String url = "/app/op/get_channels.json";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 

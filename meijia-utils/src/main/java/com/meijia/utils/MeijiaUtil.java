@@ -623,7 +623,7 @@ public class MeijiaUtil {
 	}	
 	public static String getChannelPositionName(String channelPosition) {
 		
-		String channelPositionName = "首页";
+		String channelPositionName = "发现";
 		
 		if (StringUtil.isEmpty(channelPosition)) return channelPositionName;
 		switch (channelPosition) {
@@ -640,7 +640,7 @@ public class MeijiaUtil {
 				channelPositionName = "我的";
 				break;
 			default:
-				channelPositionName = "首页";
+				channelPositionName = "发现";
 		}
 		return channelPositionName;		
 	}	

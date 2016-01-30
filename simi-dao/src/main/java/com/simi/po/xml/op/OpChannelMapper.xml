@@ -3,7 +3,7 @@
 <mapper namespace="com.simi.po.dao.op.OpChannelMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.op.OpChannel">
 		<id column="channel_id" property="channelId" jdbcType="NUMERIC" />
-		<result column="add_type" property="appType" jdbcType="VARCHAR" />
+		<result column="app_type" property="appType" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="channel_position" property="channelPosition" jdbcType="VARCHAR" />
 		<result column="enable" property="enable" jdbcType="NUMERIC" />
@@ -24,6 +24,15 @@
 		from op_channel
 		order by channel_id asc
 	</select>
+	<select id="selectByAppTypeAndPosition" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from op_channel where app_type = #{0} 
+		and channel_position = #{1}
+		and enable = 1
+		order by channel_id asc
+	</select>
+	
 	<select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />

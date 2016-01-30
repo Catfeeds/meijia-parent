@@ -24,5 +24,7 @@ public interface OpChannelService {
 
 	List<OpChannel> selectByAppType(String appType);
 
+	List<OpChannel> selectByAppTypeAndPosition(String appType, String channelPositon);
+
 
 }

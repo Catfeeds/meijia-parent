@@ -22,4 +22,7 @@ public interface OpChannelMapper {
 	List<OpChannel> selectByAppType(String appType);
 
 	List<OpChannel> selectByAll();
+
+	List<OpChannel> selectByAppTypeAndPosition(String appType,
+			String channelPositon);
 }

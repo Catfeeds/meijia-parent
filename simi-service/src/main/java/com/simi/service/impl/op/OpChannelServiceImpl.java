@@ -50,6 +50,7 @@ public class OpChannelServiceImpl implements OpChannelService {
 		    
 			record.setChannelId(0L);
 			record.setName("");
+			record.setAppType("");
 			record.setChannelPosition("");
 			record.setEnable((short)0);
 			record.setAddTime(TimeStampUtil.getNow()/1000);
@@ -86,5 +87,12 @@ public class OpChannelServiceImpl implements OpChannelService {
 	public int deleteByPrimaryKey(Long id) {
 		
 		return opChannelMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<OpChannel> selectByAppTypeAndPosition(String appType,
+			String channelPositon) {
+
+		return opChannelMapper.selectByAppTypeAndPosition(appType,channelPositon);
 	}
 }
