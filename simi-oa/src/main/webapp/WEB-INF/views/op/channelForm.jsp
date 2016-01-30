@@ -63,7 +63,7 @@
 										<label class="col-md-2 control-label">应用类型</label>
 										<div class="col-md-5">
 											<form:select path="appType" class="form-control">
-												<form:option value="xlcoud">云行政</form:option>
+												<form:option value="xcloud">云行政</form:option>
 												<form:option value="timecheck">时光机</form:option>
 												<form:option value="simi">私秘</form:option>
 											</form:select>
