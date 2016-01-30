@@ -133,8 +133,6 @@
 						
 
 						<div class="form-group required">
-
-							<!-- Text input-->
 							<label class="col-md-2 control-label">必须为服务商</label>
 							<div class="col-md-10">
 								<div class="row">
@@ -151,7 +149,46 @@
 								</div>
 							</div>
 						</div>
-						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">是否上线</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2" align="right">
+										<label class="radio"> <form:radiobutton
+												path="isOnline" value="0" />上线
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton
+												path="isOnline" value="1" />下线
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">应用提供者</label>
+							<div class="col-md-5">
+								<form:input path="appProvider" class="form-control" placeholder="应用提供者"
+									/>
+								<form:errors path="appProvider" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<label class="col-md-2 control-label">应用描述</label>
+							<div class="col-md-5">
+							<textarea id="appProvider" class="form-control" placeholder="公司简介" name="companyDesc"></textarea>
+							</div>
+						</div> -->
+						<div class="form-group">
+						<label class="col-md-2 control-label">应用描述</label>
+						<div class="col-md-5">
+								<div class="textarea">
+									<form:textarea class="form-control" path="appDescribe" placeholder="应用描述"/><br/>
+								</div>
+							</div>
+						</div>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">不满足条件时跳转页面</label>

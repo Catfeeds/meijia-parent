@@ -39,6 +39,9 @@ public class AppToolsServiceImpl implements AppToolsService {
 		    record.setOpenType("");
 		    record.setUrl("");
 		    record.setIsPartner((short)0L);
+		    record.setIsOnline((short)0);
+		    record.setAppProvider("");
+		    record.setAppDescribe("");
 		    record.setAuthUrl("");
 		    record.setAddTime(TimeStampUtil.getNow()/1000);
 			return record;

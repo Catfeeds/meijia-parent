@@ -60,6 +60,7 @@
 						<th>图标</th>
 						<th>应用类型</th>
 						<th>显示类型</th>
+						<th>是否上线</th>
 						<th>跳转url</th>
 						<th>不满足条件是跳转url</th>
 						<th>添加时间</th>
@@ -76,6 +77,14 @@
 							<td>${ item.appType}</td>
 							<td>${ item.openType}</td>
 							<%-- <td><a href="${ item.gotoUrl }" target="_blank">点击</a></td> --%>
+							<td><c:choose>
+									<c:when test="${item.isOnline  == 0}">
+														上线
+												</c:when>
+									<c:when test="${item.isOnline  == 1}">
+														下线
+									</c:when>
+							</c:choose></td> 
 							<td>${ item.url }</td>
 							<td>${ item.authUrl }</td>
 							<%-- <td><c:choose>

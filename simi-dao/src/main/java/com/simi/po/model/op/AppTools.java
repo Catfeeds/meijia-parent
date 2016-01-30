@@ -18,6 +18,12 @@ public class AppTools {
     private String url;
 
     private Short isPartner;
+    
+    private Short isOnline;
+    
+    private String appProvider;
+    
+    private String appDescribe;
 
     private String authUrl;
 
@@ -95,7 +101,31 @@ public class AppTools {
         this.isPartner = isPartner;
     }
 
-    public String getAuthUrl() {
+    public Short getIsOnline() {
+		return isOnline;
+	}
+
+	public void setIsOnline(Short isOnline) {
+		this.isOnline = isOnline;
+	}
+
+	public String getAppProvider() {
+		return appProvider;
+	}
+
+	public void setAppProvider(String appProvider) {
+		this.appProvider = appProvider;
+	}
+
+	public String getAppDescribe() {
+		return appDescribe;
+	}
+
+	public void setAppDescribe(String appDescribe) {
+		this.appDescribe = appDescribe;
+	}
+
+	public String getAuthUrl() {
         return authUrl;
     }
 
