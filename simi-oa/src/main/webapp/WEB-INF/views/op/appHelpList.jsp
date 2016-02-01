@@ -58,10 +58,13 @@
 				<thead>
 					<tr>
 						<th>卡片图标</th>
+						<td>标题</td>
 						<th>应用类型</th>
 						<th>模块标识</th>
 						<th>跳转Url</th>
 						<th>帮助说明</th>
+						<th>是否已上线</th>
+						<th>添加时间</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -70,10 +73,19 @@
 						<tr>
 							
 							<td><img src="${ item.imgUrl }" height="100" width="100"/></td>
+							<td>${item.title}</td>
 							<td>${item.appType}</td>
 							<td>${item.action}</td>
 							<td>${item.gotoUrl}</td>
 							<td>${item.content}</td>
+							<td><c:choose>
+									<c:when test="${item.isOnline  == 0}">
+														上线
+												</c:when>
+									<c:when test="${item.isOnline  == 1}">
+														下线
+									</c:when>
+							</c:choose></td> 
 							<td><timestampTag:timestamp patten="yyyy-MM-dd"
 									t="${item.addTime * 1000}" /></td>
 							<td>

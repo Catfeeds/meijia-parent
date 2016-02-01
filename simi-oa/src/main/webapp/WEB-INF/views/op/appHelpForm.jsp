@@ -43,6 +43,17 @@
 					
 					<div class="form-body">
 
+	
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">标题</label>
+							<div class="col-md-5">
+								<form:input path="title" class="form-control" placeholder="标题"
+									maxLength="32" />
+								<form:errors path="title" class="field-has-error"></form:errors>
+							</div>
+						</div>
+
 						<c:if test="${contentModel.imgUrl != null && contentModel.imgUrl != '' }">
 							<div class="form-group ">
 
@@ -105,7 +116,23 @@
 								</div>
 							</div>
 						</div>
-						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">是否上线</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2" align="right">
+										<label class="radio"> <form:radiobutton
+												path="isOnline" value="0" />上线
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton
+												path="isOnline" value="1" />下线
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="form-actions fluid">
 							<div class="col-md-offset-6 col-md-6">
 								<button type="button" id="adForm_btn" class="btn btn-success">保存</button>

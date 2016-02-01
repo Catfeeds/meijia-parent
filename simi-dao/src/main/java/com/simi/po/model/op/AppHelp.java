@@ -6,12 +6,16 @@ public class AppHelp {
     private String appType;
 
     private String action;
+    
+    private String title;
 
     private String gotoUrl;
 
     private String content;
 
     private String imgUrl;
+    
+    private Short isOnline;
 
     private Long addTime;
 
@@ -39,7 +43,15 @@ public class AppHelp {
         this.action = action == null ? null : action.trim();
     }
 
-    public String getGotoUrl() {
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title == null ? null : title.trim();
+	}
+
+	public String getGotoUrl() {
         return gotoUrl;
     }
 
@@ -63,7 +75,15 @@ public class AppHelp {
         this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
-    public Long getAddTime() {
+    public Short getIsOnline() {
+		return isOnline;
+	}
+
+	public void setIsOnline(Short isOnline) {
+		this.isOnline = isOnline;
+	}
+
+	public Long getAddTime() {
         return addTime;
     }
 

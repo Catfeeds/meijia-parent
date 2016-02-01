@@ -34,9 +34,11 @@ public class AppHelpServiceImpl implements AppHelpService {
 		    record.setId(0L);
 		    record.setAppType("");
 		    record.setAction("");
+		    record.setTitle("");
 		    record.setGotoUrl("");
 		    record.setContent("");
 		    record.setImgUrl("");
+		    record.setIsOnline((short)0);
 		    record.setAddTime(TimeStampUtil.getNow()/1000);
 			return record;
 		}
