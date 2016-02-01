@@ -111,6 +111,9 @@ public class AppHelpController extends BaseController {
 			//appCardType.setAddTime(addTime);
 			appHelpService.updateByPrimaryKeySelective(appHelp);
 		} else {
+			if (imgUrl=="") {
+				appHelp.setImgUrl("");
+			}
 			appHelp.setAddTime(TimeStampUtil.getNow() / 1000);
 			appHelpService.insertSelective(appHelp);
 		}
