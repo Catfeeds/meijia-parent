@@ -78,14 +78,18 @@ public class OpController extends BaseController {
 			@RequestParam("action") String action,
 			@RequestParam("user_id") Long userId) {
 		
-		AppHelp appHelp = appHelpService.selectByAction(action);
-
-		if (appHelp == null) {
-			AppResultData<Object> result = new AppResultData<Object>(
-					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		}
 		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		AppHelp appHelp = appHelpService.selectByAction(action);
+		
+		if (appHelp == null) {
+			return result;
+		}
+		
+		result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appHelp);
+		
 		return result;
 	}
 }
