@@ -80,6 +80,10 @@ public class OpController extends BaseController {
 		
 		AppHelp appHelp = appHelpService.selectByAction(action);
 
+		if (appHelp == null) {
+			AppResultData<Object> result = new AppResultData<Object>(
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		}
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appHelp);
 		return result;
