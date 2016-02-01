@@ -75,7 +75,8 @@ public class OpController extends BaseController {
 	//帮助接口
 	@RequestMapping(value = "get_appHelp", method = RequestMethod.GET)
 	public AppResultData<Object> getAppHelp(
-			@RequestParam("action") String action) {
+			@RequestParam("action") String action,
+			@RequestParam("user_id") Long userId) {
 		
 		AppHelp appHelp = appHelpService.selectByAction(action);
 
