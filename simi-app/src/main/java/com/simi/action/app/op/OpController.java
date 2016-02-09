@@ -14,12 +14,15 @@ import com.simi.common.Constants;
 import com.simi.po.model.op.AppHelp;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
+import com.simi.po.model.user.UserActionRecord;
 import com.simi.service.impl.op.AppHelpServiceImpl;
 import com.simi.service.op.AppHelpService;
 import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
+import com.simi.service.user.UserActionRecordService;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.UserActionSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/op")
@@ -34,6 +37,8 @@ public class OpController extends BaseController {
 	@Autowired
 	private AppHelpService appHelpService;
 
+	@Autowired
+	private UserActionRecordService userActionRecordService;
 
 	@RequestMapping(value = "get_channels", method = RequestMethod.GET)
 	public AppResultData<Object> getChannels(
@@ -80,6 +85,18 @@ public class OpController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		//判断用户是否已经操作过，如果操作过则直接返回空值.
+		UserActionSearchVo searchVo = new UserActionSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setActionType("app_help");
+		searchVo.setParams(action);
+		
+		List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
+		if (!rs.isEmpty()) {
+			return result;
+		}
+		
 		
 		AppHelp appHelp = appHelpService.selectByAction(action);
 		
