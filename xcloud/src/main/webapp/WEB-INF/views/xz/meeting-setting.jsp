@@ -36,97 +36,126 @@
 
 			<div class="am-tabs am-margin" data-am-tabs>
 				<ul class="am-tabs-nav am-nav am-nav-tabs">
-					<li class="am-active"><a href="#tab1">会议室</a></li>
-					<li><a href="#tab2">会议类型</a></li>
+					<li class="am-active"><a href="#meeting-room">会议室</a></li>
+					<li><a href="#meeting-type" id="href-tab2">会议类型</a></li>
 				</ul>
 
 				<div class="am-tabs-bd">
-					<div class="am-tab-panel am-fade am-in am-active" id="tab1">
+					<div class="am-tab-panel am-fade am-in am-active" id="meeting-room">
 						<div class="am-g am-margin-top">
 							<div class="am-u-sm-4 am-u-md-2 am-text-right">会议室名称</div>
 							<div class="am-u-sm-8 am-u-md-10">
-								<input type="input" id="meeting-name" name="meeting-name" value="" />
-								<button type="button" class="am-btn am-btn-primary am-btn-xs">添加</button>
+								<form id="meeting-room-form" class="am-form am-form-horizontal"
+									method="POST"
+								>
+									<div class="am-form-group am-input-group ">
+										<input type="hidden" id="settingType" name="settingType"
+											value="meeting-room"
+										/> <input type="input" id="meeting-room-name" name="name" value=""
+											class="am-form-field am-radius" maxLength="32" required="required"
+											style="width: 50%"
+										/> &nbsp;
+										<button type="button" onclick="addSetting('meeting-room-form')"
+											class="am-btn am-btn-primary"
+										>添加</button>
+									</div>
+								</form>
 							</div>
 						</div>
 
 						<div class="am-g am-margin-top">
 							<div class="am-u-sm-4 am-u-md-2 am-text-right">&nbsp;</div>
 							<div class="am-u-sm-4 am-u-md-10">
-							<table style="width:225px;" class="am-table am-table-bordered am-table-striped am-table-hover">
-								<thead>
-									<tr>
-										<th>会议室名称</th>
 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>大会议室</td>
+								<c:if test="${meetingRooms != ''}">
 
-									</tr>
-									<tr>
-										<td>小会议室</td>
+									<table style="width: 225px;"
+										class="am-table am-table-bordered am-table-striped am-table-hover"
+									>
+										<thead>
+											<tr>
+												<th>会议室名称</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${meetingRooms}" var="item">
+												<tr>
+													<td>${item.name }</td>
+													<td>
+														<div class="am-btn-toolbar">
+															<div class="am-btn-group am-btn-group-xs">
+																删除
 
-									</tr>
-									<tr>
-										<td>咖啡角</td>
-
-									</tr>
-									
-								</tbody>
-							</table>
+															</div>
+														</div>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
 							</div>
 						</div>
 
 					</div>
 
-					<div class="am-tab-panel am-fade" id="tab2">
+					<div class="am-tab-panel am-fade" id="meeting-type">
 						<div class="am-g am-margin-top">
 							<div class="am-u-sm-4 am-u-md-2 am-text-right">会议类型</div>
 							<div class="am-u-sm-8 am-u-md-10">
-								<input type="input" id="meeting-name" name="meeting-name" value="" />
-								<button type="button" class="am-btn am-btn-primary am-btn-xs">添加</button>
+								<form id="meeting-type-form" class="am-form am-form-horizontal"
+									method="POST"
+								>
+									<div class="am-form-group am-input-group ">
+										<input type="hidden" id="settingType" name="settingType"
+											value="meeting-type"
+										/> <input type="input" id="meeting-type-name" name="name" value=""
+											class="am-form-field am-radius" maxLength="32"
+											required="required" style="width: 50%"
+										/> &nbsp; 
+										<button type="button" onclick="addSetting('meeting-type-form')"
+											class="am-btn am-btn-primary"
+										>添加</button>
+									</div>
 							</div>
 						</div>
 
 						<div class="am-g am-margin-top">
 							<div class="am-u-sm-4 am-u-md-2 am-text-right">&nbsp;</div>
 							<div class="am-u-sm-4 am-u-md-10">
-							<table style="width:225px;" class="am-table am-table-bordered am-table-striped am-table-hover">
-								<thead>
-									<tr>
-										<th>会议类型</th>
+								<c:if test="${meettingTypes != ''}">
+									<table style="width: 225px;"
+										class="am-table am-table-bordered am-table-striped am-table-hover"
+									>
+										<thead>
+											<tr>
+												<th>会议类型</th>
 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>销售会议</td>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${meettingTypes}" var="item">
+												<tr>
+													<td>${item.name }</td>
 
-									</tr>
-									<tr>
-										<td>日程例会</td>
+												</tr>
+											</c:forEach>
 
-									</tr>
-									<tr>
-										<td>部门会议</td>
-
-									</tr>
-									
-								</tbody>
-							</table>
+										</tbody>
+									</table>
+								</c:if>
 							</div>
 						</div>
 
 					</div>
-					</div>
 				</div>
 			</div>
-
-
 		</div>
-		<!-- content end -->
+
+
+	</div>
+	<!-- content end -->
 
 	</div>
 
@@ -139,6 +168,6 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
-
+	<script src="<c:url value='/assets/js/xcloud/xz/meeting-setting.js'/>"></script>
 </body>
 </html>

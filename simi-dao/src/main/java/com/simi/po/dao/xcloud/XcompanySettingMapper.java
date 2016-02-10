@@ -1,6 +1,9 @@
 package com.simi.po.dao.xcloud;
 
+import java.util.List;
+
 import com.simi.po.model.xcloud.XcompanySetting;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 public interface XcompanySettingMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface XcompanySettingMapper {
     int updateByPrimaryKeySelective(XcompanySetting record);
 
     int updateByPrimaryKey(XcompanySetting record);
+
+	List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo);
 }

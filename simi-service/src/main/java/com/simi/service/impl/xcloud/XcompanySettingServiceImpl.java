@@ -1,9 +1,12 @@
 package com.simi.service.impl.xcloud;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
@@ -24,7 +27,7 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		record.setName("");
 		record.setSettingJson("");
 		record.setSettingType("");
-		record.setIsEnable((short)0);
+		record.setIsEnable((short)1);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
@@ -57,6 +60,11 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	@Override
 	public int updateByPrimaryKeySelective(XcompanySetting record) {
 		return xcompanySettingMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	@Override
+	public List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo) {
+		return xcompanySettingMapper.selectBySearchVo(searchVo);
 	}
 	
 	

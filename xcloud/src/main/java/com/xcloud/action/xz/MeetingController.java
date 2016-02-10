@@ -1,8 +1,5 @@
 package com.xcloud.action.xz;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,44 +8,30 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.ExcelUtil;
-import com.meijia.utils.RandomUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.utils.CardUtil;
-import com.simi.vo.AppResultData;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.Xcompany;
-import com.simi.po.model.xcloud.XcompanyDept;
-import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
-import com.simi.service.xcloud.XcompanyDeptService;
-import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
-import com.simi.vo.xcloud.StaffListVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
@@ -66,12 +49,15 @@ public class MeetingController extends BaseController {
 	private XCompanyService xCompanyService;
 	
 	@Autowired
+	private XCompanySettingService xCompanySettingService;
+	
+	@Autowired
 	private CardService cardService;
 	
 	@Autowired
 	CardAttendService cardAttendService;	
 
-//	@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/get-meeting-list", method = { RequestMethod.GET })
 	public List<Object> getCardList(HttpServletRequest request, Model model,
 			@RequestParam(value = "start", required = false, defaultValue = "") String start,
@@ -91,7 +77,7 @@ public class MeetingController extends BaseController {
 		Users u = usersService.selectByPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null)  return result;
+//		if (u == null)  return result;
 
 		//处理时间的问题
 		Long startTime = 0L;
@@ -139,6 +125,7 @@ public class MeetingController extends BaseController {
 	}	
 	
 	//会议一览
+	@AuthPassport
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request) {
 
@@ -146,12 +133,115 @@ public class MeetingController extends BaseController {
 
 	}	
 	//会议设置
+	@AuthPassport
 	@RequestMapping(value = "setting", method = RequestMethod.GET)
-	public String setting(HttpServletRequest request) {
-
+	public String setting(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+		//会议室列表
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setSettingType("meeting-room");
+		List<XcompanySetting> meettingRooms = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		model.addAttribute("meetingRooms", "");
+		if (!meettingRooms.isEmpty()) {
+			model.addAttribute("meetingRooms", meettingRooms);
+		}
+		//会议类型列表
+		searchVo = new CompanySettingSearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setSettingType("meeting-type");
+		List<XcompanySetting> meettingTypes = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		model.addAttribute("meettingTypes", "");
+		if (!meettingTypes.isEmpty()) {
+			model.addAttribute("meettingTypes", meettingTypes);
+		}
+		
 		return "xz/meeting-setting";
 
 	}
+	
+	//会议设置
+	@AuthPassport
+	@RequestMapping(value = "setting", method = RequestMethod.POST)
+	public String doSetting(HttpServletRequest request, Model model) {
+		
+		
+		String requestUrl = request.getServletPath();
+		String settingType = request.getParameter("settingType");
+		
+		requestUrl = requestUrl + "?setting_type=" + settingType;
+		
+		String name = request.getParameter("name");
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+		if (StringUtil.isEmpty(settingType) || StringUtil.isEmpty("name")) {
+			return "redirect:"+requestUrl;
+		}
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setSettingType(settingType);
+		searchVo.setName(name);
+		
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		if (!list.isEmpty()) {
+			return "redirect:"+requestUrl;
+		}
+		
+		XcompanySetting record = xCompanySettingService.initXcompanySetting();
+		record.setCompanyId(companyId);
+		record.setSettingType(settingType);
+		record.setName(name);
+		xCompanySettingService.insert(record);
+		
+		return "redirect:"+requestUrl;
+
+	}	
+	
+	
+	@AuthPassport
+	@RequestMapping(value = "/check-setting-name", method = { RequestMethod.GET })
+	public AppResultData<Object> checkSettingName(HttpServletRequest request, Model model,
+			@RequestParam("setting_type") String settingType,
+			@RequestParam("name") String name
+			) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setSettingType(settingType);
+		searchVo.setName(name);
+		
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		if (!list.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("");
+			result.setData(list);
+			return result;
+		}
+
+		return result;
+	}		
+	
 	//会展服务商
 	@RequestMapping(value = "service", method = RequestMethod.GET)
 	public String serviceList(HttpServletRequest request) {
