@@ -46,3 +46,8 @@ function addSetting(formName) {
 		console.log("fail");
 	};
 }
+
+
+function settingDel(settingId) {
+	
+}

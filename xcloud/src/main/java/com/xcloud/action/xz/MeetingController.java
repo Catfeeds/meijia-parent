@@ -132,6 +132,7 @@ public class MeetingController extends BaseController {
 		return "xz/meeting-list";
 
 	}	
+	
 	//会议设置
 	@AuthPassport
 	@RequestMapping(value = "setting", method = RequestMethod.GET)
@@ -169,7 +170,7 @@ public class MeetingController extends BaseController {
 
 	}
 	
-	//会议设置
+	//会议设置保存
 	@AuthPassport
 	@RequestMapping(value = "setting", method = RequestMethod.POST)
 	public String doSetting(HttpServletRequest request, Model model) {
@@ -211,7 +212,7 @@ public class MeetingController extends BaseController {
 
 	}	
 	
-	
+	//检测配置是否重名
 	@AuthPassport
 	@RequestMapping(value = "/check-setting-name", method = { RequestMethod.GET })
 	public AppResultData<Object> checkSettingName(HttpServletRequest request, Model model,
@@ -240,6 +241,34 @@ public class MeetingController extends BaseController {
 		}
 
 		return result;
+	}		
+	
+	//删除会议
+	//会议设置保存
+	@AuthPassport
+	@RequestMapping(value = "setting-del", method = RequestMethod.POST)
+	public String settingDel(HttpServletRequest request, Model model) {
+		
+		String requestUrl = request.getServletPath();
+		String settingType = request.getParameter("settingType");
+		String settingIdStr = request.getParameter("settingId");
+		
+		requestUrl = requestUrl + "?setting_type=" + settingType;
+				
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long companyId = accountAuth.getCompanyId();
+		
+		if (StringUtil.isEmpty(settingType) || StringUtil.isEmpty("settingIdStr")) {
+			return "redirect:"+requestUrl;
+		}
+		
+		Long settingId = Long.valueOf(settingIdStr);
+		xCompanySettingService.deleteByPrimaryKey(settingId);
+		
+		
+		return "redirect:"+requestUrl;
+
 	}		
 	
 	//会展服务商
