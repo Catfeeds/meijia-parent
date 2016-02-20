@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
 import com.simi.action.app.JUnitActionBase;
 
 public class TestSyncImMsgController extends JUnitActionBase{
@@ -76,7 +77,8 @@ public class TestSyncImMsgController extends JUnitActionBase{
 
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
-
+	    
+	    Thread.sleep(60000); // 因为junit结束会结束jvm，所以让它等会异步线程  
     }		
 
 }

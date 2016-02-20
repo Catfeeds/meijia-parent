@@ -17,11 +17,11 @@ public class TestOrderListController extends JUnitActionBase  {
 	 *     ​http://localhost:8080/onecare/app/order/get_list.json
 	 *     http://182.92.160.194/trac/wiki/%E8%AE%A2%E5%8D%95%E6%8F%90%E4%BA%A4%E6%8E%A5%E5%8F%A3
 	 */
-/*	@Test
+	@Test
     public void testList() throws Exception {
 		String url = "/app/order/get_list.json";
 		
-		String params = "?user_id=1&page=1";
+		String params = "?user_id=278&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -30,7 +30,7 @@ public class TestOrderListController extends JUnitActionBase  {
 	    resultActions.andExpect(status().isOk());
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-	}*/
+	}
 	
 	/*@Test
     public void testPartnerList() throws Exception {

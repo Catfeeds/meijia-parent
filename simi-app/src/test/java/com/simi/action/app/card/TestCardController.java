@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -33,15 +34,15 @@ public class TestCardController extends JUnitActionBase  {
      	
      	//新增
      	postRequest = postRequest.param("card_id", "0");
-	    postRequest = postRequest.param("card_type", "3");
-	    postRequest = postRequest.param("create_user_id", "139");
-	    postRequest = postRequest.param("user_id", "139");
+	    postRequest = postRequest.param("card_type", "5");
+	    postRequest = postRequest.param("create_user_id", "278");
+	    postRequest = postRequest.param("user_id", "278");
 	    
 	    //参会人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
 	    LinkManVo a1 = new LinkManVo();
-	    a1.setMobile("13146012753");
-	    a1.setName("凯凯");
+	    a1.setMobile("13552195866");
+	    a1.setName("自己");
 //	    LinkManVo a2 = new LinkManVo();
 //	    a2.setMobile("18037338893");
 //	    a2.setName("A");
@@ -57,14 +58,21 @@ public class TestCardController extends JUnitActionBase  {
 	    String attends = GsonUtil.GsonString(attendsList);
 	    
 	    postRequest = postRequest.param("attends", attends);
-	    postRequest = postRequest.param("service_time", "1446544740");
+	    postRequest = postRequest.param("service_time", "1458363641");
 //	    postRequest = postRequest.param("service_addr", "宇飞大厦612");
-	    postRequest = postRequest.param("service_content", "测试");
-	    postRequest = postRequest.param("set_remind", "1");
-	    postRequest = postRequest.param("set_now_send", "1");
+	    postRequest = postRequest.param("service_content", "头等舱");
+	    postRequest = postRequest.param("set_remind", "0");
+	    postRequest = postRequest.param("set_now_send", "0");
 	    postRequest = postRequest.param("set_sec_do", "0");
 //	    postRequest = postRequest.param("set_sec_remarks", "yuand请通知所有人员,一共2个人");
 	    
+	    //card_extra
+	    Map<String, String> cardExtraMap = new HashMap<String, String>();
+	    cardExtraMap.put("ticket_type", "0");
+	    cardExtraMap.put("ticket_from_city_id", "2");
+	    cardExtraMap.put("ticket_to_city_id", "3");
+	    String cardExtra = GsonUtil.GsonString(cardExtraMap);
+	    postRequest = postRequest.param("card_extra", cardExtra);
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 

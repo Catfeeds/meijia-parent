@@ -86,8 +86,7 @@ public class TimeStampUtil {
 	 */
 	public static Long getEndOfToday() {
 		String today = DateUtil.getEndOfDay();
-		Date d = DateUtil.parse(today);
-		return getMillisOfDate(d) / 1000;
+		return getMillisOfDayFull(today) / 1000;
 	}
 	
 	/**
@@ -187,5 +186,7 @@ public class TimeStampUtil {
 		System.out.println(TimeStampUtil.timeStampToDateHour(t*1000));
 		
 		System.out.println(TimeStampUtil.getBeginOfYesterDay());
+		
+		System.out.println(TimeStampUtil.getEndOfToday());
 	}
 }

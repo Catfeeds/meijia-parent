@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.dict.DictService;
@@ -32,6 +34,7 @@ import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
+import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.order.OrderPrices;
@@ -296,7 +299,13 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		vo.setPartnerUserId(partnerUser.getId());
 		vo.setPartnerUserName(partnerUser.getName());
-		vo.setPartnerUserHeadImg(partnerUser.getHeadImg());
+		
+		if (StringUtil.isEmpty(partnerUser.getHeadImg())) {
+			vo.setPartnerUserHeadImg(Constants.DEFAULT_HEAD_IMG);
+		} else {
+			vo.setPartnerUserHeadImg(partnerUser.getHeadImg());
+		}
+		
 		
 		Users user = usersService.selectByPrimaryKey(order.getUserId());
 		vo.setName(user.getName());
