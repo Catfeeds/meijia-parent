@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
 import com.simi.po.dao.user.UserFriendsMapper;
+import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
@@ -24,6 +26,9 @@ public class UserFriendServiceImpl implements UserFriendService {
 
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private UserFriendReqService userFriendReqService;
 	
 	@Autowired
 	private UserFriendsMapper userFriendsMapper;
@@ -147,35 +152,33 @@ public class UserFriendServiceImpl implements UserFriendService {
 	@Override
 	public Boolean addFriends(Users u, Users friendUser) {
 		
-		
 		if (u.getId().equals(friendUser.getId())) return true;
-		
 		UserFriendSearchVo searchVo = new UserFriendSearchVo();
 		searchVo.setUserId(u.getId());
 		searchVo.setFriendId(friendUser.getId());
-		UserFriends userFriend = this.selectByIsFirend(searchVo);		
-		if (userFriend == null) {
-			userFriend = this.initUserFriend();
-			userFriend.setUserId(u.getId());
-			userFriend.setFriendId(friendUser.getId());
-			userFriend.setAddTime(TimeStampUtil.getNowSecond());
-			userFriend.setUpdateTime(TimeStampUtil.getNowSecond());
-			this.insert(userFriend);
+		UserFriends userFriend = this.selectByIsFirend(searchVo);	
+		UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
+		if (userFriend == null && userFriendReq == null) {
+			userFriendReq = userFriendReqService.initUserFriendReq();
+			userFriendReq.setUserId(u.getId());
+			userFriendReq.setFriendId(friendUser.getId());
+			userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
+			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
+			userFriendReqService.insert(userFriendReq);
 		}
-		
-		searchVo = new UserFriendSearchVo();
+		/*searchVo = new UserFriendSearchVo();
 		searchVo.setUserId(friendUser.getId());
 		searchVo.setFriendId(u.getId());
-		userFriend = this.selectByIsFirend(searchVo);
-		if (userFriend == null) {
+		userFriend = this.selectByIsFirend(searchVo);	
+		userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
+		if (userFriend == null && userFriendReq == null) {
 			userFriend = this.initUserFriend();
 			userFriend.setUserId(friendUser.getId());
 			userFriend.setFriendId(u.getId());
 			userFriend.setAddTime(TimeStampUtil.getNowSecond());
 			userFriend.setUpdateTime(TimeStampUtil.getNowSecond());
 			this.insert(userFriend);
-		}
-		
+		}*/
 		return true;
 	}
 	

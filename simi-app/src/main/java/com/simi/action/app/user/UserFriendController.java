@@ -13,19 +13,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.RegexUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
+import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.user.UserFriendReqVo;
 import com.simi.vo.user.UserFriendViewVo;
 
 @Controller
@@ -37,6 +41,9 @@ public class UserFriendController extends BaseController {
 	
 	@Autowired
 	private UserFriendService userFriendService;
+	
+	@Autowired
+	private UserFriendReqService userFriendReqService;
 	
 	@Autowired
 	private UserRef3rdService userRef3rdService;	
@@ -205,5 +212,67 @@ public class UserFriendController extends BaseController {
 		
 		return result;
 	}
-
+	
+	
+	/**
+	 * 好友申请通过或拒绝接口
+	 * @param request
+	 * @param userId
+	 * @param friendId
+	 * @param status
+	 * @return
+	 */
+	@RequestMapping(value = "post_friend_req", method = RequestMethod.POST)
+	public AppResultData<Object> postFriendReq(
+			HttpServletRequest request,
+			@RequestParam("user_id") Long userId,
+			@RequestParam("friend_id") Long friendId,
+			@RequestParam("status") Short status
+			) {
+	     // 1. 更新表 user_friend_req 表的状态 status
+	     // 2. 如果状态 = 1 ，说明同意为好友，则需要去操作 user_friends 插入相应的好友记录
+		if (status.equals((short)1)) {
+			UserFriends userFriends = userFriendService.initUserFriend();
+			userFriends.setUserId(userId);
+			userFriends.setFriendId(friendId);
+			userFriends.setAddTime(TimeStampUtil.getNowSecond());
+			userFriends.setUpdateTime(TimeStampUtil.getNowSecond());
+			userFriendService.insert(userFriends);
+		}
+		//3如果状态=2，说明被拒绝，则往userFriendReq表里面查入记录
+		if (status.equals((short)2)) {
+			UserFriendReq userFriendReq = userFriendReqService.initUserFriendReq();
+			userFriendReq.setUserId(userId);
+			userFriendReq.setStatus((short)2);
+			userFriendReq.setFriendId(friendId);
+			userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
+			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
+			userFriendReqService.insert(userFriendReq);
+		}
+		
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+	
+	    return result;
+	}
+	/**
+	 * 用户-获取好友申请列表
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "get_friend_reqs", method = RequestMethod.GET)
+	public AppResultData<Object> getFriendReqs(
+			@RequestParam("user_id") Long userId) {
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		List<UserFriendReqVo> listVo = new ArrayList<UserFriendReqVo>();
+		
+		List<UserFriendReq> list = userFriendReqService.selectByUserId(userId);
+		for (UserFriendReq item : list) {
+			UserFriendReqVo vo = new UserFriendReqVo();
+			vo = userFriendReqService.getFriendReqVo(item);
+			listVo.add(vo);
+		}
+		result.setData(listVo);
+		return result;
+	}
 }

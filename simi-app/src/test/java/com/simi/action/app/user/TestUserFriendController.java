@@ -14,13 +14,13 @@ import com.simi.action.app.JUnitActionBase;
 public class TestUserFriendController extends JUnitActionBase  {
 
 	@Test
-    public void testPostFriend() throws Exception {
+    public void testPpostFriendReq() throws Exception {
 
-		String url = "/app/user/post_friend.json";
+		String url = "/app/user/post_friend_req.json";
 		MockHttpServletRequestBuilder postRequest = post(url);
 		postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("mobile", "18611194655");
-	    postRequest = postRequest.param("name", "鲍总");
+	    postRequest = postRequest.param("friend_id", "50");
+	    postRequest = postRequest.param("status", "2");
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
 	    resultActions.andExpect(content().contentType(this.mediaType));
@@ -30,11 +30,11 @@ public class TestUserFriendController extends JUnitActionBase  {
 
     }
 	
-	@Test
+	/*@Test
     public void testgetFriend() throws Exception {
 
-		String url = "/app/user/get_friends.json";
-		String params = "?&user_id=18";
+		String url = "/app/user/get_friend_reqs.json";
+		String params = "?&user_id=32";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -43,13 +43,13 @@ public class TestUserFriendController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
+    }*/
 	
-	@Test
-    public void testgetSec() throws Exception {
+	/*@Test
+    public void addFriend() throws Exception {
 
-		String url = "/app/user/get_sec.json";
-		String params = "?&user_id=18";
+		String url = "/app/user/add_friend.json";
+		String params = "?&user_id=23&friend_id=100";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -58,7 +58,7 @@ public class TestUserFriendController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
+    }*/
 
 
 

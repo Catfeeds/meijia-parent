@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserFriendReqMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserFriendReq" >
+    <result column="id" property="id" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="friend_id" property="friendId" jdbcType="NUMERIC" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List">
+		id, user_id, friend_id, remarks, status ,add_time ,update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_friend_req
+		where tag_id = #{tagId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_friend_req
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByIsFirend" resultMap="BaseResultMap" parameterType="com.simi.vo.UserFriendSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_friend_req
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="friendId != null">
+			and friend_id = #{friendId,jdbcType=NUMERIC}
+		</if>
+	</select>
+  <insert id="insert" parameterType="com.simi.po.model.user.UserFriendReq" >
+    insert into user_friend_req (id, user_id, friend_id, 
+      remarks, status, add_time, 
+      update_time)
+    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{friendId,jdbcType=NUMERIC}, 
+      #{remarks,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, 
+      #{updateTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserFriendReq" >
+    insert into user_friend_req
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="friendId != null" >
+        friend_id,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="friendId != null" >
+        #{friendId,jdbcType=NUMERIC},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_friend_req
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserFriendReq">
+		update user_friend_req
+		<set>
+		 <if test="id != null" >
+        id = #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="friendId != null" >
+       friend_id = #{friendId,jdbcType=NUMERIC},
+      </if>
+      <if test="remarks != null" >
+       remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time =#{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+       update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+		
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserFriendReq">
+		update user_friend_req
+		set 
+        id = #{id,jdbcType=NUMERIC},
+        user_id = #{userId,jdbcType=NUMERIC},
+       friend_id = #{friendId,jdbcType=NUMERIC},
+        status = #{status,jdbcType=NUMERIC},
+        add_time =#{addTime,jdbcType=NUMERIC},
+       update_time = #{updateTime,jdbcType=NUMERIC},
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>
