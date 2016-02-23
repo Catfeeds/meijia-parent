@@ -298,11 +298,7 @@ public class CardController extends BaseController {
 					searchVo.setFriendId(newUserId);
 					UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);	
 					UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
-					if (userFriendReq != null) {
-						result.setStatus(Constants.ERROR_999);
-						result.setMsg(ConstantMsg.USER_IS_REQ);
-						return result;
-					}
+					
 					if (userFriend == null && userFriendReq == null) {
 						userFriendReq = userFriendReqService.initUserFriendReq();
 						userFriendReq.setUserId(newUserId);
