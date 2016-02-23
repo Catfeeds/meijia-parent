@@ -13,8 +13,11 @@ import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.AppResultData;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
 import com.simi.po.dao.user.UserFriendsMapper;
 import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
@@ -156,12 +159,24 @@ public class UserFriendServiceImpl implements UserFriendService {
 	@Override
 	public Boolean addFriends(Users u, Users friendUser) {
 		
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
 		if (u.getId().equals(friendUser.getId())) return true;
 		UserFriendSearchVo searchVo = new UserFriendSearchVo();
 		searchVo.setUserId(u.getId());
 		searchVo.setFriendId(friendUser.getId());
 		UserFriends userFriend = this.selectByIsFirend(searchVo);	
 		UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
+		if (userFriend != null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_IS_FRIEND);
+			return true;
+		}
+		if (userFriendReq != null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_IS_REQ);
+			return true;
+		}
 		if (userFriend == null && userFriendReq == null) {
 			userFriendReq = userFriendReqService.initUserFriendReq();
 			userFriendReq.setUserId(friendUser.getId());
