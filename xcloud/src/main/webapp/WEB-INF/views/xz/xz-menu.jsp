@@ -78,6 +78,7 @@
 				<a class="am-cf"
 				data-am-collapse="{target: '#collapse-nav-express'}"
 			>
+					
 					<span class="am-icon-file"></span>
 					快递管理
 					<span
@@ -86,7 +87,7 @@
 				</a>
 				<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-express">
 					<li>
-						<a href="admin-user.html" class="am-cf">
+						<a href="/xcloud/xz/express/list" class="am-cf">
 							<span
 							class="am-icon-bell"
 						></span>
@@ -95,13 +96,13 @@
 						</a>
 					</li>
 					<li>
-						<a href="admin-404.html">
+						<a href="/xcloud/xz/express/close" class="am-cf">
 							<span class="am-icon-plane"></span>
 							快递结算
 						</a>
 					</li>
 					<li>
-						<a href="admin-log.html">
+						<a href="/xcloud/xz/express/service" class="am-cf">
 							<span class="am-icon-calendar"></span>
 							快递服务商
 						</a>
