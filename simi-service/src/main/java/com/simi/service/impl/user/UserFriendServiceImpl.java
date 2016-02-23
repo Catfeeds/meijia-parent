@@ -157,7 +157,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 	}	
 	
 	@Override
-	public Boolean addFriends(Users u, Users friendUser) {
+	public Boolean addFriendReq(Users u, Users friendUser) {
 		
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
@@ -205,5 +205,40 @@ public class UserFriendServiceImpl implements UserFriendService {
 		}*/
 		return true;
 	}
+	
+	@Override
+	public Boolean addFriends(Users u, Users friendUser) {
+		
+		
+		if (u.getId().equals(friendUser.getId())) return true;
+		
+		UserFriendSearchVo searchVo = new UserFriendSearchVo();
+		searchVo.setUserId(u.getId());
+		searchVo.setFriendId(friendUser.getId());
+		UserFriends userFriend = this.selectByIsFirend(searchVo);		
+		if (userFriend == null) {
+			userFriend = this.initUserFriend();
+			userFriend.setUserId(u.getId());
+			userFriend.setFriendId(friendUser.getId());
+			userFriend.setAddTime(TimeStampUtil.getNowSecond());
+			userFriend.setUpdateTime(TimeStampUtil.getNowSecond());
+			this.insert(userFriend);
+		}
+		
+		searchVo = new UserFriendSearchVo();
+		searchVo.setUserId(friendUser.getId());
+		searchVo.setFriendId(u.getId());
+		userFriend = this.selectByIsFirend(searchVo);
+		if (userFriend == null) {
+			userFriend = this.initUserFriend();
+			userFriend.setUserId(friendUser.getId());
+			userFriend.setFriendId(u.getId());
+			userFriend.setAddTime(TimeStampUtil.getNowSecond());
+			userFriend.setUpdateTime(TimeStampUtil.getNowSecond());
+			this.insert(userFriend);
+		}
+		
+		return true;
+	}	
 	
 }

@@ -34,4 +34,6 @@ public interface UserFriendService {
 
 	List<UserFriendViewVo> changeToUserFriendViewVos(List<UserFriends> userFriends);
 
+	Boolean addFriendReq(Users u, Users friendUser);
+
 }

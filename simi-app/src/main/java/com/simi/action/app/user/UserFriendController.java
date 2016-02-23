@@ -87,7 +87,7 @@ public class UserFriendController extends BaseController {
 			return result;
 		}
 
-		userFriendService.addFriends(u, friendUser);
+		userFriendService.addFriendReq(u, friendUser);
 		
 		return result;
 	}
@@ -139,7 +139,7 @@ public class UserFriendController extends BaseController {
 			//2. 发出邀请短信.
 		}
 
-		userFriendService.addFriends(u, friendUser);
+		userFriendService.addFriendReq(u, friendUser);
 		
 		return result;
 	}
