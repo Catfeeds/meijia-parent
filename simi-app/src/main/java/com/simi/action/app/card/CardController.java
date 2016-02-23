@@ -32,6 +32,8 @@ import com.simi.po.model.card.CardComment;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.user.UserFriendReq;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.CardAsyncService;
@@ -43,11 +45,14 @@ import com.simi.service.card.CardImgsService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.dict.DictUtil;
+import com.simi.service.user.UserFriendReqService;
+import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.LinkManVo;
 
@@ -86,6 +91,12 @@ public class CardController extends BaseController {
 	
 	@Autowired
 	private UserRefSecService userRefSecService;
+	
+	@Autowired
+	private UserFriendService userFriendService;
+	
+	@Autowired
+	private UserFriendReqService userFriendReqService;
 
 	// 卡片提交接口
 	/**
@@ -279,7 +290,27 @@ public class CardController extends BaseController {
 					
 					
 					//相互加为好友. 异步操作
-					usersAsyncService.addFriends(u, newUser);
+					//usersAsyncService.addFriends(u, newUser);
+					
+					// 如果不是好友，则自动发出好友请求.
+					UserFriendSearchVo searchVo = new UserFriendSearchVo();
+					searchVo.setUserId(userId);
+					searchVo.setFriendId(newUserId);
+					UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);	
+					UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
+					if (userFriendReq != null) {
+						result.setStatus(Constants.ERROR_999);
+						result.setMsg(ConstantMsg.USER_IS_REQ);
+						return result;
+					}
+					if (userFriend == null && userFriendReq == null) {
+						userFriendReq = userFriendReqService.initUserFriendReq();
+						userFriendReq.setUserId(newUserId);
+						userFriendReq.setFriendId(userId);
+						userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
+						userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
+						userFriendReqService.insert(userFriendReq);
+					}
 				}
 			}
 		}

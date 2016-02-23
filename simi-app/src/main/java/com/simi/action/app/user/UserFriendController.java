@@ -243,13 +243,30 @@ public class UserFriendController extends BaseController {
 			userFriends.setUpdateTime(TimeStampUtil.getNowSecond());
 			userFriendService.insert(userFriends);
 			
+			userFriends = userFriendService.initUserFriend();
+			userFriends.setUserId(friendId);
+			userFriends.setFriendId(userId);
+			userFriends.setAddTime(TimeStampUtil.getNowSecond());
+			userFriends.setUpdateTime(TimeStampUtil.getNowSecond());
+			userFriendService.insert(userFriends);
+			
 			UserFriendSearchVo searchVo = new UserFriendSearchVo();
 			searchVo.setUserId(userId);
 			searchVo.setFriendId(friendId);
 			
 			UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
-			userFriendReq.setStatus((short)1);
-		    userFriendReqService.updateByPrimaryKeySelective(userFriendReq);
+			if (userFriendReq != null) {
+				userFriendReq.setStatus((short)1);
+			    userFriendReqService.updateByPrimaryKeySelective(userFriendReq);	
+			}
+			
+			searchVo.setUserId(friendId);
+			searchVo.setFriendId(userId);
+			userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
+			if (userFriendReq != null) {
+				userFriendReq.setStatus((short)1);
+			    userFriendReqService.updateByPrimaryKeySelective(userFriendReq);	
+			}
 			
 		}
 		//3如果状态=2，说明被拒绝，则往userFriendReq表里面查入记录
