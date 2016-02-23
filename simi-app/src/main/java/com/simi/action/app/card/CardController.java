@@ -293,6 +293,9 @@ public class CardController extends BaseController {
 					//usersAsyncService.addFriends(u, newUser);
 					
 					// 如果不是好友，则自动发出好友请求.
+					
+					if (userId.equals(newUserId)) continue;
+					
 					UserFriendSearchVo searchVo = new UserFriendSearchVo();
 					searchVo.setUserId(userId);
 					searchVo.setFriendId(newUserId);
