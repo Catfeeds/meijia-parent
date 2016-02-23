@@ -43,11 +43,11 @@ public class TestUserFriendController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }*/
-/*	@Test
+	/*@Test
     public void addFriend() throws Exception {
 
 		String url = "/app/user/add_friend.json";
-		String params = "?&user_id=23&friend_id=100";
+		String params = "?&user_id=23&friend_id=295";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
