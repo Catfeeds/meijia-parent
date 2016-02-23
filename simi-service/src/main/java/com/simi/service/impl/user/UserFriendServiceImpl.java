@@ -164,8 +164,8 @@ public class UserFriendServiceImpl implements UserFriendService {
 		UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
 		if (userFriend == null && userFriendReq == null) {
 			userFriendReq = userFriendReqService.initUserFriendReq();
-			userFriendReq.setUserId(u.getId());
-			userFriendReq.setFriendId(friendUser.getId());
+			userFriendReq.setUserId(friendUser.getId());
+			userFriendReq.setFriendId(u.getId());
 			userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
 			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
 			userFriendReqService.insert(userFriendReq);

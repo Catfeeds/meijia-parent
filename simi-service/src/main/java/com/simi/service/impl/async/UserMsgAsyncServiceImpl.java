@@ -464,7 +464,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 				toMsg.setParams(fromUserId.toString());
 				toMsg.setGotoUrl("");
 				toMsg.setTitle("好友添加申请");		
-				toMsg.setSummary(fromUser.getName()+"请求加为好友");
+				toMsg.setSummary(fromUser.getName()+"请求加你为好友");
 				toMsg.setIconUrl(fromUser.getHeadImg());
 				if (toMsg.getMsgId() > 0L) {
 					toMsg.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -472,6 +472,58 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 				} else {
 					userMsgService.insert(toMsg);
 				}
+              //发送推送消息(给接收者)
+    			/*UserPushBind userPushBind = userPushBindService.selectByUserId(toUserId);
+    			
+    			if (userPushBind == null ) continue;
+    			if (StringUtil.isEmpty(userPushBind.getClientId())) continue;
+    			
+    			HashMap<String, String> params = new HashMap<String, String>();
+    			
+    			HashMap<String, String> tranParams = new HashMap<String, String>();
+
+    			tranParams.put("is_show", "true");
+    			tranParams.put("action", "msg");
+    			tranParams.put("card_id", "0");
+    			tranParams.put("card_type", "0");
+    			tranParams.put("service_time", "");
+    			tranParams.put("remind_time", "");
+    			tranParams.put("remind_title", "好友申请");
+    			tranParams.put("remind_content", fromUser.getName()+"请求加你为好友");
+    			
+    			ObjectMapper objectMapper = new ObjectMapper();
+    			
+    			String jsonParams = "";
+    			try {
+    				jsonParams = objectMapper.writeValueAsString(tranParams);
+    			} catch (JsonProcessingException e1) {
+    				// TODO Auto-generated catch block
+    				e1.printStackTrace();
+    			}	
+    			
+    			params.put("transmissionContent", jsonParams);
+    			params.put("cid", userPushBind.getClientId());
+    			
+    			if (userPushBind.getDeviceType().equals("ios")) {
+    				try {
+    					PushUtil.IOSPushToSingle(params, "notification");
+    				} catch (Exception e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			
+    			if (userPushBind.getDeviceType().equals("android")) {
+    				try {
+    					PushUtil.AndroidPushToSingle(params);
+    				} catch (Exception e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}
+    			
+    		}*/
+
 		return new AsyncResult<Boolean>(true);
 	}
 	@Async

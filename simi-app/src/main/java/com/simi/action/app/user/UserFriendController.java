@@ -279,8 +279,6 @@ public class UserFriendController extends BaseController {
 			listVo.add(vo);
 		}
 		result.setData(listVo);
-		
-		
 
 		return result;
 	}
