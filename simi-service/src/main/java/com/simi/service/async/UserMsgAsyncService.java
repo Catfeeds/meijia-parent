@@ -16,6 +16,10 @@ public interface UserMsgAsyncService {
 
 	Future<Boolean> newLeaveMsg(Long userId, Long leaveId);
 
+	Future<Boolean> newFriendMsg(Long fromUserId,Long toUserId);
+	
+	Future<Boolean> newFriendReqMsg(Long fromUserId, Long toUserId, Short status);
+
 
 	
 }

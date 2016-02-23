@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
@@ -34,7 +35,10 @@ public class UserFriendServiceImpl implements UserFriendService {
 	private UserFriendsMapper userFriendsMapper;
 	
 	@Autowired
-	private UserRef3rdService userRef3rdService;		
+	private UserRef3rdService userRef3rdService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -166,6 +170,11 @@ public class UserFriendServiceImpl implements UserFriendService {
 			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
 			userFriendReqService.insert(userFriendReq);
 		}
+		Long fromUserId = u.getId();
+		Long toUserId = friendUser.getId();
+		//生成邀请好友消息
+		userMsgAsyncService.newFriendMsg(fromUserId,toUserId);
+				
 		/*searchVo = new UserFriendSearchVo();
 		searchVo.setUserId(friendUser.getId());
 		searchVo.setFriendId(u.getId());

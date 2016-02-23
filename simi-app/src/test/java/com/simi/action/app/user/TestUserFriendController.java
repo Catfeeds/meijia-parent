@@ -29,7 +29,6 @@ public class TestUserFriendController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
-	
 	/*@Test
     public void testgetFriend() throws Exception {
 
@@ -44,8 +43,7 @@ public class TestUserFriendController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }*/
-	
-	/*@Test
+/*	@Test
     public void addFriend() throws Exception {
 
 		String url = "/app/user/add_friend.json";
@@ -57,11 +55,5 @@ public class TestUserFriendController extends JUnitActionBase  {
 	    resultActions.andExpect(status().isOk());
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-
     }*/
-
-
-
-
-
 }

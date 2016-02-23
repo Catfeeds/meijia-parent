@@ -22,6 +22,7 @@ import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
@@ -50,6 +51,9 @@ public class UserFriendController extends BaseController {
 	
 	@Autowired
 	private UserRefSecService userRefSecService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 	
 	
 	/**
@@ -249,6 +253,8 @@ public class UserFriendController extends BaseController {
 			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
 			userFriendReqService.insert(userFriendReq);
 		}
+		//生成好友同意或拒绝的消息
+		userMsgAsyncService.newFriendReqMsg(userId,friendId,status);
 		
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 	
@@ -273,6 +279,9 @@ public class UserFriendController extends BaseController {
 			listVo.add(vo);
 		}
 		result.setData(listVo);
+		
+		
+
 		return result;
 	}
 }

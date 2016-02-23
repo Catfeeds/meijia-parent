@@ -403,4 +403,156 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		return new AsyncResult<Boolean>(true);
 	}
 
+	@Async
+	@Override
+	public Future<Boolean> newFriendMsg(Long fromUserId, Long toUserId) {
+		        //需要分别往发送者和接收者都存储。
+				Users fromUser = usersService.selectByPrimaryKey(fromUserId);
+				Users toUser = usersService.selectByPrimaryKey(toUserId);
+				
+				//1. 往发送者存储消息
+				UserMsgSearchVo fromSearchVo = new UserMsgSearchVo();
+				fromSearchVo.setFromUserId(fromUserId);
+				fromSearchVo.setToUserId(toUserId);
+				fromSearchVo.setCategory("app");
+				fromSearchVo.setAction("friends");
+				fromSearchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+				fromSearchVo.setEndTime(TimeStampUtil.getEndOfToday());
+				List<UserMsg> fromList = userMsgService.selectBySearchVo(fromSearchVo);
+				
+				UserMsg fromMsg = userMsgService.initUserMsg();
+				if (!fromList.isEmpty()) {
+					fromMsg = fromList.get(0);
+				}
+				fromMsg.setUserId(fromUserId);
+				fromMsg.setFromUserId(fromUserId);
+				fromMsg.setToUserId(toUserId);
+				fromMsg.setCategory("app");
+				fromMsg.setAction("friends");
+				fromMsg.setParams(toUserId.toString());
+				fromMsg.setGotoUrl("");
+				fromMsg.setTitle("好友添加提醒");		
+				fromMsg.setSummary("你添加了"+toUser.getName()+"为好友");
+				fromMsg.setIconUrl(toUser.getHeadImg());
+				if (fromMsg.getMsgId() > 0L) {
+					fromMsg.setUpdateTime(TimeStampUtil.getNowSecond());
+					userMsgService.updateByPrimaryKey(fromMsg);
+				} else {
+					userMsgService.insert(fromMsg);
+				}
+		
+				//2. 往接收者存储消息
+				UserMsgSearchVo toSearchVo = new UserMsgSearchVo();
+				toSearchVo.setFromUserId(toUserId);
+				toSearchVo.setToUserId(fromUserId);
+				toSearchVo.setCategory("app");
+				toSearchVo.setAction("friends");
+				toSearchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+				toSearchVo.setEndTime(TimeStampUtil.getEndOfToday());
+				List<UserMsg> toList = userMsgService.selectBySearchVo(toSearchVo);
+				
+				UserMsg toMsg = userMsgService.initUserMsg();
+				if (!toList.isEmpty()) {
+					toMsg = toList.get(0);
+				}
+				
+				toMsg.setUserId(toUserId);
+				toMsg.setFromUserId(toUserId);
+				toMsg.setToUserId(fromUserId);
+				toMsg.setCategory("app");
+				toMsg.setAction("friends");
+				toMsg.setParams(fromUserId.toString());
+				toMsg.setGotoUrl("");
+				toMsg.setTitle("好友添加申请");		
+				toMsg.setSummary(fromUser.getName()+"请求加为好友");
+				toMsg.setIconUrl(fromUser.getHeadImg());
+				if (toMsg.getMsgId() > 0L) {
+					toMsg.setUpdateTime(TimeStampUtil.getNowSecond());
+					userMsgService.updateByPrimaryKey(toMsg);
+				} else {
+					userMsgService.insert(toMsg);
+				}
+		return new AsyncResult<Boolean>(true);
+	}
+	@Async
+	@Override
+	public Future<Boolean> newFriendReqMsg(Long fromUserId, Long toUserId,Short status) {
+		        //需要分别往发送者和接收者都存储。
+				Users fromUser = usersService.selectByPrimaryKey(fromUserId);
+				Users toUser = usersService.selectByPrimaryKey(toUserId);
+				
+				//1. 往发送者存储消息
+				UserMsgSearchVo fromSearchVo = new UserMsgSearchVo();
+				fromSearchVo.setFromUserId(fromUserId);
+				fromSearchVo.setToUserId(toUserId);
+				fromSearchVo.setCategory("app");
+				fromSearchVo.setAction("friends");
+				fromSearchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+				fromSearchVo.setEndTime(TimeStampUtil.getEndOfToday());
+				List<UserMsg> fromList = userMsgService.selectBySearchVo(fromSearchVo);
+				
+				UserMsg fromMsg = userMsgService.initUserMsg();
+				if (!fromList.isEmpty()) {
+					fromMsg = fromList.get(0);
+				}
+				fromMsg.setUserId(fromUserId);
+				fromMsg.setFromUserId(fromUserId);
+				fromMsg.setToUserId(toUserId);
+				fromMsg.setCategory("app");
+				fromMsg.setAction("friends");
+				fromMsg.setParams(toUserId.toString());
+				fromMsg.setGotoUrl("");
+				fromMsg.setTitle("好友申请");	
+				if (status.equals((short)1)) {
+					fromMsg.setSummary(toUser.getName()+"已经同意并添加了你为好友");	
+				}
+				if (status.equals((short)2)) {
+					fromMsg.setSummary(toUser.getName()+"拒绝了添加你为好友");	
+				}
+				
+				fromMsg.setIconUrl(toUser.getHeadImg());
+				if (fromMsg.getMsgId() > 0L) {
+					fromMsg.setUpdateTime(TimeStampUtil.getNowSecond());
+					userMsgService.updateByPrimaryKey(fromMsg);
+				} else {
+					userMsgService.insert(fromMsg);
+				}
+		
+				//2. 往接收者存储消息
+				UserMsgSearchVo toSearchVo = new UserMsgSearchVo();
+				toSearchVo.setFromUserId(toUserId);
+				toSearchVo.setToUserId(fromUserId);
+				toSearchVo.setCategory("app");
+				toSearchVo.setAction("friends");
+				toSearchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+				toSearchVo.setEndTime(TimeStampUtil.getEndOfToday());
+				List<UserMsg> toList = userMsgService.selectBySearchVo(toSearchVo);
+				
+				UserMsg toMsg = userMsgService.initUserMsg();
+				if (!toList.isEmpty()) {
+					toMsg = toList.get(0);
+				}
+				toMsg.setUserId(toUserId);
+				toMsg.setFromUserId(toUserId);
+				toMsg.setToUserId(fromUserId);
+				toMsg.setCategory("app");
+				toMsg.setAction("friends");
+				toMsg.setParams(fromUserId.toString());
+				toMsg.setGotoUrl("");
+				toMsg.setTitle("好友申请");		
+				if (status.equals((short)1)) {
+					toMsg.setSummary("你已经同意并添加"+fromUser.getName()+"为好友");
+				}
+				if (status.equals((short)2)) {
+					toMsg.setSummary("你拒绝了添加"+fromUser.getName()+"为好友");
+				}
+				toMsg.setIconUrl(fromUser.getHeadImg());
+				if (toMsg.getMsgId() > 0L) {
+					toMsg.setUpdateTime(TimeStampUtil.getNowSecond());
+					userMsgService.updateByPrimaryKey(toMsg);
+				} else {
+					userMsgService.insert(toMsg);
+				}
+		return new AsyncResult<Boolean>(true);
+	}
 }
