@@ -1,18 +1,35 @@
 package com.simi.service.impl.user;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simi.service.data.WeatherService;
+import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.card.CardListVo;
+import com.simi.vo.user.UserMsgVo;
 import com.simi.po.dao.user.UserMsgMapper;
+import com.simi.po.model.card.Cards;
+import com.simi.po.model.data.Weathers;
 import com.simi.po.model.user.UserMsg;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.GsonUtil;
+import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.BaiduMapUtil;
+import com.meijia.utils.weather.WeatherDataVo;
+import com.meijia.utils.weather.WeatherIndexVo;
 
 @Service
 public class UserMsgServiceImpl implements UserMsgService {
@@ -22,6 +39,9 @@ public class UserMsgServiceImpl implements UserMsgService {
 	
 	@Autowired
 	private UserMsgMapper userMsgMapper;
+	
+	@Autowired
+	private WeatherService weatherService;	
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -92,6 +112,70 @@ public class UserMsgServiceImpl implements UserMsgService {
 	public List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo) {
 		List<UserMsg> result = userMsgMapper.selectBySearchVo(searchVo);
 		return result;
+	}
+	
+	@Override
+	public UserMsgVo getWeather(String serviceDate, String lat, String lng) {
+		
+		UserMsgVo vo = new UserMsgVo();
+		
+		Date weatherDate = DateUtil.parse(serviceDate);
+		String todayStr = DateUtil.getToday();
+		
+		int days = DateUtil.getDateSpace(todayStr, serviceDate);
+		
+		if (days < 0 || days > 3) {
+			return vo;
+		}
+		
+		//如果没有地理位置信息，默认则为北京市
+		String cityName = "北京市";
+		if (StringUtil.isEmpty(lat) || StringUtil.isEmpty(lng)) {
+			cityName = "北京市";
+		} else {
+			cityName = BaiduMapUtil.getCityByPoi(lat, lng);
+		}
+		
+		if (StringUtil.isEmpty(cityName)) cityName = "北京市";
+		
+		Long cityId = 0L;
+		cityId = DictUtil.getCityId(cityName);
+		
+		if (cityId.equals(0L)) cityId = 2L;
+		
+		
+		Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, weatherDate);
+		
+		if (weatherInfo == null) return vo;
+		
+		List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
+		
+		if (weatherDatas.size() < days) return vo;
+		WeatherDataVo curItem = weatherDatas.get(days);
+		
+		vo.setMsgId(0L);
+		vo.setUserId(0L);
+		vo.setCategory("h5");
+		vo.setAction("weather");
+		vo.setParams("");
+		vo.setGotoUrl("http://m.weather.com.cn/mweather");
+		vo.setTitle(cityName);
+		
+		String temperature = curItem.getTemperature();
+		temperature =  temperature.replaceAll("/", "~");
+		vo.setSummary(curItem.getWeather() + "," + temperature + "," + curItem.getWind());
+		
+		int hour = DateUtil.getHours();
+		if (hour >=6 && hour < 18 ) {
+			vo.setIconUrl(curItem.getDayPictureUrl());
+		} else {
+			vo.setIconUrl(curItem.getNightPictureUrl());
+		}
+
+		vo.setMsgTime(weatherInfo.getLastTime());
+		
+		
+		return vo;
 	}
 		
 }

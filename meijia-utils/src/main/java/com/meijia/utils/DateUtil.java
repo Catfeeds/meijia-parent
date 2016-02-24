@@ -517,6 +517,36 @@ public class DateUtil {
 		c.setTime(day);		
 		return c.get(Calendar.MONTH) + 1;
 	}	
+	
+	/**
+	 * 得到两个日期相差的天数  
+	 * @param date1 <String>
+	 * @param date2 <String>
+	 * @return int
+	 * @throws ParseException
+	*/
+   public static int getDateSpace(String date1, String date2) {
+
+       Calendar calst = Calendar.getInstance();;
+       Calendar caled = Calendar.getInstance();
+
+       calst.setTime(DateUtil.parse(date1));
+       caled.setTime(DateUtil.parse(date2));
+
+        //设置时间为0时   
+        calst.set(Calendar.HOUR_OF_DAY, 0);   
+        calst.set(Calendar.MINUTE, 0);   
+        calst.set(Calendar.SECOND, 0);   
+        caled.set(Calendar.HOUR_OF_DAY, 0);   
+        caled.set(Calendar.MINUTE, 0);   
+        caled.set(Calendar.SECOND, 0);   
+       //得到两个日期相差的天数   
+        int days = ((int)(caled.getTime().getTime()/1000)-(int)(calst.getTime().getTime()/1000))/3600/24;   
+        
+       return days;   
+   }
+
+	
 
 	/**
 	 * 根据当前月份获得季度
@@ -541,7 +571,7 @@ public class DateUtil {
 //		String dateStr = "11-五月-2015";
 //		System.out.println(DateUtil.isDate(dateStr));
 		
-		System.out.println(DateUtil.compare("2016-01-27", "2016-01-26"));
+		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
 		
 	}
 }

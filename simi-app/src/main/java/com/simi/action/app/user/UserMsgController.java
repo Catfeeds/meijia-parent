@@ -41,7 +41,9 @@ public class UserMsgController extends BaseController {
 	public AppResultData<Object> getMsg(
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "service_date", required = false, defaultValue = "") String serviceDate,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "lat", required = false, defaultValue = "") String lat,
+			@RequestParam(value = "lng", required = false, defaultValue = "") String lng
 			) {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
@@ -98,6 +100,18 @@ public class UserMsgController extends BaseController {
 		}
 		
 		result.setData(resultList);
+		
+		if (page !=1 ) return result;
+		
+		//处理天气
+		//2. 如果不是当天，则不需要天气类卡片
+		UserMsgVo weatherVo = userMsgService.getWeather(serviceDate, lat, lng);
+		if (weatherVo != null) {
+			resultList.add(0, weatherVo);
+			result.setData(resultList);
+		}
+		
+		
 		return result;
 	}
 }

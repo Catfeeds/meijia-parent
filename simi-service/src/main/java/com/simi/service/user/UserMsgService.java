@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserMsg;
 import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.user.UserMsgVo;
 
 public interface UserMsgService {
 
@@ -27,5 +28,7 @@ public interface UserMsgService {
 	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
 
 	PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize);
+
+	UserMsgVo getWeather(String serviceDate, String lat, String lng);
 
 }
