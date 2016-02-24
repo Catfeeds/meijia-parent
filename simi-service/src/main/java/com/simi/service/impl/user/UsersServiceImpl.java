@@ -155,6 +155,9 @@ public class UsersServiceImpl implements UsersService {
 
 			// 默认加固定客服用户为好友
 			userAsyncService.addDefaultFriends(u.getId());
+			
+			// 发送默认欢迎消息
+			userMsgAsyncService.newUserMsg(u.getId());
 		}
 		return u;
 	}
