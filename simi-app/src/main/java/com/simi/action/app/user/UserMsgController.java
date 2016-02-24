@@ -106,7 +106,7 @@ public class UserMsgController extends BaseController {
 		//处理天气
 		//2. 如果不是当天，则不需要天气类卡片
 		UserMsgVo weatherVo = userMsgService.getWeather(serviceDate, lat, lng);
-		if (weatherVo != null) {
+		if (weatherVo != null && !StringUtil.isEmpty(weatherVo.getTitle())) {
 			resultList.add(0, weatherVo);
 			result.setData(resultList);
 		}

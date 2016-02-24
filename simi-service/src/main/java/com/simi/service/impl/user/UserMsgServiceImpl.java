@@ -143,8 +143,8 @@ public class UserMsgServiceImpl implements UserMsgService {
 		
 		if (cityId.equals(0L)) cityId = 2L;
 		
-		
-		Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, weatherDate);
+		Date today = DateUtil.getNowOfDate();
+		Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, today);
 		
 		if (weatherInfo == null) return vo;
 		
@@ -162,7 +162,7 @@ public class UserMsgServiceImpl implements UserMsgService {
 		vo.setTitle(cityName);
 		
 		String temperature = curItem.getTemperature();
-		temperature =  temperature.replaceAll("/", "~");
+		temperature =  temperature.replaceAll("/", " ~ ");
 		vo.setSummary(curItem.getWeather() + "," + temperature + "," + curItem.getWind());
 		
 		int hour = DateUtil.getHours();
