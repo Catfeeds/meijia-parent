@@ -77,7 +77,7 @@
 						<tr>
 							<td>${ item.no}</td>
 							<td>${ item.name}</td>
-							<td><img src="${ item.logo }?w=100&h=100" /></td>
+							<td><img src="${ item.logo }" /></td>
 							<td>${ item.appType}</td>
 							<td>${ item.openType}</td>
 							<td>${ item.action}</td>

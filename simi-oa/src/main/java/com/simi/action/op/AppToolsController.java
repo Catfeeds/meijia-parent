@@ -115,7 +115,7 @@ public class AppToolsController extends BaseController {
 
 		}
 		if (!StringUtil.isEmpty(imgUrl)) {
-			appTools.setLogo(imgUrl);
+			appTools.setLogo(imgUrl+"?p=0");
 		}
 		// 更新或者新增
 		if (id != null && id > 0) {
