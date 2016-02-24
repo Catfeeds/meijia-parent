@@ -155,12 +155,12 @@
 								<div class="row">
 									<div class="col-md-2" align="right">
 										<label class="radio"> <form:radiobutton
-												path="isDefault" value="0" />是
+												path="isDefault" value="1" />是
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton
-												path="isDefault" value="1" />否
+												path="isDefault" value="0" />否
 										</label>
 									</div>
 								</div>
@@ -172,12 +172,12 @@
 								<div class="row">
 									<div class="col-md-2" align="right">
 										<label class="radio"> <form:radiobutton
-												path="isDel" value="0" />可以
+												path="isDel" value="1" />可以
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton
-												path="isDel" value="1" />不可以
+												path="isDel" value="0" />不可以
 										</label>
 									</div>
 								</div>

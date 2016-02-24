@@ -84,18 +84,18 @@
 							<td>${ item.params}</td>
 							<td><c:choose>
 									<c:when test="${item.isDefault  == 0}">
-														是
+														否
 												</c:when>
 									<c:when test="${item.isDefault  == 1}">
-														否
+														是
 									</c:when>
 							</c:choose></td> 
 							<td><c:choose>
 									<c:when test="${item.isDel  == 0}">
-														可以
+														不可以
 												</c:when>
 									<c:when test="${item.isDel  == 1}">
-														不可以
+														可以
 									</c:when>
 							</c:choose></td> 
 							<td><c:choose>
