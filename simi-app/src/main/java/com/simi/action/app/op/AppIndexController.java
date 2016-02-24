@@ -83,7 +83,7 @@ public class AppIndexController extends BaseController {
 	        }  
 	        //把set集合遍历添加在list中  
 	        for (Iterator<AppTools> it = set.iterator(); it.hasNext();){  
-	            list.addAll(list);
+	            list.add(it.next());
 	        }  
 	       
 		AppResultData<Object> result = new AppResultData<Object>(
