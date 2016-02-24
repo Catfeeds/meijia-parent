@@ -44,6 +44,13 @@
 		order by no asc
 	</select>
 	
+	<select id="selectByAppTypeAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from app_tools 
+		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0 
+		order by no asc
+	</select>
 	<select id="selectByAppTypeAndStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />

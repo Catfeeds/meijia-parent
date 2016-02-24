@@ -36,7 +36,7 @@ public class ApptoolsController extends BaseController {
 			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType,
 			@RequestParam("user_id") Long userId) {
 		
-		List<AppTools> appTools = appToolsService.selectByAppType(appType);
+		List<AppTools> appTools = appToolsService.selectByAppTypeAll(appType);
          
 		List<AppToolsVo> vo = new ArrayList<AppToolsVo>();
 		

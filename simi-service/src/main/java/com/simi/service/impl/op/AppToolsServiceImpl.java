@@ -130,5 +130,12 @@ public class AppToolsServiceImpl implements AppToolsService {
 		
 		return vo;
 	}
+
+
+	@Override
+	public List<AppTools> selectByAppTypeAll(String appType) {
+
+		return appToolsMapper.selectByAppTypeAll(appType);
+	}
 	
 }
