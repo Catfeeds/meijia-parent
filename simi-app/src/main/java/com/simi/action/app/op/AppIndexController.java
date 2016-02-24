@@ -76,7 +76,7 @@ public class AppIndexController extends BaseController {
 	        //新的list集合，用来放最后的结果集  
 	        List<AppTools>  list=new ArrayList<AppTools>();  
 	        //把追加到一起的list循环放入set集合中  
-	        Set<AppTools> set=new HashSet<AppTools>();  
+	        /*Set<AppTools> set=new HashSet<AppTools>();  
 	        for (int i = 0; i < appToolsDList.size(); i++) {  
 	            AppTools str=appToolsDList.get(i);  
 	            set.add(str);             
@@ -84,7 +84,11 @@ public class AppIndexController extends BaseController {
 	        //把set集合遍历添加在list中  
 	        for (Iterator<AppTools> it = set.iterator(); it.hasNext();){  
 	            list.add(it.next());
-	        }  
+	        }  */
+	        for (int i = 0; i < appToolsDList.size(); i++) {
+	        	AppTools appToolsD = appToolsDList.get(i);
+	        	list.add(appToolsD);
+			}
 	       
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
