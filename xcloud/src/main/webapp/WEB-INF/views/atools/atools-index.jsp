@@ -16,6 +16,7 @@
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>"
 	rel="stylesheet"
 >
+<link href="<c:url value='/assets/js/switch/amazeui.switch.css'/>" rel="stylesheet">	
 
 
 </head>
@@ -111,14 +112,7 @@
 									<td>
 										<div class="am-btn-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
-													<span class="am-icon-upload"></span> 启用
-												</button>
-												<button
-													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-												>
-													<span class="am-icon-download"></span> 停用
-												</button>
+												<input id="alive" type="checkbox" checked data-on-color="success" >
 											</div>
 										</div>
 									</td>
@@ -179,6 +173,7 @@
 		<script
 			src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"
 		></script>
-		<script src="<c:url value='/assets/js/xcloud/staffs/staff-list.js'/>"></script>
+		<script src="<c:url value='/assets/js/switch/amazeui.switch.min.js'/>"></script>
+		<script src="<c:url value='/assets/js/xcloud/atools/index.js'/>"></script>
 </body>
 </html>

@@ -1,0 +1,1 @@
+$('#alive').not('[data-switch-no-init]').bootstrapSwitch();
