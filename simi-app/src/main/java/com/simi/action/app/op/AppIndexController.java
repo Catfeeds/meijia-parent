@@ -89,7 +89,7 @@ public class AppIndexController extends BaseController {
 	        	AppTools appToolsD = appToolsDList.get(i);
 	        	list.add(appToolsD);
 			}
-	       
+	    //   list.addAll(appToolsDList);
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
 		

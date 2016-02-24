@@ -11,7 +11,9 @@ import com.simi.service.op.AppToolsService;
 import com.simi.service.op.OpChannelService;
 import com.simi.vo.po.AppToolsVo;
 import com.simi.po.dao.op.AppToolsMapper;
+import com.simi.po.dao.op.UserAppToolsMapper;
 import com.simi.po.model.op.AppTools;
+import com.simi.po.model.op.UserAppTools;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 
@@ -20,6 +22,9 @@ public class AppToolsServiceImpl implements AppToolsService {
 
 	@Autowired
 	private AppToolsMapper appToolsMapper;
+	
+	@Autowired
+	private UserAppToolsMapper userAppToolsMapper;
 	
 	@Autowired
 	private OpChannelService opChannelService;		
@@ -106,13 +111,22 @@ public class AppToolsServiceImpl implements AppToolsService {
 	}
 
 	@Override
-	public AppToolsVo getAppToolsVo(AppTools item) {
+	public AppToolsVo getAppToolsVo(AppTools item,Long userId) {
 		
 		AppToolsVo vo = new AppToolsVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		
 		//添加时间返回‘yyyy-mm-dd’
 		Long addTime = item.getAddTime()*1000;
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-MM-dd"));
+		
+		//应用状态
+		vo.setStatus((short)1);
+		UserAppTools userAppTools = userAppToolsMapper.selectByUserIdAndTid(userId,item.gettId());
+		if (userAppTools != null) {
+		vo.setStatus(userAppTools.getStatus());	
+		}
 		
 		return vo;
 	}

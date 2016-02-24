@@ -6,6 +6,9 @@ public class AppToolsVo extends AppTools {
 
 	//添加时间戳
 	private String addTimeStr ;
+	
+	//应用状态
+	private Short status;
 
 	public String getAddTimeStr() {
 		return addTimeStr;
@@ -13,6 +16,14 @@ public class AppToolsVo extends AppTools {
 
 	public void setAddTimeStr(String addTimeStr) {
 		this.addTimeStr = addTimeStr;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 
 }

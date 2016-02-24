@@ -17,6 +17,16 @@
     from user_app_tools
     where id = #{id,jdbcType=NUMERIC}
   </select>
+
+ <select id="selectByUserIdAndTid" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_app_tools
+    where user_id = #{0} and t_id= #{1}
+    order by add_time desc
+    limit 1
+  </select>
+  
   <select id="selectByUserIdAndStatus" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />

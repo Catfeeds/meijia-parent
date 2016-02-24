@@ -20,4 +20,6 @@ public interface UserAppToolsMapper {
 	List<UserAppTools> selectByUserIdAndStatus(Long userId);
 
 	List<UserAppTools> selectByUserIdAndStatusOne(Long userId);
+
+	UserAppTools selectByUserIdAndTid(Long userId, Long gettId);
 }

@@ -22,7 +22,7 @@ public interface AppToolsService {
 
 	List<AppTools> selectByAppType(String appType);
 
-	AppToolsVo getAppToolsVo(AppTools item);
+	AppToolsVo getAppToolsVo(AppTools item, Long userId);
 
 	List<AppTools> selectByAppTypeAndStatus(String appType);
 

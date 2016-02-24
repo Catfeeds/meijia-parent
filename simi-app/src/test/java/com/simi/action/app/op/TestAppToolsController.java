@@ -49,7 +49,7 @@ public class TestAppToolsController extends JUnitActionBase{
 
     }	*/
 
-	@Test
+	/*@Test
     public void getAppIndexList() throws Exception {
 
 		String url = "/app/op/get_appIndexList.json?user_id=18";
@@ -65,11 +65,11 @@ public class TestAppToolsController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
-	/*@Test
+    }*/
+	@Test
     public void getAppCardType() throws Exception {
 
-		String url = "/app/op/get_appCardType.json?app_type=timechick";
+		String url = "/app/op/get_appTools.json?user_id=1";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 
@@ -82,7 +82,7 @@ public class TestAppToolsController extends JUnitActionBase{
 
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }*/
+    }
 	
 /*	@Test
     public void testPpostFriendReq() throws Exception {

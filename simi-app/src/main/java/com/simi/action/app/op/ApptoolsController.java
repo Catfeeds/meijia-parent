@@ -33,7 +33,8 @@ public class ApptoolsController extends BaseController {
 	 */
 	@RequestMapping(value = "get_appTools", method = RequestMethod.GET)
 	public AppResultData<Object> getAppTools(
-			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType) {
+			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType,
+			@RequestParam("user_id") Long userId) {
 		
 		List<AppTools> appTools = appToolsService.selectByAppType(appType);
          
@@ -41,7 +42,7 @@ public class ApptoolsController extends BaseController {
 		
 		for (AppTools item : appTools) {
 			AppToolsVo listVo = new AppToolsVo();
-			listVo = appToolsService.getAppToolsVo(item);
+			listVo = appToolsService.getAppToolsVo(item,userId);
 			vo.add(listVo);
 		}
 		
