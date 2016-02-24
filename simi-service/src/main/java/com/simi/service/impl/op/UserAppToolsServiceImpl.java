@@ -1,5 +1,7 @@
 package com.simi.service.impl.op;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,18 @@ public class UserAppToolsServiceImpl implements UserAppToolsService {
 	public int deleteByPrimaryKey(Long tId) {
 
 		return userAppToolsMapper.deleteByPrimaryKey(tId);
+	}
+
+	@Override
+	public List<UserAppTools> selectByUserIdAndStatus(Long userId) {
+		
+		return userAppToolsMapper.selectByUserIdAndStatus(userId);
+	}
+	
+	@Override
+	public List<UserAppTools> selectByUserIdAndStatusOne(Long userId) {
+		
+		return userAppToolsMapper.selectByUserIdAndStatusOne(userId);
 	}
 
 }

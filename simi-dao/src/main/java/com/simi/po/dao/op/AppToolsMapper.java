@@ -20,4 +20,6 @@ public interface AppToolsMapper {
 	List<AppTools> selectByListPage();
 
 	List<AppTools> selectByAppType(String appType);
+
+	List<AppTools> selectByAppTypeAndStatus(String appType);
 }

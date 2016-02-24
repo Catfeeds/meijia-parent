@@ -1,5 +1,7 @@
 package com.simi.po.dao.op;
 
+import java.util.List;
+
 import com.simi.po.model.op.UserAppTools;
 
 public interface UserAppToolsMapper {
@@ -14,4 +16,8 @@ public interface UserAppToolsMapper {
     int updateByPrimaryKeySelective(UserAppTools record);
 
     int updateByPrimaryKey(UserAppTools record);
+
+	List<UserAppTools> selectByUserIdAndStatus(Long userId);
+
+	List<UserAppTools> selectByUserIdAndStatusOne(Long userId);
 }

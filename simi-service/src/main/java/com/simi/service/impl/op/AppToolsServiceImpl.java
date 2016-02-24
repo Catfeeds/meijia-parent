@@ -99,6 +99,11 @@ public class AppToolsServiceImpl implements AppToolsService {
 		return appToolsMapper.selectByAppType(appType);
 	}
 
+	@Override
+	public List<AppTools> selectByAppTypeAndStatus(String appType) {
+		
+		return appToolsMapper.selectByAppTypeAndStatus(appType);
+	}
 
 	@Override
 	public AppToolsVo getAppToolsVo(AppTools item) {
