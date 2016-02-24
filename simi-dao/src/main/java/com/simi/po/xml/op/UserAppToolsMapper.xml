@@ -22,7 +22,6 @@
 		<include refid="Base_Column_List" />
 		from user_app_tools 
 		where user_id = #{userId,jdbcType=NUMERIC} and status = 0
-		order by no asc
 	</select>
 	
 	<select id="selectByUserIdAndStatusOne" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -30,7 +29,6 @@
 		<include refid="Base_Column_List" />
 		from user_app_tools 
 		where user_id = #{userId,jdbcType=NUMERIC} and status = 1
-		order by no asc
 	</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user_app_tools
