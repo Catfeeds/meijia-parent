@@ -122,7 +122,7 @@ public class AppToolsServiceImpl implements AppToolsService {
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-MM-dd"));
 		
 		//应用状态
-		vo.setStatus((short)1);
+		vo.setStatus((short)0);
 		UserAppTools userAppTools = userAppToolsMapper.selectByUserIdAndTid(userId,item.gettId());
 		if (userAppTools != null) {
 		vo.setStatus(userAppTools.getStatus());	
