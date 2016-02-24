@@ -1,4 +1,4 @@
-package com.xcloud.action.xz;
+package com.xlcoud.action.atools;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,14 +11,13 @@ import com.xcloud.auth.AuthPassport;
 
 
 @Controller
-@RequestMapping(value = "/xz")
-public class XzIndexController extends BaseController {
+@RequestMapping(value = "/atools")
+public class AtoolsController extends BaseController {
 	
 	@AuthPassport
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public String list(HttpServletRequest request) {
-
-		return "xz/xz-index";
-
+		return "atools/atools-index";
 	}	
+
 }
