@@ -38,6 +38,10 @@ public class AppToolsServiceImpl implements AppToolsService {
 		    record.setMenuType("");
 		    record.setOpenType("");
 		    record.setUrl("");
+		    record.setAction("");
+		    record.setParams("");
+		    record.setIsDefault((short)0L);
+		    record.setIsDel((short)0L);
 		    record.setIsPartner((short)0L);
 		    record.setIsOnline((short)0);
 		    record.setAppProvider("");

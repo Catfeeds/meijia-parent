@@ -16,7 +16,15 @@ public class AppTools {
     private String openType;
 
     private String url;
+    
+    private String action;
+    
+    private String params;
+    
+    private Short isDefault;
 
+    private Short isDel;
+    
     private Short isPartner;
     
     private Short isOnline;
@@ -93,7 +101,39 @@ public class AppTools {
         this.url = url == null ? null : url.trim();
     }
 
-    public Short getIsPartner() {
+    public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	public Short getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(Short isDefault) {
+		this.isDefault = isDefault;
+	}
+
+	public Short getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(Short isDel) {
+		this.isDel = isDel;
+	}
+
+	public Short getIsPartner() {
         return isPartner;
     }
 

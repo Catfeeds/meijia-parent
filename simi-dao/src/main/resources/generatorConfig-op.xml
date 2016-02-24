@@ -46,7 +46,6 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-             <!-- 用户消息表 -->
      <table schema="simi" tableName="app_help"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -141,6 +140,24 @@
 
             <columnOverride  column="no" property="No" javaType="java.lang.Short" jdbcType="NUMERIC"/>
             <columnOverride  column="card_type" property="cardType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+            
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
+		</table>
+ 
+ 	<table schema="simi" tableName="user_app_tools"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="t_id" property="tId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+            <columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
             
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
 		</table>

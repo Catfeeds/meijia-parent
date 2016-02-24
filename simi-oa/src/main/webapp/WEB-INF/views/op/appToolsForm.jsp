@@ -130,8 +130,59 @@
 							</div>
 						</div>
 
-						
+						<div class="form-group required">
 
+							<label class="col-md-2 control-label">动作标识</label>
+							<div class="col-md-5">
+								<form:input path="action" class="form-control" placeholder="动作标识"
+									maxLength="32" />
+								<form:errors path="action" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">操作相关参数</label>
+							<div class="col-md-5">
+								<form:input path="params" class="form-control" placeholder="动作标识"
+									maxLength="32" />
+								<form:errors path="params" class="field-has-error"></form:errors>
+							</div>
+						</div>
+
+                        <div class="form-group required">
+							<label class="col-md-2 control-label">默认显示</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2" align="right">
+										<label class="radio"> <form:radiobutton
+												path="isDefault" value="0" />是
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton
+												path="isDefault" value="1" />否
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-md-2 control-label">可以删除</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2" align="right">
+										<label class="radio"> <form:radiobutton
+												path="isDel" value="0" />可以
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton
+												path="isDel" value="1" />不可以
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="form-group required">
 							<label class="col-md-2 control-label">必须为服务商</label>
 							<div class="col-md-10">

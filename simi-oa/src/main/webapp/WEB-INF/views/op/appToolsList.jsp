@@ -60,6 +60,10 @@
 						<th>图标</th>
 						<th>应用类型</th>
 						<th>显示类型</th>
+						<th>动作标识</th>
+						<th>操作相关参数</th>
+						<th>是否默认显示</th>
+						<th>是否可以删除</th>
 						<th>是否上线</th>
 						<th>跳转url</th>
 						<th>不满足条件是跳转url</th>
@@ -76,7 +80,24 @@
 							<td><img src="${ item.logo }?w=100&h=100" /></td>
 							<td>${ item.appType}</td>
 							<td>${ item.openType}</td>
-							<%-- <td><a href="${ item.gotoUrl }" target="_blank">点击</a></td> --%>
+							<td>${ item.action}</td>
+							<td>${ item.params}</td>
+							<td><c:choose>
+									<c:when test="${item.isDefault  == 0}">
+														是
+												</c:when>
+									<c:when test="${item.isDefault  == 1}">
+														否
+									</c:when>
+							</c:choose></td> 
+							<td><c:choose>
+									<c:when test="${item.isDel  == 0}">
+														可以
+												</c:when>
+									<c:when test="${item.isDel  == 1}">
+														不可以
+									</c:when>
+							</c:choose></td> 
 							<td><c:choose>
 									<c:when test="${item.isOnline  == 0}">
 														上线

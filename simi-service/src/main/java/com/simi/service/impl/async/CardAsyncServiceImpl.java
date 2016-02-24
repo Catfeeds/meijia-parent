@@ -18,9 +18,11 @@ import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
+import com.simi.po.dao.user.UserFriendsMapper;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.CardAsyncService;
@@ -28,9 +30,11 @@ import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardLogService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.CityService;
+import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
+import com.simi.vo.UserFriendSearchVo;
 
 @Service
 public class CardAsyncServiceImpl implements CardAsyncService {
@@ -52,6 +56,9 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 	
 	@Autowired
 	private CityService cityService;	
+	
+	@Autowired
+	private UserFriendService userFriendService;
 	
 	/**
 	 * 第三方登录，注册绑定环信账号,异步操作
@@ -242,7 +249,13 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		}		
 		
 		for (UserPushBind p : userPushBinds) {
-						
+			//若果不是好友不能发推送消息
+			UserFriendSearchVo searchVo = new UserFriendSearchVo();
+			searchVo.setUserId(p.getUserId());
+			searchVo.setFriendId(card.getCreateUserId());
+			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);	
+			if (userFriend == null)continue;
+			
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", p.getClientId());
 			
@@ -401,6 +414,13 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		HashMap<String, String> sendSmsResult;
 		//开始发送短信
 		for (Users item : userSms) {
+			//是好友才发短信，若不是好友continue!
+			UserFriendSearchVo searchVo = new UserFriendSearchVo();
+			searchVo.setUserId(user.getId());
+			searchVo.setFriendId(createUsers.getId());
+			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);	
+			if (userFriend == null)continue;
+			
 			if (StringUtil.isEmpty(item.getMobile())) continue;
 			mobile = item.getMobile();
 			switch (card.getCardType()) {

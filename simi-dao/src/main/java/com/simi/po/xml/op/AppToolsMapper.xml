@@ -10,6 +10,10 @@
     <result column="menu_type" property="menuType" jdbcType="VARCHAR" />
     <result column="open_type" property="openType" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="action" property="action" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="NUMERIC" />
+    <result column="is_del" property="isDel" jdbcType="NUMERIC" />
     <result column="is_partner" property="isPartner" jdbcType="NUMERIC" />
     <result column="is_online" property="isOnline" jdbcType="NUMERIC" />
     <result column="app_provider" property="appProvider" jdbcType="VARCHAR" />
@@ -18,7 +22,7 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    t_id,no,name,logo,app_type,menu_type,open_type,url,is_partner,is_online,app_provider,app_describe,auth_url,add_time
+    t_id,no,name,logo,app_type,menu_type,open_type,url,action,params,is_default,is_del,is_partner,is_online,app_provider,app_describe,auth_url,add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -46,11 +50,13 @@
   <insert id="insert" parameterType="com.simi.po.model.op.AppTools" >
     insert into app_tools (t_id, no, name, 
       logo, app_type,menu_type, open_type, 
-      url, is_partner,is_online,app_provider,app_describe, auth_url, 
+      url,action,params,is_default,is_del, is_partner,is_online,app_provider,app_describe, auth_url, 
       add_time)
     values (#{tId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
       #{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{isPartner,jdbcType=NUMERIC}, 
+      #{url,jdbcType=VARCHAR},
+      #{action,jdbcType=VARCHAR},#{params,jdbcType=VARCHAR}, #{isDefault,jdbcType=NUMERIC}, #{isDel,jdbcType=NUMERIC},
+      #{isPartner,jdbcType=NUMERIC}, 
       #{isOnline,jdbcType=NUMERIC}, 
       #{appProvider,jdbcType=VARCHAR}, 
       #{appDescribe,jdbcType=VARCHAR}, 
@@ -83,6 +89,18 @@
       </if>
       <if test="url != null" >
         url,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="params != null" >
+        params,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="isDel != null" >
+        is_del,
       </if>
       <if test="isPartner != null" >
         is_partner,
@@ -127,6 +145,18 @@
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
+      </if>
+     <if test="action != null" >
+       #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+         #{isDefault,jdbcType=NUMERIC},
+      </if>
+      <if test="isDel != null" >
+       #{isDel,jdbcType=NUMERIC},
       </if>
       <if test="isPartner != null" >
         #{isPartner,jdbcType=NUMERIC},
@@ -173,6 +203,18 @@
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+       <if test="params != null" >
+       params = #{params,jdbcType=VARCHAR}, 
+      </if>
+       <if test="isDefault != null" >
+       is_default=  #{isDefault,jdbcType=NUMERIC},
+      </if>
+       <if test="isDel != null" >
+       is_del= #{isDel,jdbcType=NUMERIC},
+      </if>
       <if test="isPartner != null" >
         is_partner = #{isPartner,jdbcType=NUMERIC},
       </if>
@@ -203,6 +245,10 @@
       menu_type = #{menuType,jdbcType=VARCHAR},
       open_type = #{openType,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR}, 
+      is_default=  #{isDefault,jdbcType=NUMERIC},
+      is_del= #{isDel,jdbcType=NUMERIC},
       is_partner = #{isPartner,jdbcType=NUMERIC},
       is_online = #{isOnline,jdbcType=NUMERIC},
       app_provider = #{appProvider,jdbcType=VARCHAR},
