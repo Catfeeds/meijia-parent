@@ -66,10 +66,10 @@ public class AppIndexController extends BaseController {
 	        	AppTools appToolsA = appToolsAList.get(i);
 	        	appToolsDList.add(appToolsA);
 			}
-	       for (int i = 0; i < appToolsCList.size(); i++) {
+	     /*  for (int i = 0; i < appToolsCList.size(); i++) {
 	        	AppTools appToolsC = appToolsCList.get(i);
 	        	appToolsDList.add(appToolsC);
-			}
+			}*/
 	       
 		//4. 读取user_app_tools where status = 1  得到集合E    用户选择显示的
 	       List<UserAppTools> appToolsEList = userAppToolsService.selectByUserIdAndStatusOne(userId);

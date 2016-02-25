@@ -21,6 +21,8 @@ public interface UserAppToolsService {
 
 	List<UserAppTools> selectByUserIdAndStatusOne(Long userId);
 
+	UserAppTools selectByUserIdAndTid(Long userId, Long tId);
+
 	//PageInfo selectByListPage(int pageNo, int pageSize);
 
 }

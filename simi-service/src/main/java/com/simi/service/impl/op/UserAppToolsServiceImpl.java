@@ -69,4 +69,11 @@ public class UserAppToolsServiceImpl implements UserAppToolsService {
 		return userAppToolsMapper.selectByUserIdAndStatusOne(userId);
 	}
 
+	@Override
+	public UserAppTools selectByUserIdAndTid(Long userId, Long tId) {
+		
+		
+		return userAppToolsMapper.selectByUserIdAndTid(userId,tId);
+	}
+
 }
