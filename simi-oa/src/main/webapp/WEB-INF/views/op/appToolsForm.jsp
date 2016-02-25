@@ -172,12 +172,12 @@
 								<div class="row">
 									<div class="col-md-2" align="right">
 										<label class="radio"> <form:radiobutton
-												path="isDel" value="1" />可以
+												path="isDel" value="0" />可删
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
 										<label class="radio"> <form:radiobutton
-												path="isDel" value="0" />不可以
+												path="isDel" value="1" />不可删
 										</label>
 									</div>
 								</div>
