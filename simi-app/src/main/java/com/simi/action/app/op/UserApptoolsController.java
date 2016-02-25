@@ -43,16 +43,18 @@ public class UserApptoolsController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		UserAppTools record = userAppToolsService.initUserAppTools();
+		
 		UserAppTools userAppTools = userAppToolsService.selectByUserIdAndTid(userId,tId);
+		
+		UserAppTools record = userAppToolsService.initUserAppTools();
 		if (userAppTools == null) {
 			record.settId(tId);
 			record.setUserId(userId);
 			record.setStatus(status);
 			userAppToolsService.insert(record);
 		}else {
-			record.setStatus(status);
-			userAppToolsService.updateByPrimaryKeySelective(record);
+			userAppTools.setStatus(status);
+			userAppToolsService.updateByPrimaryKeySelective(userAppTools);
 		}
 		return result;
 	}
