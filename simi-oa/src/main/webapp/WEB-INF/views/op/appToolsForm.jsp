@@ -106,6 +106,7 @@
 									<form:option value="t" selected="selected">应用与工具</form:option>
 									<form:option value="d">成长与赚钱   </form:option>
 									<form:option value="f">全部服务   </form:option>
+									<form:option value="g">App自带  </form:option>
 								</form:select>
 							</div>
 						</div>
