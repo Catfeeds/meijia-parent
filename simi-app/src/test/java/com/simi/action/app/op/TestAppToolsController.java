@@ -66,7 +66,7 @@ public class TestAppToolsController extends JUnitActionBase{
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }*/
-	@Test
+	/*@Test
     public void getAppCardType() throws Exception {
 
 		String url = "/app/op/get_appTools.json?user_id=1";
@@ -83,8 +83,8 @@ public class TestAppToolsController extends JUnitActionBase{
 	    System.out.println("RestultActions: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
-	
-/*	@Test
+	*/
+	@Test
     public void testPpostFriendReq() throws Exception {
 
 		String url = "/app/op/user_app_tools.json";
@@ -100,5 +100,5 @@ public class TestAppToolsController extends JUnitActionBase{
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }
-	*/
+	
 }

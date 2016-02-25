@@ -18,7 +18,7 @@ public class TestAppIndexController extends JUnitActionBase{
     public void getAppIndexList() throws Exception {
 
 		String url = "/app/op/get_appIndexList.json";
-		String params = "?&user_id=18";
+		String params = "?&user_id=278";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

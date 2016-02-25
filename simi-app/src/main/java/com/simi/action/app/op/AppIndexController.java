@@ -52,17 +52,25 @@ public class AppIndexController extends BaseController {
 			UserAppTools userAppToolsB = appToolsBList.get(i);
 			AppTools appToolsB = appToolsService.selectByPrimaryKey(userAppToolsB.gettId());
 			if (appToolsB == null)continue;
-			if (appToolsB.getIsDefault() == 1) {
+			//if (appToolsB.getIsDefault() == 1) {
 				appToolsCList.add(appToolsB);
-			}
+			//}
 		}
 		//3. 集合A排查掉集合C，得到集合D   默认的，并且现实的
 		List<AppTools> appToolsDList = new ArrayList<AppTools>();
 		
 	       appToolsAList.remove(appToolsCList);
-	       appToolsDList.addAll(appToolsAList);
-	       appToolsDList.addAll(appToolsCList);
-       
+	      // appToolsDList.addAll(appToolsAList);
+	      // appToolsDList.addAll(appToolsCList);
+	       for (int i = 0; i < appToolsAList.size(); i++) {
+	        	AppTools appToolsA = appToolsAList.get(i);
+	        	appToolsDList.add(appToolsA);
+			}
+	       for (int i = 0; i < appToolsCList.size(); i++) {
+	        	AppTools appToolsC = appToolsCList.get(i);
+	        	appToolsDList.add(appToolsC);
+			}
+	       
 		//4. 读取user_app_tools where status = 1  得到集合E    用户选择显示的
 	       List<UserAppTools> appToolsEList = userAppToolsService.selectByUserIdAndStatusOne(userId);
 	       List<AppTools> appToolsFList = new ArrayList<AppTools>();
@@ -76,15 +84,6 @@ public class AppIndexController extends BaseController {
 	        //新的list集合，用来放最后的结果集  
 	        List<AppTools>  list=new ArrayList<AppTools>();  
 	        //把追加到一起的list循环放入set集合中  
-	        /*Set<AppTools> set=new HashSet<AppTools>();  
-	        for (int i = 0; i < appToolsDList.size(); i++) {  
-	            AppTools str=appToolsDList.get(i);  
-	            set.add(str);             
-	        }  
-	        //把set集合遍历添加在list中  
-	        for (Iterator<AppTools> it = set.iterator(); it.hasNext();){  
-	            list.add(it.next());
-	        }  */
 	        for (int i = 0; i < appToolsDList.size(); i++) {
 	        	AppTools appToolsD = appToolsDList.get(i);
 	        	list.add(appToolsD);
