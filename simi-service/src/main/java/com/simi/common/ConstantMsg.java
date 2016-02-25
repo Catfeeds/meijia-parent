@@ -45,6 +45,9 @@ public class ConstantMsg {
 	//用户地址不存在
 	public static String USER_NOT_EXIST_MG = "用户不存在";
 	
+	//您还不是此公司的员工
+	public static String USER_NOT_EXIST_COMPANY = "您还不是此公司的员工";
+	
 	//已经是好友，不需要重复添加
 	public static String USER_IS_FRIEND = "已经是好友，不需要重复添加";
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.meijia.utils.TimeStampUtil;
@@ -65,6 +66,21 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	@Override
 	public List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo) {
 		return xcompanySettingMapper.selectBySearchVo(searchVo);
+	}
+
+	@Override
+	public CompanySettingVo getCompantSettingVo(XcompanySetting item) {
+		
+		CompanySettingVo vo = new CompanySettingVo();
+		//添加时间返回‘yyyy-mm-dd’
+		Long addTime = item.getAddTime()*1000;
+		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime, "yyyy-MM-dd"));
+
+		vo.setName(item.getName());
+		vo.setSettingJson(item.getSettingJson());
+		vo.setSettingId(item.getId());
+		
+		return vo;
 	}
 	
 	
