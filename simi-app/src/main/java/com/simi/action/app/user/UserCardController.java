@@ -49,35 +49,41 @@ public class UserCardController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");		
 		
-		Users users = usersService.selectByPrimaryKey(userId);
-		
-		// 判断是否为注册用户，非注册用户返回 999
-		if (users == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}		
-		
-		if (cardType.equals(0L)) {
-			if (cardMoney == null || cardMoney.equals(0)) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("充值金额不正确!");
-				return result;
-			}
-			
-			OrderCards record = orderCardsService.initCardMoney(users, cardType, cardMoney, payType);
-			orderCardsService.insert(record);
-			result.setData(record);
-			return result;
-		}
-		
-		
-		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(cardType);
-
-		OrderCards record = orderCardsService.initOrderCards(users, cardType, dictCardType, payType);
-		orderCardsService.insert(record);
-
-		result.setData(record);
+		//暂时不能进行充值功能：
+		result.setStatus(Constants.ERROR_999);
+		result.setMsg("系统维护,暂时无法充值.");
 		return result;
+		
+		
+//		Users users = usersService.selectByPrimaryKey(userId);
+//		
+//		// 判断是否为注册用户，非注册用户返回 999
+//		if (users == null) {
+//			result.setStatus(Constants.ERROR_999);
+//			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+//			return result;
+//		}		
+//		
+//		if (cardType.equals(0L)) {
+//			if (cardMoney == null || cardMoney.equals(0)) {
+//				result.setStatus(Constants.ERROR_999);
+//				result.setMsg("充值金额不正确!");
+//				return result;
+//			}
+//			
+//			OrderCards record = orderCardsService.initCardMoney(users, cardType, cardMoney, payType);
+//			orderCardsService.insert(record);
+//			result.setData(record);
+//			return result;
+//		}
+//		
+//		
+//		DictCardType dictCardType = cardTypeService.selectByPrimaryKey(cardType);
+//
+//		OrderCards record = orderCardsService.initOrderCards(users, cardType, dictCardType, payType);
+//		orderCardsService.insert(record);
+//
+//		result.setData(record);
+//		return result;
 	}
 }
