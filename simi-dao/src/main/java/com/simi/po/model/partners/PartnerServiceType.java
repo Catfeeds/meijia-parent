@@ -41,14 +41,6 @@ public class PartnerServiceType {
         this.parentId = parentId;
     }
 
-	public Short getIsEnable() {
-		return isEnable;
-	}
-
-	public void setIsEnable(Short isEnable) {
-		this.isEnable = isEnable;
-	}
-
 	public Short getViewType() {
 		return viewType;
 	}
@@ -71,5 +63,13 @@ public class PartnerServiceType {
 
 	public void setPartnerId(Long partnerId) {
 		this.partnerId = partnerId;
+	}
+
+	public Short getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Short isEnable) {
+		this.isEnable = isEnable;
 	}
 }

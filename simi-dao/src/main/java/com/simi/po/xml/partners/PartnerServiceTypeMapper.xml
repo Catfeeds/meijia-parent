@@ -126,7 +126,7 @@
 				#{parentId,jdbcType=NUMERIC},
 			</if>
 			<if test="isEnable != null">
-				#{is_enable,jdbcType=NUMERIC},
+				#{isEnable,jdbcType=NUMERIC},
 			</if>
 			<if test="viewType != null">
 				#{viewType,jdbcType=NUMERIC},
