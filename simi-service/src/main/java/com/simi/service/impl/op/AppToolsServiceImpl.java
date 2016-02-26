@@ -128,7 +128,7 @@ public class AppToolsServiceImpl implements AppToolsService {
 		if (userAppTools != null) {
 		vo.setStatus(userAppTools.getStatus());	
 		}
-		
+		vo.setUserId(userId);
 		return vo;
 	}
 
@@ -155,9 +155,9 @@ public class AppToolsServiceImpl implements AppToolsService {
 			for (int i = 0; i < list.size(); i++) {
 				AppTools appTools = list.get(i);
 				AppToolsVo vo = getAppToolsVo(appTools, userId);
-				if (vo.getStatus() == null){
+				/*if (vo.getStatus() == null){
 					vo.setStatus((short)0);
-				}
+				}*/
 				list.set(i, vo);
 			}
 		}

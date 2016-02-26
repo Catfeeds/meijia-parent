@@ -114,30 +114,22 @@
 							<c:param name="pageModelName" value="contentModel" />
 							<c:param name="urlAddress" value="/staff/list" />
 						</c:import>
-
 					</form>
 				</div>
-
 			</div>
 		</div>
-
 		<div class="am-modal am-modal-confirm" tabindex="-1" id="change-dept-modal">
-
 			<div class="am-modal-dialog">
 				<div class="am-modal-hd">员工分配部门</div>
-
 				<div class="am-modal-bd">
-
 					<form class="am-form">
 						<input type="hidden" id="companyId" value="${companyId }"/>
 						<div class="am-g am-margin-top">
 							<div class="am-u-sm-4">已选择员工:</div>
-
 							<div class="am-u-sm-8 am-text-left">
 								<label id="select_staff_names"></label> <input type="hidden" id="select_staff_ids"
 									name="select_staff_ids" value="" />
 							</div>
-
 						</div>
 
 						<div class="am-g am-margin-top">

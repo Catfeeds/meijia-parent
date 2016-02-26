@@ -4,11 +4,23 @@ import com.simi.po.model.op.AppTools;
 
 public class AppToolsVo extends AppTools {
 
+	
+	private Long userId;
 	//添加时间戳
 	private String addTimeStr ;
 	
 	//应用状态
 	private Short status;
+
+	
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 	public String getAddTimeStr() {
 		return addTimeStr;

@@ -52,7 +52,7 @@ public class TestAppToolsController extends JUnitActionBase{
 	@Test
     public void getAppIndexList() throws Exception {
 
-		String url = "/app/op/get_appIndexList.json?user_id=278";
+		String url = "/app/op/get_appIndexList.json?user_id=295";
 
      	MockHttpServletRequestBuilder postRequest = get(url);
 

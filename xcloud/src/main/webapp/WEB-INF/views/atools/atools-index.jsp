@@ -12,7 +12,7 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>" type="text/css" />
+<%-- <link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>" type="text/css" /> --%>
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>"
 	rel="stylesheet"
 >
@@ -61,16 +61,46 @@
 									<td><img src="${ item.logo }"/></td>
 									<td>${item.name}</td>
 									<td><c:choose>
-									<c:when test="${item.status  == 0}">
-														未启用
-												</c:when>
-									<c:when test="${item.status  == 1}">
-														已启用
+									<c:when test="${item.status  == null && item.isDefault == 0}">
+														添加
+									</c:when>
+									<c:when test="${item.status == null && item.isDefault == 1 && item.isDel == 0}">
+														取消
+									</c:when>
+									<c:when test="${item.status == null && item.isDefault == 1 && item.isDel == 1}">
+														已添加
+									</c:when>
+									<c:when test="${item.status ==0}">
+														添加
+									</c:when>
+									<c:when test="${item.status ==1}">
+														取消
 									</c:when>
 							        </c:choose></td> 
 									<td>${item.appDescribe}</td>
 									<td>
-									<button class="btn btn-info" onclick="btn_update('ordasasaser/order-scheduling?org_staff_id=22')">排班</button>
+									<c:if test="${item.status == null && item.isDefault == 0 }">
+									<%-- <button class="btn btn-info" onclick="btn_update('/atools/user_app_tools_oa?t_id=${item.tId}&status=1&user_id=${item.userId}')">添加</button>
+									 --%><a href ="/xcloud/atools/user_app_tools_oa?t_id=${item.tId}&status=1&user_id=${item.userId}">添加</a>
+									</c:if>
+									<c:if test="${item.status == null && item.isDefault == 1 && item.isDel == 0}">
+									<a href ="/xcloud/atools/user_app_tools_oa?t_id=${item.tId}&status=0&user_id=${item.userId}">取消</a>
+									<%-- <button class="btn btn-info" onclick="btn_update('/atools/user_app_tools_oa?t_id=${item.tId}&status=0&user_id=${item.userId}')">取消</button> --%>
+									</c:if>
+									<c:if test="${item.status == null && item.isDefault == 1 && item.isDel == 1}">
+									<!-- <button class="btn btn-info" onclick="btn_update()">已添加</button> -->
+									已添加
+									</c:if>
+									<c:if test="${item.status ==0 }">
+									<a href ="/xcloud/atools/user_app_tools_oa?t_id=${item.tId}&status=1&user_id=${item.userId}">添加</a>
+									<%-- <button class="btn btn-info" onclick="btn_update('/atools/user_app_tools_oa?t_id=${item.tId}&status=1&user_id=${item.userId}')">添加</button> --%>
+									</c:if>
+									<c:if test="${item.status ==1 }">
+									<%-- <button class="btn btn-info" onclick="btn_update('/atools/user_app_tools_oa?t_id=${item.tId}&status=0&user_id=${item.userId}')">取消</button>
+									 --%>
+									 <a href ="/xcloud/atools/user_app_tools_oa?t_id=${item.tId}&status=0&user_id=${item.userId}">取消</a>
+									
+									</c:if>
 										<!-- <div class="am-btn-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
 												<input id="alive" type="checkbox" checked data-on-color="success" >
@@ -155,7 +185,10 @@
 								</tr> -->
 							</tbody>
 						</table>
-
+                       <c:import url="../shared/paging.jsp">
+							<c:param name="pageModelName" value="contentModel" />
+							<c:param name="urlAddress" value="/atools/index" />
+						</c:import>
 
 					</form>
 				</div>
