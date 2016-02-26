@@ -87,14 +87,14 @@ public class AppIndexController extends BaseController {
 					appToolsFList.add(appToolsE);
 			}
 		//5. 合并集合A和集合F，返回
-			appToolsAList.addAll(appToolsFList);
+			//appToolsAList.addAll(appToolsFList);
 	        //新的list集合，用来放最后的结果集  
-	      /*  List<AppTools>  list=new ArrayList<AppTools>();  
+	       // List<AppTools>  appToolsAList=new ArrayList<AppTools>();  
 	        //把追加到一起的list循环放入set集合中  
-	        for (int i = 0; i < appToolsDList.size(); i++) {
-	        	AppTools appToolsD = appToolsDList.get(i);
-	        	list.add(appToolsD);
-			}*/
+	        for (int i = 0; i < appToolsFList.size(); i++) {
+	        	AppTools appToolsF = appToolsFList.get(i);
+	        	appToolsAList.add(appToolsF);
+			}
 	    //   list.addAll(appToolsDList);
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appToolsAList);
