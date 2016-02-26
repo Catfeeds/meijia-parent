@@ -58,11 +58,6 @@ public class AppIndexController extends BaseController {
 			}
 		}
 		//3. 集合A排查掉集合C，得到集合A   默认的，并且现实的
-	//	List<AppTools> appToolsDList = new ArrayList<AppTools>();
-		
-	     //  appToolsAList.remove(appToolsCList);
-	      // appToolsDList.addAll(appToolsAList);
-	      // appToolsDList.addAll(appToolsCList);
 		for (int i = 0; i < appToolsCList.size(); i++) {
 	        AppTools appToolsC = appToolsCList.get(i);
 	        for (int j = 0; j < appToolsAList.size();j++) {
@@ -71,13 +66,7 @@ public class AppIndexController extends BaseController {
 					appToolsAList.remove(j);
 					}
 				}
-	        //	appToolsDList.add(appToolsA);
 			}
-	     /*  for (int i = 0; i < appToolsCList.size(); i++) {
-	        	AppTools appToolsC = appToolsCList.get(i);
-	        	appToolsDList.add(appToolsC);
-			}*/
-	       
 		//4. 读取user_app_tools where status = 1  得到集合E    用户选择显示的
 	       List<UserAppTools> appToolsEList = userAppToolsService.selectByUserIdAndStatusOne(userId);
 	       List<AppTools> appToolsFList = new ArrayList<AppTools>();
@@ -86,21 +75,19 @@ public class AppIndexController extends BaseController {
 				AppTools appToolsE = appToolsService.selectByPrimaryKey(userAppToolsE.gettId());
 					appToolsFList.add(appToolsE);
 			}
-		//5. 合并集合A和集合F，返回
-			//appToolsAList.addAll(appToolsFList);
-	        //新的list集合，用来放最后的结果集  
-	       // List<AppTools>  appToolsAList=new ArrayList<AppTools>();  
-	        //把追加到一起的list循环放入set集合中  
+		//排除掉集合F中用户勾选的默认的得到集合G
+			 List<AppTools> appToolsGList = new ArrayList<AppTools>();
 			for (int i = 0; i < appToolsFList.size(); i++) {
-				AppTools app = appToolsFList.get(i);
-	        for (int j = 0; j < appToolsFList.size(); j++) {
-	        	AppTools appToolsF = appToolsFList.get(i);
-	        	if (app.getIsDefault()==0) {
-	        	appToolsAList.add(appToolsF);
+				AppTools appToolsG = appToolsFList.get(i);	
+				if (appToolsG.getIsDefault() ==0) {
+					appToolsGList.add(appToolsG);
 				}
+				
 			}
-			}
-	    //   list.addAll(appToolsDList);
+			
+		//6. 合并集合A和集合G，返回
+			appToolsAList.addAll(appToolsGList);
+			
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appToolsAList);
 		
