@@ -91,9 +91,14 @@ public class AppIndexController extends BaseController {
 	        //新的list集合，用来放最后的结果集  
 	       // List<AppTools>  appToolsAList=new ArrayList<AppTools>();  
 	        //把追加到一起的list循环放入set集合中  
-	        for (int i = 0; i < appToolsFList.size(); i++) {
+			for (int i = 0; i < appToolsFList.size(); i++) {
+				AppTools app = appToolsFList.get(i);
+	        for (int j = 0; j < appToolsFList.size(); j++) {
 	        	AppTools appToolsF = appToolsFList.get(i);
+	        	if (app.getIsDefault()==0) {
 	        	appToolsAList.add(appToolsF);
+				}
+			}
 			}
 	    //   list.addAll(appToolsDList);
 		AppResultData<Object> result = new AppResultData<Object>(
