@@ -1,5 +1,6 @@
 package com.simi.service.impl.op;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.OpChannelService;
 import com.simi.vo.po.AppToolsVo;
+import com.simi.vo.xcloud.StaffListVo;
 import com.simi.po.dao.op.AppToolsMapper;
 import com.simi.po.dao.op.UserAppToolsMapper;
 import com.simi.po.model.op.AppTools;
@@ -135,6 +137,33 @@ public class AppToolsServiceImpl implements AppToolsService {
 	public List<AppTools> selectByAppTypeAll(String appType) {
 
 		return appToolsMapper.selectByAppTypeAll(appType);
+	}
+
+
+	@Override
+	public PageInfo selectByListPage(String appType, int pageNo, int pageSize,Long userId) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+		
+		//List<AppToolsVo> appToolsVoList = new ArrayList<AppToolsVo>();
+		List<AppTools> list = appToolsMapper.selectByAppTypeAll(appType);
+		if (!list.isEmpty()) {
+			/*for (AppTools item : list) {
+				AppToolsVo vo = getAppToolsVo(item, userId);
+				appToolsVoList.add(vo);
+			}*/
+			for (int i = 0; i < list.size(); i++) {
+				AppTools appTools = list.get(i);
+				AppToolsVo vo = getAppToolsVo(appTools, userId);
+				if (vo.getStatus() == null){
+					vo.setStatus((short)0);
+				}
+				list.set(i, vo);
+			}
+		}
+		
+		PageInfo result = new PageInfo(list);
+		return result;
 	}
 	
 }

@@ -20,6 +20,7 @@ import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.UserAppToolsService;
 import com.simi.vo.AppResultData;
+import com.sun.tools.corba.se.idl.constExpr.And;
 
 @Controller
 @RequestMapping(value = "/app/op")
@@ -46,25 +47,31 @@ public class AppIndexController extends BaseController {
 		List<AppTools> appToolsAList = appToolsService.selectByAppType(appType);
 		//2. 读取user_app_tools where status = 0  得到集合B 
 		List<UserAppTools> appToolsBList = userAppToolsService.selectByUserIdAndStatus(userId);
-		//查出用户勾选的不显示的为系统默认显示的集合
+		//查出默认显示中的用户选择不显示的  is_default = 1 is_del=0 得到集合C
 		List<AppTools> appToolsCList = new ArrayList<AppTools>();
 		for (int i = 0; i < appToolsBList.size(); i++) {
 			UserAppTools userAppToolsB = appToolsBList.get(i);
 			AppTools appToolsB = appToolsService.selectByPrimaryKey(userAppToolsB.gettId());
 			if (appToolsB == null)continue;
-			//if (appToolsB.getIsDefault() == 1) {
+			if (appToolsB.getIsDefault() == 1 && appToolsB.getIsDel()==0) {
 				appToolsCList.add(appToolsB);
-			//}
+			}
 		}
-		//3. 集合A排查掉集合C，得到集合D   默认的，并且现实的
-		List<AppTools> appToolsDList = new ArrayList<AppTools>();
+		//3. 集合A排查掉集合C，得到集合A   默认的，并且现实的
+	//	List<AppTools> appToolsDList = new ArrayList<AppTools>();
 		
-	       appToolsAList.remove(appToolsCList);
+	     //  appToolsAList.remove(appToolsCList);
 	      // appToolsDList.addAll(appToolsAList);
 	      // appToolsDList.addAll(appToolsCList);
-	       for (int i = 0; i < appToolsAList.size(); i++) {
-	        	AppTools appToolsA = appToolsAList.get(i);
-	        	appToolsDList.add(appToolsA);
+		for (int i = 0; i < appToolsCList.size(); i++) {
+	        AppTools appToolsC = appToolsCList.get(i);
+	        for (int j = 0; j < appToolsAList.size();j++) {
+	        AppTools appToolsA = appToolsAList.get(j);
+				if (appToolsC.gettId().equals(appToolsA.gettId())) {
+					appToolsAList.remove(j);
+					}
+				}
+	        //	appToolsDList.add(appToolsA);
 			}
 	     /*  for (int i = 0; i < appToolsCList.size(); i++) {
 	        	AppTools appToolsC = appToolsCList.get(i);
@@ -79,18 +86,18 @@ public class AppIndexController extends BaseController {
 				AppTools appToolsE = appToolsService.selectByPrimaryKey(userAppToolsE.gettId());
 					appToolsFList.add(appToolsE);
 			}
-		//5. 合并集合D和集合F，返回
-			appToolsDList.addAll(appToolsFList);
+		//5. 合并集合A和集合F，返回
+			appToolsAList.addAll(appToolsFList);
 	        //新的list集合，用来放最后的结果集  
-	        List<AppTools>  list=new ArrayList<AppTools>();  
+	      /*  List<AppTools>  list=new ArrayList<AppTools>();  
 	        //把追加到一起的list循环放入set集合中  
 	        for (int i = 0; i < appToolsDList.size(); i++) {
 	        	AppTools appToolsD = appToolsDList.get(i);
 	        	list.add(appToolsD);
-			}
+			}*/
 	    //   list.addAll(appToolsDList);
 		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appToolsAList);
 		
 		return result;
 	}

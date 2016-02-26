@@ -28,6 +28,9 @@ public interface AppToolsService {
 
 	List<AppTools> selectByAppTypeAll(String appType);
 
+	@SuppressWarnings("rawtypes")
+	PageInfo selectByListPage(String appType, int pageNo, int pageSize, Long userId);
+
 //	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
 
 

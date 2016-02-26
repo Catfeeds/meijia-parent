@@ -12,7 +12,7 @@
 <%@ include file="../shared/importCss.jsp"%>
 
 <!--css for this page-->
-
+<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>" type="text/css" />
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>"
 	rel="stylesheet"
 >
@@ -55,16 +55,28 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${contentModel.list}" var="item">
 								<tr>
-									<td><a href="#"><img
-											src="https://static.dingtalk.com/media/lALOAUincMzIzMg_200_200.png_450x10000q90.jpg"
-											width="60" height="60"
-										/></a></td>
-									<td>考勤管理</td>
-									<td>已启用</td>
-									<td class="am-hide-sm-only">企业可以通过手机移动考勤和实体考勤机相结合的方式，实现功能强大的企业考勤管理。</td>
+									
+									<td><img src="${ item.logo }"/></td>
+									<td>${item.name}</td>
+									<td><c:choose>
+									<c:when test="${item.status  == 0}">
+														未启用
+												</c:when>
+									<c:when test="${item.status  == 1}">
+														已启用
+									</c:when>
+							        </c:choose></td> 
+									<td>${item.appDescribe}</td>
 									<td>
-										<div class="am-btn-toolbar">
+									<button class="btn btn-info" onclick="btn_update('ordasasaser/order-scheduling?org_staff_id=22')">排班</button>
+										<!-- <div class="am-btn-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<input id="alive" type="checkbox" checked data-on-color="success" >
+											</div>
+										</div> -->
+										<!-- <div class="am-btn-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
 												<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
 													<span class="am-icon-upload"></span> 启用
@@ -75,10 +87,11 @@
 													<span class="am-icon-download"></span> 停用
 												</button>
 											</div>
-										</div>
+										</div> -->
 									</td>
 								</tr>
-								<tr>
+								</c:forEach>
+								<!-- <tr>
 									<td><a href="#"><img
 											src="https://static.dingtalk.com/media/lALOASopBszIzMg_200_200.png_450x10000q90.jpg"
 											width="60" height="60"
@@ -139,7 +152,7 @@
 											</div>
 										</div>
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 
