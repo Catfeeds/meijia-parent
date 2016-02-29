@@ -100,6 +100,11 @@ public class OrderExtGreenController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 	    List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(userId);
+	    if (userAddrsList.isEmpty()) {
+	    	result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.NOT_EXIST_ADDR);
+			return result;
+		}
 	    List<UserAddrVo> voList = new ArrayList<UserAddrVo>();
 	   for (int i = 0; i < userAddrsList.size(); i++) {
 		    UserAddrs addrs = userAddrsList.get(i);
