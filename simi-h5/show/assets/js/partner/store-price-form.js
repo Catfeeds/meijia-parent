@@ -1,9 +1,4 @@
 
-if ($.AMUI && $.AMUI.validator) {
-	$.AMUI.validator.patterns.mobile = /^\s*1\d{10}\s*$/;
-	$.AMUI.validator.patterns.price = /^\d{4}\.\d{2}$/;
-	$.AMUI.validator.patterns.disPrice = /^\d{4}\.\d{2}$/;
-}
 var userId = getUrlParam("user_id");
 $.ajax({
 	type : "GET",
@@ -15,11 +10,8 @@ $.ajax({
 	
 		if (data.status == "999") return false;
 		var partnerUsers = data.data;
-		console.log(partnerUsers);
 		var partnerId = partnerUsers.partner_id;
-		console.log(partnerId+"+++++++++++++++++++partnerId");
 		var serviceTypeId = partnerUsers.service_type_id;
-		console.log(serviceTypeId+"))))))))))))))))))serviceTypeId");
 		$("#partner_id").val(partnerId);
 		$("#user_id").val(userId);
 		$("#service_type_id").val(serviceTypeId);
@@ -27,7 +19,6 @@ $.ajax({
 	}
 });
 var servicePriceId = getUrlParam("service_price_id");
-console.log(servicePriceId+"@@@@@@@@@@@@@@@@@@servicePriceId");
 if(servicePriceId != 0){
 
 //获得商品详细信息放到form表单里面
@@ -41,9 +32,16 @@ $.ajax({
 	
 		if (data.status == "999") return false;
 		var vo = data.data;
-		console.log("999999999999999999999");
-		console.log(vo);
 		$("#name").val(vo.name);
+		
+		//图像:
+		var img_url = vo.img_url;
+		if (img_url != undefined && img_url !="") {
+			
+			$("#imgUrlPrDiv").css('display','block');
+			$("#imgUrlPr").attr('src',img_url); 
+		} 
+		
 		$("#title").val(vo.service_title);
 		$("#price").val(vo.price);
 		
@@ -55,7 +53,7 @@ $.ajax({
 		$("#contentDesc").val(vo.content_desc);
 		$("#contentFlow").val(vo.content_flow);
 		$("#isEnable").val(vo.is_enable);
-
+		
 	}
 });}
 getUrlParam("parent_id");
@@ -87,7 +85,6 @@ $('#partner-form').validator({
 	},
 });
 $("#add_btn").on('click', function(e) {
-	console.log("reg-submit click");
 	var $form = $('#partner-form');
 	var validator = $form.data('amui.validator');
 	var formValidity = validator.isFormValid()
@@ -120,15 +117,11 @@ function ajaxFileUpload() {
  	params.order_type = $('#orderType').val();
  	params.content_standard = $('#contentStandard').val();
  	params.is_addr = $('input:radio[name=isAddr]:checked').val();
- 	console.log("￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥");
- 	console.log( $('input:radio[name=isAddr]:checked').val());
  	params.is_enable = $('input:radio[name=isEnable]:checked').val();
- 	console.log("##################################################");
- 	console.log( $('input:radio[name=isEnable]:checked').val());
  	params.order_duration = $('#orderDuration').val();
  	params.content_desc =  $('#contentDesc').val()
  	params.content_flow = $('#contentFlow').val();     
-    console.log(params);
+
     
      $.ajaxFileUpload({
     	 type : "POST",
@@ -141,7 +134,6 @@ function ajaxFileUpload() {
             // alert(data);
             // location.href = "store-price-ok.html";
         	 var userId = getUrlParam("user_id");
-        	 console.log(userId+"ZXCVBMNBVC!@#$%^&*()(*&^%$#@!@#$%!!!!!!!!!!!!!!!!!");
         	 location.href = "store-price-list.html?user_id="+userId;
          },
          error: function(data, status, e){ 

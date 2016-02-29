@@ -5,7 +5,8 @@
 <title>商品添加</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 <meta name="format-detection" content="telephone=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -32,26 +33,29 @@
 </head>
 <body>
 
-	<div class="am-g" >
-		
-		<div class="am-u-md-centered">
-		<form action="" id="partner-form" class="am-forml" enctype="multipart/form-data">
+	<div class="am-g">
 
-        <input type="hidden" id="service_type_id" name="service_type_id" />
-        <input type="hidden" id="user_id" name="user_id"/>
-        <input type="hidden" id="partner_id" name="partner_id"/>
-        
-		 <!-- <div class="am-form-group">
+		<div class="am-u-md-centered">
+			<form action="" id="partner-form" class="am-forml"
+				enctype="multipart/form-data"
+			>
+
+				<input type="hidden" id="service_type_id" name="service_type_id" /> <input
+					type="hidden" id="user_id" name="user_id"
+				/> <input type="hidden" id="partner_id" name="partner_id" />
+
+				<!-- <div class="am-form-group">
 		      <label for="doc-ipt-email-1">请输入序号</label>
 		      <input type="number" type="text" id="no" name = "no" class="am-form-field" placeholder="输入序号  0-225" min="0" max="225" required>
 		 </div> -->
 
-		 <div class="am-form-group">
-		      <label for="doc-ipt-email-1">请输入名称</label>
-		      <input type="text" type="text" id="name" name = "name" class="am-form-field" placeholder="请输入名称" required>
-		 </div>
-		 
-		 <!-- <input type="hidden" name="img_url_new" id="img_url_new" value="${ contentModel.imgUrl }" />
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">请输入名称</label> <input type="text" type="text"
+						id="name" name="name" class="am-form-field" placeholder="请输入名称" required
+					>
+				</div>
+
+				<!-- <input type="hidden" name="img_url_new" id="img_url_new" value="${ contentModel.imgUrl }" />
 		<div class="form-group required">
 
 			<label class="col-md-2 control-label">图片地址</label>
@@ -60,86 +64,110 @@
 							<form:errors path="imgUrl" class="field-has-error"></form:errors>
 					</div>
 		</div> -->
-		<input type="hidden" name="img_url_new" id="img_url_new"/>
-		<div class="am-form-group am-form-file">
-			  <button type="button" id = "btnUpload" name = "btnUpload" class="am-btn am-btn-danger am-btn-sm">
-			    <i class="am-icon-cloud-upload"></i> 选择要上传的图片</button>
-			  <input id="imgUrlFile" type="file" name="imgUrlFile" >
-		</div>
-		 <div id="file-list"></div>
-				 
-			<div class="am-form-group">
-			<label for="doc-ipt-email-1">请输入副标题</label>
-			<input type="text" id="title" name="title" class="am-form-field " placeholder="请输入副标题">
-			</div>
-			
-			<div class="am-form-group">
-			<label for="doc-ipt-email-1">原价</label>
-			<input type="text"
-					id="price" name="price" class="am-form-field js-ajax-validate" placeholder="请输入正确类型的金额" maxLength="18" required>
-			</div>
-			
-			<div class="am-form-group">
-			<label for="doc-ipt-email-1">现价</label>
-			<input type="text"
-					id="disPrice" name="disPrice" class="am-form-field js-ajax-validate" placeholder="请输入正确类型的金额" maxLength="18" required>
-			</div>
-
-		 	<div class="am-form-group">
-				<label for="doc-select-1">订单类型</label>
-				<select id="orderType" name="orderType"  class="am-form-field">
-					<option value="0">通用订单</option>
-					<option value="1">时段订单</option>
-				</select> <span class="am-form-caret"></span>
-			</div>
-			
-			<div class="am-form-group"  id="orderDurationSelectBox" style="display:none">
-				<label for="doc-select-1">订单时长</label>
-				<select id="orderDuration" name="orderDuration"  class="am-form-field">
-					<option value="1">一天</option>
-					<option value="2">一周</option>
-					<option value="3">一个月</option>
-					<option value="4">三个月</option>
-					<option value="5">六个月</option>
-					<option value="6">九个月</option>
-					<option value="7">一年</option>
-				</select> <span class="am-form-caret"></span>
-			</div>
-
-			<div class="am-input-group">
-				<label for="doc-ipt-email-1">是否需要用户地址</label><br>
-				<div class="item-xx">
-					<input type="radio" value="0" name="isAddr" checked="checked"> 不需要
-					<input type="radio" value="1" name="isAddr"> 需要
+				<input type="hidden" name="img_url_new" id="img_url_new" />
+				<div class="am-form-group am-form-file">
+					<button type="button" id="btnUpload" name="btnUpload"
+						class="am-btn am-btn-danger am-btn-sm"
+					>
+						<i class="am-icon-cloud-upload"></i> 选择要上传的图片
+					</button>
+					<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*">
+				</div>
+				
+				<div class="am-form-group" id="imgUrlPrDiv" style="display:none">
+					<label for="doc-ipt-email-1">图像</label>
+					<img id="imgUrlPr" width="120" height="120" src=""/>
 				</div>
 
-			</div><br>
-			<div class="am-input-group">
-				<label for="doc-ipt-email-1">是否上架</label><br>
-				<div class="item-xx">
-					<input type="radio" value="0" name="isEnable"> 下架
-					<input type="radio" value="1" name="isEnable" checked="checked"> 上架
+
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">请输入副标题</label> <input type="text" id="title"
+						name="title" class="am-form-field " placeholder="请输入副标题"
+					>
 				</div>
 
-			</div><br>
-			 <div class="am-form-group">
-			      <label for="doc-ipt-email-1">服务标准：</label>
-			      <textarea id="contentStandard" name="contentStandard" minlength="0" maxlength="100" class="am-form-field"></textarea>
-			 </div>
-			  <div class="am-form-group">
-			      <label for="doc-ipt-email-1">服务说明：</label>
-			      <textarea id="contentDesc" name="contentDesc" minlength="0" maxlength="100" class="am-form-field"></textarea>
-			 </div>
-			  <div class="am-form-group">
-			      <label for="doc-ipt-email-1">服务流程：</label>
-			      <textarea id="contentFlow" name="contentFlow" minlength="0" maxlength="100" class="am-form-field"></textarea>
-			 </div>
-			
-			<div class="am-form-group">
-			   <!--  <button type="button" id="information_btn" class="am-btn am-btn-primary am-radius">提&nbsp;&nbsp;&nbsp;&nbsp;交</button> -->
-			<button type="button" id="add_btn" class="am-btn am-btn-danger am-btn-block">提交</button>
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">原价</label> <input type="text" id="price"
+						name="price" class="am-form-field js-pattern-pinteger"
+						placeholder="请输入正确类型的金额" maxLength="18" required
+					>
+				</div>
 
-			</div>
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">现价</label> <input type="text" id="disPrice"
+						name="disPrice" class="am-form-field js-pattern-pinteger"
+						placeholder="请输入正确类型的金额" maxLength="18" required
+					>
+				</div>
+
+				<div class="am-form-group">
+					<label for="doc-select-1">订单类型</label> <select id="orderType"
+						name="orderType" class="am-form-field"
+					>
+						<option value="0">通用订单</option>
+						<option value="1">时段订单</option>
+					</select> <span class="am-form-caret"></span>
+				</div>
+
+				<div class="am-form-group" id="orderDurationSelectBox" style="display: none">
+					<label for="doc-select-1">订单时长</label> <select id="orderDuration"
+						name="orderDuration" class="am-form-field"
+					>
+						<option value="1">一天</option>
+						<option value="2">一周</option>
+						<option value="3">一个月</option>
+						<option value="4">三个月</option>
+						<option value="5">六个月</option>
+						<option value="6">九个月</option>
+						<option value="7">一年</option>
+					</select> <span class="am-form-caret"></span>
+				</div>
+
+				<div class="am-input-group">
+					<label for="doc-ipt-email-1">是否需要用户地址</label><br>
+					<div class="item-xx">
+						<input type="radio" value="0" name="isAddr" checked="checked"> 不需要
+						<input type="radio" value="1" name="isAddr"> 需要
+					</div>
+
+				</div>
+				<br>
+				<div class="am-input-group">
+					<label for="doc-ipt-email-1">是否上架</label><br>
+					<div class="item-xx">
+						<input type="radio" value="0" name="isEnable"> 下架 <input
+							type="radio" value="1" name="isEnable" checked="checked"
+						> 上架
+					</div>
+
+				</div>
+				<br>
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">服务标准：</label>
+					<textarea id="contentStandard" name="contentStandard" minlength="0"
+						maxlength="100" class="am-form-field"
+					></textarea>
+				</div>
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">服务说明：</label>
+					<textarea id="contentDesc" name="contentDesc" minlength="0" maxlength="100"
+						class="am-form-field"
+					></textarea>
+				</div>
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">服务流程：</label>
+					<textarea id="contentFlow" name="contentFlow" minlength="0" maxlength="100"
+						class="am-form-field"
+					></textarea>
+				</div>
+
+				<div class="am-form-group">
+					<!--  <button type="button" id="information_btn" class="am-btn am-btn-primary am-radius">提&nbsp;&nbsp;&nbsp;&nbsp;交</button> -->
+					<button type="button" id="add_btn"
+						class="am-btn am-btn-danger am-btn-block"
+					>提交</button>
+
+				</div>
 			</form>
 			<hr>
 			<p align="center">© 云行政 版权所有</p>
@@ -151,18 +179,18 @@
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-	
-    <script src="assets/js/jquery.min.js"></script>
+
+	<script src="assets/js/jquery.min.js"></script>
 	<!--<![endif]-->
 	<script src="assets/js/amazeui.min.js"></script>
 	<script src="assets/js/app.js"></script>
 	<script src="assets/js/common/common.js"></script>
-	
+
 	<!--本页面使用的js-->
 	<script src="assets/js/common/validate-methods.js"></script>
 	<script src="assets/js/countdown.js"></script>
-	
-    <script src="assets/js/ajaxfileupload.js"></script>
+
+	<script src="assets/js/ajaxfileupload.js"></script>
 
 	<!--[if (gte IE 9)|!(IE)]><!-->
 	<!--<![endif]-->
