@@ -4,20 +4,15 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -25,10 +20,8 @@ import com.simi.po.model.order.OrderExtGreen;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
-import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderLogService;
@@ -40,7 +33,6 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.order.OrderExtGreenListVo;
-import com.simi.vo.order.OrderListVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -231,6 +223,12 @@ public class OrderExtGreenController extends BaseController {
 		
 		OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(green);
 		result.setData(vo);
+		
+		//todo: 绿植给相应的运营人员发送短信
+		
+		
+		
+		
 		return result;
 	}	
 	
