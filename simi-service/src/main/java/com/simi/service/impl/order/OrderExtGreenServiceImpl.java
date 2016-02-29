@@ -82,7 +82,7 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 		record.setOrderNo("");
 		record.setMobile("");
 		record.setTotalNum(0L);
-		record.setTotalBudget(0L);
+		record.setTotalBudget(new BigDecimal(0));
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}

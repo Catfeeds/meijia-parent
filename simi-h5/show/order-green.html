@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head lang="en">
-  <meta charset="UTF-8">
-  <title>绿植管理</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-  <link rel="stylesheet" href="assets/css/app.css">
-  <style>
+<head lang="en">
+<meta charset="UTF-8">
+<title>绿植管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
 .header {
 	text-align: center;
 }
+
 .header h1 {
 	font-size: 200%;
 	color: #333;
 	margin-top: 30px;
 }
+
 .header p {
 	font-size: 14px;
 }
 </style>
-  </head>
-  <body>
-<div class="header">
-    <div class="am-g">
-    <h2>办公室专业绿植服务</h2>
-  </div>
-    <hr />
-  </div>
-<div class="am-g">
-    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-    <form class="am-form am-form-horizontal">
-       <div class="am-form-group am-form-group-sm">
-       <center>
-        <img src="http://www.ilvbao.com/images/201311/thumb_img/298_thumb_G_1385706952709.jpg"  class="am-img-responsive" alt=""/>
-        <p>绿萝：适合桌面摆放</p>
-        </center>
-        </div>
-      <div class="am-form-group am-form-group-sm">
-        <label for="doc-ipt-3-1" class="am-u-sm-3 am-form-label">数量</label>
-        <div class="am-u-sm-9">
-            <div class="am-input-group">
-                <span class="am-input-group-btn">
-                  <button class="am-btn am-btn-default" type="button">-</button>
-                </span>
-                <input type="text" class="am-form-field" value="1个*19元">
-                <span class="am-input-group-btn">
-                  <button class="am-btn am-btn-default" type="button">+</button>
-                </span>
-          	</div>
-          </div>
-      </div>
- 
-        <div class="am-form-group am-form-group-sm">
-        <label for="doc-ipt-3-1" class="am-u-sm-3 am-form-label">收货地址</label>
-        <div class="am-u-sm-9">
-            <input type="email" id="doc-ipt-3-1" class="am-form-field" placeholder="请输入收货地址" value="">
-          </div>
-      </div>
-        <div class="am-form-group am-form-group-sm">
-        <label for="doc-ipt-3-1" class="am-u-sm-3 am-form-label">签收人</label>
-        <div class="am-u-sm-9">
-            <input type="email" id="doc-ipt-3-1" class="am-form-field" placeholder="请输入签收人姓名" value="">
-          </div>
-      </div>
-        <div class="am-form-group am-form-group-sm">
-        <label for="doc-ipt-3-1" class="am-u-sm-3 am-form-label">联系电话</label>
-        <div class="am-u-sm-9">
-            <input type="email" id="doc-ipt-3-1" class="am-form-field" placeholder="请输入签收人联系电话" value="">
-          </div>
-      </div>
-        <div class="am-form-group am-form-group-sm">
-        <label for="doc-ipt-pwd-21" class="am-u-sm-3 am-form-label">备注</label>
-        <div class="am-u-sm-9">
-            <input type="password" id="doc-ipt-pwd-21" class="am-form-field" placeholder="请输入特殊需求">
-          </div>
-      </div>
-        <div class="am-form-group">
-        <div class="am-u-sm-12">
-            <button type="submit" class="am-btn am-btn-danger am-btn-block">一键送达</button>
-          </div>
-      </div>
-      </form>
-    <hr>
-    <p align="center">© 云行政 版权所有</p>
-  </div>
-  </div>
-<!--[if lt IE 9]>
+</head>
+<body>
+	<div class="header">
+		<div class="am-g">
+			<h2>绿植服务</h2>
+		</div>
+		<hr />
+	</div>
+	<div class="am-g">
+		<div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+			<!--  <form class="am-form am-form-horizontal"> -->
+			<form action="" id="order-green-form"
+				class="am-form">
+				<input type="hidden" id="service_type_id" name="service_type_id" />
+				<input type="hidden" id="user_id" name="user_id" />
+
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">数量</label> <input type="text"
+						type="number" id="totalNum" name="totalNum" class="am-form-field"
+						placeholder="数量" required>
+				</div>
+				<!-- <div class="am-form-group">
+		      <label for="doc-ipt-email-1">请输入序号</label>
+		      <input type="number" type="text" id="no" name = "no" class="am-form-field" placeholder="输入序号  0-225" min="0" max="225" required>
+		 </div> -->
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">预算</label> <input type="text"
+						type="text" id="totalBudget" name="totalBudget"
+						class="am-form-field" placeholder="总预算" required>
+				</div>
+
+				<input type="hidden" id="addrId" name="addrId" value="" /> <label
+					for="doc-select-1">您能提供的服务内容：</label> <select id="addrName"
+					name="addrName" class="am-form-field">
+
+				</select> <span class="am-form-caret"></span>
+
+				<div class="am-form-group ">
+					<label for="doc-ipt-pwd-21">备注</label>
+
+					<textarea id="remarks" name="remarks" minlength="0" maxlength="100"
+						class="am-form-field" placeholder="备注"></textarea>
+
+				</div>
+				<div class="am-form-group">
+					<div class="am-u-sm-12">
+						<button type="submit" id="add_btn"
+							class="am-btn am-btn-danger am-btn-block">免费咨询</button>
+						<!--  <button type="button" id="add_btn" class="am-btn am-btn-danger am-btn-block">提交</button> -->
+
+					</div>
+				</div>
+			</form>
+			<hr>
+			<p align="center">© 云行政 版权所有</p>
+		</div>
+	</div>
+	<!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/polyfill/rem.min.js"></script>
 <script src="assets/js/polyfill/respond.min.js"></script>
 <script src="assets/js/amazeui.legacy.js"></script>
-<![endif]--> 
+<![endif]-->
+	<script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
 
-<!--[if (gte IE 9)|!(IE)]><!--> 
-<script src="assets/js/jquery.min.js"></script> 
-<script src="assets/js/amazeui.min.js"></script> 
-<!--<![endif]--> 
-<script src="assets/js/app.js"></script>
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/countdown.js"></script>
+
+	<!--<![endif]-->
+	<script src="assets/js/order/order-green.js"></script>
 </body>
 </html>

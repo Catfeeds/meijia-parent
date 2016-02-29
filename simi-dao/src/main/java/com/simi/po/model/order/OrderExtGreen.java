@@ -1,5 +1,7 @@
 package com.simi.po.model.order;
 
+import java.math.BigDecimal;
+
 
 public class OrderExtGreen {
 	
@@ -15,7 +17,7 @@ public class OrderExtGreen {
     
     private Long totalNum;
     
-    private Long totalBudget;
+    private BigDecimal totalBudget;
     
     private Long addTime;
 
@@ -67,13 +69,11 @@ public class OrderExtGreen {
 		this.totalNum = totalNum;
 	}
 
-
-
-	public Long getTotalBudget() {
+	public BigDecimal getTotalBudget() {
 		return totalBudget;
 	}
 
-	public void setTotalBudget(Long totalBudget) {
+	public void setTotalBudget(BigDecimal totalBudget) {
 		this.totalBudget = totalBudget;
 	}
 
