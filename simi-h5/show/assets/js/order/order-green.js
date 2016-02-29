@@ -11,8 +11,12 @@ $.ajax({
 	success : function(data) {
 	
 		if (data.status == "999") return false;
+		/*if (data.data == null){
+			alert("您还没有添加地址，请添加地址后再进行此操作！");
+		}*/
+		
 		var userAddr = data.data;
-		console.log(userAddr);
+		
 		
 		var userAddrHtml = "";
 		for(var i=0 ; i < userAddr.length; i++){
@@ -67,8 +71,8 @@ function companyRegSubmit() {
 	var userId = getUrlParam("user_id");
 	console.log(userId+"1111111111111111111111");
 	var params = {};
-	params.addr_id = 3;
-	params.mobile = "18249516801";
+	//params.addr_id = 3;
+	//params.mobile = "18249516801";
 	params.total_num = $('#totalNum').val();
 	params.total_budget = $('#totalBudget').val();
 	params.remarks = $('#remarks').val();

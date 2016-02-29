@@ -45,6 +45,9 @@ public class ConstantMsg {
 	//用户地址不存在
 	public static String USER_NOT_EXIST_MG = "用户不存在";
 	
+	//用户地址不存在
+	public static String NOT_EXIST_ADDR = "您还没有添加地址，请先去添加地址再进行此操作！";
+	
 	//您还不是此公司的员工
 	public static String USER_NOT_EXIST_COMPANY = "您还不是此公司的员工";
 	
