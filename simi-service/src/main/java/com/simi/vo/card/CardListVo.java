@@ -14,6 +14,10 @@ public class CardListVo {
 	
 	private List<CardAttend> attends;
 	
+	private String headImgCreateUser;
+	
+	private Long createUserId;
+	
 	private String title;
 	
 	private Long serviceTime;
@@ -134,6 +138,22 @@ public class CardListVo {
 
 	public void setStatus(Short status) {
 		this.status = status;
+	}
+
+	public String getHeadImgCreateUser() {
+		return headImgCreateUser;
+	}
+
+	public void setHeadImgCreateUser(String headImgCreateUser) {
+		this.headImgCreateUser = headImgCreateUser;
+	}
+
+	public Long getCreateUserId() {
+		return createUserId;
+	}
+
+	public void setCreateUserId(Long createUserId) {
+		this.createUserId = createUserId;
 	}
 		
 }

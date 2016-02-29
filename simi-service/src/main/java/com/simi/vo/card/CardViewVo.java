@@ -17,6 +17,8 @@ public class CardViewVo extends Cards {
  
 	private String createUserName;
 	
+	private String headImgCreateUser;
+	
 	private String userName;
 	
 	private String userHeadImg;
@@ -139,6 +141,14 @@ public class CardViewVo extends Cards {
 
 	public void setCardLogo(String cardLogo) {
 		this.cardLogo = cardLogo;
+	}
+
+	public String getHeadImgCreateUser() {
+		return headImgCreateUser;
+	}
+
+	public void setHeadImgCreateUser(String headImgCreateUser) {
+		this.headImgCreateUser = headImgCreateUser;
 	}
 	
 }

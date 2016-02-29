@@ -169,7 +169,11 @@ public class CardsServiceImpl implements CardService {
 		
 		//获取用户名称
 		Users createUser = usersService.getUserInfo(vo.getCreateUserId());
-		if (createUser != null) vo.setCreateUserName(createUser.getName());
+		if (createUser != null) {
+			vo.setCreateUserId(createUser.getId());
+			vo.setCreateUserName(createUser.getName());
+			vo.setHeadImgCreateUser(createUser.getHeadImg());
+		}
 		
 		Users u = usersService.getUserInfo(vo.getUserId());
 		if (u != null) {
@@ -222,18 +226,27 @@ public class CardsServiceImpl implements CardService {
 		if (cards.isEmpty()) return result;
 		
 		List<Long> cardIds = new ArrayList<Long>();
+		List<Long> userIds = new ArrayList<Long>();
 		for (Cards item : cards) {
 			cardIds.add(item.getCardId());
+			if (!userIds.contains(item.getCreateUserId())) {
+				userIds.add(item.getCreateUserId());
+			}
 		}
 
 		List<CardAttend> cardAttends = new ArrayList<CardAttend>();
 		List<HashMap> totalCardZans = new ArrayList<HashMap>();
 		List<HashMap> totalCardComments = new ArrayList<HashMap>();
+		List<Users> createUsers = new ArrayList<Users>();
 		
 		if (!cardIds.isEmpty()) {
 			cardAttends = cardAttendService.selectByCardIds(cardIds);
 			totalCardZans = cardZanService.totalByCardIds(cardIds);
 			totalCardComments = cardCommentService.totalByCardIds(cardIds);
+		}
+		
+		if (!userIds.isEmpty()) {
+			createUsers = usersService.selectByUserIds(userIds);
 		}
 				
 		Cards item = null;
@@ -243,6 +256,14 @@ public class CardsServiceImpl implements CardService {
 			
 			vo.setCardId(item.getCardId());
 			vo.setCardType(item.getCardType());
+			
+			for (Users us : createUsers) {
+				if (us.getId().equals(item.getCreateUserId())) {
+					vo.setCreateUserId(item.getCreateUserId());
+					vo.setHeadImgCreateUser(us.getHeadImg());
+					break;
+				}
+			}
 			
 			//卡片类型名称
 			String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());

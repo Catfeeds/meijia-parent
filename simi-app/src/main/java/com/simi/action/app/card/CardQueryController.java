@@ -169,25 +169,7 @@ public class CardQueryController extends BaseController {
 			cardList = cardService.changeToCardListVo(cards);
 			result.setData(cardList);
 		}
-		
-		//处理天气类卡片的问题
-		
-		//1. 如果不是第一页，则不需要天气类卡片
-//		if (page !=1 ) return result;
-//		
-//		//2. 如果不是当天，则不需要天气类卡片
-//		String today = DateUtil.getToday();
-//		if (!StringUtil.isEmpty(serviceDate) ) {
-//			if (!serviceDate.equals(today)) return result;
-//		}
-//		
-//		CardListVo weatherCard = cardService.getWeatherCard(serviceDate, lat, lng);
-//		
-//		if (weatherCard != null && weatherCard.getCardType().equals((short)99)) {
-//			cardList.add(0, weatherCard);
-//			result.setData(cardList);
-//		}
-		
+				
 		return result;
 	}
 
