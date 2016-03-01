@@ -6,6 +6,7 @@ import java.util.Map;
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
+import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.po.model.user.UserRef3rd;
@@ -75,6 +76,8 @@ public interface UsersService {
 	Boolean userSecToUserPushSms(Users users);
 
 	String getHeadImg(Users u);
+
+	UserBaseVo getUserBaseVo(Users user);
 
 
 }

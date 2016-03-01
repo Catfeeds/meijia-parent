@@ -55,6 +55,7 @@ import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.UserSearchVo;
 import com.simi.vo.UsersSearchVo;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
@@ -259,6 +260,20 @@ public class UsersServiceImpl implements UsersService {
 		}
 		return vo;
 	}
+	
+	@Override
+	public UserBaseVo getUserBaseVo(Users user) {
+
+		UserBaseVo vo = new UserBaseVo();
+		vo.setUserId(user.getId());
+		vo.setHeadImg(user.getHeadImg());
+		vo.setMobile(user.getMobile());
+		vo.setName(user.getName());
+		vo.setProvinceName(user.getProvinceName());
+		vo.setSex(user.getSex());
+		
+		return vo;
+	}	
 
 	@Override
 	public int updateByPrimaryKeySelective(Users user) {

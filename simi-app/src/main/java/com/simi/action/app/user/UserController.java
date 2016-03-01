@@ -1,6 +1,7 @@
 package com.simi.action.app.user;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.BeanUtilsExp;
@@ -31,6 +33,7 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserPushBindVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserViewVo;
@@ -245,5 +248,28 @@ public class UserController extends BaseController {
 
 		return result;
 	}
+	
+	/**
+	 * 
+	 */
+	@RequestMapping(value = "get_user_base", method = RequestMethod.GET)
+	public AppResultData<Object> getUserBase(
+			@RequestParam("user_id") Long userId) {
 
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		UserBaseVo vo = userService.getUserBaseVo(u);
+		result.setData(vo);
+
+		return result;
+	}
 }
