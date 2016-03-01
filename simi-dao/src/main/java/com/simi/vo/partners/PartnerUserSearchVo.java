@@ -15,6 +15,9 @@ public class PartnerUserSearchVo {
 	 private String mobile;
 	 
 	 private Long parentId;
+	 
+    //权重类型
+    private Short weightType;
 
 
 	public Long getPartnerId() {
@@ -63,5 +66,13 @@ public class PartnerUserSearchVo {
 
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
+	}
+
+	public Short getWeightType() {
+		return weightType;
+	}
+
+	public void setWeightType(Short weightType) {
+		this.weightType = weightType;
 	}	 
 }

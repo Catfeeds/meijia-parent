@@ -219,4 +219,10 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 		return partnerUsersMapper.selectByPartnerId(partnerId);
 	}
 	
+	
+	@Override
+	public List<PartnerUsers> selectBySearchVo(PartnerUserSearchVo partnersSearchVo) {	
+		return partnerUsersMapper.selectBySearchVo(partnersSearchVo);
+	}
+	
 }

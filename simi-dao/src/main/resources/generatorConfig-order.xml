@@ -5,8 +5,8 @@
 	<!--  
 	  <classPathEntry location="C:\workspace\java\libs\mysql-connector-java-5.1.5-bin.jar" />
     -->
- <!--    <classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
-  --><classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" />
+   <classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
+  
 
 	<!-- 数据库链接URL、用户名、密码 -->
 	<context id="jdbc-test">
@@ -47,7 +47,7 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
-		<table schema="simi" tableName="order_ext_green"
+		<table schema="simi" tableName="order_ext_water"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -59,8 +59,7 @@
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="total_num" property="totalNum" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
+			<columnOverride  column="service_price_id" property="servicePriceId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 
 		</table>

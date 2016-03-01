@@ -149,6 +149,11 @@ public class OrderPayServiceImpl implements OrderPayService {
 		//订单操作成功后，对应的用户累加积分（1:1）
 		orderAsyncService.orderScore(order);
 		
+		//扩展操作，如果为送水订单，则还继续提醒运营人员.
+		if (serviceTypeId.equals(239L)) {
+			this.orderWaterPaySuccessToDo(order);
+		}
+		
 	}
 	
 	@Override
@@ -202,5 +207,20 @@ public class OrderPayServiceImpl implements OrderPayService {
 		}
 		return true;
 	}
+	
+	@Override
+	public void orderWaterPaySuccessToDo(Orders order) {
+		//通知运营人员，进行送水服务商的人工派工流程.
+	}
+	
+	@Override
+	public void orderGreenPaySuccessToDo(Orders order) {
+		//通知运营人员，进行绿植服务商的人工派工流程.
+	}	
+	
+	@Override
+	public void orderTeamPaySuccessToDo(Orders order) {
+		//通知运营人员，进行绿植服务商的人工派工流程.
+	}		
 	
 }

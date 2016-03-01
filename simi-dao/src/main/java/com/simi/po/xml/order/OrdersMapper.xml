@@ -98,6 +98,17 @@
 		</foreach>
 		order by add_time desc
 	</select>
+	
+	<select id="selectByOrderIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where order_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>
 
 	<!-- oa订单查询，并可以根据mobile和orderNo查询 -->
 

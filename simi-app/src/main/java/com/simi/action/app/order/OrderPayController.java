@@ -113,6 +113,11 @@ public class OrderPayController extends BaseController {
 		Long servicePriceId = orderPrice.getServicePriceId();
 
 		BigDecimal orderPay = servicePrice.getDisPrice();//折扣价
+		
+		if (serviceTypeId.equals(239L)) {
+			orderPay = orderPrice.getOrderPay();
+		}
+		
 
 		orderPay = orderPricesService.getPayByOrder(orderPay, userCouponId);
 		

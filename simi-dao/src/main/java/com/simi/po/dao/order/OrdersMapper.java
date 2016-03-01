@@ -37,5 +37,7 @@ public interface OrdersMapper {
 	int statTotalOrder(ChartSearchVo chartSearchVo);
 
 	List<Orders> selectIdsByListPage(List<Long> partnerUserIdList);
+
+	List<Orders> selectByOrderIds(List<Long> orderIds);
 	
 }

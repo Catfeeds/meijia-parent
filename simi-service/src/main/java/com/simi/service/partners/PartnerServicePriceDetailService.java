@@ -1,5 +1,7 @@
 package com.simi.service.partners;
 
+import java.util.List;
+
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 
 public interface PartnerServicePriceDetailService {
@@ -21,6 +23,8 @@ public interface PartnerServicePriceDetailService {
 	PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId);
 
 	int deleteByServiceTypeId(Long servicePriceId);
+
+	List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds);
 	
 
 

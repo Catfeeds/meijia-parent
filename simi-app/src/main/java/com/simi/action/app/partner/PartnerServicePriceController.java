@@ -36,6 +36,7 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/partner")
@@ -114,7 +115,7 @@ public class PartnerServicePriceController extends BaseController {
 	}
 
 	/**
-	 * 服务报价列表接口
+	 * 服务报价列表接口(通过服务人员ID查询)
 	 * 
 	 * @param partnerUserId
 	 * @param page
@@ -368,4 +369,46 @@ public class PartnerServicePriceController extends BaseController {
 		result.setData(partners);
 		return result;
 	}
+	
+	/**
+	 * 服务报价列表接口(通过服务大类查询)
+	 * 
+	 * @param service_type_id  服务大类ID
+	 * @param page
+	 * @return
+	 */
+
+	@RequestMapping(value = "get_default_service_price_list", method = RequestMethod.GET)
+	public AppResultData<Object> getDefaultList(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("service_type_id") Long serviceTypeId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		//先根据服务大类找到相应的推荐人员.
+		PartnerUserSearchVo searchVo  = new PartnerUserSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
+		searchVo.setWeightType((short)1);
+		
+		List<PartnerUsers> list = partnerUserService.selectBySearchVo(searchVo);
+		if (list.isEmpty()) return result;
+		
+		PartnerUsers partnerUser = list.get(0);
+		
+		AppResultData<Object> resultList = this.list(partnerUser.getUserId());
+		
+		result.setData(resultList.getData());
+
+		return result;
+
+	}	
 }

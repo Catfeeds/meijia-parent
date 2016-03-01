@@ -1,6 +1,8 @@
 package com.simi.service.impl.partners;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,11 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 	public PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.selectByServicePriceId(servicePriceId);
 	}	
+	
+	@Override
+	public List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds) {
+		return partnerServicePriceDetailMapper.selectByServicePriceIds(servicePriceIds);
+	}		
 
 	@Override
 	public int updateByPrimaryKeySelective(PartnerServicePriceDetail record) {

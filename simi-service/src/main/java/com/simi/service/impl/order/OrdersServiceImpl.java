@@ -187,6 +187,11 @@ public class OrdersServiceImpl implements OrdersService {
 		return ordersMapper.selectByOrderNo(orderNo);
 	}
 	
+	@Override
+	public List<Orders> selectByOrderIds(List<Long> orderIds) {
+		return ordersMapper.selectByOrderIds(orderIds);
+	}
+	
 
 
 

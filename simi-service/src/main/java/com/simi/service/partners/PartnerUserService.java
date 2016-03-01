@@ -34,6 +34,8 @@ public interface PartnerUserService {
 			Long partnerId);
 
 	List<PartnerUsers> selectByPartnerId(Long partnerId);
+
+	List<PartnerUsers> selectBySearchVo(PartnerUserSearchVo partnersSearchVo);
 	
 
 	

@@ -32,6 +32,8 @@ public interface OrdersService {
 
 	Orders selectByOrderNo(String orderNo);
 
+	List<Orders> selectByOrderIds(List<Long> orderIds);
+
 
 
 	

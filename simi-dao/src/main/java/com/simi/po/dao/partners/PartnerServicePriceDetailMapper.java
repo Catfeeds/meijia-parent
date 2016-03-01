@@ -1,5 +1,7 @@
 package com.simi.po.dao.partners;
 
+import java.util.List;
+
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 
 public interface PartnerServicePriceDetailMapper {
@@ -18,4 +20,6 @@ public interface PartnerServicePriceDetailMapper {
     int updateByPrimaryKey(PartnerServicePriceDetail record);
 
 	PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId);
+
+	List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds);
 }

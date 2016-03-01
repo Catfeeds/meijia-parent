@@ -82,6 +82,41 @@
 
 		order by weight_type desc, weight_no asc, add_time desc 
 	</select>
+	
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.partners.PartnerUserSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from partner_users
+		where 1=1
+		<if test="partnerId != null">
+			and partner_id =  #{partnerId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="serviceTypeId != null">
+			and service_type_id =  #{serviceTypeId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="serviceTypeIds != null">
+			and service_type_id in
+			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="name != null">
+			and user_id in (select id from users where  name like CONCAT('%','${name}','%' ) )
+		</if>
+		<if test="mobile != null">
+			and user_id in (select id from users where  mobile like CONCAT('%','${mobile}','%' ) )
+		</if>
+		
+		<if test="weightType != null">
+			and weight_type =  #{weightType,jdbcType=NUMERIC}
+		</if>
+
+		order by weight_type desc, weight_no asc, add_time desc 
+	</select>	
 
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
