@@ -35,7 +35,7 @@
 		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</select>	
 	
-	<select id="selectByServicePriceId" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="selectByServicePriceIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_price_detail
