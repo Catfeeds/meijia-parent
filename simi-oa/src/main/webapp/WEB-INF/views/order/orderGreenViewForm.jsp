@@ -117,7 +117,27 @@
 								<form:errors path="orderStatusName" class="field-has-error"></form:errors>
 							</div>
 						</div> --%>
-						
+						<c:if test="${contentModel.orderStatus < 2 }">
+						<div class="form-group">
+
+							<label class="col-md-2 control-label">总金额</label>
+							<div class="col-md-5">
+								<form:input path="orderMoney" class="form-control"
+									maxLength="32"/>
+								<form:errors path="orderMoney" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<label class="col-md-2 control-label">支付金额</label>
+							<div class="col-md-5">
+								<form:input path="orderPay" class="form-control"
+									maxLength="32" />
+								<form:errors path="orderPay" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						</c:if>
+						<c:if test="${contentModel.orderStatus >= 2 }">
 						<div class="form-group">
 
 							<label class="col-md-2 control-label">总金额</label>
@@ -136,6 +156,7 @@
 								<form:errors path="orderPay" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						</c:if>
 						<div class="form-group">
                               <label  class="col-md-2 control-label">订单状态</label>
                               <div class="col-md-5">

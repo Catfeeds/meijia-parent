@@ -9,12 +9,32 @@ var formVal = $('#order-green-view-form').validate({
 			required: true,
 			number:true,
 		},
+		orderPay: {
+			required: "请输入价格",
+			number: "请输入正确的价格数字",
+			
+		},
+		
+		orderMoney: {
+			required: "请输入价格",
+			number: "请输入正确的价格数字",
+		},
 	
 	
 	},
 
 	messages : {
 		partnerOrderMoney: {
+			required: "请输入价格",
+			number: "请输入正确的价格数字",
+			
+		},
+		orderPay: {
+			required: "请输入价格",
+			number: "请输入正确的价格数字",
+			
+		},
+		orderMoney: {
 			required: "请输入价格",
 			number: "请输入正确的价格数字",
 			
