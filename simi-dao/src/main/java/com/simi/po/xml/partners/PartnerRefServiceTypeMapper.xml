@@ -25,6 +25,12 @@
     from partner_ref_service_type
     where partner_id = #{partneId,jdbcType=NUMERIC}
   </select>
+  <select id="selectByServiceTypeId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from partner_ref_service_type
+    where service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+  </select>
   <!--查询出服务商对应到的服务类型-->
   <select id="selectServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
     select 

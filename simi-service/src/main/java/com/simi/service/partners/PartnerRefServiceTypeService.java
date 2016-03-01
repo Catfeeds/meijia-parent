@@ -1,5 +1,7 @@
 package com.simi.service.partners;
 
+import java.util.List;
+
 import com.simi.po.model.partners.PartnerRefServiceType;
 
 public interface PartnerRefServiceTypeService {
@@ -19,5 +21,7 @@ public interface PartnerRefServiceTypeService {
     PartnerRefServiceType initPartnerRefServiceType();
 
 	int deleteByPartnerId(Long partnerId);
+
+	List<PartnerRefServiceType> selectByServiceTypeId(Long serviceTypeId);
 
 }

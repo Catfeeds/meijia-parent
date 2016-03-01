@@ -24,5 +24,7 @@ public interface PartnerRefServiceTypeMapper {
     List<PartnerRefServiceType> selectServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
    
     List<PartnerRefServiceType> selectSubServiceTypeByPartnerIdAndParentId(Long partnerId,Long parentId);
+
+	List<PartnerRefServiceType> selectByServiceTypeId(Long serviceTypeId);
     
 }

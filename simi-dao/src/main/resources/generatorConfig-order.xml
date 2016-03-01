@@ -46,7 +46,217 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
+<!-- 订单表 -->
+		<table schema="simi" tableName="orders"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_date" property="serviceDate" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="start_time" property="startTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="cell_id" property="cellId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="addr_id" property="addrId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 
+			<columnOverride  column="service_type" property="serviceType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_hours" property="serviceHours" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_from" property="orderFrom" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_status" property="orderStatus" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_rate" property="orderRate" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_score" property="isScore" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+
+		</table>
+
+		<!-- 订单价格表 -->
+		<table schema="simi" tableName="order_prices"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="used_score" property="usedScore" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+			<columnOverride  column="pay_type" property="payTypeype" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="clean_tools" property="cleanTools" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+
+		</table>
+
+		<!-- 订单选择信息表 -->
+		<table schema="simi" tableName="order_selected"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="select_value" property="selectValue" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>
+
+		<!-- 充值卡订单表 -->
+		<table schema="simi" tableName="order_cards"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="card_type" property="cardType" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_status" property="orderStatus" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
+
+		<!-- 管家卡订单表 -->
+		<table schema="simi" tableName="order_senior"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="senior_type" property="seniorType" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+			<columnOverride  column="order_status" property="orderStatus" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
+
+
+		<!-- 与家拥坊订单的关联表 -->
+		<table schema="simi" tableName="order_ref_jyf"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+			<columnOverride  column="dispatch_id" property="dispatchId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="employee_id" property="employeeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+		</table>
+
+		<!-- 订单日志表 -->
+		<table schema="simi" tableName="order_log"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_status" property="orderStatus" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+
+		</table>
+
+		<!-- 派工表 -->
+		<table schema="simi" tableName="order_dispatchs"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_date" property="serviceDate" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="start_time" property="startTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="staff_id" property="staffId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="partner_id" property="partnerId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="admin_id" property="adminId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="service_hours" property="serviceHours" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			
+		</table>
+		
+		<table schema="simi" tableName="order_ext_green"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="total_num" property="totalNum" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+		</table>
+		<table schema="simi" tableName="order_ext_team"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="attend_num" property="attendNum" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="service_days" property="serviceDays" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="team_type" property="teamType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+		</table>
 		<table schema="simi" tableName="order_ext_water"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"

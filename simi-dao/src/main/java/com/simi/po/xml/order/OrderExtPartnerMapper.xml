@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.order.OrderExtPartnerMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderExtPartner" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="order_id" property="orderId" jdbcType="NUMERIC" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+    <result column="partner_order_no" property="partnerOrderNo" jdbcType="VARCHAR" />
+    <result column="partner_order_money" property="partnerOrderMoney" jdbcType="DECIMAL" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, order_no, partner_id, partner_order_no, partner_order_money, remarks, 
+    add_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_ext_partner
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_ext_partner
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.order.OrderExtPartner" >
+    insert into order_ext_partner (id, order_id, order_no, 
+      partner_id, partner_order_no, partner_order_money, 
+      remarks, add_time, update_time
+      )
+    values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR}, 
+      #{partnerId,jdbcType=NUMERIC}, #{partnerOrderNo,jdbcType=VARCHAR}, #{partnerOrderMoney,jdbcType=DECIMAL}, 
+      #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.order.OrderExtPartner" >
+    insert into order_ext_partner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="partnerOrderNo != null" >
+        partner_order_no,
+      </if>
+      <if test="partnerOrderMoney != null" >
+        partner_order_money,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="partnerOrderNo != null" >
+        #{partnerOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerOrderMoney != null" >
+        #{partnerOrderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderExtPartner" >
+    update order_ext_partner
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=NUMERIC},
+      </if>
+      <if test="partnerOrderNo != null" >
+        partner_order_no = #{partnerOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerOrderMoney != null" >
+        partner_order_money = #{partnerOrderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderExtPartner" >
+    update order_ext_partner
+    set order_id = #{orderId,jdbcType=NUMERIC},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      partner_id = #{partnerId,jdbcType=NUMERIC},
+      partner_order_no = #{partnerOrderNo,jdbcType=VARCHAR},
+      partner_order_money = #{partnerOrderMoney,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

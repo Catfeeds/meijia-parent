@@ -1,6 +1,8 @@
 package com.simi.service.impl.partners;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,6 +65,13 @@ public class PartnerRefServiceTypeServiceImpl implements PartnerRefServiceTypeSe
 	public int deleteByPartnerId(Long partnerId) {
 		
 		return partnerRefServiceTypeMapper.deleteByPartnerId(partnerId);
+	}
+
+	@Override
+	public List<PartnerRefServiceType> selectByServiceTypeId(
+			Long serviceTypeId) {
+		
+		return partnerRefServiceTypeMapper.selectByServiceTypeId(serviceTypeId);
 	}
 	
 	

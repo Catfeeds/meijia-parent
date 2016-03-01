@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.order.OrderExtTeamMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderExtTeam" >
+    <id column="id" property="id" jdbcType="NUMERIC" />
+    <result column="order_id" property="orderId" jdbcType="NUMERIC" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="service_days" property="serviceDays" jdbcType="NUMERIC" />
+    <result column="team_type" property="teamType" jdbcType="NUMERIC" />
+    <result column="attend_num" property="attendNum" jdbcType="NUMERIC" />
+    <result column="city_id" property="cityId" jdbcType="NUMERIC" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, order_no, user_id, mobile, service_days, team_type, attend_num, city_id, 
+    add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_ext_team
+    where id = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_ext_team
+    where id = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.order.OrderExtTeam" >
+    insert into order_ext_team (id, order_id, order_no, 
+      user_id, mobile, service_days, 
+      team_type, attend_num, city_id, 
+      add_time)
+    values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR}, #{serviceDays,jdbcType=NUMERIC}, 
+      #{teamType,jdbcType=NUMERIC}, #{attendNum,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, 
+      #{addTime,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.order.OrderExtTeam" >
+    insert into order_ext_team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="serviceDays != null" >
+        service_days,
+      </if>
+      <if test="teamType != null" >
+        team_type,
+      </if>
+      <if test="attendNum != null" >
+        attend_num,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="serviceDays != null" >
+        #{serviceDays,jdbcType=NUMERIC},
+      </if>
+      <if test="teamType != null" >
+        #{teamType,jdbcType=NUMERIC},
+      </if>
+      <if test="attendNum != null" >
+        #{attendNum,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderExtTeam" >
+    update order_ext_team
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="serviceDays != null" >
+        service_days = #{serviceDays,jdbcType=NUMERIC},
+      </if>
+      <if test="teamType != null" >
+        team_type = #{teamType,jdbcType=NUMERIC},
+      </if>
+      <if test="attendNum != null" >
+        attend_num = #{attendNum,jdbcType=NUMERIC},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=NUMERIC},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderExtTeam" >
+    update order_ext_team
+    set order_id = #{orderId,jdbcType=NUMERIC},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=NUMERIC},
+      mobile = #{mobile,jdbcType=CHAR},
+      service_days = #{serviceDays,jdbcType=NUMERIC},
+      team_type = #{teamType,jdbcType=NUMERIC},
+      attend_num = #{attendNum,jdbcType=NUMERIC},
+      city_id = #{cityId,jdbcType=NUMERIC},
+      add_time = #{addTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>
