@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.MathBigDeciamlUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -227,6 +229,7 @@ public class PartnerServicePriceController extends BaseController {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/post_partner_service_price_add", method = { RequestMethod.POST })
 	public AppResultData<Object> partnerAdd(
 			HttpServletRequest request,
@@ -404,9 +407,51 @@ public class PartnerServicePriceController extends BaseController {
 		
 		PartnerUsers partnerUser = list.get(0);
 		
-		AppResultData<Object> resultList = this.list(partnerUser.getUserId());
+		Long parnterUserId = partnerUser.getUserId();
 		
-		result.setData(resultList.getData());
+		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
+		
+		List<Long> servicePriceIds = new ArrayList<Long>();
+		for (PartnerServicePriceDetail item : servicePriceDetails) {
+			if (!servicePriceIds.contains(item.getServicePriceId())) {
+				servicePriceIds.add(item.getServicePriceId());
+			}
+		}
+		
+		
+		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
+		
+		
+		// List<PartnerServiceType> list =
+		// partnerServiceTypeService.selectByPartnerIdIn(partnerId);
+		// 服务价格
+		List<Map> resultList = new ArrayList<Map>();
+		for (PartnerServicePriceDetail item : servicePriceDetails) {
+			
+			String name = "";
+			
+			PartnerServiceType serviceType = null;
+			for (PartnerServiceType item1 : serviceTypes) {
+				if (item1.getId().equals(item.getServicePriceId())) {
+					serviceType = item1;
+					break;
+				}
+			}
+			
+			
+			Map<String, String> resultMap = new HashMap<String, String>();
+			resultMap.put("name", serviceType.getName());
+			resultMap.put("servcePriceId", serviceType.getId().toString());
+			resultMap.put("price", MathBigDeciamlUtil.round2(item.getPrice()));
+			resultMap.put("disPrice", MathBigDeciamlUtil.round2(item.getDisPrice()));
+			resultMap.put("imgUrl", item.getImgUrl());
+			
+			resultList.add(resultMap);
+			
+		}
+		
+
+		result.setData(resultList);
 
 		return result;
 

@@ -1,10 +1,6 @@
 package com.simi.vo;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-
-import com.simi.po.model.order.Orders;
-import com.simi.vo.order.OrderListVo;
 
 public class OrdersGreenPartnerVo extends OrdersListVo{
 	

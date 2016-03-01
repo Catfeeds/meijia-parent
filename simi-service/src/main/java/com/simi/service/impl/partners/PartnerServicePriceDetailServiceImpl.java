@@ -52,7 +52,12 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 	@Override
 	public List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds) {
 		return partnerServicePriceDetailMapper.selectByServicePriceIds(servicePriceIds);
-	}		
+	}	
+	
+	@Override
+	public List<PartnerServicePriceDetail> selectByUserId(Long userId) {
+		return partnerServicePriceDetailMapper.selectByUserId(userId);
+	}
 
 	@Override
 	public int updateByPrimaryKeySelective(PartnerServicePriceDetail record) {

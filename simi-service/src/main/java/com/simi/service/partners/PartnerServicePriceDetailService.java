@@ -25,6 +25,8 @@ public interface PartnerServicePriceDetailService {
 	int deleteByServiceTypeId(Long servicePriceId);
 
 	List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds);
+
+	List<PartnerServicePriceDetail> selectByUserId(Long userId);
 	
 
 

@@ -22,4 +22,6 @@ public interface PartnerServicePriceDetailMapper {
 	PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId);
 
 	List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds);
+
+	List<PartnerServicePriceDetail> selectByUserId(Long userId);
 }
