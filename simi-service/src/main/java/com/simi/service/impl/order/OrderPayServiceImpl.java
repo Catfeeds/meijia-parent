@@ -108,11 +108,14 @@ public class OrderPayServiceImpl implements OrderPayService {
 		String userMobile = order.getMobile();
 		
 		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
-		String partnerUserMobile = partnerUser.getMobile();
+		if (partnerUser != null) {
 		
-		//通知相关服务商
-		String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile , " " };
-//		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
+			String partnerUserMobile = partnerUser.getMobile();
+			
+			//通知相关服务商
+			String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile , " " };
+	//		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
+		}
 		
 		//通知用户
 		String addTimeStr = TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000 , "yyyy-MM-dd HH:mm");

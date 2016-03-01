@@ -177,6 +177,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			}
 		}
 		
+		if (orderIds.isEmpty()) return result;
 		List<Orders> orders = ordersService.selectByOrderIds(orderIds);
 		
 		List<Long> serviceTypeIds = new ArrayList<Long>();
@@ -283,8 +284,5 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			result.add(vo);
 		}
 		return result;
-	}	
-
-
-
+	}
 }

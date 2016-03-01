@@ -101,7 +101,9 @@ public class OrderExtWaterController extends BaseController {
 		
 		List<OrderExtWaterListVo> listVo = new ArrayList<OrderExtWaterListVo>();
 		List<OrderExtWater> list = orderExtWaterService.selectByUserId(userId);
-		listVo = orderExtWaterService.getListVos(list);
+		
+		if (!list.isEmpty())
+			listVo = orderExtWaterService.getListVos(list);
 		
 		result.setData(listVo);
 		return result;
