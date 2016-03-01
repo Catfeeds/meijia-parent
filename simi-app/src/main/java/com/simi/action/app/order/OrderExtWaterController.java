@@ -157,7 +157,6 @@ public class OrderExtWaterController extends BaseController {
 	@RequestMapping(value = "post_add_water", method = RequestMethod.POST)
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
-			@RequestParam("city_name") String cityName,
 			@RequestParam("addr_id") Long addrId,
 			@RequestParam("service_price_id") Long servicePriceId,
 			@RequestParam("service_num") Integer serviceNum,
@@ -180,6 +179,14 @@ public class OrderExtWaterController extends BaseController {
 		}
 		
 		//如果城市不是北京市，则提示无法服务
+		UserAddrs userAddr = userAddrsService.selectByPrimaryKey(addrId);
+		if (userAddr == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("目前仅支持北京市区服务范围，敬请谅解！");
+			return result;	
+		}
+		
+		String cityName = userAddr.getCity();
 		if (!cityName.equals("北京市")) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("目前仅支持北京市区服务范围，敬请谅解！");
