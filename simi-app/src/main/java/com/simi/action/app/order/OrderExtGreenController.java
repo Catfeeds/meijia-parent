@@ -102,7 +102,7 @@ public class OrderExtGreenController extends BaseController {
 		    UserAddrs addrs = userAddrsList.get(i);
 		    UserAddrVo vo = new UserAddrVo();
 			vo.setAddrId(addrs.getId());
-			vo.setAddrName(addrs.getName() + addrs.getAddr());
+			vo.setAddrName(addrs.getAddress() + addrs.getAddr());
 		   
 		   voList.add(vo);
 	}
@@ -129,6 +129,7 @@ public class OrderExtGreenController extends BaseController {
 			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") Long addrId,
 			@RequestParam("total_num") Long totalNum,
+			@RequestParam("mobile") String mobile,
 			@RequestParam("total_budget") BigDecimal totalBudget,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks
 			//@RequestParam(value = "",required = false,defaultValue= "")
@@ -177,7 +178,7 @@ public class OrderExtGreenController extends BaseController {
 		//order.setPartnerUserId(partnerUserId);
 		order.setServiceTypeId(serviceTypeId);
 		order.setUserId(userId);
-		order.setMobile(u.getMobile());
+		order.setMobile(mobile);
 		//order.setOrderType(servicePrice.getOrderType());
 		//order.setOrderDuration(servicePrice.getOrderDuration());
 		order.setServiceContent(serviceContent);
@@ -187,7 +188,7 @@ public class OrderExtGreenController extends BaseController {
 			order.setRemarks(remarks);	
 		}
 		//order.setOrderFrom(orderFrom);
-		order.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
+		order.setOrderStatus(Constants.ORDER_STATUS_3_PROCESSING);
 		//order.setCityId(cityId);
 		ordersService.insert(order);
 		Long orderId = order.getOrderId();
@@ -204,7 +205,7 @@ public class OrderExtGreenController extends BaseController {
 	//	orderPrice.setServicePriceId(servicePriceId);
 	//	orderPrice.setPartnerUserId(partnerUserId);
 		orderPrice.setUserId(userId);
-		orderPrice.setMobile(u.getMobile());
+		orderPrice.setMobile(mobile);
 	//	orderPrice.setPayType(payType);
 	//	orderPrice.setUserCouponId(userCouponId);
 		orderPrice.setOrderMoney(orderMoney);

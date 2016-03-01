@@ -45,7 +45,7 @@
 
 				<div class="am-form-group">
 					<label for="doc-ipt-email-1">数量</label> <input type="text"
-						type="number" id="totalNum" name="totalNum" class="am-form-field"
+						type="number" id="totalNum" name="totalNum" class="am-form-field js-pattern-pinteger"
 						placeholder="数量" required>
 				</div>
 				<!-- <div class="am-form-group">
@@ -55,21 +55,26 @@
 				<div class="am-form-group">
 					<label for="doc-ipt-email-1">预算</label> <input type="text"
 						type="text" id="totalBudget" name="totalBudget"
-						class="am-form-field" placeholder="总预算" required>
+						class="am-form-field js-pattern-pinteger" maxLength="8" placeholder="总预算" required>
 				</div>
 
 				<input type="hidden" id="addrId" name="addrId" value="" /> <label
-					for="doc-select-1">您能提供的服务内容：</label> <select id="addrName"
-					name="addrName" class="am-form-field">
+					for="doc-select-1">请选择送货地址：</label> <select id="addrName"
+					name="addrName" class="am-form-field" required>
 
 				</select> <span class="am-form-caret"></span>
 
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">联系人</label> <input type="text"
+						type="text" id="mobile" name="mobile"
+						class="am-form-field js-pattern-pinteger" placeholder="联系人手机号" required>
+				</div>
+				
 				<div class="am-form-group ">
 					<label for="doc-ipt-pwd-21">备注</label>
 
 					<textarea id="remarks" name="remarks" minlength="0" maxlength="100"
 						class="am-form-field" placeholder="备注"></textarea>
-
 				</div>
 				<div class="am-form-group">
 					<div class="am-u-sm-12">

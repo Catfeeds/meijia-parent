@@ -28,9 +28,33 @@ $.ajax({
 
 	}
 });
+//获得用户详细信息放到form表单里面
+$.ajax({
+	type : "GET",
+	url : appRootUrl + "user/get_user_base.json?user_id="+userId,
+	dataType : "json",
+	cache : true,
+	async : false,	
+	success : function(data) {
+	
+		if (data.status == "999") return false;
+		var vo = data.data;
+		console.log(vo);
+		$("#mobile").val(vo.mobile);
+		
+	}
+});
 $('#order-green-form').validator({
 	validate : function(validity) {
 		
+		
+		//数量校验
+		if ($(validity.field).is('.js-ajax-validate')) {
+			var  totalNum = $('#totalNum').val();  
+			validity.valid = verifyNumber(totalNum);
+
+			return validity;    
+		} 
 		//钱数校验
 		if ($(validity.field).is('.js-ajax-validate')) {
 			var  totalBudget = $('#totalBudget').val();  
@@ -38,6 +62,15 @@ $('#order-green-form').validator({
 
 			return validity;    
 		} 
+		
+		//手机号校验
+		if ($(validity.field).is('.js-ajax-validate')) {
+			var  mobile = $('#mobile').val(); 
+			console.log(mobile);
+			validity.valid = verifyMobile(mobile);
+
+			return validity;    
+		}  
 		
 
 	},
@@ -57,14 +90,14 @@ $('#order-green-form').validator({
 $("#add_btn").on('click', function(e) {
 	console.log("reg-submit click");
 	var $form = $('#order-green-form');
-	//var validator = $form.data('amui.validator');
-//	var formValidity = validator.isFormValid()
-	//$.when(formValidity).then(function() {
+	var validator = $form.data('amui.validator');
+	var formValidity = validator.isFormValid()
+	$.when(formValidity).then(function() {
 		// done, submit form
 		companyRegSubmit()
-	//}, function() {
+	}, function() {
 		// fail
-	//});
+	});
 });
 //提交
 function companyRegSubmit() {
@@ -79,6 +112,7 @@ function companyRegSubmit() {
 	params.user_id = userId;
 //	params.addr = $('#addr').val();
 	params.addr_id = $('#addrName').val();
+	params.mobile = $('#mobile').val();
 	
 	// 提交数据，完成注册流程
 	$.ajax({
