@@ -3,7 +3,7 @@
 	<div class="am-topbar-brand">
 		<img src="https://gtms02.alicdn.com/tps/i2/TB1qU_xGFXXXXczaXXXTyVt9VXX-128-128.png" height="25"
 			width="25"><a href="#"></i> | 北京美家生活科技有限公司 </a><a href="javascript:;"> <span
-			class="am-badge am-badge-danger am-radius">未认证</span></a>
+			class="am-badge am-badge-danger am-radius"></span></a>
 	</div>
 
 	<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
