@@ -22,6 +22,7 @@ import com.simi.po.model.user.Users;
 import com.alibaba.druid.util.Utils;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.mysql.jdbc.Util;
 
@@ -80,6 +81,8 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 		record.setUserId(0L);
 		record.setOrderId(0L);
 		record.setOrderNo("");
+		record.setOrderExtStatus((short)0);
+		record.setGreenType((short)0);
 		record.setMobile("");
 		record.setTotalNum(0L);
 		record.setTotalBudget(new BigDecimal(0));
@@ -113,25 +116,7 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
 		}
 		//订单状态
-		//0 = 已关闭 1 = 待支付 2 = 已支付 3 = 处理中 7 = 待评价 9 = 已完成
-		if (order.getOrderStatus() == 0) {
-				vo.setOrderStatusName("已关闭");
-		}
-		if (order.getOrderStatus() == 1) {
-				vo.setOrderStatusName("待支付");
-		}
-		if (order.getOrderStatus() == 2) {
-				vo.setOrderStatusName("已支付");
-		}
-		if (order.getOrderStatus() == 3) {
-				vo.setOrderStatusName("处理中");
-		}
-		if (order.getOrderStatus() == 7) {
-				vo.setOrderStatusName("待评价");
-		}
-		if (order.getOrderStatus() == 9) {
-				vo.setOrderStatusName("已完成");
-		}
+		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
 		
 		Long addTime = order.getAddTime()*1000;	
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));

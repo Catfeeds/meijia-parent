@@ -180,6 +180,7 @@
 								</form:select>
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<label class="col-md-2 control-label">服务地址</label>
 							<div class="col-md-5">
@@ -190,6 +191,49 @@
 								</form:select>
 							</div>
 						</div>
+						<div class="form-group">
+							<!-- Text input-->
+							<label class="col-md-2 control-label">状态</label>
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="orderExtStatus"
+												value="0" />运营人员处理中
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="orderExtStatus"
+												value="1" />已转派服务商
+										</label>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<!-- Text input-->
+							<label class="col-md-2 control-label">绿植类型</label>
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-md-2" align="center">
+										<label class="radio"> <form:radiobutton path="greenType"
+												value="0" />绿植租摆
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="greenType"
+												value="1" />定期维护
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="greenType"
+												value="2" />其他
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">绿植的数量</label>

@@ -11,6 +11,10 @@ public class OrderExtGreen {
     
     private String orderNo;
     
+    private Short orderExtStatus;
+    
+    private Short greenType;
+    
     private Long userId;
     
     private String mobile;
@@ -43,6 +47,22 @@ public class OrderExtGreen {
 
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public Short getOrderExtStatus() {
+		return orderExtStatus;
+	}
+
+	public void setOrderExtStatus(Short orderExtStatus) {
+		this.orderExtStatus = orderExtStatus;
+	}
+
+	public Short getGreenType() {
+		return greenType;
+	}
+
+	public void setGreenType(Short greenType) {
+		this.greenType = greenType;
 	}
 
 	public Long getUserId() {

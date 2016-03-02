@@ -144,6 +144,8 @@ public class OrderGreenController extends AdminController {
 			vo.setPartnerOrderNo("");
 			vo.setPartnerOrderMoney(new BigDecimal(0));
 			vo.setPartnerId(0L);
+			vo.setOrderExtStatus((short)0);
+			vo.setGreenType((short)0);
 			
 			vo.setTotalNum(green.getTotalNum());
 			vo.setTotalBudget(green.getTotalBudget());
@@ -176,10 +178,14 @@ public class OrderGreenController extends AdminController {
 		OrdersGreenPartnerVo vo = new OrdersGreenPartnerVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(listvo, vo);
 		OrderExtGreen green = orderExtGreenService.selectByOrderId(vo.getOrderId());
-		vo.setPartnerOrderNo("");
-		vo.setPartnerOrderMoney(new BigDecimal(0));
-		vo.setPartnerId(0L);
+		OrderExtPartner orderExtPartner = orderExtPartnerService
+				.selectByOrderId(orders.getOrderId());
+		vo.setPartnerOrderNo(orderExtPartner.getPartnerOrderNo());
+		vo.setPartnerOrderMoney(orderExtPartner.getPartnerOrderMoney());
+		vo.setPartnerId(orderExtPartner.getPartnerId());
 		
+		vo.setOrderExtStatus(green.getGreenType());
+		vo.setGreenType(green.getGreenType());
 		vo.setTotalNum(green.getTotalNum());
 		vo.setTotalBudget(green.getTotalBudget());
 		model.addAttribute("contentModel", vo);
@@ -234,21 +240,40 @@ public class OrderGreenController extends AdminController {
     
     	if (orderId > 0L ) {
     		record = orders;
+    		record.setAddrId(vo.getAddrId());
     		record.setOrderStatus(vo.getOrderStatus());
     		ordersService.updateByPrimaryKeySelective(record);
     		
-    		//像订单服务商信息扩展表中插记录
-			OrderExtPartner orderExtPartner = orderExtPartnerService.initOrderExtPartner();
-			orderExtPartner.setOrderId(record.getOrderId());
-			orderExtPartner.setOrderNo(record.getOrderNo());
-			orderExtPartner.setPartnerId(vo.getPartnerId());
-			orderExtPartner.setPartnerOrderNo(vo.getPartnerOrderNo());
-			orderExtPartner.setPartnerOrderMoney(vo.getPartnerOrderMoney());
-			orderExtPartner.setRemarks(vo.getRemarks());
-			orderExtPartnerService.insert(orderExtPartner);
+			// 像订单服务商信息扩展表中插记录
+						OrderExtPartner orderExtPartner = orderExtPartnerService
+								.selectByOrderId(orderId);
+						OrderExtPartner partner = orderExtPartnerService
+								.initOrderExtPartner();
+						if (orderExtPartner == null) {
+							orderExtPartner = partner;
+							orderExtPartner.setOrderId(record.getOrderId());
+							orderExtPartner.setOrderNo(record.getOrderNo());
+							orderExtPartner.setPartnerId(vo.getPartnerId());
+							orderExtPartner.setPartnerOrderNo(vo.getPartnerOrderNo());
+							orderExtPartner.setPartnerOrderMoney(vo.getPartnerOrderMoney());
+							orderExtPartner.setRemarks(vo.getRemarks());
+							orderExtPartnerService.insert(orderExtPartner);
+						} else {
+							orderExtPartner.setOrderId(record.getOrderId());
+							orderExtPartner.setOrderNo(record.getOrderNo());
+							orderExtPartner.setPartnerId(vo.getPartnerId());
+							orderExtPartner.setPartnerOrderNo(vo.getPartnerOrderNo());
+							orderExtPartner.setPartnerOrderMoney(vo.getPartnerOrderMoney());
+							orderExtPartner.setRemarks(vo.getRemarks());
+							orderExtPartner.setAddTime(TimeStampUtil.getNowSecond());
+							orderExtPartnerService
+									.updateByPrimaryKeySelective(orderExtPartner);
+						}
 			//更新绿植表
 			OrderExtGreen green = orderExtGreenService.selectByOrderId(orderId);
 			
+			green.setOrderExtStatus(vo.getOrderExtStatus());
+			green.setGreenType(vo.getGreenType());
 			green.setTotalNum(vo.getTotalNum());
 			green.setTotalBudget(vo.getTotalBudget());
 			green.setAddTime(TimeStampUtil.getNowSecond());

@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 
 public class OrdersGreenPartnerVo extends OrdersListVo{
 	
+	private Short orderExtStatus;
+	
+	private Short greenType;
 	
 	private Long totalNum;
 	    
@@ -15,6 +18,21 @@ public class OrdersGreenPartnerVo extends OrdersListVo{
 	
 	private Long partnerId;
 
+	public Short getOrderExtStatus() {
+		return orderExtStatus;
+	}
+
+	public void setOrderExtStatus(Short orderExtStatus) {
+		this.orderExtStatus = orderExtStatus;
+	}
+
+	public Short getGreenType() {
+		return greenType;
+	}
+
+	public void setGreenType(Short greenType) {
+		this.greenType = greenType;
+	}
 
 	public Long getTotalNum() {
 		return totalNum;
