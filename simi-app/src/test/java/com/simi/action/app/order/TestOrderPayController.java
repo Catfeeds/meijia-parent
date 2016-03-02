@@ -22,12 +22,12 @@ public class TestOrderPayController  extends JUnitActionBase  {
 		String url = "/app/order/post_pay.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("mobile", "18610807136");
-	    postRequest = postRequest.param("order_id", "554");
-	    postRequest = postRequest.param("order_no", "591185785416318976");
-	    postRequest = postRequest.param("pay_type", "0");
-	    postRequest = postRequest.param("card_passwd", "4GZT43L5");
-	    postRequest = postRequest.param("score", "0");
+	    postRequest = postRequest.param("user_id", "278");
+	    postRequest = postRequest.param("order_id", "101");
+	    postRequest = postRequest.param("order_no", "704926980268621824");
+	    postRequest = postRequest.param("pay_type", "1");
+//	    postRequest = postRequest.param("card_passwd", "4GZT43L5");
+//	    postRequest = postRequest.param("score", "0");
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 

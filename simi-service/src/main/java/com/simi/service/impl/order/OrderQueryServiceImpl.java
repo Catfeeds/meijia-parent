@@ -295,15 +295,19 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		//订单价格信息
 		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
 		
-		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
-		
-		vo.setPartnerUserId(partnerUser.getId());
-		vo.setPartnerUserName(partnerUser.getName());
-		
-		if (StringUtil.isEmpty(partnerUser.getHeadImg())) {
-			vo.setPartnerUserHeadImg(Constants.DEFAULT_HEAD_IMG);
-		} else {
-			vo.setPartnerUserHeadImg(partnerUser.getHeadImg());
+		vo.setPartnerUserId(0L);
+		vo.setPartnerUserName("");
+		vo.setPartnerUserHeadImg(Constants.DEFAULT_HEAD_IMG);
+		if (order.getPartnerUserId() > 0L) {
+			Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
+			
+			
+			vo.setPartnerUserId(partnerUser.getId());
+			vo.setPartnerUserName(partnerUser.getName());
+			
+			if (!StringUtil.isEmpty(partnerUser.getHeadImg())) {
+				vo.setPartnerUserHeadImg(partnerUser.getHeadImg());
+			}
 		}
 		
 		
