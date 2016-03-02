@@ -48,7 +48,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
-import com.simi.vo.OrdersWaterListVo;
+import com.simi.vo.order.OrdersWaterListVo;
 import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.user.UserAddrVo;
