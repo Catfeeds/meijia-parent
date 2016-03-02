@@ -80,6 +80,9 @@ public class MeijiaUtil {
 			case 7:
 				statusName = "你的订单已经完成，请对我们的服务进行评价.";
 				break;
+			case 8:
+				statusName = "你的订单已经完成.";
+				break;	
 			case 9:
 				statusName = "你的订单已经完成已关闭.";
 				break;
