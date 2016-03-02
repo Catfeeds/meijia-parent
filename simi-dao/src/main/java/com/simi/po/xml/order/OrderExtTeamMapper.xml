@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="NUMERIC" />
     <result column="order_id" property="orderId" jdbcType="NUMERIC" />
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_ext_status" property="orderExtStatus" jdbcType="NUMERIC" />
     <result column="user_id" property="userId" jdbcType="NUMERIC" />
     <result column="mobile" property="mobile" jdbcType="CHAR" />
     <result column="service_days" property="serviceDays" jdbcType="NUMERIC" />
@@ -14,7 +15,7 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, order_no, user_id, mobile, service_days, team_type, attend_num, city_id, 
+    id, order_id, order_no, order_ext_status,user_id, mobile, service_days, team_type, attend_num, city_id, 
     add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -28,12 +29,12 @@
     where id = #{id,jdbcType=NUMERIC}
   </delete>
   <insert id="insert" parameterType="com.simi.po.model.order.OrderExtTeam" >
-    insert into order_ext_team (id, order_id, order_no, 
+    insert into order_ext_team (id, order_id, order_no, order_ext_status,
       user_id, mobile, service_days, 
       team_type, attend_num, city_id, 
       add_time)
     values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR}, #{serviceDays,jdbcType=NUMERIC}, 
+      #{orderExtStatus,jdbcType=NUMERIC},#{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR}, #{serviceDays,jdbcType=NUMERIC}, 
       #{teamType,jdbcType=NUMERIC}, #{attendNum,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC}, 
       #{addTime,jdbcType=NUMERIC})
   </insert>
@@ -48,6 +49,9 @@
       </if>
       <if test="orderNo != null" >
         order_no,
+      </if>
+      <if test="orderExtStatus != null" >
+        order_ext_status,
       </if>
       <if test="userId != null" >
         user_id,
@@ -81,6 +85,9 @@
       <if test="orderNo != null" >
         #{orderNo,jdbcType=VARCHAR},
       </if>
+        <if test="orderExtStatus != null" >
+         #{orderExtStatus,jdbcType=NUMERIC},
+      </if>
       <if test="userId != null" >
         #{userId,jdbcType=NUMERIC},
       </if>
@@ -113,6 +120,9 @@
       <if test="orderNo != null" >
         order_no = #{orderNo,jdbcType=VARCHAR},
       </if>
+      <if test="orderExtStatus != null" >
+         order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
+      </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=NUMERIC},
       </if>
@@ -141,6 +151,7 @@
     update order_ext_team
     set order_id = #{orderId,jdbcType=NUMERIC},
       order_no = #{orderNo,jdbcType=VARCHAR},
+      order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
       user_id = #{userId,jdbcType=NUMERIC},
       mobile = #{mobile,jdbcType=CHAR},
       service_days = #{serviceDays,jdbcType=NUMERIC},

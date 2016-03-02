@@ -1,11 +1,14 @@
 package com.simi.po.model.order;
 
 public class OrderExtTeam {
+	
     private Long id;
 
     private Long orderId;
 
     private String orderNo;
+    
+    private Short orderExtStatus;
 
     private Long userId;
 
@@ -45,7 +48,15 @@ public class OrderExtTeam {
         this.orderNo = orderNo == null ? null : orderNo.trim();
     }
 
-    public Long getUserId() {
+    public Short getOrderExtStatus() {
+		return orderExtStatus;
+	}
+
+	public void setOrderExtStatus(Short orderExtStatus) {
+		this.orderExtStatus = orderExtStatus;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 

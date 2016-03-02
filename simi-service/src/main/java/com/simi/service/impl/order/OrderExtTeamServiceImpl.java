@@ -52,6 +52,7 @@ public class OrderExtTeamServiceImpl implements OrderExtTeamService{
 		record.setUserId(0L);
 		record.setOrderId(0L);
 		record.setOrderNo("");
+		record.setOrderExtStatus((short)0);
 		record.setMobile("");
 		record.setServiceDays((short)0);
 		record.setTeamType((short)0);
