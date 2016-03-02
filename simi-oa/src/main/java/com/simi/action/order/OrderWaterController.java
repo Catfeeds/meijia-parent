@@ -48,8 +48,8 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
-import com.simi.vo.order.OrdersWaterListVo;
 import com.simi.vo.order.OrderWaterComVo;
+import com.simi.vo.order.OrdersWaterListVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.user.UserAddrVo;
 
@@ -195,7 +195,7 @@ public class OrderWaterController extends AdminController {
 
 		model.addAttribute("contentModel", vo);
 		// 服务商列表
-		Long serviceTypeId = 238L;
+		Long serviceTypeId = 239L;
 		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService
 				.selectByServiceTypeId(serviceTypeId);
 		List<Partners> partnerList = new ArrayList<Partners>();
