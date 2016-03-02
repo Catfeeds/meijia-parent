@@ -180,6 +180,35 @@
 								</form:select>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">服务地址</label>
+							<div class="col-md-5">
+								<form:select path="addrId" name="addrId" id="addrId" class="form-control">
+									<option value="">请选择服务地址</option>
+									<form:options items="${userAddrVo}" itemValue="addrId"
+										itemLabel="addrName" />
+								</form:select>
+							</div>
+						</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">绿植的数量</label>
+							<div class="col-md-5">
+								<form:input path="totalNum" class="form-control"
+									maxLength="32" />
+								<form:errors path="totalNum" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">总预算</label>
+							<div class="col-md-5">
+								<form:input path="totalBudget" class="form-control"
+									maxLength="32" />
+								<form:errors path="totalBudget" class="field-has-error"></form:errors>
+							</div>
+						</div>
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">服务商订单号</label>
@@ -197,16 +226,7 @@
 								<form:errors path="partnerOrderMoney" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-md-2 control-label">服务地址</label>
-							<div class="col-md-5">
-								<form:select path="addrId" name="addrId" id="addrId" class="form-control">
-									<option value="">请选择服务地址</option>
-									<form:options items="${userAddrVo}" itemValue="addrId"
-										itemLabel="addrName" />
-								</form:select>
-							</div>
-						</div>
+						
 						<div class="form-group">
 							<label class="col-md-2 control-label">备注</label>
 							<div class="col-md-5">
@@ -214,11 +234,16 @@
 									placeholder="请输入备注" />
 							</div>
 						</div>
-							<div class="form-actions">
-							<div class="row">
+							<div class="form-actions fluid">
+							  <div class="col-md-offset-4">
 									<button class="btn btn-success" id="btn_submit" type="button">保存</button>
-							</div>
 						</div>
+						</div>
+						<!-- <div class="form-actions fluid">
+                           <div class="col-md-offset-4">
+                              <button type="button" id ="btn_submit" class="btn btn-success">保存</button>
+                           </div>
+                        </div> -->
 				</form:form>
 			</div>
 			</section>

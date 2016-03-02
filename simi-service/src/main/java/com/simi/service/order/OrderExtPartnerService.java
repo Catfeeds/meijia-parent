@@ -19,6 +19,8 @@ public interface OrderExtPartnerService {
 
 	int updateByPrimaryKey(OrderExtPartner record);
 
+	OrderExtPartner selectByOrderId(Long orderId);
+
 
 
 }

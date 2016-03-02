@@ -25,5 +25,7 @@ public interface OrderExtGreenService {
 
 	OrderExtGreenListVo getOrderExtGreenListVo(OrderExtGreen item);
 
+	OrderExtGreen selectByOrderId(Long orderId);
+
 
 }

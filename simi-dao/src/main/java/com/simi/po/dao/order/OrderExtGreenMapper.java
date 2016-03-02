@@ -18,4 +18,6 @@ public interface OrderExtGreenMapper {
     int updateByPrimaryKey(OrderExtGreen record);
 
 	List<OrderExtGreen> selectByUserId(Long userId);
+
+	OrderExtGreen selectByOrderId(Long orderId);
 }

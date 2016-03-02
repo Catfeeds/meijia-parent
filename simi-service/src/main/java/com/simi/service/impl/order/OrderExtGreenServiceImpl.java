@@ -139,4 +139,10 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 		return vo;
 	}
 
+	@Override
+	public OrderExtGreen selectByOrderId(Long orderId) {
+		
+		return orderExtGreenMapper.selectByOrderId(orderId);
+	}
+
 }

@@ -19,7 +19,12 @@ var formVal = $('#order-green-view-form').validate({
 			required: "请输入价格",
 			number: "请输入正确的价格数字",
 		},
-	
+		totalNum: {
+			required: true,
+     		digits:true,
+			range:[0,10000]
+
+		}
 	
 	},
 
@@ -39,6 +44,12 @@ var formVal = $('#order-green-view-form').validate({
 			number: "请输入正确的价格数字",
 			
 		},
+		totalNum: {
+			required: "请输入数量。",
+			digits:"请输入整数",
+			range:"输入值必须介于 0 和 10000之间"
+
+		}
 	},
 
 	invalidHandler : function(event, validator) { //display error alert on form submit

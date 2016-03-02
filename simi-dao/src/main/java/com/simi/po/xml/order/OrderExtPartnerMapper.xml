@@ -22,6 +22,14 @@
     from order_ext_partner
     where id = #{id,jdbcType=NUMERIC}
   </select>
+  
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_ext_partner
+    where order_id = #{orderId,jdbcType=NUMERIC}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from order_ext_partner
     where id = #{id,jdbcType=NUMERIC}

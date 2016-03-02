@@ -14,4 +14,6 @@ public interface OrderExtPartnerMapper {
     int updateByPrimaryKeySelective(OrderExtPartner record);
 
     int updateByPrimaryKey(OrderExtPartner record);
+
+	OrderExtPartner selectByOrderId(Long orderId);
 }

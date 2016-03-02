@@ -61,4 +61,10 @@ public class OrderExtPartnerServiceImpl implements OrderExtPartnerService{
 		return record;
 	}
 
+	@Override
+	public OrderExtPartner selectByOrderId(Long orderId) {
+		
+		return orderExtPartnerMapper.selectByOrderId(orderId);
+	}
+
 }

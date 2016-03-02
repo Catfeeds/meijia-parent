@@ -25,19 +25,28 @@ import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.msg.Msg;
+import com.simi.po.model.order.OrderExtGreen;
 import com.simi.po.model.order.OrderExtPartner;
+import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerRefServiceType;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
+import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderExtPartnerService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerRefServiceTypeService;
+import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
@@ -45,6 +54,8 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersGreenPartnerVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderViewVo;
+import com.simi.vo.order.OrderWaterComVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.user.UserAddrVo;
 import com.simi.vo.user.UserViewVo;
 
@@ -78,6 +89,18 @@ public class OrderGreenController extends AdminController {
 
 	@Autowired
 	private OrderExtPartnerService orderExtPartnerService;
+	
+	@Autowired
+	private OrderExtGreenService orderExtGreenService;
+	
+	@Autowired
+	private PartnerUserService partnerUserService;
+	
+	@Autowired
+	private  PartnerServicePriceDetailService partnerServicePriceDetailService;
+	 
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
 	/**
 	 * 订单列表
 	 * 
@@ -114,7 +137,18 @@ public class OrderGreenController extends AdminController {
 		for (int i = 0; i < orderList.size(); i++) {
 			orders = orderList.get(i);
 			OrdersListVo ordersListVo = orderQueryService.completeVo(orders);
-			orderList.set(i, ordersListVo);
+			
+			OrdersGreenPartnerVo vo = new OrdersGreenPartnerVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(ordersListVo, vo);
+			OrderExtGreen green = orderExtGreenService.selectByOrderId(vo.getOrderId());
+			vo.setPartnerOrderNo("");
+			vo.setPartnerOrderMoney(new BigDecimal(0));
+			vo.setPartnerId(0L);
+			
+			vo.setTotalNum(green.getTotalNum());
+			vo.setTotalBudget(green.getTotalBudget());
+			
+			orderList.set(i, vo);
 		}
 		PageInfo result = new PageInfo(orderList);
 
@@ -141,10 +175,13 @@ public class OrderGreenController extends AdminController {
 		OrdersListVo listvo = orderQueryService.completeVo(orders);
 		OrdersGreenPartnerVo vo = new OrdersGreenPartnerVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(listvo, vo);
-		
+		OrderExtGreen green = orderExtGreenService.selectByOrderId(vo.getOrderId());
 		vo.setPartnerOrderNo("");
 		vo.setPartnerOrderMoney(new BigDecimal(0));
 		vo.setPartnerId(0L);
+		
+		vo.setTotalNum(green.getTotalNum());
+		vo.setTotalBudget(green.getTotalBudget());
 		model.addAttribute("contentModel", vo);
 	    //服务商列表
 		Long serviceTypeId = 238L;
@@ -168,6 +205,7 @@ public class OrderGreenController extends AdminController {
 			    voList.add(vos);
 		}
 	   model.addAttribute("userAddrVo", voList);
+	   
 		
 		return "order/orderGreenViewForm";
 	}
@@ -206,8 +244,15 @@ public class OrderGreenController extends AdminController {
 			orderExtPartner.setPartnerId(vo.getPartnerId());
 			orderExtPartner.setPartnerOrderNo(vo.getPartnerOrderNo());
 			orderExtPartner.setPartnerOrderMoney(vo.getPartnerOrderMoney());
-			orderExtPartner.setRemarks(orders.getRemarks());
+			orderExtPartner.setRemarks(vo.getRemarks());
 			orderExtPartnerService.insert(orderExtPartner);
+			//更新绿植表
+			OrderExtGreen green = orderExtGreenService.selectByOrderId(orderId);
+			
+			green.setTotalNum(vo.getTotalNum());
+			green.setTotalBudget(vo.getTotalBudget());
+			green.setAddTime(TimeStampUtil.getNowSecond());
+			orderExtGreenService.updateByPrimaryKeySelective(green);
 			
 		}else {
 			ordersService.insertSelective(record);
