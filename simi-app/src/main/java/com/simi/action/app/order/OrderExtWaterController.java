@@ -302,7 +302,7 @@ public class OrderExtWaterController extends BaseController {
 			return result;
 		}
 		
-		order.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
+		order.setOrderStatus(Constants.ORDER_STATUS_7_RATE_WAIT);
 		order.setUpdateTime(TimeStampUtil.getNowSecond());
 		
 		OrderExtWater orderExtWater = orderExtWaterService.selectByOrderId(orderId);
