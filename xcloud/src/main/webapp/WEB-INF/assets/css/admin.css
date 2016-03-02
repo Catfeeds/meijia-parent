@@ -466,7 +466,7 @@ ul {
 }
 
 .admin-main {
-  background: #f3f3f3;
+  background: #fff;
 }
 
 .admin-menu {
@@ -499,7 +499,7 @@ ul {
   margin-top: 0;
   margin-bottom: 0;
   box-shadow: 0 16px 8px -15px #e2e2e2 inset;
-  background: #ececec;
+  /* background: #ececec; */
   padding-left: 24px;
 }
 

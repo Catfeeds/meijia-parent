@@ -4,7 +4,7 @@
 
 <!-- sidebar start -->
 <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
-	<div class="am-offcanvas-bar admin-offcanvas-bar">
+	
 		<ul class="am-list admin-sidebar-list">
 			<li><a href="/xcloud/schedule/list"><span class="am-icon-tags"></span>
 					日程管理</a></li>
@@ -33,15 +33,7 @@
 
 		</ul>
 
-		<div class="am-panel am-panel-default admin-sidebar-panel">
-			<div class="am-panel-bd">
-				<p>
-					<span class="am-icon-bookmark"></span> 最新公告
-				</p>
-				<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
-			</div>
-		</div>
-	</div>
+		
 </div>
 <!-- sidebar end -->
 
