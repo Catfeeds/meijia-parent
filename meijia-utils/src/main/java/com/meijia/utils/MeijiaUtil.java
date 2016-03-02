@@ -50,6 +50,9 @@ public class MeijiaUtil {
 			case 7:
 				statusName = "待评价";
 				break;
+			case 8:
+				statusName = "已完成";
+				break;	
 			case 9:
 				statusName = "已关闭";
 				break;
