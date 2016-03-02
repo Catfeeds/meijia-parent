@@ -160,7 +160,7 @@ public class OrderExtWaterController extends BaseController {
 			@RequestParam("addr_id") Long addrId,
 			@RequestParam("service_price_id") Long servicePriceId,
 			@RequestParam("service_num") Integer serviceNum,
-			@RequestParam("pay_type") Short payType,
+//			@RequestParam("pay_type") Short payType,
 			@RequestParam(value = "link_man",required = false,defaultValue = "") String linkMan,
 			@RequestParam(value = "link_tel",required = false,defaultValue = "") String linkTel,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks,
@@ -205,14 +205,14 @@ public class OrderExtWaterController extends BaseController {
 		orderMoney = MathBigDeciamlUtil.mul(disPrice, serviceNumDe);
 		orderPay = orderMoney;
 		
-		if (payType.equals(Constants.PAY_TYPE_0)) {
-			//1.先判断用户余额是否够支付
-			if(u.getRestMoney().compareTo(orderPay) < 0) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg(ConstantMsg.ERROR_999_MSG_5);
-				return result;
-			}
-		}
+//		if (payType.equals(Constants.PAY_TYPE_0)) {
+//			//1.先判断用户余额是否够支付
+//			if(u.getRestMoney().compareTo(orderPay) < 0) {
+//				result.setStatus(Constants.ERROR_999);
+//				result.setMsg(ConstantMsg.ERROR_999_MSG_5);
+//				return result;
+//			}
+//		}
 		
 		// 调用公共订单号类，生成唯一订单号
     	Orders order = null;
@@ -274,30 +274,30 @@ public class OrderExtWaterController extends BaseController {
 		orderExtWaterService.insert(water);
 		
 		
-		if (payType.equals(Constants.PAY_TYPE_0)) {
-			// 1. 扣除用户余额.
-			// 2. 用户账号明细增加.
-			// 3. 订单状态变为已支付.
-			// 4. 订单日志
-			
-			u.setRestMoney(u.getRestMoney().subtract(orderPay));
-			u.setUpdateTime(TimeStampUtil.getNowSecond());
-			userService.updateByPrimaryKeySelective(u);
-			
-			order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//已支付
-			order.setUpdateTime(TimeStampUtil.getNowSecond());
-			ordersService.updateByPrimaryKeySelective(order);
-			
-			//记录订单日志.
-			orderLog = orderLogService.initOrderLog(order);
-			orderLogService.insert(orderLog);
-			
-			//记录用户消费明细
-			userDetailPayService.userDetailPayForOrder(u, order, orderPrice, "", "", "");
-			
-			//订单支付成功后
-			orderPayService.orderPaySuccessToDo(order);
-		}
+//		if (payType.equals(Constants.PAY_TYPE_0)) {
+//			// 1. 扣除用户余额.
+//			// 2. 用户账号明细增加.
+//			// 3. 订单状态变为已支付.
+//			// 4. 订单日志
+//			
+//			u.setRestMoney(u.getRestMoney().subtract(orderPay));
+//			u.setUpdateTime(TimeStampUtil.getNowSecond());
+//			userService.updateByPrimaryKeySelective(u);
+//			
+//			order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//已支付
+//			order.setUpdateTime(TimeStampUtil.getNowSecond());
+//			ordersService.updateByPrimaryKeySelective(order);
+//			
+//			//记录订单日志.
+//			orderLog = orderLogService.initOrderLog(order);
+//			orderLogService.insert(orderLog);
+//			
+//			//记录用户消费明细
+//			userDetailPayService.userDetailPayForOrder(u, order, orderPrice, "", "", "");
+//			
+//			//订单支付成功后
+//			orderPayService.orderPaySuccessToDo(order);
+//		}
 			
 		OrderExtWaterListVo vo = orderExtWaterService.getListVo(water);
 		result.setData(vo);
