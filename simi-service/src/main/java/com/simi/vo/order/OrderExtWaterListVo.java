@@ -24,6 +24,10 @@ public class OrderExtWaterListVo {
     private int serviceNum;
     
     private String orderStatusName;
+    
+    private Short isDone;
+    
+    private String isDoneTimeStr;
         
     private String addTimeStr;
 
@@ -112,6 +116,26 @@ public class OrderExtWaterListVo {
 	}
 
 	public void setServiceNum(Integer serviceNum) {
+		this.serviceNum = serviceNum;
+	}
+
+	public Short getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(Short isDone) {
+		this.isDone = isDone;
+	}
+
+	public String getIsDoneTimeStr() {
+		return isDoneTimeStr;
+	}
+
+	public void setIsDoneTimeStr(String isDoneTimeStr) {
+		this.isDoneTimeStr = isDoneTimeStr;
+	}
+
+	public void setServiceNum(int serviceNum) {
 		this.serviceNum = serviceNum;
 	}
 	

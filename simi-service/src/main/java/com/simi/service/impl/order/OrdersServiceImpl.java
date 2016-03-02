@@ -188,6 +188,12 @@ public class OrdersServiceImpl implements OrdersService {
 	}
 	
 	@Override
+	public Orders selectByPrimaryKey(Long orderId) {
+		
+		return ordersMapper.selectByPrimaryKey(orderId);
+	}
+	
+	@Override
 	public List<Orders> selectByOrderIds(List<Long> orderIds) {
 		return ordersMapper.selectByOrderIds(orderIds);
 	}

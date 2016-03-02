@@ -28,6 +28,7 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
@@ -78,6 +79,9 @@ public class OrderExtWaterController extends BaseController {
 	
 	@Autowired
 	private UserDetailPayService userDetailPayService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 	
 
 	/**送水订单列表接口
@@ -194,7 +198,7 @@ public class OrderExtWaterController extends BaseController {
 		}
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+//		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		
 		BigDecimal orderMoney = new BigDecimal(0.0);//原价
@@ -204,16 +208,7 @@ public class OrderExtWaterController extends BaseController {
 		BigDecimal serviceNumDe = BigDecimal.valueOf(serviceNum.doubleValue());
 		orderMoney = MathBigDeciamlUtil.mul(disPrice, serviceNumDe);
 		orderPay = orderMoney;
-		
-//		if (payType.equals(Constants.PAY_TYPE_0)) {
-//			//1.先判断用户余额是否够支付
-//			if(u.getRestMoney().compareTo(orderPay) < 0) {
-//				result.setStatus(Constants.ERROR_999);
-//				result.setMsg(ConstantMsg.ERROR_999_MSG_5);
-//				return result;
-//			}
-//		}
-		
+				
 		// 调用公共订单号类，生成唯一订单号
     	Orders order = null;
     	String orderNo = "";
@@ -228,7 +223,6 @@ public class OrderExtWaterController extends BaseController {
 		}
 		//保存订单信息
 		order.setOrderNo(orderNo);
-		//order.setPartnerUserId(partnerUserId);
 		order.setServiceTypeId(serviceTypeId);
 		order.setUserId(userId);
 		order.setMobile(u.getMobile());
@@ -256,7 +250,6 @@ public class OrderExtWaterController extends BaseController {
 		orderPrice.setServicePriceId(servicePriceId);
 		orderPrice.setUserId(userId);
 		orderPrice.setMobile(u.getMobile());
-	//	orderPrice.setPayType(payType);
 		orderPrice.setOrderMoney(orderMoney);
 		orderPrice.setOrderPay(orderPay);
 		orderPricesService.insert(orderPrice);
@@ -272,36 +265,54 @@ public class OrderExtWaterController extends BaseController {
 		water.setLinkTel(linkTel);
 
 		orderExtWaterService.insert(water);
-		
-		
-//		if (payType.equals(Constants.PAY_TYPE_0)) {
-//			// 1. 扣除用户余额.
-//			// 2. 用户账号明细增加.
-//			// 3. 订单状态变为已支付.
-//			// 4. 订单日志
-//			
-//			u.setRestMoney(u.getRestMoney().subtract(orderPay));
-//			u.setUpdateTime(TimeStampUtil.getNowSecond());
-//			userService.updateByPrimaryKeySelective(u);
-//			
-//			order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);//已支付
-//			order.setUpdateTime(TimeStampUtil.getNowSecond());
-//			ordersService.updateByPrimaryKeySelective(order);
-//			
-//			//记录订单日志.
-//			orderLog = orderLogService.initOrderLog(order);
-//			orderLogService.insert(orderLog);
-//			
-//			//记录用户消费明细
-//			userDetailPayService.userDetailPayForOrder(u, order, orderPrice, "", "", "");
-//			
-//			//订单支付成功后
-//			orderPayService.orderPaySuccessToDo(order);
-//		}
-			
+					
 		OrderExtWaterListVo vo = orderExtWaterService.getListVo(water);
 		result.setData(vo);
+		
+		//异步产生首页消息信息.
+		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 				
+		return result;
+	}
+	
+	@RequestMapping(value = "post_done_water", method = RequestMethod.POST)
+	public AppResultData<Object> postDone(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("order_id") Long orderId
+			) {	
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		Users u = userService.selectByPrimaryKey(userId);
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null ) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		Orders order = ordersService.selectByPrimaryKey(orderId);
+		Short orderStatus = order.getOrderStatus();
+		if (orderStatus.equals(Constants.ORDER_STATUS_0_CLOSE) || 
+			orderStatus.equals(Constants.ORDER_STATUS_1_PAY_WAIT) ||
+			orderStatus.equals(Constants.ORDER_STATUS_2_PAY_DONE) ||
+			orderStatus.equals(Constants.ORDER_STATUS_9_COMPLETE) 
+			) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("订单未处理，不能签收");
+			return result;
+		}
+		
+		order.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
+		order.setUpdateTime(TimeStampUtil.getNowSecond());
+		
+		OrderExtWater orderExtWater = orderExtWaterService.selectByOrderId(orderId);
+		
+		orderExtWater.setOrderExtStatus((short) 2);
+		orderExtWater.setIsDone((short) 1);
+		orderExtWater.setIsDoneTime(TimeStampUtil.getNowSecond());
+		
+		//告知签收成功，产生消息通知
+		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "你的订单已经签收成功.");
 		return result;
 	}
 	

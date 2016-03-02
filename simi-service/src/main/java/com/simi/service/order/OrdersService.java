@@ -34,6 +34,8 @@ public interface OrdersService {
 
 	List<Orders> selectByOrderIds(List<Long> orderIds);
 
+	Orders selectByPrimaryKey(Long orderId);
+
 
 
 	

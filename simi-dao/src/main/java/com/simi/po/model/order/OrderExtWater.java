@@ -6,6 +6,8 @@ public class OrderExtWater {
     private Long orderId;
 
     private String orderNo;
+    
+    private Short orderExtStatus;
 
     private Long userId;
 
@@ -16,6 +18,10 @@ public class OrderExtWater {
     private String linkMan;
 
     private String linkTel;
+    
+    private Short isDone;
+    
+    private Long isDoneTime;
 
     private Long addTime;
 
@@ -90,4 +96,28 @@ public class OrderExtWater {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Short getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(Short isDone) {
+		this.isDone = isDone;
+	}
+
+	public Long getIsDoneTime() {
+		return isDoneTime;
+	}
+
+	public void setIsDoneTime(Long isDoneTime) {
+		this.isDoneTime = isDoneTime;
+	}
+
+	public Short getOrderExtStatus() {
+		return orderExtStatus;
+	}
+
+	public void setOrderExtStatus(Short orderExtStatus) {
+		this.orderExtStatus = orderExtStatus;
+	}
 }

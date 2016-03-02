@@ -58,6 +58,34 @@ public class MeijiaUtil {
 		}
 		return statusName;
 	}
+	
+	public static String getOrderStausMsg(Short status) {
+		String statusName = "";
+		switch (status) {
+			case 0:
+				statusName = "你的订单已取消.";
+				break;
+			case 1:
+				statusName = "你生成了新的待支付订单.";
+				break;
+			case 2:
+				statusName = "你的订单已经支付成功.";
+				break;
+			case 3:
+				statusName = "你的订单正在处理中.";
+				break;
+			case 7:
+				statusName = "你的订单已经完成，请对我们的服务进行评价.";
+				break;
+			case 9:
+				statusName = "你的订单已经完成已关闭.";
+				break;
+			default:
+				statusName = "";
+		}
+		return statusName;
+	}	
+	
 	public static String getStatusName(Short status) {
 		String statusName = "";
 		switch (status) {

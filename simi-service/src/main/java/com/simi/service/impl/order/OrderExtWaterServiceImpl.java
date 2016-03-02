@@ -95,11 +95,14 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		record.setId(0L);
 		record.setOrderId(0L);
 		record.setOrderNo("");
+		record.setOrderExtStatus((short) 0);
 		record.setUserId(0L);
 		record.setServicePriceId(0L);
 		record.setServiceNum(0);
 		record.setLinkMan("");
 		record.setLinkTel("");
+		record.setIsDone((short) 0);
+		record.setIsDoneTime(0L);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
@@ -124,8 +127,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		if (userAddr != null) {
 			vo.setAddrName(userAddr.getName() + " " + userAddr.getAddr());
 		}
-		
-		
+
 		//服务大类名称
 		vo.setServiceTypeName("");
 		Long serviceTypeId = order.getServiceTypeId();
@@ -144,8 +146,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		if (servicePrice != null) {
 			vo.setServicePriceName(servicePrice.getName());
 		}
-		
-		
+
 		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		if (servicePriceDetail != null) {
 			vo.setImgUrl(servicePriceDetail.getImgUrl());
@@ -153,9 +154,16 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		}
 		
 		vo.setServiceNum(item.getServiceNum());
-		
 		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
+		
+		vo.setIsDone(item.getIsDone());
+		
+		vo.setIsDoneTimeStr("");
+		if (item.getIsDoneTime() > 0L) {
+			vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
+		}		
+		
 		return vo;
 	}
 	
@@ -281,6 +289,13 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 //			System.out.println("order_id =" + order.getOrderId().toString() + " status = " + order.getOrderStatus().toString());
 			vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
 			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
+			
+			vo.setIsDone(item.getIsDone());
+			
+			vo.setIsDoneTimeStr("");
+			if (item.getIsDoneTime() > 0L) {
+				vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
+			}	
 			result.add(vo);
 		}
 		return result;

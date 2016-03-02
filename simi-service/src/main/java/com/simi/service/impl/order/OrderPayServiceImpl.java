@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.OrderAsyncService;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
@@ -80,6 +81,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 		
 	/**
 	 * 订单支付成功,后续通知功能
@@ -114,7 +118,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 			
 			//通知相关服务商
 			String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile , " " };
-	//		SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
+			SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
 		}
 		
 		//通知用户
@@ -213,7 +217,13 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Override
 	public void orderWaterPaySuccessToDo(Orders order) {
+		Long userId = order.getUserId();
+		Long orderId = order.getOrderId();
 		//通知运营人员，进行送水服务商的人工派工流程.
+		
+		//异步产生用户消息信息
+		
+		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "你的订单已经签收成功.");
 	}
 	
 	@Override
@@ -224,6 +234,6 @@ public class OrderPayServiceImpl implements OrderPayService {
 	@Override
 	public void orderTeamPaySuccessToDo(Orders order) {
 		//通知运营人员，进行绿植服务商的人工派工流程.
-	}		
+	}
 	
 }

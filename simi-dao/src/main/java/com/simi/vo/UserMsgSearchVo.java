@@ -11,6 +11,8 @@ public class UserMsgSearchVo {
 	private String category;
 
 	private String action;
+	
+	private String params;
 
 	private Long startTime;
 
@@ -70,6 +72,14 @@ public class UserMsgSearchVo {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
 	}
 
 }

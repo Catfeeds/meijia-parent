@@ -5,16 +5,19 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="order_id" property="orderId" jdbcType="NUMERIC" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_ext_status" property="orderExtStatus" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="service_price_id" property="servicePriceId" jdbcType="NUMERIC" />
 		<result column="service_num" property="serviceNum" jdbcType="SMALLINT" />
 		<result column="link_man" property="linkMan" jdbcType="VARCHAR" />
 		<result column="link_tel" property="linkTel" jdbcType="VARCHAR" />
+		<result column="is_done" property="isDone" jdbcType="NUMERIC" />
+		<result column="is_done_time" property="isDoneTime" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, order_id, order_no, user_id, service_price_id, service_num, link_man, link_tel,
-		add_time
+		id, order_id, order_no, order_ext_status, user_id, service_price_id, service_num, link_man, link_tel,
+		is_done, is_done_time, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -43,13 +46,15 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.order.OrderExtWater">
-		insert into order_ext_water (id, order_id, order_no,
+		insert into order_ext_water (id, order_id, order_no, order_ext_status,
 		user_id, service_price_id, service_num,
-		link_man, link_tel, add_time
+		link_man, link_tel, is_done, is_done_time, add_time
 		)
 		values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR},
+		#{orderExtStatus,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceNum,jdbcType=SMALLINT},
-		#{linkMan,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
+		#{linkMan,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR}, 
+		#{isDone,jdbcType=NUMERIC}, #{isDoneTime,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.order.OrderExtWater">
@@ -63,6 +68,9 @@
 			</if>
 			<if test="orderNo != null">
 				order_no,
+			</if>
+			<if test="orderExtStatus != null">
+				order_ext_status,
 			</if>
 			<if test="userId != null">
 				user_id,
@@ -79,6 +87,12 @@
 			<if test="linkTel != null">
 				link_tel,
 			</if>
+			<if test="isDone != null">
+				is_done,
+			</if>
+			<if test="isDoneTime != null">
+				is_done_time,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -92,6 +106,9 @@
 			</if>
 			<if test="orderNo != null">
 				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderExtStatus != null">
+				#{orderExtStatus,jdbcType=NUMERIC},
 			</if>
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
@@ -108,6 +125,12 @@
 			<if test="linkTel != null">
 				#{linkTel,jdbcType=VARCHAR},
 			</if>
+			<if test="isDone != null">
+				#{isDone,jdbcType=NUMERIC},
+			</if>
+			<if test="isDoneTime != null">
+				#{isDoneTime,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
@@ -121,6 +144,9 @@
 			</if>
 			<if test="orderNo != null">
 				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderExtStatus != null">
+				order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
 			</if>
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
@@ -137,6 +163,12 @@
 			<if test="linkTel != null">
 				link_tel = #{linkTel,jdbcType=VARCHAR},
 			</if>
+			<if test="isDone != null">
+				is_done = #{isDone,jdbcType=NUMERIC},
+			</if>
+			<if test="isDoneTime != null">
+				is_done_time = #{isDoneTime,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -147,11 +179,14 @@
 		update order_ext_water
 		set order_id = #{orderId,jdbcType=NUMERIC},
 		order_no = #{orderNo,jdbcType=VARCHAR},
+		order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		service_price_id = #{servicePriceId,jdbcType=NUMERIC},
 		service_num = #{serviceNum,jdbcType=SMALLINT},
 		link_man = #{linkMan,jdbcType=VARCHAR},
 		link_tel = #{linkTel,jdbcType=VARCHAR},
+		is_done = #{isDone,jdbcType=NUMERIC},
+		is_done_time = #{isDoneTime,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

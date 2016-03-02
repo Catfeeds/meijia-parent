@@ -273,6 +273,24 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 
 		</table>
+		
+		<table schema="simi" tableName="order_ext_clean"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="order_id" property="orderId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="clean_area" property="cleanArea" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="clean_type" property="cleanType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
 
 	</context>
 </generatorConfiguration>
