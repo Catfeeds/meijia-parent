@@ -210,7 +210,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			
 			Orders order = null;
 			for (Orders tmpOrder : orders) {
-				if (item.getOrderId().equals(order.getOrderId())) {
+				if (item.getOrderId().equals(item.getOrderId())) {
 					order = tmpOrder;
 					break;
 				}

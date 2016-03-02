@@ -17,7 +17,7 @@ public class TestOrderExtWaterController extends JUnitActionBase  {
     public void testList() throws Exception {
 		String url = "/app/order/get_list_water.json";
 		
-		String params = "?user_id=18";
+		String params = "?user_id=278";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
