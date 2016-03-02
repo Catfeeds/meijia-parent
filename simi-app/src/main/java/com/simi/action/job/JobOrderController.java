@@ -74,7 +74,7 @@ public class JobOrderController extends BaseController {
 			//若时间差< 0 则说明订单已经超过一小时未支付
 			if (addTime < 0) {
 			
-			record.setOrderStatus(Constants.ORDER_STATUS_0_CLOSE);
+			record.setOrderStatus(Constants.ORDER_STATUS_9_CLOSE);
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKeySelective(record);
 			//相应的优惠券信息置为空
@@ -139,6 +139,7 @@ public class JobOrderController extends BaseController {
 		
 			record.setOrderRate((short)5);
 			record.setOrderRateContent("订单超时未评价，系统默认给5星好评");
+			record.setOrderStatus(Constants.ORDER_STATUS_8_COMPLETE);
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKeySelective(record);
 		

@@ -348,7 +348,7 @@ public class OrderController extends BaseController {
 		if (StringUtil.isEmpty(orderRateContent)) {
 			orders.setOrderRateContent(orderRateContent);
 		}
-		orders.setOrderStatus(Constants.ORDER_STATUS_9_COMPLETE);
+		orders.setOrderStatus(Constants.ORDER_STATUS_8_COMPLETE);
 		long now = TimeStampUtil.getNow() / 1000;
 		orders.setUpdateTime(now);
 		

@@ -25,12 +25,13 @@ public class Constants {
 	
 
 	//0 = 已关闭 1 = 待支付 2 = 已支付 3 = 处理中 7 = 待评价 9 = 已完成
-	public static short ORDER_STATUS_0_CLOSE = 0;	
+	public static short ORDER_STATUS_0_CANCEL = 0;	
 	public static short ORDER_STATUS_1_PAY_WAIT = 1;
 	public static short ORDER_STATUS_2_PAY_DONE = 2;
 	public static short ORDER_STATUS_3_PROCESSING = 3;
 	public static short ORDER_STATUS_7_RATE_WAIT = 7;	
-	public static short ORDER_STATUS_9_COMPLETE = 9;
+	public static short ORDER_STATUS_8_COMPLETE = 8;
+	public static short ORDER_STATUS_9_CLOSE = 9;
 	
 	//订单评价 5颗星  1 - 5
 

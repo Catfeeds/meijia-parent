@@ -292,10 +292,10 @@ public class OrderExtWaterController extends BaseController {
 		
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		Short orderStatus = order.getOrderStatus();
-		if (orderStatus.equals(Constants.ORDER_STATUS_0_CLOSE) || 
+		if (orderStatus.equals(Constants.ORDER_STATUS_0_CANCEL) || 
 			orderStatus.equals(Constants.ORDER_STATUS_1_PAY_WAIT) ||
 			orderStatus.equals(Constants.ORDER_STATUS_2_PAY_DONE) ||
-			orderStatus.equals(Constants.ORDER_STATUS_9_COMPLETE) 
+			orderStatus.equals(Constants.ORDER_STATUS_9_CLOSE) 
 			) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("订单未处理，不能签收");
