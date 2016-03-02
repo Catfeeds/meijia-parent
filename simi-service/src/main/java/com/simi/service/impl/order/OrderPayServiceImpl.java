@@ -223,7 +223,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		
 		//异步产生用户消息信息
 		
-		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "你的订单已经签收成功.");
+		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 	}
 	
 	@Override
