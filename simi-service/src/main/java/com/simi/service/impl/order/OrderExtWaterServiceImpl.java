@@ -210,7 +210,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			
 			Orders order = null;
 			for (Orders tmpOrder : orders) {
-				if (item.getOrderId().equals(item.getOrderId())) {
+				if (tmpOrder.getOrderId().equals(item.getOrderId())) {
 					order = tmpOrder;
 					break;
 				}
@@ -278,7 +278,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			}
 			
 			vo.setServiceNum(item.getServiceNum());
-			
+//			System.out.println("order_id =" + order.getOrderId().toString() + " status = " + order.getOrderStatus().toString());
 			vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
 			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 			result.add(vo);
