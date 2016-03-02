@@ -441,10 +441,10 @@ public class PartnerServicePriceController extends BaseController {
 			
 			Map<String, String> resultMap = new HashMap<String, String>();
 			resultMap.put("name", serviceType.getName());
-			resultMap.put("servcePriceId", serviceType.getId().toString());
+			resultMap.put("servce_price_id", serviceType.getId().toString());
 			resultMap.put("price", MathBigDeciamlUtil.round2(item.getPrice()));
-			resultMap.put("disPrice", MathBigDeciamlUtil.round2(item.getDisPrice()));
-			resultMap.put("imgUrl", item.getImgUrl());
+			resultMap.put("dis_price", MathBigDeciamlUtil.round2(item.getDisPrice()));
+			resultMap.put("img_url", item.getImgUrl());
 			
 			resultList.add(resultMap);
 			
