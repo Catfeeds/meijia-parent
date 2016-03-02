@@ -407,10 +407,27 @@ public class UsersServiceImpl implements UsersService {
 		if (!companyList.isEmpty()) {
 			vo.setHasCompany((short) 1);
 			vo.setCompanyCount(companyList.size());
+			
+			Long defaultCompanyId = 0L;
+			//获取默认公司ID.
 			if (companyList.size() == 1) {
 				XcompanyStaff item = companyList.get(0);
-				vo.setCompanyId(item.getCompanyId());
+				defaultCompanyId = item.getCompanyId();
+			} else {
+				for (XcompanyStaff xs : companyList) {
+					if (xs.getIsDefault().equals((short)1)) {
+						defaultCompanyId = xs.getCompanyId();
+					}
+				}
+				
+				if (defaultCompanyId.equals(0L)) {
+					XcompanyStaff item = companyList.get(0);
+					defaultCompanyId = item.getCompanyId();
+				}
+				
 			}
+			
+			vo.setCompanyId(defaultCompanyId);
 		}
 
 		return vo;
