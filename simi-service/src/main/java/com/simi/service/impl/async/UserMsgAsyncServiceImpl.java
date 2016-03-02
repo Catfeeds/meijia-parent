@@ -736,7 +736,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 				break;
 			//送水
 			case "239":
-				iconUrl = "http://img.51xingzheng.cn/879905845779a81df1e0a670411dc22f?p=0";
+				iconUrl = "http://img.51xingzheng.cn/e5e4ba5855916bcdc516056e0176cc93?p=0";
 				break;	
 		}
 		
