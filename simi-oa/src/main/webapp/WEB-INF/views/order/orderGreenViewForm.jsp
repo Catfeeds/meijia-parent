@@ -213,7 +213,7 @@
 						<div class="form-group">
 							<!-- Text input-->
 							<label class="col-md-2 control-label">废品类型</label>
-							<div class="col-md-8">
+							<div class="col-md-9">
 								<div class="row">
 									<div class="col-md-2" align="center">
 										<label class="radio"> <form:radiobutton path="recycleType"
@@ -241,7 +241,7 @@
 						
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">绿植的数量</label>
+							<label class="col-md-2 control-label">废品的数量</label>
 							<div class="col-md-5">
 								<form:input path="totalNum" class="form-control"
 									maxLength="32" />

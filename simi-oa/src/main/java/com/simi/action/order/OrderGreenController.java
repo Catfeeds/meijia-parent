@@ -125,7 +125,7 @@ public class OrderGreenController extends AdminController {
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		searchVo.setUserId(userId);
 		//绿植服务大类ID
-		searchVo.setServiceTypeId(238L);
+		searchVo.setServiceTypeId(246L);
 		
 		// 分页
 		PageHelper.startPage(pageNo, pageSize);
@@ -190,7 +190,7 @@ public class OrderGreenController extends AdminController {
 		vo.setTotalBudget(green.getTotalBudget());
 		model.addAttribute("contentModel", vo);
 	    //服务商列表
-		Long serviceTypeId = 238L;
+		Long serviceTypeId = 246L;
 		List<PartnerRefServiceType> partnerRefServiceType = 
 				partnerRefServiceTypeService.selectByServiceTypeId(serviceTypeId);
 		List<Partners> partnerList = new ArrayList<Partners>();
