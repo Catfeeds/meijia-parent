@@ -88,7 +88,7 @@
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
 							<td>${ item.orderNo }</td>
-							<td><timestampTag:timestamp patten="yyyy-MM-dd"
+							<td><timestampTag:timestamp patten="yyyy-MM-dd HH:mm "
 									t="${item.addTime * 1000}" /></td>
 							<td>${ item.mobile }</td>
 							<td><timestampTag:timestamp patten="yyyy-MM-dd"
