@@ -6,6 +6,9 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 
 public class PartnerServicePriceDetailVo extends PartnerServicePriceDetail {
 	
+	
+	private  Long serviceTypeId;
+	
 	private String name;
 	
 	private Long parentId;
@@ -16,6 +19,12 @@ public class PartnerServicePriceDetailVo extends PartnerServicePriceDetail {
 	
 	private Long partnerId;
 		
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
 	public Long getParentId() {
 		return parentId;
 	}

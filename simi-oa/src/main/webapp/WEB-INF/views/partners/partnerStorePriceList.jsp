@@ -38,7 +38,7 @@
                           	<%-- <b>${companyName}</b> --%> - 服务人员商品列表
                           	
                           	<div class="pull-right">
-                          		<button onClick="btn_add('/partners/partner_service_price_form?service_price_id=0&user_id=${user_id}&partner_id=${partner_id}')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+                          		<button onClick="btn_add('/partners/partner_service_price_form?service_price_id=0&user_id=${user_id}&partner_id=${partner_id}&service_type_id=${service_type_id}')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
                     		</div>     
                           </header>
                           <hr style="width: 100%; color: black; height: 1px; background-color:black;" />

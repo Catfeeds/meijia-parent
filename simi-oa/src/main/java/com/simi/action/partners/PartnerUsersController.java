@@ -384,6 +384,7 @@ public class PartnerUsersController extends BaseController{
 		PageInfo result = partnerServiceTypeService.selectByListPage(searchVo, pageNo, pageSize);
 		model.addAttribute("user_id", userId);
 		model.addAttribute("partner_id", partnerId);
+		model.addAttribute("service_type_id", serviceTypeId);
 		model.addAttribute("contentModel", result);
 		return "partners/partnerStorePriceList";
 	}
@@ -394,10 +395,11 @@ public class PartnerUsersController extends BaseController{
 		public String partnerPrice(Model model, HttpServletRequest request,
 			//	@RequestParam("id") Long id,
 				@RequestParam("service_price_id") Long servicePriceId,
-			//	@RequestParam("partner_id") Long partnerId,
+				//@RequestParam("") Long serviceTypeId,
 				@RequestParam("user_id") Long userId,
 				HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException  {
 
+			Long serviceTypeId = Long.valueOf(request.getParameter("service_type_id"));
 			Long partnerId = Long.valueOf(request.getParameter("partner_id"));
 			
 			PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
@@ -418,6 +420,7 @@ public class PartnerUsersController extends BaseController{
 			vo.setParentId(0l);
 			vo.setIsEnable((short)0);
 			vo.setNo(0);
+			vo.setServiceTypeId(serviceTypeId);
 			model.addAttribute("contentModel", vo);
     	
 		return "partners/partnerStorePriceForm";
@@ -431,7 +434,7 @@ public class PartnerUsersController extends BaseController{
 				@RequestParam("imgUrlFile") MultipartFile file,
 				BindingResult result) throws IOException {
 		    Long partnerId = Long.valueOf(request.getParameter("partner_id"));
-		    
+		    Long serviceTypeId = Long.valueOf(request.getParameter("serviceTypeId"));
 		    Long servicePriceId = Long.valueOf(request.getParameter("service_price_id"));
 		    PartnerServiceType partnerServiceType = partnerServiceTypeService
 					.initPartnerServiceType();
@@ -444,11 +447,11 @@ public class PartnerUsersController extends BaseController{
 			partnerServiceType.setViewType((short) 1);
 			partnerServiceType.setPartnerId(vo.getPartnerId());
 			partnerServiceType.setIsEnable(vo.getIsEnable());
-			Long serviceTypeId = partnerServiceType.getId();
+		//	Long serviceTypeId = partnerServiceType.getId();
 			// if (serviceTypeId.equals(0L)) {
 			 partnerServiceTypeService.updateByPrimaryKey(partnerServiceType);
 			 } else {
-				    partnerServiceType.setParentId(servicePriceId);
+				    partnerServiceType.setParentId(serviceTypeId);
 					partnerServiceType.setName(vo.getName());
 					partnerServiceType.setViewType((short) 1);
 				    partnerServiceType.setPartnerId(partnerId);
@@ -457,7 +460,7 @@ public class PartnerUsersController extends BaseController{
 			 partnerServiceTypeService.insert(partnerServiceType);
 				
 			 }
-			Long serviceTypeId = partnerServiceType.getId();
+			serviceTypeId = partnerServiceType.getId();
 			// 先删除后增加
 			PartnerServicePriceDetail record = partnerServicePriceDetailService
 					.initPartnerServicePriceDetail();

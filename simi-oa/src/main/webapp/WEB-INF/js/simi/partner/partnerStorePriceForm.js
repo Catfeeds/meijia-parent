@@ -15,10 +15,10 @@ $('#partner-service-price-form').validate({
 			required: true
 		},
 		
-		serviceTitle: {
+		/*serviceTitle: {
 			required: true
 		},
-		
+		*/
 		price: {
 			required: true,
 			number:true,
@@ -55,10 +55,10 @@ $('#partner-service-price-form').validate({
 			required : "请输入提供的服务名称"
 		},
 		
-		serviceTitle: {
+		/*serviceTitle: {
 			required: "请输入提供副标题"
 		},
-		
+		*/
 		price: {
 			required: "请输入原价",
 			number: "请输入正确的价格数字",

@@ -40,6 +40,7 @@
  				method="POST" id="partner-service-price-form">
  				
  						<form:hidden path="userId" />
+ 						<form:hidden path="serviceTypeId" />
  						<%-- <form:hidden path="parentId" />
  						<form:hidden path="servicePriceId" /> --%>
                         <div class="form-body">
