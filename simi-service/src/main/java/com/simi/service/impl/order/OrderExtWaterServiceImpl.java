@@ -218,7 +218,9 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(serviceTypeIds);
 		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectByIds(serivcePriceIds);
 		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByServicePriceIds(serivcePriceIds);
-		List<UserAddrs> userAddrs = userAddrsService.selectByIds(userAddrIds);
+		List<UserAddrs> userAddrs = new ArrayList<UserAddrs>();
+		if (!userAddrIds.isEmpty())
+			userAddrsService.selectByIds(userAddrIds);
 		
 		for (int i = 0; i < list.size(); i++) {
 			OrderExtWater item = list.get(i);
