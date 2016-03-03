@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.admin.AdminAccountService;
+import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.async.OrderAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderLogService;
@@ -42,89 +43,66 @@ import com.simi.po.model.user.Users;
 public class OrderPayServiceImpl implements OrderPayService {
 	@Autowired
 	private OrdersService ordersService;
-	
-	@Autowired
-	private AdminAccountService adminAccountService;
-	
+
 	@Autowired
 	private OrderPricesService orderPricesService;
-	
+
 	@Autowired
 	private OrderAsyncService orderAsyncService;
-	
+
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private UserDetailPayService userDetailPayService;
-	
+
 	@Autowired
 	private OrderSeniorMapper orderSeniorMapper;
-	
+
 	@Autowired
 	UserCouponsMapper userCouponsMapper;
-	
+
 	@Autowired
 	OrderCardsMapper orderCardsMapper;
-	
+
 	@Autowired
 	OrderLogService orderLogService;
-	
+
 	@Autowired
 	OrderSeniorService orderSeniorService;
-	
+
 	@Autowired
-	private UserRefSecService userRefSecService;	
-	
+	private UserRefSecService userRefSecService;
+
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;	
-	
+	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+
 	@Autowired
 	PartnerServiceTypeService partnerServiceTypeService;
-	
+
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
-		
+	
+	@Autowired
+	private NoticeSmsAsyncService noticeSmsAsyncService;
+
 	/**
-	 * 订单支付成功,后续通知功能
-	 * 1. 如果为
+	 * 订单支付成功,后续通知功能 1. 如果为
 	 */
 	@Override
 	public void orderPaySuccessToDo(Orders order) {
 		
-		
+		Long orderId = order.getOrderId();
 		Long serviceTypeId = order.getServiceTypeId();
 		Long userId = order.getUserId();
 		Long partnerUserId = order.getPartnerUserId();
-		String orderNo = order.getOrderNo();
+
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 		
-		//获取服务报价的信息。
-		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(orderPrice.getServicePriceId());
-				
 		
-		BigDecimal orderPay = orderPrice.getOrderPay();
-		String orderPayStr = orderPay.toString();
-		String servicePriceName = serviceType.getName();
+
 		
-		Users u = usersService.selectByPrimaryKey(order.getUserId());
-		String userName = u.getName();
-		String userMobile = order.getMobile();
 		
-		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
-		if (partnerUser != null) {
-		
-			String partnerUserMobile = partnerUser.getMobile();
-			
-			//通知相关服务商
-			String[] partnerContent = new String[] { orderPayStr, servicePriceName, userName, userMobile , " " };
-			SmsUtil.SendSms(partnerUserMobile, "48147", partnerContent);
-		}
-		
-		//通知用户
-		String addTimeStr = TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000 , "yyyy-MM-dd HH:mm");
-		String[] userContent = new String[] { userName, addTimeStr, servicePriceName };
-		SmsUtil.SendSms(userMobile, "48132", userContent);
 		
 		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
 		if (serviceTypeId.equals(75L)) {
@@ -144,7 +122,6 @@ public class OrderPayServiceImpl implements OrderPayService {
 		}
 		
 		//todo, 更新user_couonp_id 的使用，变成已使用.
-		
 		if (orderPrice.getUserCouponId()>0) {
 			UserCoupons record = userCouponsMapper.selectByPrimaryKey(orderPrice.getUserCouponId());
 			
@@ -152,25 +129,30 @@ public class OrderPayServiceImpl implements OrderPayService {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			userCouponsMapper.updateByPrimaryKeySelective(record);
 		}
+		
+		//通知服务商
+		noticeSmsAsyncService.noticeOrderPartner(orderId);
+		
+		//通知用户
+		noticeSmsAsyncService.noticeOrderUser(orderId);
+		
+		//通知运营人员，订单支付成功
+		noticeSmsAsyncService.noticeOrderOper(orderId);
+		 		
 		//异步操作
 		//订单操作成功后，对应的用户累加积分（1:1）
-		orderAsyncService.orderScore(order);
-		
-		//扩展操作，如果为送水订单，则还继续提醒运营人员.
-		if (serviceTypeId.equals(239L)) {
-			this.orderWaterPaySuccessToDo(order);
-		}
-		
+		orderAsyncService.orderScore(order);	
 	}
-	
+
 	@Override
 	public boolean orderSeniorPaySuccessTodo(OrderSenior orderSenior) {
-
+		
+		Long orderId = orderSenior.getId(); 
 		Long userId = orderSenior.getUserId();
 		Long secId = orderSenior.getSecId();
-		//分配秘书
-		UserRefSec userRefSec  = userRefSecService.selectByUserId(userId);
-		
+		// 分配秘书
+		UserRefSec userRefSec = userRefSecService.selectByUserId(userId);
+
 		if (userRefSec == null) {
 			userRefSec = userRefSecService.initUserRefSec();
 			userRefSec.setUserId(userId);
@@ -181,59 +163,30 @@ public class OrderPayServiceImpl implements OrderPayService {
 			userRefSec.setSecId(secId);
 			userRefSecService.updateByPrimaryKeySelective(userRefSec);
 		}
+
+		// 购买秘书成功后给同事给运营人员和秘书发送信息.
+		noticeSmsAsyncService.noticeOrderPartner(orderId);
 		
-		//购买秘书成功后给同事给运营人员和秘书发送信息.
-		Users sec = usersService.selectByPrimaryKey(secId);
-		String name = sec.getName();
-		short validDay = orderSenior.getValidDay();
-		BigDecimal orderPay = orderSenior.getOrderPay();
-		
-		String orderPStr = orderPay.toString();
-		String secMobile = sec.getMobile();
-		String validDayStr = String.valueOf(validDay);
-		
-//		List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
-			//查出所有运营部的人员（roleId=3）
-		Long roleId = 3L;
-		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
-		List<String> mobileList = new ArrayList<String>();
-		for (AdminAccount item: adminAccounts) {
-			if (!StringUtil.isEmpty(item.getMobile())) {
-			mobileList.add(item.getMobile());
-			}
-			
-		}
-		mobileList.add(secMobile);
-		String[] content = new String[] { name,orderPStr,validDayStr };
-		for (int i = 0; i < mobileList.size(); i++) {
-			
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i),
-				Constants.SEC_REGISTER_ID, content);
-		
-		System.out.println(sendSmsResult + "00000000000000");
-		}
 		return true;
 	}
-	
+
 	@Override
 	public void orderWaterPaySuccessToDo(Orders order) {
 		Long userId = order.getUserId();
 		Long orderId = order.getOrderId();
-		//通知运营人员，进行送水服务商的人工派工流程.
-		
-		//异步产生用户消息信息
-		
+		// 通知运营人员，进行送水服务商的人工派工流程.
+
+		// 异步产生用户消息信息
 		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 	}
-	
+
 	@Override
 	public void orderGreenPaySuccessToDo(Orders order) {
-		//通知运营人员，进行绿植服务商的人工派工流程.
-	}	
-	
+		// 通知运营人员，进行绿植服务商的人工派工流程.
+	}
+
 	@Override
 	public void orderTeamPaySuccessToDo(Orders order) {
-		//通知运营人员，进行绿植服务商的人工派工流程.
+		// 通知运营人员，进行绿植服务商的人工派工流程.
 	}
-	
 }
