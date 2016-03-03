@@ -18,6 +18,8 @@ private Long servicePriceId;
 	private BigDecimal partnerOrderMoney;
 	
 	private Long partnerId;
+	
+	private Short orderExtStatus;
 
 	public String getPartnerOrderNo() {
 		return partnerOrderNo;
@@ -73,6 +75,14 @@ private Long servicePriceId;
 
 	public void setLinkTel(String linkTel) {
 		this.linkTel = linkTel;
+	}
+
+	public Short getOrderExtStatus() {
+		return orderExtStatus;
+	}
+
+	public void setOrderExtStatus(Short orderExtStatus) {
+		this.orderExtStatus = orderExtStatus;
 	}
 	
 }

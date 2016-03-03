@@ -53,13 +53,13 @@ public class TestOrderExtWaterController extends JUnitActionBase  {
      	
      	//通用订单. 无需支付
 	    postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("addr_id", "11");
-	    postRequest = postRequest.param("service_price_id", "243");
-	    postRequest = postRequest.param("service_num", "2");
+	    postRequest = postRequest.param("addr_id", "102");
+	    postRequest = postRequest.param("service_price_id", "244");
+	    postRequest = postRequest.param("service_num", "1");
 	    postRequest = postRequest.param("pay_type", "0");
-	    postRequest = postRequest.param("link_man", "Rita");
-	    postRequest = postRequest.param("link_tel", "13810002890");
-	    postRequest = postRequest.param("remarks", "请尽快送达");
+	    postRequest = postRequest.param("link_man", "张");
+	    postRequest = postRequest.param("link_tel", "");
+	    postRequest = postRequest.param("remarks", "有票");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
