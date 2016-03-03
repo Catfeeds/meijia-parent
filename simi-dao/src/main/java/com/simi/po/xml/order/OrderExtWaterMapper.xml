@@ -25,14 +25,14 @@
 		from order_ext_water
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from order_ext_water
 		where order_id = #{orderId,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
@@ -40,7 +40,26 @@
 		where user_id = #{userId,jdbcType=NUMERIC}
 		order by add_time desc
 	</select>
-	
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.OrderSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from order_ext_water
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="orderNo != null">
+			and order_no like CONCAT('%','${orderNo}','%' )
+		</if>
+
+		<if test="serviceTypeId != null">
+			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from order_ext_water
 		where id = #{id,jdbcType=NUMERIC}
@@ -53,7 +72,7 @@
 		values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR},
 		#{orderExtStatus,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceNum,jdbcType=SMALLINT},
-		#{linkMan,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR}, 
+		#{linkMan,jdbcType=VARCHAR}, #{linkTel,jdbcType=VARCHAR},
 		#{isDone,jdbcType=NUMERIC}, #{isDoneTime,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}
 		)
 	</insert>
@@ -182,7 +201,8 @@
 		order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		service_price_id = #{servicePriceId,jdbcType=NUMERIC},
-		service_num = #{serviceNum,jdbcType=SMALLINT},
+		service_num =
+		#{serviceNum,jdbcType=SMALLINT},
 		link_man = #{linkMan,jdbcType=VARCHAR},
 		link_tel = #{linkTel,jdbcType=VARCHAR},
 		is_done = #{isDone,jdbcType=NUMERIC},

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.MathBigDeciamlUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
@@ -42,6 +43,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.vo.user.UserAddrVo;
@@ -91,7 +93,8 @@ public class OrderExtWaterController extends BaseController {
 	 */
 	@RequestMapping(value = "get_list_water", method = RequestMethod.GET)
 	public AppResultData<Object> list(
-			@RequestParam("user_id") Long userId) {
+			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
@@ -104,7 +107,10 @@ public class OrderExtWaterController extends BaseController {
 		}
 		
 		List<OrderExtWaterListVo> listVo = new ArrayList<OrderExtWaterListVo>();
-		List<OrderExtWater> list = orderExtWaterService.selectByUserId(userId);
+		OrderSearchVo searchVo = new OrderSearchVo();
+		searchVo.setUserId(userId);
+		PageInfo plist = orderExtWaterService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		List<OrderExtWater> list = plist.getList();
 		
 		if (!list.isEmpty())
 			listVo = orderExtWaterService.getListVos(list);

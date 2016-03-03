@@ -15,6 +15,7 @@ import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.po.dao.order.OrderExtGreenMapper;
@@ -28,6 +29,8 @@ import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.alibaba.druid.util.Utils;
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -106,6 +109,15 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
+	
+	@Override
+	public PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
+
+		 PageHelper.startPage(pageNo, pageSize);
+         List<OrderExtWater> list = orderExtWaterMapper.selectByListPage(orderSearchVo);
+         PageInfo result = new PageInfo(list);
+        return result;
+    }
 
 	@Override
 	public List<OrderExtWater> selectByUserId(Long userId) {

@@ -3,6 +3,7 @@ package com.simi.po.dao.order;
 import java.util.List;
 
 import com.simi.po.model.order.OrderExtWater;
+import com.simi.vo.OrderSearchVo;
 
 public interface OrderExtWaterMapper {
     int deleteByPrimaryKey(Long id);
@@ -20,4 +21,6 @@ public interface OrderExtWaterMapper {
 	List<OrderExtWater> selectByUserId(Long userId);
 
 	OrderExtWater selectByOrderId(Long orderId);
+
+	List<OrderExtWater> selectByListPage(OrderSearchVo orderSearchVo);
 }
