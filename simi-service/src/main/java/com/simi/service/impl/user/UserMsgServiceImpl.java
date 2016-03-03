@@ -1,10 +1,7 @@
 package com.simi.service.impl.user;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +12,16 @@ import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserMsgSearchVo;
-import com.simi.vo.card.CardListVo;
 import com.simi.vo.user.UserMsgVo;
 import com.simi.po.dao.user.UserMsgMapper;
-import com.simi.po.model.card.Cards;
 import com.simi.po.model.data.Weathers;
 import com.simi.po.model.user.UserMsg;
-import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
-import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.baidu.BaiduMapUtil;
 import com.meijia.utils.weather.WeatherDataVo;
-import com.meijia.utils.weather.WeatherIndexVo;
 
 @Service
 public class UserMsgServiceImpl implements UserMsgService {

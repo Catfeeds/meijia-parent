@@ -4,9 +4,7 @@ package com.simi.service.impl.user;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.object.RdbmsOperation;
 import org.springframework.stereotype.Service;
 
 import com.meijia.utils.TimeStampUtil;
@@ -14,10 +12,8 @@ import com.simi.po.dao.user.UserFriendReqMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserFriendReq;
-import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserFriendReqService;
-import com.simi.service.user.UserRef3rdService;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendReqVo;
 

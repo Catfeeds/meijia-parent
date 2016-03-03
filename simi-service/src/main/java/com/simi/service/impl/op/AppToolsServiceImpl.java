@@ -1,6 +1,5 @@
 package com.simi.service.impl.op;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import com.github.pagehelper.PageInfo;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.OpChannelService;
 import com.simi.vo.po.AppToolsVo;
-import com.simi.vo.xcloud.StaffListVo;
 import com.simi.po.dao.op.AppToolsMapper;
 import com.simi.po.dao.op.UserAppToolsMapper;
 import com.simi.po.model.op.AppTools;

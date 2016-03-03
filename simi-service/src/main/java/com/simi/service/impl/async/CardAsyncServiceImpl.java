@@ -18,7 +18,6 @@ import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
-import com.simi.po.dao.user.UserFriendsMapper;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.Cards;

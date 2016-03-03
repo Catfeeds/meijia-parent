@@ -3,7 +3,6 @@ package com.simi.service.impl.order;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +18,9 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
-import com.alibaba.druid.util.Utils;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.mysql.jdbc.Util;
 
 @Service
 public class OrderExtGreenServiceImpl implements OrderExtGreenService{

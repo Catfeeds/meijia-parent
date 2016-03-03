@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
@@ -16,25 +14,17 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
-import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.vo.order.OrderExtWaterListVo;
-import com.simi.po.dao.order.OrderExtGreenMapper;
 import com.simi.po.dao.order.OrderExtWaterMapper;
-import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
-import com.simi.po.model.user.Users;
-import com.alibaba.druid.util.Utils;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.mysql.jdbc.Util;
 
 @Service
 public class OrderExtWaterServiceImpl implements OrderExtWaterService{

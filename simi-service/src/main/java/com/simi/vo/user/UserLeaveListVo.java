@@ -1,7 +1,5 @@
 package com.simi.vo.user;
 
-import java.util.List;
-
 public class UserLeaveListVo {
 	
     private Long leaveId;

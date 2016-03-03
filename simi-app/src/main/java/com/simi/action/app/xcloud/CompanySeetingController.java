@@ -1,41 +1,21 @@
 package com.simi.action.app.xcloud;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.google.zxing.WriterException;
-import com.meijia.utils.MeijiaUtil;
-import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.op.AppTools;
-import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.Xcompany;
-import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
-import com.simi.service.op.AppToolsService;
-import com.simi.service.user.UserSmsTokenService;
-import com.simi.service.user.UsersService;
-import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
-import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.po.AppToolsVo;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;

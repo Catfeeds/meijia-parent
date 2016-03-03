@@ -20,7 +20,6 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
@@ -30,12 +29,10 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.UserMsgAsyncService;
-import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
-import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -44,9 +41,7 @@ import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
-import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.vo.order.OrderExtWaterListVo;
-import com.simi.vo.user.UserAddrVo;
 
 @Controller
 @RequestMapping(value = "/app/order")

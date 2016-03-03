@@ -10,6 +10,7 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.order.OrderCards;
+import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.dict.CardTypeService;
 import com.simi.service.order.OrderCardsService;
 import com.simi.service.user.UsersService;
@@ -23,10 +24,15 @@ public class UserCardPayController extends BaseController {
 
 	@Autowired
 	private UsersService usersService;
+	
 	@Autowired
 	private OrderCardsService orderCardsService;
+	
 	@Autowired
 	private CardTypeService cardTypeService;
+	
+	@Autowired
+	private NoticeSmsAsyncService noticeSmsAsyncService;
 
 	// 8. 会员充值在线支付成功同步接口
 	/**
@@ -85,8 +91,12 @@ public class UserCardPayController extends BaseController {
 		
 		orderCards.setPayType(payType);
 		orderCards.setOrderStatus(Constants.PAY_STATUS_1);
+		orderCards.setUpdateTime(updateTime);
 		// 更新orders,orderPrices,Users,插入消费明细UserDetailPay
 		orderCardsService.updateOrderByOnlinePay(orderCards, tradeNo, tradeStatus, payAccount);
+		
+		//通知运营人员，用户充值成功
+		noticeSmsAsyncService.noticeOrderCardUser(orderCards.getId());
 		
 		return result;
 

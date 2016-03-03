@@ -2,8 +2,6 @@ package com.simi.vo.user;
 
 import java.util.List;
 
-import com.simi.po.model.user.UserLeavePass;
-
 public class UserLeaveDetailVo extends UserLeaveListVo {
 	
 	private List<String> imgs;

@@ -15,7 +15,6 @@ import com.simi.po.model.op.AppHelp;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.user.UserActionRecord;
-import com.simi.service.impl.op.AppHelpServiceImpl;
 import com.simi.service.op.AppHelpService;
 import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;

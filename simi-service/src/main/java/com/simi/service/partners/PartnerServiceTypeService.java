@@ -7,7 +7,6 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
-import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnerUserServiceTypeVo;
 
 public interface PartnerServiceTypeService {

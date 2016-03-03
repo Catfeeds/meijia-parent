@@ -25,9 +25,7 @@ import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.op.AppCardType;
 import com.simi.po.model.op.AppIndex;
-import com.simi.service.op.AppCardTypeService;
 import com.simi.service.op.AppIndexService;
 
 @Controller

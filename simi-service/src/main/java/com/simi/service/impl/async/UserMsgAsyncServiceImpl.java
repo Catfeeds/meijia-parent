@@ -27,7 +27,6 @@ import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;

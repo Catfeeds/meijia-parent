@@ -1,17 +1,11 @@
 package com.simi.action.app.partner;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -27,13 +20,9 @@ import com.meijia.utils.baidu.DwzUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
-import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.TagUsers;
-import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -43,16 +32,7 @@ import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.OrderSearchVo;
-import com.simi.vo.order.OrderDetailVo;
-import com.simi.vo.order.OrderListVo;
-import com.simi.vo.partners.PartnerServicePriceDetailVo;
-import com.simi.vo.partners.PartnerServicePriceListVo;
-import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.partners.PartnerUserDetailVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
-import com.simi.vo.partners.PartnerUserVo;
-import com.simi.vo.user.UserImgVo;
 
 
 @Controller

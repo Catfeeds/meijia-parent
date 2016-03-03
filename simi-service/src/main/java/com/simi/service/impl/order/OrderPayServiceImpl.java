@@ -1,19 +1,9 @@
 package com.simi.service.impl.order;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.meijia.utils.SmsUtil;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.common.Constants;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.async.OrderAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
@@ -30,14 +20,11 @@ import com.simi.service.user.UsersService;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
-import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserRefSec;
-import com.simi.po.model.user.Users;
 
 @Service
 public class OrderPayServiceImpl implements OrderPayService {

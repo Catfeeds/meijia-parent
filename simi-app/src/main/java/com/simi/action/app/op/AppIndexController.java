@@ -1,11 +1,7 @@
 package com.simi.action.app.op;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +16,6 @@ import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.UserAppToolsService;
 import com.simi.vo.AppResultData;
-import com.sun.tools.corba.se.idl.constExpr.And;
 
 @Controller
 @RequestMapping(value = "/app/op")

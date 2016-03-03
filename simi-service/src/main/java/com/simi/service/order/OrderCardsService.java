@@ -27,4 +27,5 @@ public interface OrderCardsService {
 
 	OrderCards initCardMoney(Users users, Long cardType, BigDecimal cardMoney,
 			Short payType);
+
 }
