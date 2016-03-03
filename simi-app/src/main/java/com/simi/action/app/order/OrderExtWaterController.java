@@ -19,7 +19,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;

@@ -2,22 +2,22 @@ package com.simi.po.dao.order;
 
 import java.util.List;
 
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 
 public interface OrderExtGreenMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(OrderExtGreen record);
+    int insert(OrderExtRecycle record);
 
-    int insertSelective(OrderExtGreen record);
+    int insertSelective(OrderExtRecycle record);
 
-    OrderExtGreen selectByPrimaryKey(Long id);
+    OrderExtRecycle selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(OrderExtGreen record);
+    int updateByPrimaryKeySelective(OrderExtRecycle record);
 
-    int updateByPrimaryKey(OrderExtGreen record);
+    int updateByPrimaryKey(OrderExtRecycle record);
 
-	List<OrderExtGreen> selectByUserId(Long userId);
+	List<OrderExtRecycle> selectByUserId(Long userId);
 
-	OrderExtGreen selectByOrderId(Long orderId);
+	OrderExtRecycle selectByOrderId(Long orderId);
 }

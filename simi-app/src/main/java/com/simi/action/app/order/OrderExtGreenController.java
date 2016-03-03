@@ -16,7 +16,7 @@ import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
@@ -75,8 +75,8 @@ public class OrderExtGreenController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 		List<OrderExtGreenListVo> listVo = new ArrayList<OrderExtGreenListVo>();
-		List<OrderExtGreen> list = orderExtGreenService.selectByUserId(userId);
-		for (OrderExtGreen item : list) {
+		List<OrderExtRecycle> list = orderExtGreenService.selectByUserId(userId);
+		for (OrderExtRecycle item : list) {
 			OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(item);
 			listVo.add(vo);
 		}
@@ -213,7 +213,7 @@ public class OrderExtGreenController extends BaseController {
 		orderPricesService.insert(orderPrice);
 		
 		//保存绿植订单扩展表信息
-		OrderExtGreen green = orderExtGreenService.initOrderExtGreen();
+		OrderExtRecycle green = orderExtGreenService.initOrderExtGreen();
 		green.setOrderId(orderId);
 		green.setOrderNo(orderNo);
 		green.setUserId(userId);

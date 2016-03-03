@@ -2,30 +2,30 @@ package com.simi.service.order;
 
 import java.util.List;
 
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.vo.order.OrderExtGreenListVo;
 
 public interface OrderExtGreenService {
 
-	OrderExtGreen initOrderExtGreen();
+	OrderExtRecycle initOrderExtGreen();
 
 	int deleteByPrimaryKey(Long id);
 
-	int insert(OrderExtGreen record);
+	int insert(OrderExtRecycle record);
 
-	int insertSelective(OrderExtGreen record);
+	int insertSelective(OrderExtRecycle record);
 
-	OrderExtGreen selectByPrimaryKey(Long id);
+	OrderExtRecycle selectByPrimaryKey(Long id);
 
-	int updateByPrimaryKeySelective(OrderExtGreen record);
+	int updateByPrimaryKeySelective(OrderExtRecycle record);
 
-	int updateByPrimaryKey(OrderExtGreen record);
+	int updateByPrimaryKey(OrderExtRecycle record);
 
-	List<OrderExtGreen> selectByUserId(Long userId);
+	List<OrderExtRecycle> selectByUserId(Long userId);
 
-	OrderExtGreenListVo getOrderExtGreenListVo(OrderExtGreen item);
+	OrderExtGreenListVo getOrderExtGreenListVo(OrderExtRecycle item);
 
-	OrderExtGreen selectByOrderId(Long orderId);
+	OrderExtRecycle selectByOrderId(Long orderId);
 
 
 }

@@ -22,14 +22,17 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
+import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.partners.PartnerRefServiceType;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
@@ -38,12 +41,15 @@ import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
+import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 
@@ -80,6 +86,10 @@ public class PartnerUsersController extends BaseController{
 	
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	
 	
 	/**
 	 * 服务人员列表 
@@ -335,4 +345,87 @@ public class PartnerUsersController extends BaseController{
 		
 		return "redirect:user_list?partnerId=" + partnerId;
 	} 
+	//todo商品列表
+	@RequestMapping(value = "/partner_service_price_list", method = { RequestMethod.GET })
+	public String partnerServicelist(HttpServletRequest request, Model model,
+			@RequestParam("partnerId") Long partnerId,
+			@RequestParam("service_type_id") Long serviceTypeId,
+			@RequestParam("user_id")Long userId,
+			PartnerUserSearchVo searchVo) {
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		
+		if (searchVo == null) {
+			searchVo = new PartnerUserSearchVo();
+		}
+		
+		searchVo.setPartnerId(partnerId);
+		
+		model.addAttribute("searchModel", searchVo);
+		
+		model.addAttribute("partnerId", partnerId);
+		
+		String companyName = "";
+		if (partnerId > 0L) {
+			Partners parnter = partnersService.selectByPrimaryKey(partnerId);
+			companyName = parnter.getCompanyName();
+		}
+		
+		model.addAttribute("companyName", companyName);
+		
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		
+	//	PageInfo result = partnerUserService.selectByListPage(searchVo, pageNo, pageSize);
+		PageInfo result = partnerUserService.selectByListPage(searchVo, pageNo, pageSize);
+		model.addAttribute("contentModel", result);
+		return "partners/partnerUserList";
+	}
+	
+	    //todo 
+	    //商品添加
+		@RequestMapping(value = "/partner_service_price_details", method = { RequestMethod.GET })
+		public String partnerPrice(Model model, HttpServletRequest request,
+				//@RequestParam("id") Long id,
+				@RequestParam("service_price_id") Long servicePriceId,
+				HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException  {
+
+		if (servicePriceId == 0) {
+			return "partners/partnerUserForm";
+		}
+		PartnerServicePriceDetail record = partnerServicePriceDetailService
+				.selectByServicePriceId(servicePriceId);
+
+		PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(record, vo);
+
+		// 服务类别名称
+		PartnerServiceType prices = partnerServiceTypeService
+				.selectByPrimaryKey(servicePriceId);
+		vo.setName(prices.getName());
+		vo.setIsEnable(prices.getIsEnable());
+
+	    model.addAttribute("vo", vo);
+    	
+		return "partners/partnerUserForm";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -6,7 +6,7 @@ public class OrdersGreenPartnerVo extends OrdersListVo{
 	
 	private Short orderExtStatus;
 	
-	private Short greenType;
+	private Short recycleType;
 	
 	private Long totalNum;
 	    
@@ -26,12 +26,12 @@ public class OrdersGreenPartnerVo extends OrdersListVo{
 		this.orderExtStatus = orderExtStatus;
 	}
 
-	public Short getGreenType() {
-		return greenType;
+	public Short getRecycleType() {
+		return recycleType;
 	}
 
-	public void setGreenType(Short greenType) {
-		this.greenType = greenType;
+	public void setRecycleType(Short recycleType) {
+		this.recycleType = recycleType;
 	}
 
 	public Long getTotalNum() {

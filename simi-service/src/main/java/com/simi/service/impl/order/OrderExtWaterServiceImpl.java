@@ -19,7 +19,7 @@ import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.po.dao.order.OrderExtGreenMapper;
 import com.simi.po.dao.order.OrderExtWaterMapper;
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;

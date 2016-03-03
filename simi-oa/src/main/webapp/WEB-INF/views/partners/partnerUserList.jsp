@@ -80,6 +80,8 @@
 							           
 							            <td>
 							            	<button id="btn_update"  onClick="btn_update('partners/user_form?id=${ item.id }&partnerId=${item.partnerId}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+							                <button id="btn_update"  onClick="btn_update('partners/get_partner_service_price_details?service_price_id=${ item.servicePriceId }')" class="btn btn-primary btn-xs" title="添加商品"><i class="icon-pencil"></i></button>
+							            
 							            </td>
                               </tr>
                               </c:forEach>

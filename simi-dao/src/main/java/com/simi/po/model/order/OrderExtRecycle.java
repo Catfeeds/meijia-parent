@@ -3,7 +3,7 @@ package com.simi.po.model.order;
 import java.math.BigDecimal;
 
 
-public class OrderExtGreen {
+public class OrderExtRecycle {
 	
 	private Long id;
 	
@@ -13,7 +13,7 @@ public class OrderExtGreen {
     
     private Short orderExtStatus;
     
-    private Short greenType;
+    private Short recycleType;
     
     private Long userId;
     
@@ -57,12 +57,12 @@ public class OrderExtGreen {
 		this.orderExtStatus = orderExtStatus;
 	}
 
-	public Short getGreenType() {
-		return greenType;
+	public Short getRecycleType() {
+		return recycleType;
 	}
 
-	public void setGreenType(Short greenType) {
-		this.greenType = greenType;
+	public void setRecycleType(Short recycleType) {
+		this.recycleType = recycleType;
 	}
 
 	public Long getUserId() {

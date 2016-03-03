@@ -14,7 +14,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.po.dao.order.OrderExtGreenMapper;
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
@@ -49,40 +49,40 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 	}
 
 	@Override
-	public int insert(OrderExtGreen record) {
+	public int insert(OrderExtRecycle record) {
 		return orderExtGreenMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(OrderExtGreen record) {
+	public int insertSelective(OrderExtRecycle record) {
 		return orderExtGreenMapper.insertSelective(record);
 	}
 
 	@Override
-	public OrderExtGreen selectByPrimaryKey(Long id) {
+	public OrderExtRecycle selectByPrimaryKey(Long id) {
 		return orderExtGreenMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public int updateByPrimaryKey(OrderExtGreen record) {
+	public int updateByPrimaryKey(OrderExtRecycle record) {
 		return orderExtGreenMapper.updateByPrimaryKey(record);
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(OrderExtGreen record) {
+	public int updateByPrimaryKeySelective(OrderExtRecycle record) {
 		return orderExtGreenMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public OrderExtGreen initOrderExtGreen() {
+	public OrderExtRecycle initOrderExtGreen() {
 		
-		OrderExtGreen record = new OrderExtGreen();
+		OrderExtRecycle record = new OrderExtRecycle();
 		record.setId(0L);
 		record.setUserId(0L);
 		record.setOrderId(0L);
 		record.setOrderNo("");
 		record.setOrderExtStatus((short)0);
-		record.setGreenType((short)0);
+		record.setRecycleType((short)0);
 		record.setMobile("");
 		record.setTotalNum(0L);
 		record.setTotalBudget(new BigDecimal(0));
@@ -91,13 +91,13 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 	}
 
 	@Override
-	public List<OrderExtGreen> selectByUserId(Long userId) {
+	public List<OrderExtRecycle> selectByUserId(Long userId) {
 		
 		return orderExtGreenMapper.selectByUserId(userId);
 	}
 
 	@Override
-	public OrderExtGreenListVo getOrderExtGreenListVo(OrderExtGreen item) {
+	public OrderExtGreenListVo getOrderExtGreenListVo(OrderExtRecycle item) {
 		
 		OrderExtGreenListVo vo = new OrderExtGreenListVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
@@ -125,7 +125,7 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 	}
 
 	@Override
-	public OrderExtGreen selectByOrderId(Long orderId) {
+	public OrderExtRecycle selectByOrderId(Long orderId) {
 		
 		return orderExtGreenMapper.selectByOrderId(orderId);
 	}

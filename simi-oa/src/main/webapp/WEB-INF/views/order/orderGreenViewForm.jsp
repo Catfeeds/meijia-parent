@@ -212,22 +212,27 @@
 						</div>
 						<div class="form-group">
 							<!-- Text input-->
-							<label class="col-md-2 control-label">绿植类型</label>
+							<label class="col-md-2 control-label">废品类型</label>
 							<div class="col-md-8">
 								<div class="row">
 									<div class="col-md-2" align="center">
-										<label class="radio"> <form:radiobutton path="greenType"
-												value="0" />绿植租摆
+										<label class="radio"> <form:radiobutton path="recycleType"
+												value="0" />日常办公垃圾
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="greenType"
-												value="1" />定期维护
+										<label class="radio"> <form:radiobutton path="recycleType"
+												value="1" />废旧电器
 										</label>
 									</div>
 									<div class="col-md-2" align="left">
-										<label class="radio"> <form:radiobutton path="greenType"
-												value="2" />其他
+										<label class="radio"> <form:radiobutton path="recycleType"
+												value="2" />硒鼓墨盒
+										</label>
+									</div>
+									<div class="col-md-2" align="left">
+										<label class="radio"> <form:radiobutton path="recycleType"
+												value="3" />其他
 										</label>
 									</div>
 								</div>

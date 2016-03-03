@@ -25,7 +25,7 @@ import com.simi.action.admin.AdminController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.msg.Msg;
-import com.simi.po.model.order.OrderExtGreen;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtPartner;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderLog;
@@ -140,12 +140,12 @@ public class OrderGreenController extends AdminController {
 			
 			OrdersGreenPartnerVo vo = new OrdersGreenPartnerVo();
 			BeanUtilsExp.copyPropertiesIgnoreNull(ordersListVo, vo);
-			OrderExtGreen green = orderExtGreenService.selectByOrderId(vo.getOrderId());
+			OrderExtRecycle green = orderExtGreenService.selectByOrderId(vo.getOrderId());
 			vo.setPartnerOrderNo("");
 			vo.setPartnerOrderMoney(new BigDecimal(0));
 			vo.setPartnerId(0L);
 			vo.setOrderExtStatus((short)0);
-			vo.setGreenType((short)0);
+			vo.setRecycleType((short)0);
 			
 			vo.setTotalNum(green.getTotalNum());
 			vo.setTotalBudget(green.getTotalBudget());
@@ -177,15 +177,15 @@ public class OrderGreenController extends AdminController {
 		OrdersListVo listvo = orderQueryService.completeVo(orders);
 		OrdersGreenPartnerVo vo = new OrdersGreenPartnerVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(listvo, vo);
-		OrderExtGreen green = orderExtGreenService.selectByOrderId(vo.getOrderId());
+		OrderExtRecycle green = orderExtGreenService.selectByOrderId(vo.getOrderId());
 		OrderExtPartner orderExtPartner = orderExtPartnerService
 				.selectByOrderId(orders.getOrderId());
 		vo.setPartnerOrderNo(orderExtPartner.getPartnerOrderNo());
 		vo.setPartnerOrderMoney(orderExtPartner.getPartnerOrderMoney());
 		vo.setPartnerId(orderExtPartner.getPartnerId());
 		
-		vo.setOrderExtStatus(green.getGreenType());
-		vo.setGreenType(green.getGreenType());
+		vo.setOrderExtStatus(green.getOrderExtStatus());
+		vo.setRecycleType(green.getRecycleType());
 		vo.setTotalNum(green.getTotalNum());
 		vo.setTotalBudget(green.getTotalBudget());
 		model.addAttribute("contentModel", vo);
@@ -270,10 +270,10 @@ public class OrderGreenController extends AdminController {
 									.updateByPrimaryKeySelective(orderExtPartner);
 						}
 			//更新绿植表
-			OrderExtGreen green = orderExtGreenService.selectByOrderId(orderId);
+			OrderExtRecycle green = orderExtGreenService.selectByOrderId(orderId);
 			
 			green.setOrderExtStatus(vo.getOrderExtStatus());
-			green.setGreenType(vo.getGreenType());
+			green.setRecycleType(vo.getRecycleType());
 			green.setTotalNum(vo.getTotalNum());
 			green.setTotalBudget(vo.getTotalBudget());
 			green.setAddTime(TimeStampUtil.getNowSecond());

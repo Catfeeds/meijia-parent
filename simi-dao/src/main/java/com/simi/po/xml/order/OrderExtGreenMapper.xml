@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simi.po.dao.order.OrderExtGreenMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderExtGreen" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderExtRecycle" >
     <id column="id" property="id" jdbcType="NUMERIC" />
     <result column="order_id" property="orderId" jdbcType="NUMERIC" />
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
     <result column="order_ext_status" property="orderExtStatus" jdbcType="NUMERIC" />
-    <result column="green_type" property="greenType" jdbcType="NUMERIC" />
+    <result column="recycle_type" property="recycleType" jdbcType="NUMERIC" />
     <result column="user_id" property="userId" jdbcType="NUMERIC" />
     <result column="mobile" property="mobile" jdbcType="CHAR" />
     <result column="total_num" property="totalNum" jdbcType="NUMERIC" />
@@ -14,7 +14,7 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_id, order_no,order_ext_status,green_type, user_id, mobile, total_num, total_budget, add_time
+    id, order_id, order_no,order_ext_status,recycle_type, user_id, mobile, total_num, total_budget, add_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -40,16 +40,16 @@
     delete from order_ext_green
     where id = #{id,jdbcType=NUMERIC}
   </delete>
-  <insert id="insert" parameterType="com.simi.po.model.order.OrderExtGreen" >
-    insert into order_ext_green (id, order_id, order_no, order_ext_status,green_type,
+  <insert id="insert" parameterType="com.simi.po.model.order.OrderExtRecycle" >
+    insert into order_ext_green (id, order_id, order_no, order_ext_status,recycle_type,
       user_id, mobile, total_num, 
       total_budget, add_time)
     values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR}, 
-     #{orderExtStatus,jdbcType=NUMERIC}, #{greenType,jdbcType=NUMERIC},
+     #{orderExtStatus,jdbcType=NUMERIC}, #{recycleType,jdbcType=NUMERIC},
       #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR}, #{totalNum,jdbcType=NUMERIC}, 
       #{totalBudget,jdbcType=DECIMAL}, #{addTime,jdbcType=NUMERIC})
   </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.order.OrderExtGreen" >
+  <insert id="insertSelective" parameterType="com.simi.po.model.order.OrderExtRecycle" >
     insert into order_ext_green
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -65,8 +65,8 @@
     <if test="orderExtStatus != null" >
         order_ext_status,
       </if>
-      <if test="greenType != null" >
-        green_type,
+      <if test="recycleType != null" >
+        recycle_type,
       </if>
       <if test="userId != null" >
         user_id,
@@ -98,8 +98,8 @@
     <if test="orderExtStatus != null" >
         #{orderExtStatus,jdbcType=NUMERIC},
       </if>
-      <if test="greenType != null" >
-        #{greenType,jdbcType=NUMERIC},
+      <if test="recycleType != null" >
+        #{recycleType,jdbcType=NUMERIC},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=NUMERIC},
@@ -118,7 +118,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderExtGreen" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderExtRecycle" >
     update order_ext_green
     <set >
       <if test="orderId != null" >
@@ -130,8 +130,8 @@
     <if test="orderExtStatus != null" >
        order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
       </if>
-      <if test="greenType != null" >
-       green_type =  #{greenType,jdbcType=NUMERIC},
+      <if test="recycleType != null" >
+       recycle_type =  #{recycleType,jdbcType=NUMERIC},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=NUMERIC},
@@ -151,12 +151,12 @@
     </set>
     where id = #{id,jdbcType=NUMERIC}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderExtGreen" >
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderExtRecycle" >
     update order_ext_green
     set order_id = #{orderId,jdbcType=NUMERIC},
       order_no = #{orderNo,jdbcType=VARCHAR},
       order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
-      green_type =  #{greenType,jdbcType=NUMERIC},
+      recycle_type =  #{recycleType,jdbcType=NUMERIC},
       user_id = #{userId,jdbcType=NUMERIC},
       mobile = #{mobile,jdbcType=CHAR},
       total_num = #{totalNum,jdbcType=NUMERIC},
