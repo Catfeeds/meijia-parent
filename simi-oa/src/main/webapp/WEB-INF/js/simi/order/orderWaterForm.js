@@ -215,6 +215,8 @@ $("#orderStatus").change(function(){
 
 
 $("#servicePriceId").change(function(){ 
+	var imgUrl = $("#servicePriceId").find("option:selected").attr('imgUrl');
+	$("#imgUrl").attr("src", imgUrl);
 	mathMoney();
 });
 

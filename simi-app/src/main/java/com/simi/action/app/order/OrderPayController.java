@@ -139,7 +139,9 @@ public class OrderPayController extends BaseController {
 			}
 		}
 		
-		order.setAddrId(addrId);
+		if (addrId > 0L) {
+			order.setAddrId(addrId);
+		}
 		ordersService.updateByPrimaryKeySelective(order);
 		
 		

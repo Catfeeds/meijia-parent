@@ -89,7 +89,7 @@
 						<div class="form-group required">
 							<label class="col-md-2 control-label">商品图片:</label>
 							<div class="col-md-5">
-								<img wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
+								<img id="imgUrl" wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
 							</div>
 						</div>
 
@@ -99,7 +99,7 @@
 								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="form-control" autocomplete="off">
 									<option value="">请选择商品</option>
 									<c:forEach items="${waterComVos}" var="item">
-										<option value="${item.servicePriceId}" disprice="${item.disprice }" <c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >${item.namePrice}</option>
+										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" <c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >${item.namePrice}</option>
 									</c:forEach>
 								</form:select>
 							</div>
