@@ -404,13 +404,13 @@ public class PartnerUsersController extends BaseController{
 			
 			PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
 			
+			
 			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 			
-			PartnerServicePriceDetail partnerServiceTypeDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
-			
-			if (partnerServiceTypeDetail == null) {
+			PartnerServicePriceDetail partnerServiceTypeDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+			/*if (partnerServiceTypeDetail == null) {
 				partnerServiceTypeDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
-			}
+			}*/
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(partnerServiceTypeDetail, vo);
 			vo.setName("");
@@ -421,6 +421,7 @@ public class PartnerUsersController extends BaseController{
 			vo.setIsEnable((short)0);
 			vo.setNo(0);
 			vo.setServiceTypeId(serviceTypeId);
+			
 			model.addAttribute("contentModel", vo);
     	
 		return "partners/partnerStorePriceForm";

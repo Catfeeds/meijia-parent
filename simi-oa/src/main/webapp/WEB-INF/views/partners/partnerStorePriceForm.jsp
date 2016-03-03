@@ -232,7 +232,7 @@
 	});
 	</script>	
 	
-	<script src="<c:url value='/js/simi/partner/partnerServicePriceForm.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/js/simi/partner/partnerStorePriceForm.js'/>" type="text/javascript"></script>
 	<script>
 		$('#orderType').trigger('change');
 	</script>
