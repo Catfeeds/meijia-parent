@@ -487,6 +487,7 @@ public class PartnerServicePriceController extends BaseController {
 		List<Map> resultList = new ArrayList<Map>();
 		for (PartnerUsers partnerUser : list) {
 			Long userId = partnerUser.getUserId();
+			Users u = usersService.selectByPrimaryKey(userId);
 			List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(userId);
 			
 			List<Long> servicePriceIds = new ArrayList<Long>();
@@ -519,6 +520,8 @@ public class PartnerServicePriceController extends BaseController {
 				resultMap.put("price", MathBigDeciamlUtil.round2(item.getPrice()));
 				resultMap.put("dis_price", MathBigDeciamlUtil.round2(item.getDisPrice()));
 				resultMap.put("img_url", item.getImgUrl());
+				resultMap.put("user_name", u.getName());
+				resultMap.put("mobile", u.getMobile());
 				
 				resultList.add(resultMap);
 				

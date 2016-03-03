@@ -191,7 +191,7 @@ function changePartner(serviceTypeId, partnerId) {
 			//给select 赋值.
 			$("#servicePriceList").empty(); 
 			$.each(data, function(i, item) {
-				var name = item.name + "(原价:" + item.price + ",折扣价:" + item.dis_price + ")"
+				var name = item.name + "(原价:" + item.price + ",折扣价:" + item.dis_price + ")--(服务人员:" + item.user_name +",手机:" + item.mobile + ")";
 				$("#servicePriceList").append("<option value='"+ item.servce_price_id +"'>"+name+"</option>"); 
 			});
 		}
