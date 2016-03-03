@@ -81,7 +81,7 @@
 							            <td>
 							            	<button id="btn_update"  onClick="btn_update('partners/user_form?id=${ item.id }&partnerId=${item.partnerId}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
 							              
-											<button id="btn_update" onClick="btn_update('partners/partner_service_price_list?service_type_id=${ item.serviceTypeId }&user_id=${item.userId}&partner_id=${item.partnerId}')" class="btn btn-primary btn-xs"  title="添加商品"><i class="icon-pencil"></i></button>
+											<button id="btn_update" onClick="btn_update('partners/partner_service_price_list?service_type_id=${ item.serviceTypeId }&user_id=${item.userId}&partner_id=${item.partnerId}')" class="btn btn-danger btn-xs"  title="添加商品"><i class="icon-search "></i></button>
 							            </td>
                               </tr>
                               </c:forEach>
