@@ -39,6 +39,7 @@
 				>
 
 					<form:hidden path="orderId" />
+					
 					<div class="form-body">
 
 						<div class="form-group required">
@@ -95,11 +96,11 @@
 						<div class="form-group required">
 							<label class="col-md-2 control-label">商品:</label>
 							<div class="col-md-5">
-								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="form-control"
-									disabled="true"
-								>
+								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="form-control" autocomplete="off">
 									<option value="">请选择商品</option>
-									<form:options items="${waterComVos}" itemValue="servicePriceId" itemLabel="namePrice" />
+									<c:forEach items="${waterComVos}" var="item">
+										<option value="${item.servicePriceId}" disprice="${item.disprice }" <c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >${item.namePrice}</option>
+									</c:forEach>
 								</form:select>
 							</div>
 						</div>
@@ -107,7 +108,8 @@
 						<div class="form-group required">
 							<label class="col-md-2 control-label">送水的数量</label>
 							<div class="col-md-5">
-								<form:input path="serviceNum" class="form-control" maxLength="32" readonly="true" />
+								<form:input path="serviceNum" class="form-control" maxLength="32"  
+								/>
 								<form:errors path="serviceNum" class="field-has-error"></form:errors>
 							</div>
 						</div>
@@ -116,7 +118,8 @@
 
 							<label class="col-md-2 control-label">总金额</label>
 							<div class="col-md-5">
-								<form:input path="orderMoney" class="form-control" maxLength="32"  />
+								<form:input path="orderMoney" class="form-control" maxLength="32" 
+								 />
 								<form:errors path="orderMoney" class="field-has-error"></form:errors>
 							</div>
 						</div>
@@ -124,7 +127,8 @@
 
 							<label class="col-md-2 control-label">支付金额</label>
 							<div class="col-md-5">
-								<form:input path="orderPay" class="form-control" maxLength="32"  />
+								<form:input path="orderPay" class="form-control" maxLength="32" 
+								 />
 								<form:errors path="orderPay" class="field-has-error"></form:errors>
 							</div>
 						</div>
@@ -281,6 +285,7 @@
 	
 	
 	<script>
+		$('#orderStaus').trigger('change');
 		$('#partnerId').trigger('change');
 	</script>
 </body>

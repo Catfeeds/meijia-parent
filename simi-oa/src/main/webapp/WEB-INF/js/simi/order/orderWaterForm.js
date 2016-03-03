@@ -4,6 +4,15 @@ var formVal = $('#order-water-view-form').validate({
 	focusInvalid : false, // do not focus the last invalid input
 	ignore : [],
 	rules : {
+		
+		servicePriceId : {
+			required : true,
+		},
+		
+		serviceNum : {
+			required : true,
+			isIntGtZero : true,
+		},
 
 		orderMoney : {
 			required : true,
@@ -30,6 +39,15 @@ var formVal = $('#order-water-view-form').validate({
 	},
 
 	messages : {
+		
+		servicePriceId : {
+			required : "请选择商品",
+		},
+		
+		serviceNum : {
+			required : "请输入送水数量",
+			isIntGtZero : "数量只能输入数字",
+		},
 
 		orderMoney : {
 			required : "请输入总金额",
@@ -84,7 +102,7 @@ var formValp = $('#order-water-partner-form').validate({
 	focusInvalid : false, // do not focus the last invalid input
 	ignore : [],
 	rules : {
-
+				
 		partnerId : {
 			required : true,
 		},
@@ -178,4 +196,49 @@ function changePartner(serviceTypeId, partnerId) {
 			});
 		}
 	});
+}
+
+$("#orderStatus").change(function(){ 
+	var orderStatus = $(this).children('option:selected').val();
+	if (orderStatus == 1) {
+		$("servicePriceId").attr("disabled", "true");
+		$("serviceNum").attr("readonly", "true");
+		$("orderMoney").attr("readonly", "true");
+		$("orderPay").attr("readonly", "true");
+	} else {
+		$("servicePriceId").attr("disabled", "false");
+		$("serviceNum").attr("readonly", "false");
+		$("orderMoney").attr("readonly", "false");
+		$("orderPay").attr("readonly", "false");
+	}
+});
+
+
+$("#servicePriceId").change(function(){ 
+	mathMoney();
+});
+
+$("#serviceNum").keyup(function(){ 
+	mathMoney();
+});
+
+
+function mathMoney() {
+	var dispriceStr = $("#servicePriceId").find("option:selected").attr('disprice');
+	
+	var serviceNumStr = $("#serviceNum").val();
+	
+	var disPrice = parseFloat(dispriceStr);
+	var serviceNum = parseFloat(serviceNumStr);
+	console.log("disprice = " + disPrice + "====serviceNum===" + serviceNum);
+	
+	var total = disPrice * serviceNum;
+	if (total != undefined) {
+		total = parseFloat(total).toFixed(2);
+	}
+	console.log("total = " + total);
+	
+	$("#orderMoney").val(total);
+	$("#orderPay").val(total);
+	
 }
