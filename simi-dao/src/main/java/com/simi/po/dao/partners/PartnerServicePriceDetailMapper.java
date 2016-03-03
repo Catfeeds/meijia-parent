@@ -3,6 +3,7 @@ package com.simi.po.dao.partners;
 import java.util.List;
 
 import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.vo.partners.PartnerUserServiceTypeVo;
 
 public interface PartnerServicePriceDetailMapper {
     int deleteByPrimaryKey(Long id);
@@ -24,4 +25,7 @@ public interface PartnerServicePriceDetailMapper {
 	List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds);
 
 	List<PartnerServicePriceDetail> selectByUserId(Long userId);
+
+	List<PartnerServicePriceDetail> selectByListPage(
+			PartnerUserServiceTypeVo searchVo);
 }

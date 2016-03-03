@@ -10,6 +10,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.partners.PartnerServicePriceDetailMapper;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.vo.partners.PartnerUserServiceTypeVo;
 
 
 @Service
@@ -87,6 +88,13 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 		record.setContentFlow("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
+	}
+
+	@Override
+	public List<PartnerServicePriceDetail> selectByListPage(
+			PartnerUserServiceTypeVo searchVo) {
+		
+		return partnerServicePriceDetailMapper.selectByListPage(searchVo);
 	}
 
 	

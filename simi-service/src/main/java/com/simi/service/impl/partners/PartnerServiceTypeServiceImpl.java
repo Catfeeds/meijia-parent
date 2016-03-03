@@ -5,18 +5,26 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.ss.formula.IStabilityClassifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.partners.PartnerUsers;
+import com.simi.po.model.partners.Partners;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.partners.PartnerUserServiceTypeVo;
+import com.simi.vo.partners.PartnerUserVo;
 
 @Service
 public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService {
@@ -179,6 +187,33 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		}
 		return vo;
 		
+	}
+
+	@Override
+	public PageInfo selectByListPage(PartnerUserServiceTypeVo searchVo, int pageNo,
+			int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		//找出服务商对应的服务大类的集合
+	//	List<PartnerServiceType> list = partnerServiceTypeMapper.selectByPartnerIdIn(searchVo.getPartnerId());
+		//得到服务大类id的集合
+		/*List<Long> serviceTypeIds = new ArrayList<Long>();
+		for (int i = 0; i < list.size(); i++) {
+			
+			PartnerServiceType serviceType =list.get(i);
+			serviceTypeIds.add(serviceType.getId());
+		}*/
+		//searchVo.setServiceTypeIds(serviceTypeIds);
+		List<PartnerServicePriceDetail> detailList = partnerServicePriceDetailService.selectByListPage(searchVo);
+		
+		/*
+			//List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
+			for (int i =0 ; i < list.size(); i++) {
+				PartnerUsers item = list.get(i);
+				PartnerUserVo vo = this.changeToVo(item) ;
+				list.set(i, vo);
+			}*/
+		PageInfo pageInfo = new PageInfo(detailList);
+		return pageInfo;
 	}
 	
 	

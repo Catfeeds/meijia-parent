@@ -52,7 +52,30 @@
 		from partner_service_price_detail
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>
-	
+
+<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_price_detail
+		where 1=1
+		<if test="userId != null">
+			and user_id =  #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="serviceTypeIds != null">
+			and service_price_id in
+			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<!-- <if test="partnerId != null">
+			and partner_id =  #{partnerId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="serviceTypeId != null">
+			and service_type_id =  #{serviceTypeId,jdbcType=NUMERIC}
+		</if> -->
+		order by add_time desc 
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from partner_service_price_detail
 		where id = #{id,jdbcType=NUMERIC}

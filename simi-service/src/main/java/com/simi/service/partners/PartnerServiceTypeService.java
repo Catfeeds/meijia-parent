@@ -2,10 +2,13 @@ package com.simi.service.partners;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.partners.PartnerUserServiceTypeVo;
 
 public interface PartnerServiceTypeService {
 	
@@ -36,6 +39,9 @@ public interface PartnerServiceTypeService {
 	List<PartnerServiceType> selectByPartnerIdIn(Long partnerId);
 
 	PartnerServicePriceDetailVoAll getPartnerPriceList(PartnerServiceType item, Long userId);
+
+	PageInfo selectByListPage(PartnerUserServiceTypeVo searchVo, int pageNo,
+			int pageSize);
 
 	
 }

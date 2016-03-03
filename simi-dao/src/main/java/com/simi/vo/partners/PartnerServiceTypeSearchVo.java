@@ -17,8 +17,7 @@ public class PartnerServiceTypeSearchVo {
 	 private Short viewType;
 	 
 	 private Short isEnable;
-	 
-	
+
 
 	public Long getServiceTypeId() {
 		return serviceTypeId;
@@ -75,7 +74,6 @@ public class PartnerServiceTypeSearchVo {
 	public void setIsEnable(Short isEnable) {
 		this.isEnable = isEnable;
 	}
-
 
 	
 }
