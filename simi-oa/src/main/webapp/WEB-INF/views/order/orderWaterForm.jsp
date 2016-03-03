@@ -116,7 +116,7 @@
 
 							<label class="col-md-2 control-label">总金额</label>
 							<div class="col-md-5">
-								<form:input path="orderMoney" class="form-control" maxLength="32" readonly="true" />
+								<form:input path="orderMoney" class="form-control" maxLength="32"  />
 								<form:errors path="orderMoney" class="field-has-error"></form:errors>
 							</div>
 						</div>
@@ -124,7 +124,7 @@
 
 							<label class="col-md-2 control-label">支付金额</label>
 							<div class="col-md-5">
-								<form:input path="orderPay" class="form-control" maxLength="32" readonly="true" />
+								<form:input path="orderPay" class="form-control" maxLength="32"  />
 								<form:errors path="orderPay" class="field-has-error"></form:errors>
 							</div>
 						</div>
@@ -270,6 +270,7 @@
 
 
 	<!--script for this page-->
+	<script src="<c:url value='/js/simi/common/validate-methods.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
 	<script type="text/javascript"
 		src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"
