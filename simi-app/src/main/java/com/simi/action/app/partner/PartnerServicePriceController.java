@@ -456,4 +456,81 @@ public class PartnerServicePriceController extends BaseController {
 		return result;
 
 	}	
+	
+	/**
+	 * 服务报价列表接口(通过服务大类和服务商)
+	 * 
+	 * @param service_type_id  服务大类ID
+	 * @param page
+	 * @return
+	 */
+
+	@RequestMapping(value = "get_service_price_list", method = RequestMethod.GET)
+	public AppResultData<Object> getServicePriceList(
+			@RequestParam("service_type_id") Long serviceTypeId,
+			@RequestParam("partner_id") Long partnerId
+			) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		
+		//先根据服务大类和服务商找到相应的服务人员.
+		PartnerUserSearchVo searchVo  = new PartnerUserSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
+		searchVo.setPartnerId(partnerId);
+		
+		List<PartnerUsers> list = partnerUserService.selectBySearchVo(searchVo);
+		
+		if (list.isEmpty()) return result;
+		
+		List<Map> resultList = new ArrayList<Map>();
+		for (PartnerUsers partnerUser : list) {
+			Long userId = partnerUser.getUserId();
+			List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(userId);
+			
+			List<Long> servicePriceIds = new ArrayList<Long>();
+			for (PartnerServicePriceDetail item : servicePriceDetails) {
+				if (!servicePriceIds.contains(item.getServicePriceId())) {
+					servicePriceIds.add(item.getServicePriceId());
+				}
+			}
+			
+			
+			List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
+			
+			
+			for (PartnerServicePriceDetail item : servicePriceDetails) {
+				
+				String name = "";
+				
+				PartnerServiceType serviceType = null;
+				for (PartnerServiceType item1 : serviceTypes) {
+					if (item1.getId().equals(item.getServicePriceId())) {
+						serviceType = item1;
+						break;
+					}
+				}
+				
+				
+				Map<String, String> resultMap = new HashMap<String, String>();
+				resultMap.put("name", serviceType.getName());
+				resultMap.put("servce_price_id", serviceType.getId().toString());
+				resultMap.put("price", MathBigDeciamlUtil.round2(item.getPrice()));
+				resultMap.put("dis_price", MathBigDeciamlUtil.round2(item.getDisPrice()));
+				resultMap.put("img_url", item.getImgUrl());
+				
+				resultList.add(resultMap);
+				
+			}
+		
+		}
+		
+		result.setData(resultList);
+
+		return result;
+
+	}		
+	
+	
 }

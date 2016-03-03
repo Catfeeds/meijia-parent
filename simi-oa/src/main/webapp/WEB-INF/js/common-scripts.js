@@ -3,6 +3,11 @@ var host = window.location.host;
 var appName = "simi-oa";
 
 var appRootUrl = "http://" + host + "/" + appName + "/";
+
+var simiAppName = "simi";
+
+var simiAppRootUrl = "http://" + host + "/" + simiAppName + "/";
+
 /*---LEFT BAR ACCORDION----*/
 $(function() {
     $('#nav-accordion').dcAccordion({
