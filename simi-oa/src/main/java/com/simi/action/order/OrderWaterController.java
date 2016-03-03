@@ -36,6 +36,7 @@ import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderExtPartnerService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
@@ -98,6 +99,9 @@ public class OrderWaterController extends AdminController {
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 
 	/**
 	 * 送水订单列表
@@ -331,6 +335,7 @@ public class OrderWaterController extends AdminController {
 		Long orderId = vo.getOrderId();
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		Long id = vo.getId();
+		Long userId = order.getUserId();
 		
 		Short orderExtStatus = 1;
 		if (id.equals(0L)) {
@@ -343,7 +348,7 @@ public class OrderWaterController extends AdminController {
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKey(order);
 			
-			
+			userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 			
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());

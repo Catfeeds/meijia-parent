@@ -22,6 +22,8 @@ public interface UserMsgAsyncService {
 
 	Future<Boolean> newOrderMsg(Long userId, Long orderId, String orderExtType, String orderExtTitle);
 
+	Future<Boolean> pushMsgToDevice(Long userId, String msgTitle, String msgContent);
+
 
 	
 }
