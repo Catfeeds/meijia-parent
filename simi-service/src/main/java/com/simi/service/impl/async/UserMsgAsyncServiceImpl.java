@@ -667,6 +667,10 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		case "239":
 			iconUrl = "http://img.51xingzheng.cn/e5e4ba5855916bcdc516056e0176cc93?p=0";
 			break;
+		// 废品回收
+		case "246":
+			iconUrl = "http://img.51xingzheng.cn/b081a229aa5e8d590a2189654ddd5534?p=0";
+			break;
 		}
 
 		return iconUrl;
