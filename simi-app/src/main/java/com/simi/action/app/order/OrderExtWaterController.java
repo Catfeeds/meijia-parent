@@ -20,6 +20,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.common.ValidateService;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
@@ -79,6 +80,9 @@ public class OrderExtWaterController extends BaseController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private ValidateService validateService;
 	
 
 	/**送水订单列表接口
@@ -176,27 +180,15 @@ public class OrderExtWaterController extends BaseController {
 	
 		Long serviceTypeId = (long) 239;
 		Users u = userService.selectByPrimaryKey(userId);
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null ) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
+		
+		AppResultData<Object> v = validateService.validateUser(userId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
 		}
 		
 		//如果城市不是北京市，则提示无法服务
-		UserAddrs userAddr = userAddrsService.selectByPrimaryKey(addrId);
-		if (userAddr == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("目前仅支持北京市区服务范围，敬请谅解！");
-			return result;	
-		}
+		v = validateService.validateUserAddr(userId, addrId);
 		
-		String cityName = userAddr.getCity();
-		if (!cityName.equals("北京市")) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("目前仅支持北京市区服务范围，敬请谅解！");
-			return result;			
-		}
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 //		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);

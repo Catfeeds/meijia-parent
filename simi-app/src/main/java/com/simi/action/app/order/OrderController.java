@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.common.ValidateService;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
@@ -50,8 +52,6 @@ public class OrderController extends BaseController {
 	@Autowired
 	private OrdersService ordersService;
 	
-
-	
 	@Autowired
 	private OrderQueryService orderQueryService;	
 	
@@ -75,6 +75,9 @@ public class OrderController extends BaseController {
 	
 	@Autowired
 	private OrderPayService orderPayService;	
+	
+	@Autowired
+	private ValidateService validateService;	
 
 	// 1. 订单提交接口
 	/**
@@ -114,14 +117,16 @@ public class OrderController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		Users u = userService.selectByPrimaryKey(userId);
-		Users partnerUser = userService.selectByPrimaryKey(partnerUserId);
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null || partnerUser == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
+		// 判断是否为注册用户，非注册用户返回 999		
+		AppResultData<Object> v = validateService.validateUser(userId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
 		}
 		
+		v = validateService.validateUser(partnerUserId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
+		}
 		//如果用户没有手机号，则需要更新用户手机号,并且判断是否唯一.
 		if (StringUtil.isEmpty(u.getMobile())) {
 			Users existUser = userService.selectByMobile(mobile);
@@ -132,6 +137,12 @@ public class OrderController extends BaseController {
 			}
 			u.setMobile(mobile);
 			userService.updateByPrimaryKeySelective(u);
+		}
+		
+		//加入服务地区限制
+		v = validateService.validateOrderCity(userId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
 		}
 		
 		//获取服务报价的信息。
