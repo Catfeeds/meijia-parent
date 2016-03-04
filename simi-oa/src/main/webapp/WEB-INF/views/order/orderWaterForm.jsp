@@ -285,7 +285,7 @@
 	
 	
 	<script>
-		$('#orderStaus').trigger('change');
+		$('#orderStatus').trigger('change');
 		$('#partnerId').trigger('change');
 	</script>
 </body>

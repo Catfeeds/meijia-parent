@@ -200,16 +200,18 @@ function changePartner(serviceTypeId, partnerId) {
 
 $("#orderStatus").change(function(){ 
 	var orderStatus = $(this).children('option:selected').val();
-	if (orderStatus == 1) {
-		$("servicePriceId").attr("disabled", "true");
-		$("serviceNum").attr("readonly", "true");
-		$("orderMoney").attr("readonly", "true");
-		$("orderPay").attr("readonly", "true");
+	console.log("orderStatus = " + orderStatus);
+	//订单为未支付订单，则可以修改商品和价格这些
+	if (orderStatus == "1") {
+		$("#servicePriceId").removeAttr("disabled");
+		$("#serviceNum").removeAttr("readonly");
+		$("#orderMoney").removeAttr("readonly");
+		$("#orderPay").removeAttr("readonly");
 	} else {
-		$("servicePriceId").attr("disabled", "false");
-		$("serviceNum").attr("readonly", "false");
-		$("orderMoney").attr("readonly", "false");
-		$("orderPay").attr("readonly", "false");
+		$("#servicePriceId").attr("disabled", "true");
+		$("#serviceNum").attr("readonly", "true");
+		$("#orderMoney").attr("readonly", "true");
+		$("#orderPay").attr("readonly", "true");
 	}
 });
 
@@ -229,7 +231,11 @@ function mathMoney() {
 	var dispriceStr = $("#servicePriceId").find("option:selected").attr('disprice');
 	
 	var serviceNumStr = $("#serviceNum").val();
-	
+	if (serviceNumStr == "") {
+		$("#orderMoney").val(0);
+		$("#orderPay").val(0);
+		return false;
+	}
 	var disPrice = parseFloat(dispriceStr);
 	var serviceNum = parseFloat(serviceNumStr);
 	console.log("disprice = " + disPrice + "====serviceNum===" + serviceNum);

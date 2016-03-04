@@ -86,11 +86,6 @@ public class OrderPayServiceImpl implements OrderPayService {
 
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
 		
-		
-
-		
-		
-		
 		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
 		if (serviceTypeId.equals(75L)) {
 			//分配秘书
@@ -129,6 +124,13 @@ public class OrderPayServiceImpl implements OrderPayService {
 		//异步操作
 		//订单操作成功后，对应的用户累加积分（1:1）
 		orderAsyncService.orderScore(order);	
+		
+		//送水订单的后续操作
+		if (serviceTypeId.equals(239L)) {
+			orderWaterPaySuccessToDo(order);
+		}
+		
+		//废品回收后续操作
 	}
 
 	@Override
@@ -166,7 +168,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		// 异步产生用户消息信息
 		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 	}
-
+	
 	@Override
 	public void orderGreenPaySuccessToDo(Orders order) {
 		// 通知运营人员，进行绿植服务商的人工派工流程.

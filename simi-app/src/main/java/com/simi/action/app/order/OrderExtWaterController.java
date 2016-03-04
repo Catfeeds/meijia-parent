@@ -181,6 +181,7 @@ public class OrderExtWaterController extends BaseController {
 		Long serviceTypeId = (long) 239;
 		Users u = userService.selectByPrimaryKey(userId);
 		
+		// 判断是否为注册用户，非注册用户返回 999		
 		AppResultData<Object> v = validateService.validateUser(userId);
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
@@ -188,7 +189,9 @@ public class OrderExtWaterController extends BaseController {
 		
 		//如果城市不是北京市，则提示无法服务
 		v = validateService.validateUserAddr(userId, addrId);
-		
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
+		}
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 //		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);

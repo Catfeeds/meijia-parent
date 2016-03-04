@@ -314,6 +314,7 @@ public class OrderWaterController extends AdminController {
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);
 		orderPrice.setOrderMoney(vo.getOrderMoney());
 		orderPrice.setOrderPay(vo.getOrderPay());
+		orderPricesService.updateByPrimaryKeySelective(orderPrice);
 			
 		// 更新订单扩展送水表
 		OrderExtWater water = orderExtWaterService.selectByOrderId(orderId);
