@@ -29,6 +29,7 @@ import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderDetailVo;
@@ -279,7 +280,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 		
 		//订单状态
-		String orderStatusName = MeijiaUtil.getOrderStausName(vo.getOrderStatus());
+		String orderStatusName = OrderUtil.getOrderStausName(vo.getOrderStatus());
 		vo.setOrderStatusName(orderStatusName);
 		
         return vo;
@@ -340,7 +341,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
 		}
 		vo.setOrderStatus(order.getOrderStatus());
-		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(order.getAddTime() * 1000));
 		
@@ -380,7 +381,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			vo.setCityName(cityName);
 		}		
 		
-		vo.setPayTypeName(MeijiaUtil.getPayTypeName(orderPrice.getPayType()));
+		vo.setPayTypeName(OrderUtil.getPayTypeName(orderPrice.getPayType()));
 		vo.setRemarks(order.getRemarks());
 		vo.setServiceContent(order.getServiceContent());
 		

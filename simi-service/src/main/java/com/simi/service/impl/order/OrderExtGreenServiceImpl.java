@@ -11,6 +11,7 @@ import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.po.dao.order.OrderExtGreenMapper;
 import com.simi.po.model.order.OrderExtRecycle;
@@ -112,7 +113,7 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
 		}
 		//订单状态
-		vo.setOrderStatusName(MeijiaUtil.getOrderStausName(order.getOrderStatus()));
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		
 		Long addTime = order.getAddTime()*1000;	
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));

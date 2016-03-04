@@ -40,6 +40,7 @@ import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.UserMsgSearchVo;
 
 @Service
@@ -540,7 +541,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 
 		// 根据订单状态获得描述信息.
-		String orderSummary = MeijiaUtil.getOrderStausMsg(order.getOrderStatus());
+		String orderSummary = OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		if (!StringUtil.isEmpty(summary)) {
 			orderSummary = summary;
 		}

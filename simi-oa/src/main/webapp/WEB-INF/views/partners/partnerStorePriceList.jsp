@@ -49,32 +49,35 @@
                               <tr>
                                 	  <th>商品图片</th>
                                 	  <th>商品名称</th>
-		                              <!-- <th width="6%">服务大类</th> -->
-		                              <th>服务子标题</th>
 		                              <th>原价</th>
 		                              <th>折扣价</th>
 		                              <th>服务说明</th>
+		                              <th>状态</th>
 		                              <th>添加时间</th>
-		                              <!-- <th >操作</th> -->
+		                              <th>操作</th>
                               </tr>
                               </thead>
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-	                                   <td><img alt="" width=100 height="100" src="${item.imgUrl}"></td>
-							           <%--  <td>${item.servicePriceId}</td> --%>
+	                                   <td><img alt="" width="50" height="50" src="${item.imgUrl}"></td>
+							           
 							            <td>${item.name}</td>
-							            <td>${item.serviceTitle}</td>
+							            
 								        <td>${item.price}</td>
 								        <td>${item.disPrice}</td>
 							            <td>${item.contentDesc}</td>
+							            <td>
+							            	<c:if test="${item.isEnable == 0 }"><font color="red">下架</font></c:if>
+							            	<c:if test="${item.isEnable == 1 }"><font color="green">上架</font></c:if>
+							            </td>
+							            
+							            
 							            <td> <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/></td>
 							           
-							            <%-- <td>
-							            	<button id="btn_update"  onClick="btn_update('partners/user_form?id=${ item.id }&partnerId=${item.partnerId}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-							                <button id="btn_update"  onClick="btn_update('partners/get_partner_service_price_details?service_price_id=${ item.servicePriceId }')" class="btn btn-primary btn-xs" title="添加商品"><i class="icon-pencil"></i></button>
-							            
-							            </td> --%>
+							            <td>
+							            	<button id="btn_update"  onClick="btn_update('/partners/partner_service_price_form?service_price_id=${item.servicePriceId }&user_id=${user_id}&partner_id=${partner_id}&service_type_id=${service_type_id}')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
+							            </td>
                               </tr>
                               </c:forEach>
                               </tbody>

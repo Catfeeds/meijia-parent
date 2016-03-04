@@ -41,8 +41,8 @@
  				
  						<form:hidden path="userId" />
  						<form:hidden path="serviceTypeId" />
- 						<%-- <form:hidden path="parentId" />
- 						<form:hidden path="servicePriceId" /> --%>
+ 						<form:hidden path="partnerId" />
+ 						<form:hidden path="servicePriceId" />
                         <div class="form-body">
                         
                         	<div class="form-group">
@@ -66,14 +66,14 @@
 	
 									<label class="col-md-2 control-label">图片</label>
 									<div class="col-md-5">
-										<img src="${ contentModel.imgUrl }?w=300&h=300"/>
+										<img src="${ contentModel.imgUrl }?p=0"/>
 									</div>
 								</div>
 							</c:if>
 
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">图片地址(尺寸为640 × 370)</label>
+							<label class="col-md-2 control-label">图片地址(640 × 370)</label>
 							<div class="col-md-5">
 								<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*"
 									data-show-upload="false">

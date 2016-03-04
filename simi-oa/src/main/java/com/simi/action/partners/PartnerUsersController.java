@@ -52,46 +52,45 @@ import com.simi.vo.partners.PartnerUserServiceTypeVo;
 import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 
-
 /**
  * @description：
  * @author： kerryg
- * @date:2015年8月11日 
+ * @date:2015年8月11日
  */
 @Controller
 @RequestMapping(value = "/partners")
-public class PartnerUsersController extends BaseController{
+public class PartnerUsersController extends BaseController {
 
 	@Autowired
 	private UsersService userService;
-	
+
 	@Autowired
 	private TagsService tagsService;
-	
+
 	@Autowired
-	private TagsUsersService tagsUsersService;	
-	
+	private TagsUsersService tagsUsersService;
+
 	@Autowired
 	private PartnersService partnersService;
 
 	@Autowired
 	private PartnerUserService partnerUserService;
-	
+
 	@Autowired
 	private PartnerRefRegionService partnerRefRegionService;
-	
+
 	@Autowired
 	private PartnerRefCityService partnerRefCityService;
-	
+
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
-	
+
 	@Autowired
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;
-	
-	
+
 	/**
-	 * 服务人员列表 
+	 * 服务人员列表
+	 * 
 	 * @param request
 	 * @param model
 	 * @param searchVo
@@ -99,133 +98,127 @@ public class PartnerUsersController extends BaseController{
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/user_list", method = { RequestMethod.GET })
-	public String list(HttpServletRequest request, Model model,
-			@RequestParam("partnerId") Long partnerId,
-			PartnerUserSearchVo searchVo) {
+	public String list(HttpServletRequest request, Model model, @RequestParam("partnerId") Long partnerId, PartnerUserSearchVo searchVo) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		
+
 		if (searchVo == null) {
 			searchVo = new PartnerUserSearchVo();
 		}
-		
+
 		searchVo.setPartnerId(partnerId);
-		
+
 		model.addAttribute("searchModel", searchVo);
-		
+
 		model.addAttribute("partnerId", partnerId);
-		
+
 		String companyName = "";
 		if (partnerId > 0L) {
 			Partners parnter = partnersService.selectByPrimaryKey(partnerId);
 			companyName = parnter.getCompanyName();
 		}
-		
+
 		model.addAttribute("companyName", companyName);
-		
+
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-		
+
 		PageInfo result = partnerUserService.selectByListPage(searchVo, pageNo, pageSize);
-		
+
 		model.addAttribute("contentModel", result);
 		return "partners/partnerUserList";
 	}
-	
 
 	/**
 	 * 跳转到编辑服务人员的页面
+	 * 
 	 * @param model
 	 * @param id
 	 * @return
-	 * @throws JsonMappingException 
-	 * @throws JsonParseException 
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
 	 * @throws IOException
 	 */
-   // @AuthPassport
+	// @AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.GET })
-	public String userForm(Model model, HttpServletRequest request,
-			@RequestParam("id") Long id, @RequestParam("partnerId") Long partnerId,
-			HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException  {
-    	
-    	if (id == null) {
-    		id = 0L;
-    	}
-    	
-    	PartnerUsers partnerUser = partnerUserService.iniPartnerUsers();
-    	Users u = userService.initUsers();
-    	Long userId = u.getId();
-    	
-    	List<Tags> tags = tagsService.selectByTagType((short) 2);
-    	List<Tags> userTags = new ArrayList<Tags>();
-    	String  tagIds = "";
-    	if (id > 0L) {
-    		partnerUser = partnerUserService.selectByPrimaryKey(id);
-    		userId = partnerUser.getUserId();
-    		u = userService.selectByPrimaryKey(userId);
-    		
-    		List<TagUsers> tagUsers = tagsUsersService.selectByUserId(userId);
-    		
-    		for (TagUsers item : tagUsers) {
-    			tagIds += item.getTagId() + ",";
-    		}
-    		
-    	}
-    	
-    	Partners partner = partnersService.selectByPrimaryKey(partnerId);
-    	
-    	PartnerUserVo vo = new PartnerUserVo();
-    	vo.setId(id);
-    	vo.setPartnerId(partnerId);
-    	vo.setCompanyName(partner.getCompanyName());
-    	vo.setUserId(u.getId());
-    	vo.setIntroduction(u.getIntroduction());
-    	vo.setHeadImg(userService.getHeadImg(u));
-    	vo.setName(u.getName());
-    	vo.setMobile(u.getMobile());
-    	vo.setResponseTime(partnerUser.getResponseTime());
-    	vo.setServiceTypeId(partnerUser.getServiceTypeId());
-    	vo.setUserTags(userTags);
-    	vo.setProvinceId(partnerUser.getProvinceId());
-    	vo.setCityId(partnerUser.getCityId());
-    	vo.setRegionId(partnerUser.getRegionId());
-    	vo.setWeightType(partnerUser.getWeightType());
-    	vo.setWeightNo(partnerUser.getWeightNo());
-    	vo.setTotalOrder(partnerUser.getTotalOrder());
-    	vo.setTotalRate(partnerUser.getTotalRate());
-    	vo.setTotalRateResponse(partnerUser.getTotalRateResponse());
-    	vo.setTotalRateAttitude(partnerUser.getTotalRateAttitude());
-    	vo.setTotalRateMajor(partnerUser.getTotalRateMajor());
-    	
-    	model.addAttribute("contentModel", vo);
-    	model.addAttribute("tags", tags);
-    	model.addAttribute("tagIds", tagIds);
-    	
-    	//服务大类，该公司的服务大类
-    	List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
-    	
-    	
-    	List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
-    	
-    	if (!partnerRefServiceType.isEmpty()) {
-	    	List<Long> serviceTypeIds = new ArrayList<Long>();
-	    	
-	    	for (PartnerRefServiceType item : partnerRefServiceType) {
-	    		if (!serviceTypeIds.contains(item.getServiceTypeId())) {
-	    			serviceTypeIds.add(item.getServiceTypeId());
-	    		}
-	    	}
-	    	
-	    	
-	    	partnerServiceType =   partnerServiceTypeService.selectByIds(serviceTypeIds);
-    	}
-    	
-    	model.addAttribute("partnerServiceType", partnerServiceType);
-    	
+	public String userForm(Model model, HttpServletRequest request, @RequestParam("id") Long id, @RequestParam("partnerId") Long partnerId,
+			HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException {
+
+		if (id == null) {
+			id = 0L;
+		}
+
+		PartnerUsers partnerUser = partnerUserService.iniPartnerUsers();
+		Users u = userService.initUsers();
+		Long userId = u.getId();
+
+		List<Tags> tags = tagsService.selectByTagType((short) 2);
+		List<Tags> userTags = new ArrayList<Tags>();
+		String tagIds = "";
+		if (id > 0L) {
+			partnerUser = partnerUserService.selectByPrimaryKey(id);
+			userId = partnerUser.getUserId();
+			u = userService.selectByPrimaryKey(userId);
+
+			List<TagUsers> tagUsers = tagsUsersService.selectByUserId(userId);
+
+			for (TagUsers item : tagUsers) {
+				tagIds += item.getTagId() + ",";
+			}
+
+		}
+
+		Partners partner = partnersService.selectByPrimaryKey(partnerId);
+
+		PartnerUserVo vo = new PartnerUserVo();
+		vo.setId(id);
+		vo.setPartnerId(partnerId);
+		vo.setCompanyName(partner.getCompanyName());
+		vo.setUserId(u.getId());
+		vo.setIntroduction(u.getIntroduction());
+		vo.setHeadImg(userService.getHeadImg(u));
+		vo.setName(u.getName());
+		vo.setMobile(u.getMobile());
+		vo.setResponseTime(partnerUser.getResponseTime());
+		vo.setServiceTypeId(partnerUser.getServiceTypeId());
+		vo.setUserTags(userTags);
+		vo.setProvinceId(partnerUser.getProvinceId());
+		vo.setCityId(partnerUser.getCityId());
+		vo.setRegionId(partnerUser.getRegionId());
+		vo.setWeightType(partnerUser.getWeightType());
+		vo.setWeightNo(partnerUser.getWeightNo());
+		vo.setTotalOrder(partnerUser.getTotalOrder());
+		vo.setTotalRate(partnerUser.getTotalRate());
+		vo.setTotalRateResponse(partnerUser.getTotalRateResponse());
+		vo.setTotalRateAttitude(partnerUser.getTotalRateAttitude());
+		vo.setTotalRateMajor(partnerUser.getTotalRateMajor());
+
+		model.addAttribute("contentModel", vo);
+		model.addAttribute("tags", tags);
+		model.addAttribute("tagIds", tagIds);
+
+		// 服务大类，该公司的服务大类
+		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
+
+		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+
+		if (!partnerRefServiceType.isEmpty()) {
+			List<Long> serviceTypeIds = new ArrayList<Long>();
+
+			for (PartnerRefServiceType item : partnerRefServiceType) {
+				if (!serviceTypeIds.contains(item.getServiceTypeId())) {
+					serviceTypeIds.add(item.getServiceTypeId());
+				}
+			}
+
+			partnerServiceType = partnerServiceTypeService.selectByIds(serviceTypeIds);
+		}
+
+		model.addAttribute("partnerServiceType", partnerServiceType);
+
 		return "partners/partnerUserForm";
 	}
-    
-	
+
 	/**
 	 * 添加/修改服务人员
 	 *
@@ -234,17 +227,15 @@ public class PartnerUsersController extends BaseController{
 	 * @param partners
 	 * @param result
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	//@AuthPassport
+	// @AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.POST })
-	public String doPartnerForm(HttpServletRequest request, Model model,
-			@ModelAttribute("contentModel") PartnerUserVo partnerUserVo, 
-			@RequestParam("imgUrlFile") MultipartFile file,
-			BindingResult result) throws IOException {
+	public String doPartnerForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") PartnerUserVo partnerUserVo,
+			@RequestParam("imgUrlFile") MultipartFile file, BindingResult result) throws IOException {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		
+
 		Long id = partnerUserVo.getId();
 		Long userId = partnerUserVo.getUserId();
 		Long partnerId = partnerUserVo.getPartnerId();
@@ -252,12 +243,12 @@ public class PartnerUsersController extends BaseController{
 		Long serviceTypeId = partnerUserVo.getServiceTypeId();
 		String mobile = partnerUserVo.getMobile();
 		String name = partnerUserVo.getName();
-		
+
 		Users u = userService.selectByMobile(mobile);
 
-		//创建新用户
+		// 创建新用户
 		if (u == null) {
-			u = userService.genUsers(partnerUserVo.getIntroduction(),mobile, name, (short) 2);
+			u = userService.genUsers(partnerUserVo.getIntroduction(), mobile, name, (short) 2);
 			userId = u.getId();
 		} else {
 			if (!u.getName().equals(name)) {
@@ -265,16 +256,16 @@ public class PartnerUsersController extends BaseController{
 			}
 			userId = u.getId();
 		}
-		
+
 		u.setIntroduction(partnerUserVo.getIntroduction());
-		
+
 		u.setUserType((short) 2);
 		if (serviceTypeId.equals(75L)) {
 			u.setUserType((short) 1);
 		}
-		
+
 		u.setIsApproval((short) 2);
-		//更新头像 
+		// 更新头像
 		if (file != null && !file.isEmpty()) {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
 			String fileName = file.getOriginalFilename();
@@ -291,21 +282,19 @@ public class PartnerUsersController extends BaseController{
 			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
 			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-						
+
 			u.setHeadImg(imgUrl);
-			
-			
 
 		}
-		
+
 		userService.updateByPrimaryKeySelective(u);
-		
-		//更新服务商用户表
+
+		// 更新服务商用户表
 		PartnerUsers partnerUser = partnerUserService.iniPartnerUsers();
 		if (id > 0L) {
 			partnerUser = partnerUserService.selectByPrimaryKey(id);
 		}
-		
+
 		partnerUser.setPartnerId(partnerId);
 		partnerUser.setUserId(userId);
 		partnerUser.setResponseTime(responseTime);
@@ -322,16 +311,17 @@ public class PartnerUsersController extends BaseController{
 			partnerUser.setId(0L);
 			partnerUserService.insert(partnerUser);
 		}
-		
-		//处理标签
+
+		// 处理标签
 		String tagIds = request.getParameter("tagIds");
 		if (!StringUtil.isEmpty(tagIds)) {
 			tagsUsersService.deleteByUserId(userId);
 			String[] tagList = StringUtil.convertStrToArray(tagIds);
-			
+
 			for (int i = 0; i < tagList.length; i++) {
-				if (StringUtil.isEmpty(tagList[i])) continue;
-				
+				if (StringUtil.isEmpty(tagList[i]))
+					continue;
+
 				TagUsers record = new TagUsers();
 				record.setId(0L);
 				record.setUserId(userId);
@@ -340,44 +330,42 @@ public class PartnerUsersController extends BaseController{
 				tagsUsersService.insert(record);
 			}
 		}
-		
-		
+
 		return "redirect:user_list?partnerId=" + partnerId;
-	} 
-	//todo商品列表
+	}
+
+	// todo商品列表
 	@RequestMapping(value = "/partner_service_price_list", method = { RequestMethod.GET })
-	public String partnerServicelist(HttpServletRequest request, Model model,
-			@RequestParam("partner_id" ) Long partnerId,
-			@RequestParam("service_type_id") Long serviceTypeId,
-			@RequestParam("user_id")Long userId,
-			PartnerUserServiceTypeVo searchVo) {
+	public String partnerServicelist(HttpServletRequest request, Model model, @RequestParam("partner_id") Long partnerId,
+			@RequestParam("service_type_id") Long serviceTypeId, @RequestParam("user_id") Long userId, PartnerUserServiceTypeVo searchVo) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		
+
 		if (searchVo == null) {
 			searchVo = new PartnerUserServiceTypeVo();
 		}
-		
+
 		searchVo.setPartnerId(partnerId);
 		searchVo.setUserId(userId);
 		searchVo.setServiceTypeId(serviceTypeId);
-		
+
 		model.addAttribute("searchModel", searchVo);
-		
+
 		model.addAttribute("partnerId", partnerId);
-		
-		/*String companyName = "";
-		if (partnerId > 0L) {
-			Partners parnter = partnersService.selectByPrimaryKey(partnerId);
-			companyName = parnter.getCompanyName();
-		}
-		
-		model.addAttribute("companyName", companyName);*/
-		
+
+		/*
+		 * String companyName = ""; if (partnerId > 0L) { Partners parnter =
+		 * partnersService.selectByPrimaryKey(partnerId); companyName =
+		 * parnter.getCompanyName(); }
+		 * 
+		 * model.addAttribute("companyName", companyName);
+		 */
+
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-		
-	//	PageInfo results = partnerUserService.selectByListPage(searchVo, pageNo, pageSize);
+
+		// PageInfo results = partnerUserService.selectByListPage(searchVo,
+		// pageNo, pageSize);
 		PageInfo result = partnerServiceTypeService.selectByListPage(searchVo, pageNo, pageSize);
 		model.addAttribute("user_id", userId);
 		model.addAttribute("partner_id", partnerId);
@@ -385,132 +373,115 @@ public class PartnerUsersController extends BaseController{
 		model.addAttribute("contentModel", result);
 		return "partners/partnerStorePriceList";
 	}
-	
-	    //todo 
-	    //商品添加
-		@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.GET })
-		public String partnerPrice(Model model, HttpServletRequest request,
-			//	@RequestParam("id") Long id,
-				@RequestParam("service_price_id") Long servicePriceId,
-				//@RequestParam("") Long serviceTypeId,
-				@RequestParam("user_id") Long userId,
-				HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException  {
 
-			Long serviceTypeId = Long.valueOf(request.getParameter("service_type_id"));
-			Long partnerId = Long.valueOf(request.getParameter("partner_id"));
-			
-			PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
-			
-			
-			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-			
-			PartnerServicePriceDetail partnerServiceTypeDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
-			/*if (partnerServiceTypeDetail == null) {
-				partnerServiceTypeDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
-			}*/
-			
-			BeanUtilsExp.copyPropertiesIgnoreNull(partnerServiceTypeDetail, vo);
-			vo.setName("");
-			
-			vo.setPartnerId(partnerId);
-			vo.setUserId(userId);
-			vo.setParentId(0l);
-			vo.setIsEnable((short)0);
-			vo.setNo(0);
-			vo.setServiceTypeId(serviceTypeId);
-			
-			model.addAttribute("contentModel", vo);
-    	
+	// todo
+	// 商品添加
+	@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.GET })
+	public String partnerPrice(Model model, HttpServletRequest request,
+			@RequestParam("service_type_id") Long serviceTypeId,
+			@RequestParam("service_price_id") Long servicePriceId,
+			@RequestParam("partner_id") Long partnerId,
+			@RequestParam("user_id") Long userId, HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException {
+
+		PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
+
+		PartnerServiceType partnerServicePrice = null;
+		PartnerServicePriceDetail partnerServiceTypeDetail;
+		if (servicePriceId.equals(0L)) {
+			partnerServicePrice = partnerServiceTypeService.initPartnerServiceType();
+			partnerServiceTypeDetail = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+		} else {
+			partnerServicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+			partnerServiceTypeDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		}
+
+		BeanUtilsExp.copyPropertiesIgnoreNull(partnerServicePrice, vo);
+		BeanUtilsExp.copyPropertiesIgnoreNull(partnerServiceTypeDetail, vo);
+
+		vo.setUserId(userId);
+		vo.setServiceTypeId(serviceTypeId);
+		vo.setPartnerId(partnerId);
+		vo.setServicePriceId(servicePriceId);
+
+		model.addAttribute("contentModel", vo);
+
 		return "partners/partnerStorePriceForm";
 	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.POST })
+	public String partnerPriceAdd(Model model, HttpServletRequest request,
+
+	@ModelAttribute("contentModel") PartnerServicePriceDetailVo vo, 
+		@RequestParam("imgUrlFile") MultipartFile file, BindingResult result) throws IOException {
+		Long partnerId = vo.getPartnerId();
+		Long serviceTypeId = vo.getServiceTypeId();
+		Long servicePriceId = vo.getServicePriceId();
+		PartnerServiceType partnerServiceType = null;
+		if (servicePriceId.equals(0L)) {
+			partnerServiceType = partnerServiceTypeService.initPartnerServiceType();
+		} else {
+			partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		}
+			
+		partnerServiceType.setParentId(serviceTypeId);
+		partnerServiceType.setName(vo.getName());
+		partnerServiceType.setId(servicePriceId);
+		partnerServiceType.setIsEnable(vo.getIsEnable());
+		partnerServiceType.setViewType((short) 1);
+		partnerServiceType.setNo(vo.getNo());
+		partnerServiceType.setPartnerId(partnerId);
 	
-	
-		@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.POST })
-		public String partnerPriceAdd(Model model, HttpServletRequest request,
-			
-				@ModelAttribute("contentModel") PartnerServicePriceDetailVo vo, 
-				@RequestParam("imgUrlFile") MultipartFile file,
-				BindingResult result) throws IOException {
-		    Long partnerId = Long.valueOf(request.getParameter("partner_id"));
-		    Long serviceTypeId = Long.valueOf(request.getParameter("serviceTypeId"));
-		    Long servicePriceId = Long.valueOf(request.getParameter("service_price_id"));
-		    PartnerServiceType partnerServiceType = partnerServiceTypeService
-					.initPartnerServiceType();
-			if (servicePriceId > 0L && servicePriceId != null) {
-			
-			partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(servicePriceId); 
-			 
-			partnerServiceType.setParentId(servicePriceId);
-			partnerServiceType.setName(vo.getName());
-			partnerServiceType.setViewType((short) 1);
-			partnerServiceType.setPartnerId(vo.getPartnerId());
-			partnerServiceType.setIsEnable(vo.getIsEnable());
-		//	Long serviceTypeId = partnerServiceType.getId();
-			// if (serviceTypeId.equals(0L)) {
-			 partnerServiceTypeService.updateByPrimaryKey(partnerServiceType);
-			 } else {
-				    partnerServiceType.setParentId(serviceTypeId);
-					partnerServiceType.setName(vo.getName());
-					partnerServiceType.setViewType((short) 1);
-				    partnerServiceType.setPartnerId(partnerId);
-					partnerServiceType.setIsEnable(vo.getIsEnable());
-			
-			 partnerServiceTypeService.insert(partnerServiceType);
-				
-			 }
-			serviceTypeId = partnerServiceType.getId();
-			// 先删除后增加
-			PartnerServicePriceDetail record = partnerServicePriceDetailService
-					.initPartnerServicePriceDetail();
-			if (servicePriceId > 0L) {
-				  record = partnerServicePriceDetailService.selectByServicePriceId
-						  (servicePriceId); 
-						  
-				}
-			record.setUserId(vo.getUserId());
-			record.setServicePriceId(serviceTypeId);
-			record.setServiceTitle(vo.getServiceTitle());
-
-			record.setPrice(vo.getPrice());
-			record.setDisPrice(vo.getDisPrice());
-			record.setOrderType(vo.getOrderType());
-			record.setOrderDuration(vo.getOrderDuration());
-			record.setIsAddr(vo.getIsAddr());
-			record.setContentStandard(vo.getContentStandard());
-			record.setContentDesc(vo.getContentDesc());
-			record.setContentFlow(vo.getContentFlow());
+		if (servicePriceId.equals(0L)) {
+			partnerServiceTypeService.insert(partnerServiceType);
+		} else {
+			partnerServiceTypeService.updateByPrimaryKey(partnerServiceType);
+		}
 		
+		PartnerServicePriceDetail record = partnerServicePriceDetailService.initPartnerServicePriceDetail();
+		if (servicePriceId > 0L) {
+			record = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		}
+		record.setUserId(vo.getUserId());
+		record.setServicePriceId(serviceTypeId);
+		record.setServiceTitle(vo.getServiceTitle());
+		record.setPrice(vo.getPrice());
+		record.setDisPrice(vo.getDisPrice());
+		record.setOrderType(vo.getOrderType());
+		record.setOrderDuration(vo.getOrderDuration());
+		record.setIsAddr(vo.getIsAddr());
+		record.setContentStandard(vo.getContentStandard());
+		record.setContentDesc(vo.getContentDesc());
+		record.setContentFlow(vo.getContentFlow());
 
-			if (file != null && !file.isEmpty()) {
-				String url = Constants.IMG_SERVER_HOST + "/upload/";
-				String fileName = file.getOriginalFilename();
-				String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-				fileType = fileType.toLowerCase();
-				String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
+		if (file != null && !file.isEmpty()) {
+			String url = Constants.IMG_SERVER_HOST + "/upload/";
+			String fileName = file.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+			fileType = fileType.toLowerCase();
+			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
 
-				ObjectMapper mapper = new ObjectMapper();
+			ObjectMapper mapper = new ObjectMapper();
 
-				HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
+			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
 
-				String ret = o.get("ret").toString();
+			String ret = o.get("ret").toString();
 
-				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
+			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
-				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-				
-				record.setImgUrl(imgUrl);
+			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
 
-			}
-			 
-			  if (servicePriceId > 0L) {
-			  partnerServicePriceDetailService.updateByPrimaryKeySelective(record);
-			  }
-			  else {
-			   partnerServicePriceDetailService.insert(record);
-			  }
-			  
-			  return "redirect:partner_service_price_list?partner_id="+partnerId+"&user_id="+vo.getUserId()+"&service_type_id="+serviceTypeId;
-			 
-}
-		
+			record.setImgUrl(imgUrl);
+		}
+
+		if (servicePriceId > 0L) {
+			partnerServicePriceDetailService.updateByPrimaryKeySelective(record);
+		} else {
+			partnerServicePriceDetailService.insert(record);
+		}
+
+		return "redirect:partner_service_price_list?partner_id=" + partnerId + "&user_id=" + vo.getUserId() + "&service_type_id=" + serviceTypeId;
+
+	}
+
 }

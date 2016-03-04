@@ -55,14 +55,13 @@
 		                              <th width="8%">服务响应时间</th>
 		                              <th width="30%">标签</th>
 		                              <th width="30%">个人简介</th>
-		                              <!-- <th >添加时间</th> -->
-		                              <th >操作</th>
+		                              <th width="8%">操作</th>
                               </tr>
                               </thead>
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-	                                   <td><img alt="" width=100 height="100" src="${item.headImg}"></td>
+	                                   <td><img alt="" width="50" height="50" src="${item.headImg}"></td>
 							            <td>${item.name}</td>
 							            <td>${item.mobile}</td>
 								        <td>${item.cityAndRegion}</td>

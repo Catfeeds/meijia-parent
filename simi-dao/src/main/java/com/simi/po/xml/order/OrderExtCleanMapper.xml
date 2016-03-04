@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.order.OrderExtCleanMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderExtClean">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="order_id" property="orderId" jdbcType="NUMERIC" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_ext_status" property="orderExtStatus" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="clean_area" property="cleanArea" jdbcType="NUMERIC" />
+		<result column="clean_type" property="cleanType" jdbcType="NUMERIC" />
+		<result column="link_man" property="linkMan" jdbcType="VARCHAR" />
+		<result column="link_tel" property="linkTel" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, order_id, order_no, order_ext_status, user_id, company_name, clean_area, clean_type, link_man, link_tel, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_ext_clean
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_ext_clean
+		where order_id = #{orderId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_ext_clean
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.OrderSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from order_ext_clean
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="orderId != null">
+			and order_id = #{orderId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="orderNo != null">
+			and order_no like CONCAT('%','${orderNo}','%' )
+		</if>
+
+		<if test="serviceTypeId != null">
+			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from order_ext_clean
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.order.OrderExtClean">
+		insert into order_ext_clean (id, order_id, order_no, order_ext_status,
+		user_id, company_name, clean_area, clean_type, link_man,
+		link_tel, add_time)
+		values (#{id,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, #{orderNo,jdbcType=VARCHAR},
+		#{orderExtStatus,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR},
+		#{cleanArea,jdbcType=NUMERIC}, #{cleanType,jdbcType=NUMERIC},
+		#{linkMan,jdbcType=VARCHAR},
+		#{linkTel,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.order.OrderExtClean">
+		insert into order_ext_clean
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="orderExtStatus != null">
+				order_ext_status,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="companyName != null">
+				company_name,
+			</if>
+			<if test="cleanArea != null">
+				clean_area,
+			</if>
+			<if test="cleanType != null">
+				clean_type,
+			</if>
+			<if test="linkMan != null">
+				link_man,
+			</if>
+			<if test="linkTel != null">
+				link_tel,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderExtStatus != null">
+				#{orderExtStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyName != null">
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="cleanArea != null">
+				#{cleanArea,jdbcType=NUMERIC},
+			</if>
+			<if test="cleanType != null">
+				#{cleanType,jdbcType=NUMERIC},
+			</if>
+			<if test="linkMan != null">
+				#{linkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="linkTel != null">
+				#{linkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderExtClean">
+		update order_ext_clean
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=NUMERIC},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderExtStatus != null">
+				order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyName != null">
+				company_name = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="cleanArea != null">
+				clean_area = #{cleanArea,jdbcType=NUMERIC},
+			</if>
+			<if test="cleanType != null">
+				clean_type = #{cleanType,jdbcType=NUMERIC},
+			</if>
+			<if test="linkMan != null">
+				link_man = #{linkMan,jdbcType=VARCHAR},
+			</if>
+			<if test="linkTel != null">
+				link_tel = #{linkTel,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderExtClean">
+		update order_ext_clean
+		set order_id = #{orderId,jdbcType=NUMERIC},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		order_ext_status = #{orderExtStatus,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		company_name = #{companyName,jdbcType=VARCHAR},
+		clean_area = #{cleanArea,jdbcType=NUMERIC},
+		clean_type = #{cleanType,jdbcType=NUMERIC},
+		link_man = #{linkMan,jdbcType=VARCHAR},
+		link_tel = #{linkTel,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id =
+		#{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

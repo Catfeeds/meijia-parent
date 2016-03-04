@@ -1,25 +1,23 @@
 package com.simi.service.impl.order;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.service.order.OrderExtWaterService;
+import com.simi.service.order.OrderExtCleanService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
-import com.simi.vo.order.OrderExtWaterListVo;
-import com.simi.po.dao.order.OrderExtWaterMapper;
+import com.simi.vo.order.OrderExtCleanListVo;
+import com.simi.po.dao.order.OrderExtCleanMapper;
+import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.github.pagehelper.PageHelper;
@@ -28,9 +26,9 @@ import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
-public class OrderExtWaterServiceImpl implements OrderExtWaterService{
+public class OrderExtCleanServiceImpl implements OrderExtCleanService{
     @Autowired
-    private OrderExtWaterMapper orderExtWaterMapper;
+    private OrderExtCleanMapper orderExtCleanMapper;
     
     @Autowired
     private UsersService usersService;
@@ -43,60 +41,55 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
     
     @Autowired
     private PartnerServiceTypeService partnerServiceTypeService;
-    
-    @Autowired
-    private PartnerServicePriceDetailService partnerServicePriceDetailService;
-    
+        
 	@Override
 	public int deleteByPrimaryKey(Long id) {
-		return orderExtWaterMapper.deleteByPrimaryKey(id);
+		return orderExtCleanMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public int insert(OrderExtWater record) {
-		return orderExtWaterMapper.insert(record);
+	public int insert(OrderExtClean record) {
+		return orderExtCleanMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(OrderExtWater record) {
-		return orderExtWaterMapper.insertSelective(record);
+	public int insertSelective(OrderExtClean record) {
+		return orderExtCleanMapper.insertSelective(record);
 	}
 
 	@Override
-	public OrderExtWater selectByPrimaryKey(Long id) {
-		return orderExtWaterMapper.selectByPrimaryKey(id);
+	public OrderExtClean selectByPrimaryKey(Long id) {
+		return orderExtCleanMapper.selectByPrimaryKey(id);
 	}
 	
 	@Override
-	public OrderExtWater selectByOrderId(Long orderId) {
-		return orderExtWaterMapper.selectByOrderId(orderId);
+	public OrderExtClean selectByOrderId(Long orderId) {
+		return orderExtCleanMapper.selectByOrderId(orderId);
 	}	
 
 	@Override
-	public int updateByPrimaryKey(OrderExtWater record) {
-		return orderExtWaterMapper.updateByPrimaryKey(record);
+	public int updateByPrimaryKey(OrderExtClean record) {
+		return orderExtCleanMapper.updateByPrimaryKey(record);
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(OrderExtWater record) {
-		return orderExtWaterMapper.updateByPrimaryKeySelective(record);
+	public int updateByPrimaryKeySelective(OrderExtClean record) {
+		return orderExtCleanMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
-	public OrderExtWater initOrderExtWater() {
+	public OrderExtClean initOrderExtClean() {
 		
-		OrderExtWater record = new OrderExtWater();
+		OrderExtClean record = new OrderExtClean();
 		record.setId(0L);
 		record.setOrderId(0L);
 		record.setOrderNo("");
 		record.setOrderExtStatus((short) 0);
 		record.setUserId(0L);
-		record.setServicePriceId(0L);
-		record.setServiceNum(0);
+		record.setCompanyName("");
+		record.setCleanArea((short) 0);
 		record.setLinkMan("");
 		record.setLinkTel("");
-		record.setIsDone((short) 0);
-		record.setIsDoneTime(0L);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
@@ -106,22 +99,23 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 	public PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
 
 		 PageHelper.startPage(pageNo, pageSize);
-         List<OrderExtWater> list = orderExtWaterMapper.selectByListPage(orderSearchVo);
+         List<OrderExtClean> list = orderExtCleanMapper.selectByListPage(orderSearchVo);
          PageInfo result = new PageInfo(list);
         return result;
     }
 
 	@Override
-	public List<OrderExtWater> selectByUserId(Long userId) {
-		return orderExtWaterMapper.selectByUserId(userId);
+	public List<OrderExtClean> selectByUserId(Long userId) {
+		return orderExtCleanMapper.selectByUserId(userId);
 	}
 	
 	@Override
-	public OrderExtWaterListVo getListVo(OrderExtWater item) {
-		OrderExtWaterListVo  vo = new OrderExtWaterListVo();
+	public OrderExtCleanListVo getListVo(OrderExtClean item) {
+		OrderExtCleanListVo  vo = new OrderExtCleanListVo();
 		vo.setOrderId(item.getOrderId());
 		vo.setOrderNo(item.getOrderNo());
 		vo.setUserId(item.getUserId());
+		vo.setCompanyName(item.getCompanyName());
 		
 		//服务地址
 		vo.setAddrName("");
@@ -139,55 +133,25 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		if (serviceType != null) {
 			vo.setServiceTypeName(serviceType.getName());
 		}
-
-		//服务价格商品名称
-		vo.setServicePriceName("");
-		vo.setImgUrl("");
-		vo.setDisPrice(new BigDecimal(0));
 		
-		Long servicePriceId = item.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		if (servicePrice != null) {
-			vo.setServicePriceName(servicePrice.getName());
-		}
-
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
-		if (servicePriceDetail != null) {
-			vo.setImgUrl(servicePriceDetail.getImgUrl());
-			vo.setDisPrice(servicePriceDetail.getDisPrice());
-		}
-		
-		vo.setServiceNum(item.getServiceNum());
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
-		
-		vo.setIsDone(item.getIsDone());
-		
-		vo.setIsDoneTimeStr("");
-		if (item.getIsDoneTime() > 0L) {
-			vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
-		}	
 		vo.setOrderExtStatus(item.getOrderExtStatus());
-		
 		return vo;
 	}
 	
 	@Override
-	public List<OrderExtWaterListVo> getListVos(List<OrderExtWater> list) {
-		List<OrderExtWaterListVo>  result = new ArrayList<OrderExtWaterListVo>();
+	public List<OrderExtCleanListVo> getListVos(List<OrderExtClean> list) {
+		List<OrderExtCleanListVo>  result = new ArrayList<OrderExtCleanListVo>();
 		
 		List<Long> orderIds = new ArrayList<Long>();
 		
-		List<Long> serivcePriceIds = new ArrayList<Long>();
 		//批量查找userAddrs;
-		for (OrderExtWater item : list) {
+		for (OrderExtClean item : list) {
 			if (!orderIds.contains(item.getOrderId())) {
 				orderIds.add(item.getOrderId());
 			}
 			
-			if (!serivcePriceIds.contains(item.getServicePriceId())) {
-				serivcePriceIds.add(item.getServicePriceId());
-			}
 		}
 		
 		if (orderIds.isEmpty()) return result;
@@ -209,15 +173,12 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		}
 		
 		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(serviceTypeIds);
-		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectByIds(serivcePriceIds);
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByServicePriceIds(serivcePriceIds);
-		List<UserAddrs> userAddrs = new ArrayList<UserAddrs>();
-		if (!userAddrIds.isEmpty())
-			userAddrsService.selectByIds(userAddrIds);
+		
+		List<UserAddrs> userAddrs = userAddrsService.selectByIds(userAddrIds);
 		
 		for (int i = 0; i < list.size(); i++) {
-			OrderExtWater item = list.get(i);
-			OrderExtWaterListVo vo = new OrderExtWaterListVo();
+			OrderExtClean item = list.get(i);
+			OrderExtCleanListVo vo = new OrderExtCleanListVo();
 			
 			vo.setOrderId(item.getOrderId());
 			vo.setOrderNo(item.getOrderNo());
@@ -262,48 +223,11 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 				vo.setServiceTypeName(serviceType.getName());
 			}
 	
-			//服务价格商品名称
-			vo.setServicePriceName("");
-			vo.setImgUrl("");
-			vo.setDisPrice(new BigDecimal(0));
 			
-			Long servicePriceId = item.getServicePriceId();
-			PartnerServiceType servicePrice = null;
-			for (PartnerServiceType tmpServicePrice : servicePrices) {
-				if (tmpServicePrice.getId().equals(servicePriceId)) {
-					servicePrice = tmpServicePrice;
-					break;
-				}
-			}
-			if (servicePrice != null) {
-				vo.setServicePriceName(servicePrice.getName());
-			}
-			
-			
-			PartnerServicePriceDetail servicePriceDetail = null;
-			for (PartnerServicePriceDetail tmpServicePriceDetail : servicePriceDetails) {
-				if (tmpServicePriceDetail.getServicePriceId().equals(servicePriceId)) {
-					servicePriceDetail = tmpServicePriceDetail;
-					break;
-				}
-			}
-			if (servicePriceDetail != null) {
-				vo.setImgUrl(servicePriceDetail.getImgUrl());
-				vo.setDisPrice(servicePriceDetail.getDisPrice());
-			}
-			
-			vo.setServiceNum(item.getServiceNum());
-//			System.out.println("order_id =" + order.getOrderId().toString() + " status = " + order.getOrderStatus().toString());
 			vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
-			
-			vo.setIsDone(item.getIsDone());
-			
-			vo.setIsDoneTimeStr("");
-			if (item.getIsDoneTime() > 0L) {
-				vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
-			}
 			vo.setOrderExtStatus(item.getOrderExtStatus());
+			vo.setCompanyName(item.getCompanyName());
 			result.add(vo);
 		}
 		return result;

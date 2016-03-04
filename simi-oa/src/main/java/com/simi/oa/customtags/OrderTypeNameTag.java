@@ -1,10 +1,12 @@
 package com.simi.oa.customtags;
 
 import java.io.IOException;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 import com.meijia.utils.MeijiaUtil;
+import com.simi.utils.OrderUtil;
 
 public class OrderTypeNameTag extends SimpleTagSupport {
 
@@ -18,7 +20,7 @@ public class OrderTypeNameTag extends SimpleTagSupport {
         try {
         	String orderTypeName = "";
         	if (orderTypeId != null) {
-        		orderTypeName = MeijiaUtil.getOrderTypeName(orderTypeId);
+        		orderTypeName = OrderUtil.getOrderTypeName(orderTypeId);
         	}
             getJspContext().getOut().write(orderTypeName);
         } catch (Exception e) {

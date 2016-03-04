@@ -194,7 +194,7 @@ public class CardsServiceImpl implements CardService {
 		vo.setZanTop10(zanTop10);
 		
 		//卡片类型名称
-		String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());
+		String cardTypeName = CardUtil.getCardTypeName(vo.getCardType());
 		vo.setCardTypeName(cardTypeName);
 		
 		//卡片添加时间字符串
@@ -266,7 +266,7 @@ public class CardsServiceImpl implements CardService {
 			}
 			
 			//卡片类型名称
-			String cardTypeName = MeijiaUtil.getCardTypeName(vo.getCardType());
+			String cardTypeName = CardUtil.getCardTypeName(vo.getCardType());
 			vo.setCardTypeName(cardTypeName);
 			
 			vo.setServiceTime(item.getServiceTime());
@@ -500,7 +500,7 @@ public class CardsServiceImpl implements CardService {
 		}
 		
 		Short cardType = 99;
-		result.setCardTypeName(MeijiaUtil.getCardTypeName(cardType));
+		result.setCardTypeName(CardUtil.getCardTypeName(cardType));
 		result.setCardType(cardType);
 		
 		String lastTime = weatherInfo.getLastTime();
