@@ -1,6 +1,7 @@
 package com.simi.service.impl.order;
 
 import com.meijia.utils.TimeStampUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.order.OrderWaterComVo;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
@@ -131,6 +133,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 		}
 		
 		//废品回收后续操作
+		if (serviceTypeId.equals(246L)) {
+			orderRecyclePaySuccessToDo(order);
+		}
 	}
 
 	@Override
@@ -168,7 +173,15 @@ public class OrderPayServiceImpl implements OrderPayService {
 		// 异步产生用户消息信息
 		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 	}
-	
+	@Override
+	public void orderRecyclePaySuccessToDo(Orders order){
+		Long userId = order.getUserId();
+		Long orderId = order.getOrderId();
+		// 通知运营人员，进行废品回收服务商的人工派工流程.
+
+		// 异步产生用户消息信息
+		userMsgAsyncService.newOrderMsg(userId, orderId, "recycle", "");
+	}
 	@Override
 	public void orderGreenPaySuccessToDo(Orders order) {
 		// 通知运营人员，进行绿植服务商的人工派工流程.

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class OrdersGreenPartnerVo extends OrdersListVo{
 	
+	private Long servicePriceId;
+	
 	private Short orderExtStatus;
 	
 	private Short recycleType;
@@ -17,6 +19,15 @@ public class OrdersGreenPartnerVo extends OrdersListVo{
 	private BigDecimal partnerOrderMoney;
 	
 	private Long partnerId;
+
+	
+	public Long getServicePriceId() {
+		return servicePriceId;
+	}
+
+	public void setServicePriceId(Long servicePriceId) {
+		this.servicePriceId = servicePriceId;
+	}
 
 	public Short getOrderExtStatus() {
 		return orderExtStatus;

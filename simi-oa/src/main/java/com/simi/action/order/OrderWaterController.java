@@ -26,6 +26,7 @@ import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.order.OrderExtPartner;
+import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
@@ -37,6 +38,7 @@ import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderExtPartnerService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
@@ -102,6 +104,9 @@ public class OrderWaterController extends AdminController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private OrderExtGreenService orderExtGreenService;
 
 	/**
 	 * 送水订单列表
@@ -349,7 +354,7 @@ public class OrderWaterController extends AdminController {
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKey(order);
 			
-			userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
+			userMsgAsyncService.newOrderMsg(userId, orderId, "recycle", "");
 			
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -363,6 +368,7 @@ public class OrderWaterController extends AdminController {
 		OrderExtWater water = orderExtWaterService.selectByOrderId(orderId);
 		water.setOrderExtStatus(orderExtStatus);
 		orderExtWaterService.updateByPrimaryKeySelective(water);
+		
 		
 		return "redirect:/order/waterList";
 	}

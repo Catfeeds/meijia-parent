@@ -15,5 +15,7 @@ public interface OrderPayService {
 		void orderGreenPaySuccessToDo(Orders order);
 
 		void orderTeamPaySuccessToDo(Orders order);
+
+		void orderRecyclePaySuccessToDo(Orders order);
 		
 }

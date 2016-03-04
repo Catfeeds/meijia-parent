@@ -250,3 +250,14 @@ function mathMoney() {
 	$("#orderPay").val(total);
 	
 }
+$('.input-group.date').datepicker({
+	format: "yyyy-mm-dd",
+	language: "zh-CN",
+	autoclose: true,
+	startView: 1,
+	defaultViewDate : {
+		year:1980,
+		month:0,
+		day:1
+	}
+});

@@ -35,7 +35,7 @@
 
 			<div class="panel-body">
 				<form:form modelAttribute="contentModel" class="form-horizontal" method="POST" action="saveOrderWater"
-					id="order-water-view-form"
+					id="order-green-view-form"
 				>
 
 					<form:hidden path="orderId" />

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.ValidateService;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -61,6 +64,15 @@ public class OrderExtGreenController extends BaseController {
 	
 	@Autowired
 	private UserAddrsService userAddrsService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private ValidateService validateService;
+	
+	@Autowired
+	private UsersService usersService;
 	
 
 	/**绿植订单列表接口
@@ -128,35 +140,30 @@ public class OrderExtGreenController extends BaseController {
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") Long addrId,
-			@RequestParam("link_man") String linkMan,
-			@RequestParam("mobile") String mobile,
-			@RequestParam("link_tel") String linkTel,
+	
+			@RequestParam(value = "link_man",required = false,defaultValue = "") String linkMan,
+			@RequestParam(value = "link_tel",required = false,defaultValue = "") String linkTel,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks
 			//@RequestParam(value = "",required = false,defaultValue= "")
 			) throws UnsupportedEncodingException {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 	
 		Long serviceTypeId = (long) 238;
-		Users u = userService.selectByPrimaryKey(userId);
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null ) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
+		Users users  = usersService.selectByPrimaryKey(userId);
+		// 判断是否为注册用户，非注册用户返回 999		
+		AppResultData<Object> v = validateService.validateUser(userId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
 		}
-		List<UserAddrs> userAddrs = userAddrsService.selectByUserId(userId);
-		//如果用户没有手机号，则需要更新用户手机号,并且判断是否唯一.
-	/*	if (StringUtil.isEmpty(u.getMobile())) {
-			Users existUser = userService.selectByMobile(mobile);
-			if (!existUser.getId().equals(u.getId())) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("手机号在其他用户已经存在");
-				return result;
-			}
-			u.setMobile(mobile);
-			userService.updateByPrimaryKeySelective(u);
-		}*/
+				
+		//如果城市不是北京市，则提示无法服务
+		v = validateService.validateUserAddr(userId, addrId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
+		}
 		
+		List<UserAddrs> userAddrs = userAddrsService.selectByUserId(userId);
+	
 		BigDecimal orderMoney = new BigDecimal(0.0);//原价
 		BigDecimal orderPay = new BigDecimal(0.0);//折扣价
 		// 调用公共订单号类，生成唯一订单号
@@ -178,7 +185,7 @@ public class OrderExtGreenController extends BaseController {
 		//order.setPartnerUserId(partnerUserId);
 		order.setServiceTypeId(serviceTypeId);
 		order.setUserId(userId);
-		order.setMobile(mobile);
+		order.setMobile(users.getMobile());
 		//order.setOrderType(servicePrice.getOrderType());
 		//order.setOrderDuration(servicePrice.getOrderDuration());
 		order.setServiceContent(serviceContent);
@@ -205,7 +212,7 @@ public class OrderExtGreenController extends BaseController {
 	//	orderPrice.setServicePriceId(servicePriceId);
 	//	orderPrice.setPartnerUserId(partnerUserId);
 		orderPrice.setUserId(userId);
-		orderPrice.setMobile(mobile);
+		orderPrice.setMobile(users.getMobile());
 	//	orderPrice.setPayType(payType);
 	//	orderPrice.setUserCouponId(userCouponId);
 		orderPrice.setOrderMoney(orderMoney);
@@ -217,7 +224,7 @@ public class OrderExtGreenController extends BaseController {
 		green.setOrderId(orderId);
 		green.setOrderNo(orderNo);
 		green.setUserId(userId);
-		green.setMobile(u.getMobile());
+		green.setMobile(users.getMobile());
 		green.setLinkMan(linkMan);
 		green.setLinkTel(linkTel);
 		orderExtGreenService.insert(green);
@@ -226,9 +233,8 @@ public class OrderExtGreenController extends BaseController {
 		result.setData(vo);
 		
 		//todo: 绿植给相应的运营人员发送短信
-		
-		
-		
+		//异步产生首页消息信息.
+		userMsgAsyncService.newOrderMsg(userId, orderId, "recycle", "");
 		
 		return result;
 	}	

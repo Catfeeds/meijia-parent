@@ -1,51 +1,80 @@
 var formVal = $('#order-green-view-form').validate({
-	errorElement : 'span', //default input error message container
+	errorElement : 'span', // default input error message container
 	errorClass : 'help-block', // default input error message class
 	focusInvalid : false, // do not focus the last invalid input
-	ignore: [],
+	ignore : [],
 	rules : {
 		
-		partnerOrderMoney: {
-			required: true,
-			number:true,
-		},
-		orderPay: {
-			required: "请输入价格",
-			number: "请输入正确的价格数字",
-			
+		servicePriceId : {
+			required : true,
 		},
 		
-		orderMoney: {
-			required: "请输入价格",
-			number: "请输入正确的价格数字",
-		}
-	
+
+		orderMoney : {
+			required : true,
+			isPrice : true,
+		},
+
+		orderPay : {
+			required : true,
+			isPrice : true,
+		},
+
+		addrId : {
+			required : true,
+		},
+
+		linkMan : {
+			required : true,
+		},
+
+		linkTel : {
+			required : true,
+		},
+
 	},
 
 	messages : {
-		partnerOrderMoney: {
-			required: "请输入价格",
-			number: "请输入正确的价格数字",
-			
+		
+		servicePriceId : {
+			required : "请选择商品",
 		},
-		orderPay: {
-			required: "请输入价格",
-			number: "请输入正确的价格数字",
-			
+		
+
+		orderMoney : {
+			required : "请输入总金额",
+			isPrice : "金额只能包含数字,并且精确到小数点两位",
 		},
-		orderMoney: {
-			required: "请输入价格",
-			number: "请输入正确的价格数字",
-			
-		}
+
+		orderPay : {
+			required : "请输入支付金额",
+			isPrice : "金额只能包含数字,并且精确到小数点两位",
+		},
+
+		addrId : {
+			required : "请选择服务地址.",
+		},
+
+		linkMan : {
+			required : "请输入联系人.",
+		},
+
+		linkTel : {
+			required : "请输入联系电话",
+		},
 	},
 
-	invalidHandler : function(event, validator) { //display error alert on form submit
+	invalidHandler : function(event, validator) { // display error alert on
+													// form submit
 		$('.alert-error', $('#order-green-view-form')).show();
 	},
 
 	highlight : function(element) { // hightlight error inputs
-		$(element).closest('.form-group').addClass('has-error'); // set error class to the control group
+		$(element).closest('.form-group').addClass('has-error'); // set error
+																	// class to
+																	// the
+																	// control
+																	// group
 	},
 
 	success : function(label) {
@@ -59,19 +88,132 @@ var formVal = $('#order-green-view-form').validate({
 
 });
 
-$('.order-green-view-form input').keypress(function(e) {
-	if (e.which == 13) {
-		$("#btn_submit").click();
-		return false;
+var formValp = $('#order-green-partner-form').validate({
+	errorElement : 'span', // default input error message container
+	errorClass : 'help-block', // default input error message class
+	focusInvalid : false, // do not focus the last invalid input
+	ignore : [],
+	rules : {
+				
+		partnerId : {
+			required : true,
+		},
+
+		partnerOrderMoney : {
+			required : true,
+			number : true,
+		},
+	},
+
+	messages : {
+
+		partnerId : {
+			required : "请选择服务商",
+		},
+		partnerOrderMoney : {
+			required : "请输入价格",
+			number : "请输入正确的价格数字",
+		},
+	},
+
+	invalidHandler : function(event, validator) { // display error alert on
+													// form submit
+		$('.alert-error', $('#order-green-partner-form')).show();
+	},
+
+	highlight : function(element) { // hightlight error inputs
+		$(element).closest('.form-group').addClass('has-error'); // set error
+																	// class to
+																	// the
+																	// control
+																	// group
+	},
+
+	success : function(label) {
+		label.closest('.form-group').removeClass('has-error');
+		label.remove();
+	},
+
+	errorPlacement : function(error, element) {
+		error.insertAfter(element.parents(".col-md-5"));
 	}
+
 });
 
 $("#btn_submit").click(function() {
-	if (confirm("确认要保存吗?")) {
+	if (confirm("确认要保存订单信息吗?")) {
 		if ($('#order-green-view-form').validate().form()) {
-			
+
 			$('#order-green-view-form').submit();
 		}
 	}
 });
 
+$("#btn_submit_partner").click(function() {
+	if (confirm("确认要保存订单信息吗?")) {
+		if ($('#order-green-partner-form').validate().form()) {
+
+			$('#order-green-partner-form').submit();
+		}
+	}
+});
+
+$("#partnerId").change(function(){ 
+	var partnerId = $(this).children('option:selected').val();
+	if (partnerId != "") {
+		changePartner(239, partnerId);
+	}
+	
+});
+
+function changePartner(serviceTypeId, partnerId) {
+
+	var params = {};
+	params.service_type_id = serviceTypeId;
+	params.partner_id = partnerId;
+	$.ajax({
+		type : "GET",
+		url : simiAppRootUrl + "/app/partner/get_service_price_list.json", // 发送给服务器的url
+		data : params,
+		dataType : "json",
+		async : false,
+		success : function(msg) {
+			var data = msg.data;
+
+			//给select 赋值.
+			$("#servicePriceList").empty(); 
+			$.each(data, function(i, item) {
+				var name = item.name + "(原价:" + item.price + ",折扣价:" + item.dis_price + ")--(服务人员:" + item.user_name +",手机:" + item.mobile + ")";
+				$("#servicePriceList").append("<option value='"+ item.servce_price_id +"'>"+name+"</option>"); 
+			});
+		}
+	});
+}
+
+$("#orderStatus").change(function(){ 
+	var orderStatus = $(this).children('option:selected').val();
+	console.log("orderStatus = " + orderStatus);
+	//订单为未支付订单，则可以修改商品和价格这些
+	if (orderStatus == "1") {
+		$("#servicePriceId").removeAttr("disabled");
+	//	$("#serviceNum").removeAttr("readonly");
+		$("#orderMoney").removeAttr("readonly");
+		$("#orderPay").removeAttr("readonly");
+	} else {
+		$("#servicePriceId").attr("disabled", "true");
+	//	$("#serviceNum").attr("readonly", "true");
+		$("#orderMoney").attr("readonly", "true");
+		$("#orderPay").attr("readonly", "true");
+	}
+});
+$('.input-group.date').datepicker({
+	format: "yyyy-mm-dd",
+	language: "zh-CN",
+	autoclose: true,
+	startView: 1,
+	defaultViewDate : {
+		year:1980,
+		month:0,
+		day:1
+	}
+});
