@@ -82,7 +82,7 @@
 						</div>
                            
                            <div class="form-group">
-                              <label  class="col-md-2 control-label">副标题&nbsp;*</label>
+                              <label  class="col-md-2 control-label">商品标题&nbsp;*</label>
                               <div class="col-md-5">
                                  <form:input path="serviceTitle" class="form-control" placeholder="副标题"/><br/>
                                  <form:errors path="serviceTitle" class="field-has-error"></form:errors>
