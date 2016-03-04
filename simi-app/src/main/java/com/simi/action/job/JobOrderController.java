@@ -14,17 +14,20 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
+import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.OrderSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/job/order")
@@ -44,6 +47,9 @@ public class JobOrderController extends BaseController {
 	
 	@Autowired
 	private OrderPricesService orderPricesService;
+	
+	@Autowired
+	private OrderLogService orderLogService;
 
 	/**
 	 *  订单超过1个小时未支付,则关闭订单,
@@ -166,6 +172,19 @@ public class JobOrderController extends BaseController {
 			
 			Orders orders = list.get(i);
 			
+			OrderLog orderLog = null;
+			
+			OrderSearchVo searchVo = new OrderSearchVo();
+			searchVo.setUserId(orders.getUserId());
+			searchVo.setOrderId(orders.getOrderId());
+			searchVo.setAction("remind");
+			List<OrderLog> orderLogs = orderLogService.selectBySearchVo(searchVo);
+			if (!orderLogs.isEmpty()) {
+				orderLog = orderLogs.get(0);
+			}
+			
+			if (orderLog != null) continue;
+			
 			Users users = usersService.selectByPrimaryKey(orders.getUserId());
 			//用户名
 			String name = users.getName();
@@ -185,6 +204,14 @@ public class JobOrderController extends BaseController {
 			
 			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile,
 					Constants.USER_ORDER_MORE_1HOUR, content);
+			
+			
+			orderLog = orderLogService.initOrderLog(orders);
+			orderLog.setAction("remind");
+			orderLog.setAction("订单未支付，短信提醒用户.");
+			orderLogService.insert(orderLog);
+			
+			
 			
 			System.out.println(sendSmsResult + "00000000000000");
 			

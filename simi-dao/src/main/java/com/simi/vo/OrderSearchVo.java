@@ -10,6 +10,8 @@ public class OrderSearchVo {
 	
 	private String orderNo;
 	
+	private Long orderId;
+	
 	private String orderType;
 
 	private Long serviceTypeId;
@@ -17,6 +19,8 @@ public class OrderSearchVo {
 	private Short orderFrom;
 	
 	private Short orderStatus;
+	
+	private String action;
 
 	public String getMobile() {
 		return mobile;
@@ -81,6 +85,22 @@ public class OrderSearchVo {
 
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 }

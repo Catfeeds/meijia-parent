@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.order.OrderLogService;
+import com.simi.vo.OrderSearchVo;
 import com.simi.po.dao.order.OrderLogMapper;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
@@ -24,6 +25,7 @@ public class OrderLogServiceImpl implements OrderLogService {
 		orderLog.setOrderId(orders.getOrderId());
 		orderLog.setOrderNo(orders.getOrderNo());
 		orderLog.setOrderStatus(orders.getOrderStatus());
+		orderLog.setAction("");
 		orderLog.setRemarks(" ");
 		orderLog.setId(0L);
 		return orderLog;
@@ -37,5 +39,10 @@ public class OrderLogServiceImpl implements OrderLogService {
 	@Override
 	public List<OrderLog> selectByOrderNo(String orderNo) {
 		return orderLogMapper.selectByOrderNo(orderNo);
+	}
+	
+	@Override
+	public List<OrderLog> selectBySearchVo(OrderSearchVo searchVo) {
+		return orderLogMapper.selectBySearchVo(searchVo);
 	}
 }

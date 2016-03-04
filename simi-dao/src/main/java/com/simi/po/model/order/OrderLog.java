@@ -10,6 +10,8 @@ public class OrderLog {
 	private String orderNo;
 
 	private Short orderStatus;
+	
+	private String action;
 
 	private String remarks;
 
@@ -69,6 +71,14 @@ public class OrderLog {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 }
