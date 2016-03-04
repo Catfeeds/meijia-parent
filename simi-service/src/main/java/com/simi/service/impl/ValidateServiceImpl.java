@@ -1,4 +1,4 @@
-package com.simi.common;
+package com.simi.service.impl;
 
 import java.util.List;
 
@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meijia.utils.StringUtil;
+import com.simi.service.ValidateService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
 import com.simi.po.dao.user.UserPushBindMapper;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.UserPushBind;

@@ -1,4 +1,4 @@
-package com.simi.common;
+package com.simi.service;
 
 import java.util.List;
 
