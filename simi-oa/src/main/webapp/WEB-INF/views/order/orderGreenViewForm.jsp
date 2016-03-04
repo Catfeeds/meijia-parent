@@ -241,23 +241,22 @@
 						
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">废品的数量</label>
+							<label class="col-md-2 control-label">联系人</label>
 							<div class="col-md-5">
-								<form:input path="totalNum" class="form-control"
-									maxLength="32" />
-								<form:errors path="totalNum" class="field-has-error"></form:errors>
+								<form:input path="linkMan" class="form-control" />
+								<form:errors path="linkMan" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						
+
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">总预算</label>
+							<label class="col-md-2 control-label">联系人电话</label>
 							<div class="col-md-5">
-								<form:input path="totalBudget" class="form-control"
-									maxLength="32" />
-								<form:errors path="totalBudget" class="field-has-error"></form:errors>
+								<form:input path="linkTel" class="form-control" maxLength="32" />
+								<form:errors path="linkTel" class="field-has-error"></form:errors>
 							</div>
 						</div>
+
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">服务商订单号</label>

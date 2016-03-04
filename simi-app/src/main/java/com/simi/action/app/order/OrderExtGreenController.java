@@ -128,9 +128,9 @@ public class OrderExtGreenController extends BaseController {
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") Long addrId,
-			@RequestParam("total_num") Long totalNum,
+			@RequestParam("link_man") String linkMan,
 			@RequestParam("mobile") String mobile,
-			@RequestParam("total_budget") BigDecimal totalBudget,
+			@RequestParam("link_tel") String linkTel,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks
 			//@RequestParam(value = "",required = false,defaultValue= "")
 			) throws UnsupportedEncodingException {
@@ -218,8 +218,8 @@ public class OrderExtGreenController extends BaseController {
 		green.setOrderNo(orderNo);
 		green.setUserId(userId);
 		green.setMobile(u.getMobile());
-		green.setTotalNum(totalNum);
-		green.setTotalBudget(totalBudget);
+		green.setLinkMan(linkMan);
+		green.setLinkTel(linkTel);
 		orderExtGreenService.insert(green);
 		
 		OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(green);

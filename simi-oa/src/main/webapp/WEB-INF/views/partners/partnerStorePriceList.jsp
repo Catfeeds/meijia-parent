@@ -48,6 +48,7 @@
                               <thead>
                               <tr>
                                 	  <th width="5%">商品图片</th>
+                                	  <th width="5%">商品名称</th>
 		                              <!-- <th width="6%">服务大类</th> -->
 		                              <th width="3%">服务子标题</th>
 		                              <th width="5%">原价</th>
@@ -62,6 +63,7 @@
                               <tr>
 	                                   <td><img alt="" width=100 height="100" src="${item.imgUrl}"></td>
 							           <%--  <td>${item.servicePriceId}</td> --%>
+							            <td>${item.name}</td>
 							            <td>${item.serviceTitle}</td>
 								        <td>${item.price}</td>
 								        <td>${item.disPrice}</td>

@@ -8,9 +8,9 @@ public class OrdersGreenPartnerVo extends OrdersListVo{
 	
 	private Short recycleType;
 	
-	private Long totalNum;
+	private String linkMan;
 	    
-	private BigDecimal totalBudget;
+	private String linkTel;
 	
 	private String partnerOrderNo;
 	 
@@ -34,20 +34,21 @@ public class OrdersGreenPartnerVo extends OrdersListVo{
 		this.recycleType = recycleType;
 	}
 
-	public Long getTotalNum() {
-		return totalNum;
+
+	public String getLinkMan() {
+		return linkMan;
 	}
 
-	public void setTotalNum(Long totalNum) {
-		this.totalNum = totalNum;
+	public void setLinkMan(String linkMan) {
+		this.linkMan = linkMan;
 	}
 
-	public BigDecimal getTotalBudget() {
-		return totalBudget;
+	public String getLinkTel() {
+		return linkTel;
 	}
 
-	public void setTotalBudget(BigDecimal totalBudget) {
-		this.totalBudget = totalBudget;
+	public void setLinkTel(String linkTel) {
+		this.linkTel = linkTel;
 	}
 
 	public String getPartnerOrderNo() {

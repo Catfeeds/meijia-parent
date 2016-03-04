@@ -16,6 +16,7 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeVo;
@@ -199,16 +200,31 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		}*/
 		//searchVo.setServiceTypeIds(serviceTypeIds);
 		List<PartnerServicePriceDetail> detailList = partnerServicePriceDetailService.selectByListPage(searchVo);
-		
-		/*
-			//List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
-			for (int i =0 ; i < list.size(); i++) {
-				PartnerUsers item = list.get(i);
-				PartnerUserVo vo = this.changeToVo(item) ;
-				list.set(i, vo);
-			}*/
+			for (int i =0 ; i < detailList.size(); i++) {
+				PartnerServicePriceDetail item = detailList.get(i);
+				PartnerServicePriceDetailVo vo = this.changeToDetailVo(item) ;
+				
+				detailList.set(i, vo);
+			}
 		PageInfo pageInfo = new PageInfo(detailList);
 		return pageInfo;
+	}
+
+	private PartnerServicePriceDetailVo changeToDetailVo(
+			PartnerServicePriceDetail item) {
+		
+		PartnerServicePriceDetailVo vo = new PartnerServicePriceDetailVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		PartnerServiceType serviceType = partnerServiceTypeMapper.selectByPrimaryKey(item.getServicePriceId());
+		vo.setName(serviceType.getName());
+		vo.setNo(serviceType.getNo());
+		vo.setServiceTypeId(serviceType.getId());
+		vo.setParentId(serviceType.getParentId());
+		vo.setPartnerId(serviceType.getPartnerId());
+		vo.setIsEnable(serviceType.getIsEnable());
+		return vo;
 	}
 	
 	

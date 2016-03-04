@@ -80,8 +80,8 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 		record.setOrderExtStatus((short)0);
 		record.setRecycleType((short)0);
 		record.setMobile("");
-		record.setTotalNum(0L);
-		record.setTotalBudget(new BigDecimal(0));
+		record.setLinkMan("");
+		record.setLinkTel("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}

@@ -77,7 +77,6 @@
 						<th>服务日期</th>
 						<th>服务大类</th>
 						<th>地址</th>
-						<th>绿植数量</th>
 						<th>订单状态</th>
 						<th>订单总金额</th>
 						<th>订单支付金额</th>
@@ -96,7 +95,6 @@
 							<td>${ item.serviceTypeName }</td>
 
 							<td>${ item.addr }</td>
-							<td>${ item.totalNum }</td>
 							<td><c:if test="${ item.orderStatus < 1 }">
 							            		${ item.orderStatusName }
 							            	</c:if> <c:if test="${ item.orderStatus == 1 }">

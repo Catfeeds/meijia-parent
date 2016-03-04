@@ -91,7 +91,7 @@ public class OrderGreenController extends AdminController {
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
 	/**
-	 * 订单列表
+	 * 废品回收订单列表
 	 * 
 	 * @param request
 	 * @param model
@@ -136,9 +136,8 @@ public class OrderGreenController extends AdminController {
 			vo.setOrderExtStatus((short)0);
 			vo.setRecycleType((short)0);
 			
-			vo.setTotalNum(green.getTotalNum());
-			vo.setTotalBudget(green.getTotalBudget());
-			
+			vo.setLinkMan(green.getLinkMan());
+			vo.setLinkTel(green.getLinkTel());
 			orderList.set(i, vo);
 		}
 		PageInfo result = new PageInfo(orderList);
@@ -175,8 +174,8 @@ public class OrderGreenController extends AdminController {
 		
 		vo.setOrderExtStatus(green.getOrderExtStatus());
 		vo.setRecycleType(green.getRecycleType());
-		vo.setTotalNum(green.getTotalNum());
-		vo.setTotalBudget(green.getTotalBudget());
+		vo.setLinkMan(green.getLinkMan());
+		vo.setLinkTel(green.getLinkTel());
 		model.addAttribute("contentModel", vo);
 	    //服务商列表
 		Long serviceTypeId = 246L;
@@ -263,8 +262,8 @@ public class OrderGreenController extends AdminController {
 			
 			green.setOrderExtStatus(vo.getOrderExtStatus());
 			green.setRecycleType(vo.getRecycleType());
-			green.setTotalNum(vo.getTotalNum());
-			green.setTotalBudget(vo.getTotalBudget());
+			green.setLinkMan(vo.getLinkMan());
+			green.setLinkTel(vo.getLinkTel());
 			green.setAddTime(TimeStampUtil.getNowSecond());
 			orderExtGreenService.updateByPrimaryKeySelective(green);
 			

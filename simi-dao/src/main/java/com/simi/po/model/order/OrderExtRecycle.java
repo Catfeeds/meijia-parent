@@ -1,7 +1,5 @@
 package com.simi.po.model.order;
 
-import java.math.BigDecimal;
-
 
 public class OrderExtRecycle {
 	
@@ -19,9 +17,9 @@ public class OrderExtRecycle {
     
     private String mobile;
     
-    private Long totalNum;
-    
-    private BigDecimal totalBudget;
+    private String linkMan;
+
+    private String linkTel;
     
     private Long addTime;
 
@@ -81,20 +79,21 @@ public class OrderExtRecycle {
 		this.mobile = mobile;
 	}
 
-	public Long getTotalNum() {
-		return totalNum;
+
+	public String getLinkMan() {
+		return linkMan;
 	}
 
-	public void setTotalNum(Long totalNum) {
-		this.totalNum = totalNum;
+	public void setLinkMan(String linkMan) {
+		this.linkMan = linkMan;
 	}
 
-	public BigDecimal getTotalBudget() {
-		return totalBudget;
+	public String getLinkTel() {
+		return linkTel;
 	}
 
-	public void setTotalBudget(BigDecimal totalBudget) {
-		this.totalBudget = totalBudget;
+	public void setLinkTel(String linkTel) {
+		this.linkTel = linkTel;
 	}
 
 	public Long getAddTime() {
@@ -104,4 +103,5 @@ public class OrderExtRecycle {
 	public void setAddTime(Long addTime) {
 		this.addTime = addTime;
 	}
+
 }
