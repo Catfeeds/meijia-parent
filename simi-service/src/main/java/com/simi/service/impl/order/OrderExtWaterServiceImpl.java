@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.order.OrderExtWaterService;
+import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -18,6 +19,7 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.po.dao.order.OrderExtWaterMapper;
 import com.simi.po.model.order.OrderExtWater;
+import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
@@ -40,6 +42,10 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
     
     @Autowired
     private OrdersService ordersService;
+    
+    @Autowired
+    private OrderPricesService orderPricesService;
+
     
     @Autowired
     private PartnerServiceTypeService partnerServiceTypeService;
@@ -126,6 +132,16 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		//服务地址
 		vo.setAddrName("");
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
+		OrderPrices orderPrice = orderPricesService.selectByOrderId(item.getOrderId());
+		
+		vo.setOrderMoney(new BigDecimal(0));
+		vo.setOrderPay(new BigDecimal(0));
+		//订单价格
+		if (orderPrice != null) {
+			vo.setOrderMoney(orderPrice.getOrderMoney());
+			vo.setOrderPay(orderPrice.getOrderPay());
+		}
+		
 		Long addrId = order.getAddrId();
 		UserAddrs userAddr = userAddrsService.selectByPrimaryKey(addrId);
 		if (userAddr != null) {
@@ -193,6 +209,8 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		if (orderIds.isEmpty()) return result;
 		List<Orders> orders = ordersService.selectByOrderIds(orderIds);
 		
+		List<OrderPrices> orderPrices = orderPricesService.selectByOrderIds(orderIds);
+		
 		List<Long> serviceTypeIds = new ArrayList<Long>();
 		List<Long> userAddrIds = new ArrayList<Long>();
 		
@@ -229,6 +247,22 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 					order = tmpOrder;
 					break;
 				}
+			}
+			
+			OrderPrices orderPrice = null;
+			for (OrderPrices tmpOrderPrice : orderPrices) {
+				if (tmpOrderPrice.getOrderId().equals(item.getOrderId())) {
+					orderPrice = tmpOrderPrice;
+					break;
+				}
+			}
+			
+			vo.setOrderMoney(new BigDecimal(0));
+			vo.setOrderPay(new BigDecimal(0));
+			//订单价格
+			if (orderPrice != null) {
+				vo.setOrderMoney(orderPrice.getOrderMoney());
+				vo.setOrderPay(orderPrice.getOrderPay());
 			}
 			
 			//服务地址

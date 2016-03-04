@@ -21,6 +21,10 @@ public class OrderExtWaterListVo {
     
     private BigDecimal disPrice;
     
+    private BigDecimal orderMoney;
+    
+    private BigDecimal orderPay;
+    
     private int serviceNum;
     
     private String orderStatusName;
@@ -147,6 +151,22 @@ public class OrderExtWaterListVo {
 
 	public void setOrderExtStatus(Short orderExtStatus) {
 		this.orderExtStatus = orderExtStatus;
+	}
+
+	public BigDecimal getOrderMoney() {
+		return orderMoney;
+	}
+
+	public void setOrderMoney(BigDecimal orderMoney) {
+		this.orderMoney = orderMoney;
+	}
+
+	public BigDecimal getOrderPay() {
+		return orderPay;
+	}
+
+	public void setOrderPay(BigDecimal orderPay) {
+		this.orderPay = orderPay;
 	}
 	
 	
