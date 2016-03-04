@@ -164,7 +164,8 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		vo.setIsDoneTimeStr("");
 		if (item.getIsDoneTime() > 0L) {
 			vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
-		}		
+		}	
+		vo.setOrderExtStatus(item.getOrderExtStatus());
 		
 		return vo;
 	}
@@ -299,7 +300,8 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			vo.setIsDoneTimeStr("");
 			if (item.getIsDoneTime() > 0L) {
 				vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
-			}	
+			}
+			vo.setOrderExtStatus(item.getOrderExtStatus());
 			result.add(vo);
 		}
 		return result;
