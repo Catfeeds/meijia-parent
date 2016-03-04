@@ -140,7 +140,7 @@ public class OrderExtGreenController extends BaseController {
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") Long addrId,
-	
+			@RequestParam("recycle_type") Short recycleType,
 			@RequestParam(value = "link_man",required = false,defaultValue = "") String linkMan,
 			@RequestParam(value = "link_tel",required = false,defaultValue = "") String linkTel,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks
@@ -227,6 +227,7 @@ public class OrderExtGreenController extends BaseController {
 		green.setMobile(users.getMobile());
 		green.setLinkMan(linkMan);
 		green.setLinkTel(linkTel);
+		green.setRecycleType(recycleType);
 		orderExtGreenService.insert(green);
 		
 		OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(green);
