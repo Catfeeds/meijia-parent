@@ -89,7 +89,7 @@
 
 							</div>
 						</div>
-						<c:if test="${contentModel.orderStatus < 2 }">
+						<%-- <c:if test="${contentModel.orderStatus < 2 }"> --%>
 						<div class="form-group">
 
 							<label class="col-md-2 control-label">总金额</label>
@@ -108,27 +108,6 @@
 								<form:errors path="orderPay" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						</c:if>
-						<c:if test="${contentModel.orderStatus >= 2 }">
-						<div class="form-group">
-
-							<label class="col-md-2 control-label">总金额</label>
-							<div class="col-md-5">
-								<form:input path="orderMoney" class="form-control"
-									maxLength="32" readonly="true"/>
-								<form:errors path="orderMoney" class="field-has-error"></form:errors>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<label class="col-md-2 control-label">支付金额</label>
-							<div class="col-md-5">
-								<form:input path="orderPay" class="form-control"
-									maxLength="32" readonly="true"/>
-								<form:errors path="orderPay" class="field-has-error"></form:errors>
-							</div>
-						</div>
-						</c:if>
 						  <div class="form-group">
 						<label class="col-md-2 control-label">服&nbsp;务&nbsp;时&nbsp;间</label>
 							<div class="col-md-5">
@@ -167,18 +146,6 @@
 										</label>
 									</div>
 								</div>
-							</div>
-						</div>
-						<!-- ######商品####### -->
-						<div class="form-group required">
-							<label class="col-md-2 control-label">商品:</label>
-							<div class="col-md-5">
-								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="form-control" autocomplete="off">
-									<option value="">请选择商品</option>
-									<c:forEach items="${waterComVos}" var="item">
-										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" <c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >${item.namePrice}</option>
-									</c:forEach>
-								</form:select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -310,14 +277,6 @@
 							</form:select>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label">商品列表:</label>
-						<div class="col-md-5">
-							<select id="servicePriceList" name="servicePriceList" class="form-control">
-
-							</select>
-						</div>
-					</div>
 					<div class="form-group required">
 						<label class="col-md-2 control-label">服务商订单号:</label>
 						<div class="col-md-5">
@@ -388,6 +347,9 @@
 	<script type="text/javascript"
 			src="<c:url value='/js/simi/order/orderGreenForm.js'/>"></script>
 	<script src="<c:url value='/js/simi/demo.js'/>"></script>
-
+<script>
+		$('#orderStatus').trigger('change');
+		$('#partnerId').trigger('change');
+	</script>
 </body>
 </html>

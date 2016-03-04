@@ -4,12 +4,6 @@ var formVal = $('#order-green-view-form').validate({
 	focusInvalid : false, // do not focus the last invalid input
 	ignore : [],
 	rules : {
-		
-		servicePriceId : {
-			required : true,
-		},
-		
-
 		orderMoney : {
 			required : true,
 			isPrice : true,
@@ -35,12 +29,6 @@ var formVal = $('#order-green-view-form').validate({
 	},
 
 	messages : {
-		
-		servicePriceId : {
-			required : "请选择商品",
-		},
-		
-
 		orderMoney : {
 			required : "请输入总金额",
 			isPrice : "金额只能包含数字,并且精确到小数点两位",
@@ -158,50 +146,14 @@ $("#btn_submit_partner").click(function() {
 	}
 });
 
-$("#partnerId").change(function(){ 
-	var partnerId = $(this).children('option:selected').val();
-	if (partnerId != "") {
-		changePartner(239, partnerId);
-	}
-	
-});
-
-function changePartner(serviceTypeId, partnerId) {
-
-	var params = {};
-	params.service_type_id = serviceTypeId;
-	params.partner_id = partnerId;
-	$.ajax({
-		type : "GET",
-		url : simiAppRootUrl + "/app/partner/get_service_price_list.json", // 发送给服务器的url
-		data : params,
-		dataType : "json",
-		async : false,
-		success : function(msg) {
-			var data = msg.data;
-
-			//给select 赋值.
-			$("#servicePriceList").empty(); 
-			$.each(data, function(i, item) {
-				var name = item.name + "(原价:" + item.price + ",折扣价:" + item.dis_price + ")--(服务人员:" + item.user_name +",手机:" + item.mobile + ")";
-				$("#servicePriceList").append("<option value='"+ item.servce_price_id +"'>"+name+"</option>"); 
-			});
-		}
-	});
-}
-
 $("#orderStatus").change(function(){ 
 	var orderStatus = $(this).children('option:selected').val();
 	console.log("orderStatus = " + orderStatus);
 	//订单为未支付订单，则可以修改商品和价格这些
 	if (orderStatus == "1") {
-		$("#servicePriceId").removeAttr("disabled");
-	//	$("#serviceNum").removeAttr("readonly");
 		$("#orderMoney").removeAttr("readonly");
 		$("#orderPay").removeAttr("readonly");
 	} else {
-		$("#servicePriceId").attr("disabled", "true");
-	//	$("#serviceNum").attr("readonly", "true");
 		$("#orderMoney").attr("readonly", "true");
 		$("#orderPay").attr("readonly", "true");
 	}

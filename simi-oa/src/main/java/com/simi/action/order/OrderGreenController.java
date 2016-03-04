@@ -2,6 +2,7 @@ package com.simi.action.order;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.mysql.fabric.xmlrpc.base.Data;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
@@ -221,6 +225,7 @@ public class OrderGreenController extends AdminController {
 			voList.add(vos);
 		}
 		model.addAttribute("userAddrVo", voList);
+		
 		// 获得商品列表的选择下拉列表
 		// 先根据服务大类找到相应的推荐人员.
 		PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
@@ -304,7 +309,7 @@ public class OrderGreenController extends AdminController {
 			BindingResult result, HttpServletRequest request)
 			throws IOException {
 
-		
+		String serviceDate1 = request.getParameter("serviceDate");	
 		Orders order = ordersService.selectByOrderNo(vo.getOrderNo());
 		if (order == null)
 			return "redirect:/order/greenList";
@@ -314,7 +319,7 @@ public class OrderGreenController extends AdminController {
 		order.setAddrId(vo.getAddrId());
 		order.setOrderStatus(vo.getOrderStatus());
 		order.setRemarks(vo.getRemarks());
-		order.setServiceDate(vo.getServiceDate());
+		order.setServiceDate(TimeStampUtil.getMillisOfDay(serviceDate1)/1000);
 		ordersService.updateByPrimaryKeySelective(order);
 		
 		//更新价格信息

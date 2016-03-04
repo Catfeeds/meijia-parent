@@ -219,7 +219,7 @@ public class OrderExtGreenController extends BaseController {
 		orderPrice.setOrderPay(orderPay);
 		orderPricesService.insert(orderPrice);
 		
-		//保存绿植订单扩展表信息
+		//保存废品回收订单扩展表信息
 		OrderExtRecycle green = orderExtGreenService.initOrderExtGreen();
 		green.setOrderId(orderId);
 		green.setOrderNo(orderNo);
