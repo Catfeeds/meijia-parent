@@ -144,6 +144,11 @@
 		<if test="serviceTypeId != null">
 			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="notServiceTypeId != null">
+			<![CDATA[ and service_type_id <> #{notServiceTypeId,jdbcType=NUMERIC} ]]>
+		</if>
+		
 		order by add_time desc
 	</select>
 	

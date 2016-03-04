@@ -21,6 +21,8 @@ public class OrderSearchVo {
 	private Short orderStatus;
 	
 	private String action;
+	
+	private Long  notServiceTypeId;
 
 	public String getMobile() {
 		return mobile;
@@ -101,6 +103,14 @@ public class OrderSearchVo {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public Long getNotServiceTypeId() {
+		return notServiceTypeId;
+	}
+
+	public void setNotServiceTypeId(Long notServiceTypeId) {
+		this.notServiceTypeId = notServiceTypeId;
 	}
 
 }

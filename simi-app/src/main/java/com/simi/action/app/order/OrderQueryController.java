@@ -55,10 +55,11 @@ public class OrderQueryController extends BaseController {
 		}
 		OrderSearchVo searchVo = new OrderSearchVo();
 		searchVo.setUserId(userId);
+		searchVo.setNotServiceTypeId(239L);
 		PageInfo list = orderQueryService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<Orders> orderList = list.getList();
 		
-		for (Orders item : orderList) {
+		for (Orders item : orderList) {			
 			OrderListVo listVo = new OrderListVo();
 			listVo = orderQueryService.getOrderListVo(item);
 			
