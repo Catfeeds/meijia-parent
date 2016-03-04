@@ -442,8 +442,9 @@ public class PartnerUsersController extends BaseController {
 		if (servicePriceId > 0L) {
 			record = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		}
+		
 		record.setUserId(vo.getUserId());
-		record.setServicePriceId(serviceTypeId);
+		record.setServicePriceId(servicePriceId);
 		record.setServiceTitle(vo.getServiceTitle());
 		record.setPrice(vo.getPrice());
 		record.setDisPrice(vo.getDisPrice());

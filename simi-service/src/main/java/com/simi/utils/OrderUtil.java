@@ -175,4 +175,43 @@ public class OrderUtil {
 		}
 		return orderTypeName;
 	}
+	
+	public static String getOrderCleaAreaName(Short cleaArea) {
+		String cleaAreaName = "";
+		switch (cleaArea) {
+		case 0:
+			cleaAreaName = "0-300平米";
+			break;
+		case 1:
+			cleaAreaName = "300-800平米";
+			break;
+		case 2:
+			cleaAreaName = "800平米以上";
+			break;
+		default:
+			cleaAreaName = "";
+		}
+		return cleaAreaName;
+	}	
+	
+	public static String getOrderCleaTypeName(Short cleaType) {
+		String cleaTypeName = "";
+		switch (cleaType) {
+		case 0:
+			cleaTypeName = "定期保洁";
+			break;
+		case 1:
+			cleaTypeName = "深度养护";
+			break;
+		case 2:
+			cleaTypeName = "维修清洗";
+			break;
+		case 3:
+			cleaTypeName = "其他";
+			break;
+		default:
+			cleaTypeName = "";
+		}
+		return cleaTypeName;
+	}	
 }

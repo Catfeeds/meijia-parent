@@ -17,9 +17,9 @@ public class OrderExtCleanListVo {
     
     private String addrName;
         
-    private String cleanArea;
+    private String cleanAreaName;
     
-    private String cleanType;
+    private String cleanTypeName;
     
     private String orderStatusName;
         
@@ -81,22 +81,6 @@ public class OrderExtCleanListVo {
 		this.addTimeStr = addTimeStr;
 	}
 
-	public String getCleanArea() {
-		return cleanArea;
-	}
-
-	public void setCleanArea(String cleanArea) {
-		this.cleanArea = cleanArea;
-	}
-
-	public String getCleanType() {
-		return cleanType;
-	}
-
-	public void setCleanType(String cleanType) {
-		this.cleanType = cleanType;
-	}
-
 	public Short getOrderExtStatus() {
 		return orderExtStatus;
 	}
@@ -111,6 +95,22 @@ public class OrderExtCleanListVo {
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+
+	public String getCleanAreaName() {
+		return cleanAreaName;
+	}
+
+	public void setCleanAreaName(String cleanAreaName) {
+		this.cleanAreaName = cleanAreaName;
+	}
+
+	public String getCleanTypeName() {
+		return cleanTypeName;
+	}
+
+	public void setCleanTypeName(String cleanTypeName) {
+		this.cleanTypeName = cleanTypeName;
 	}
 
 

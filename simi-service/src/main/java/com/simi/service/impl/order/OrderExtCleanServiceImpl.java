@@ -228,6 +228,8 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 			vo.setOrderExtStatus(item.getOrderExtStatus());
 			vo.setCompanyName(item.getCompanyName());
+			vo.setCleanAreaName(OrderUtil.getOrderCleaAreaName(item.getCleanArea()));
+			vo.setCleanTypeName(OrderUtil.getOrderCleaTypeName(item.getCleanType()));
 			result.add(vo);
 		}
 		return result;
