@@ -187,9 +187,16 @@ public class OrderGreenController extends AdminController {
 				.getOrderId());
 		OrderExtPartner orderExtPartner = orderExtPartnerService
 				.selectByOrderId(orders.getOrderId());
-		vo.setPartnerOrderNo(orderExtPartner.getPartnerOrderNo());
-		vo.setPartnerOrderMoney(orderExtPartner.getPartnerOrderMoney());
-		vo.setPartnerId(orderExtPartner.getPartnerId());
+		
+		if (orderExtPartner == null) {
+			vo.setPartnerOrderNo("");
+			vo.setPartnerOrderMoney(new BigDecimal(0));
+			vo.setPartnerId(0L);
+		} else {
+			vo.setPartnerOrderNo(orderExtPartner.getPartnerOrderNo());
+			vo.setPartnerOrderMoney(orderExtPartner.getPartnerOrderMoney());
+			vo.setPartnerId(orderExtPartner.getPartnerId());
+		}
 
 		vo.setServiceDate(TimeStampUtil.getNowSecond());
 		vo.setOrderExtStatus(recycle.getOrderExtStatus());
