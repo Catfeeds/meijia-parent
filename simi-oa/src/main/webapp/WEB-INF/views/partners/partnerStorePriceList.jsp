@@ -47,14 +47,14 @@
                           <table class="table table-striped table-advance table-hover">
                               <thead>
                               <tr>
-                                	  <th width="5%">商品图片</th>
-                                	  <th width="5%">商品名称</th>
+                                	  <th>商品图片</th>
+                                	  <th>商品名称</th>
 		                              <!-- <th width="6%">服务大类</th> -->
-		                              <th width="3%">服务子标题</th>
-		                              <th width="5%">原价</th>
-		                              <th width="5%">折扣价</th>
-		                              <th width="8%">服务说明</th>
-		                              <th width="8%">添加时间</th>
+		                              <th>服务子标题</th>
+		                              <th>原价</th>
+		                              <th>折扣价</th>
+		                              <th>服务说明</th>
+		                              <th>添加时间</th>
 		                              <!-- <th >操作</th> -->
                               </tr>
                               </thead>
