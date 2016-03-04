@@ -94,13 +94,6 @@ public class NoticeSmsAsyncServiceImpl implements NoticeSmsAsyncService {
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		if (order == null) return new AsyncResult<Boolean>(true);
 		
-		if (order.getPartnerUserId().equals(0L)) return new AsyncResult<Boolean>(true);
-		Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
-		if (partnerUser == null) return new AsyncResult<Boolean>(true);
-		
-		String partnerUserMobile = partnerUser.getMobile();
-		if (StringUtil.isEmpty(partnerUserMobile)) return new AsyncResult<Boolean>(true);
-		
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);
 		Users u = usersService.selectByPrimaryKey(order.getUserId());
 		
@@ -181,7 +174,7 @@ public class NoticeSmsAsyncServiceImpl implements NoticeSmsAsyncService {
 		return new AsyncResult<Boolean>(true);
 	}
 	
-	//订单支付成功通知用户
+	//充值支付成功通知运营人员
 	@Async
 	@Override
 	public Future<Boolean> noticeOrderCardUser(Long orderId) {
