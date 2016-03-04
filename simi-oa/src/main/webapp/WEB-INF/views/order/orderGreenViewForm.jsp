@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
-			绿植订单管理 </header>
+			废品回收订单管理 </header>
 
 			<hr
 				style="width: 100%; color: black; height: 1px; background-color: black;" />

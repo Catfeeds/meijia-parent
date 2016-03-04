@@ -492,25 +492,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		if (users != null) {
 			vo.setUserName(users.getName());
 		}
-		//0 = 已关闭 1 = 待支付 2 = 已支付 3 = 处理中 7 = 待评价 9 = 已完成
-		if (orders.getOrderStatus() == 0) {
-			vo.setOrderStatusName("已关闭");
-		}
-		if (orders.getOrderStatus() == 1) {
-			vo.setOrderStatusName("待支付");
-		}
-		if (orders.getOrderStatus() == 2) {
-			vo.setOrderStatusName("已支付");
-		}
-		if (orders.getOrderStatus() == 3) {
-			vo.setOrderStatusName("处理中");
-		}
-		if (orders.getOrderStatus() == 7) {
-			vo.setOrderStatusName("待评价");
-		}
-		if (orders.getOrderStatus() == 9) {
-			vo.setOrderStatusName("已完成");
-		}
+		//订单状态
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(orders.getOrderStatus()));
+				
 		OrderPrices orderPrices = orderPricesService.selectByOrderId(orders.getOrderId());
 		if (orderPrices != null) {
 			//订单金额

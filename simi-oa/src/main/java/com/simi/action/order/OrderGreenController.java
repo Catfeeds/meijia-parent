@@ -232,49 +232,6 @@ public class OrderGreenController extends AdminController {
 			voList.add(vos);
 		}
 		model.addAttribute("userAddrVo", voList);
-		
-		// 获得商品列表的选择下拉列表
-		// 先根据服务大类找到相应的推荐人员.
-		PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
-		searchVo.setServiceTypeId(serviceTypeId);
-		searchVo.setWeightType((short) 1);
-
-		List<PartnerUsers> list = partnerUserService.selectBySearchVo(searchVo);
-
-		PartnerUsers partnerUser = list.get(0);
-
-		Long parnterUserId = partnerUser.getUserId();
-
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService
-				.selectByUserId(parnterUserId);
-
-		List<Long> servicePriceIds = new ArrayList<Long>();
-		for (PartnerServicePriceDetail item : servicePriceDetails) {
-			if (!servicePriceIds.contains(item.getServicePriceId())) {
-				servicePriceIds.add(item.getServicePriceId());
-			}
-		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService
-				.selectByIds(servicePriceIds);
-		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
-		PartnerServiceType serviceType = null;
-		for (PartnerServiceType item : serviceTypes) {
-			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService
-					.selectByServicePriceId(serviceType.getId());
-			OrderWaterComVo waterComVo = new OrderWaterComVo();
-			waterComVo.setPrice(detail.getPrice());
-			waterComVo.setDisprice(detail.getDisPrice());
-			waterComVo.setImgUrl(detail.getImgUrl());
-			waterComVo.setServicePriceId(serviceType.getId());
-			waterComVo.setName(serviceType.getName());
-			waterComVo.setNamePrice(serviceType.getName() + "(原价:"
-					+ detail.getPrice().toString() + "元,折扣价："
-					+ detail.getDisPrice().toString() + "元)");
-			waterComVos.add(waterComVo);
-
-		}
-		model.addAttribute("waterComVos", waterComVos);
 
 		// 服务商信息
 		// 服务商列表
