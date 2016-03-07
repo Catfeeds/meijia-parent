@@ -168,8 +168,9 @@ public class OrderExtCleanController extends BaseController {
 	@RequestMapping(value = "post_add_clean", method = RequestMethod.POST)
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
-			@RequestParam("clean_area") Short cleanArea,
 			@RequestParam("clean_type") Short cleanType,
+			@RequestParam(value = "addr_id",required = false,defaultValue = "0") Long addrId,
+			@RequestParam(value = "clean_area",required = false,defaultValue = "0") Short cleanArea,
 			@RequestParam(value = "company_name",required = false,defaultValue = "") String companyName,
 			@RequestParam(value = "link_man",required = false,defaultValue = "") String linkMan,
 			@RequestParam(value = "link_tel",required = false,defaultValue = "") String linkTel,
@@ -217,7 +218,7 @@ public class OrderExtCleanController extends BaseController {
 		order.setMobile(u.getMobile());
 		order.setOrderFrom(orderFrom);
 		order.setServiceContent(serviceType.getName());
-
+		order.setAddrId(addrId);
 		if (!StringUtil.isEmpty(remarks)) {
 			order.setRemarks(remarks);	
 		}
