@@ -221,7 +221,7 @@ public class OrderExtCleanController extends BaseController {
 		if (!StringUtil.isEmpty(remarks)) {
 			order.setRemarks(remarks);	
 		}
-		order.setOrderStatus(Constants.ORDER_STATUS_2_PAY_DONE);
+		order.setOrderStatus(Constants.ORDER_STATUS_3_PROCESSING);
 		ordersService.insert(order);
 		Long orderId = order.getOrderId();
 		
