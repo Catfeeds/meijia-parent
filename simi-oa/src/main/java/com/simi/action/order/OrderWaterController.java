@@ -150,6 +150,10 @@ public class OrderWaterController extends AdminController {
 				vo.setLinkMan(water.getLinkMan());
 				vo.setLinkTel(water.getLinkTel());
 			}
+			
+			Long addrId = vo.getAddrId();
+			UserAddrs userAddr =	userAddrsService.selectByPrimaryKey(addrId);
+			vo.setAddr(userAddr.getName() + " " + userAddr.getAddr());
 
 			orderList.set(i, vo);
 		}
