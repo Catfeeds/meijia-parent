@@ -134,6 +134,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(item.getOrderId());
 		
+		vo.setOrderStatus(order.getOrderStatus());
 		vo.setOrderMoney(new BigDecimal(0));
 		vo.setOrderPay(new BigDecimal(0));
 		//订单价格
@@ -247,6 +248,10 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 					order = tmpOrder;
 					break;
 				}
+			}
+			
+			if (order != null) {
+				vo.setOrderStatus(order.getOrderStatus());
 			}
 			
 			OrderPrices orderPrice = null;

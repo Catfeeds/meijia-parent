@@ -9,6 +9,8 @@ public class OrderExtWaterListVo {
     
     private String orderNo;
     
+    private Short orderStatus;
+    
     private Long userId;
         
     private String serviceTypeName;
@@ -167,6 +169,14 @@ public class OrderExtWaterListVo {
 
 	public void setOrderPay(BigDecimal orderPay) {
 		this.orderPay = orderPay;
+	}
+
+	public Short getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(Short orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	
 	
