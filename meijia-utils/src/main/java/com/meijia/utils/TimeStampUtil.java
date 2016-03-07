@@ -169,7 +169,7 @@ public class TimeStampUtil {
     
     public static String fromTodayStr(Long time) {
         
-    	Long todayBegin = TimeStampUtil.getBeginOfToday();
+    	Long todayBegin = TimeStampUtil.getBeginOfToday() * 1000;
     	
         if (time >= todayBegin) {
         	return TimeStampUtil.timeStampToDateStr(time, "HH:mm");
