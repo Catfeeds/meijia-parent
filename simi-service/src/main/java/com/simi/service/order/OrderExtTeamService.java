@@ -1,7 +1,12 @@
 package com.simi.service.order;
 
 
+import java.util.List;
+
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.order.OrderExtTeam;
+import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrdersExtTeamListVo;
 
 public interface OrderExtTeamService {
 
@@ -18,6 +23,14 @@ public interface OrderExtTeamService {
 	int updateByPrimaryKeySelective(OrderExtTeam record);
 
 	int updateByPrimaryKey(OrderExtTeam record);
+
+	PageInfo selectByListPage(OrderSearchVo searchVo, int pageNo, int pageSize);
+
+	List<OrdersExtTeamListVo> getListVos(List<OrderExtTeam> list);
+
+	OrderExtTeam selectByOrderId(Long orderId);
+
+	OrdersExtTeamListVo getListVo(OrderExtTeam orderExtTeam);
 
 
 

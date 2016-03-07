@@ -21,6 +21,10 @@ public class OrderExtTeam {
     private Long attendNum;
 
     private Long cityId;
+    
+    private String linkMan;
+
+    private String linkTel;
 
     private Long addTime;
 
@@ -104,7 +108,23 @@ public class OrderExtTeam {
         this.cityId = cityId;
     }
 
-    public Long getAddTime() {
+    public String getLinkMan() {
+		return linkMan;
+	}
+
+	public void setLinkMan(String linkMan) {
+		this.linkMan = linkMan;
+	}
+
+	public String getLinkTel() {
+		return linkTel;
+	}
+
+	public void setLinkTel(String linkTel) {
+		this.linkTel = linkTel;
+	}
+
+	public Long getAddTime() {
         return addTime;
     }
 

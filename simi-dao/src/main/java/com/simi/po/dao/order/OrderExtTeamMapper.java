@@ -1,6 +1,9 @@
 package com.simi.po.dao.order;
 
+import java.util.List;
+
 import com.simi.po.model.order.OrderExtTeam;
+import com.simi.vo.OrderSearchVo;
 
 public interface OrderExtTeamMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,8 @@ public interface OrderExtTeamMapper {
     int updateByPrimaryKeySelective(OrderExtTeam record);
 
     int updateByPrimaryKey(OrderExtTeam record);
+
+	List<OrderExtTeam> selectByListPage(OrderSearchVo orderSearchVo);
+
+	OrderExtTeam selectByOrderId(Long orderId);
 }
