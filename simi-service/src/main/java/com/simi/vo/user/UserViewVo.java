@@ -1,28 +1,33 @@
 package com.simi.vo.user;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.simi.po.model.user.Users;
 
-public class UserViewVo {
+public class UserViewVo extends Users {
 	
 	private long userId;
 	
-    private String mobile;
+	/**
+	 * 私秘卡有效期
+	 */
+    private String seniorRange;
     
-    private String provinceName;
-
-    private String name;
+    /**
+     * 是否可以使用真人秘书服务 1=是 0=否
+     */
+    private Short isSenior;
     
-    private String sex;
-        
-    private	String headImg;
-
-    private BigDecimal restMoney;
-
-	private String qrCode;	
-	    
+    private Long secId;
+    
+    /**
+     * 秘书IM账号
+     */
+    private String imSecUsername;
+    
+    /**
+     * 秘书IM昵称
+     */
+    private String imSecNickname;
+    
     /**
      * 用户Im用户名
      */
@@ -32,7 +37,17 @@ public class UserViewVo {
      * 用户Im密码
      */
     private String ImPassword;
-        
+    
+    /**
+     * 机器人管家账号
+     */
+    private String ImRobotUsername;
+    
+    /**
+     * 机器人管家昵称
+     */
+    private String ImRobotNickname;
+    
     /**
      * 绑定推送设备clientID
      */
@@ -44,7 +59,6 @@ public class UserViewVo {
     //所属公司的ID
     private Long companyId;
     
-    //所属公司的名称
     private String companyName;
     
     //所属公司个数
@@ -66,12 +80,69 @@ public class UserViewVo {
 		ImPassword = imPassword;
 	}
 
+	public String getImRobotUsername() {
+		return ImRobotUsername;
+	}
+
+	public void setImRobotUsername(String imRobotUsername) {
+		ImRobotUsername = imRobotUsername;
+	}
+
+	public String getImRobotNickname() {
+		return ImRobotNickname;
+	}
+
+	public void setImRobotNickname(String imRobotNickname) {
+		ImRobotNickname = imRobotNickname;
+	}
+
 	public UserViewVo() {
 		super();
 	}
 
+	public String getSeniorRange() {
+		return seniorRange;
+	}
+
+	public void setSeniorRange(String seniorRange) {
+		this.seniorRange = seniorRange;
+	}
+
+	public Short getIsSenior() {
+		return isSenior;
+	}
+
+	public void setIsSenior(Short isSenior) {
+		this.isSenior = isSenior;
+	}
+
+
+	public String getImSecUsername() {
+		return imSecUsername;
+	}
+
+	public void setImSecUsername(String imSecUsername) {
+		this.imSecUsername = imSecUsername;
+	}
+
+	public String getImSecNickname() {
+		return imSecNickname;
+	}
+
+	public void setImSecNickname(String imSecNickname) {
+		this.imSecNickname = imSecNickname;
+	}
+
 	public long getUserId() {
 		return userId;
+	}
+
+	public Long getSecId() {
+		return secId;
+	}
+
+	public void setSecId(Long secId) {
+		this.secId = secId;
 	}
 
 	public void setUserId(long userId) {
@@ -116,62 +187,6 @@ public class UserViewVo {
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getProvinceName() {
-		return provinceName;
-	}
-
-	public void setProvinceName(String provinceName) {
-		this.provinceName = provinceName;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public String getHeadImg() {
-		return headImg;
-	}
-
-	public void setHeadImg(String headImg) {
-		this.headImg = headImg;
-	}
-
-	public BigDecimal getRestMoney() {
-		return restMoney;
-	}
-
-	public void setRestMoney(BigDecimal restMoney) {
-		this.restMoney = restMoney;
-	}
-
-	public String getQrCode() {
-		return qrCode;
-	}
-
-	public void setQrCode(String qrCode) {
-		this.qrCode = qrCode;
 	}
 
 }

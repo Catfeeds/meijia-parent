@@ -109,10 +109,9 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
-	
+
 	@Autowired
 	private XCompanyService xCompanyService;
-
 	/**
 	 * 新用户注册流程 1. 注册用户 2. 赠送金额
 	 */
@@ -184,13 +183,13 @@ public class UsersServiceImpl implements UsersService {
 
 		BeanUtilsExp.copyPropertiesIgnoreNull(user, userInfo);
 
-//		String seniorRange = "";
-//		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
-//
-//		if (!(seniorEndDate == null)) {
-//			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
-//		}
-//		userInfo.setSeniorRange(seniorRange);
+		String seniorRange = "";
+		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
+
+		if (!(seniorEndDate == null)) {
+			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
+		}
+		userInfo.setSeniorRange(seniorRange);
 
 		return userInfo;
 	}
@@ -340,6 +339,48 @@ public class UsersServiceImpl implements UsersService {
 			vo.setName(vo.getMobile());
 		}
 
+		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
+
+		// 获取用户与绑定的秘书的环信IM账号
+		Map imRobot = this.getImRobot(u);
+		vo.setImRobotUsername(imRobot.get("username").toString());
+		vo.setImRobotNickname(imRobot.get("nickname").toString());
+		vo.setSecId(0L);
+		if (userRefSec != null) {
+
+			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userRefSec.getSecId());
+
+			if (userRef3rd != null) {
+				vo.setImSecUsername(userRef3rd.getUsername());
+				vo.setImSecNickname(secUser.getName());
+				vo.setSecId(userRefSec.getSecId());
+			}
+		} else {
+			vo.setImSecUsername("");
+			vo.setImSecNickname("");
+		}
+
+		vo.setIsSenior((short) 0);
+		String seniorRange = "";
+
+		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
+
+		if (!(seniorEndDate == null)) {
+
+			String endDateStr = DateUtil.formatDate(seniorEndDate);
+			String nowStr = DateUtil.getToday();
+			if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+				vo.setIsSenior((short) 1);
+				seniorRange = "截止" + endDateStr;
+			} else {
+				seniorRange = "已过期";
+			}
+
+		}
+
+		vo.setSeniorRange(seniorRange);
+
 		// 用户环信IM信息
 		UserRef3rd userRef3rd = this.genImUser(u);
 		if (userRef3rd.getUsername().length() > 0) {
@@ -368,12 +409,11 @@ public class UsersServiceImpl implements UsersService {
 			vo.setCompanyCount(companyList.size());
 			
 			Long defaultCompanyId = 0L;
-			String defaultCompanName = "";
+			
 			//获取默认公司ID.
 			if (companyList.size() == 1) {
 				XcompanyStaff item = companyList.get(0);
 				defaultCompanyId = item.getCompanyId();
-				
 			} else {
 				for (XcompanyStaff xs : companyList) {
 					if (xs.getIsDefault().equals((short)1)) {
@@ -389,6 +429,7 @@ public class UsersServiceImpl implements UsersService {
 			}
 			
 			vo.setCompanyId(defaultCompanyId);
+			vo.setCompanyName("");
 			
 			if (defaultCompanyId > 0L) {
 				Xcompany xcompany = xCompanyService.selectByPrimaryKey(defaultCompanyId);
@@ -425,11 +466,43 @@ public class UsersServiceImpl implements UsersService {
 				vo.setName(vo.getMobile());
 			}
 
+			// 获取用户与绑定的秘书的环信IM账号
+			Map imRobot = this.getImRobot(u);
+			vo.setImRobotUsername(imRobot.get("username").toString());
+			vo.setImRobotNickname(imRobot.get("nickname").toString());
+
+			vo.setImSecUsername(userRef3rd.getUsername());
+			vo.setImSecNickname(secUser.getName());
+			vo.setSecId(secUser.getId());
+
+			vo.setIsSenior((short) 0);
+			String seniorRange = "";
+
+			Date seniorEndDate = orderQueryService.getSeniorRangeDate(u.getId());
+
+			if (!(seniorEndDate == null)) {
+
+				String endDateStr = DateUtil.formatDate(seniorEndDate);
+				String nowStr = DateUtil.getToday();
+				if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+					vo.setIsSenior((short) 1);
+					seniorRange = "截止" + endDateStr;
+				} else {
+					seniorRange = "已过期";
+				}
+
+			}
+
+			// 去掉已经到期的用户
+			if (vo.getIsSenior().equals((short) 0))
+				continue;
+
+			vo.setSeniorRange(seniorRange);
+
 			for (UserRef3rd item : userRef3rds) {
 				if (item.getUserId().equals(u.getId())) {
 					vo.setImUsername(item.getUsername());
 					vo.setImPassword(item.getPassword());
-					break;
 				}
 			}
 			result.add(vo);
