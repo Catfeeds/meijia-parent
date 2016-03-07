@@ -14,7 +14,7 @@ var formVal = $('#order-green-view-form').validate({
 			isFloat : true,
 		},
 
-		addrId : {
+		cityId : {
 			required : true,
 		},
 
@@ -39,8 +39,8 @@ var formVal = $('#order-green-view-form').validate({
 			isFloat : "金额只能包含数字,并且精确到小数点两位",
 		},
 
-		addrId : {
-			required : "请选择服务地址.",
+		cityId : {
+			required : "请选择活动城市.",
 		},
 
 		linkMan : {

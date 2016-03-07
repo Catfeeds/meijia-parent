@@ -5,26 +5,23 @@ var formVal = $('#order-team-view-form').validate({
 	ignore : [],
 	rules : {
 		
-		servicePriceId : {
-			required : true,
-		},
-		
 		serviceNum : {
 			required : true,
 			isIntGtZero : true,
 		},
+		
 
 		orderMoney : {
 			required : true,
 			isFloat : true,
 		},
-
+		
 		orderPay : {
 			required : true,
 			isFloat : true,
 		},
 
-		addrId : {
+		cityId : {
 			required : true,
 		},
 
@@ -39,10 +36,6 @@ var formVal = $('#order-team-view-form').validate({
 	},
 
 	messages : {
-		
-		servicePriceId : {
-			required : "请选择商品",
-		},
 		
 		serviceNum : {
 			required : "请输入送水数量",
@@ -59,8 +52,8 @@ var formVal = $('#order-team-view-form').validate({
 			isFloat : "金额只能包含数字,并且精确到小数点两位",
 		},
 
-		addrId : {
-			required : "请选择服务地址.",
+		cityId : {
+			required : "请选择活动城市.",
 		},
 
 		linkMan : {
@@ -166,63 +159,26 @@ $("#btn_submit_partner").click(function() {
 	}
 });
 
-$("#partnerId").change(function(){ 
-	var partnerId = $(this).children('option:selected').val();
-	if (partnerId != "") {
-		changePartner(239, partnerId);
-	}
-	
-});
-
-function changePartner(serviceTypeId, partnerId) {
-
-	var params = {};
-	params.service_type_id = serviceTypeId;
-	params.partner_id = partnerId;
-	$.ajax({
-		type : "GET",
-		url : simiAppRootUrl + "/app/partner/get_service_price_list.json", // 发送给服务器的url
-		data : params,
-		dataType : "json",
-		async : false,
-		success : function(msg) {
-			var data = msg.data;
-
-			//给select 赋值.
-			$("#servicePriceList").empty(); 
-			$.each(data, function(i, item) {
-				var name = item.name + "(原价:" + item.price + ",折扣价:" + item.dis_price + ")--(服务人员:" + item.user_name +",手机:" + item.mobile + ")";
-				$("#servicePriceList").append("<option value='"+ item.servce_price_id +"'>"+name+"</option>"); 
-			});
-		}
-	});
-}
-
 $("#orderStatus").change(function(){ 
 	var orderStatus = $(this).children('option:selected').val();
 	console.log("orderStatus = " + orderStatus);
 	//订单为未支付订单，则可以修改商品和价格这些
 	if (orderStatus == "1") {
-		$("#servicePriceId").removeAttr("disabled");
-		$("#serviceNum").removeAttr("readonly");
+		$("#teamType").removeAttr("readonly");
+		$("#cityId").removeAttr("readonly");
+		$("#attendNum").removeAttr("readonly");
 		$("#orderMoney").removeAttr("readonly");
 		$("#orderPay").removeAttr("readonly");
 	} else {
-		$("#servicePriceId").attr("disabled", "true");
-		$("#serviceNum").attr("readonly", "true");
+		$("#teamType").attr("readonly", "true");
+		$("#cityId").attr("readonly", "true");
+		$("#attendNum").attr("readonly", "true");
 		$("#orderMoney").attr("readonly", "true");
 		$("#orderPay").attr("readonly", "true");
 	}
 });
 
-
-$("#servicePriceId").change(function(){ 
-	var imgUrl = $("#servicePriceId").find("option:selected").attr('imgUrl');
-	$("#imgUrl").attr("src", imgUrl);
-	mathMoney();
-});
-
-$("#serviceNum").keyup(function(){ 
+$("#attendNum").keyup(function(){ 
 	mathMoney();
 });
 

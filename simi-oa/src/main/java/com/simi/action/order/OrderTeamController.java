@@ -58,6 +58,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
+import com.simi.vo.dict.DictCityVo;
 import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.order.OrdersExtTeamListVo;
 import com.simi.vo.order.OrdersTeamListVo;
@@ -212,6 +213,7 @@ public class OrderTeamController extends AdminController {
 
 		vo.setServiceDays(team.getServiceDays());
 		vo.setAttendNum(team.getAttendNum());
+		vo.setTeamType(team.getTeamType());
 		vo.setOrderExtStatus(team.getOrderExtStatus());
 		vo.setCityId(team.getCityId());
 		vo.setLinkMan(team.getLinkMan());
@@ -227,6 +229,24 @@ public class OrderTeamController extends AdminController {
 		//用户信息
 		Users user = usersService.selectByPrimaryKey(team.getUserId());
 		model.addAttribute("user", user);
+		
+		//服务时间
+		Long serviceDate1 = orders.getServiceDate();
+		String serviceDate1Str = TimeStampUtil.timeStampToDateStr(serviceDate1 * 1000,
+				"yyyy-MM-dd");
+		model.addAttribute("serviceDate1", serviceDate1Str);
+		
+		// 用户地址列表
+		List<DictCity> dictCityList = cityService.selectAll();
+		List<DictCityVo> voList = new ArrayList<DictCityVo>();
+		for (int i = 0; i < dictCityList.size(); i++) {
+			DictCity city = dictCityList.get(i);
+			DictCityVo vos = new DictCityVo();
+			vos.setCityId(city.getCityId());
+			vos.setCityName(city.getName());
+			voList.add(vos);
+		}
+		model.addAttribute("dictCityVo", voList);
 		
 		//服务商信息
 		// 服务商列表
@@ -265,12 +285,16 @@ public class OrderTeamController extends AdminController {
 	public String adForm(Model model,
 	@ModelAttribute("contentModel") OrdersTeamListVo vo, BindingResult result, HttpServletRequest request) throws IOException {
 
+		String serviceDate1 = request.getParameter("serviceDate");	
+		
 		Long orderId = vo.getOrderId();
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		if (order == null) return "redirect:/order/teamList";
 		
 		//更新订单基础信息
-		order.setAddrId(vo.getAddrId());
+	//	order.setAddrId(vo.getAddrId());
+		order.setServiceDate(TimeStampUtil.getMillisOfDay(serviceDate1)/1000);
+		order.setCityId(vo.getCityId());
 		order.setOrderStatus(vo.getOrderStatus());
 		order.setRemarks(vo.getRemarks());
 		ordersService.updateByPrimaryKeySelective(order);
@@ -289,6 +313,7 @@ public class OrderTeamController extends AdminController {
 		team.setAttendNum(vo.getAttendNum());
 		team.setOrderExtStatus(vo.getOrderExtStatus());
 		team.setCityId(vo.getCityId());
+		team.setTeamType(vo.getTeamType());
 		team.setLinkMan(vo.getLinkMan());
 		team.setLinkTel(vo.getLinkTel());
 		team.setOrderExtStatus(vo.getOrderExtStatus());
@@ -327,7 +352,6 @@ public class OrderTeamController extends AdminController {
 			
 			String orderExtStatusStr = request.getParameter("orderExtStatus");
 			orderExtStatus = Short.valueOf(orderExtStatusStr);
-	
 		}
 		
 		OrderExtTeam team = orderExtTeamService.selectByOrderId(orderId);
