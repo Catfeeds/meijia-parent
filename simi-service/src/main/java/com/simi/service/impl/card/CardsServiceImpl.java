@@ -168,14 +168,14 @@ public class CardsServiceImpl implements CardService {
 		vo.setAttends(attends);
 		
 		//获取用户名称
-		Users createUser = usersService.getUserInfo(vo.getCreateUserId());
+		Users createUser = usersService.selectByPrimaryKey(vo.getCreateUserId());
 		if (createUser != null) {
 			vo.setCreateUserId(createUser.getId());
 			vo.setCreateUserName(createUser.getName());
 			vo.setHeadImgCreateUser(createUser.getHeadImg());
 		}
 		
-		Users u = usersService.getUserInfo(vo.getUserId());
+		Users u = usersService.selectByPrimaryKey(vo.getUserId());
 		if (u != null) {
 			vo.setUserName(u.getName());
 			vo.setUserHeadImg(usersService.getHeadImg(u));
