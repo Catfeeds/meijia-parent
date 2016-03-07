@@ -16,12 +16,7 @@ $(function() {
 	jQuery.validator.addMethod("isFloat", function(value, element) {
 		return this.optional(element) || /^[-\+]?\d+(\.\d+)?$/.test(value);
 	}, "只能包含数字、小数点等字符");
-	
-	jQuery.validator.addMethod("isPrice", function(value, element) {
-		return this.optional(element) || /^\d+(?:\.\d{0,2})$/.test(value);
-	}, "金额只能包含数字,并且精确到小数点两位");
-	
-	
+		
 	// 只能输入[0-9]数字
 	jQuery.validator.addMethod("isDigits", function(value, element) {
 		return this.optional(element) || /^\d+$/.test(value);

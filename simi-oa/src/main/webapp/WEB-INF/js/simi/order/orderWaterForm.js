@@ -16,12 +16,12 @@ var formVal = $('#order-water-view-form').validate({
 
 		orderMoney : {
 			required : true,
-			isPrice : true,
+			isFloat : true,
 		},
 
 		orderPay : {
 			required : true,
-			isPrice : true,
+			isFloat : true,
 		},
 
 		addrId : {
@@ -51,12 +51,12 @@ var formVal = $('#order-water-view-form').validate({
 
 		orderMoney : {
 			required : "请输入总金额",
-			isPrice : "金额只能包含数字,并且精确到小数点两位",
+			isFloat : "金额只能包含数字,并且精确到小数点两位",
 		},
 
 		orderPay : {
 			required : "请输入支付金额",
-			isPrice : "金额只能包含数字,并且精确到小数点两位",
+			isFloat : "金额只能包含数字,并且精确到小数点两位",
 		},
 
 		addrId : {

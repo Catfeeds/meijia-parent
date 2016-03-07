@@ -358,7 +358,7 @@ public class OrderWaterController extends AdminController {
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKey(order);
 			
-			userMsgAsyncService.newOrderMsg(userId, orderId, "recycle", "");
+			userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
 			
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());

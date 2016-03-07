@@ -6,12 +6,12 @@ var formVal = $('#order-green-view-form').validate({
 	rules : {
 		orderMoney : {
 			required : true,
-			isPrice : true,
+			isFloat : true,
 		},
 
 		orderPay : {
 			required : true,
-			isPrice : true,
+			isFloat : true,
 		},
 
 		addrId : {
@@ -31,12 +31,12 @@ var formVal = $('#order-green-view-form').validate({
 	messages : {
 		orderMoney : {
 			required : "请输入总金额",
-			isPrice : "金额只能包含数字,并且精确到小数点两位",
+			isFloat : "金额只能包含数字,并且精确到小数点两位",
 		},
 
 		orderPay : {
 			required : "请输入支付金额",
-			isPrice : "金额只能包含数字,并且精确到小数点两位",
+			isFloat : "金额只能包含数字,并且精确到小数点两位",
 		},
 
 		addrId : {
