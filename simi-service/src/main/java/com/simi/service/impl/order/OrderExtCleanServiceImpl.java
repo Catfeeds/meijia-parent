@@ -174,8 +174,11 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 		
 		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(serviceTypeIds);
 		
-		List<UserAddrs> userAddrs = userAddrsService.selectByIds(userAddrIds);
+		List<UserAddrs> userAddrs = new ArrayList<UserAddrs>();
 		
+		if (!userAddrIds.isEmpty()) {
+				userAddrsService.selectByIds(userAddrIds);
+		}
 		for (int i = 0; i < list.size(); i++) {
 			OrderExtClean item = list.get(i);
 			OrderExtCleanListVo vo = new OrderExtCleanListVo();
