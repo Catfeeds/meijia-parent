@@ -50,7 +50,7 @@ public class UserTrailController extends BaseController {
 			return result;
 		}
 		
-		UserTrailReal userTrail = userTrailRealService.selectByPrimaryKey(userId);
+		UserTrailReal userTrail = userTrailRealService.selectByUserId(userId);
 		
 		if (userTrail == null) {
 			userTrail = userTrailRealService.initUserTrailReal();
