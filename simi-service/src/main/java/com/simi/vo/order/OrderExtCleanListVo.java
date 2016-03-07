@@ -7,6 +7,8 @@ public class OrderExtCleanListVo {
     
     private String orderNo;
     
+    private Short orderStatus;
+    
     private Short orderExtStatus;
     
     private Long userId;
@@ -111,6 +113,14 @@ public class OrderExtCleanListVo {
 
 	public void setCleanTypeName(String cleanTypeName) {
 		this.cleanTypeName = cleanTypeName;
+	}
+
+	public Short getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(Short orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 

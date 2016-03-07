@@ -100,7 +100,9 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 
 		 PageHelper.startPage(pageNo, pageSize);
          List<OrderExtClean> list = orderExtCleanMapper.selectByListPage(orderSearchVo);
+                  
          PageInfo result = new PageInfo(list);
+         
         return result;
     }
 
@@ -136,6 +138,7 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 		
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
+		vo.setOrderStatus(order.getOrderStatus());
 		vo.setOrderExtStatus(item.getOrderExtStatus());
 		return vo;
 	}
@@ -193,6 +196,10 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 					order = tmpOrder;
 					break;
 				}
+			}
+			
+			if (order != null) {
+				vo.setOrderStatus(order.getOrderStatus());
 			}
 			
 			//服务地址
