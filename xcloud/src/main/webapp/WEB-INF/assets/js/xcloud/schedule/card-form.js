@@ -1,3 +1,9 @@
+
+var hiddenNames = $("#selectUserNamesHidden").val();
+if (hiddenNames != undefined) {
+	$("#selectUserNames").html(hiddenNames);
+}
+
 //初始化员工表格
 $("#list-table").DataTable(
 		{
@@ -126,9 +132,10 @@ function removeSelectTable(userId) {
 
 // hidden selectUserIds 和 selectUserNames 处理添加的情况
 function addSelectUser(userId, name, mobile) {
-
+	console.log("addSelectUser");
 	var selectUserIds = $("#selectUserIds").val();
 	var selectUserNames = $("#selectUserNames").html();
+	var selectUserNamesHidden = $("#selectUserNamesHidden").val();
 	var selectUserMobiles = $("#selectUserMobiles").val();
 
 	var hasExist = false;
@@ -141,15 +148,17 @@ function addSelectUser(userId, name, mobile) {
 			}
 		}
 	}
-
+	
 	if (hasExist == false) {
 		selectUserIds = selectUserIds + userId + ",";
 		selectUserNames = selectUserNames + name + ",";
 		selectUserMobiles = selectUserMobiles + mobile + ",";
 		$("#selectUserIds").val(selectUserIds);
 		$("#selectUserNames").html(selectUserNames);
+		$("#selectUserNamesHidden").val(selectUserNames);
 		$("#selectUserMobiles").val(selectUserMobiles);
 	}
+
 	console.log($("#selectUserIds").val());
 	console.log($("#selectUserMobiles").val());
 };
@@ -159,6 +168,8 @@ function removeSelectUser(userId, name, mobile) {
 	var selectUserIds = $("#selectUserIds").val();
 	var selectUserNames = $("#selectUserNames").html();
 	var selectUserMobiles = $("#selectUserMobiles").val();
+	var selectUserNamesHidden = $("#selectUserNamesHidden").val();
+	
 	var hasExist = false;
 	var newSelectUserIds = "";
 	var newSelectNames = "";
@@ -178,6 +189,7 @@ function removeSelectUser(userId, name, mobile) {
 
 	$("#selectUserIds").val(newSelectUserIds);
 	$("#selectUserNames").html(newSelectNames);
+	$("#selectUserNames").val(newSelectNames);
 	$("#selectUserMobiles").val(newSelectMobiles);
 	
 	console.log($("#selectUserIds").val());
