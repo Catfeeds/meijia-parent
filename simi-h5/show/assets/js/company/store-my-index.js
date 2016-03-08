@@ -21,13 +21,19 @@ $.ajax({
 		//if (data.status == "999") return false;
 		if (data.status == "999") {
 			//alert(data.msg);	
-			alert(data.msg);
-			location.href = "store-index.html?user_id="+userId;
-			return;
+			
+			if (confirm(data.msg)) {
+				location.href = "store-index.html?user_id="+userId;
+				return;
+			}
+			//alert(data.msg);
 			}
 		if (data.status == "100") {
-			alert(data.msg);	
-			return false;
+			
+			if (confirm(data.msg)) {
+
+				return false;
+			}
 			}
 		var partnerUsers = data.data;
 		console.log(partnerUsers);
