@@ -33,11 +33,7 @@ var formVal = $('#order-team-view-form').validate({
 		},
 
 	},
-
 	messages : {
-		
-		
-		
 		attendNum : {
 			required : "请输入参加人数",
 			isIntGtZero : "数量只能输入数字",
@@ -165,12 +161,14 @@ $("#orderStatus").change(function(){
 	console.log("orderStatus = " + orderStatus);
 	//订单为未支付订单，则可以修改商品和价格这些
 	if (orderStatus == "1") {
+		$("#serviceDays").removeAttr("readonly");
 		$("#teamType").removeAttr("readonly");
 		$("#cityId").removeAttr("readonly");
 		$("#attendNum").removeAttr("readonly");
 		$("#orderMoney").removeAttr("readonly");
 		$("#orderPay").removeAttr("readonly");
 	} else {
+		$("#serviceDays").attr("readonly", "true");
 		$("#teamType").attr("readonly", "true");
 		$("#cityId").attr("readonly", "true");
 		$("#attendNum").attr("readonly", "true");
