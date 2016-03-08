@@ -78,6 +78,9 @@ public class LoginController extends BaseController {
 
         AccountAuth accountAuth= new AccountAuth();
         accountAuth.setUserId(userId);
+        accountAuth.setName(u.getName());
+        accountAuth.setHeadImg(u.getHeadImg());
+        accountAuth.setMobile(u.getMobile());
         accountAuth.setCompanyId(companyId);
         accountAuth.setCompanyName(companyName);
         accountAuth.setShortName(shortName);

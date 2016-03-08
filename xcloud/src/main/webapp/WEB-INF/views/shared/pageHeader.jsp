@@ -2,7 +2,7 @@
 <header class="am-topbar admin-header">
 	<div class="am-topbar-brand">
 		<img src="https://gtms02.alicdn.com/tps/i2/TB1qU_xGFXXXXczaXXXTyVt9VXX-128-128.png" height="25"
-			width="25"><a href="#"></i> | 北京美家生活科技有限公司 </a><a href="javascript:;"> <span
+			width="25"><a href="#"></i> | ${sessionScope.accountAuth.companyName} </a><a href="javascript:;"> <span
 			class="am-badge am-badge-danger am-radius"></span></a>
 	</div>
 
@@ -26,13 +26,13 @@
       	-->
 			<li class="am-dropdown" data-am-dropdown><a class="am-dropdown-toggle"
 				data-am-dropdown-toggle href="javascript:;"> <img src="<c:url value='/assets/img/a1.png'/>"
-					class="am-img-thumbnail am-circle" width="30" height="30"> 莎拉波娃 <span
+					class="am-img-thumbnail am-circle" width="30" height="30"> ${sessionScope.accountAuth.name} <span
 					class="am-icon-caret-down"></span>
 			</a>
 				<ul class="am-dropdown-content">
 					<li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
 					<li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
-					<li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+					<li><a href="/xcloud/logout"><span class="am-icon-power-off"></span> 退出</a></li>
 				</ul></li>
 		</ul>
 	</div>
