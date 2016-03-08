@@ -52,6 +52,7 @@ public class UserImageController extends BaseController {
 	 *             参考 ：http://www.concretepage.com/spring-4/spring-4-mvc-single-
 	 *             multiple-file-upload-example-with-tomcat
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_user_head_img", method = RequestMethod.POST)
 	public AppResultData<Object> userHeadImg(HttpServletRequest request,
 			@RequestParam("user_id") Long userId,
@@ -100,6 +101,9 @@ public class UserImageController extends BaseController {
 			u.setHeadImg(imgUrl);
 
 			userService.updateByPrimaryKeySelective(u);
+			
+			//更新用户二维码
+			userImgService.genUserQrCode(u.getId());
 
 			img.put("user_id", userId.toString());
 			img.put("head_img", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
@@ -115,6 +119,7 @@ public class UserImageController extends BaseController {
 	 * 
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_user_img", method = RequestMethod.POST)
 	public AppResultData<Object> userImg(HttpServletRequest request,
 			@RequestParam("user_id") Long userId,
@@ -267,51 +272,17 @@ public class UserImageController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
+		
+		String qrCode = u.getQrCode();
 
-		if (!StringUtil.isEmpty(u.getQrCode())) {
-			result.setData(u.getQrCode());
-			
+		if (!StringUtil.isEmpty(qrCode)) {
+			result.setData(qrCode);
 			return result;
 		}
 		
-		String qrCodeLogo = userService.getHeadImg(u);
-		if (StringUtil.isEmpty(qrCodeLogo)) {
-			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
-		}
-				
-		String contents = "xcloud://action=add_friend";
-			   contents+= "&user_id="+u.getId().toString();
-			   contents+= "&name="+u.getName();
-			   contents+= "&mobile="+u.getMobile();
+		qrCode = userImgService.genUserQrCode(u.getId());
 		
-		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(contents, 800, 800, qrCodeLogo);
-		
-		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();  
-        try {  
-            boolean resultWrite = ImageIO.write(qrCodeImg, "png", imageStream);  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
-        imageStream.flush();  
-        byte[] imgBytes = imageStream.toByteArray();  
-		
-        String url = Constants.IMG_SERVER_HOST + "/upload/";
-		String sendResult = ImgServerUtil.sendPostBytes(url, imgBytes, "png");
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-		String ret = o.get("ret").toString();
-
-		HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-		String imgUrl = Constants.IMG_SERVER_HOST + "/"+ info.get("md5").toString();		
-		
-		u.setQrCode(imgUrl);
-		userService.updateByPrimaryKeySelective(u);
-		
-		result.setData(imgUrl);
+		result.setData(qrCode);
 		
 		return result;
 	}	
