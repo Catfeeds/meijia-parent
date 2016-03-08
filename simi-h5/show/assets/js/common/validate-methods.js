@@ -45,9 +45,9 @@ function verifyNumber($str){
 
 //验证手机号的方法
 function verifyMobile(mobile){
-	//$pattern = /^1[3,4,5,6,7,8，9][0-9]{9}$/;
+	$pattern = /^1[3,4,5,6,7,8，9][0-9]{9}$/;
 	//$pattern = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
-	$pattern =/^(13[0-9]{9})|(15[89][0-9]{8})$/;
+	//$pattern =/^(13[0-9]{9})|(15[0-9][0-9]{9})$/;
 	if(mobile.match($pattern)){
 		return true;
 	}else{
