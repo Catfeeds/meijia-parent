@@ -190,9 +190,16 @@ public class OrderExtCleanController extends BaseController {
 		}
 		
 		//如果城市不是北京市，则提示无法服务
-		v = validateService.validateOrderCity(userId);
-		if (v.getStatus() == Constants.ERROR_999) {
-			return v;
+		if (addrId.equals(0L)) {
+			v = validateService.validateOrderCity(userId);
+			if (v.getStatus() == Constants.ERROR_999) {
+				return v;
+			}
+		} else {
+			v = validateService.validateUserAddr(userId, addrId);
+			if (v.getStatus() == Constants.ERROR_999) {
+				return v;
+			}
 		}
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);

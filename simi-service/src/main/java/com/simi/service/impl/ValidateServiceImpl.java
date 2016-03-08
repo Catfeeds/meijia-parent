@@ -64,7 +64,7 @@ public class ValidateServiceImpl implements ValidateService {
 		} else {
 			Users u = userService.selectByPrimaryKey(userId);
 			if (!StringUtil.isEmpty(u.getProvinceName())) {
-				if (!u.getProvinceName().equals("北京市")) {
+				if (!u.getProvinceName().equals("北京")) {
 					result.setStatus(Constants.ERROR_999);
 					result.setMsg("目前仅支持北京市区服务范围，敬请谅解！");
 					return result;
