@@ -18,6 +18,10 @@ public interface ValidateService {
 	AppResultData<Object> validateOrderCity(Long userId);
 
 	AppResultData<Object> validateUserAddr(Long userId, Long addrId);
+
+	AppResultData<Object> validateFriend(Long userId, Long friendId);
+
+	AppResultData<Object> validateSameCompany(Long userId, Long friendId);
 	
 	
 }

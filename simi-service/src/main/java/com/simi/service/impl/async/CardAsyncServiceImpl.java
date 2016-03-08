@@ -18,12 +18,14 @@ import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
+import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
+import com.simi.service.ValidateService;
 import com.simi.service.async.CardAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardLogService;
@@ -33,6 +35,7 @@ import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
+import com.simi.vo.AppResultData;
 import com.simi.vo.UserFriendSearchVo;
 
 @Service
@@ -58,6 +61,9 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 	
 	@Autowired
 	private UserFriendService userFriendService;
+	
+	@Autowired
+	private ValidateService validateService;
 	
 	/**
 	 * 第三方登录，注册绑定环信账号,异步操作
@@ -248,13 +254,18 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		}		
 		
 		for (UserPushBind p : userPushBinds) {
-			//若果不是好友不能发推送消息
-			UserFriendSearchVo searchVo = new UserFriendSearchVo();
-			searchVo.setUserId(p.getUserId());
-			searchVo.setFriendId(card.getCreateUserId());
-			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);	
-			if (userFriend == null)continue;
+			//若果不是好友以及不是同一家公司不能发推送消息
+			AppResultData<Object> v = validateService.validateFriend(card.getCreateUserId(), p.getUserId());
 			
+			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);
+			
+			if (isFriend == false) {
+				v = validateService.validateSameCompany(card.getCreateUserId(), p.getUserId());
+				if (v.getStatus() == Constants.ERROR_999) {
+					continue;
+				}
+			}
+
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", p.getClientId());
 			
