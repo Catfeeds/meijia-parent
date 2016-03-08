@@ -171,9 +171,9 @@ public class OrderExtTeamController extends BaseController {
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("city_id") Long cityId,
-			@RequestParam("attend_num") Long attendNum,
 			@RequestParam("team_type") Short teamType,
-			@RequestParam(value = "service_days",required = false,defaultValue = "") Short serviceDays,
+			@RequestParam(value = "attend_num",required = false,defaultValue = "0") Long attendNum,
+			@RequestParam(value = "service_days",required = false,defaultValue = "0") Short serviceDays,
 			@RequestParam(value = "link_man",required = false,defaultValue = "") String linkMan,
 			@RequestParam(value = "link_tel",required = false,defaultValue = "") String linkTel,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks
