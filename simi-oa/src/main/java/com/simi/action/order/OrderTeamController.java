@@ -156,7 +156,7 @@ public class OrderTeamController extends AdminController {
 		PageHelper.startPage(pageNo, pageSize);
 
 		List<Orders> orderList = orderQueryService.selectByListPageList(searchVo, pageNo, pageSize);
-
+        
 		Orders orders = null;
 		for (int i = 0; i < orderList.size(); i++) {
 			orders = orderList.get(i);
@@ -174,12 +174,14 @@ public class OrderTeamController extends AdminController {
 				vo.setLinkMan(team.getLinkMan());
 				vo.setLinkTel(team.getLinkTel());
 				vo.setOrderExtStatus(team.getOrderExtStatus());
+				
+				DictCity dictCity = cityService.getCityById(team.getCityId());
+				
+				vo.setCityName("");
+				if (dictCity != null) {
+				vo.setCityName(dictCity.getName());
 			}
-			DictCity dictCity = cityService.getCityById(team.getCityId());
 			
-			vo.setCityName("");
-			if (dictCity != null) {
-			vo.setCityName(dictCity.getName());
 			}
 			orderList.set(i, vo);
 		}
