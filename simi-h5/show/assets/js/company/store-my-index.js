@@ -1,6 +1,7 @@
 
 
 var userId = getUrlParam("user_id");
+alert(userId);
 //alert(window.location.href);
 //商品管理
 $("#storePrice").attr("href","store-price-list.html?user_id="+userId);
@@ -17,7 +18,7 @@ $.ajax({
 	cache : true,
 	async : false,	
 	success : function(data) {
-	
+	   
 		//if (data.status == "999") return false;
 		if (data.status == "999") {
 			//alert(data.msg);	
