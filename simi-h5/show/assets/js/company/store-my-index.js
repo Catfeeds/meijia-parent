@@ -21,6 +21,7 @@ $.ajax({
 		//if (data.status == "999") return false;
 		if (data.status == "999") {
 			//alert(data.msg);	
+			alert(data.msg);
 			location.href = "store-index.html?user_id="+userId;
 			return;
 			}
