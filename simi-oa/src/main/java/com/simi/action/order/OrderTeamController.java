@@ -1,7 +1,9 @@
 package com.simi.action.order;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +22,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.OrderNoUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.order.OrderExtPartner;
 import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtTeam;
 import com.simi.po.model.order.OrderExtWater;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerRefServiceType;
@@ -39,6 +45,7 @@ import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.dict.CityService;
 import com.simi.service.order.OrderExtGreenService;
@@ -56,11 +63,13 @@ import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.dict.DictCityVo;
 import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.order.OrdersExtTeamListVo;
+import com.simi.vo.order.OrdersTeamAddOaVo;
 import com.simi.vo.order.OrdersTeamListVo;
 import com.simi.vo.order.OrdersWaterListVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
@@ -117,6 +126,9 @@ public class OrderTeamController extends AdminController {
 	
 	@Autowired
 	private CityService cityService;
+	
+	@Autowired
+	private ValidateService validateService;
 
 	/**
 	 * 团建订单列表
@@ -236,7 +248,7 @@ public class OrderTeamController extends AdminController {
 				"yyyy-MM-dd");
 		model.addAttribute("serviceDate1", serviceDate1Str);
 		
-		// 用户地址列表
+		// 活动地址列表
 		List<DictCity> dictCityList = cityService.selectAll();
 		List<DictCityVo> voList = new ArrayList<DictCityVo>();
 		for (int i = 0; i < dictCityList.size(); i++) {
@@ -250,7 +262,6 @@ public class OrderTeamController extends AdminController {
 		
 		//服务商信息
 		// 服务商列表
-		
 		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectByServiceTypeId(serviceTypeId);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
@@ -362,6 +373,103 @@ public class OrderTeamController extends AdminController {
 		return "redirect:/order/teamList";
 	}
 	
+	@RequestMapping(value = "/orderTeamAddForm", method = RequestMethod.GET)
+	public String orderTeamAdd(Long id, Model model) {
+		
+		OrdersTeamAddOaVo vo = new OrdersTeamAddOaVo();
+		OrderExtTeam team = orderExtTeamService.initOrderExtTeam();
+		BeanUtilsExp.copyPropertiesIgnoreNull(team, vo);
+		vo.setRemarks("");
+		vo.setServiceDate(TimeStampUtil.getNowSecond());
+		String serviceDate1Str = TimeStampUtil.timeStampToDateStr(TimeStampUtil.getNowSecond() * 1000,
+				"yyyy-MM-dd");
+		// 活动地址列表
+				List<DictCity> dictCityList = cityService.selectAll();
+				List<DictCityVo> voList = new ArrayList<DictCityVo>();
+				for (int i = 0; i < dictCityList.size(); i++) {
+					DictCity city = dictCityList.get(i);
+					DictCityVo vos = new DictCityVo();
+					vos.setCityId(city.getCityId());
+					vos.setCityName(city.getName());
+					voList.add(vos);
+				}
+				model.addAttribute("dictCityVo", voList);
+		model.addAttribute("serviceDate1", serviceDate1Str);
+		model.addAttribute("contentModel", vo);
+
+		return "order/orderTeamAddForm";
+	}
 	
+	@RequestMapping(value = "/saveOrderTeamAdd", method = RequestMethod.POST)
+	public String orderTeamSave(Model model,
+			@ModelAttribute("contentModel") OrdersTeamAddOaVo vo, 
+			BindingResult result, HttpServletRequest request) throws UnsupportedEncodingException {
+		
+		Long serviceTypeId = (long) 79;
+		Users u = usersService.selectByMobile(vo.getMobile());
+		
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		// 调用公共订单号类，生成唯一订单号
+    	Orders order = null;
+    	String orderNo = "";
+    
+    	orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+		order = ordersService.initOrders();
+		String remarks = vo.getRemarks();
+		// 服务内容及备注信息需要进行urldecode;		
+		if (!StringUtil.isEmpty(remarks)) {
+			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
+		}
+		//保存订单信息
+		order.setOrderNo(orderNo);
+		order.setServiceTypeId(serviceTypeId);
+		order.setUserId(u.getId());
+		order.setMobile(u.getMobile());
+		order.setOrderStatus(Constants.ORDER_STATUS_3_PROCESSING);
+		order.setServiceContent(serviceType.getName());
+
+		order.setCityId(vo.getCityId());
+		if (!StringUtil.isEmpty(remarks)) {
+			order.setRemarks(remarks);	
+		}
+		ordersService.insert(order);
+		Long orderId = order.getOrderId();
+		
+		//记录订单日志.
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLogService.insert(orderLog);
+		
+		//保存订单价格信息
+		OrderPrices orderPrice = orderPricesService.initOrderPrices();
+		
+
+		orderPrice.setOrderId(orderId);
+		orderPrice.setOrderNo(orderNo);
+		orderPrice.setUserId(u.getId());
+		orderPrice.setMobile(u.getMobile());
+		orderPricesService.insert(orderPrice);
+		
+		//保存团建订单扩展表信息
+		OrderExtTeam team = orderExtTeamService.initOrderExtTeam();
+		team.setOrderId(orderId);
+		team.setOrderNo(orderNo);
+		team.setUserId(u.getId());
+		team.setCityId(vo.getCityId());
+		team.setMobile(u.getMobile());
+		team.setServiceDays(vo.getServiceDays());
+		team.setTeamType(vo.getTeamType());
+		team.setAttendNum(vo.getAttendNum());
+		team.setLinkMan(vo.getLinkMan());
+		team.setLinkTel(vo.getLinkTel());
+		orderExtTeamService.insert(team);
+					
+		/*OrdersExtTeamListVo vo = orderExtTeamService.getListVo(team);
+		result.setData(vo);*/
+		
+		//异步产生首页消息信息.
+		userMsgAsyncService.newOrderMsg(u.getId(), orderId, "team", "");
+		
+		return "redirect:/order/teamList";
+	}
 
 }

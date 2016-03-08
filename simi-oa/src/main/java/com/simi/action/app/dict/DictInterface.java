@@ -16,9 +16,11 @@ import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.user.Users;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.DictService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 
@@ -31,6 +33,9 @@ public class DictInterface extends BaseController {
 
     @Autowired
     private AdService adService;
+    
+    @Autowired
+    private UsersService usersService;
     
     @Autowired
     private PartnerServiceTypeService partnerServiceTypeService;
@@ -95,6 +100,20 @@ public class DictInterface extends BaseController {
 		
 		return result;
 	}
-
+	/**
+	 * 检查用户是否存在
+	 * @param mobile
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "check-user-by-mobile", method = RequestMethod.GET)
+    public AppResultData<Object> getUser(
+    		@RequestParam(value = "mobile", required = true, defaultValue = "") String mobile) {
+		
+		Users users = usersService.selectByMobile(mobile);
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
+				ConstantMsg.SUCCESS_0_MSG, users);
+    	return result;
+    }
 
 }
