@@ -58,7 +58,7 @@
 							<c:forEach items="${contentModel.list}" var="item">
 								<tr>
 									
-									<td><img src="${ item.logo }"/></td>
+									<td><img width="60" height="60" src="${ item.logo }"/></td>
 									<td>${item.name}</td>
 									<td><c:choose>
 									<c:when test="${item.status  == null && item.isDefault == 0}">
