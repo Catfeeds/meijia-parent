@@ -6,6 +6,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -170,9 +171,9 @@ public class OrderExtTeamController extends BaseController {
 	public AppResultData<Object> postGreen(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("city_id") Long cityId,
-			@RequestParam("service_days") Short serviceDays,
 			@RequestParam("attend_num") Long attendNum,
 			@RequestParam("team_type") Short teamType,
+			@RequestParam(value = "service_days",required = false,defaultValue = "") Short serviceDays,
 			@RequestParam(value = "link_man",required = false,defaultValue = "") String linkMan,
 			@RequestParam(value = "link_tel",required = false,defaultValue = "") String linkTel,
 			@RequestParam(value = "remarks",required = false,defaultValue = "") String remarks
