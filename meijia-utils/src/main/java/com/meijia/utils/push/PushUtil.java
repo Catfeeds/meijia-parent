@@ -84,7 +84,7 @@ public class PushUtil {
 		System.out.println(template.toString());
 		SingleMessage message = new SingleMessage();
 		message.setOffline(true);
-		message.setOfflineExpireTime(2 * 1000 * 3600);
+		message.setOfflineExpireTime(72 * 1000 * 3600);
 		message.setData(template);
 			
 		Target target1 = new Target();
@@ -178,7 +178,7 @@ public class PushUtil {
 		
 		SingleMessage message = new SingleMessage();
 		message.setOffline(true);
-		message.setOfflineExpireTime(2 * 1000 * 3600);
+		message.setOfflineExpireTime(72 * 1000 * 3600);
 		message.setData(template);
 			
 		Target target1 = new Target();
