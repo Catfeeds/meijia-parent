@@ -1,6 +1,5 @@
 package com.simi.service.impl.order;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

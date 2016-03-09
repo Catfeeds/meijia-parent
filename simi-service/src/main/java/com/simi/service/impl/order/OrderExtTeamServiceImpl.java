@@ -1,5 +1,4 @@
 package com.simi.service.impl.order;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,20 +10,13 @@ import com.simi.service.order.OrdersService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
-import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.vo.order.OrdersExtTeamListVo;
 import com.simi.po.dao.dict.DictCityMapper;
 import com.simi.po.dao.order.OrderExtTeamMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.order.OrderExtTeam;
-import com.simi.po.model.order.OrderExtWater;
-import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
-import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
-import com.sun.tools.classfile.StackMapTable_attribute.chop_frame;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;

@@ -28,26 +28,26 @@
 		</javaTypeResolver>
 
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="com.simi.po.model.dict"
+		<javaModelGenerator targetPackage="com.simi.po.model.common"
 			targetProject="simi-dao">
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
 		<!-- 生成的映射文件包名和位置 -->
-		<sqlMapGenerator targetPackage="com.simi.po.xml.dict"
+		<sqlMapGenerator targetPackage="com.simi.po.xml.common"
 			targetProject="simi-dao">
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator targetPackage="com.simi.po.dao.dict"
+		<javaClientGenerator targetPackage="com.simi.po.dao.common"
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
 		<!--快递服务商字典表 -->
-		<table schema="simi" tableName="dict_express"
+		<table schema="simi" tableName="imgs"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
 			enableUpdateByPrimaryKey="true"
@@ -56,9 +56,10 @@
 			enableDeleteByExample="false"
 			enableSelectByExample="false"
 			enableCountByExample="false">
-			<columnOverride  column="express_id" property="expressId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="img_id" property="imgId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="link_id" property="linkId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 		
 

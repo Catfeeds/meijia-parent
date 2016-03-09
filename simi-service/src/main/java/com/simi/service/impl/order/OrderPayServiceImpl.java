@@ -18,7 +18,6 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.order.OrderWaterComVo;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;

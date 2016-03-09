@@ -1,9 +1,7 @@
 package com.simi.service.user;
 
-import java.io.IOException;
 import java.util.List;
 
-import com.google.zxing.WriterException;
 import com.simi.po.model.user.UserImgs;
 
 public interface UserImgService {

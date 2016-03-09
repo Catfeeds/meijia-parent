@@ -52,10 +52,12 @@ public class OrdersTeamListVo extends OrdersListVo{
 		this.attendNum = attendNum;
 	}
 
+	@Override
 	public Long getCityId() {
 		return cityId;
 	}
 
+	@Override
 	public void setCityId(Long cityId) {
 		this.cityId = cityId;
 	}

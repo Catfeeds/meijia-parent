@@ -2,19 +2,20 @@ package com.simi.service.impl.user;
 
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simi.service.data.WeatherService;
+import com.simi.service.WeatherService;
 import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserMsgSearchVo;
 import com.simi.vo.user.UserMsgVo;
 import com.simi.po.dao.user.UserMsgMapper;
-import com.simi.po.model.data.Weathers;
+import com.simi.po.model.common.Weathers;
 import com.simi.po.model.user.UserMsg;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;

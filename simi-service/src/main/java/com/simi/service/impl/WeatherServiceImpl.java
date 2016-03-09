@@ -1,4 +1,4 @@
-package com.simi.service.impl.data;
+package com.simi.service.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -14,9 +14,9 @@ import com.meijia.utils.weather.WeatherIndexVo;
 import com.meijia.utils.weather.WeatherInfoVo;
 import com.meijia.utils.weather.WeatherResultVo;
 import com.meijia.utils.weather.WeatherUtil;
-import com.simi.po.dao.data.WeathersMapper;
-import com.simi.po.model.data.Weathers;
-import com.simi.service.data.WeatherService;
+import com.simi.po.dao.common.WeathersMapper;
+import com.simi.po.model.common.Weathers;
+import com.simi.service.WeatherService;
 
 
 @Service

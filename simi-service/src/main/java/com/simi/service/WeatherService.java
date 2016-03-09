@@ -1,8 +1,8 @@
-package com.simi.service.data;
+package com.simi.service;
 
 import java.util.Date;
 
-import com.simi.po.model.data.Weathers;
+import com.simi.po.model.common.Weathers;
 
 
 public interface WeatherService {

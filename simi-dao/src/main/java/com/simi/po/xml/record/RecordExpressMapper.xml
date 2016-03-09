@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.record.RecordExpressMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.record.RecordExpress">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="to_user_id" property="toUserId" jdbcType="NUMERIC" />
+		<result column="express_id" property="expressId" jdbcType="NUMERIC" />
+		<result column="express_no" property="expressNo" jdbcType="VARCHAR" />
+		<result column="express_type" property="expressType" jdbcType="NUMERIC" />
+		<result column="is_done" property="isDone" jdbcType="NUMERIC" />
+		<result column="is_close" property="isClose" jdbcType="NUMERIC" />
+		<result column="pay_type" property="payType" jdbcType="NUMERIC" />
+		<result column="from_city_id" property="fromCityId" jdbcType="NUMERIC" />
+		<result column="from_addr" property="fromAddr" jdbcType="VARCHAR" />
+		<result column="from_name" property="fromName" jdbcType="VARCHAR" />
+		<result column="from_tel" property="fromTel" jdbcType="VARCHAR" />
+		<result column="from_company_name" property="fromCompanyName" jdbcType="VARCHAR" />
+		<result column="to_city_id" property="toCityId" jdbcType="NUMERIC" />
+		<result column="to_addr" property="toAddr" jdbcType="VARCHAR" />
+		<result column="to_name" property="toName" jdbcType="VARCHAR" />
+		<result column="to_tel" property="toTel" jdbcType="VARCHAR" />
+		<result column="to_company_name" property="toCompanyName" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, user_id, to_user_id, express_id, express_no, express_type, is_done,
+		is_close, pay_type, from_city_id, from_addr, from_name,
+		from_tel, from_company_name,
+		to_city_id, to_addr, to_name, to_tel, to_company_name, remarks, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from record_express
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByExpressNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from record_express
+		where express_no = #{expressNo,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordExpressSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_express
+		where 1=1
+
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="expressId != null">
+			and express_id = #{expressId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="expressNo != null">
+			and express_no like CONCAT('%','${expressNo}','%' )
+		</if>
+
+		<if test="expressType != null">
+			and express_type = #{expressType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isDone != null">
+			and is_done = #{isDone,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isClose != null">
+			and is_close = #{isClose,jdbcType=NUMERIC}
+		</if>
+
+		<if test="payType != null">
+			and pay_type = #{payType,jdbcType=NUMERIC}
+		</if>
+
+		order by add_time desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordExpressSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_express
+		where 1=1
+
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="expressId != null">
+			and express_id = #{expressId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="expressNo != null">
+			and express_no like CONCAT('%','${expressNo}','%' )
+		</if>
+
+		<if test="expressType != null">
+			and express_type = #{expressType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isDone != null">
+			and is_done = #{isDone,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isClose != null">
+			and is_close = #{isClose,jdbcType=NUMERIC}
+		</if>
+
+		<if test="payType != null">
+			and pay_type = #{payType,jdbcType=NUMERIC}
+		</if>
+
+		order by add_time desc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from record_express
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.record.RecordExpress">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into record_express (id, company_id, user_id,
+		to_user_id, express_id, express_no,
+		express_type, is_done,
+		is_close,
+		pay_type, from_city_id, from_addr,
+		from_name, from_tel, from_company_name,
+		to_city_id, to_addr, to_name,
+		to_tel, to_company_name, remarks, add_time,
+		update_time)
+		values (#{id,jdbcType=NUMERIC},
+		#{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{toUserId,jdbcType=NUMERIC}, #{expressId,jdbcType=NUMERIC},
+		#{expressNo,jdbcType=VARCHAR},
+		#{expressType,jdbcType=NUMERIC}, #{isDone,jdbcType=NUMERIC}, #{isClose,jdbcType=NUMERIC},
+		#{payType,jdbcType=NUMERIC},
+		#{fromCityId,jdbcType=NUMERIC},
+		#{fromAddr,jdbcType=VARCHAR},
+		#{fromName,jdbcType=VARCHAR}, #{fromTel,jdbcType=VARCHAR}, #{fromCompanyName,jdbcType=VARCHAR},
+		#{toCityId,jdbcType=NUMERIC},
+		#{toAddr,jdbcType=VARCHAR}, #{toName,jdbcType=VARCHAR},
+		#{toTel,jdbcType=VARCHAR}, #{toCompanyName,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordExpress">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into record_express
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="toUserId != null">
+				to_user_id,
+			</if>
+			<if test="expressId != null">
+				express_id,
+			</if>
+			<if test="expressNo != null">
+				express_no,
+			</if>
+			<if test="expressType != null">
+				express_type,
+			</if>
+			<if test="isDone != null">
+				is_done,
+			</if>
+			<if test="isClose != null">
+				is_close,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="fromCityId != null">
+				from_city_id,
+			</if>
+			<if test="fromAddr != null">
+				from_addr,
+			</if>
+			<if test="fromName != null">
+				from_name,
+			</if>
+			<if test="fromTel != null">
+				from_tel,
+			</if>
+			<if test="fromCompanyName != null">
+				from_company_name,
+			</if>
+			<if test="toCityId != null">
+				to_city_id,
+			</if>
+			<if test="toAddr != null">
+				to_addr,
+			</if>
+			<if test="toName != null">
+				to_name,
+			</if>
+			<if test="toTel != null">
+				to_tel,
+			</if>
+			<if test="toCompanyName != null">
+				to_company_name,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="toUserId != null">
+				#{toUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="expressId != null">
+				#{expressId,jdbcType=NUMERIC},
+			</if>
+			<if test="expressNo != null">
+				#{expressNo,jdbcType=VARCHAR},
+			</if>
+			<if test="expressType != null">
+				#{expressType,jdbcType=NUMERIC},
+			</if>
+			<if test="isDone != null">
+				#{isDone,jdbcType=NUMERIC},
+			</if>
+			<if test="isClose != null">
+				#{isClose,jdbcType=NUMERIC},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=NUMERIC},
+			</if>
+			<if test="fromCityId != null">
+				#{fromCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="fromAddr != null">
+				#{fromAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="fromName != null">
+				#{fromName,jdbcType=VARCHAR},
+			</if>
+			<if test="fromTel != null">
+				#{fromTel,jdbcType=VARCHAR},
+			</if>
+			<if test="fromCompanyName != null">
+				#{fromCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="toCityId != null">
+				#{toCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="toAddr != null">
+				#{toAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="toName != null">
+				#{toName,jdbcType=VARCHAR},
+			</if>
+			<if test="toTel != null">
+				#{toTel,jdbcType=VARCHAR},
+			</if>
+			<if test="toCompanyName != null">
+				#{toCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.record.RecordExpress">
+		update record_express
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="toUserId != null">
+				to_user_id = #{toUserId,jdbcType=NUMERIC},
+			</if>
+			<if test="expressId != null">
+				express_id = #{expressId,jdbcType=NUMERIC},
+			</if>
+			<if test="expressNo != null">
+				express_no = #{expressNo,jdbcType=VARCHAR},
+			</if>
+			<if test="expressType != null">
+				express_type = #{expressType,jdbcType=NUMERIC},
+			</if>
+			<if test="isDone != null">
+				is_done = #{isDone,jdbcType=NUMERIC},
+			</if>
+			<if test="isClose != null">
+				is_close = #{isClose,jdbcType=NUMERIC},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=NUMERIC},
+			</if>
+			<if test="fromCityId != null">
+				from_city_id = #{fromCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="fromAddr != null">
+				from_addr = #{fromAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="fromName != null">
+				from_name = #{fromName,jdbcType=VARCHAR},
+			</if>
+			<if test="fromTel != null">
+				from_tel = #{fromTel,jdbcType=VARCHAR},
+			</if>
+			<if test="fromCompanyName != null">
+				from_company_name = #{fromCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="toCityId != null">
+				to_city_id = #{toCityId,jdbcType=NUMERIC},
+			</if>
+			<if test="toAddr != null">
+				to_addr = #{toAddr,jdbcType=VARCHAR},
+			</if>
+			<if test="toName != null">
+				to_name = #{toName,jdbcType=VARCHAR},
+			</if>
+			<if test="toTel != null">
+				to_tel = #{toTel,jdbcType=VARCHAR},
+			</if>
+			<if test="toCompanyName != null">
+				to_company_name = #{toCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.record.RecordExpress">
+		update record_express
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		to_user_id = #{toUserId,jdbcType=NUMERIC},
+		express_id = #{expressId,jdbcType=NUMERIC},
+		express_no = #{expressNo,jdbcType=VARCHAR},
+		express_type =
+		#{expressType,jdbcType=NUMERIC},
+		is_done = #{isDone,jdbcType=NUMERIC},
+		is_close = #{isClose,jdbcType=NUMERIC},
+		pay_type = #{payType,jdbcType=NUMERIC},
+		from_city_id = #{fromCityId,jdbcType=NUMERIC},
+		from_addr = #{fromAddr,jdbcType=VARCHAR},
+		from_name = #{fromName,jdbcType=VARCHAR},
+		from_tel =
+		#{fromTel,jdbcType=VARCHAR},
+		from_company_name = #{fromCompanyName,jdbcType=VARCHAR},
+		to_city_id = #{toCityId,jdbcType=NUMERIC},
+		to_addr =
+		#{toAddr,jdbcType=VARCHAR},
+		to_name = #{toName,jdbcType=VARCHAR},
+		to_tel = #{toTel,jdbcType=VARCHAR},
+		to_company_name = #{toCompanyName,jdbcType=VARCHAR},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

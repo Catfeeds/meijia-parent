@@ -17,7 +17,7 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictCity;
-import com.simi.service.data.WeatherService;
+import com.simi.service.WeatherService;
 import com.simi.service.dict.DictService;
 import com.simi.vo.AppResultData;
 

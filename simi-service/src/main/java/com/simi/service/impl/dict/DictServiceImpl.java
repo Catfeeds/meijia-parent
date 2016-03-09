@@ -11,17 +11,20 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
+import com.simi.service.dict.ExpressService;
 import com.simi.service.dict.ProvinceService;
 import com.simi.service.dict.RegionService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.po.dao.dict.DictCityMapper;
 import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.dict.DictExpress;
 import com.simi.po.model.dict.DictProvince;
 import com.simi.po.model.dict.DictRegion;
 
 @Service
 public class DictServiceImpl implements DictService {
 
+	@SuppressWarnings("rawtypes")
 	public static Map<String, List> memDictMap = new HashMap<String, List>();
 	
 	@Autowired
@@ -38,6 +41,9 @@ public class DictServiceImpl implements DictService {
 
 	@Autowired
 	private UserAddrsService userAddrsService;
+	
+	@Autowired
+	private ExpressService expressService;
 
 	/**
 	 * Spring 容器初始化时加载
@@ -53,6 +59,9 @@ public class DictServiceImpl implements DictService {
 
 		// 区县信息
 		this.LoadRegionData();
+		
+		// 快递服务商信息
+		this.loadExpressData();
 
 	}
 
@@ -75,6 +84,7 @@ public class DictServiceImpl implements DictService {
 		return cityName;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DictProvince> LoadProvinceData() {
 		// 城市信息
@@ -87,6 +97,7 @@ public class DictServiceImpl implements DictService {
 		return listProvince;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DictCity> LoadCityData() {
 		// 城市信息
@@ -99,6 +110,7 @@ public class DictServiceImpl implements DictService {
 		return listCity;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<DictCity> getCityByProvinceId(Long provinceId) {
 		List<DictCity> listCity = LoadCityData();
@@ -116,6 +128,7 @@ public class DictServiceImpl implements DictService {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<DictRegion> getRegionByCityId(Long cityId){
 		List<DictRegion> listRegion = LoadRegionData();
@@ -133,6 +146,7 @@ public class DictServiceImpl implements DictService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<DictRegion> LoadRegionData() {
 		// 城市信息
 		List<DictRegion> listRegion = memDictMap.get("listRegion");
@@ -142,5 +156,18 @@ public class DictServiceImpl implements DictService {
 		}
 
 		return listRegion;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DictExpress> loadExpressData() {
+		// 城市信息
+		List<DictExpress> listExpress = memDictMap.get("listExpress");
+		if (listExpress == null || listExpress.isEmpty()) {
+			listExpress = expressService.selectAll();
+			memDictMap.put("listExpress", listExpress);
+		}
+
+		return listExpress;
 	}
 }

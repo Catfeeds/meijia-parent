@@ -1,4 +1,4 @@
-package com.simi.po.model.data;
+package com.simi.po.model.common;
 
 import java.util.Date;
 

@@ -1,8 +1,8 @@
-package com.simi.po.dao.data;
+package com.simi.po.dao.common;
 
 import java.util.Date;
 
-import com.simi.po.model.data.Weathers;
+import com.simi.po.model.common.Weathers;
 
 public interface WeathersMapper {
     int deleteByPrimaryKey(Long id);

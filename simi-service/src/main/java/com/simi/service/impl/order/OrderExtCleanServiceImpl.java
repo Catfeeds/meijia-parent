@@ -16,13 +16,11 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtCleanListVo;
 import com.simi.po.dao.order.OrderExtCleanMapper;
 import com.simi.po.model.order.OrderExtClean;
-import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

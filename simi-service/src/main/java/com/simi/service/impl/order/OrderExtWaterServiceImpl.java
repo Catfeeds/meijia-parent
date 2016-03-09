@@ -26,7 +26,6 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

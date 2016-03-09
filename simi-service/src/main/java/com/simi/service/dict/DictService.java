@@ -3,6 +3,7 @@ package com.simi.service.dict;
 import java.util.List;
 
 import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.dict.DictExpress;
 import com.simi.po.model.dict.DictProvince;
 import com.simi.po.model.dict.DictRegion;
 
@@ -19,6 +20,8 @@ public interface DictService {
 	List<DictProvince> LoadProvinceData();
 
 	List<DictCity> LoadCityData();
+
+	List<DictExpress> loadExpressData();
 
 
 
