@@ -442,7 +442,7 @@ public class CardQueryController extends BaseController {
 	
 	@RequestMapping(value = "push-msg", method = RequestMethod.GET)	
 	public AppResultData<Object> pushMsg(
-			@RequestParam(value = "clinet_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
+			@RequestParam(value = "client_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
 			
 			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType
 			) throws Exception {
@@ -460,7 +460,6 @@ public class CardQueryController extends BaseController {
 		 
 		 String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 		 
-		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		 
 		 tranParams.put("action", "msg");	
 		 tranParams.put("card_id", "0");
@@ -468,7 +467,7 @@ public class CardQueryController extends BaseController {
 		 tranParams.put("service_time", "");
 		 tranParams.put("remind_time", "");
 		 tranParams.put("remind_title", "新消息");
-		 tranParams.put("remind_content", "你在" + timeStr + "有一条新的消息");
+		 tranParams.put("remind_content", "你在" + timeStr1 + "有一条新的消息");
 
 //		 JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 		 
