@@ -15,6 +15,8 @@ public class OrdersExtTeamListVo {
 	
 	private Short teamType;
 	
+	private String teamTypeName;
+	
 	private Long attendNum;
 	
 	private String cityName;
@@ -75,6 +77,14 @@ public class OrdersExtTeamListVo {
 
 	public void setTeamType(Short teamType) {
 		this.teamType = teamType;
+	}
+
+	public String getTeamTypeName() {
+		return teamTypeName;
+	}
+
+	public void setTeamTypeName(String teamTypeName) {
+		this.teamTypeName = teamTypeName;
 	}
 
 	public Long getAttendNum() {

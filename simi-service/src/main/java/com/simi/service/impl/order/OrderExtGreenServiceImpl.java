@@ -118,6 +118,8 @@ public class OrderExtGreenServiceImpl implements OrderExtGreenService{
 		Long addTime = order.getAddTime()*1000;	
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
 		
+		vo.setRecycleTypeName(OrderUtil.getOrderRecycleTypeName(item.getRecycleType()));
+		
 		return vo;
 	}
 

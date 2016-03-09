@@ -1,7 +1,6 @@
 
 
 var userId = getUrlParam("user_id");
-alert(userId);
 //alert(window.location.href);
 //商品管理
 $("#storePrice").attr("href","store-price-list.html?user_id="+userId);

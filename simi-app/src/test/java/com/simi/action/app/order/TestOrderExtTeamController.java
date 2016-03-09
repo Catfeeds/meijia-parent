@@ -14,11 +14,11 @@ import com.simi.action.app.JUnitActionBase;
 
 public class TestOrderExtTeamController extends JUnitActionBase  {
 
-/*	@Test
+	@Test
     public void testList() throws Exception {
 		String url = "/app/order/get_list_team.json";
 		
-		String params = "?user_id=278";
+		String params = "?user_id=472";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -27,7 +27,7 @@ public class TestOrderExtTeamController extends JUnitActionBase  {
 	    resultActions.andExpect(status().isOk());
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-	}*/
+	}
 	
 /*	@Test
     public void testDetail() throws Exception {
@@ -45,7 +45,7 @@ public class TestOrderExtTeamController extends JUnitActionBase  {
 	}	
 	*/
 	
-	@Test
+	/*@Test
     public void testpostGreen() throws Exception {
 
 		String url = "/app/order/post_add_team.json";
@@ -69,6 +69,6 @@ public class TestOrderExtTeamController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
-    }
+    }*/
 	
 }

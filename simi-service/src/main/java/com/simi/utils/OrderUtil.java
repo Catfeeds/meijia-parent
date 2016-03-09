@@ -213,5 +213,52 @@ public class OrderUtil {
 			cleaTypeName = "";
 		}
 		return cleaTypeName;
-	}	
+	}
+	public static String getOrderRecycleTypeName(Short rectcleType) {
+		String rectcleTypeName = "";
+		switch (rectcleType) {
+		case 0:
+			rectcleTypeName = "日常办公垃圾";
+			break;
+		case 1:
+			rectcleTypeName = "废旧电器";
+			break;
+		case 2:
+			rectcleTypeName = "硒鼓墨盒";
+			break;
+		case 3:
+			rectcleTypeName = "其他";
+			break;
+		default:
+			rectcleTypeName = "";
+		}
+		return rectcleTypeName;
+	}
+	
+	public static String getOrderTeamTypeName(Short teamType) {
+		String teamTypeName = "";
+		switch (teamType) {
+		case 0:
+			teamTypeName = "不限";
+			break;
+		case 1:
+			teamTypeName = "年会";
+			break;
+		case 2:
+			teamTypeName = "拓展训练";
+			break;
+		case 3:
+			teamTypeName = "聚会沙龙";
+			break;
+		case 4:
+			teamTypeName = "休闲度假";
+			break;
+		case 5:
+			teamTypeName = "其他";
+			break;
+		default:
+			teamTypeName = "";
+		}
+		return teamTypeName;
+	}
 }

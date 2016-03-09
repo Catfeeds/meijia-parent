@@ -22,7 +22,7 @@ public class TestOrderExtGreenController extends JUnitActionBase  {
     public void testList() throws Exception {
 		String url = "/app/order/get_list_green.json";
 		
-		String params = "?user_id=814";
+		String params = "?user_id=77";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 		
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -41,12 +41,8 @@ public class TestOrderExtGreenController extends JUnitActionBase  {
      	
      	//通用订单. 无需支付
 	    postRequest = postRequest.param("user_id", "77");
-	    postRequest = postRequest.param("addr_id", "5");
-	    postRequest = postRequest.param("service_type_id", "238");
-	    postRequest = postRequest.param("mobile", "13146012753");
-	    postRequest = postRequest.param("total_num", "3");
-	    postRequest = postRequest.param("total_budget", "3");
-	    postRequest = postRequest.param("remarks", "3");
+	    postRequest = postRequest.param("addr_id", "106");
+	    postRequest = postRequest.param("recycle_type", "2");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 

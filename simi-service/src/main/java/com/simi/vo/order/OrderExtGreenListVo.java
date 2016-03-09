@@ -11,7 +11,11 @@ public class OrderExtGreenListVo {
 
     private String mobile;
     
-    private String name;    
+    private String name;  
+    
+    private Short recycleType;
+    
+    private String recycleTypeName;
     
     private String serviceTypeName;
     
@@ -111,6 +115,22 @@ public class OrderExtGreenListVo {
 
 	public void setAddTimeStr(String addTimeStr) {
 		this.addTimeStr = addTimeStr;
+	}
+
+	public Short getRecycleType() {
+		return recycleType;
+	}
+
+	public void setRecycleType(Short recycleType) {
+		this.recycleType = recycleType;
+	}
+
+	public String getRecycleTypeName() {
+		return recycleTypeName;
+	}
+
+	public void setRecycleTypeName(String recycleTypeName) {
+		this.recycleTypeName = recycleTypeName;
 	}
 	
 	

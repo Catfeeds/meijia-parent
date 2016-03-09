@@ -141,6 +141,10 @@ public class OrderExtTeamServiceImpl implements OrderExtTeamService{
 			vo.setCityName("");
 			if (dictCity != null) {
 			vo.setCityName(dictCity.getName());
+			
+			vo.setTeamTypeName(OrderUtil.getOrderTeamTypeName(item.getTeamType()));
+			
+			
 			}
 			
 			result.add(vo);
@@ -173,6 +177,7 @@ public class OrderExtTeamServiceImpl implements OrderExtTeamService{
 		vo.setCityName(dictCity.getName());
 		}
 		
+		vo.setTeamTypeName(OrderUtil.getOrderTeamTypeName(orderExtTeam.getTeamType()));
 		return vo;
 	}
 
