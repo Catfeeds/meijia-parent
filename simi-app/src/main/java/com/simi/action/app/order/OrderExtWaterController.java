@@ -193,6 +193,12 @@ public class OrderExtWaterController extends BaseController {
 			return v;
 		}
 		
+		if (serviceNum <= 0) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数量必须大于0");
+			return result;
+		}
+		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 //		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
 		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
