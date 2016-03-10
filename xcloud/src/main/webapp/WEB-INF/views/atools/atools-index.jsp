@@ -27,16 +27,13 @@
 	<!--header end-->
 
 	<div class="am-cf admin-main">
-		<!-- sidebar start -->
-		<%@ include file="../atools/atools-menu.jsp"%>
-		<!-- sidebar end -->
 
 		<!-- content start -->
 		<div class="admin-content">
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>Contacts</small>
+					<strong class="am-text-primary am-text-lg">应用中心</strong> / <small>Contacts</small>
 				</div>
 			</div>
 			<hr>
