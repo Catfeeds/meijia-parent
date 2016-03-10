@@ -71,12 +71,13 @@
 							<thead>
 								<tr>
 									
-									<th class="table-name">时间</th>
+									<th class="table-date">时间</th>
 									<th class="table-title">快递服务商</th>
 									<th class="table-type">快递单号</th>
-									<th class="table-author am-hide-sm-only">类型</th>
-									<th class="table-date am-hide-sm-only">是否送达</th>
-									<th class="table-id">是否结算</th>
+									<th class="table-date">类型</th>
+									<th class="table-date">费用</th>
+									<th class="table-date">是否送达</th>
+									<th class="table-date">是否结算</th>
 									<th class="table-set">操作</th>
 								</tr>
 							</thead>
