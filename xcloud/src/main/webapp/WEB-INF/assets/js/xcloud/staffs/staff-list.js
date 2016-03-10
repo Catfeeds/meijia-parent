@@ -103,7 +103,8 @@ $("#btn-staff-import").click(function() {
 	location.href = "/xcloud/staff/staff-import";
 });
 //导出通讯录
-$("#btn-staff-export").click(function() {
-	var companyId = $("#companyId").val();
-	location.href = "/xcloud/staff/staff-download?companyId="+companyId;
+$("#btn-dept").click(function() {
+	location.href = "/xcloud/staff/dept";
 });
+
+//组织架构
