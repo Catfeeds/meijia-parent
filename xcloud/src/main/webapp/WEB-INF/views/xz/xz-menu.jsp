@@ -121,7 +121,7 @@
 				</a>
 				<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-water">
 					<li>
-						<a href="admin-user.html" class="am-cf">
+						<a href="/xcloud/xz/water/water-form" class="am-cf">
 							<span
 							class="am-icon-bell"
 						></span>
@@ -130,13 +130,13 @@
 						</a>
 					</li>
 					<li>
-						<a href="admin-404.html">
+						<a href="/xcloud/xz/water/list">
 							<span class="am-icon-plane"></span>
 							饮用水结算
 						</a>
 					</li>
 					<li>
-						<a href="admin-log.html">
+						<a href="/xcloud/xz/water/service">
 							<span class="am-icon-calendar"></span>
 							饮用水服务商
 						</a>
@@ -192,15 +192,7 @@
 
 		</ul>
 
-		<div class="am-panel am-panel-default admin-sidebar-panel">
-			<div class="am-panel-bd">
-				<p>
-					<span class="am-icon-bookmark"></span>
-					最新公告
-				</p>
-				<p>新年将至，公司年会将在月球举办，点击查看详情。</p>
-			</div>
-		</div>
+		
 	</div>
 </div>
 <!-- sidebar end -->
