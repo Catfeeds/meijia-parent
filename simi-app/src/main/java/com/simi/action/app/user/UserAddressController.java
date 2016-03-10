@@ -152,4 +152,15 @@ public class UserAddressController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
 		return result;
 	}
+	//通过用户手机号获取地址列表接口
+	@RequestMapping(value = "get_addrs_by_mobile", method = RequestMethod.GET)
+	public AppResultData<List> getAddress(@RequestParam("mobile") String mobile) {
+		Users users = usersService.selectByMobile(mobile);
+		
+		List<UserAddrs> list = userAddrsService.selectByUserId(users.getId());
+
+		AppResultData<List> result = new AppResultData<List>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
+		return result;
+	}
 }

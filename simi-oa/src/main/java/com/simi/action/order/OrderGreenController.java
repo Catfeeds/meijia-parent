@@ -1,8 +1,9 @@
 package com.simi.action.order;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,29 +19,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.meijia.utils.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.MeijiaUtil;
+import com.meijia.utils.OrderNoUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.mysql.fabric.xmlrpc.base.Data;
+import com.meijia.utils.vo.AppResultData;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderExtPartner;
-import com.simi.po.model.order.OrderExtWater;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerRefServiceType;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderExtGreenService;
 import com.simi.service.order.OrderExtPartnerService;
@@ -58,8 +58,7 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersGreenPartnerVo;
 import com.simi.vo.OrdersListVo;
-import com.simi.vo.order.OrderWaterComVo;
-import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.order.OrdersRecycleAddOaVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -107,6 +106,9 @@ public class OrderGreenController extends AdminController {
 
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private ValidateService validateService;
 	/**
 	 * 废品回收订单列表
 	 * 
@@ -340,5 +342,106 @@ public class OrderGreenController extends AdminController {
 		
 		return "redirect:/order/greenList";
 	}
+	/**
+	 * 废品回收后台下单表单
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/orderGreenAddForm", method = RequestMethod.GET)
+	public String orderGreenAdd(Long id, Model model) {
+		OrdersRecycleAddOaVo vo = new OrdersRecycleAddOaVo();
+		OrderExtRecycle recycle = orderExtGreenService.initOrderExtGreen();
+		BeanUtilsExp.copyPropertiesIgnoreNull(recycle, vo);
+		vo.setRemarks("");
+		vo.setServiceDate(TimeStampUtil.getNowSecond());
+		String serviceDate1Str = TimeStampUtil.timeStampToDateStr(TimeStampUtil.getNowSecond() * 1000,
+				"yyyy-MM-dd");
+		
+		model.addAttribute("serviceDate1", serviceDate1Str);
+		
+		model.addAttribute("contentModel", vo);
 
+		return "order/orderGreenAddForm";
+	}
+	/**
+	 * 废品回收后台订单保存
+	 * @param model
+	 * @param vo
+	 * @param result
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/saveOrderGreenAdd", method = RequestMethod.POST)
+	public String orderTeamSave(Model model,
+			@ModelAttribute("contentModel") OrdersRecycleAddOaVo vo, 
+			BindingResult result, HttpServletRequest request) throws UnsupportedEncodingException {
+		
+		Long serviceTypeId = (long) 246;
+		Users users = usersService.selectByMobile(vo.getMobile());
+		
+		List<UserAddrs> userAddrs = userAddrsService.selectByUserId(users.getId());
+	
+		BigDecimal orderMoney = new BigDecimal(0.0);//原价
+		BigDecimal orderPay = new BigDecimal(0.0);//折扣价
+		// 调用公共订单号类，生成唯一订单号
+    	Orders order = null;
+    	String orderNo = "";
+    
+    	orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+		order = ordersService.initOrders();
+    	
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		// 服务内容及备注信息需要进行urldecode;
+		String serviceContent = serviceType.getName() ;
+		String remarks = vo.getRemarks();
+		if (!StringUtil.isEmpty(remarks)) {
+			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
+		}
+		//保存订单信息
+		order.setOrderNo(orderNo);
+		order.setServiceTypeId(serviceTypeId);
+		order.setUserId(users.getId());
+		order.setMobile(vo.getMobile());
+		order.setServiceContent(serviceContent);
+		order.setAddrId(vo.getAddrId());
+		if (!StringUtil.isEmpty(remarks)) {
+			order.setRemarks(remarks);	
+		}
+		order.setOrderStatus(Constants.ORDER_STATUS_3_PROCESSING);
+		ordersService.insert(order);
+		Long orderId = order.getOrderId();
+		
+		//记录订单日志.
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLogService.insert(orderLog);
+		
+		//保存订单价格信息
+		OrderPrices orderPrice = orderPricesService.initOrderPrices();
+
+		orderPrice.setOrderId(orderId);
+		orderPrice.setOrderNo(orderNo);
+		orderPrice.setUserId(users.getId());
+		orderPrice.setMobile(users.getMobile());
+		orderPrice.setOrderMoney(orderMoney);
+		orderPrice.setOrderPay(orderPay);
+		orderPricesService.insert(orderPrice);
+		
+		//保存废品回收订单扩展表信息
+		OrderExtRecycle green = orderExtGreenService.initOrderExtGreen();
+		green.setOrderId(orderId);
+		green.setOrderNo(orderNo);
+		green.setUserId(users.getId());
+		green.setMobile(users.getMobile());
+		green.setLinkMan(vo.getLinkMan());
+		green.setLinkTel(vo.getLinkTel());
+		green.setRecycleType(vo.getRecycleType());
+		orderExtGreenService.insert(green);
+		
+		//异步产生首页消息信息.
+		userMsgAsyncService.newOrderMsg(users.getId(), orderId, "recycle", "");
+		
+		return "redirect:/order/greenList";
+	}
 }

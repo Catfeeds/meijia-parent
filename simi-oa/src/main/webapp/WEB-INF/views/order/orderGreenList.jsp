@@ -66,6 +66,9 @@
                       	
             <header class="panel-heading">
                   <h4>废品回收订单列表</h4>
+          <div class="pull-right">
+            <button onClick="btn_add('order/orderGreenAddForm?id=0')" class="btn btn-primary" type="button"><i class="icon-expand-alt"></i>新增</button>
+         </div> 
             </header>
 			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 			<table class="table table-striped table-advance table-hover">

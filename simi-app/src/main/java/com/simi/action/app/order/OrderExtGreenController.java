@@ -17,6 +17,7 @@ import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
@@ -35,6 +36,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.order.OrderExtCleanListVo;
 import com.simi.vo.order.OrderExtGreenListVo;
 import com.simi.vo.user.UserAddrVo;
 
@@ -75,7 +77,7 @@ public class OrderExtGreenController extends BaseController {
 	private UsersService usersService;
 	
 
-	/**绿植订单列表接口
+	/**废品回收订单列表接口
 	 * 
 	 * @param userId
 	 * @return
@@ -95,12 +97,43 @@ public class OrderExtGreenController extends BaseController {
 		result.setData(listVo);
 		return result;
 	}	
+	/**
+	 * 废品回收订单详情
+	 * @param userId
+	 * @param orderId
+	 * @return
+	 */
+	@RequestMapping(value = "get_detail_green", method = RequestMethod.GET)
+	public AppResultData<Object> detail(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("order_id") Long orderId) {
+
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		Users u = userService.selectByPrimaryKey(userId);
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null ) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+		
+		OrderExtRecycle recycle = orderExtGreenService.selectByOrderId(orderId);
+		if (recycle == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.ORDER_NO_NOT_EXIST_MG);
+			return result;
+		}
+		OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(recycle);
+		result.setData(vo);
+		return result;
+	}		
 	
 	@RequestMapping(value = "get_user_addr_list", method = RequestMethod.GET)
 	public AppResultData<Object> getServiceTypeList(
 			@RequestParam("user_id") Long userId) {
 
-		AppResultData<Object> result = new AppResultData<Object>(
+		AppResultData<Object> result = new AppResultData<Object>( 
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 	    List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(userId);
@@ -125,7 +158,7 @@ public class OrderExtGreenController extends BaseController {
 	}
 
 	/**
-	 * 绿植订单下单接口
+	 * 废品回收订单下单接口
 	 * @param userId
 	 * @param serviceTypeId
 	 * @param mobile

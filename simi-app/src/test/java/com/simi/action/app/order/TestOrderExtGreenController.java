@@ -32,7 +32,7 @@ public class TestOrderExtGreenController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	}*/
-	@Test
+/*	@Test
     public void testpostGreen() throws Exception {
 
 		String url = "/app/order/post_add_green.json";
@@ -52,6 +52,21 @@ public class TestOrderExtGreenController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
-    }
+    }*/
+	
+	@Test
+    public void testListDetail() throws Exception {
+		String url = "/app/order/get_detail_green.json";
+		
+		String params = "?user_id=77&order_id=182";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+		
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+	}
 	
 }

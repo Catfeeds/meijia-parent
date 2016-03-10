@@ -374,7 +374,12 @@ public class OrderTeamController extends AdminController {
 		
 		return "redirect:/order/teamList";
 	}
-	
+	/**
+	 * 后台团建下单
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/orderTeamAddForm", method = RequestMethod.GET)
 	public String orderTeamAdd(Long id, Model model) {
 		
@@ -401,7 +406,15 @@ public class OrderTeamController extends AdminController {
 
 		return "order/orderTeamAddForm";
 	}
-	
+	/**
+	 * 后台团建订单保存
+	 * @param model
+	 * @param vo
+	 * @param result
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value = "/saveOrderTeamAdd", method = RequestMethod.POST)
 	public String orderTeamSave(Model model,
 			@ModelAttribute("contentModel") OrdersTeamAddOaVo vo, 
