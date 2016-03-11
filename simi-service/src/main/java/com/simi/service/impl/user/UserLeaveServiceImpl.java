@@ -172,7 +172,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		passVo.setUserId(u.getId());
 		passVo.setName(u.getName());
 		passVo.setHeadImg(u.getHeadImg());
-		passVo.setStatus((short) 0);
+		passVo.setStatus((short) 99);
 		passVo.setStatusName("发起审批");
 		passVo.setRemarks("");
 		passVo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime() * 1000));
