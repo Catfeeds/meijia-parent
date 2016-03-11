@@ -1,7 +1,9 @@
 package com.simi.action.order;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,14 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.OrderNoUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
@@ -26,12 +32,18 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.order.OrderExtPartner;
+import com.simi.po.model.order.OrderExtWater;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerRefServiceType;
+import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.order.OrderExtCleanService;
 import com.simi.service.order.OrderExtPartnerService;
@@ -45,9 +57,15 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderCleanOaVo;
+import com.simi.vo.order.OrderExtCleanListVo;
+import com.simi.vo.order.OrderWaterComVo;
+import com.simi.vo.order.OrdersCleanAddOaVo;
+import com.simi.vo.order.OrdersWaterAddOaVo;
+import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -92,6 +110,9 @@ public class OrderCleanController extends AdminController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private NoticeSmsAsyncService noticeSmsAsyncService;
 	
 	//serviceTypeId = 204L
 	
@@ -332,7 +353,112 @@ public class OrderCleanController extends AdminController {
 
 
 
-	
-	
+	/**
+	 * 后台保洁订单表单
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/orderCleanAddForm", method = RequestMethod.GET)
+	public String orderTeamAdd(Long id, Model model) {
+		Long serviceTypeId = 204L;
+		OrdersCleanAddOaVo vo = new OrdersCleanAddOaVo();
+		OrderExtClean clean = orderExtCleanService.initOrderExtClean();
+		BeanUtilsExp.copyPropertiesIgnoreNull(clean, vo);
+		model.addAttribute("contentModel", vo);
 
+		return "order/orderCleanAddForm";
+	}
+
+	/**
+	 * 后台保洁订单保存
+	 * 
+	 * @param model
+	 * @param vo
+	 * @param result
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/saveOrderCleanAdd", method = RequestMethod.POST)
+	public String orderTeamSave(Model model,
+			@ModelAttribute("contentModel") OrdersCleanAddOaVo vo,
+			BindingResult result, HttpServletRequest request)
+			throws UnsupportedEncodingException {
+
+		Long serviceTypeId = 204L;
+		Users u = usersService.selectByMobile(vo.getMobile());
+		
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+
+		BigDecimal orderMoney = new BigDecimal(0.0);//原价
+		BigDecimal orderPay = new BigDecimal(0.0);//折扣价
+						
+		// 调用公共订单号类，生成唯一订单号
+    	Orders order = null;
+    	String orderNo = "";
+    
+    	orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+		order = ordersService.initOrders();
+    	
+		String remarks = vo.getRemarks();
+		// 服务内容及备注信息需要进行urldecode;		
+		if (!StringUtil.isEmpty(remarks)) {
+			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
+		}
+		//保存订单信息
+		order.setOrderNo(orderNo);
+		order.setServiceTypeId(serviceTypeId);
+		order.setUserId(u.getId());
+		order.setMobile(u.getMobile());
+		order.setServiceContent(serviceType.getName());
+		order.setAddrId(vo.getAddrId());
+		if (!StringUtil.isEmpty(remarks)) {
+			order.setRemarks(remarks);	
+		}
+		order.setOrderStatus(Constants.ORDER_STATUS_3_PROCESSING);
+		ordersService.insert(order);
+		Long orderId = order.getOrderId();
+		
+		//记录订单日志.
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLogService.insert(orderLog);
+		
+		//保存订单价格信息
+		OrderPrices orderPrice = orderPricesService.initOrderPrices();
+		
+		orderPrice.setOrderId(orderId);
+		orderPrice.setOrderNo(orderNo);
+		orderPrice.setUserId(u.getId());
+		orderPrice.setMobile(u.getMobile());
+		orderPrice.setOrderMoney(orderMoney);
+		orderPrice.setOrderPay(orderPay);
+		orderPricesService.insert(orderPrice);
+		
+		//保存保洁订单扩展表信息
+		OrderExtClean clean = orderExtCleanService.initOrderExtClean();
+		clean.setOrderId(orderId);
+		clean.setOrderNo(orderNo);
+		clean.setUserId(u.getId());
+		if (vo.getCompanyName()!=null) {
+		clean.setCompanyName(vo.getCompanyName());
+		}
+		if (vo.getCleanArea() != null) {
+			clean.setCleanArea(vo.getCleanArea());
+		}
+		clean.setCleanType(vo.getCleanType());
+		clean.setLinkMan(vo.getLinkMan());
+		clean.setLinkTel(vo.getLinkTel());
+
+		orderExtCleanService.insert(clean);
+		
+		//通知运营人员，订单支付成功
+		noticeSmsAsyncService.noticeOrderOper(orderId);
+		
+		//异步产生首页消息信息.
+		userMsgAsyncService.newOrderMsg(u.getId(), orderId, "clean", "");
+
+		return "redirect:/order/cleanList";
+	}
 }

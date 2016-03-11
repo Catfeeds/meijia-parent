@@ -504,7 +504,7 @@ public class OrderWaterController extends AdminController {
 		Users u = usersService.selectByMobile(vo.getMobile());
 
 		PartnerServiceType serviceType = partnerServiceTypeService
-				.selectByPrimaryKey(serviceTypeId);
+				.selectByPrimaryKey(serviceTypeId); 
 		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService
 				.selectByServicePriceId(vo.getServicePriceId());
 

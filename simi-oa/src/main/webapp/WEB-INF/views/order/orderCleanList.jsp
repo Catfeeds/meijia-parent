@@ -56,6 +56,12 @@
 					<input type="submit" value="搜索">
 				</div>
 		</div>
+		<div class="pull-right">
+			<button onClick="btn_add('order/orderCleanAddForm?id=0')"
+				class="btn btn-primary" type="button">
+				<i class="icon-expand-alt"></i>新增
+			</button>
+		</div>
 		</header>
 		</form:form>
 
