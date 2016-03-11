@@ -523,6 +523,8 @@ public class CardQueryController extends BaseController {
 		tranParams.put("rest_money", restMoney);
 		tranParams.put("user_id", userId.toString());
 		tranParams.put("cap_img", "http://img.51xingzheng.cn/8afe58fcc9dc9dafb302a560841f48be");
+		tranParams.put("remind_content", "");
+		
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
