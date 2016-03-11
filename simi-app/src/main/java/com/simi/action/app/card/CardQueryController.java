@@ -483,7 +483,7 @@ public class CardQueryController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		List<UserPushBind> exists = userPushBindService.selectByClientId(clientId);
-		if (!exists.isEmpty()) {
+		if (exists.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("client_id 不存在");
 			return result;
