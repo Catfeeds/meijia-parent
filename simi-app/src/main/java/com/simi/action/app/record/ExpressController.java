@@ -153,6 +153,9 @@ public class ExpressController extends BaseController {
 			}
 		}
 		
+		//发送首页消息格式
+		//异步产生首页消息信息.
+		userMsgAsyncService.newActionAppMsg(userId, express.getId(), "express", "快递", "你登记了一个快递信息.");
 		
 		return result;
 	}

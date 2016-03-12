@@ -85,6 +85,7 @@ public class AppToolsServiceImpl implements AppToolsService {
 	}
 
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public PageInfo selectByListPage(int pageNo, int pageSize) {
 
@@ -102,6 +103,12 @@ public class AppToolsServiceImpl implements AppToolsService {
 	public List<AppTools> selectByAppType(String appType) {
 		
 		return appToolsMapper.selectByAppType(appType);
+	}
+	
+	@Override
+	public AppTools selectByAction(String action) {
+		
+		return appToolsMapper.selectByAction(action);
 	}
 
 	@Override

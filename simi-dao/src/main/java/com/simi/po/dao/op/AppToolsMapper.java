@@ -24,4 +24,6 @@ public interface AppToolsMapper {
 	List<AppTools> selectByAppTypeAndStatus(String appType);
 
 	List<AppTools> selectByAppTypeAll(String appType);
+
+	AppTools selectByAction(String action);
 }

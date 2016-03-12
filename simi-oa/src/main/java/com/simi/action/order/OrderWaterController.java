@@ -46,7 +46,7 @@ import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.UserMsgAsyncService;
-import com.simi.service.order.OrderExtGreenService;
+import com.simi.service.order.OrderExtRecycleService;
 import com.simi.service.order.OrderExtPartnerService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
@@ -60,6 +60,7 @@ import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
@@ -119,7 +120,7 @@ public class OrderWaterController extends AdminController {
 	private UserMsgAsyncService userMsgAsyncService;
 
 	@Autowired
-	private OrderExtGreenService orderExtGreenService;
+	private OrderExtRecycleService orderExtGreenService;
 
 	/**
 	 * 送水订单列表
@@ -393,7 +394,12 @@ public class OrderWaterController extends AdminController {
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKey(order);
 
-			userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
+
+			
+			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+			String title = serviceType.getName();
+			String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+			userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);
 
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -573,7 +579,9 @@ public class OrderWaterController extends AdminController {
 		orderExtWaterService.insert(water);
 
 		// 异步产生首页消息信息.
-		userMsgAsyncService.newOrderMsg(u.getId(), orderId, "water", "");
+		String title = serviceType.getName();
+		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		userMsgAsyncService.newActionAppMsg(vo.getUserId(), orderId, "water", title, summary);
 
 		return "redirect:/order/waterList";
 	}

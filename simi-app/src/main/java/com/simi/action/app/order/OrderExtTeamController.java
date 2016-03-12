@@ -43,6 +43,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
@@ -253,8 +254,11 @@ public class OrderExtTeamController extends BaseController {
 		OrdersExtTeamListVo vo = orderExtTeamService.getListVo(team);
 		result.setData(vo);
 		
+
 		//异步产生首页消息信息.
-		userMsgAsyncService.newOrderMsg(userId, orderId, "team", "");
+		String title = serviceType.getName();
+		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "teamwork", title, summary);
 				
 		return result;
 	}

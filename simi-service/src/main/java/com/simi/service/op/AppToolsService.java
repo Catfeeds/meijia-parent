@@ -31,6 +31,8 @@ public interface AppToolsService {
 	@SuppressWarnings("rawtypes")
 	PageInfo selectByListPage(String appType, int pageNo, int pageSize, Long userId);
 
+	AppTools selectByAction(String action);
+
 //	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
 
 

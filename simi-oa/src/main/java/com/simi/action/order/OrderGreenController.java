@@ -42,7 +42,7 @@ import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
-import com.simi.service.order.OrderExtGreenService;
+import com.simi.service.order.OrderExtRecycleService;
 import com.simi.service.order.OrderExtPartnerService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -55,6 +55,7 @@ import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersGreenPartnerVo;
 import com.simi.vo.OrdersListVo;
@@ -93,7 +94,7 @@ public class OrderGreenController extends AdminController {
 	private OrderExtPartnerService orderExtPartnerService;
 
 	@Autowired
-	private OrderExtGreenService orderExtGreenService;
+	private OrderExtRecycleService orderExtGreenService;
 
 	@Autowired
 	private PartnerUserService partnerUserService;
@@ -326,7 +327,12 @@ public class OrderGreenController extends AdminController {
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKey(order);
 			
-			userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
+//			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+//			String title = serviceType.getName();
+//			String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+//			userMsgAsyncService.newActionAppMsg(userId, orderId, "clean", title, summary);
+//						
+//			userMsgAsyncService.pushMsgToDevice(userId, serviceType.getName(), orderSummary);
 			
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -439,8 +445,12 @@ public class OrderGreenController extends AdminController {
 		green.setRecycleType(vo.getRecycleType());
 		orderExtGreenService.insert(green);
 		
+
 		//异步产生首页消息信息.
-		userMsgAsyncService.newOrderMsg(users.getId(), orderId, "recycle", "");
+		
+		String title = serviceType.getName();
+		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		userMsgAsyncService.newActionAppMsg(users.getId(), orderId, "recycle", title, summary);
 		
 		return "redirect:/order/greenList";
 	}

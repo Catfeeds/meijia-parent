@@ -18,12 +18,14 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserRefSec;
 
@@ -131,10 +133,21 @@ public class OrderPayServiceImpl implements OrderPayService {
 			orderWaterPaySuccessToDo(order);
 		}
 		
+		//保洁订单的后续操作
+		if (serviceTypeId.equals(204L)) {
+			orderWaterPaySuccessToDo(order);
+		}
+		
 		//废品回收后续操作
 		if (serviceTypeId.equals(246L)) {
 			orderRecyclePaySuccessToDo(order);
 		}
+		
+		//团建扩展后续操作
+		if (serviceTypeId.equals(246L)) {
+			orderRecyclePaySuccessToDo(order);
+		}
+		
 	}
 
 	@Override
@@ -169,18 +182,30 @@ public class OrderPayServiceImpl implements OrderPayService {
 		Long orderId = order.getOrderId();
 		// 通知运营人员，进行送水服务商的人工派工流程.
 
-		// 异步产生用户消息信息
-		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
+
+		//异步产生首页消息信息.
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		String title = serviceType.getName();
+		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);
+		
+		userMsgAsyncService.pushMsgToDevice(userId, title, summary);
+		
 	}
+	
 	@Override
 	public void orderRecyclePaySuccessToDo(Orders order){
 		Long userId = order.getUserId();
 		Long orderId = order.getOrderId();
 		// 通知运营人员，进行废品回收服务商的人工派工流程.
-
-		// 异步产生用户消息信息
-		userMsgAsyncService.newOrderMsg(userId, orderId, "recycle", "");
+		
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		String title = serviceType.getName();
+		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "recycle", title, summary);
+		
 	}
+	
 	@Override
 	public void orderGreenPaySuccessToDo(Orders order) {
 		// 通知运营人员，进行绿植服务商的人工派工流程.

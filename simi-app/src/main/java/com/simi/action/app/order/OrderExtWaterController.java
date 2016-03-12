@@ -40,6 +40,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
@@ -270,9 +271,11 @@ public class OrderExtWaterController extends BaseController {
 					
 		OrderExtWaterListVo vo = orderExtWaterService.getListVo(water);
 		result.setData(vo);
-		
+				
 		//异步产生首页消息信息.
-		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "");
+		String title = serviceType.getName();
+		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);		
 				
 		return result;
 	}
@@ -313,8 +316,13 @@ public class OrderExtWaterController extends BaseController {
 		orderExtWater.setIsDone((short) 1);
 		orderExtWater.setIsDoneTime(TimeStampUtil.getNowSecond());
 		
-		//告知签收成功，产生消息通知
-		userMsgAsyncService.newOrderMsg(userId, orderId, "water", "你的订单已经签收成功.");
+		//异步产生首页消息信息.
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		
+		String title = serviceType.getName();
+		String summary =  "你的订单已经签收成功.";
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);			
+		
 		return result;
 	}
 	

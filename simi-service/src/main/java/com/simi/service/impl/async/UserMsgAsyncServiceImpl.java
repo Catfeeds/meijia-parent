@@ -19,6 +19,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.feed.Feeds;
+import com.simi.po.model.op.AppTools;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserLeave;
@@ -30,6 +31,7 @@ import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;
 import com.simi.service.feed.FeedService;
+import com.simi.service.op.AppToolsService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserLeavePassService;
@@ -77,6 +79,9 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 	@Autowired
 	private OrdersService ordersService;
+	
+	@Autowired
+	private AppToolsService appToolsService;
 
 	/**
 	 * 新增用户时发送默认消息
@@ -526,33 +531,25 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		return new AsyncResult<Boolean>(true);
 	}
-
+	
 	@Async
 	@Override
-	public Future<Boolean> newOrderMsg(Long userId, Long orderId, String orderExtType, String summary) {
-
-		Orders order = ordersService.selectByPrimaryKey(orderId);
-		if (order == null)
-			return new AsyncResult<Boolean>(true);
-
-		// 得到服务大类名称
-		Long serviceTypeId = order.getServiceTypeId();
-		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-
-		// 根据订单状态获得描述信息.
-		String orderSummary = OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		if (!StringUtil.isEmpty(summary)) {
-			orderSummary = summary;
-		}
+	public Future<Boolean> newActionAppMsg(Long userId, Long id, String extType, String title, String summary) {
 
 		// 根据服务大类ID 获得图标
-		String iconUrl = getIconByServiceTypeId(serviceTypeId);
+		String iconUrl = "http://img.51xingzheng.cn/437396cc0b49b04dc89a0552f7e90cae?p=0";
+		AppTools appTools = appToolsService.selectByAction(extType);
+		if (appTools != null) {
+			iconUrl = appTools.getLogo();
+		}
 
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setCategory("app");
-		searchVo.setAction(orderExtType);
-		searchVo.setParams(orderId.toString());
+		searchVo.setAction(extType);
+		searchVo.setParams(id.toString());
+		searchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+		searchVo.setEndTime(TimeStampUtil.getEndOfToday());		
 		List<UserMsg> rsList = userMsgService.selectBySearchVo(searchVo);
 
 		UserMsg record = userMsgService.initUserMsg();
@@ -564,11 +561,11 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		record.setFromUserId(userId);
 		record.setToUserId(userId);
 		record.setCategory("app");
-		record.setAction(orderExtType);
-		record.setParams(orderId.toString());
+		record.setAction(extType);
+		record.setParams(id.toString());
 		record.setGotoUrl("");
-		record.setTitle(serviceType.getName());
-		record.setSummary(orderSummary);
+		record.setTitle(title);
+		record.setSummary(summary);
 		record.setIconUrl(iconUrl);
 		if (record.getMsgId() > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -577,14 +574,8 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 			userMsgService.insert(record);
 		}
 		
-		//发送推送消息
-		if (order.getOrderStatus().equals(Constants.ORDER_STATUS_2_PAY_DONE) ||
-			order.getOrderStatus().equals(Constants.ORDER_STATUS_3_PROCESSING)) {
-			pushMsgToDevice(userId, serviceType.getName(), orderSummary);
-		}
-		
 		return new AsyncResult<Boolean>(true);
-	}
+	}	
 
 	// 发送推送消息
 	@Async
@@ -644,35 +635,4 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 		return new AsyncResult<Boolean>(true);
 	}
-
-	// 根据服务大类获得对应的图表
-	private String getIconByServiceTypeId(Long serviceTypeId) {
-		String iconUrl = "";
-
-		switch (serviceTypeId.toString()) {
-		// 团建
-		case "79":
-			iconUrl = "http://img.51xingzheng.cn/c14e06eb395592ae3dbefda371e7a410?p=0";
-			break;
-		// 保洁
-		case "204":
-			iconUrl = "http://img.51xingzheng.cn/879905845779a81df1e0a670411dc22f?p=0";
-			break;
-		// 绿植
-		case "238":
-			iconUrl = "http://img.51xingzheng.cn/e471c96a527a807f1b3e862c45c753f4?p=0";
-			break;
-		// 送水
-		case "239":
-			iconUrl = "http://img.51xingzheng.cn/e5e4ba5855916bcdc516056e0176cc93?p=0";
-			break;
-		// 废品回收
-		case "246":
-			iconUrl = "http://img.51xingzheng.cn/b081a229aa5e8d590a2189654ddd5534?p=0";
-			break;
-		}
-
-		return iconUrl;
-	}
-
 }
