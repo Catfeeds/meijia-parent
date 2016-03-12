@@ -3,11 +3,11 @@ package com.simi.service.order;
 import java.util.List;
 
 import com.simi.po.model.order.OrderExtRecycle;
-import com.simi.vo.order.OrderExtGreenListVo;
+import com.simi.vo.order.OrderExtRecycleListVo;
 
 public interface OrderExtRecycleService {
 
-	OrderExtRecycle initOrderExtGreen();
+	OrderExtRecycle initOrderExtRecycle();
 
 	int deleteByPrimaryKey(Long id);
 
@@ -23,7 +23,7 @@ public interface OrderExtRecycleService {
 
 	List<OrderExtRecycle> selectByUserId(Long userId);
 
-	OrderExtGreenListVo getOrderExtGreenListVo(OrderExtRecycle item);
+	OrderExtRecycleListVo getOrderExtRecycleListVo(OrderExtRecycle item);
 
 	OrderExtRecycle selectByOrderId(Long orderId);
 

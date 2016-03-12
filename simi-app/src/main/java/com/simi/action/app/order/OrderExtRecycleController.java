@@ -38,7 +38,7 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.order.OrderExtCleanListVo;
-import com.simi.vo.order.OrderExtGreenListVo;
+import com.simi.vo.order.OrderExtRecycleListVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -51,7 +51,7 @@ public class OrderExtRecycleController extends BaseController {
 	private OrdersService ordersService;
 	
 	@Autowired
-	private OrderExtRecycleService orderExtGreenService;
+	private OrderExtRecycleService orderExtRecycleService;
 	
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
@@ -89,10 +89,10 @@ public class OrderExtRecycleController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		List<OrderExtGreenListVo> listVo = new ArrayList<OrderExtGreenListVo>();
-		List<OrderExtRecycle> list = orderExtGreenService.selectByUserId(userId);
+		List<OrderExtRecycleListVo> listVo = new ArrayList<OrderExtRecycleListVo>();
+		List<OrderExtRecycle> list = orderExtRecycleService.selectByUserId(userId);
 		for (OrderExtRecycle item : list) {
-			OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(item);
+			OrderExtRecycleListVo vo = orderExtRecycleService.getOrderExtRecycleListVo(item);
 			listVo.add(vo);
 		}
 		result.setData(listVo);
@@ -119,13 +119,13 @@ public class OrderExtRecycleController extends BaseController {
 			return result;
 		}
 		
-		OrderExtRecycle recycle = orderExtGreenService.selectByOrderId(orderId);
+		OrderExtRecycle recycle = orderExtRecycleService.selectByOrderId(orderId);
 		if (recycle == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.ORDER_NO_NOT_EXIST_MG);
 			return result;
 		}
-		OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(recycle);
+		OrderExtRecycleListVo vo = orderExtRecycleService.getOrderExtRecycleListVo(recycle);
 		result.setData(vo);
 		return result;
 	}		
@@ -171,7 +171,7 @@ public class OrderExtRecycleController extends BaseController {
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping(value = "post_add_recycle", method = RequestMethod.POST)
-	public AppResultData<Object> postGreen(
+	public AppResultData<Object> postRecycle(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("addr_id") Long addrId,
 			@RequestParam("recycle_type") Short recycleType,
@@ -254,7 +254,7 @@ public class OrderExtRecycleController extends BaseController {
 		orderPricesService.insert(orderPrice);
 		
 		//保存废品回收订单扩展表信息
-		OrderExtRecycle recycle = orderExtGreenService.initOrderExtGreen();
+		OrderExtRecycle recycle = orderExtRecycleService.initOrderExtRecycle();
 		recycle.setOrderId(orderId);
 		recycle.setOrderNo(orderNo);
 		recycle.setUserId(userId);
@@ -262,9 +262,9 @@ public class OrderExtRecycleController extends BaseController {
 		recycle.setLinkMan(linkMan);
 		recycle.setLinkTel(linkTel);
 		recycle.setRecycleType(recycleType);
-		orderExtGreenService.insert(recycle);
+		orderExtRecycleService.insert(recycle);
 		
-		OrderExtGreenListVo vo = orderExtGreenService.getOrderExtGreenListVo(recycle);
+		OrderExtRecycleListVo vo = orderExtRecycleService.getOrderExtRecycleListVo(recycle);
 		result.setData(vo);
 		
 		
