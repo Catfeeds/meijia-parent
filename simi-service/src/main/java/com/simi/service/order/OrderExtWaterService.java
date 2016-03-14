@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
+import com.simi.vo.order.OrderExtWaterXcloudVo;
 
 public interface OrderExtWaterService {
 
@@ -26,11 +27,15 @@ public interface OrderExtWaterService {
 	List<OrderExtWater> selectByUserId(Long userId);
 
 	OrderExtWaterListVo getListVo(OrderExtWater item);
-
+	
+	OrderExtWaterXcloudVo getListXcloudVo(OrderExtWater item);
+	
 	List<OrderExtWaterListVo> getListVos(List<OrderExtWater> list);
 
 	OrderExtWater selectByOrderId(Long orderId);
 
 	PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize);
+
+	PageInfo selectByPage(OrderSearchVo searchVo,  int pageNo, int pageSize);
 
 }

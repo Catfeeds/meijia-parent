@@ -47,52 +47,68 @@
 					<form:form modelAttribute="contentModel" method="POST" id="water-form"
 						class="am-form am-form-horizontal" enctype="multipart/form-data">
 
-
-						<div class="am-form-group">
-							<label for="user-email" class="am-u-sm-3 am-form-label">请选择品牌:</label>
-							<div class="am-u-sm-9">
-								下拉选择框
+                        <input type="hidden" id="userId" value="${userId }" />
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">商品图片:</label>
+							<div class="col-md-5">
+								<img id="imgUrl" wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">数量:</label>
-							<div class="am-u-sm-9">
-								输入框，只能输入数字，必须大于0，默认为1
+						<div class="form-group required">
+							<label class="col-md-2 control-label">商品:</label>
+							<div class="col-md-5">
+								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="form-control" autocomplete="off">
+									<c:forEach items="${waterComVos}" var="item">
+										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" <c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >${item.namePrice}</option>
+							
+									</c:forEach>
+								</form:select>
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">送货地址:</label>
-							<div class="am-u-sm-9">
-								下拉选择框
+						<div class="form-group required">
+							<label class="col-md-2 control-label">送水的数量</label>
+							<div class="col-md-5">
+								<form:input path="serviceNum" class="am-form-field am-radius js-pattern-pinteger" maxLength="32"  
+								/>
+								<form:errors path="serviceNum" class="field-has-error"></form:errors>
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">联系人:</label>
-							<div class="am-u-sm-9">
-								输入框
+						 <div class="form-group" required>
+							<label class="col-md-2 control-label">服务地址</label>
+							<div class="col-md-5">
+								<form:select path="addrId" name="addrId" id="addrId" class="am-form-field am-radius js-pattern-pinteger">
+									<!-- <option value="">请选择服务地址</option> -->
+									<form:options items="${userAddrVo}" itemValue="addrId" itemLabel="addrName" />
+								</form:select>
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">联系电话:</label>
-							<div class="am-u-sm-9">
-								输入框
+						<div class="form-group required">
+							<label class="col-md-2 control-label">联系人</label>
+							<div class="col-md-5">
+								<form:input path="linkMan" class="form-control" />
+								<form:errors path="linkMan" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						<div class="form-group required">
 
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">备注:</label>
-							<div class="am-u-sm-9">
-								
+							<label class="col-md-2 control-label">联系人电话</label>
+							<div class="col-md-5">
+								<form:input path="linkTel" class="form-control" maxLength="32" />
+								<form:errors path="linkTel" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">备注</label>
+							<div class="col-md-5">
+								<form:textarea path="remarks" class="form-control" placeholder="请输入备注" />
+							</div>
+						</div>
+						
 						<hr>
 						<div class="am-form-group">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<button type="button" class="am-btn am-btn-danger" id="btn-staff-submit">提交</button>
+								<button type="button" class="am-btn am-btn-danger" id="btn-water-submit">提交</button>
 								<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 							</div>
 						</div>
@@ -115,6 +131,8 @@
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
 
+	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" type="text/javascript"></script>
+	
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/xcloud/common/validate-methods.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/xcloud/xz/water-form.js'/>"></script>

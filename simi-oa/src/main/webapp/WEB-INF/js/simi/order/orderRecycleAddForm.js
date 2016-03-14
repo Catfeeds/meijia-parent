@@ -19,6 +19,10 @@ $.validator.addMethod("uniqueMobile", function(value, element) {
 $("#mobile").on('change', function(){
 	$mobile = $(this).val();
 
+	//更换手机号时清空地址下拉列表
+	var obj=document.getElementById('addrId');
+	obj.options.length=0;
+	
 	//发送ajax请求根据服务大类ID获取服务小类ID
 	$.ajax({
 		type: 'GET',

@@ -17,6 +17,8 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
+import com.simi.vo.order.OrderExtWaterXcloudVo;
+import com.simi.common.Constants;
 import com.simi.po.dao.order.OrderExtWaterMapper;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderPrices;
@@ -121,6 +123,72 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		return orderExtWaterMapper.selectByUserId(userId);
 	}
 	
+	@Override
+	public OrderExtWaterXcloudVo getListXcloudVo(OrderExtWater item) {
+		OrderExtWaterXcloudVo  vo = new OrderExtWaterXcloudVo();
+		vo.setOrderId(item.getOrderId());
+		vo.setOrderNo(item.getOrderNo());
+		vo.setUserId(item.getUserId());
+		
+		//服务地址
+		vo.setAddrName("");
+		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
+		OrderPrices orderPrice = orderPricesService.selectByOrderId(item.getOrderId());
+		
+		vo.setOrderStatus(order.getOrderStatus());
+		vo.setOrderMoney(new BigDecimal(0));
+		vo.setOrderPay(new BigDecimal(0));
+		//订单价格
+		if (orderPrice != null) {
+			vo.setOrderMoney(orderPrice.getOrderMoney());
+			vo.setOrderPay(orderPrice.getOrderPay());
+		}
+		
+		Long addrId = order.getAddrId();
+		UserAddrs userAddr = userAddrsService.selectByPrimaryKey(addrId);
+		if (userAddr != null) {
+			vo.setAddrName(userAddr.getName() + " " + userAddr.getAddr());
+		}
+
+		//服务大类名称
+		vo.setServiceTypeName("");
+		Long serviceTypeId = order.getServiceTypeId();
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		if (serviceType != null) {
+			vo.setServiceTypeName(serviceType.getName());
+		}
+
+		//服务价格商品名称
+		vo.setServicePriceName("");
+		vo.setImgUrl("");
+		vo.setDisPrice(new BigDecimal(0));
+		
+		Long servicePriceId = item.getServicePriceId();
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		if (servicePrice != null) {
+			vo.setServicePriceName(servicePrice.getName());
+		}
+
+		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		if (servicePriceDetail != null) {
+			vo.setImgUrl(servicePriceDetail.getImgUrl());
+			vo.setDisPrice(servicePriceDetail.getDisPrice());
+		}
+		
+		vo.setServiceNum(item.getServiceNum());
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
+		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
+		
+		vo.setIsDone(item.getIsDone());
+		
+		vo.setIsDoneTimeStr("");
+		if (item.getIsDoneTime() > 0L) {
+			vo.setIsDoneTimeStr(TimeStampUtil.fromTodayStr(item.getIsDoneTime() * 1000));
+		}	
+		vo.setOrderExtStatus(item.getOrderExtStatus());
+		
+		return vo;
+	}
 	@Override
 	public OrderExtWaterListVo getListVo(OrderExtWater item) {
 		OrderExtWaterListVo  vo = new OrderExtWaterListVo();
@@ -346,4 +414,28 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		}
 		return result;
 	}
+//@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public PageInfo selectByPage(OrderSearchVo searchVo,int pageNo, int pageSize) {
+		 PageHelper.startPage(pageNo, pageSize);
+		 List<OrderExtWaterXcloudVo> listVo = new ArrayList<OrderExtWaterXcloudVo>();
+         List<OrderExtWater> list = orderExtWaterMapper.selectByListPage(searchVo);
+         OrderExtWater item = null;
+         for (int i = 0; i < list.size(); i++) {
+        	 item = list.get(i);
+        	 OrderExtWaterXcloudVo vo = this.getListXcloudVo(item);
+        	 list.set(i, vo);
+		}
+         PageInfo result = new PageInfo(list);
+        return result;
+	}
+	
+	/*@Override
+	public PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
+
+		 PageHelper.startPage(pageNo, pageSize);
+         List<OrderExtWater> list = orderExtWaterMapper.selectByListPage(orderSearchVo);
+         PageInfo result = new PageInfo(list);
+        return result;
+    }*/
 }
