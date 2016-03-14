@@ -49,7 +49,7 @@
 			></span> 饮用水管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
 		</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-water">
-				<li><a href="/xcloud/xz/water/water-form" class="am-cf"> <span class="am-icon-bell"></span> 一键送水 <span
+				<li><a href="/xcloud/xz/water/water-form" class="am-cf"> <span class="am-icon-bell"></span> 送水预约 <span
 						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
 					></span>
 				</a></li>
@@ -58,8 +58,56 @@
 				<li><a href="/xcloud/xz/water/service"> <span class="am-icon-calendar"></span> 饮用水服务商
 				</a></li>
 			</ul></li>
-		<li class="admin-parent"><a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav-assets'}">
-				<span class="am-icon-file"></span> 资产管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+			
+			
+		<li class="admin-parent"><a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-clean'}"> <span
+				class="am-icon-file"
+			></span> 企业保洁 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+		</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-clean">
+				<li><a href="/xcloud/xz/clean/clean-form" class="am-cf"> <span class="am-icon-bell"></span> 保洁预约 <span
+						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
+					></span>
+				</a></li>
+				<li><a href="/xcloud/xz/clean/list"> <span class="am-icon-plane"></span> 保洁结算
+				</a></li>
+				<li><a href="/xcloud/xz/clean/service"> <span class="am-icon-calendar"></span> 保洁服务商
+				</a></li>
+			</ul></li>
+			
+		<li class="admin-parent"><a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-teamwork'}"> <span
+				class="am-icon-file"
+			></span> 企业团建 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+		</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-teamwork">
+				<li><a href="/xcloud/xz/teamwork/teamwork-form" class="am-cf"> <span class="am-icon-bell"></span> 团建预约 <span
+						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
+					></span>
+				</a></li>
+				<li><a href="/xcloud/xz/teamwork/list"> <span class="am-icon-plane"></span> 团建结算
+				</a></li>
+				<li><a href="/xcloud/xz/teamwork/service"> <span class="am-icon-calendar"></span> 团建服务商
+				</a></li>
+			</ul></li>	
+			
+		<li class="admin-parent"><a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-recycle'}"> <span
+				class="am-icon-file"
+			></span> 废品回收 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+		</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-recycle">
+				<li><a href="/xcloud/xz/recycle/recycle-form" class="am-cf"> <span class="am-icon-bell"></span> 回收预约 <span
+						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
+					></span>
+				</a></li>
+				<li><a href="/xcloud/xz/recycle/list"> <span class="am-icon-plane"></span> 回收结算
+				</a></li>
+				<li><a href="/xcloud/xz/recycle/service"> <span class="am-icon-calendar"></span> 团建服务商
+				</a></li>
+			</ul></li>	
+				
+		<li class="admin-parent"><a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav-assets'}"> <span
+				class="am-icon-file"
+			></span> 资产管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
 		</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-assets">
 				<li><a href="admin-user.html" class="am-cf"> <span class="am-icon-bell"></span> 资产一览 <span
