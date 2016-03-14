@@ -55,37 +55,18 @@
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
 								<tr>
-									<!-- <th class="table-check"><input type="checkbox" name="select_all" id="select_all"
-										value="1" /></th> -->
-					<!-- <th>订单号</th>
-					<th>下单时间</th>
-					<th>用户手机号</th>
-					<th>服务日期</th>
-					<th>服务大类</th>
-					<th>地址</th>
-					<th>送水的数量</th>
-					<th>订单状态</th>
-					<th>订单总金额</th>
-					<th>订单支付金额</th> -->
-					
-					
-									<!-- <th class="table-name">订单号</th> -->
 									<th class="table-date am-hide-sm-only">服务大类名称</th>
-									<th class="table-set">送水的数量</th>
-									<th class="table-id">地址</th>
-									<th class="table-date am-hide-sm-only">订单状态</th>
-									<th class="table-title">下单时间</th>
-									<!-- <th class="table-type">用户手机号</th> -->
-									<!-- <th class="table-author am-hide-sm-only">服务日期</th> -->
-									<!-- <th class="table-id">订单总金额</th>
-									<th class="table-set">订单支付金额</th> -->
+									<th class="table-id">数量</th>
+									<th class="table-title">地址</th>
+									<th >订单状态</th>
+									<th class="table-set">下单时间</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${contentModel.list}" var="item">
 									<tr>
 										<td>${item.serviceTypeName}</td>
-										<td><a href="#" class="name-cell">${ item.serviceNum }</a></td>
+										<td>${ item.serviceNum }桶</td>
 										<td>${item.addrName}</td>
 										<td class="am-hide-sm-only">${item.orderStatusName}</td>
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
@@ -123,6 +104,6 @@
 
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/xz/express-list.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/xz/water-list.js'/>"></script>
 </body>
 </html>
