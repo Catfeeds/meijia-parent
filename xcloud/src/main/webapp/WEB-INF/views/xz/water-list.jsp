@@ -56,9 +56,11 @@
 							<thead>
 								<tr>
 									<th class="table-date am-hide-sm-only">服务大类名称</th>
+									<th >商品名称</th>
 									<th class="table-id">数量</th>
 									<th class="table-title">地址</th>
 									<th >订单状态</th>
+									<th >是否签收</th>
 									<th class="table-set">下单时间</th>
 								</tr>
 							</thead>
@@ -66,9 +68,11 @@
 								<c:forEach items="${contentModel.list}" var="item">
 									<tr>
 										<td>${item.serviceTypeName}</td>
+										<td>${item.servicePriceName}</td>
 										<td>${ item.serviceNum }桶</td>
 										<td>${item.addrName}</td>
 										<td class="am-hide-sm-only">${item.orderStatusName}</td>
+										<td class="am-hide-sm-only">${item.orderExtStatusName}</td>
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
 									</tr>
 								</c:forEach>

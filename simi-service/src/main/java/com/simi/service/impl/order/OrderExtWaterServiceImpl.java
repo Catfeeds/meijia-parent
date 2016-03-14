@@ -129,7 +129,17 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		vo.setOrderId(item.getOrderId());
 		vo.setOrderNo(item.getOrderNo());
 		vo.setUserId(item.getUserId());
-		
+		vo.setOrderExtStatus(item.getOrderExtStatus());
+		vo.setOrderExtStatusName("");
+		if (item.getOrderExtStatus() == 0) {
+			vo.setOrderExtStatusName("运营人员处理中");
+		}
+		if (item.getOrderExtStatus() == 1) {
+			vo.setOrderExtStatusName("已转派服务商");
+		}
+		if (item.getOrderExtStatus() == 2) {
+			vo.setOrderExtStatusName("已签收");
+		}
 		//服务地址
 		vo.setAddrName("");
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());

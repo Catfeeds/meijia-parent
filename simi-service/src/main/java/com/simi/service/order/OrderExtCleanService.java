@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.order.OrderExtClean;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtCleanListVo;
+import com.simi.vo.order.OrderExtCleanXcloudVo;
 
 public interface OrderExtCleanService {
 
@@ -32,5 +33,9 @@ public interface OrderExtCleanService {
 	OrderExtClean selectByOrderId(Long orderId);
 
 	PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize);
+
+	PageInfo selectByPage(OrderSearchVo searchVo, int pageNo, int pageSize);
+
+	OrderExtCleanXcloudVo getXcloudList(OrderExtClean item);
 
 }

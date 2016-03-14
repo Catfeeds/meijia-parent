@@ -14,11 +14,15 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtCleanListVo;
+import com.simi.vo.order.OrderExtCleanXcloudVo;
+import com.simi.vo.order.OrderExtWaterXcloudVo;
 import com.simi.po.dao.order.OrderExtCleanMapper;
 import com.simi.po.model.order.OrderExtClean;
+import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
+import com.alibaba.druid.sql.ast.expr.SQLCaseExpr.Item;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
@@ -241,5 +245,73 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 			result.add(vo);
 		}
 		return result;
+	}
+	@Override
+	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo,
+			int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<OrderExtCleanXcloudVo> listVo = new ArrayList<OrderExtCleanXcloudVo>();
+		List<OrderExtClean> list = orderExtCleanMapper.selectByListPage(searchVo);
+		OrderExtClean item = null;
+		for (int i = 0; i < list.size(); i++) {
+			 item = list.get(i);
+        	 OrderExtCleanXcloudVo vo = this.getXcloudList(item);
+        	 list.set(i, vo);
+		}
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
+	@Override
+	public OrderExtCleanXcloudVo getXcloudList(OrderExtClean item) {
+		OrderExtCleanXcloudVo  vo = new OrderExtCleanXcloudVo();
+		vo.setOrderId(item.getOrderId());
+		vo.setOrderNo(item.getOrderNo());
+		vo.setUserId(item.getUserId());
+		vo.setCompanyName(item.getCompanyName());
+		
+		//服务地址
+		vo.setAddrName("");
+		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
+		Long addrId = order.getAddrId();
+		UserAddrs userAddr = userAddrsService.selectByPrimaryKey(addrId);
+		if (userAddr != null) {
+			vo.setAddrName(userAddr.getName() + " " + userAddr.getAddr());
+		}
+        
+		//服务大类名称
+		vo.setServiceTypeName("");
+		Long serviceTypeId = order.getServiceTypeId();
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		if (serviceType != null) {
+			vo.setServiceTypeName(serviceType.getName());
+		}
+		vo.setOrderExtStatusName("");
+		if (item.getOrderExtStatus() ==0) {
+			vo.setOrderExtStatusName("运营人员处理中");
+		}
+		if (item.getOrderExtStatus() ==1) {
+			vo.setOrderExtStatusName("已转派服务商");
+		}
+		
+		vo.setCleanTypeName("");
+		if (item.getCleanType() ==0) {
+			vo.setCleanTypeName("定期保洁");
+		}
+		if (item.getCleanType() ==1) {
+			vo.setCleanTypeName("深度养护");
+		}
+		if (item.getCleanType() ==2) {
+			vo.setCleanTypeName("维修清理");
+		}
+		if (item.getCleanType() ==3) {
+			vo.setCleanTypeName("其他");
+		}
+		
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
+		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
+		vo.setOrderStatus(order.getOrderStatus());
+		vo.setOrderExtStatus(item.getOrderExtStatus());
+		
+		return vo;
 	}
 }

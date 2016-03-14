@@ -1,36 +1,26 @@
 package com.simi.vo.order;
 
-import java.math.BigDecimal;
-
-import com.simi.po.model.order.OrderExtWater;
+import com.simi.po.model.order.OrderExtClean;
 
 
-public class OrderExtWaterXcloudVo extends OrderExtWater{
+public class OrderExtCleanXcloudVo extends OrderExtClean{
 	
     
     private Short orderStatus;
     
     private String serviceTypeName;
     
+    private String cleanTypeName;
+    
     private String addrName;
     
     private String servicePriceName;
-    
-    private String imgUrl;
-    
-    private BigDecimal disPrice;
-    
-    private BigDecimal orderMoney;
-    
-    private BigDecimal orderPay;
     
     private String orderStatusName;
     
     private String orderExtStatusName;
     
     private Short orderExtStatus;
-    
-    private String isDoneTimeStr;
         
     private String addTimeStr;
 
@@ -66,38 +56,6 @@ public class OrderExtWaterXcloudVo extends OrderExtWater{
 		this.servicePriceName = servicePriceName;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-
-	public BigDecimal getDisPrice() {
-		return disPrice;
-	}
-
-	public void setDisPrice(BigDecimal disPrice) {
-		this.disPrice = disPrice;
-	}
-
-	public BigDecimal getOrderMoney() {
-		return orderMoney;
-	}
-
-	public void setOrderMoney(BigDecimal orderMoney) {
-		this.orderMoney = orderMoney;
-	}
-
-	public BigDecimal getOrderPay() {
-		return orderPay;
-	}
-
-	public void setOrderPay(BigDecimal orderPay) {
-		this.orderPay = orderPay;
-	}
-
 	public String getOrderStatusName() {
 		return orderStatusName;
 	}
@@ -114,14 +72,6 @@ public class OrderExtWaterXcloudVo extends OrderExtWater{
 		this.addTimeStr = addTimeStr;
 	}
 
-	public String getIsDoneTimeStr() {
-		return isDoneTimeStr;
-	}
-
-	public void setIsDoneTimeStr(String isDoneTimeStr) {
-		this.isDoneTimeStr = isDoneTimeStr;
-	}
-
 	public Short getOrderExtStatus() {
 		return orderExtStatus;
 	}
@@ -136,6 +86,14 @@ public class OrderExtWaterXcloudVo extends OrderExtWater{
 
 	public void setOrderExtStatusName(String orderExtStatusName) {
 		this.orderExtStatusName = orderExtStatusName;
+	}
+
+	public String getCleanTypeName() {
+		return cleanTypeName;
+	}
+
+	public void setCleanTypeName(String cleanTypeName) {
+		this.cleanTypeName = cleanTypeName;
 	}
 
 	

@@ -26,6 +26,7 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.UserAddrs;
+import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderQueryService;
@@ -94,11 +95,15 @@ public class WaterController extends BaseController {
 		Long userId = accountAuth.getUserId();
 		model.addAttribute("userId", userId);
 		
+		Users users = usersService.selectByPrimaryKey(userId);
+		
 		OrdersWaterAddOaVo vo = new OrdersWaterAddOaVo();
 		OrderExtWater water = orderExtWaterService.initOrderExtWater();
 		BeanUtilsExp.copyPropertiesIgnoreNull(water, vo);
 		vo.setRemarks("");
 		vo.setMobile("");
+		vo.setLinkMan(users.getName());
+		vo.setLinkTel(users.getMobile());
 		vo.setServiceNum(1);
 		// 获得商品列表的选择下拉列表
 		PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
