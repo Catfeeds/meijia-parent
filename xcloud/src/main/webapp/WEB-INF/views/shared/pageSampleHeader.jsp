@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header class="am-topbar admin-header">
   <div class="am-topbar-brand">
-    <img src="https://gtms02.alicdn.com/tps/i2/TB1qU_xGFXXXXczaXXXTyVt9VXX-128-128.png" height="25" width="25"><a href="company-index.html"></i> | 云行政-管理平台 </a><a href="company-auth.html"></a>
+    <img src="http://123.57.173.36/simi-h5/icon/web-logo.png" height="25" width="25"><a href="company-index.html"></i> | 云行政-管理平台 </a><a href="company-auth.html"></a>
   </div>
   <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
   </div>
