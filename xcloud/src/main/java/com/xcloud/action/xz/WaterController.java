@@ -169,8 +169,7 @@ public class WaterController extends BaseController {
 	// 查询与登记
 	@AuthPassport
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model model,OrderSearchVo searchVo,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page
+	public String list(HttpServletRequest request, Model model,OrderSearchVo searchVo
 		) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
@@ -185,7 +184,7 @@ public class WaterController extends BaseController {
 		
 		searchVo.setUserId(userId);
 	
-		PageInfo result = orderExtWaterService.selectByPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		PageInfo result = orderExtWaterService.selectByPage(searchVo, pageNo,pageSize);
 		
 		model.addAttribute("contentModel", result);
 		
