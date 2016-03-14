@@ -99,6 +99,7 @@ public class WaterController extends BaseController {
 		BeanUtilsExp.copyPropertiesIgnoreNull(water, vo);
 		vo.setRemarks("");
 		vo.setMobile("");
+		vo.setServiceNum(1);
 		// 获得商品列表的选择下拉列表
 		PartnerUserSearchVo searchVo = new PartnerUserSearchVo();
 		searchVo.setServiceTypeId(serviceTypeId);

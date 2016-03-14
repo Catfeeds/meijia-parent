@@ -49,58 +49,61 @@
 
                         <input type="hidden" id="userId" value="${userId }" />
 						
-						<div class="form-group required">
-							<label class="col-md-2 control-label">商品图片:</label>
-							<div class="col-md-5">
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
+							<div class="am-u-sm-9">
 								<img id="imgUrl" wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
 							</div>
 						</div>
-						<div class="form-group required">
-							<label class="col-md-2 control-label">商品:</label>
-							<div class="col-md-5">
-								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="form-control" autocomplete="off">
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
+							<div class="am-u-sm-9">
+								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="am-form-field am-radius" autocomplete="off">
 									<c:forEach items="${waterComVos}" var="item">
-										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" <c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >${item.namePrice}</option>
+										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" 
+										<c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >
+										${item.namePrice}</option>
 							
 									</c:forEach>
 								</form:select>
 							</div>
 						</div>
-						<div class="form-group required">
-							<label class="col-md-2 control-label">送水的数量</label>
-							<div class="col-md-5">
-								<form:input path="serviceNum" class="am-form-field am-radius js-pattern-pinteger" maxLength="32"  
-								/>
-								<form:errors path="serviceNum" class="field-has-error"></form:errors>
+						<div class="am-form-group" required>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">送水的数量:</label>
+							<div class="am-u-sm-9">
+								<form:input path="serviceNum" class="am-form-field am-radius js-pattern-pinteger" maxLength="32"
+									required="required" />
+								<small>*必填项</small>
 							</div>
 						</div>
-						 <div class="form-group" required>
-							<label class="col-md-2 control-label">服务地址</label>
-							<div class="col-md-5">
-								<form:select path="addrId" name="addrId" id="addrId" class="am-form-field am-radius js-pattern-pinteger">
-									<!-- <option value="">请选择服务地址</option> -->
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">服务地址:</label>
+							<div class="am-u-sm-9">
+								<form:select path="addrId" class="am-form-field am-radius">
 									<form:options items="${userAddrVo}" itemValue="addrId" itemLabel="addrName" />
 								</form:select>
+								<small></small>
 							</div>
 						</div>
-						<div class="form-group required">
-							<label class="col-md-2 control-label">联系人</label>
-							<div class="col-md-5">
-								<form:input path="linkMan" class="form-control" />
-								<form:errors path="linkMan" class="field-has-error"></form:errors>
+						
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">联系人:</label>
+							<div class="am-u-sm-9">
+								<form:input path="linkMan" class="am-form-field am-radius" maxLength="32" />
+								<small></small>
 							</div>
 						</div>
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">联系人电话</label>
-							<div class="col-md-5">
-								<form:input path="linkTel" class="form-control" maxLength="32" />
-								<form:errors path="linkTel" class="field-has-error"></form:errors>
+						
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">联系电话:</label>
+							<div class="am-u-sm-9">
+								<form:input path="linkTel" class="am-form-field am-radius" maxLength="32" />
+								<small></small>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-md-2 control-label">备注</label>
-							<div class="col-md-5">
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">备注:</label>
+							<div class="am-u-sm-9">
 								<form:textarea path="remarks" class="form-control" placeholder="请输入备注" />
 							</div>
 						</div>
