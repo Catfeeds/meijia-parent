@@ -33,7 +33,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">应用中心</strong> / <small>app-tools</small>
+					<strong class="am-text-primary am-text-lg">我的应用</strong> / <small>My Application</small>
 				</div>
 			</div>
 			<hr>
