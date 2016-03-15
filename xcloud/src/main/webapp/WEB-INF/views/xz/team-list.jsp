@@ -56,7 +56,7 @@
 							<thead>
 								<tr>
 								    <th class="table-date am-hide-sm-only">服务大类名称</th>
-									<th class="table-date am-hide-sm-only">清洁类型</th>
+									<th class="table-date am-hide-sm-only">团建类型</th>
 									<th class="table-title">活动城市</th>
 									<th >订单状态</th>
 									<th >处理情况</th>
