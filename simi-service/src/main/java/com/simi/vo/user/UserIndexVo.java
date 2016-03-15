@@ -33,6 +33,8 @@ public class UserIndexVo  {
 	
 	private Integer score;
 	
+	private Short isFriend;
+	
 
 	public long getId() {
 		return Id;
@@ -144,5 +146,13 @@ public class UserIndexVo  {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Short getIsFriend() {
+		return isFriend;
+	}
+
+	public void setIsFriend(Short isFriend) {
+		this.isFriend = isFriend;
 	}
 }

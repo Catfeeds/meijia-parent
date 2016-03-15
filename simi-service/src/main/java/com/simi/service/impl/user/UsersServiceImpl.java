@@ -33,6 +33,7 @@ import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.user.UserCoupons;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
@@ -262,6 +263,21 @@ public class UsersServiceImpl implements UsersService {
 			Long totalFriends = userFriendPage.getTotal();
 			vo.setTotalFriends(totalFriends.intValue());
 		}
+		
+		//是否为好友
+		vo.setIsFriend((short) 0);
+		Long userId = user.getId();
+		Long friendId = viewUser.getId();
+		searchVo1 = new UserFriendSearchVo();
+		searchVo1.setUserId(userId);
+		searchVo1.setFriendId(friendId);
+		UserFriends userFriend = userFriendService.selectByIsFirend(searchVo1);
+		
+		if (userFriend != null) {
+			vo.setIsFriend((short) 1);
+		}
+		
+		
 		return vo;
 	}
 	
