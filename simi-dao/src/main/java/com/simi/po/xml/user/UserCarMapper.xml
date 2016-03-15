@@ -28,7 +28,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from user_car
-		where car_no = #{carNO,jdbcType=NUMERIC}
+		where lower(car_no) = lower(#{carNO,jdbcType=NUMERIC})
 	</select>
 	
 	
