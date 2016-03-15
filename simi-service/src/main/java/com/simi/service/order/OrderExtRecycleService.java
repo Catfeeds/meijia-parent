@@ -2,7 +2,9 @@ package com.simi.service.order;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.order.OrderExtRecycle;
+import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtRecycleListVo;
 
 public interface OrderExtRecycleService {
@@ -26,6 +28,8 @@ public interface OrderExtRecycleService {
 	OrderExtRecycleListVo getOrderExtRecycleListVo(OrderExtRecycle item);
 
 	OrderExtRecycle selectByOrderId(Long orderId);
+
+	PageInfo selectByPage(OrderSearchVo searchVo, int pageNo, int pageSize);
 
 
 }

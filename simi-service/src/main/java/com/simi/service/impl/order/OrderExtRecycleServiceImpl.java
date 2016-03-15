@@ -1,5 +1,6 @@
 package com.simi.service.impl.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,19 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
+import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderExtCleanXcloudVo;
 import com.simi.vo.order.OrderExtRecycleListVo;
+import com.simi.vo.order.OrderExtRecycleXcloudVo;
 import com.simi.po.dao.order.OrderExtRecycleMapper;
+import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 
@@ -125,6 +132,59 @@ public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
 	public OrderExtRecycle selectByOrderId(Long orderId) {
 		
 		return orderExtRecycleMapper.selectByOrderId(orderId);
+	}
+
+	@Override
+	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo,
+			int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<OrderExtRecycleXcloudVo> listVo = new ArrayList<OrderExtRecycleXcloudVo>();
+		List<OrderExtRecycle> list = orderExtRecycleMapper.selectByListPage(searchVo);
+		OrderExtRecycle item = null;
+		for (int i = 0; i < list.size(); i++) {
+			 item = list.get(i);
+			 OrderExtRecycleXcloudVo vo = this.getXcloudList(item);
+        	 list.set(i, vo);
+		}
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
+
+	private OrderExtRecycleXcloudVo getXcloudList(OrderExtRecycle item) {
+		OrderExtRecycleXcloudVo vo = new OrderExtRecycleXcloudVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		Users users = usersService.selectByPrimaryKey(item.getUserId());
+		//vo.setName(users.getName());
+		
+		//vo.setServiceTypeName("绿植设计租摆");
+		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
+		PartnerServiceType  serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		vo.setServiceTypeName(serviceType.getName());
+		//用户地址
+		vo.setAddrName("");
+		if (order.getAddrId() > 0L) {
+			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
+			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
+		}
+		//订单状态
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
+		
+		Long addTime = order.getAddTime()*1000;	
+		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
+		
+		vo.setOrderExtStatusName("");
+		if (item.getOrderExtStatus() == 0) {
+			vo.setOrderExtStatusName("运营人员处理中");
+		}
+		if (item.getOrderExtStatus() == 1) {
+			vo.setOrderExtStatusName("已转派服务商");
+		}
+	
+		vo.setRecycleTypeName(OrderUtil.getOrderRecycleTypeName(item.getRecycleType()));
+		
+		return vo;
+	
 	}
 
 }

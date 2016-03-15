@@ -3,6 +3,7 @@ package com.simi.po.dao.order;
 import java.util.List;
 
 import com.simi.po.model.order.OrderExtRecycle;
+import com.simi.vo.OrderSearchVo;
 
 public interface OrderExtRecycleMapper {
     int deleteByPrimaryKey(Long id);
@@ -20,4 +21,6 @@ public interface OrderExtRecycleMapper {
 	List<OrderExtRecycle> selectByUserId(Long userId);
 
 	OrderExtRecycle selectByOrderId(Long orderId);
+
+	List<OrderExtRecycle> selectByListPage(OrderSearchVo searchVo);
 }
