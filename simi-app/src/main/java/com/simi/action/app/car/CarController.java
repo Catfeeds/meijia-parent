@@ -205,7 +205,7 @@ public class CarController extends BaseController {
 			userMsgAsyncService.newActionAppMsg(userId, orderId, "expy", serviceType.getName(), remarks);
 			
 			//推送信息
-			String capImg = "http://img.51xingzheng.cn/8afe58fcc9dc9dafb302a560841f48be";
+			String capImg = "http://img.51xingzheng.cn/9790863671ef3249011398e23f137fc6";
 			noticeAppAsyncService.pushMsgToExpr(orderId, carNo, carColor, capImg);
 
 		} catch (JSONException e) {
