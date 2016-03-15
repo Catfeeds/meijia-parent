@@ -70,10 +70,10 @@
 							</div>
 						</div>
 						
-						<div class="am-form-group">
+						<div class="am-form-group" required>
 							<label for="user-phone" class="am-u-sm-3 am-form-label">联系人:</label>
 							<div class="am-u-sm-9">
-								<form:input path="linkMan" class="am-form-field am-radius" maxLength="32" />
+								<form:input path="linkMan" class="am-form-field am-radius" maxLength="32" required="required"/>
 								<small></small>
 							</div>
 						</div>
