@@ -268,15 +268,17 @@ public class UsersServiceImpl implements UsersService {
 		vo.setIsFriend((short) 0);
 		Long userId = user.getId();
 		Long friendId = viewUser.getId();
-		searchVo1 = new UserFriendSearchVo();
-		searchVo1.setUserId(userId);
-		searchVo1.setFriendId(friendId);
-		UserFriends userFriend = userFriendService.selectByIsFirend(searchVo1);
 		
-		if (userFriend != null) {
-			vo.setIsFriend((short) 1);
+		if (!userId.equals(friendId)) {
+			searchVo1 = new UserFriendSearchVo();
+			searchVo1.setUserId(userId);
+			searchVo1.setFriendId(friendId);
+			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo1);
+			
+			if (userFriend != null) {
+				vo.setIsFriend((short) 1);
+			}
 		}
-		
 		
 		return vo;
 	}
