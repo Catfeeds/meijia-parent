@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.order.OrderPricesService;
+import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.vo.UserSearchVo;
@@ -38,6 +39,9 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 	@Autowired
 	private UsersMapper usersMapper;
 
+	@Autowired
+	private OrdersService ordersService;
+	
 	@Autowired
 	private OrderPricesService orderPricesService;
 	
@@ -257,13 +261,24 @@ public class UserDetailPayServiceImpl implements UserDetailPayService {
 		BeanUtils.copyProperties(userDetailPay, vo);
 		
 		//订单类型名称
+		vo.setOrderTypeName("");
 		if (userDetailPay.getOrderType() == Constants.ORDER_TYPE_0) {
-			OrderPrices orderPrices = orderPricesService.selectByOrderId(vo.getOrderId());
-			if (orderPrices.getServicePriceId() != null) {
-				PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(orderPrices.getServicePriceId());
-				vo.setOrderTypeName(partnerServiceType.getName());
-			}else {
-				vo.setOrderTypeName("");
+			Long orderId = vo.getOrderId();
+			Orders order = ordersService.selectByPrimaryKey(orderId);
+			
+			OrderPrices orderPrices = orderPricesService.selectByOrderId(orderId);
+			PartnerServiceType partnerServiceType = null;
+			if (orderPrices.getServicePriceId().equals(0L)) {
+				partnerServiceType  = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+				if (partnerServiceType != null) {
+					vo.setOrderTypeName(partnerServiceType.getName());
+				}
+			} else {
+				
+				partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(orderPrices.getServicePriceId());
+				if (partnerServiceType != null) {
+					vo.setOrderTypeName(partnerServiceType.getName());
+				}
 			}
 			
 		}
