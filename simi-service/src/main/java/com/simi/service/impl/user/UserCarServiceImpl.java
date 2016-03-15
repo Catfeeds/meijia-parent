@@ -73,7 +73,7 @@ public class UserCarServiceImpl implements UserCarService {
 	
 	@Override
 	public UserCar selectByUserId(Long userId) {
-		return userCarMapper.selectByPrimaryKey(userId);
+		return userCarMapper.selectByUserId(userId);
 	}
 	
 	@Override
