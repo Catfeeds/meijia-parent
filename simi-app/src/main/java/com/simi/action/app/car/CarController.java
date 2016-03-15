@@ -110,11 +110,10 @@ public class CarController extends BaseController {
 	@SuppressWarnings({ "deprecation" })
 	@RequestMapping(value = "cap", method = { RequestMethod.POST })
 	@ResponseBody
-	public AppResultData<Object> doCap(@RequestBody String content) throws JsonParseException, JsonMappingException, IOException {
+	public String doCap(@RequestBody String content) throws JsonParseException, JsonMappingException, IOException {
 		
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
-//		System.out.println("pre_content = " + content);
+		
+		System.out.println("pre_content = " + content);
 		content = URLDecoder.decode(content);
 		System.out.println("after_content = " + content);
 
@@ -138,7 +137,7 @@ public class CarController extends BaseController {
 			carNo = carNo.trim();
 			UserCar userCar = userCarService.selectByCarNo(carNo);
 			
-			if (userCar == null) return result;
+			if (userCar == null) return "";
 			
 			Long userId = userCar.getUserId();
 			
@@ -148,9 +147,7 @@ public class CarController extends BaseController {
 			BigDecimal orderPay = new BigDecimal(5.0);//折扣价
 			//查询用户余额
 			if(u.getRestMoney().compareTo(orderPay) < 0) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg(ConstantMsg.ERROR_999_MSG_5);
-				return result;
+				return "";
 			}
 			//扣除用户余额
 			u.setRestMoney(u.getRestMoney().subtract(orderPay));
@@ -215,7 +212,7 @@ public class CarController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result;
+		return "";
 
 	}
 
