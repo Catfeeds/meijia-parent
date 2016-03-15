@@ -7,15 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.order.OrderExtTeamService;
 import com.simi.service.order.OrdersService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderExtTeamXcloudVo;
+import com.simi.vo.order.OrderExtWaterXcloudVo;
 import com.simi.vo.order.OrdersExtTeamListVo;
 import com.simi.po.dao.dict.DictCityMapper;
 import com.simi.po.dao.order.OrderExtTeamMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.order.OrderExtTeam;
+import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,6 +40,9 @@ public class OrderExtTeamServiceImpl implements OrderExtTeamService{
     
     @Autowired
     private DictCityMapper dictCityMapper;
+    
+    @Autowired
+    private PartnerServiceTypeService partnerServiceTypeService;
      
     
 	@Override
@@ -173,4 +181,56 @@ public class OrderExtTeamServiceImpl implements OrderExtTeamService{
 		return vo;
 	}
 
+	@Override
+	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo,
+			int pageSize) {
+       PageHelper.startPage(pageNo, pageSize);
+		 List<OrderExtTeamXcloudVo> listVo = new ArrayList<OrderExtTeamXcloudVo>();
+		 List<OrderExtTeam> list = orderExtTeamMapper.selectByListPage(searchVo);
+		 OrderExtTeam item = null;
+       for (int i = 0; i < list.size(); i++) {
+      	 item = list.get(i);
+      	OrderExtTeamXcloudVo vo = this.getXcloudListVo(item);
+      	 list.set(i, vo);
+		}
+       PageInfo result = new PageInfo(list);
+      return result;
+	}
+	@Override
+	public OrderExtTeamXcloudVo getXcloudListVo(OrderExtTeam orderExtTeam) {
+		OrderExtTeamXcloudVo vo = new OrderExtTeamXcloudVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(orderExtTeam, vo);
+		Orders order = ordersService.selectByOrderNo(orderExtTeam.getOrderNo());
+		
+		Users users = usersService.selectByPrimaryKey(orderExtTeam.getUserId());
+		vo.setLinkMan(users.getName());
+		vo.setLinkTel(users.getMobile());
+		vo.setOrderExtStatusName("");
+		if (orderExtTeam.getOrderExtStatus() == 0) {
+			vo.setOrderExtStatusName("运营人员处理中");	
+		}
+		if (orderExtTeam.getOrderExtStatus() == 1) {
+			vo.setOrderExtStatusName("已转派服务商");	
+		}
+		
+		vo.setOrderExtStatusName(OrderUtil.getOrderTeamTypeName(orderExtTeam.getTeamType()));
+		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
+		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
+		DictCity dictCity = dictCityMapper.selectByPrimaryKey(orderExtTeam.getCityId());
+		
+		vo.setCityName("");
+		if (dictCity != null) {
+		vo.setCityName(dictCity.getName());
+		}
+		//服务大类名称
+				vo.setServiceTypeName("");
+				Long serviceTypeId = order.getServiceTypeId();
+				PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+				if (serviceType != null) {
+					vo.setServiceTypeName(serviceType.getName());
+				}
+		vo.setTeamTypeName(OrderUtil.getOrderTeamTypeName(orderExtTeam.getTeamType()));
+		return vo;
+	}
 }

@@ -292,21 +292,8 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 		if (item.getOrderExtStatus() ==1) {
 			vo.setOrderExtStatusName("已转派服务商");
 		}
-		
-		vo.setCleanTypeName("");
-		if (item.getCleanType() ==0) {
-			vo.setCleanTypeName("定期保洁");
-		}
-		if (item.getCleanType() ==1) {
-			vo.setCleanTypeName("深度养护");
-		}
-		if (item.getCleanType() ==2) {
-			vo.setCleanTypeName("维修清理");
-		}
-		if (item.getCleanType() ==3) {
-			vo.setCleanTypeName("其他");
-		}
-		
+	
+		vo.setCleanTypeName(OrderUtil.getOrderCleaTypeName(item.getCleanType()));
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 		vo.setOrderStatus(order.getOrderStatus());
