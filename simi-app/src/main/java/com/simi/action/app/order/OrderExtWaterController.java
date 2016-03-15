@@ -309,12 +309,14 @@ public class OrderExtWaterController extends BaseController {
 		
 		order.setOrderStatus(Constants.ORDER_STATUS_7_RATE_WAIT);
 		order.setUpdateTime(TimeStampUtil.getNowSecond());
+		ordersService.updateByPrimaryKeySelective(order);
 		
 		OrderExtWater orderExtWater = orderExtWaterService.selectByOrderId(orderId);
 		
 		orderExtWater.setOrderExtStatus((short) 2);
 		orderExtWater.setIsDone((short) 1);
 		orderExtWater.setIsDoneTime(TimeStampUtil.getNowSecond());
+		orderExtWaterService.updateByPrimaryKeySelective(orderExtWater);
 		
 		//异步产生首页消息信息.
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());

@@ -56,12 +56,13 @@
 							<thead>
 								<tr>
 									<th class="table-date am-hide-sm-only">服务大类名称</th>
-									<th >商品名称</th>
+									<th class="table-title">商品名称</th>
 									<th class="table-id">数量</th>
 									<th class="table-title">地址</th>
 									<th >订单状态</th>
 									<th >是否签收</th>
 									<th class="table-set">下单时间</th>
+									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -74,6 +75,15 @@
 										<td class="am-hide-sm-only">${item.orderStatusName}</td>
 										<td class="am-hide-sm-only">${item.orderExtStatusName}</td>
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
+										<c:if test="${item.orderExtStatus == 0 || item.orderExtStatus == 1 }">
+										<td><button type="button" class="am-btn am-btn-success" id="qianshou_btn"
+											onclick="waterSign(${item.userId},${item.orderId})">签&nbsp;&nbsp;&nbsp;&nbsp;收</button>
+										</td>
+										</c:if>
+										<c:if test="${item.orderExtStatus == 2 }">
+										<td><input type="button" class="am-btn am-btn-default" id="qianshou_btn" value="已签收"/>
+										</td>
+										</c:if>
 									</tr>
 								</c:forEach>
 							</tbody>
