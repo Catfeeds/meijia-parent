@@ -531,5 +531,19 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>			
 
+		<table schema="simi" tableName="user_car"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>
+
 	</context>
 </generatorConfiguration>

@@ -13,7 +13,7 @@ import com.simi.service.user.UserCouponService;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.user.UserCoupons;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -112,7 +112,7 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 		/*BigDecimal p1 = new BigDecimal(100);
 		BigDecimal p2 = MathBigDeciamlUtil.mul(orderPay, p1);
 		orderPayNow = MathBigDeciamlUtil.round(p2, 0);*/
-		orderPay = MathBigDeciamlUtil.round(orderPay, 2);
+		orderPay = MathBigDecimalUtil.round(orderPay, 2);
 		return orderPay;
 	}	
 	

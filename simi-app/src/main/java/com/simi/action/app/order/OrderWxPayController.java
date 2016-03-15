@@ -29,7 +29,7 @@ import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.HttpClientUtil;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 import com.meijia.wx.utils.MD5Util;
@@ -115,8 +115,8 @@ public class OrderWxPayController extends BaseController {
 			
 			BigDecimal orderPay = orderPrice.getOrderPay();
 			BigDecimal p1 = new BigDecimal(100);
-			BigDecimal p2 = MathBigDeciamlUtil.mul(orderPay, p1);
-			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
+			BigDecimal p2 = MathBigDecimalUtil.mul(orderPay, p1);
+			BigDecimal orderPayNow = MathBigDecimalUtil.round(p2, 0);
 			
 			wxPay = orderPayNow.toString();
 			
@@ -145,8 +145,8 @@ public class OrderWxPayController extends BaseController {
 			
 			BigDecimal cardPay = orderCard.getCardPay();
 			BigDecimal p1 = new BigDecimal(100);
-			BigDecimal p2 = MathBigDeciamlUtil.mul(cardPay, p1);
-			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
+			BigDecimal p2 = MathBigDecimalUtil.mul(cardPay, p1);
+			BigDecimal orderPayNow = MathBigDecimalUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
 			body = "充值";
@@ -170,8 +170,8 @@ public class OrderWxPayController extends BaseController {
 			
 			BigDecimal cardPay = orderSenior.getOrderPay();
 			BigDecimal p1 = new BigDecimal(100);
-			BigDecimal p2 = MathBigDeciamlUtil.mul(cardPay, p1);
-			BigDecimal orderPayNow = MathBigDeciamlUtil.round(p2, 0);
+			BigDecimal p2 = MathBigDecimalUtil.mul(cardPay, p1);
+			BigDecimal orderPayNow = MathBigDecimalUtil.round(p2, 0);
 
 			wxPay = orderPayNow.toString();
 			body = "服务费";

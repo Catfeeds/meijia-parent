@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserCarMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserCar">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="car_no" property="carNo" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, car_no, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_car
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_car
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByCarNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_car
+		where car_no = #{carNO,jdbcType=NUMERIC}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_car
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserCar">
+		insert into user_car (id, user_id, car_no,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{carNo,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserCar">
+		insert into user_car
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="carNo != null">
+				car_no,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="carNo != null">
+				#{carNo,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserCar">
+		update user_car
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="carNo != null">
+				car_no = #{carNo,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserCar">
+		update user_car
+		set user_id = #{userId,jdbcType=NUMERIC},
+		car_no = #{carNo,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

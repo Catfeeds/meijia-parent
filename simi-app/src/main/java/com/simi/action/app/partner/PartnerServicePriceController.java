@@ -20,7 +20,7 @@ import org.springframework.ui.Model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -442,8 +442,8 @@ public class PartnerServicePriceController extends BaseController {
 			Map<String, String> resultMap = new HashMap<String, String>();
 			resultMap.put("name", serviceType.getName());
 			resultMap.put("servce_price_id", serviceType.getId().toString());
-			resultMap.put("price", MathBigDeciamlUtil.round2(item.getPrice()));
-			resultMap.put("dis_price", MathBigDeciamlUtil.round2(item.getDisPrice()));
+			resultMap.put("price", MathBigDecimalUtil.round2(item.getPrice()));
+			resultMap.put("dis_price", MathBigDecimalUtil.round2(item.getDisPrice()));
 			resultMap.put("img_url", item.getImgUrl());
 			
 			resultList.add(resultMap);
@@ -517,8 +517,8 @@ public class PartnerServicePriceController extends BaseController {
 				Map<String, String> resultMap = new HashMap<String, String>();
 				resultMap.put("name", serviceType.getName());
 				resultMap.put("servce_price_id", serviceType.getId().toString());
-				resultMap.put("price", MathBigDeciamlUtil.round2(item.getPrice()));
-				resultMap.put("dis_price", MathBigDeciamlUtil.round2(item.getDisPrice()));
+				resultMap.put("price", MathBigDecimalUtil.round2(item.getPrice()));
+				resultMap.put("dis_price", MathBigDecimalUtil.round2(item.getDisPrice()));
 				resultMap.put("img_url", item.getImgUrl());
 				resultMap.put("user_name", u.getName());
 				resultMap.put("mobile", u.getMobile());

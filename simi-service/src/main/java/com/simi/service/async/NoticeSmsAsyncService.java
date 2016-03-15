@@ -14,5 +14,7 @@ public interface NoticeSmsAsyncService {
 
 	Future<Boolean> noticeOrderCardUser(Long orderId);
 
+	Future<Boolean> noticeOrderCarUser(Long orderId);
+
 	
 }

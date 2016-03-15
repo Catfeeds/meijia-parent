@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
@@ -502,7 +502,7 @@ public class CardQueryController extends BaseController {
 		Users u = userService.selectByPrimaryKey(userId);
 		String mobile = u.getMobile();
 		BigDecimal b = u.getRestMoney();
-		String restMoney = MathBigDeciamlUtil.round2(b);
+		String restMoney = MathBigDecimalUtil.round2(b);
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);

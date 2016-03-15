@@ -5,6 +5,7 @@ import com.meijia.utils.TimeStampUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.async.OrderAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
@@ -75,6 +76,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	private NoticeSmsAsyncService noticeSmsAsyncService;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAppAsyncService;
 
 	/**
 	 * 订单支付成功,后续通知功能 1. 如果为
@@ -189,7 +193,8 @@ public class OrderPayServiceImpl implements OrderPayService {
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);
 		
-		userMsgAsyncService.pushMsgToDevice(userId, title, summary);
+		//推送消息到app
+		noticeAppAsyncService.pushMsgToDevice(userId, title, summary);
 		
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -200,4 +201,33 @@ public class NoticeSmsAsyncServiceImpl implements NoticeSmsAsyncService {
 		
 		return new AsyncResult<Boolean>(true);
 	}	
+	
+	//支付速通宝成功发送短信
+	@Async
+	@Override
+	public Future<Boolean> noticeOrderCarUser(Long orderId) {
+		Orders order = ordersService.selectByPrimaryKey(orderId);
+		if (order == null) return new AsyncResult<Boolean>(true);
+		
+		Long userId = order.getUserId();
+		Users u = usersService.selectByPrimaryKey(userId);
+		String mobile = u.getMobile();
+		if (StringUtil.isEmpty(mobile)) return new AsyncResult<Boolean>(true);
+		
+		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);
+		if (orderPrice == null ) return new AsyncResult<Boolean>(true);
+		
+		BigDecimal orderPay = orderPrice.getOrderPay();
+
+		String orderPStr = MathBigDecimalUtil.round2(orderPay);
+		
+		String timeStr = TimeStampUtil.timeStampToDateStr(order.getUpdateTime() * 1000 , "MM-dd HH:mm");
+		String[] content = new String[] { timeStr, orderPStr, "" };
+		
+		SmsUtil.SendSms(mobile, "72913", content);
+			
+		
+		return new AsyncResult<Boolean>(true);
+	}	
+	
 }

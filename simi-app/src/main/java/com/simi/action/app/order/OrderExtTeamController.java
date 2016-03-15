@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;

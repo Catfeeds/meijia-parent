@@ -27,6 +27,7 @@ import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardService;
@@ -49,9 +50,6 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 	@Autowired
 	public UsersService usersService;
-
-	@Autowired
-	private UserPushBindService userPushBindService;
 
 	@Autowired
 	private UserMsgService userMsgService;
@@ -82,6 +80,9 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 	
 	@Autowired
 	private AppToolsService appToolsService;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAppAsyncService;
 
 	/**
 	 * 新增用户时发送默认消息
@@ -362,7 +363,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 			userMsgService.insert(passRecord);
 
 			// 发送推送消息
-			pushMsgToDevice(item.getPassUserId(), "请假审批", msgContent);
+			noticeAppAsyncService.pushMsgToDevice(item.getPassUserId(), "请假审批", msgContent);
 		}
 
 		return new AsyncResult<Boolean>(true);
@@ -439,7 +440,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 
 		// 发送推送消息（接受者）
-		pushMsgToDevice(toUserId, "好友申请", fromUser.getName() + "请求加你为好友");
+		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", fromUser.getName() + "请求加你为好友");
 		
 		return new AsyncResult<Boolean>(true);
 	}
@@ -491,7 +492,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		
 		// 发送推送消息（发送者）
-		pushMsgToDevice(toUserId, "好友申请", summary);
+		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", summary);
 				
 		
 		// 2. 往接收者存储消息
@@ -577,62 +578,5 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		return new AsyncResult<Boolean>(true);
 	}	
 
-	// 发送推送消息
-	@Async
-	@Override
-	public Future<Boolean> pushMsgToDevice(Long userId, String msgTitle, String msgContent) {
 
-		// 发送推送消息（接受者）
-		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
-
-		if (userPushBind == null)
-			return new AsyncResult<Boolean>(true);
-		if (StringUtil.isEmpty(userPushBind.getClientId()))
-			return new AsyncResult<Boolean>(true);
-
-		HashMap<String, String> params = new HashMap<String, String>();
-
-		HashMap<String, String> tranParams = new HashMap<String, String>();
-
-		tranParams.put("is_show", "true");
-		tranParams.put("action", "msg");
-		tranParams.put("card_id", "0");
-		tranParams.put("card_type", "0");
-		tranParams.put("service_time", "");
-		tranParams.put("remind_time", "");
-		tranParams.put("remind_title", msgTitle);
-		tranParams.put("remind_content", msgContent);
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		String jsonParams = "";
-		try {
-			jsonParams = objectMapper.writeValueAsString(tranParams);
-		} catch (JsonProcessingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		params.put("transmissionContent", jsonParams);
-		params.put("cid", userPushBind.getClientId());
-
-		if (userPushBind.getDeviceType().equals("ios")) {
-			try {
-				PushUtil.IOSPushToSingle(params, "notification");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		if (userPushBind.getDeviceType().equals("android")) {
-			try {
-				PushUtil.AndroidPushToSingle(params);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return new AsyncResult<Boolean>(true);
-	}
 }

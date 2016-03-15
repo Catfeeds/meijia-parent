@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -209,7 +209,7 @@ public class OrderExtWaterController extends BaseController {
 		
 		BigDecimal disPrice = servicePriceDetail.getDisPrice();
 		BigDecimal serviceNumDe = BigDecimal.valueOf(serviceNum.doubleValue());
-		orderMoney = MathBigDeciamlUtil.mul(disPrice, serviceNumDe);
+		orderMoney = MathBigDecimalUtil.mul(disPrice, serviceNumDe);
 		orderPay = orderMoney;
 				
 		// 调用公共订单号类，生成唯一订单号

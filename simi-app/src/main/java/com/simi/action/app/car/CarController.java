@@ -27,7 +27,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
-import com.meijia.utils.MathBigDeciamlUtil;
+import com.meijia.utils.MathBigDecimalUtil;
+import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.push.PushUtil;
@@ -37,13 +38,27 @@ import com.simi.common.Constants;
 import com.simi.po.model.card.CardComment;
 import com.simi.po.model.card.CardLog;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.order.OrderLog;
+import com.simi.po.model.order.OrderPrices;
+import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.user.UserCar;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.NoticeAppAsyncService;
+import com.simi.service.async.NoticeSmsAsyncService;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardLogService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
+import com.simi.service.order.OrderLogService;
+import com.simi.service.order.OrderPricesService;
+import com.simi.service.order.OrdersService;
+import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.user.UserCarService;
+import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserRef3rdService;
@@ -62,148 +77,178 @@ public class CarController extends BaseController {
 	@Autowired
 	private UsersService userService;
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
-	@RequestMapping(value = "cap", method = {RequestMethod.POST }) 
-    @ResponseBody  
-    public void doCap(@RequestBody String content) throws JsonParseException, JsonMappingException, IOException { 
-        
-		System.out.println("pre_content = " + content);
+	@Autowired
+	private UserCarService userCarService;
+	
+	@Autowired
+	private UserPushBindService userPushBindService;
+	
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private OrdersService ordersService;
+	
+	@Autowired
+	private OrderPricesService orderPricesService;
+	
+	@Autowired
+	private OrderLogService orderLogService;
+	
+	@Autowired
+	private NoticeSmsAsyncService noticeSmsAsyncService;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAppAsyncService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private UserDetailPayService userDetailPayService;
+
+	@SuppressWarnings({ "deprecation" })
+	@RequestMapping(value = "cap", method = { RequestMethod.POST })
+	@ResponseBody
+	public AppResultData<Object> doCap(@RequestBody String content) throws JsonParseException, JsonMappingException, IOException {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+//		System.out.println("pre_content = " + content);
 		content = URLDecoder.decode(content);
 		System.out.println("after_content = " + content);
-		
+
 		JSONObject dataJson;
 
 		try {
 			dataJson = new JSONObject(content);
 			JSONObject alarmInfoPlate = dataJson.getJSONObject("AlarmInfoPlate");
-			JSONObject result = alarmInfoPlate.getJSONObject("result");
-			JSONObject plateResult = result.getJSONObject("PlateResult");
+			JSONObject resultJons = alarmInfoPlate.getJSONObject("result");
+			JSONObject plateResult = resultJons.getJSONObject("PlateResult");
 			String carNo = plateResult.getString("license");
 			String colorType = plateResult.getString("colorType");
-			
+
 			String carColor = getCarColor(colorType);
 			
-			System.out.print("车牌号：" + carNo);
-			String imagePath = plateResult.getString("imagePath");
-			imagePath = "http://192.168.1.108" + imagePath;
-			System.out.println("imagePath = " + imagePath);
+//			System.out.print("车牌号：" + carNo);
+//			String imagePath = plateResult.getString("imagePath");
+//			imagePath = "http://192.168.1.108" + imagePath;
+//			System.out.println("imagePath = " + imagePath);			
 			
-			Long userId = 99L;
+			carNo = carNo.trim();
+			UserCar userCar = userCarService.selectByCarNo(carNo);
+			
+			if (userCar == null) return result;
+			
+			Long userId = userCar.getUserId();
+			
 			Users u = userService.selectByPrimaryKey(userId);
-			String mobile = u.getMobile();
-			BigDecimal b = u.getRestMoney();
-			String restMoney = MathBigDeciamlUtil.round2(b);
 			
-			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("cid", "4a4c5176135534bfaf0067313002bb7e");
-
-			HashMap<String, String> tranParams = new HashMap<String, String>();
-
-			Long time1 = TimeStampUtil.getNow();
-
-			String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "yyyy-MM-dd HH:mm:ss");
-					
-			tranParams.put("is_show", "false");
-			tranParams.put("action", "car-msg");
-			tranParams.put("car_no", carNo);
-			tranParams.put("car_color", carColor);
-			tranParams.put("mobile", mobile);
-			tranParams.put("ocx_time", timeStr1);
-			tranParams.put("order_money", "10元");
-			tranParams.put("rest_money", restMoney);
-			tranParams.put("user_id", userId.toString());
-			tranParams.put("cap_img", "http://img.51xingzheng.cn/8afe58fcc9dc9dafb302a560841f48be");
-			tranParams.put("remind_content", "");
-			
-			ObjectMapper objectMapper = new ObjectMapper();
-			String jsonParams = objectMapper.writeValueAsString(tranParams);
-			System.out.println(jsonParams);
-
-			params.put("transmissionContent", jsonParams);
-
-			
-			try {
-				PushUtil.IOSPushToSingle(params, "notification");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			BigDecimal orderMoney = new BigDecimal(5.0);//原价
+			BigDecimal orderPay = new BigDecimal(5.0);//折扣价
+			//查询用户余额
+			if(u.getRestMoney().compareTo(orderPay) < 0) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.ERROR_999_MSG_5);
+				return result;
 			}
-
-			userId = 77L;
-			u = userService.selectByPrimaryKey(userId);
-			mobile = u.getMobile();
-			b = u.getRestMoney();
-			restMoney = MathBigDeciamlUtil.round2(b);
+			//扣除用户余额
+			u.setRestMoney(u.getRestMoney().subtract(orderPay));
+			u.setUpdateTime(TimeStampUtil.getNowSecond());
+			userService.updateByPrimaryKeySelective(u);
 			
-			params = new HashMap<String, String>();
-			params.put("cid", "15d2bee6caad6d57c8f14290256b1ec5");
-
-			tranParams = new HashMap<String, String>();
-					
-			tranParams.put("is_show", "false");
-			tranParams.put("action", "car-msg");
-			tranParams.put("car_no", carNo);
-			tranParams.put("car_color", carColor);
-			tranParams.put("mobile", mobile);
-			tranParams.put("ocx_time", timeStr1);
-			tranParams.put("order_money", "10元");
-			tranParams.put("rest_money", restMoney);
-			tranParams.put("user_id", userId.toString());
-			tranParams.put("cap_img", "http://img.51xingzheng.cn/8afe58fcc9dc9dafb302a560841f48be");
-			tranParams.put("remind_content", "");
+			Long serviceTypeId = 258L;
+			//生成订单扣款
+			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 			
-			objectMapper = new ObjectMapper();
-			jsonParams = objectMapper.writeValueAsString(tranParams);
-
-
-			params.put("transmissionContent", jsonParams);
-
-			try {
-				PushUtil.AndroidPushToSingle(params);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// 调用公共订单号类，生成唯一订单号
+	    	Orders order = null;
+	    	String orderNo = "";
+	    
+	    	orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+			order = ordersService.initOrders();
 			
+			order.setOrderNo(orderNo);
+			order.setServiceTypeId(serviceTypeId);
+			order.setUserId(userId);
+			order.setMobile(u.getMobile());
+			order.setServiceContent(serviceType.getName());
+
+			order.setOrderStatus(Constants.ORDER_TYPE_2);
+			
+			String remarks = serviceType.getName() + "扣款" + MathBigDecimalUtil.round2(orderMoney) + "元";
+ 			order.setRemarks(remarks);
+			
+			ordersService.insert(order);
+			Long orderId = order.getOrderId();
+			
+			//记录订单日志.
+			OrderLog orderLog = orderLogService.initOrderLog(order);
+			orderLogService.insert(orderLog);
+			
+			//保存订单价格信息
+			OrderPrices orderPrice = orderPricesService.initOrderPrices();
+			
+
+			orderPrice.setOrderId(orderId);
+			orderPrice.setOrderNo(orderNo);
+			orderPrice.setUserId(userId);
+			orderPrice.setMobile(u.getMobile());
+			orderPrice.setOrderMoney(orderMoney);
+			orderPrice.setOrderPay(orderPay);
+			orderPricesService.insert(orderPrice);
+			
+			//记录用户消费明细
+			userDetailPayService.userDetailPayForOrder(u, order, orderPrice, "", "", "");
+			
+			//发送用户短信
+			noticeSmsAsyncService.noticeOrderCarUser(orderId);
+			
+			//生成用户首页消息信息
+			userMsgAsyncService.newActionAppMsg(userId, orderId, "expy", serviceType.getName(), remarks);
+			
+			//推送信息
+			String capImg = "http://img.51xingzheng.cn/8afe58fcc9dc9dafb302a560841f48be";
+			noticeAppAsyncService.pushMsgToExpr(orderId, carNo, carColor, capImg);
+
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-    } 
-	
-	@RequestMapping(value = "reg", method = {RequestMethod.POST }) 
-    @ResponseBody  
-    public void regist(HttpServletRequest request)  { 
-		
+		return result;
+
+	}
+
+	@RequestMapping(value = "reg", method = { RequestMethod.POST })
+	@ResponseBody
+	public void regist(HttpServletRequest request) {
+
 		String deviceName = request.getParameter("device_name");
-		
+
 		System.out.println("deviceName = " + deviceName);
 	}
-	
-	
+
 	public String getCarColor(String colorType) {
 		String carColor = "";
 		switch (colorType) {
-			case "0" :
-				carColor = "未知";
-				break;
-			case "1" :
-				carColor = "蓝色";
-				break;
-			case "2" :
-				carColor = "黄色";
-				break;
-			case "3" :
-				carColor = "白色";
-				break;
-			case "4" :
-				carColor = "黑色";
-				break;	
-			case "5" :
-				carColor = "绿色";
-				break;	
+		case "0":
+			carColor = "未知";
+			break;
+		case "1":
+			carColor = "蓝色";
+			break;
+		case "2":
+			carColor = "黄色";
+			break;
+		case "3":
+			carColor = "白色";
+			break;
+		case "4":
+			carColor = "黑色";
+			break;
+		case "5":
+			carColor = "绿色";
+			break;
 		}
 		return carColor;
 	}
