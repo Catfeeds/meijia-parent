@@ -143,8 +143,8 @@ public class CarController extends BaseController {
 			
 			Users u = userService.selectByPrimaryKey(userId);
 			
-			BigDecimal orderMoney = new BigDecimal(5.0);//原价
-			BigDecimal orderPay = new BigDecimal(5.0);//折扣价
+			BigDecimal orderMoney = new BigDecimal(1.0);//原价
+			BigDecimal orderPay = new BigDecimal(1.0);//折扣价
 			//查询用户余额
 			if(u.getRestMoney().compareTo(orderPay) < 0) {
 				return "";
