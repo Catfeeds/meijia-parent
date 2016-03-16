@@ -222,7 +222,7 @@ public class NoticeSmsAsyncServiceImpl implements NoticeSmsAsyncService {
 		String orderPStr = MathBigDecimalUtil.round2(orderPay);
 		
 		String timeStr = TimeStampUtil.timeStampToDateStr(order.getUpdateTime() * 1000 , "MM-dd HH:mm");
-		String[] content = new String[] { timeStr, orderPStr, "" };
+		String[] content = new String[] { timeStr, orderPStr, "http://t.cn/RGBjgMp" };
 		
 		SmsUtil.SendSms(mobile, "72913", content);
 			
