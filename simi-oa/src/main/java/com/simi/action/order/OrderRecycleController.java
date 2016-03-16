@@ -25,7 +25,6 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.vo.AppResultData;
 import com.simi.action.admin.AdminController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;

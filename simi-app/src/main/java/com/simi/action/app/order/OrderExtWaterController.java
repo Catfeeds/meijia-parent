@@ -26,7 +26,6 @@ import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;

@@ -1,13 +1,8 @@
 package com.simi.service.impl.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.simi.service.user.UserCarService;
 
 import com.simi.service.user.UsersService;
@@ -16,10 +11,6 @@ import com.simi.po.dao.user.UserCarMapper;
 
 import com.simi.po.model.user.UserCar;
 
-import com.simi.po.model.user.Users;
-import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.DateUtil;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

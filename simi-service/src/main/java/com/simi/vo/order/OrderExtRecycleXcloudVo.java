@@ -80,10 +80,12 @@ public class OrderExtRecycleXcloudVo extends OrderExtRecycle{
 		this.orderExtStatusName = orderExtStatusName;
 	}
 
+	@Override
 	public Short getOrderExtStatus() {
 		return orderExtStatus;
 	}
 
+	@Override
 	public void setOrderExtStatus(Short orderExtStatus) {
 		this.orderExtStatus = orderExtStatus;
 	}

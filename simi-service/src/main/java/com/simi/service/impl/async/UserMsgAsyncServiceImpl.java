@@ -1,7 +1,6 @@
 package com.simi.service.impl.async;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -10,22 +9,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.push.PushUtil;
-import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.op.AppTools;
-import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserLeave;
 import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.UserMsg;
-import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
@@ -38,11 +29,9 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserLeavePassService;
 import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UserMsgService;
-import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
-import com.simi.utils.OrderUtil;
 import com.simi.vo.UserMsgSearchVo;
 
 @Service

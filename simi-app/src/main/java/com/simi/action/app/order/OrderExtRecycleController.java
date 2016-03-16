@@ -17,7 +17,6 @@ import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.order.OrderExtRecycle;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
@@ -37,7 +36,6 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.order.OrderExtCleanListVo;
 import com.simi.vo.order.OrderExtRecycleListVo;
 import com.simi.vo.user.UserAddrVo;
 

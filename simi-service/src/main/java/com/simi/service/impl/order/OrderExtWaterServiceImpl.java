@@ -18,7 +18,6 @@ import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.vo.order.OrderExtWaterXcloudVo;
-import com.simi.common.Constants;
 import com.simi.po.dao.order.OrderExtWaterMapper;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderPrices;

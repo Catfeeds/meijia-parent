@@ -72,10 +72,12 @@ public class OrderExtCleanXcloudVo extends OrderExtClean{
 		this.addTimeStr = addTimeStr;
 	}
 
+	@Override
 	public Short getOrderExtStatus() {
 		return orderExtStatus;
 	}
 
+	@Override
 	public void setOrderExtStatus(Short orderExtStatus) {
 		this.orderExtStatus = orderExtStatus;
 	}

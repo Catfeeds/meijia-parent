@@ -122,10 +122,12 @@ public class OrderExtWaterXcloudVo extends OrderExtWater{
 		this.isDoneTimeStr = isDoneTimeStr;
 	}
 
+	@Override
 	public Short getOrderExtStatus() {
 		return orderExtStatus;
 	}
 
+	@Override
 	public void setOrderExtStatus(Short orderExtStatus) {
 		this.orderExtStatus = orderExtStatus;
 	}

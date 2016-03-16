@@ -74,10 +74,12 @@ public class OrderExtTeamXcloudVo extends OrderExtTeam{
 		this.addTimeStr = addTimeStr;
 	}
 
+	@Override
 	public Short getOrderExtStatus() {
 		return orderExtStatus;
 	}
 
+	@Override
 	public void setOrderExtStatus(Short orderExtStatus) {
 		this.orderExtStatus = orderExtStatus;
 	}
@@ -90,10 +92,12 @@ public class OrderExtTeamXcloudVo extends OrderExtTeam{
 		this.orderExtStatusName = orderExtStatusName;
 	}
 
+	@Override
 	public Long getCityId() {
 		return cityId;
 	}
 
+	@Override
 	public void setCityId(Long cityId) {
 		this.cityId = cityId;
 	}
