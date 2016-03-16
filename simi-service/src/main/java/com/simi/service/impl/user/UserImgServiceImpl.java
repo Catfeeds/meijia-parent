@@ -70,7 +70,7 @@ public class UserImgServiceImpl implements UserImgService{
 		Users u = userService.selectByPrimaryKey(userId);
 		String qrCodeLogo = userService.getHeadImg(u);
 		if (StringUtil.isEmpty(qrCodeLogo)) {
-			qrCodeLogo = "http://img.51xingzheng.cn/c9778e512787866532e425e550023262";
+			qrCodeLogo = Constants.DEFAULT_LOGO;
 		}
 				
 		String contents = "xcloud://action=add_friend";

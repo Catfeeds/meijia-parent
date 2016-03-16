@@ -31,7 +31,7 @@
 			</a>
 				<ul class="am-dropdown-content">
 					<li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
-					<li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+					<!-- <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li> -->
 					<li><a href="/xcloud/logout"><span class="am-icon-power-off"></span> 退出</a></li>
 				</ul></li>
 		</ul>
