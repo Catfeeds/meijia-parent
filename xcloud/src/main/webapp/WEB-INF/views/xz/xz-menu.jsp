@@ -35,11 +35,11 @@
 				<span class="am-icon-file"></span> 快递管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
 		</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-express">
-				<li><a href="/xcloud/xz/express/list" class="am-cf"> <span class="am-icon-bell"></span> 查询与登记 <span
+				<li><a href="/xcloud/xz/express/express-form" class="am-cf"> <span class="am-icon-bell"></span> 查询与登记 <span
 						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
 					></span>
 				</a></li>
-				<li><a href="/xcloud/xz/express/close" class="am-cf"> <span class="am-icon-plane"></span> 快递结算
+				<li><a href="/xcloud/xz/express/list" class="am-cf"> <span class="am-icon-plane"></span> 快递结算
 				</a></li>
 				<li><a href="/xcloud/xz/express/service" class="am-cf"> <span class="am-icon-calendar"></span> 快递服务商
 				</a></li>

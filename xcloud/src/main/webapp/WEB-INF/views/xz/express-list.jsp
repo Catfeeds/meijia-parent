@@ -53,14 +53,15 @@
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-3">
-					<form class="am-form" id="search-form">
+					<!-- <form class="am-form" id="search-form"> -->
+					 <form:form modelAttribute="contentModel" action="list" method="GET">
 					<div class="am-input-group am-input-group-sm">
 						<input type="text" id="express_no" name="express_no" class="am-form-field" placeholder="快递单号" maxLength="18" size=18> <span
 							class="am-input-group-btn">
 							<button class="am-btn am-btn-default" type="submit">搜索</button>
 						</span>
 					</div>
-					</form>
+					</form:form>
 				</div>
 			</div>
 			<br>
@@ -75,14 +76,23 @@
 									<th class="table-title">快递服务商</th>
 									<th class="table-type">快递单号</th>
 									<th class="table-date">类型</th>
-									<th class="table-date">费用</th>
+									<!-- <th class="table-date">费用</th> -->
 									<th class="table-date">是否送达</th>
 									<th class="table-date">是否结算</th>
-									<th class="table-set">操作</th>
+									<!-- <th class="table-set">操作</th> -->
 								</tr>
 							</thead>
 							<tbody>
-								
+								<c:forEach items="${contentModel.list}" var="item">
+									<tr>
+										<td>${item.addTimeStr}</td>
+										<td>${item.expressId}</td>
+										<td>${item.expressNo}</td>
+										<td class="am-hide-sm-only">${item.expressTypeName}</td>
+										<td class="am-hide-sm-only">${item.isDoneName}</td>
+										<td class="am-hide-sm-only">${item.isCloseName}</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 						

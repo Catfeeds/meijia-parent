@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 import com.simi.service.ImgService;
 import com.simi.service.dict.DictService;
 import com.simi.service.record.RecordExpressService;
+import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderExtCleanXcloudVo;
+import com.simi.vo.order.RecordExpressXcloudVo;
 import com.simi.vo.record.RecordExpressSearchVo;
 import com.simi.vo.record.RecordExpressVo;
 import com.simi.po.model.dict.DictExpress;
+import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.record.RecordExpress;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -174,6 +178,67 @@ public class RecordExpressServiceImpl implements RecordExpressService {
 		vo.setUpdateTimeStr(TimeStampUtil.fromTodayStr(item.getUpdateTime() * 1000));
 
 		return vo;
-	}	
-			
+	}
+
+	@Override
+	public PageInfo selectByPage(RecordExpressSearchVo searchVo, int pageNo,
+			int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<RecordExpressXcloudVo> listVo = new ArrayList<RecordExpressXcloudVo>();
+		List<RecordExpress> list = recordExpressMapper.selectByPage(searchVo);
+		RecordExpress item = null;
+		for (int i = 0; i < list.size(); i++) {
+			 item = list.get(i);
+			 RecordExpressXcloudVo vo = this.getXcloudList(item);
+        	 list.set(i, vo);
+		}
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
+	
+	//@Override
+	private RecordExpressXcloudVo getXcloudList(RecordExpress item) {
+
+		List<DictExpress> expressList = dictService.loadExpressData();
+		
+		RecordExpressXcloudVo vo = new RecordExpressXcloudVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		//快递服务商信息
+		vo.setExpressName("");
+		if (item.getExpressId() > 0L) {
+			for (DictExpress e : expressList) {
+				if (e.getExpressId().equals(item.getExpressId())) {
+					vo.setExpressName(e.getName());
+					break;
+				}
+			}
+		}
+		vo.setExpressTypeName("");
+		if (item.getExpressType() == 0) {
+		vo.setExpressTypeName("收件");	
+		}
+		if (item.getExpressType() == 1) {
+		vo.setExpressTypeName("寄件");	
+		}
+		vo.setIsDoneName("");
+		if (item.getIsDone() == 0) {
+			vo.setIsDoneName("在路上");
+		}
+		if (item.getIsDone() == 1) {
+			vo.setIsDoneName("已送达");
+		}
+		vo.setIsCloseName("");
+		if (item.getIsClose()==0) {
+			vo.setIsCloseName("未结算");
+		}
+		if (item.getIsClose()==1) {
+			vo.setIsCloseName("已结算");
+		}
+		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime() * 1000));
+		vo.setUpdateTimeStr(TimeStampUtil.fromTodayStr(item.getUpdateTime() * 1000));
+
+		return vo;
+	}
 }

@@ -86,7 +86,45 @@
 
 		order by add_time desc
 	</select>
+	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordExpressSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_express
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
 
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="expressId != null">
+			and express_id = #{expressId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="expressNo != null">
+			and express_no like CONCAT('%','${expressNo}','%' )
+		</if>
+
+		<if test="expressType != null">
+			and express_type = #{expressType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isDone != null">
+			and is_done = #{isDone,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isClose != null">
+			and is_close = #{isClose,jdbcType=NUMERIC}
+		</if>
+
+		<if test="payType != null">
+			and pay_type = #{payType,jdbcType=NUMERIC}
+		</if>
+		
+		order by add_time desc
+	</select>
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordExpressSearchVo">
 		select
 		<include refid="Base_Column_List" />
