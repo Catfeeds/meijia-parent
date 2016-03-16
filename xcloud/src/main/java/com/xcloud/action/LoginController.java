@@ -74,12 +74,13 @@ public class LoginController extends BaseController {
 		Long userId = u.getId();
 		String companyName = xCompany.getCompanyName();
 		String shortName = xCompany.getShortName();
+		String headImg = usersService.getHeadImg(u);
 
 
         AccountAuth accountAuth= new AccountAuth();
         accountAuth.setUserId(userId);
         accountAuth.setName(u.getName());
-        accountAuth.setHeadImg(u.getHeadImg());
+        accountAuth.setHeadImg(headImg);
         accountAuth.setMobile(u.getMobile());
         accountAuth.setCompanyId(companyId);
         accountAuth.setCompanyName(companyName);
