@@ -5,6 +5,7 @@ import com.simi.po.model.user.UserFriendReq;
 import com.simi.vo.UserFriendSearchVo;
 
 public interface UserFriendReqMapper {
+	
     int insert(UserFriendReq record);
     
     int insertBySelective(UserFriendReq record);
@@ -22,5 +23,7 @@ public interface UserFriendReqMapper {
 	UserFriendReq selectByIsFirend(UserFriendSearchVo searchVo);
 
 	List<UserFriendReq> selectByUserId(Long userId);
+
+	List<UserFriendReq> selectByListPage(UserFriendSearchVo searchVo);
 
 }

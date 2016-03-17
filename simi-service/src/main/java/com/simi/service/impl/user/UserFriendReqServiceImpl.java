@@ -7,11 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.user.UserFriendReqMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserFriendReq;
+import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserFriendReqService;
 import com.simi.vo.UserFriendSearchVo;
@@ -92,7 +95,7 @@ public class UserFriendReqServiceImpl implements UserFriendReqService {
 	}
 
 	@Override
-	public UserFriendReqVo getFriendReqVo(UserFriendReq item) {
+	public UserFriendReqVo getFriendReqVo(UserFriendReq item, Long userId) {
 		/*friend_idlong用户ID
 		namestring用户名称
 		sexstring性别   男 女
@@ -101,15 +104,22 @@ public class UserFriendReqServiceImpl implements UserFriendReqService {
 		statusint申请状态 0 = 申请  1 = 同意 2 = 拒绝
 		add_time_strstring申请时间*/
 		UserFriendReqVo vo = new UserFriendReqVo();
-
-		vo.setFriendId(item.getFriendId());
-		Users user = userMapper.selectByPrimaryKey(item.getFriendId());
-		vo.setName(user.getName());
-		if (user.getSex().equals((short)0)) {
-			vo.setSex("先生");
-		}else {
-			vo.setSex("女士");
+		
+		//reqType  0 = 我申请的  1 = 我需要去审批的
+		Short reqType = (short)0;
+		Long viewUserId = item.getFriendId();
+		if (!userId.equals(item.getUserId())) {
+			reqType = (short)1;
+			viewUserId = item.getUserId();
 		}
+		Users user = userMapper.selectByPrimaryKey(viewUserId);
+		
+		
+		vo.setUserId(item.getUserId());
+		vo.setFriendId(item.getFriendId());
+		
+		vo.setName(user.getName());
+		vo.setSex(user.getSex());
 		vo.setHeadImg(user.getHeadImg());
 		vo.setMobile(user.getMobile());
 		vo.setStatus(item.getStatus());
@@ -117,6 +127,15 @@ public class UserFriendReqServiceImpl implements UserFriendReqService {
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
 		
 		return vo;
+	}
+	
+	@Override
+	public PageInfo selectByListPage(UserFriendSearchVo searchVo, int pageNo, int pageSize) {
+
+		PageHelper.startPage(pageNo, pageSize);
+		List<UserFriendReq> list = userFriendReqMapper.selectByListPage(searchVo);
+		PageInfo result = new PageInfo(list);
+		return result;
 	}
 
 }

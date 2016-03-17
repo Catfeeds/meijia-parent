@@ -2,6 +2,8 @@ package com.simi.vo.user;
 
 public class UserFriendReqVo {
 	
+	private Long userId;
+	
 	private Long friendId;
 	
     private String name;
@@ -15,6 +17,8 @@ public class UserFriendReqVo {
     private short status;
     
     private String addTimeStr;
+    
+    private Short reqType;
     
 	public String getName() {
 		return name;
@@ -70,6 +74,22 @@ public class UserFriendReqVo {
 
 	public void setAddTimeStr(String addTimeStr) {
 		this.addTimeStr = addTimeStr;
+	}
+
+	public Short getReqType() {
+		return reqType;
+	}
+
+	public void setReqType(Short reqType) {
+		this.reqType = reqType;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 }

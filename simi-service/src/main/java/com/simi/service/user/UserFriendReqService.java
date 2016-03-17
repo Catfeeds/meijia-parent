@@ -3,6 +3,7 @@ package com.simi.service.user;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserFriendReq;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendReqVo;
@@ -27,12 +28,8 @@ public interface UserFriendReqService {
 
 	List<UserFriendReq> selectByUserId(Long userId);
 
-	UserFriendReqVo getFriendReqVo(UserFriendReq item);
+	PageInfo selectByListPage(UserFriendSearchVo searchVo, int pageNo, int pageSize);
 
-	/*List<UserMsg> selectByUserId(Long userId);
-
-	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
-
-	PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize);*/
+	UserFriendReqVo getFriendReqVo(UserFriendReq item, Long userId);
 
 }

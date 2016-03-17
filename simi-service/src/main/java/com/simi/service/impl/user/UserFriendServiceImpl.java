@@ -162,9 +162,14 @@ public class UserFriendServiceImpl implements UserFriendService {
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
 		if (u.getId().equals(friendUser.getId())) return true;
+		
+		Long fromUserId = u.getId();
+		Long toUserId = friendUser.getId();
+		
 		UserFriendSearchVo searchVo = new UserFriendSearchVo();
 		searchVo.setUserId(u.getId());
 		searchVo.setFriendId(friendUser.getId());
+		
 		UserFriends userFriend = this.selectByIsFirend(searchVo);	
 		UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
 		if (userFriend != null) {
@@ -179,30 +184,14 @@ public class UserFriendServiceImpl implements UserFriendService {
 		}
 		if (userFriend == null && userFriendReq == null) {
 			userFriendReq = userFriendReqService.initUserFriendReq();
-			userFriendReq.setUserId(friendUser.getId());
-			userFriendReq.setFriendId(u.getId());
-			userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
-			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
+			userFriendReq.setUserId(fromUserId);
+			userFriendReq.setFriendId(toUserId);
 			userFriendReqService.insert(userFriendReq);
 		}
-		Long fromUserId = u.getId();
-		Long toUserId = friendUser.getId();
+		
 		//生成邀请好友消息
 		userMsgAsyncService.newFriendMsg(fromUserId,toUserId);
-				
-		/*searchVo = new UserFriendSearchVo();
-		searchVo.setUserId(friendUser.getId());
-		searchVo.setFriendId(u.getId());
-		userFriend = this.selectByIsFirend(searchVo);	
-		userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
-		if (userFriend == null && userFriendReq == null) {
-			userFriend = this.initUserFriend();
-			userFriend.setUserId(friendUser.getId());
-			userFriend.setFriendId(u.getId());
-			userFriend.setAddTime(TimeStampUtil.getNowSecond());
-			userFriend.setUpdateTime(TimeStampUtil.getNowSecond());
-			this.insert(userFriend);
-		}*/
+
 		return true;
 	}
 	
