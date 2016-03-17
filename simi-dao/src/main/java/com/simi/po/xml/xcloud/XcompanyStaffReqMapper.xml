@@ -40,7 +40,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_staff_req
-		where user_id = #{0} OR company_id = #{1}
+		where user_id = #{0, jdbcType=NUMERIC} OR company_id = #{1,jdbcType=NUMERIC}
 		order by add_time desc;
 	</select>
 	
@@ -53,7 +53,7 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
-		<if test="companyId != null && companyId > 0">
+		<if test="companyId != null ">
 			or company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
 		order by add_time desc
