@@ -167,7 +167,7 @@ public class DictController<T> {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		//服务大类，该公司的服务大类
+		//服务大类，该团队的服务大类
 		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
 		
 		

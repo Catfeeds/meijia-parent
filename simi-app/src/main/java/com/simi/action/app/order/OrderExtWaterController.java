@@ -274,7 +274,7 @@ public class OrderExtWaterController extends BaseController {
 		//异步产生首页消息信息.
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);		
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");		
 				
 		return result;
 	}
@@ -322,7 +322,7 @@ public class OrderExtWaterController extends BaseController {
 		
 		String title = serviceType.getName();
 		String summary =  "你的订单已经签收成功.";
-		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);			
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");			
 		
 		return result;
 	}

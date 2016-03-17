@@ -197,7 +197,7 @@ public class PartnerUsersController extends BaseController {
 		model.addAttribute("tags", tags);
 		model.addAttribute("tagIds", tagIds);
 
-		// 服务大类，该公司的服务大类
+		// 服务大类，该团队的服务大类
 		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
 
 		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);

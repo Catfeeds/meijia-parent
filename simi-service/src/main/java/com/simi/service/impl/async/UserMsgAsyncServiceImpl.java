@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
@@ -524,13 +525,16 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 	
 	@Async
 	@Override
-	public Future<Boolean> newActionAppMsg(Long userId, Long id, String extType, String title, String summary) {
+	public Future<Boolean> newActionAppMsg(Long userId, Long id, String extType, String title, String summary, String iconUrl) {
 
 		// 根据服务大类ID 获得图标
-		String iconUrl = "http://img.51xingzheng.cn/437396cc0b49b04dc89a0552f7e90cae?p=0";
-		AppTools appTools = appToolsService.selectByAction(extType);
-		if (appTools != null) {
-			iconUrl = appTools.getLogo();
+
+		if (StringUtil.isEmpty(iconUrl)) {
+			iconUrl = "http://img.51xingzheng.cn/437396cc0b49b04dc89a0552f7e90cae?p=0";
+			AppTools appTools = appToolsService.selectByAction(extType);
+			if (appTools != null) {
+				iconUrl = appTools.getLogo();
+			}
 		}
 
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();

@@ -230,7 +230,7 @@
 						<!-- <div class="form-group">
 							<label class="col-md-2 control-label">应用描述</label>
 							<div class="col-md-5">
-							<textarea id="appProvider" class="form-control" placeholder="公司简介" name="companyDesc"></textarea>
+							<textarea id="appProvider" class="form-control" placeholder="团队简介" name="companyDesc"></textarea>
 							</div>
 						</div> -->
 						<div class="form-group">

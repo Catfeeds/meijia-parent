@@ -270,7 +270,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	@Override
 	public List<Object> checkDuplication(Long companyId, List<Object> excelDatas) throws Exception {
 		
-		//公司所有的员工列表
+		//团队所有的员工列表
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setStatus((short) 1);
@@ -451,7 +451,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	private List<Object> validateDataExist(Long companyId, List<Object> datas) {
 		List<Object> result = new ArrayList<Object>();
 		
-		//公司所有的员工列表
+		//团队所有的员工列表
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setStatus((short) 1);
@@ -503,7 +503,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 				
-		//公司所有的员工列表
+		//团队所有的员工列表
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setStatus((short) 1);
@@ -541,7 +541,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			
 			usersService.updateByPrimaryKeySelective(u);
 			
-			//再处理公司员工表的情况:
+			//再处理团队员工表的情况:
 			XcompanyStaff record = this.initXcompanyStaff();
 			for (XcompanyStaff vo : existLists) {
 				if (vo.getUserId().equals(userId)) {

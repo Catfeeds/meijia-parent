@@ -28,7 +28,7 @@
 <body>
 	<div class="header">
 		<div class="am-g">
-			<h1>公司注册成功</h1>
+			<h1>团队注册成功</h1>
 			<p>
 				 <a href="/xcloud/login">立即登录</a>
 			</p>

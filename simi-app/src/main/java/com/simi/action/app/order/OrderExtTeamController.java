@@ -249,7 +249,7 @@ public class OrderExtTeamController extends BaseController {
 		//异步产生首页消息信息.
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(userId, orderId, "teamwork", title, summary);
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "teamwork", title, summary, "");
 				
 		return result;
 	}

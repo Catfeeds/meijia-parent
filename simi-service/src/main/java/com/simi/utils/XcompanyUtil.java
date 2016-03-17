@@ -14,7 +14,7 @@ import com.meijia.utils.QrCodeUtil;
 import com.simi.common.Constants;
 
 /**
- * 公司的常用静态方法
+ * 团队的常用静态方法
  *
  */
 public class XcompanyUtil {

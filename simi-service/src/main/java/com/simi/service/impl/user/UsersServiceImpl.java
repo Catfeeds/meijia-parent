@@ -412,7 +412,7 @@ public class UsersServiceImpl implements UsersService {
 		if (userPushBind != null)
 			vo.setClientId(userPushBind.getClientId());
 
-		// 用户是否为某个公司的职员
+		// 用户是否为某个团队的职员
 		vo.setHasCompany((short) 0);
 		vo.setCompanyId(0L);
 		vo.setCompanyCount(0);
@@ -428,7 +428,7 @@ public class UsersServiceImpl implements UsersService {
 			
 			Long defaultCompanyId = 0L;
 			
-			//获取默认公司ID.
+			//获取默认团队ID.
 			if (companyList.size() == 1) {
 				XcompanyStaff item = companyList.get(0);
 				defaultCompanyId = item.getCompanyId();

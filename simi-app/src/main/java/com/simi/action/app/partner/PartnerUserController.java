@@ -209,7 +209,7 @@ public class PartnerUserController extends BaseController {
 		return result;	
 	}
 	/**
-	 * 通过公司Id查找信息
+	 * 通过团队Id查找信息
 	 * @param partnerId
 	 * @return
 	 */

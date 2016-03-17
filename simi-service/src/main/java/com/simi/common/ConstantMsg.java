@@ -48,8 +48,8 @@ public class ConstantMsg {
 	//用户地址不存在
 	public static String NOT_EXIST_ADDR = "您还没有添加地址，请先去添加地址再进行此操作！";
 	
-	//您还不是此公司的员工
-	public static String USER_NOT_EXIST_COMPANY = "您还不是此公司的员工";
+	//您还不是此团队的员工
+	public static String USER_NOT_EXIST_COMPANY = "您还不是此团队的员工";
 	
 	//已经是好友，不需要重复添加
 	public static String USER_IS_FRIEND = "已经是好友，不需要重复添加";
@@ -69,8 +69,8 @@ public class ConstantMsg {
 	//您所在店铺还未认证通过，请耐心等待或致电4001691615查询
 	public static String PARTNERS_NOT_THROUGH = " 您申请的店铺还未审核通过，我们将会尽快处理，您也可直接致电4001691615问询，谢谢您的关注！";
 	
-	//公司不存在
-	public static String XCOMPANY_NOT_EXIST = "公司不存在";
+	//团队不存在
+	public static String XCOMPANY_NOT_EXIST = "团队不存在";
 	
 	//您是用户，不允许注册商品。
 	public static String USERS_NOT_REGIETER_STORE = "本业务只向服务商提供，您已注册过用户，是否要注册店铺？";
@@ -79,8 +79,8 @@ public class ConstantMsg {
 	public static String SEC_NOT_REGIETER_STORE = "您已经是秘书,若想要继续，请注册店铺！";
 		
 	
-	//公司名称已存在
-	public static String XCOMPANY_NAME_EXIST = "公司名称已存在";
+	//团队名称已存在
+	public static String XCOMPANY_NAME_EXIST = "团队名称已存在";
 	
 	//卡片不存在
 	public static String CADR_NOT_EXIST_MG = "卡片不存在";

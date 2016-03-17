@@ -170,7 +170,7 @@ public class CarController extends BaseController {
 			noticeSmsAsyncService.noticeOrderCarUser(orderId);
 			
 			//生成用户首页消息信息
-			userMsgAsyncService.newActionAppMsg(userId, orderId, "expy", serviceType.getName(), remarks);
+			userMsgAsyncService.newActionAppMsg(userId, orderId, "expy", serviceType.getName(), remarks, "");
 			
 			//推送信息
 			String capImg = "http://img.51xingzheng.cn/9790863671ef3249011398e23f137fc6";

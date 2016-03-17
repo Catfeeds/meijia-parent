@@ -73,11 +73,11 @@ public class CompanyBenzController extends BaseController {
 		
 		if (companyId.equals(0L)) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("公司不存在");
+			result.setMsg("团队不存在");
 			return result;
 		}
 		
-		//判断员工是否为公司一员
+		//判断员工是否为团队一员
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
@@ -86,7 +86,7 @@ public class CompanyBenzController extends BaseController {
 		
 		if (staffList.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("数据有错误：公司与员工未绑定");
+			result.setMsg("数据有错误：团队与员工未绑定");
 			return result;
 		}
 

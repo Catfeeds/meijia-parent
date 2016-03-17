@@ -327,7 +327,7 @@ public class OrderCleanController extends AdminController {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			String title = serviceType.getName();
 			String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-			userMsgAsyncService.newActionAppMsg(userId, orderId, "clean", title, summary);
+			userMsgAsyncService.newActionAppMsg(userId, orderId, "clean", title, summary, "");
 			
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -455,7 +455,7 @@ public class OrderCleanController extends AdminController {
 		
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(u.getId(), orderId, "clean", title, summary);
+		userMsgAsyncService.newActionAppMsg(u.getId(), orderId, "clean", title, summary, "");
 
 		return "redirect:/order/cleanList";
 	}

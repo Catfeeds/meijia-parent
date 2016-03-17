@@ -20,7 +20,7 @@ public interface UserMsgAsyncService {
 	
 	Future<Boolean> newFriendReqMsg(Long fromUserId, Long toUserId, Short status);
 
-	Future<Boolean> newActionAppMsg(Long userId, Long id, String extType, String title, String summary);
+	Future<Boolean> newActionAppMsg(Long userId, Long id, String extType, String title, String summary, String iconUrl);
 
 
 	

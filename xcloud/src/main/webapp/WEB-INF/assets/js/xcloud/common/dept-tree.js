@@ -1,4 +1,4 @@
-//此为在jsp中需要设置，作为根节点和公司参数使用.
+//此为在jsp中需要设置，作为根节点和团队参数使用.
 var companyId = $("#companyId").val();
 var shortName = $("#shortName").val();
 

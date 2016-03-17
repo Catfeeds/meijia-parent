@@ -349,7 +349,7 @@ public class OrderTeamController extends AdminController {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			String title = serviceType.getName();
 			String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-			userMsgAsyncService.newActionAppMsg(userId, orderId, "teamwork", title, summary);
+			userMsgAsyncService.newActionAppMsg(userId, orderId, "teamwork", title, summary, "");
 			
 			
 		} else {
@@ -478,7 +478,7 @@ public class OrderTeamController extends AdminController {
 //		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(vo.getUserId(), orderId, "teamwork", title, summary);
+		userMsgAsyncService.newActionAppMsg(vo.getUserId(), orderId, "teamwork", title, summary, "");
 		
 		return "redirect:/order/teamList";
 	}

@@ -87,7 +87,7 @@
 						</div>
 
 						<div class="form-group required">
-							<label class="col-md-2 control-label">公司名称</label>
+							<label class="col-md-2 control-label">团队名称</label>
 							<div class="col-md-5">
 								<form:input path="companyName" class="form-control" maxLength="64"  
 								/>

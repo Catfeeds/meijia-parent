@@ -21,11 +21,11 @@
 							<!--span-->
 							<div class="col-md-5">
 								<div class="form-group">
-									<label class="control-label col-md-5">公司名称</label>
+									<label class="control-label col-md-5">团队名称</label>
 									<div class="col-md-5">
 										<form:input path="companyName" id="companyName"
 											class="form-control " autocomplete="off"
-											placeholder="公司名称" />
+											placeholder="团队名称" />
 
 									</div>
 								</div>

@@ -93,11 +93,11 @@ public class RegisterController extends BaseController {
 		Long userId = u.getId();
 		
 		String companyName = xCompanyVo.getCompanyName().trim();
-		//验证公司与用户是否已经存在
+		//验证团队与用户是否已经存在
 		Xcompany xCompanyExist = xCompanyService.selectByCompanyNameAndUserName(companyName, mobile);
 		
 		if (xCompanyExist != null) {
-			result.addError(new FieldError("contentModel","userName","您已经注册过此公司."));
+			result.addError(new FieldError("contentModel","userName","您已经注册过此团队."));
 			model.addAttribute("contentModel", xCompanyVo);
 			return register(model);
 		}
@@ -123,13 +123,13 @@ public class RegisterController extends BaseController {
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		} else {
 			
-			//生成公司唯一邀请码
+			//生成团队唯一邀请码
 			String invitationCode = StringUtil.generateShortUuid();
 			xCompany.setInvitationCode(invitationCode);
 			xCompanyService.insert(xCompany);
 			companyId = xCompany.getCompanyId();
 			
-			//生成公司邀请二维码
+			//生成团队邀请二维码
 			String imgUrl = XcompanyUtil.genQrCode(invitationCode);
 
 			xCompany.setQrCode(imgUrl);
@@ -139,7 +139,7 @@ public class RegisterController extends BaseController {
 		
 		
 		
-		//公司部门预置信息.
+		//团队部门预置信息.
 		List<String> defaultDepts = MeijiaUtil.getDefaultDept();
 		for (int i = 0 ; i < defaultDepts.size(); i++) {
 			XcompanyDept dept = xCompanyDeptService.initXcompanyDept();
@@ -156,7 +156,7 @@ public class RegisterController extends BaseController {
 		}
 		
 		
-		//将用户加入公司员工中
+		//将用户加入团队员工中
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);

@@ -53,18 +53,18 @@
 						<hr />
 						<div class="form-group">
 							<!-- Text input-->
-							<label class="col-md-2 control-label">公司名称&nbsp;*</label>
+							<label class="col-md-2 control-label">团队名称&nbsp;*</label>
 							<div class=col-md-5>
 								<form:input path="companyName" class="form-control"
-									placeholder="公司名称" maxSize="10" />
+									placeholder="团队名称" maxSize="10" />
 							</div>
 						</div>
 						<div class="form-group">
 							<!-- Text input-->
-							<label class="col-md-2 control-label">公司简称</label>
+							<label class="col-md-2 control-label">团队简称</label>
 							<div class=col-md-5>
 								<form:input path="shortName" class="form-control"
-									placeholder="公司简称" maxSize="10" />
+									placeholder="团队简称" maxSize="10" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -96,7 +96,7 @@
 						</div>
 					
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司规模 </label>
+							<label class="col-md-2 control-label">团队规模 </label>
 							<div class=col-md-8>
 								<div class="row">
 									<div class="col-md-2" align="center">
@@ -163,10 +163,10 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司简介</label>
+							<label class="col-md-2 control-label">团队简介</label>
 							<div class="col-md-5">
 								<form:textarea path="companyDesc" class="form-control"
-									placeholder="公司简介" />
+									placeholder="团队简介" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -192,7 +192,7 @@
 									</c:if>
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">公司简介图片</label>
+							<label class="col-md-2 control-label">团队简介图片</label>
 							<div class="col-md-5">
 								<input id="companyDescImg" type="file" name="companyDescImg"
 									accept="image/*" data-show-upload="false">

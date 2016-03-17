@@ -449,7 +449,7 @@ public class OrderRecycleController extends AdminController {
 		
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(users.getId(), orderId, "recycle", title, summary);
+		userMsgAsyncService.newActionAppMsg(users.getId(), orderId, "recycle", title, summary, "");
 		
 		return "redirect:/order/recycleList";
 	}

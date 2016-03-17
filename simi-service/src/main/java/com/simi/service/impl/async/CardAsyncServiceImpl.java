@@ -254,7 +254,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		}		
 		
 		for (UserPushBind p : userPushBinds) {
-			//若果不是好友以及不是同一家公司不能发推送消息
+			//若果不是好友以及不是同一家团队不能发推送消息
 			AppResultData<Object> v = validateService.validateFriend(card.getCreateUserId(), p.getUserId());
 			
 			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);
@@ -347,7 +347,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		for (UserPushBind p : userPushBinds) {
 			if (p.getUserId().equals(card.getCreateUserId())) continue;
 			
-			//若果不是好友以及不是同一家公司不能发推送消息
+			//若果不是好友以及不是同一家团队不能发推送消息
 			AppResultData<Object> v = validateService.validateFriend(card.getCreateUserId(), p.getUserId());
 			
 			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);

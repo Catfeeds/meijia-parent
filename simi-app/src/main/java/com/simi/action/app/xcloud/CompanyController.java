@@ -24,11 +24,15 @@ import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.po.model.xcloud.XcompanyStaffReq;
+import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
+import com.simi.service.xcloud.XcompanyStaffReqService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.utils.OrderUtil;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.UserCompanySearchVo;
@@ -51,6 +55,12 @@ public class CompanyController extends BaseController {
 
 	@Autowired
 	private XcompanyStaffService xCompanyStaffService;
+	
+	@Autowired
+	private XcompanyStaffReqService xCompanyStaffReqService;
+	
+	@Autowired
+	private UserMsgAsyncService userMsgAsyncService;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/reg", method = { RequestMethod.POST })
@@ -109,20 +119,20 @@ public class CompanyController extends BaseController {
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		} else {
 
-			// 生成公司唯一邀请码
+			// 生成团队唯一邀请码
 			String invitationCode = StringUtil.generateShortUuid();
 			xCompany.setInvitationCode(invitationCode);
 			xCompanyService.insert(xCompany);
 			companyId = xCompany.getCompanyId();
 
-			// 生成公司邀请二维码
+			// 生成团队邀请二维码
 			String imgUrl = XcompanyUtil.genQrCode(invitationCode);
 
 			xCompany.setQrCode(imgUrl);
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 		}
 
-		// 公司部门预置信息.
+		// 团队部门预置信息.
 		List<String> defaultDepts = MeijiaUtil.getDefaultDept();
 		for (int i = 0; i < defaultDepts.size(); i++) {
 			XcompanyDept dept = xCompanyDeptService.initXcompanyDept();
@@ -137,7 +147,7 @@ public class CompanyController extends BaseController {
 		if (defaultDept != null) {
 			deptId = defaultDept.getDeptId();
 		}
-		// 将用户加入公司员工中
+		// 将用户加入团队员工中
 		XcompanyStaff record = xCompanyStaffService.initXcompanyStaff();
 		record.setUserId(u.getId());
 		record.setCompanyId(companyId);
@@ -152,8 +162,11 @@ public class CompanyController extends BaseController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/join", method = { RequestMethod.POST })
-	public AppResultData<Object> companyReg(@RequestParam("user_name") String userName, @RequestParam("sms_token") String smsToken,
-			@RequestParam("invitation_code") String invitationCode) {
+	public AppResultData<Object> companyReg(
+			@RequestParam("user_name") String userName, 
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam("invitation_code") String invitationCode,
+			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -187,7 +200,8 @@ public class CompanyController extends BaseController {
 			return result;
 		}
 		companyId = xCompany.getCompanyId();
-
+		
+		//是否已经加入团队
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
@@ -201,22 +215,60 @@ public class CompanyController extends BaseController {
 
 		if (vo != null) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("您已经加入该公司");
+			result.setMsg("您已经加入该团队.");
 			return result;
 		}
-
-		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
-		Long deptId = 0L;
-		if (defaultDept != null) {
-			deptId = defaultDept.getDeptId();
+		
+		//是否已经发出过请求.
+		List<XcompanyStaffReq> xCompanyStaffReqs = xCompanyStaffReqService.selectByUserId(userId);
+		if (!xCompanyStaffReqs.isEmpty()) {
+			for (XcompanyStaffReq item : xCompanyStaffReqs) {
+				if (item.getCompanyId().equals(companyId)) {
+					result.setStatus(Constants.ERROR_999);
+					result.setMsg("您已经申请过加入该团队.");
+					return result;
+				}
+			}
 		}
-		// 将用户加入公司员工中
-		XcompanyStaff record = xCompanyStaffService.initXcompanyStaff();
-		record.setUserId(u.getId());
+		
+		XcompanyStaffReq record = xCompanyStaffReqService.initXcompanyStaffReq();
 		record.setCompanyId(companyId);
-		record.setDeptId(deptId);
-		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
-		xCompanyStaffService.insertSelective(record);
+		record.setUserId(userId);
+		record.setRemarks("");
+		xCompanyStaffReqService.insert(record);
+		
+		//异步产生首页消息信息.
+		
+		
+		//1. 给申请者发送
+		String title = "申请加入团队";
+		
+		String summary =  "你申请加入"+ xCompany.getCompanyName();
+		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		
+		//2.给审批者发出msg信息。
+		String adminMobile = xCompany.getUserName();
+		Users xCompanyAdmin = usersService.selectByMobile(adminMobile);
+		if (xCompanyAdmin == null) return result;
+		Long adminId = xCompanyAdmin.getId();
+		
+		title = "员工审批";
+		String staffName = (StringUtil.isEmpty(u.getName())) ? u.getMobile() : u.getName();
+		summary = "新员工" + staffName + "申请加入团队,请关注.";
+		userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		
+//		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
+//		Long deptId = 0L;
+//		if (defaultDept != null) {
+//			deptId = defaultDept.getDeptId();
+//		}
+//		// 将用户加入团队员工中
+//		XcompanyStaff record = xCompanyStaffService.initXcompanyStaff();
+//		record.setUserId(u.getId());
+//		record.setCompanyId(companyId);
+//		record.setDeptId(deptId);
+//		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
+//		xCompanyStaffService.insertSelective(record);
 
 		return result;
 

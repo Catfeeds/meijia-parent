@@ -13,7 +13,7 @@ import com.simi.action.app.JUnitActionBase;
 public class TestCompanyController extends JUnitActionBase  {
 
 	/**
-	 * 	 公司列表接口
+	 * 	 团队列表接口
 	 */
 /*	@Test
     public void testCompanyList() throws Exception {
@@ -31,7 +31,7 @@ public class TestCompanyController extends JUnitActionBase  {
     }
 	*/
 	/**
-	 * 	 公司列表接口
+	 * 	 团队列表接口
 	 */
 	@Test
     public void testCompanyStaffList() throws Exception {

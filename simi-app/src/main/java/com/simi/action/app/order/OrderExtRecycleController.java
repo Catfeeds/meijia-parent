@@ -269,7 +269,7 @@ public class OrderExtRecycleController extends BaseController {
 		//异步产生首页消息信息.
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(userId, orderId, "recycle", title, summary);
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "recycle", title, summary, "");
 		
 		return result;
 	}	

@@ -39,7 +39,7 @@
 						<h4>服务人员基础信息</h4>
 						<hr />
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司名称&nbsp;*</label>
+							<label class="col-md-2 control-label">团队名称&nbsp;*</label>
 							<div class=col-md-5>${contentModel.companyName }</div>
 						</div>
 						<div class="form-group required">

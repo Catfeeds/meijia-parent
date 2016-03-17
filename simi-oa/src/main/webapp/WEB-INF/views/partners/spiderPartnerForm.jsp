@@ -40,15 +40,15 @@
 						<h4>企业基本信息</h4>
 						<hr/>
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司名称&nbsp;*</label>
+							<label class="col-md-2 control-label">团队名称&nbsp;*</label>
 							<div class=col-md-5>${spiderPartner.companyName }</div>
 						</div>
 						<div class="form-group">
 							<!-- Text input-->
-							<label class="col-md-2 control-label">公司简称</label>
+							<label class="col-md-2 control-label">团队简称</label>
 							<div class=col-md-5>
 								<form:input path="shortName" class="form-control"
-									placeholder="公司简称" maxSize="10" />
+									placeholder="团队简称" maxSize="10" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -100,7 +100,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司规模 </label>
+							<label class="col-md-2 control-label">团队规模 </label>
 							<div class=col-md-8>
 									<div class="row">
 									<div class="col-md-2" align="center">
@@ -167,7 +167,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">公司简介</label>
+							<label class="col-md-2 control-label">团队简介</label>
 							<div class="col-md-7">
 								${spiderPartner.companyDesc }
 								${spiderPartner.companyDescImg }

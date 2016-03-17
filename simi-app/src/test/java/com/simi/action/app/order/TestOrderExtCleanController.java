@@ -53,7 +53,7 @@ public class TestOrderExtCleanController extends JUnitActionBase  {
      	
      	//通用订单. 无需支付
 	    postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("company_name", "北京美家生活科技有限公司");
+	    postRequest = postRequest.param("company_name", "北京美家生活科技有限团队");
 	    postRequest = postRequest.param("clean_area", "1");
 	    postRequest = postRequest.param("clean_type", "1");
 	    postRequest = postRequest.param("link_man", "张");

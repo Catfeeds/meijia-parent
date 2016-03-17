@@ -73,13 +73,13 @@ public class PartnerRegisterController extends BaseController {
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 				Partners partners = partnersService.selectByCompanyNames(companyName);
-				// 公司名称如果有重复，则不能创建流程
+				// 团队名称如果有重复，则不能创建流程
 				if (partners != null) {
 					result.setStatus(Constants.ERROR_999);
 					result.setMsg(ConstantMsg.XCOMPANY_NAME_EXIST);
 					return result;
 				}
-				//公司不存在，新增
+				//团队不存在，新增
 				partners = partnersService.iniPartners();
 				partners.setCompanyName(companyName);
 				partners.setStatus((short)3L);
@@ -105,7 +105,7 @@ public class PartnerRegisterController extends BaseController {
 				//更新后的partnes表
 				partners = partnersService.selectByCompanyNames(companyName);
 				
-				// 将此公司和用户建立关系
+				// 将此团队和用户建立关系
 				PartnerUsers partnerUsers = partnerUserService.iniPartnerUsers();
 				partnerUsers.setUserId(users.getId());
 				partnerUsers.setPartnerId(partners.getPartnerId());

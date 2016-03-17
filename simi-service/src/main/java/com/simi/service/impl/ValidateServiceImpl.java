@@ -125,7 +125,7 @@ public class ValidateServiceImpl implements ValidateService {
 		return result;
 	}
 	
-	//验证是不是同一个公司/组织
+	//验证是不是同一个团队/组织
 	@Override
 	public AppResultData<Object> validateSameCompany(Long userId, Long friendId) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -137,7 +137,7 @@ public class ValidateServiceImpl implements ValidateService {
 		
 		if (company1.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("不在同一家公司");
+			result.setMsg("不在同一家团队");
 			return result;
 		}
 		
@@ -148,7 +148,7 @@ public class ValidateServiceImpl implements ValidateService {
 		
 		if (company2.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("不在同一家公司");
+			result.setMsg("不在同一家团队");
 			return result;
 		}
 		
@@ -164,7 +164,7 @@ public class ValidateServiceImpl implements ValidateService {
 		
 		if (isSame == false) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("不在同一家公司");
+			result.setMsg("不在同一家团队");
 			return result;
 		}
 		

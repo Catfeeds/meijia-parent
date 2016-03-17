@@ -53,15 +53,15 @@ public class UserViewVo extends Users {
      */
     private String clientId;
     
-    //是否属于某公司的员工
+    //是否属于某团队的员工
     private Short hasCompany;
     
-    //所属公司的ID
+    //所属团队的ID
     private Long companyId;
     
     private String companyName;
     
-    //所属公司个数
+    //所属团队个数
     private int companyCount;
         
 	public String getImUsername() {

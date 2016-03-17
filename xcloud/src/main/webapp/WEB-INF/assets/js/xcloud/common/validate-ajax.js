@@ -30,7 +30,7 @@ function validateUserMobile(mobile, userId, userType){
 }
 
 
-//查询公司用户是否重复
+//查询团队用户是否重复
 function checkCompanyUserNameExist(userName, companyId) {
 	console.log("checkCompanyUserNameExist");
 	var isExist = true;

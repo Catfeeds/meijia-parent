@@ -392,7 +392,7 @@ public class OrderWaterController extends AdminController {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			String title = serviceType.getName();
 			String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-			userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);
+			userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");
 
 		} else {
 			vo.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -574,7 +574,7 @@ public class OrderWaterController extends AdminController {
 		// 异步产生首页消息信息.
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(vo.getUserId(), orderId, "water", title, summary);
+		userMsgAsyncService.newActionAppMsg(vo.getUserId(), orderId, "water", title, summary, "");
 
 		return "redirect:/order/waterList";
 	}

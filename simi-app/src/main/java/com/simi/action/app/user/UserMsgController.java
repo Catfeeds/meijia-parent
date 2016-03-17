@@ -18,8 +18,10 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserMsg;
+import com.simi.po.model.user.UserTrailReal;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserMsgService;
+import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.UserMsgSearchVo;
@@ -34,6 +36,9 @@ public class UserMsgController extends BaseController {
 	
 	@Autowired
 	private UserMsgService userMsgService;	
+	
+	@Autowired
+	private UserTrailRealService userTrailRealService;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get_msg", method = RequestMethod.GET)
@@ -106,6 +111,11 @@ public class UserMsgController extends BaseController {
 		//2. 如果不是当天，则不需要天气类卡片
 		
 		//获得用户最后一次的地理位置信息.
+		UserTrailReal userTrailReal = userTrailRealService.selectByUserId(userId);
+		if (userTrailReal != null) {
+			lat = userTrailReal.getLatitude();
+			lng = userTrailReal.getLongitude();
+		}
 		
 		UserMsgVo weatherVo = userMsgService.getWeather(serviceDate, lat, lng);
 		if (weatherVo != null && !StringUtil.isEmpty(weatherVo.getTitle())) {

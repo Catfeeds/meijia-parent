@@ -191,7 +191,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary);
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");
 		
 		//推送消息到app
 		noticeAppAsyncService.pushMsgToDevice(userId, title, summary);
@@ -207,7 +207,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
-		userMsgAsyncService.newActionAppMsg(userId, orderId, "recycle", title, summary);
+		userMsgAsyncService.newActionAppMsg(userId, orderId, "recycle", title, summary, "");
 		
 	}
 	

@@ -50,7 +50,7 @@
 						class="am-form am-container am-padding-xl am-padding-bottom" >
 						<form:hidden path="companyId" />
 						<div class="am-g am-container">
-							<h2>注册云行政公司账号</h2>
+							<h2>注册云行政团队账号</h2>
 							<form:errors path="userName" class="am-alert am-alert-danger center"></form:errors>
 						</div>
 						<div class="am-g am-padding-sm">
@@ -87,13 +87,13 @@
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="companyName" class="am-form-field am-radius" placeholder="输入公司全称" maxLength="64" required="required" />	
+								<form:input path="companyName" class="am-form-field am-radius" placeholder="输入团队全称" maxLength="64" required="required" />	
 							</div>
 
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="shortName" class="am-form-field am-radius"  placeholder="输入公司简称" maxLength="32" required="required" />	
+								<form:input path="shortName" class="am-form-field am-radius"  placeholder="输入团队简称" maxLength="32" required="required" />	
 							</div>
 
 							<button type="button"  class="am-btn am-btn-success am-btn-block am-radius"

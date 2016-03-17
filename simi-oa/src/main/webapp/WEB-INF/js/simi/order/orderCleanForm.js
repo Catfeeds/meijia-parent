@@ -32,7 +32,7 @@ var formVal = $('#order-clean-view-form').validate({
 	messages : {
 		
 		companyName : {
-			required : "请输入公司名称",
+			required : "请输入团队名称",
 		},
 
 		orderMoney : {

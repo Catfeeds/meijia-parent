@@ -86,7 +86,7 @@ public class CompanyCheckinController extends BaseController {
 			return result;
 		}
 		
-		//判断员工是否为公司一员
+		//判断员工是否为团队一员
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
@@ -95,7 +95,7 @@ public class CompanyCheckinController extends BaseController {
 		
 		if (staffList.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("公司不存在");
+			result.setMsg("团队不存在");
 			return result;
 		}
 
@@ -117,7 +117,7 @@ public class CompanyCheckinController extends BaseController {
 		record.setPoiName(poiName);
 		record.setPoiLat(poiLat);
 		record.setPoiLng(poiLng);
-		//todo .根据公司的地址计算距离公司的距离数（单位：米）;
+		//todo .根据团队的地址计算距离团队的距离数（单位：米）;
 		record.setPoiDistance(0);
 		
 		record.setRemarks(remarks);
@@ -160,7 +160,7 @@ public class CompanyCheckinController extends BaseController {
 			return result;
 		}
 		
-		//找出用户的默认公司
+		//找出用户的默认团队
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setStatus((short) 1);
@@ -168,7 +168,7 @@ public class CompanyCheckinController extends BaseController {
 		
 		if (staffList.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("公司不存在");
+			result.setMsg("团队不存在");
 			return result;
 		}
 		

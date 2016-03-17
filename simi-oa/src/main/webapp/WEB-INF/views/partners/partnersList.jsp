@@ -53,8 +53,8 @@
                           <table class="table table-striped table-advance table-hover">
                               <thead>
                               <tr>
-                                	  <th >公司名称</th>
-		                              <th >公司规模</th>
+                                	  <th >团队名称</th>
+		                              <th >团队规模</th>
 		                              <th >注册时间</th>
 		                              <th >合作方式</th>
 		                              <th>采集url</th>

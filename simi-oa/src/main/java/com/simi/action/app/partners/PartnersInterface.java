@@ -24,7 +24,7 @@ public class PartnersInterface extends BaseController {
 	private PartnersService partnersService;
 	
 	/**
-	 * 根据公司名称进行排重
+	 * 根据团队名称进行排重
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")

@@ -68,7 +68,7 @@
 							<tr>
 								<td>2</td>
 								<td>风清扬</td>
-								<td><a href="#">公司LOGO设计</a></td>
+								<td><a href="#">团队LOGO设计</a></td>
 								<td><span class="am-badge am-badge-danger">+2</span></td>
 								<td>
 									<div class="am-dropdown" data-am-dropdown>

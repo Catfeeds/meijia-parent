@@ -280,7 +280,7 @@ public class CardUtil {
 				break;
 			case 2:
 //				cardTypeName = "通知公告";
-				tips = "发布公司日常的通知公告，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
+				tips = "发布团队日常的通知公告，可创建这个卡片哦，不仅能给自己提醒，还能发送或分享给好友，快来试试吧~";
 				break;
 			case 3:
 //				cardTypeName = "事务提醒";

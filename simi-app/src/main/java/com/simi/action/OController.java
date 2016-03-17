@@ -25,7 +25,7 @@ public class OController extends BaseController {
 	/**
 	 * 
 	 * @param t 即服务类型现有6项，包括：
-				company，公司注册或人员加入
+				company，团队注册或人员加入
 				meeting，会议或会议室
 				express，快递
 				water，送水

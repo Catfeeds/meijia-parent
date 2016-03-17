@@ -32,7 +32,7 @@ public class CompanySeetingController extends BaseController {
 	private XcompanyStaffService xcompanyStaffService;
 
 	/**
-	 * 公司配置信息接口
+	 * 团队配置信息接口
 	 * @param settingType
 	 * @param userId
 	 * @param companyId
@@ -45,7 +45,7 @@ public class CompanySeetingController extends BaseController {
 			@RequestParam("company_id") Long companyId) {
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		//若不是对用公司的员工责返回提示不再查询
+		//若不是对用团队的员工责返回提示不再查询
 		UserCompanySearchVo companysearchVo = new UserCompanySearchVo();
 		companysearchVo.setUserId(userId);
 		companysearchVo.setCompanyId(companyId);

@@ -77,7 +77,7 @@
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">公司邮箱:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">邮箱:</label>
 							<div class="am-u-sm-9">
 								<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email"
 									required="required" maxLength="64" />
