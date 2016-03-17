@@ -50,8 +50,8 @@
                         
 						<div class="am-form-group" required>
 							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号:</label>
-							<div class="am-u-sm-9">
-								<form:input path="mobile" class="am-form-field am-radius js-pattern-pinteger" maxLength="32"/>
+							<div class="am-u-sm-9" >
+								<form:input path="mobile" class="am-form-field am-radius js-pattern-pinteger" maxLength="32" readonly="true"/>
 								<small></small>
 							</div>
 						</div>

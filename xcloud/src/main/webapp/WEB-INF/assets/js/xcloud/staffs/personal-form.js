@@ -39,7 +39,6 @@ $("#btn-personal-submit").on('click', function(e) {
 					//location.href = "/xcloud/index";
 					var params = {}
 					params.user_id = $("#userId").val();
-					alert("111111111111");
 					$.ajaxFileUpload({
 						type : "POST",
 						url : appRootUrl + "user/post_user_head_img.json", // 发送给服务器的url

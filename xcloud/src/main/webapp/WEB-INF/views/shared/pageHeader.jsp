@@ -2,7 +2,7 @@
 <header class="am-topbar admin-header">
 	<div class="am-topbar-brand">
 		<img src="http://123.57.173.36/simi-h5/icon/web-logo.png" height="25"
-			width="25"><a href="#"></i> | ${sessionScope.accountAuth.companyName} </a><a href="javascript:;"> <span
+			width="25"><a href="/xcloud/company/company_edit_form"></i> | ${sessionScope.accountAuth.companyName} </a><a href="javascript:;"> <span
 			class="am-badge am-badge-danger am-radius"></span></a>
 	</div>
 
