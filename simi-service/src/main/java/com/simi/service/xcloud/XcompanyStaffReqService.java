@@ -3,8 +3,11 @@ package com.simi.service.xcloud;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyStaffReq;
 import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.XcompanyStaffReqVo;
 
 
 public interface XcompanyStaffReqService {
@@ -26,5 +29,11 @@ public interface XcompanyStaffReqService {
 	List<XcompanyStaffReq> selectByUserId(Long userId);
 
 	List<XcompanyStaffReq> selectByCompanyId(Long companyId);
+
+	List<XcompanyStaffReq> selectByUserIdOrCompanyId(Long userId, Long companyId);
+
+	PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize);
+
+	List<XcompanyStaffReqVo> getVos(List<XcompanyStaffReq> list);
 
 }

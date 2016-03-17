@@ -25,6 +25,7 @@
 		<include refid="Base_Column_List" />
 		from xcompany_staff_req
 		where company_id = #{companyId,jdbcType=NUMERIC}
+		order by add_time desc;
 	</select>
 	
 	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -32,6 +33,30 @@
 		<include refid="Base_Column_List" />
 		from xcompany_staff_req
 		where user_id = #{userId,jdbcType=NUMERIC}
+		order by add_time desc;
+	</select>
+	
+	<select id="selectByUserIdOrCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff_req
+		where user_id = #{0} OR company_id = #{1}
+		order by add_time desc;
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.UserCompanySearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_staff
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyId != null && companyId > 0">
+			or company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -2,16 +2,27 @@ package com.simi.service.impl.xcloud;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyStaffReqMapper;
+import com.simi.po.model.order.OrderExtClean;
+import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaffReq;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffReqService;
+import com.simi.vo.OrderSearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.XcompanyStaffReqVo;
 
 
 @Service
@@ -22,6 +33,9 @@ public class XcompanyStaffReqServiceImpl implements XcompanyStaffReqService {
 	
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private XCompanyService xCompanyService;
 
 	
 	@Override
@@ -83,6 +97,80 @@ public class XcompanyStaffReqServiceImpl implements XcompanyStaffReqService {
 	public List<XcompanyStaffReq> selectByCompanyId(Long companyId) {
 		
 		return xCompanyStaffReqMapper.selectByCompanyId(companyId);
+	}
+	
+	@Override
+	public List<XcompanyStaffReq> selectByUserIdOrCompanyId(Long userId, Long companyId) {
+		return xCompanyStaffReqMapper.selectByUserIdOrCompanyId(userId, companyId);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize) {
+
+		 PageHelper.startPage(pageNo, pageSize);
+         List<XcompanyStaffReq> list = xCompanyStaffReqMapper.selectByListPage(searchVo);
+                  
+         PageInfo result = new PageInfo(list);
+         
+        return result;
+    }
+	
+	@Override
+	public List<XcompanyStaffReqVo> getVos(List<XcompanyStaffReq> list) {
+		List<XcompanyStaffReqVo> result = new ArrayList<XcompanyStaffReqVo>();
+		
+		if (list.isEmpty()) return result;
+		
+		
+		List<Long> userIds = new ArrayList<Long>();
+		List<Long> companyIds = new ArrayList<Long>();
+		
+		for (XcompanyStaffReq item : list) {
+			if (!userIds.contains(item.getUserId())) userIds.add(item.getUserId());
+			
+			if (!companyIds.contains(item.getCompanyId())) {
+				companyIds.add(item.getCompanyId());
+			}
+		}
+		
+		List<Users> users = new ArrayList<Users>();
+		
+		if (!userIds.isEmpty()) {
+			users = userService.selectByUserIds(userIds);
+		}
+		
+		List<Xcompany> xcompanys = new ArrayList<Xcompany>();
+		
+		if (!companyIds.isEmpty()) {
+			xcompanys = xCompanyService.selectByIds(companyIds);
+		}
+		
+		for (XcompanyStaffReq item : list) {
+			XcompanyStaffReqVo vo = new XcompanyStaffReqVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			vo.setName("");
+			vo.setHeadImg("");
+			for (Users user : users) {
+				if (user.getId().equals(vo.getUserId())) {
+					vo.setName(user.getName());
+					vo.setHeadImg(user.getHeadImg());
+					break;
+				}
+			}
+			
+			vo.setCompanyName("");
+			for (Xcompany xcompany : xcompanys) {
+				if (xcompany.getCompanyId().equals(vo.getCompanyId())) {
+					vo.setCompanyName(xcompany.getCompanyName());
+					break;
+				}
+			}
+			result.add(vo);
+		}
+		
+		return result;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.simi.service.xcloud;
 
+import java.util.List;
+
 import com.simi.po.model.xcloud.Xcompany;
 
 
@@ -29,5 +31,7 @@ public interface XCompanyService {
 	Xcompany selectByInvitationCode(String invitationCode);
 
 	Xcompany selectByCompanyNameAndUserName(String companyName, String userName);
+
+	List<Xcompany> selectByIds(List<Long> ids);
 
 }

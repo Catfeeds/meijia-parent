@@ -1,5 +1,7 @@
 package com.simi.service.impl.xcloud;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,5 +104,10 @@ public class XcompanyServiceImpl implements XCompanyService {
 	public Xcompany selectByUserNameAndPass(String userName, String passMd5) {
 		return xCompanyMapper.selectByUserNameAndPass(userName, passMd5);
 	}	
+	
+	@Override
+	public List<Xcompany> selectByIds(List<Long> ids) {
+		return xCompanyMapper.selectByIds(ids);
+	}
 
 }

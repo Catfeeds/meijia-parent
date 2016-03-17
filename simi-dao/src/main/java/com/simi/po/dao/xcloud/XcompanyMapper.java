@@ -1,5 +1,7 @@
 package com.simi.po.dao.xcloud;
 
+import java.util.List;
+
 import com.simi.po.model.xcloud.Xcompany;
 
 public interface XcompanyMapper {
@@ -24,4 +26,6 @@ public interface XcompanyMapper {
 	Xcompany selectByInvitationCode(String invitationCode);
 
 	Xcompany selectByCompanyNameAndUserName(String companyName, String userName);
+
+	List<Xcompany> selectByIds(List<Long> ids);
 }

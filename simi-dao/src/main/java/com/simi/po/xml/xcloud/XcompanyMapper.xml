@@ -60,6 +60,17 @@
 		company_name = #{0, jdbcType=VARCHAR} and user_name = #{1, jdbcType=VARCHAR}
 	</select>
 	
+	<select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany
+		where company_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		order by add_time asc
+	</select>
+	
 	
 	
 	<select id="selectByCompanyName" resultMap="BaseResultMap" parameterType="java.lang.String">
