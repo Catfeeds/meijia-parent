@@ -34,6 +34,6 @@ public interface XcompanyStaffReqService {
 
 	PageInfo selectByListPage(UserCompanySearchVo searchVo, int pageNo, int pageSize);
 
-	List<XcompanyStaffReqVo> getVos(List<XcompanyStaffReq> list);
+	List<XcompanyStaffReqVo> getVos(List<XcompanyStaffReq> list, Long userId);
 
 }

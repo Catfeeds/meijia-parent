@@ -395,7 +395,7 @@ public class CompanyStaffController extends BaseController {
 		xCompanyStaffReqs = plist.getList();
 		
 		List<XcompanyStaffReqVo> datas = new ArrayList<XcompanyStaffReqVo>();
-		datas = xCompanyStaffReqService.getVos(xCompanyStaffReqs);
+		datas = xCompanyStaffReqService.getVos(xCompanyStaffReqs, userId);
 		
 		result.setData(datas);
 		

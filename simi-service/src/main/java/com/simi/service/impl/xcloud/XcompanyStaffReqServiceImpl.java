@@ -117,7 +117,7 @@ public class XcompanyStaffReqServiceImpl implements XcompanyStaffReqService {
     }
 	
 	@Override
-	public List<XcompanyStaffReqVo> getVos(List<XcompanyStaffReq> list) {
+	public List<XcompanyStaffReqVo> getVos(List<XcompanyStaffReq> list, Long userId) {
 		List<XcompanyStaffReqVo> result = new ArrayList<XcompanyStaffReqVo>();
 		
 		if (list.isEmpty()) return result;
@@ -167,6 +167,10 @@ public class XcompanyStaffReqServiceImpl implements XcompanyStaffReqService {
 					break;
 				}
 			}
+			
+			vo.setReqType((short) 0);
+			if (!userId.equals(vo.getUserId())) vo.setReqType((short) 1);
+			
 			result.add(vo);
 		}
 		
