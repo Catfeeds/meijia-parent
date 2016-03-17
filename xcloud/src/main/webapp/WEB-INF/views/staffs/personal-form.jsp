@@ -45,7 +45,7 @@
 
 				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
 					<form:form modelAttribute="contentModel" method="POST" id="personal-form"
-						class="am-form am-form-horizontal" enctype="multipart/form-data">
+						class="am-form am-form-horizontal" enctype="multipart/form-data" >
                         <input type="hidden" id="userId" value="${userId }" />
                         
 						<div class="am-form-group" required>
@@ -64,7 +64,7 @@
 									class="am-btn am-btn-danger am-btn-sm">
 									<i class="am-icon-cloud-upload"></i> 选择要上传的图片
 								</button>
-								<input id="file" type="file" name="file" accept="image/*">
+								<input id="file" type="file" name="file" accept="image/*" required="required">
 							</div>
 						</div>
 						</div>

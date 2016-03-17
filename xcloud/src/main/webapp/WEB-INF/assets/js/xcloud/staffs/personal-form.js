@@ -40,7 +40,7 @@ $("#btn-personal-submit").on('click', function(e) {
 					var params = {}
 					params.user_id = $("#userId").val();
 					alert("111111111111");
-					$.ajax({
+					$.ajaxFileUpload({
 						type : "POST",
 						url : appRootUrl + "user/post_user_head_img.json", // 发送给服务器的url
 						data : params,
