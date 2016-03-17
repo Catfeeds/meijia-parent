@@ -108,4 +108,44 @@ public class OpController extends BaseController {
 		
 		return result;
 	}
+	
+	
+	//帮助接口
+		@RequestMapping(value = "post_help", method = RequestMethod.POST)
+		public AppResultData<Object> postHelp(
+				@RequestParam("action") String action,
+				@RequestParam("user_id") Long userId) {
+			
+			AppResultData<Object> result = new AppResultData<Object>(
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+			
+			AppHelp appHelp = appHelpService.selectByAction(action);
+			
+			if (appHelp == null) {
+				return result;
+			}
+			
+			//判断用户是否已经操作过，如果操作过则直接返回空值.
+			UserActionSearchVo searchVo = new UserActionSearchVo();
+			searchVo.setUserId(userId);
+			searchVo.setActionType("app_help");
+			searchVo.setParams(action);
+			
+			List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
+			
+			if (!rs.isEmpty()) {
+				return result;
+			}
+			
+			UserActionRecord record = userActionRecordService.initUserActionRecord();
+			record.setUserId(userId);
+			record.setActionType("app_help");
+			record.setParams(action);
+			
+			userActionRecordService.insert(record);
+			
+			return result;
+		}
+	
+	
 }
