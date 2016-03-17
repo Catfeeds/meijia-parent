@@ -238,6 +238,7 @@ public class CompanyCheckinController extends BaseController {
 			checkinItem.put("poiName", item.getPoiName());
 			checkinItem.put("remarks", "");
 			checkinItem.put("addTime", item.getAddTime().toString());
+			checkinItem.put("checkintNet", item.getCheckinNet());
 			checkinList.add(checkinItem);
 		}
 		datas.put("list", checkinList);
