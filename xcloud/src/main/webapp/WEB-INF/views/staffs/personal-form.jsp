@@ -55,7 +55,7 @@
 								<small></small>
 							</div>
 						</div>
-						<div class="am-form-group" required>
+						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">头像:</label>
 							<div class="am-u-sm-9">
 						<input type="hidden" name="img_url_new" id="img_url_new" />
@@ -64,7 +64,7 @@
 									class="am-btn am-btn-danger am-btn-sm">
 									<i class="am-icon-cloud-upload"></i> 选择要上传的图片
 								</button>
-								<input id="file" type="file" name="file" accept="image/*" required="required">
+								<input id="file" type="file" name="file" accept="image/*">
 							</div>
 						</div>
 						</div>
