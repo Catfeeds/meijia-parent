@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
+import com.simi.vo.AppResultData;
 import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
 
@@ -34,6 +35,6 @@ public interface UserFriendService {
 
 	List<UserFriendViewVo> changeToUserFriendViewVos(List<UserFriends> userFriends);
 
-	Boolean addFriendReq(Users u, Users friendUser);
+	AppResultData<Object> addFriendReq(Users u, Users friendUser);
 
 }

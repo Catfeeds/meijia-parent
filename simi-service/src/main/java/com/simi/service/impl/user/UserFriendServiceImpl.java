@@ -157,11 +157,11 @@ public class UserFriendServiceImpl implements UserFriendService {
 	}	
 	
 	@Override
-	public Boolean addFriendReq(Users u, Users friendUser) {
+	public AppResultData<Object> addFriendReq(Users u, Users friendUser) {
 		
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
-		if (u.getId().equals(friendUser.getId())) return true;
+		if (u.getId().equals(friendUser.getId())) return result;
 		
 		Long fromUserId = u.getId();
 		Long toUserId = friendUser.getId();
@@ -175,14 +175,15 @@ public class UserFriendServiceImpl implements UserFriendService {
 		if (userFriend != null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_IS_FRIEND);
-			return true;
+			return result;
 		}
 		if (userFriendReq != null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_IS_REQ);
-			return true;
+			return result;
 		}
 		if (userFriend == null && userFriendReq == null) {
+			System.out.println("加好友----" + fromUserId.toString() + " -----" + toUserId.toString());
 			userFriendReq = userFriendReqService.initUserFriendReq();
 			userFriendReq.setUserId(fromUserId);
 			userFriendReq.setFriendId(toUserId);
@@ -192,7 +193,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 		//生成邀请好友消息
 		userMsgAsyncService.newFriendMsg(fromUserId,toUserId);
 
-		return true;
+		return result;
 	}
 	
 	@Override
