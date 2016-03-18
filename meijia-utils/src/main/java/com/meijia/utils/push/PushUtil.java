@@ -348,7 +348,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "169c27156343d0780b48f2fb8e6e7c9d";
+		String clientId = "ca745b39a2cb53bbb93f54025309473e";
 		
 		getUserStatus(clientId);
 		
@@ -374,8 +374,8 @@ public class PushUtil {
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		
 		 tranParams.put("action", "alarm");		
-		 tranParams.put("card_id", "0");
-		 tranParams.put("card_type", "0");
+//		 tranParams.put("card_id", "0");
+//		 tranParams.put("card_type", "0");
 		 tranParams.put("service_time", "0");
 		 tranParams.put("remind_time", "0");
 		 tranParams.put("remind_title", "事务提醒");

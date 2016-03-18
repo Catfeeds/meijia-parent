@@ -232,13 +232,13 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		}
 		
 		if (card.getSetNowSend().equals((short)1)) isShow = "true";
-		
+				
 		tranParams.put("is_show", isShow);
-		tranParams.put("action", "msg");
-		tranParams.put("card_id", "0");
-		tranParams.put("card_type", "0");
-		tranParams.put("service_time", "");
-		tranParams.put("remind_time", "");
+		tranParams.put("action", "setclock");
+		tranParams.put("card_id", card.getCardId().toString());
+		tranParams.put("card_type", card.getCardType().toString());
+		tranParams.put("service_time", serviceTime.toString());
+		tranParams.put("remind_time", remindTime.toString());
 		tranParams.put("remind_title", cardTypeName);
 		tranParams.put("remind_content", pushContent);
 
@@ -254,20 +254,29 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		}		
 		
 		for (UserPushBind p : userPushBinds) {
+			Long createUserId = card.getCreateUserId();
+			Long toUserId = p.getUserId();
+			String clientId = p.getClientId();
+			
+			if (StringUtil.isEmpty(clientId)) continue;
+
+			//本人就不发了
+			if (createUserId.equals(toUserId)) continue;
+			
 			//若果不是好友以及不是同一家团队不能发推送消息
-			AppResultData<Object> v = validateService.validateFriend(card.getCreateUserId(), p.getUserId());
+			AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
 			
 			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);
 			
 			if (isFriend == false) {
-				v = validateService.validateSameCompany(card.getCreateUserId(), p.getUserId());
+				v = validateService.validateSameCompany(createUserId, toUserId);
 				if (v.getStatus() == Constants.ERROR_999) {
 					continue;
 				}
 			}
 
 			params.put("transmissionContent", jsonParams);
-			params.put("cid", p.getClientId());
+			params.put("cid", clientId);
 			
 			if (p.getDeviceType().equals("ios")) {
 				try {

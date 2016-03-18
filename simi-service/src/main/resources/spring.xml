@@ -11,23 +11,23 @@
 	<!-- 扫描文件（自动将service层注入） -->
 	<context:component-scan
 		base-package="com.simi.service.**,
-    									  com.simi.service.dict.**,
-    									  com.simi.service.order.**,
-    									  com.simi.service.user.**,
-    									  com.simi.service.admin.**,
-    									  com.simi.service.partners.**,
-    									  com.simi.service.card.**,
-    									  com.simi.service.async.**,
-    									  com.simi.service.impl.**,
-    									  com.simi.service.impl.remind.**,
-    									  com.simi.service.impl.dict.**,
-    									  com.simi.service.impl.order.**,
-    									  com.simi.service.impl.user.**,
-    									  com.simi.service.impl.admin.**,
-    									  com.simi.service.impl.partners.**,
-    									  com.simi.service.impl.card.**,
-    									  com.simi.service.impl.dispatch.**,
-    									  com.simi.service.impl.async.**">
+					  com.simi.service.dict.**,
+					  com.simi.service.order.**,
+					  com.simi.service.user.**,
+					  com.simi.service.admin.**,
+					  com.simi.service.partners.**,
+					  com.simi.service.card.**,
+					  com.simi.service.async.**,
+					  com.simi.service.impl.**,
+					  com.simi.service.impl.remind.**,
+					  com.simi.service.impl.dict.**,
+					  com.simi.service.impl.order.**,
+					  com.simi.service.impl.user.**,
+					  com.simi.service.impl.admin.**,
+					  com.simi.service.impl.partners.**,
+					  com.simi.service.impl.card.**,
+					  com.simi.service.impl.dispatch.**,
+					  com.simi.service.impl.async.**">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
