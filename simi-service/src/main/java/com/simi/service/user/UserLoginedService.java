@@ -16,4 +16,6 @@ public interface UserLoginedService {
     int updateByPrimaryKey(UserLogined record);
     
 	UserLogined initUserLogined();
+
+	int selectByCount(Long userId);
 }

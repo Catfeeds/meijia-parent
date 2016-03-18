@@ -14,4 +14,6 @@ public interface UserLoginedMapper {
     int updateByPrimaryKeySelective(UserLogined record);
 
     int updateByPrimaryKey(UserLogined record);
+
+	int selectByCount(Long userId);
 }

@@ -54,5 +54,10 @@ public class UserLoginedServiceImpl implements UserLoginedService{
 		record.setLoginIp(0L);
 		return record;
 	}
+	
+	@Override
+	public int selectByCount(Long userId) {
+		return userLoginedMapper.selectByCount(userId);
+	}
 
 }

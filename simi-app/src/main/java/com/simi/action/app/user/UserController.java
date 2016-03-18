@@ -26,6 +26,7 @@ import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
+import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserRef3rdService;
@@ -71,6 +72,9 @@ public class UserController extends BaseController {
 	
 	@Autowired
 	private UsersAsyncService usersAsyncService;
+	
+	@Autowired
+	public UserLoginedService userLoginedService;
 
 	// 5. 会员登陆接口
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -117,9 +121,8 @@ public class UserController extends BaseController {
 		if (userPushBind != null) {
 			vo.setClientId(userPushBind.getClientId());
 		}
-
-		result = new AppResultData<Object>(Constants.SUCCESS_0,
-				ConstantMsg.SUCCESS_0_MSG, vo);
+		
+		
 		
 		//异步操作
 		// 如果第一次登陆未注册时未成功注册环信，则重新注册
@@ -128,6 +131,15 @@ public class UserController extends BaseController {
 		// 记录用户登陆信息
 		long ip = IPUtil.getIpAddr(request);
 		usersAsyncService.userLogined(u.getId(), loginFrom, ip);
+		
+		//判断是否为第一次登陆，查询登陆日志，是否只有一条记录
+		vo.setIsNewUser((short) 0);
+		int loginCount = userLoginedService.selectByCount(u.getId());
+		if (loginCount == 0) {
+			vo.setIsNewUser((short) 1);
+		}
+
+		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);
 		
 		return result;
 	}

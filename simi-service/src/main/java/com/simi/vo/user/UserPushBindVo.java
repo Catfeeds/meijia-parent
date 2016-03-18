@@ -12,6 +12,8 @@ public class UserPushBindVo extends Users {
     
     private String clientId;
     
+    private Short isNewUser;
+    
 	public String getAppId() {
 		return appId;
 	}
@@ -42,5 +44,13 @@ public class UserPushBindVo extends Users {
 
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
+	}
+
+	public Short getIsNewUser() {
+		return isNewUser;
+	}
+
+	public void setIsNewUser(Short isNewUser) {
+		this.isNewUser = isNewUser;
 	}
 }
