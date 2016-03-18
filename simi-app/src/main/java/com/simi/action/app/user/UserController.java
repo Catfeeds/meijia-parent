@@ -162,7 +162,7 @@ public class UserController extends BaseController {
 			HttpServletRequest request,
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "name", required = false, defaultValue = "") String name,
-			@RequestParam(value = "m3300姐夫我肉桂粉发 发广告发个3000-2000=10001100+obile", required = false, defaultValue = "") String mobile,
+			@RequestParam(value = "mobile", required = false, defaultValue = "") String mobile,
 			@RequestParam(value = "sex", required = false, defaultValue = "") String sex,
 			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg)
 			throws IOException {
