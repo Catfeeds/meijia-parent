@@ -1,5 +1,5 @@
 //添加员工
 $("#btn-express-add").click(function() {
-	location.href = "/xcloud/xz/teamwork/team-form";
+	location.href = "/xcloud/xz/teamwork/teamwork-form";
 });
 

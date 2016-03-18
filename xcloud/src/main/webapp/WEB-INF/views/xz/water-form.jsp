@@ -39,7 +39,7 @@
 						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
 					<div class="am-panel-bd">可以一键扫码叫水，快来试试吧</div>
-					<div class="am-panel-bd"><img src="${xCompany.qrCode }" width="250" height="250" /></div>
+					<div class="am-panel-bd"><img src="<c:url value='/assets/img/erweima.png'/>" width="250" height="250" /></div>
 					</section>
 				</div>
 
@@ -48,17 +48,17 @@
 						class="am-form am-form-horizontal" enctype="multipart/form-data">
 
                         <input type="hidden" id="userId" value="${userId }" />
-						
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
 							<div class="am-u-sm-9">
 								<img id="imgUrl" wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
 							</div>
 						</div>
-						<div class="am-form-group">
+						<div class="am-form-group" required>
 							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
 							<div class="am-u-sm-9">
 								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="am-form-field am-radius" autocomplete="off">
+									<option value = "">请选择商品</option>
 									<c:forEach items="${waterComVos}" var="item">
 										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" 
 										<c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >

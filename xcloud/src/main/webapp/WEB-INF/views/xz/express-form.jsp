@@ -42,7 +42,7 @@
 						class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
 					<div class="am-panel-bd">可以用App扫码加入快递，快去试试吧</div>
-
+					<div class="am-panel-bd"><img src="<c:url value='/assets/img/erweima.png'/>" width="250" height="250" /></div>
 					</section>
 				</div>
 
