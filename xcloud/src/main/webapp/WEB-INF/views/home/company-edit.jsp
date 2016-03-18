@@ -70,7 +70,7 @@
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="addr" class="am-form-field am-radius"  placeholder="输入详细地址" maxLength="32" required="required" />	
+								<form:input path="addr" class="am-form-field am-radius"  placeholder="输入详细地址" maxLength="32"/>	
 							</div>
 							
 							<div class="am-form-group am-input-group">
@@ -92,13 +92,13 @@
 						    <div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="linkMan" class="am-form-field am-radius"  placeholder="输入联系人" maxLength="32" required="required" />	
+								<form:input path="linkMan" class="am-form-field am-radius"  placeholder="输入联系人" maxLength="32"/>	
 							</div>
 							
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="email" class="am-form-field am-radius"  placeholder="输入邮箱" maxLength="32" required="required" />	
+								<form:input path="email" class="am-form-field am-radius"  placeholder="输入邮箱" maxLength="32"/>	
 							</div>
 							
 
