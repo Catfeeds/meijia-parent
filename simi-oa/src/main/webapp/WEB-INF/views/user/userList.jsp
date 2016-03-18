@@ -41,6 +41,19 @@
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
+                      <form:form modelAttribute="searchModel" action="list" method="GET">
+				<header class="panel-heading">
+				<h4>数据搜索</h4>
+				<div>
+					手机号：
+					<form:input path="mobile" />
+					昵称：
+					<form:input path="name" />
+
+					<input type="submit" value="搜索">
+				</div>
+				</header>
+			</form:form>
                           <header class="panel-heading">
                           	用户管理
                           	

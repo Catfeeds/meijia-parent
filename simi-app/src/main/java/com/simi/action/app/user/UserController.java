@@ -95,10 +95,11 @@ public class UserController extends BaseController {
 					smsType);
 		}
 
-		if (validateResult.getStatus() != Constants.SUCCESS_0) {
+		if (validat3.30 4000 6.30  4000eResult.getStatus() != Constants.SUCCESS_0) {
 			return validateResult;
 		}
-
+3         3.10  5000+3000=8000-2000=1300
+：
 		Users u = userService.selectByMobile(mobile);
 
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
@@ -161,15 +162,20 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "post_userinfo", method = RequestMethod.POST)
 	public AppResultData<Object> updateUserInfo(
 			HttpServletRequest request,
-			@RequestParam("user_id") Long userId,
+			@RequestParam("user_id") Long userId,3.09 2250
 			@RequestParam(value = "name", required = false, defaultValue = "") String name,
-			@RequestParam(value = "mobile", required = false, defaultValue = "") String mobile,
-			@RequestParam(value = "sex", required = false, defaultValue = "") String sex,
-			@RequestParam(value = "head_img", required = false, defaultValue = "") String headImg)
+			@RequestParam(value = "m3300姐夫我肉桂粉发 发广告发个3000-2000=10001100+obile", required = false, defaultValue = "") String mobile,
+			@Requ3.30 4000+3000=7000-estP好，aram(value = "sex", required = false, defaultValue = "") String sex,
+			@RequestParam(value = "head_img", req饭来开个会离开过恢复发广告发 复古风格 官方发放给 功夫功夫个方法个功夫发GVuired
+			还得上课恢复了电话费if肯定会来开发的立刻恢复唠嗑浪费的客户佛顶骨颇为浪费肯德基
+			了开发和咖啡馆和反馈楼回复过我人口咖啡馆反馈给军阀割据
+			了风格和反馈给反馈给积分分开发及；发率较高飞了估计来几个胸立法机关立法机关
+			了风格和风格及反馈给甲方开关机uired开发结构化风格和肯定会给发货管理费的
+            了符合规范来开个会反馈给喝咖啡了开发过恢复了可广泛和开关和反馈给回复			= false, defaultValue = "") String headImg)
 			throws IOException {
 
 		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+				Constants.SU1100C700CESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
 		Users u = userService.selectByPrimaryKey(userId);
 
@@ -188,7 +194,7 @@ public class UserController extends BaseController {
 				result.setMsg("该手机号已经在由其他用户注册.");
 				return result;
 			} else {
-				u.setMobile(mobile);
+				u.setMob3000+4800=8000ile(mobile);
 			}
 		}
 
@@ -257,8 +263,8 @@ public class UserController extends BaseController {
 			@RequestParam("user_id") Long userId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		Users u = userService.selectByPrimaryKey(userId);
+				Constants突发奇想个小想法.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		Users u = userService.selectB垫子，被子，拖鞋，牙刷，枕头yPrimaryKey(userId);
 
 		// 判断是否为注册用户，非注册用户返回 999
 		if (u == null) {

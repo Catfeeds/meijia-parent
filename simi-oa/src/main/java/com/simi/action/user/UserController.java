@@ -79,7 +79,9 @@ public class UserController extends AdminController {
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String userList(HttpServletRequest request, Model model,
 			UserSearchVo searchVo,
-			@RequestParam(value="sec_id", required = false) Long secId ) {
+			@RequestParam(value="sec_id", required = false) Long secId,
+			@RequestParam(value="mobile", required = false) String mobile,
+			@RequestParam(value="name", required = false) String name) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
@@ -89,6 +91,8 @@ public class UserController extends AdminController {
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		searchVo.setSecId(secId);
+		searchVo.setMobile(mobile);
+		searchVo.setName(name);
 		PageInfo result = usersService.searchVoListPage(searchVo, pageNo,
 				pageSize);
 		model.addAttribute("contentModel", result);

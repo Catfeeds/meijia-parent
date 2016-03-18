@@ -3,6 +3,8 @@ package com.simi.vo;
 
 public class UserSearchVo {
 
+	  private String name;
+	
 	  private String mobile;
 	  
 	  private Long secId;
@@ -10,6 +12,14 @@ public class UserSearchVo {
 	  private Short userType;
 	  
 	  private Short isApproval;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getMobile() {
 		return mobile;

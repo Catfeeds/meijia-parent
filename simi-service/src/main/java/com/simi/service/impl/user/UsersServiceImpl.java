@@ -307,11 +307,15 @@ public class UsersServiceImpl implements UsersService {
 
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		String mobile = searchVo.getMobile();
+		String name = searchVo.getName();
 		Long secId = searchVo.getSecId();
 		List<Long> userIdList = new ArrayList<Long>();
 
 		if (mobile != null && !mobile.isEmpty()) {
 			conditions.put("mobile", mobile.trim());
+		}
+		if (name != null && !name.isEmpty()) {
+			conditions.put("name", name.trim());
 		}
 		if (secId != null) {
 			List<UserRefSec> list = userRefSecService.selectBySecId(secId);

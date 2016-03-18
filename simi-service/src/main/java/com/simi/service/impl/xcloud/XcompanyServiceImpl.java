@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.vo.xcloud.CompanySearchVo;
+import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.xcloud.Xcompany;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyMapper;
 
@@ -103,6 +107,16 @@ public class XcompanyServiceImpl implements XCompanyService {
 	@Override
 	public Xcompany selectByUserNameAndPass(String userName, String passMd5) {
 		return xCompanyMapper.selectByUserNameAndPass(userName, passMd5);
+	}
+
+	@Override
+	public List<Xcompany> selectByListPage(CompanySearchVo searchVo,
+			int pageNo, int pageSize) {
+	
+		List<Xcompany> list = xCompanyMapper.selectByListPage(searchVo);
+		
+		return list;
+		
 	}	
 	
 	@Override
