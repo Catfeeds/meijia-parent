@@ -115,9 +115,13 @@ public class UserFriendReqServiceImpl implements UserFriendReqService {
 		vo.setReqType(reqType);
 		Users user = userMapper.selectByPrimaryKey(viewUserId);
 		
-		
-		vo.setUserId(item.getUserId());
-		vo.setFriendId(item.getFriendId());
+		if (reqType.equals((short)0)) {
+			vo.setUserId(item.getUserId());
+			vo.setFriendId(item.getFriendId());
+		} else {
+			vo.setUserId(item.getFriendId());
+			vo.setFriendId(item.getUserId());
+		}
 		
 		vo.setName(user.getName());
 		vo.setSex(user.getSex());
