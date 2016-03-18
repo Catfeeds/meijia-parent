@@ -135,6 +135,12 @@ public class UserRef3rdController extends BaseController {
 		if (userPushBind != null) {
 			vo.setClientId(userPushBind.getClientId());
 		}
+		
+		vo.setIsNewUser((short) 0);
+		int loginCount = userLoginedService.selectByCount(users.getId());
+		if (loginCount == 0) {
+			vo.setIsNewUser((short) 1);
+		}
 		result.setData(vo);
 
 		return result;
