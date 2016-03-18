@@ -32,7 +32,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">保洁列表</strong> / <small>drinking water</small>
+					<strong class="am-text-primary am-text-lg">团建列表</strong> / <small>team</small>
 				</div>
 			</div>
 			<hr>

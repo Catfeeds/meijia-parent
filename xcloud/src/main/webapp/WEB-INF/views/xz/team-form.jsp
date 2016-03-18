@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">送水</strong> / <small>drinking water</small>
+					<strong class="am-text-primary am-text-lg">团建</strong> / <small>team</small>
 				</div>
 			</div>
 			<hr>
