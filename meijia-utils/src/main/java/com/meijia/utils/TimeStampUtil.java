@@ -179,17 +179,24 @@ public class TimeStampUtil {
     }	    
 
 	public static void main(String[] args) {
-		Long serviceTime = (long) 1458294331;
+//		Long serviceTime = (long) 1458294331;
 		
 //		System.out.println(DateUtil.format(serviceTime * 1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
 //		
-		System.out.println(TimeStampUtil.timeStampToDateHour(serviceTime*1000));
-		System.out.println(TimeStampUtil.timeStampToDateStr(serviceTime*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
-
-		Long remindTime = serviceTime - 5 * 60;
-		System.out.println(TimeStampUtil.timeStampToDateStr(remindTime*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
+//		System.out.println(TimeStampUtil.timeStampToDateHour(serviceTime*1000));
+//		System.out.println(TimeStampUtil.timeStampToDateStr(serviceTime*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
+//
+//		Long remindTime = serviceTime - 5 * 60;
+//		System.out.println(TimeStampUtil.timeStampToDateStr(remindTime*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
 		//		System.out.println(TimeStampUtil.getBeginOfYesterDay());
 		
 //		System.out.println(TimeStampUtil.getEndOfToday());
+		
+		Long nowMin = 1458295140000L;
+		Long serviceTime = 1458295440L;
+//		serviceTime = TimeStampUtil.timeStampToDateHour(serviceTime * 1000);
+		int remindMin = 5;
+		Long remindTime = serviceTime - remindMin * 60;
+		System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime * 1000,DateUtil.DEFAULT_FULL_PATTERN));
 	}
 }
