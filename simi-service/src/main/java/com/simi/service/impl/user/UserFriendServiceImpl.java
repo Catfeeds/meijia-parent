@@ -161,14 +161,16 @@ public class UserFriendServiceImpl implements UserFriendService {
 		
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
-		if (u.getId().equals(friendUser.getId())) return result;
-		
 		Long fromUserId = u.getId();
 		Long toUserId = friendUser.getId();
 		
+		if (fromUserId.equals(toUserId)) return result;
+		
+		
+		
 		UserFriendSearchVo searchVo = new UserFriendSearchVo();
-		searchVo.setUserId(u.getId());
-		searchVo.setFriendId(friendUser.getId());
+		searchVo.setUserId(fromUserId);
+		searchVo.setFriendId(toUserId);
 		
 		UserFriends userFriend = this.selectByIsFirend(searchVo);	
 		UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);

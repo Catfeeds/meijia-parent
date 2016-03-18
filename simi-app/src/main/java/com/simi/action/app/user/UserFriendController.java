@@ -280,12 +280,15 @@ public class UserFriendController extends BaseController {
 			searchVo.setFriendId(userId);
 			UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
 //			UserFriendReq userFriendReq = userFriendReqService.initUserFriendReq();
-			userFriendReq.setUserId(userId);
-			userFriendReq.setStatus((short)2);
-			userFriendReq.setFriendId(friendId);
-			userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
-			userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
-			userFriendReqService.insert(userFriendReq);
+			if (userFriendReq != null) {
+				userFriendReq.setUserId(userId);
+				userFriendReq.setStatus((short)2);
+				userFriendReq.setFriendId(friendId);
+				userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
+				userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
+				userFriendReqService.updateByPrimaryKeySelective(userFriendReq);	
+			}
+			
 		}
 		//生成好友同意或拒绝的消息
 		userMsgAsyncService.newFriendReqMsg(friendId, userId, status);
