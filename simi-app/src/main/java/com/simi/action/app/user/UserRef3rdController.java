@@ -138,7 +138,8 @@ public class UserRef3rdController extends BaseController {
 		
 		vo.setIsNewUser((short) 0);
 		int loginCount = userLoginedService.selectByCount(users.getId());
-		if (loginCount == 0) {
+		
+		if (loginCount == 0 || loginCount == 1) {
 			vo.setIsNewUser((short) 1);
 		}
 		result.setData(vo);

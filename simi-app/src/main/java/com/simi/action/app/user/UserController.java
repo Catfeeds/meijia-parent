@@ -135,7 +135,7 @@ public class UserController extends BaseController {
 		//判断是否为第一次登陆，查询登陆日志，是否只有一条记录
 		vo.setIsNewUser((short) 0);
 		int loginCount = userLoginedService.selectByCount(u.getId());
-		if (loginCount == 0) {
+		if (loginCount == 0 || loginCount == 1) {
 			vo.setIsNewUser((short) 1);
 		}
 
