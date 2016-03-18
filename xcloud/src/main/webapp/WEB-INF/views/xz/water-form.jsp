@@ -58,10 +58,10 @@
 							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
 							<div class="am-u-sm-9">
 								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="am-form-field am-radius" autocomplete="off">
-									<option value = "">请选择商品</option>
+									<option value = "" required="required" >请选择商品</option>
 									<c:forEach items="${waterComVos}" var="item">
-										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" 
-										<c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>   >
+										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" required="required" 
+										<c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>  >
 										${item.namePrice}</option>
 							
 									</c:forEach>

@@ -66,7 +66,7 @@
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">快递公司:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">快递公司ID:</label>
 							<div class="am-u-sm-9">
 								<form:input path="expressId"
 									class="am-form-field am-radius js-pattern-pinteger"
@@ -98,20 +98,20 @@
 							</div>
 						</div>
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">寄件人地址:</label>
+							<label class="am-u-sm-3 am-form-label">寄件人地址:</label>
 							<div class="am-u-sm-9">
 								<form:input path="fromAddr"
-									class="am-form-field am-radius js-pattern-pinteger"
+								class="form-control"
 									maxLength="32" required="required" />
 								<small>*必填项</small>
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">寄件人姓名:</label>
+							<label class="am-u-sm-3 am-form-label">寄件人姓名:</label>
 							<div class="am-u-sm-9">
 								<form:input path="fromName"
-									class="am-form-field am-radius js-pattern-pinteger"
+									class="form-control"
 									maxLength="32" required="required" />
 								<small>*必填项</small>
 							</div>
@@ -128,19 +128,19 @@
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">收件人地址:</label>
+							<label class="am-u-sm-3 am-form-label">收件人地址:</label>
 							<div class="am-u-sm-9">
 								<form:input path="toAddr"
-									class="am-form-field am-radius js-pattern-pinteger"
+									class="form-control"
 									maxLength="32" required="required" />
 								<small>*必填项</small>
 							</div>
 						</div>
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">收件人姓名:</label>
+							<label class="am-u-sm-3 am-form-label">收件人姓名:</label>
 							<div class="am-u-sm-9">
 								<form:input path="toName"
-									class="am-form-field am-radius js-pattern-pinteger"
+									class="form-control"
 									maxLength="32" required="required" />
 								<small>*必填项</small>
 							</div>

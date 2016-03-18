@@ -52,10 +52,12 @@
 							<label for="user-phone" class="am-u-sm-3 am-form-label">清洁类型:</label>
 							<div class="am-u-sm-9">
 						      <select id="teamType">
-						        <option value="0">定期保洁</option>
-						        <option value="1">深度养护</option>
-						        <option value="2">维修清理</option>
-						        <option value="3">其他</option>
+						        <option value="0">不限</option>
+						        <option value="1">年会</option>
+						        <option value="2">拓展训练</option>
+						        <option value="3">聚会沙龙</option>
+						         <option value="4">休闲度假</option>
+						        <option value="5">其他</option>
 						      </select>
 						      <span class="am-form-caret"></span>
 						    </div>
