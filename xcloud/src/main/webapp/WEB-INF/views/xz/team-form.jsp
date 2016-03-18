@@ -49,7 +49,7 @@
                         <input type="hidden" id="userId" value="${userId }" />
 						
 						    <div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">清洁类型:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">团建类型:</label>
 							<div class="am-u-sm-9">
 						      <select id="teamType">
 						        <option value="0">不限</option>
