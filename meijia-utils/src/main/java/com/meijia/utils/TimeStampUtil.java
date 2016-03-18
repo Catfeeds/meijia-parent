@@ -179,14 +179,17 @@ public class TimeStampUtil {
     }	    
 
 	public static void main(String[] args) {
-		Long t = (long) 1427328056;
-		Date startTime = TimeStampUtil.timeStampToDate(t*1000);
-		System.out.println(DateUtil.format(startTime, TimeStampUtil.DEFAULT_FULL_PATTERN));
-		System.out.println(TimeStampUtil.timeStampToDateStr(t*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
-		System.out.println(TimeStampUtil.timeStampToDateHour(t*1000));
+		Long serviceTime = (long) 1458294331;
 		
-		System.out.println(TimeStampUtil.getBeginOfYesterDay());
+//		System.out.println(DateUtil.format(serviceTime * 1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
+//		
+		System.out.println(TimeStampUtil.timeStampToDateHour(serviceTime*1000));
+		System.out.println(TimeStampUtil.timeStampToDateStr(serviceTime*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
+
+		Long remindTime = serviceTime - 5 * 60;
+		System.out.println(TimeStampUtil.timeStampToDateStr(remindTime*1000, TimeStampUtil.DEFAULT_FULL_PATTERN));
+		//		System.out.println(TimeStampUtil.getBeginOfYesterDay());
 		
-		System.out.println(TimeStampUtil.getEndOfToday());
+//		System.out.println(TimeStampUtil.getEndOfToday());
 	}
 }
