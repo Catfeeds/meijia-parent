@@ -356,13 +356,16 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		for (UserPushBind p : userPushBinds) {
 			if (p.getUserId().equals(card.getCreateUserId())) continue;
 			
+			Long createUserId = card.getCreateUserId();
+			Long toUserId = p.getUserId();
+			String clientId = p.getClientId();
 			//若果不是好友以及不是同一家团队不能发推送消息
-			AppResultData<Object> v = validateService.validateFriend(card.getCreateUserId(), p.getUserId());
+			AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
 			
 			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);
 			
 			if (isFriend == false) {
-				v = validateService.validateSameCompany(card.getCreateUserId(), p.getUserId());
+				v = validateService.validateSameCompany(createUserId, toUserId);
 				if (v.getStatus() == Constants.ERROR_999) {
 					continue;
 				}
@@ -370,7 +373,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			
 			System.out.println("userId= " + p.getUserId() + "---cid = " + p.getClientId());
 			params.put("transmissionContent", jsonParams);
-			params.put("cid", p.getClientId());
+			params.put("cid", clientId);
 			
 			String userStatus = PushUtil.getUserStatus(p.getClientId());
 			if (p.getDeviceType().equals("ios")) {
@@ -386,9 +389,9 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			
 			if (p.getDeviceType().equals("android")) {
 				try {
-					if (userStatus.equals("Offline")) {
+//					if (userStatus.equals("Offline")) {
 						PushUtil.AndroidPushToSingle(params);
-					}
+//					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
