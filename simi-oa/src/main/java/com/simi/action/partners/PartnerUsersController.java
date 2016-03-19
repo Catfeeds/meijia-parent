@@ -438,12 +438,14 @@ public class PartnerUsersController extends BaseController {
 			partnerServiceTypeService.updateByPrimaryKey(partnerServiceType);
 		}
 		
-		PartnerServicePriceDetail record = partnerServicePriceDetailService.initPartnerServicePriceDetail();
-		if (servicePriceId > 0L) {
-			record = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		servicePriceId = partnerServiceType.getId();
+		PartnerServicePriceDetail record = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		
+		if (record == null) {
+			record = partnerServicePriceDetailService.initPartnerServicePriceDetail();
 		}
 		
-		servicePriceId = partnerServiceType.getId();
+		
 		record.setUserId(vo.getUserId());
 		record.setServicePriceId(servicePriceId);
 		record.setServiceTitle(vo.getServiceTitle());
