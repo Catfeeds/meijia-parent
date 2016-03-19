@@ -443,6 +443,7 @@ public class PartnerUsersController extends BaseController {
 			record = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		}
 		
+		servicePriceId = partnerServiceType.getId();
 		record.setUserId(vo.getUserId());
 		record.setServicePriceId(servicePriceId);
 		record.setServiceTitle(vo.getServiceTitle());
@@ -475,7 +476,7 @@ public class PartnerUsersController extends BaseController {
 			record.setImgUrl(imgUrl);
 		}
 
-		if (servicePriceId > 0L) {
+		if (record.getId() > 0L) {
 			partnerServicePriceDetailService.updateByPrimaryKeySelective(record);
 		} else {
 			partnerServicePriceDetailService.insert(record);

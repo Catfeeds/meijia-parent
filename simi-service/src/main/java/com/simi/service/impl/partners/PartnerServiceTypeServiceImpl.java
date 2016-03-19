@@ -217,13 +217,24 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
 		
-		PartnerServiceType serviceType = partnerServiceTypeMapper.selectByPrimaryKey(item.getServicePriceId());
-		vo.setName(serviceType.getName());
-		vo.setNo(serviceType.getNo());
-		vo.setServiceTypeId(serviceType.getId());
-		vo.setParentId(serviceType.getParentId());
-		vo.setPartnerId(serviceType.getPartnerId());
-		vo.setIsEnable(serviceType.getIsEnable());
+		vo.setName("");
+		vo.setNo(0);
+		vo.setServiceTypeId(0L);
+		vo.setParentId(0L);
+		vo.setPartnerId(0L);
+		vo.setIsEnable((short) 0);
+		
+		if (!item.getServicePriceId().equals(0L)) {
+			PartnerServiceType serviceType = partnerServiceTypeMapper.selectByPrimaryKey(item.getServicePriceId());
+			
+			
+			vo.setName(serviceType.getName());
+			vo.setNo(serviceType.getNo());
+			vo.setServiceTypeId(serviceType.getId());
+			vo.setParentId(serviceType.getParentId());
+			vo.setPartnerId(serviceType.getPartnerId());
+			vo.setIsEnable(serviceType.getIsEnable());
+		}
 		return vo;
 	}
 	
