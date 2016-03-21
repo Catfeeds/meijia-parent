@@ -105,8 +105,8 @@ public class OrdersController extends AdminController {
 	 * @param model
 	 * @return
 	 */
-	// @AuthPassport
-
+	
+	@AuthPassport
 	@RequestMapping(value = "/orderView", method = RequestMethod.GET)
 	public String orderDetail(String orderNo, Model model) {
 
@@ -161,6 +161,7 @@ public class OrdersController extends AdminController {
 		return "order/orderDetail";
 	}
 
+	@AuthPassport
 	@RequestMapping(value = "/placeOrders", method = { RequestMethod.GET })
 	public String placeOrders(HttpServletRequest request, Model model) {
 		model.addAttribute("requestUrl", request.getServletPath());
@@ -168,6 +169,7 @@ public class OrdersController extends AdminController {
 		return "order/placeOrders";
 	}
 
+	@AuthPassport
 	@RequestMapping(value = "/saveDisp", method = { RequestMethod.GET })
 	public String saveDispatch(HttpServletRequest request, Model model) {
 		model.addAttribute("requestUrl", request.getServletPath());
@@ -176,6 +178,7 @@ public class OrdersController extends AdminController {
 		return "Success";
 	}
 
+	@AuthPassport
 	@RequestMapping(value = "/calendar", method = { RequestMethod.GET })
 	public String orderCalender(HttpServletRequest request, Model model) {
 		model.addAttribute("requestUrl", request.getServletPath());

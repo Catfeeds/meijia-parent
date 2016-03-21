@@ -54,7 +54,7 @@ public class AppHelpController extends BaseController {
 			return "op/appHelpList";
 		}
 
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/appHelpForm", method = { RequestMethod.GET })
 	public String appIndexForm(HttpServletRequest request, Model model, @RequestParam(value = "id") Long id) {
 
@@ -69,7 +69,7 @@ public class AppHelpController extends BaseController {
 		return "op/appHelpForm";
 	}
 
-	// @AuthPassport
+	@AuthPassport
 //	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/appHelpForm", method = { RequestMethod.POST })
 	public String doAdForm(HttpServletRequest request, Model model, 

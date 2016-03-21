@@ -9,7 +9,7 @@ public interface AppToolsMapper {
 
     int insert(AppTools record);
 
-    int insertSelective(AppTools record);
+    Long insertSelective(AppTools record);
 
     AppTools selectByPrimaryKey(Long tId);
 

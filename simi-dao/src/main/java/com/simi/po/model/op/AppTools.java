@@ -34,6 +34,8 @@ public class AppTools {
     private String appDescribe;
 
     private String authUrl;
+    
+    private String qrCode;
 
     private long addTime;
 
@@ -180,4 +182,12 @@ public class AppTools {
     public void setAddTime(long addTime) {
         this.addTime = addTime;
     }
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
+	}
 }

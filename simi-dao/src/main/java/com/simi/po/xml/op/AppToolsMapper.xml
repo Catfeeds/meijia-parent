@@ -1,282 +1,301 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.op.AppToolsMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.op.AppTools" >
-    <id column="t_id" property="tId" jdbcType="NUMERIC" />
-    <result column="no" property="No" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="logo" property="logo" jdbcType="VARCHAR" />
-    <result column="app_type" property="appType" jdbcType="VARCHAR" />
-    <result column="menu_type" property="menuType" jdbcType="VARCHAR" />
-    <result column="open_type" property="openType" jdbcType="VARCHAR" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="action" property="action" jdbcType="VARCHAR" />
-    <result column="params" property="params" jdbcType="VARCHAR" />
-    <result column="is_default" property="isDefault" jdbcType="NUMERIC" />
-    <result column="is_del" property="isDel" jdbcType="NUMERIC" />
-    <result column="is_partner" property="isPartner" jdbcType="NUMERIC" />
-    <result column="is_online" property="isOnline" jdbcType="NUMERIC" />
-    <result column="app_provider" property="appProvider" jdbcType="VARCHAR" />
-    <result column="app_describe" property="appDescribe" jdbcType="VARCHAR" />
-    <result column="auth_url" property="authUrl" jdbcType="VARCHAR" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    t_id,no,name,logo,app_type,menu_type,open_type,url,action,params,is_default,is_del,is_partner,is_online,app_provider,app_describe,auth_url,add_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from app_tools
-    where t_id = #{tId,jdbcType=NUMERIC}
-  </select>
-  <select id="selectByListPage" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from app_tools
-    order by no asc
-  </select>
-    <select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
+<mapper namespace="com.simi.po.dao.op.AppToolsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.op.AppTools">
+		<id column="t_id" property="tId" jdbcType="NUMERIC" />
+		<result column="no" property="No" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="app_type" property="appType" jdbcType="VARCHAR" />
+		<result column="menu_type" property="menuType" jdbcType="VARCHAR" />
+		<result column="open_type" property="openType" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="action" property="action" jdbcType="VARCHAR" />
+		<result column="params" property="params" jdbcType="VARCHAR" />
+		<result column="is_default" property="isDefault" jdbcType="NUMERIC" />
+		<result column="is_del" property="isDel" jdbcType="NUMERIC" />
+		<result column="is_partner" property="isPartner" jdbcType="NUMERIC" />
+		<result column="is_online" property="isOnline" jdbcType="NUMERIC" />
+		<result column="app_provider" property="appProvider" jdbcType="VARCHAR" />
+		<result column="app_describe" property="appDescribe" jdbcType="VARCHAR" />
+		<result column="auth_url" property="authUrl" jdbcType="VARCHAR" />
+		<result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		t_id,no,name,logo,app_type,menu_type,open_type,url,action,params,is_default,is_del,is_partner,is_online,app_provider,app_describe,auth_url, qr_code, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
-		from app_tools 
+		from app_tools
+		where t_id = #{tId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByListPage" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from app_tools
+		order by no asc
+	</select>
+	<select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from app_tools
 		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0 and is_default = 1
 		order by no asc
 	</select>
-	
-	
+
+
 	<select id="selectByAction" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from app_tools 
+		from app_tools
 		where action = #{action,jdbcType=VARCHAR}
 	</select>
 	<select id="selectByAppTypeAll" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from app_tools 
-		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0 
+		from app_tools
+		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0
 		order by no asc
 	</select>
 	<select id="selectByAppTypeAndStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
-		from app_tools 
+		from app_tools
 		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0 and status = 0
 		order by no asc
 	</select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from app_tools
-    where t_id = #{tId,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.op.AppTools" >
-    insert into app_tools (t_id, no, name, 
-      logo, app_type,menu_type, open_type, 
-      url,action,params,is_default,is_del, is_partner,is_online,app_provider,app_describe, auth_url, 
-      add_time)
-    values (#{tId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
-      #{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR},
-      #{action,jdbcType=VARCHAR},#{params,jdbcType=VARCHAR}, #{isDefault,jdbcType=NUMERIC}, #{isDel,jdbcType=NUMERIC},
-      #{isPartner,jdbcType=NUMERIC}, 
-      #{isOnline,jdbcType=NUMERIC}, 
-      #{appProvider,jdbcType=VARCHAR}, 
-      #{appDescribe,jdbcType=VARCHAR}, 
-      #{authUrl,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.op.AppTools" >
-    insert into app_tools
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="tId != null" >
-        t_id,
-      </if>
-      <if test="No != null" >
-        no,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="logo != null" >
-        logo,
-      </if>
-      <if test="appType != null" >
-        app_type,
-      </if>
-      <if test="menuType != null" >
-        menu_type,
-      </if>
-      <if test="openType != null" >
-        open_type,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="action != null" >
-        action,
-      </if>
-      <if test="params != null" >
-        params,
-      </if>
-      <if test="isDefault != null" >
-        is_default,
-      </if>
-      <if test="isDel != null" >
-        is_del,
-      </if>
-      <if test="isPartner != null" >
-        is_partner,
-      </if>
-      <if test="isOnline != null" >
-        is_online,
-      </if>
-      <if test="appProvider != null" >
-        app_provider,
-      </if>
-      <if test="appDescribe != null" >
-        app_describe,
-      </if>
-      <if test="authUrl != null" >
-        auth_url,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="tId != null" >
-        #{tId,jdbcType=NUMERIC},
-      </if>
-      <if test="No != null" >
-        #{No,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="logo != null" >
-        #{logo,jdbcType=VARCHAR},
-      </if>
-      <if test="appType != null" >
-        #{appType,jdbcType=VARCHAR},
-      </if>
-      <if test="menuType != null" >
-        #{menuType,jdbcType=VARCHAR},
-      </if>
-      <if test="openType != null" >
-        #{openType,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-     <if test="action != null" >
-       #{action,jdbcType=VARCHAR},
-      </if>
-      <if test="params != null" >
-        #{params,jdbcType=VARCHAR},
-      </if>
-      <if test="isDefault != null" >
-         #{isDefault,jdbcType=NUMERIC},
-      </if>
-      <if test="isDel != null" >
-       #{isDel,jdbcType=NUMERIC},
-      </if>
-      <if test="isPartner != null" >
-        #{isPartner,jdbcType=NUMERIC},
-      </if>
-       <if test="isOnline != null" >
-        #{isOnline,jdbcType=NUMERIC},
-      </if>
-      <if test="appProvider != null" >
-        #{appProvider,jdbcType=VARCHAR},
-      </if>
-      <if test="appDescribe != null" >
-        #{appDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="authUrl != null" >
-        #{authUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.AppTools" >
-    update app_tools
-    <set >
-      <if test="No != null" >
-        no = #{No,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="logo != null" >
-        logo = #{logo,jdbcType=VARCHAR},
-      </if>
-      <if test="appType != null" >
-        app_type = #{appType,jdbcType=VARCHAR},
-      </if>
-      
-      <if test="menuType != null" >
-        menu_type = #{menuType,jdbcType=VARCHAR},
-      </if>
-      <if test="openType != null" >
-        open_type = #{openType,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="action != null" >
-        action = #{action,jdbcType=VARCHAR},
-      </if>
-       <if test="params != null" >
-       params = #{params,jdbcType=VARCHAR}, 
-      </if>
-       <if test="isDefault != null" >
-       is_default=  #{isDefault,jdbcType=NUMERIC},
-      </if>
-       <if test="isDel != null" >
-       is_del= #{isDel,jdbcType=NUMERIC},
-      </if>
-      <if test="isPartner != null" >
-        is_partner = #{isPartner,jdbcType=NUMERIC},
-      </if>
-       <if test="isOnline != null" >
-        is_online = #{isOnline,jdbcType=NUMERIC},
-      </if>
-      <if test="appProvider != null" >
-        app_provider = #{appProvider,jdbcType=VARCHAR},
-      </if>
-      <if test="appDescribe != null" >
-        app_describe = #{appDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="authUrl != null" >
-        auth_url = #{authUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where t_id = #{tId,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.AppTools" >
-    update app_tools
-    set no = #{No,jdbcType=NUMERIC},
-      name = #{name,jdbcType=VARCHAR},
-      logo = #{logo,jdbcType=VARCHAR},
-      app_type = #{appType,jdbcType=VARCHAR},
-      menu_type = #{menuType,jdbcType=VARCHAR},
-      open_type = #{openType,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      action = #{action,jdbcType=VARCHAR},
-      params = #{params,jdbcType=VARCHAR}, 
-      is_default= #{isDefault,jdbcType=NUMERIC},
-      is_del= #{isDel,jdbcType=NUMERIC},
-      is_partner = #{isPartner,jdbcType=NUMERIC},
-      is_online = #{isOnline,jdbcType=NUMERIC},
-      app_provider = #{appProvider,jdbcType=VARCHAR},
-      app_describe = #{appDescribe,jdbcType=VARCHAR},
-      auth_url = #{authUrl,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=NUMERIC}
-    where t_id = #{tId,jdbcType=NUMERIC}
-  </update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from app_tools
+		where t_id = #{tId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.op.AppTools">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="tId">
+			SELECT LAST_INSERT_ID() AS t_id
+		</selectKey>
+	
+		insert into app_tools (t_id, no, name,
+		logo, app_type,menu_type, open_type,
+		url,action,params,is_default,is_del, is_partner,is_online,app_provider,app_describe, auth_url, qr_code,
+		add_time)
+		values (#{tId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},
+		#{action,jdbcType=VARCHAR},#{params,jdbcType=VARCHAR}, #{isDefault,jdbcType=NUMERIC}, #{isDel,jdbcType=NUMERIC},
+		#{isPartner,jdbcType=NUMERIC},
+		#{isOnline,jdbcType=NUMERIC},
+		#{appProvider,jdbcType=VARCHAR},
+		#{appDescribe,jdbcType=VARCHAR},
+		#{authUrl,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.op.AppTools">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="tId">
+			SELECT LAST_INSERT_ID() AS t_id
+		</selectKey>
+	
+		insert into app_tools
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tId != null">
+				t_id,
+			</if>
+			<if test="No != null">
+				no,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="logo != null">
+				logo,
+			</if>
+			<if test="appType != null">
+				app_type,
+			</if>
+			<if test="menuType != null">
+				menu_type,
+			</if>
+			<if test="openType != null">
+				open_type,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="action != null">
+				action,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="isDefault != null">
+				is_default,
+			</if>
+			<if test="isDel != null">
+				is_del,
+			</if>
+			<if test="isPartner != null">
+				is_partner,
+			</if>
+			<if test="isOnline != null">
+				is_online,
+			</if>
+			<if test="appProvider != null">
+				app_provider,
+			</if>
+			<if test="appDescribe != null">
+				app_describe,
+			</if>
+			<if test="authUrl != null">
+				auth_url,
+			</if>
+			<if test="qrCode != null">
+				qr_code,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tId != null">
+				#{tId,jdbcType=NUMERIC},
+			</if>
+			<if test="No != null">
+				#{No,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				#{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="appType != null">
+				#{appType,jdbcType=VARCHAR},
+			</if>
+			<if test="menuType != null">
+				#{menuType,jdbcType=VARCHAR},
+			</if>
+			<if test="openType != null">
+				#{openType,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				#{action,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params,jdbcType=VARCHAR},
+			</if>
+			<if test="isDefault != null">
+				#{isDefault,jdbcType=NUMERIC},
+			</if>
+			<if test="isDel != null">
+				#{isDel,jdbcType=NUMERIC},
+			</if>
+			<if test="isPartner != null">
+				#{isPartner,jdbcType=NUMERIC},
+			</if>
+			<if test="isOnline != null">
+				#{isOnline,jdbcType=NUMERIC},
+			</if>
+			<if test="appProvider != null">
+				#{appProvider,jdbcType=VARCHAR},
+			</if>
+			<if test="appDescribe != null">
+				#{appDescribe,jdbcType=VARCHAR},
+			</if>
+			<if test="authUrl != null">
+				#{authUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="qrCode != null">
+				#{qrCode,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.AppTools">
+		update app_tools
+		<set>
+			<if test="No != null">
+				no = #{No,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="appType != null">
+				app_type = #{appType,jdbcType=VARCHAR},
+			</if>
+
+			<if test="menuType != null">
+				menu_type = #{menuType,jdbcType=VARCHAR},
+			</if>
+			<if test="openType != null">
+				open_type = #{openType,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				action = #{action,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				params = #{params,jdbcType=VARCHAR},
+			</if>
+			<if test="isDefault != null">
+				is_default= #{isDefault,jdbcType=NUMERIC},
+			</if>
+			<if test="isDel != null">
+				is_del= #{isDel,jdbcType=NUMERIC},
+			</if>
+			<if test="isPartner != null">
+				is_partner = #{isPartner,jdbcType=NUMERIC},
+			</if>
+			<if test="isOnline != null">
+				is_online = #{isOnline,jdbcType=NUMERIC},
+			</if>
+			<if test="appProvider != null">
+				app_provider = #{appProvider,jdbcType=VARCHAR},
+			</if>
+			<if test="appDescribe != null">
+				app_describe = #{appDescribe,jdbcType=VARCHAR},
+			</if>
+			<if test="authUrl != null">
+				auth_url = #{authUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="qrCode != null">
+				qr_code = #{qrCode,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where t_id = #{tId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.AppTools">
+		update app_tools
+		set no = #{No,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		app_type = #{appType,jdbcType=VARCHAR},
+		menu_type = #{menuType,jdbcType=VARCHAR},
+		open_type = #{openType,jdbcType=VARCHAR},
+		url = #{url,jdbcType=VARCHAR},
+		action = #{action,jdbcType=VARCHAR},
+		params = #{params,jdbcType=VARCHAR},
+		is_default= #{isDefault,jdbcType=NUMERIC},
+		is_del= #{isDel,jdbcType=NUMERIC},
+		is_partner = #{isPartner,jdbcType=NUMERIC},
+		is_online = #{isOnline,jdbcType=NUMERIC},
+		app_provider = #{appProvider,jdbcType=VARCHAR},
+		app_describe = #{appDescribe,jdbcType=VARCHAR},
+		auth_url = #{authUrl,jdbcType=VARCHAR},
+		qr_code = #{qrCode,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where t_id = #{tId,jdbcType=NUMERIC}
+	</update>
 </mapper>

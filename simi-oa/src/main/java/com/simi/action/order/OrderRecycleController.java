@@ -174,8 +174,7 @@ public class OrderRecycleController extends AdminController {
 	 * @param model
 	 * @return
 	 */
-	// @AuthPassport
-
+	@AuthPassport
 	@RequestMapping(value = "/orderRecycleView", method = RequestMethod.GET)
 	public String orderDetail(String orderNo, Model model) {
 
@@ -269,6 +268,7 @@ public class OrderRecycleController extends AdminController {
 	 * @return
 	 * @throws IOException
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/saveOrderRecycle", method = { RequestMethod.POST })
 	public String adForm(Model model,
 			@ModelAttribute("contentModel") OrdersRecyclePartnerVo vo,
@@ -305,6 +305,8 @@ public class OrderRecycleController extends AdminController {
 
 		return "redirect:/order/recycleList";
 	}
+	
+	@AuthPassport
 	@RequestMapping(value = "/saveOrderRecyclePartner", method = { RequestMethod.POST })
 	public String saveOrderWaterPartner(Model model,
 	@ModelAttribute("orderExtPartner") OrderExtPartner vo, 
@@ -353,6 +355,7 @@ public class OrderRecycleController extends AdminController {
 	 * @param model
 	 * @return
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/orderRecycleAddForm", method = RequestMethod.GET)
 	public String orderRecycleAdd(Long id, Model model) {
 		OrdersRecycleAddOaVo vo = new OrdersRecycleAddOaVo();
@@ -378,6 +381,7 @@ public class OrderRecycleController extends AdminController {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/saveOrderRecycleAdd", method = RequestMethod.POST)
 	public String orderTeamSave(Model model,
 			@ModelAttribute("contentModel") OrdersRecycleAddOaVo vo, 

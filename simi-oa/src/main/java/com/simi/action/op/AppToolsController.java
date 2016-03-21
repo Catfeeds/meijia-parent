@@ -2,6 +2,8 @@ package com.simi.action.op;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,8 @@ public class AppToolsController extends BaseController {
 	@Autowired
 	private OpChannelService opChannelService;	
 
-	 @AuthPassport
+	 @SuppressWarnings("rawtypes")
+	@AuthPassport
 	@RequestMapping(value = "/appTools_list", method = { RequestMethod.GET })
 		public String appToolsList(HttpServletRequest request, Model model) {
 
@@ -59,13 +62,18 @@ public class AppToolsController extends BaseController {
 			int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 
 			PageInfo result = appToolsService.selectByListPage(pageNo, pageSize);
+			
+			List<AppTools> list = result.getList();
+			for (AppTools item : list) {
+				appToolsService.genQrCode(item);
+			}
 
 			model.addAttribute("contentModel", result);
 
 			return "op/appToolsList";
 		}
 
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/appToolsForm", method = { RequestMethod.GET })
 	public String adForm(HttpServletRequest request, Model model, @RequestParam(value = "t_id") Long tId) {
 
@@ -83,7 +91,7 @@ public class AppToolsController extends BaseController {
 		return "op/appToolsForm";
 	}
 
-	// @AuthPassport
+	@AuthPassport
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/appToolsForm", method = { RequestMethod.POST })
 	public String doAdForm(HttpServletRequest request, Model model, 
@@ -93,6 +101,21 @@ public class AppToolsController extends BaseController {
 			) throws IOException {
 
 		Long id = appTools.gettId();
+		
+		Boolean genQrCode = false;
+		
+		if (id.equals(0L)) genQrCode = true;
+		
+		if (id > 0L) {
+			AppTools oldRecord = appToolsService.selectByPrimaryKey(id);
+			
+			if (!oldRecord.getOpenType().equals(appTools.getOpenType()) ||
+				!oldRecord.getAction().equals(appTools.getAction())	||
+				!oldRecord.getParams().equals(appTools.getParams()) ||
+				!oldRecord.getUrl().equals(appTools.getUrl())) {
+				genQrCode = true;
+			}	
+		}
 
 		// 更新头像
 		String imgUrl = "";
@@ -126,6 +149,10 @@ public class AppToolsController extends BaseController {
 			appTools.setAddTime(TimeStampUtil.getNow() / 1000);
 			appTools.setLogo(imgUrl);
 			appToolsService.insertSelective(appTools);
+		}
+		
+		if (genQrCode) {
+			appToolsService.genQrCode(appTools);
 		}
 
 		return "redirect:appTools_list";

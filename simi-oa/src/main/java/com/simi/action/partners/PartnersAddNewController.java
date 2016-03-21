@@ -144,7 +144,8 @@ public class PartnersAddNewController extends BaseController{
 		model.addAttribute("contentModel", result);
 		return "partners/partnersList";
 	}
-//	@AuthPassport
+	
+	@AuthPassport
 	@RequestMapping(value = "/partnerOrderlist", method = { RequestMethod.GET })
 	public String partnerOrderlist(HttpServletRequest request, Model model,
 			//,OrderSearchVo searchVo,
@@ -195,7 +196,7 @@ public class PartnersAddNewController extends BaseController{
 	 * @param response
 	 * @return
 	 */
-   // @AuthPassport
+    @AuthPassport
 	@RequestMapping(value = "/partnerAddNewForm", method = { RequestMethod.GET })
 	public String spiderPartnerForm(Model model,
 			@RequestParam("partnerId") Long partnerId,HttpServletRequest request,
@@ -322,7 +323,7 @@ public class PartnersAddNewController extends BaseController{
 	 * @return
 	 * @throws IOException 
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/savePartnerAddNewForm", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model,
 			@ModelAttribute("partners") PartnerFormVo partners,

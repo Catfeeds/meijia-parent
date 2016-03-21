@@ -355,6 +355,7 @@ public class OrderCleanController extends AdminController {
 	 * @param model
 	 * @return
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/orderCleanAddForm", method = RequestMethod.GET)
 	public String orderTeamAdd(Long id, Model model) {
 		Long serviceTypeId = 204L;
@@ -376,6 +377,7 @@ public class OrderCleanController extends AdminController {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/saveOrderCleanAdd", method = RequestMethod.POST)
 	public String orderTeamSave(Model model,
 			@ModelAttribute("contentModel") OrdersCleanAddOaVo vo,

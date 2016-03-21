@@ -58,15 +58,14 @@
 						<th>序号</th>
 						<th>名称</th>
 						<th>图标</th>
-						<th>应用类型</th>
 						<th>显示类型</th>
 						<th>动作标识</th>
-						<th>操作相关参数</th>
-						<th>是否默认显示</th>
-						<th>是否可以删除</th>
-						<th>是否上线</th>
-						<th>跳转url</th>
-						<th>不满足条件是跳转url</th>
+						<th>相关参数</th>
+						<th>默认显示</th>
+						<th>可以删除</th>
+						<th>上线</th>
+						
+						<th>二维码</th>
 						<th>添加时间</th>
 
 						<th>操作</th>
@@ -78,7 +77,6 @@
 							<td>${ item.no}</td>
 							<td>${ item.name}</td>
 							<td><img src="${ item.logo }" /></td>
-							<td>${ item.appType}</td>
 							<td>${ item.openType}</td>
 							<td>${ item.action}</td>
 							<td>${ item.params}</td>
@@ -106,8 +104,8 @@
 														下线
 									</c:when>
 							</c:choose></td> 
-							<td>${ item.url }</td>
-							<td>${ item.authUrl }</td>
+
+							<td><img src="${ item.qrCode }" width="100" height="100" /></td>
 							<%-- <td><c:choose>
 									<c:when test="${item.enable  == 0}">
 														不可用

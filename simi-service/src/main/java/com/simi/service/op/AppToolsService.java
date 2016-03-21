@@ -14,7 +14,7 @@ public interface AppToolsService {
 
 	int updateByPrimaryKeySelective(AppTools record);
 
-	int insertSelective(AppTools record);
+	Long insertSelective(AppTools record);
 	
 	int deleteByPrimaryKey(Long tId);
 
@@ -32,6 +32,8 @@ public interface AppToolsService {
 	PageInfo selectByListPage(String appType, int pageNo, int pageSize, Long userId);
 
 	AppTools selectByAction(String action);
+
+	String genQrCode(AppTools item);
 
 //	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
 

@@ -139,7 +139,7 @@ public class PartnerUsersController extends BaseController {
 	 * @throws JsonParseException
 	 * @throws IOException
 	 */
-	// @AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.GET })
 	public String userForm(Model model, HttpServletRequest request, @RequestParam("id") Long id, @RequestParam("partnerId") Long partnerId,
 			HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException {
@@ -229,7 +229,7 @@ public class PartnerUsersController extends BaseController {
 	 * @return
 	 * @throws IOException
 	 */
-	// @AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/user_form", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") PartnerUserVo partnerUserVo,
 			@RequestParam("imgUrlFile") MultipartFile file, BindingResult result) throws IOException {
@@ -335,6 +335,7 @@ public class PartnerUsersController extends BaseController {
 	}
 
 	// todo商品列表
+	@AuthPassport
 	@RequestMapping(value = "/partner_service_price_list", method = { RequestMethod.GET })
 	public String partnerServicelist(HttpServletRequest request, Model model, @RequestParam("partner_id") Long partnerId,
 			@RequestParam("service_type_id") Long serviceTypeId, @RequestParam("user_id") Long userId, PartnerUserServiceTypeVo searchVo) {
@@ -376,6 +377,7 @@ public class PartnerUsersController extends BaseController {
 
 	// todo
 	// 商品添加
+	@AuthPassport
 	@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.GET })
 	public String partnerPrice(Model model, HttpServletRequest request,
 			@RequestParam("service_type_id") Long serviceTypeId,
@@ -409,6 +411,7 @@ public class PartnerUsersController extends BaseController {
 	}
 
 	@SuppressWarnings("unchecked")
+	@AuthPassport
 	@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.POST })
 	public String partnerPriceAdd(Model model, HttpServletRequest request,
 

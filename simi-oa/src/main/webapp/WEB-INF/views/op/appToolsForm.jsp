@@ -69,8 +69,13 @@
 							<div class="form-group ">
 
 								<label class="col-md-2 control-label">图片</label>
-								<div class="col-md-5">
+								<div class="col-md-4">
 									<img src="${ contentModel.logo }" />
+								</div>
+								
+								<label class="col-md-2 control-label">二维码</label>
+								<div class="col-md-4">
+									<img src="${ contentModel.qrCode }" weight="200" height="150" />
 								</div>
 							</div>
 						</c:if>
@@ -227,12 +232,7 @@
 								<form:errors path="appProvider" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<!-- <div class="form-group">
-							<label class="col-md-2 control-label">应用描述</label>
-							<div class="col-md-5">
-							<textarea id="appProvider" class="form-control" placeholder="团队简介" name="companyDesc"></textarea>
-							</div>
-						</div> -->
+
 						<div class="form-group">
 						<label class="col-md-2 control-label">应用描述</label>
 						<div class="col-md-5">

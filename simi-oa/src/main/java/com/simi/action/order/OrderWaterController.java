@@ -417,6 +417,7 @@ public class OrderWaterController extends AdminController {
 	 * @param model
 	 * @return
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/orderWaterAddForm", method = RequestMethod.GET)
 	public String orderTeamAdd(Long id, Model model) {
 
@@ -493,6 +494,7 @@ public class OrderWaterController extends AdminController {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
+	@AuthPassport
 	@RequestMapping(value = "/saveOrderWaterAdd", method = RequestMethod.POST)
 	public String orderTeamSave(Model model,
 			@ModelAttribute("contentModel") OrdersWaterAddOaVo vo,
