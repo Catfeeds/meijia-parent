@@ -72,11 +72,11 @@ public class UserImgServiceImpl implements UserImgService{
 		if (StringUtil.isEmpty(qrCodeLogo)) {
 			qrCodeLogo = Constants.DEFAULT_LOGO;
 		}
-				
-		String contents = "xcloud://action=add_friend";
-			   contents+= "&user_id="+u.getId().toString();
-			   contents+= "&name="+u.getName();
-			   contents+= "&mobile="+u.getMobile();
+		
+		String qrUrl = "http://www.51xingzheng.cn/d/open.html?";
+		String contents = qrUrl + "category=app";
+			   contents+= "$action=add_friend";
+			   contents+= "&params=="+u.getId().toString();
 		
 		BufferedImage qrCodeImg = null;
 		try {
