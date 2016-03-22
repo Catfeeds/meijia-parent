@@ -2,6 +2,7 @@ package com.simi.action.app.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,6 +125,49 @@ public class UserMsgController extends BaseController {
 		}
 		
 		
+		return result;
+	}
+	
+	// 按照年月查看卡片个数
+	/**
+	 * @param card_id
+	 *            卡片ID, 0 表示新增
+	 * @param user_id
+	 *            用户ID
+	 *
+	 * @return CardViewVo
+	 */
+	@RequestMapping(value = "/msg/total_by_month", method = RequestMethod.GET)
+	public AppResultData<Object> getLogs(
+		@RequestParam("user_id") Long userId, 
+		@RequestParam("year") int year, 
+		@RequestParam("month") int month) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		String startTimeStr = DateUtil.getFirstDayOfMonth(year, month) + " 00:00:00";
+		String endTimeStr = DateUtil.getLastDayOfMonth(year, month) + " 23:59:59";
+
+		Long startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
+		Long endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		UserMsgSearchVo searchVo = new UserMsgSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setStartTime(startTime);
+		searchVo.setEndTime(endTime);
+
+		List<HashMap> monthDatas = userMsgService.totalByMonth(searchVo);
+
+		result.setData(monthDatas);
 		return result;
 	}
 }

@@ -80,6 +80,42 @@
 		order by msg_id desc
 	</select>
 	
+	<!-- 统计某个时间范围有消息的日期和个数 -->
+	<select id="totalByMonth" resultType="java.util.HashMap"
+		parameterType="com.simi.vo.UserMsgSearchVo">
+		select FROM_UNIXTIME(service_time ,'%Y-%m-%d') as service_date , count(distinct msg_id) as total
+		(SELECT msg_id, 
+		CASE WHEN service_time > add_time THEN service_time ELSE add_time END ) as service_time
+		from user_msg
+		where 1=1
+		<if test="fromUserId != null">
+			and from_user_id = #{fromUserId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="toUserId != null">
+			and to_user_id = #{toUserId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="category != null">
+			and category = #{category,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="action != null">
+			and action = #{action,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="params != null">
+			and params = #{params,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="startTime != null">
+			<![CDATA[ and ( (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC}) OR (service_time >= #{startTime,jdbcType=NUMERIC} and service_time <= #{endTime,jdbcType=NUMERIC}) ) ]]>
+		</if>		
+		) as T
+		GROUP BY service_date
+		order by service_date asc
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from user_msg
 		where msg_id = #{msgId,jdbcType=NUMERIC}

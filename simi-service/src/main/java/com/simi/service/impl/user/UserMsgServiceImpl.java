@@ -1,6 +1,7 @@
 package com.simi.service.impl.user;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserMsgVo;
 import com.simi.po.dao.user.UserMsgMapper;
 import com.simi.po.model.common.Weathers;
@@ -170,6 +172,11 @@ public class UserMsgServiceImpl implements UserMsgService {
 		
 		
 		return vo;
+	}
+	
+	@Override
+	public List<HashMap> totalByMonth(UserMsgSearchVo vo) {
+		return userMsgMapper.totalByMonth(vo);
 	}
 		
 }

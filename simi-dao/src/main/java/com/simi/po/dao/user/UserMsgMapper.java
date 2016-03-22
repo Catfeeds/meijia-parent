@@ -1,5 +1,6 @@
 package com.simi.po.dao.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.simi.po.model.user.UserMsg;
@@ -23,4 +24,6 @@ public interface UserMsgMapper {
 	List<UserMsg> selectBySearchVo(UserMsgSearchVo searchVo);
 
 	List<UserMsg> selectByListPage(UserMsgSearchVo searchVo);
+
+	List<HashMap> totalByMonth(UserMsgSearchVo vo);
 }

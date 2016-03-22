@@ -1,5 +1,6 @@
 package com.simi.service.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
@@ -30,5 +31,7 @@ public interface UserMsgService {
 	PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize);
 
 	UserMsgVo getWeather(String serviceDate, String lat, String lng);
+
+	List<HashMap> totalByMonth(UserMsgSearchVo vo);
 
 }
