@@ -76,7 +76,7 @@ public class UserImgServiceImpl implements UserImgService{
 		String qrUrl = "http://www.51xingzheng.cn/d/open.html?";
 		String contents = qrUrl + "category=app";
 			   contents+= "&action=add_friend";
-			   contents+= "&params=="+u.getId().toString();
+			   contents+= "&params="+u.getId().toString();
 		
 		BufferedImage qrCodeImg = null;
 		try {
