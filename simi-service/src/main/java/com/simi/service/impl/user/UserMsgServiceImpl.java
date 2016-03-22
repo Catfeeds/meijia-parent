@@ -80,6 +80,7 @@ public class UserMsgServiceImpl implements UserMsgService {
 		record.setTitle("");
 		record.setSummary("");
 		record.setIconUrl("");
+		record.setServiceTime(TimeStampUtil.getNowSecond());
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		return record;

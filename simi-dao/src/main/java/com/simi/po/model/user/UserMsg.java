@@ -22,6 +22,8 @@ public class UserMsg {
     private String summary;
     
     private String iconUrl;
+    
+    private Long serviceTime;
 
     private Long addTime;
     
@@ -129,5 +131,13 @@ public class UserMsg {
 
 	public void setIconUrl(String iconUrl) {
 		this.iconUrl = iconUrl;
+	}
+
+	public Long getServiceTime() {
+		return serviceTime;
+	}
+
+	public void setServiceTime(Long serviceTime) {
+		this.serviceTime = serviceTime;
 	}
 }

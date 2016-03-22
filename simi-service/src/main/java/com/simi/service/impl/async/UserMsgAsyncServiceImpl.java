@@ -144,7 +144,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 			record.setParams(cardId.toString());
 			record.setGotoUrl("");
 			record.setTitle(CardUtil.getCardTypeName(card.getCardType()));
-
+			record.setServiceTime(card.getServiceTime());
 			record.setSummary(serviceContent);
 			record.setIconUrl(CardUtil.getCardIcon(card.getCardType()));
 			userMsgService.insert(record);
@@ -185,7 +185,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		if (title.length() == 0) {
 			title = "你发布了新的动态";
 		}
-
+		
 		record.setSummary(title);
 		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
 		userMsgService.insert(record);

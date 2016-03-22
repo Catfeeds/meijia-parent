@@ -13,11 +13,12 @@
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="summary" property="summary" jdbcType="VARCHAR" />
 		<result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
+		<result column="service_time" property="serviceTime" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		msg_id, user_id, from_user_id, to_user_id, category, action, params, goto_url, title, summary, icon_url, add_time, update_time
+		msg_id, user_id, from_user_id, to_user_id, category, action, params, goto_url, title, summary, icon_url, service_time, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -41,13 +42,9 @@
 		</if>
 		
 		<if test="startTime != null">
-			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} ]]>
+			<![CDATA[ and ( (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC}) OR (service_time >= #{serviceTime,jdbcType=NUMERIC} and service_time <= #{serviceTime,jdbcType=NUMERIC}) ) ]]>
 		</if>
 		
-		<if test="endTime != null">
-			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
-		</if>
-
 		order by update_time desc
 	</select>
 	
@@ -77,11 +74,7 @@
 		</if>
 		
 		<if test="startTime != null">
-			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} ]]>
-		</if>
-		
-		<if test="endTime != null">
-			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+			<![CDATA[ and ( (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC}) OR (service_time >= #{serviceTime,jdbcType=NUMERIC} and service_time <= #{serviceTime,jdbcType=NUMERIC}) ) ]]>
 		</if>
 				
 		order by msg_id desc
@@ -94,12 +87,12 @@
 	<insert id="insert" parameterType="com.simi.po.model.user.UserMsg">
 		insert into user_msg (msg_id, user_id, from_user_id, to_user_id,
 		category, action, params,
-		goto_url, title, summary, icon_url, add_time, update_time)
+		goto_url, title, summary, icon_url, service_time, add_time, update_time)
 		values (#{msgId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{fromUserId,jdbcType=NUMERIC},
 		#{toUserId,jdbcType=NUMERIC},
 		#{category,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
 		#{gotoUrl,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
-		#{iconUrl,jdbcType=VARCHAR},
+		#{iconUrl,jdbcType=VARCHAR}, #{serviceTime,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserMsg">
@@ -137,6 +130,9 @@
 			</if>
 			<if test="iconUrl != null">
 				icon_url,
+			</if>
+			<if test="serviceTime != null">
+				service_time,
 			</if>
 			<if test="addTime != null">
 				add_time,
@@ -179,6 +175,9 @@
 			<if test="iconUrl != null">
 				#{iconUrl,jdbcType=VARCHAR},
 			</if>
+			<if test="serviceTime != null">
+				#{serviceTime,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
@@ -220,6 +219,9 @@
 			<if test="iconUrl != null">
 				icon_url = #{iconUrl,jdbcType=VARCHAR},
 			</if>
+			<if test="serviceTime != null">
+				service_time = #{serviceTime,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -241,6 +243,7 @@
 		title = #{title,jdbcType=VARCHAR},
 		summary = #{summary,jdbcType=VARCHAR},
 		icon_url = #{iconUrl,jdbcType=VARCHAR},
+		service_time = #{serviceTime,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where msg_id = #{msgId,jdbcType=NUMERIC}
