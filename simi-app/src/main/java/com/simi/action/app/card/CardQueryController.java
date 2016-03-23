@@ -340,7 +340,7 @@ public class CardQueryController extends BaseController {
 
 	@RequestMapping(value = "push-setclock", method = RequestMethod.GET)
 	public AppResultData<Object> pushSetClock(@RequestParam("card_id") Long cardId,
-			@RequestParam(value = "clinet_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
+			@RequestParam(value = "client_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
 
 			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType) throws Exception {
 
