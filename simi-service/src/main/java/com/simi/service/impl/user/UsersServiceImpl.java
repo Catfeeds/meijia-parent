@@ -113,44 +113,16 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private XCompanyService xCompanyService;
-	/**
-	 * 新用户注册流程 1. 注册用户 2. 赠送金额
-	 */
+
 	@Override
-	public Users genUsers(String introduction, String mobile, String name, short addFrom) {
+	public Users genUser(String mobile, String name, short addFrom, String introduction) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers();
 			u.setMobile(mobile);
 			u.setAddFrom(addFrom);
 			u.setName(name);
-			u.setUserType((short) 2);
 			u.setIntroduction(introduction);
-			this.insertSelective(u);
-
-			// 检测用户所在地，异步操作
-			userAsyncService.userMobileCity(u.getId());
-
-			// 新用户注册通知运营人员
-			userAsyncService.newUserNotice(u.getId());
-
-			// 默认加固定客服用户为好友
-			userAsyncService.addDefaultFriends(u.getId());
-			
-			// 发送默认欢迎消息
-			userMsgAsyncService.newUserMsg(u.getId());
-		}
-		return u;
-	}
-
-	@Override
-	public Users genUser(String mobile, String name, short addFrom) {
-		Users u = selectByMobile(mobile);
-		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = this.initUsers();
-			u.setMobile(mobile);
-			u.setAddFrom(addFrom);
-			u.setName(name);
 			this.insertSelective(u);
 
 			// 检测用户所在地，异步操作
@@ -740,48 +712,6 @@ public class UsersServiceImpl implements UsersService {
 		u.setAddTime(TimeStampUtil.getNow() / 1000);
 		u.setUpdateTime(TimeStampUtil.getNow() / 1000);
 		return u;
-	}
-
-	// 运营人员收到新秘书注册的短信提醒
-	@Override
-	public Boolean userOrderAmPushSms(Users users) {
-		String name = users.getName();
-		String nameMobile = users.getMobile();
-		Long addTime = users.getAddTime();
-		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000);
-
-		// List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
-		// 查出所有运营部的人员（roleId=3）
-		Long roleId = 3L;
-		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
-		List<String> mobileList = new ArrayList<String>();
-		for (AdminAccount item : adminAccounts) {
-			if (!StringUtil.isEmpty(item.getMobile())) {
-				mobileList.add(item.getMobile());
-			}
-		}
-		String[] content = new String[] { name, nameMobile, addTimeStr };
-		for (int i = 0; i < mobileList.size(); i++) {
-
-			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i), Constants.SEC_REGISTER_ID, content);
-			System.out.println(sendSmsResult + "00000000000000");
-		}
-		return true;
-	}
-
-	// 秘书审核通过后给助理发送短信提醒
-	@Override
-	public Boolean userSecToUserPushSms(Users users) {
-
-		String name = users.getName();
-		String mobile = users.getMobile();
-		String url = "";
-
-		String[] content = new String[] { name, url };
-		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.SEC_REGISTER_USER_ID, content);
-		System.out.println(sendSmsResult + "00000000000000");
-
-		return true;
 	}
 
 	@Override

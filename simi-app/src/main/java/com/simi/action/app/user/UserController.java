@@ -105,7 +105,7 @@ public class UserController extends BaseController {
 		Users u = userService.selectByMobile(mobile);
 
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = userService.genUser(mobile, "", Constants.USER_APP);
+			u = userService.genUser(mobile, "", Constants.USER_APP, "");
 		}
 		
 		// 根据mobile找到user_baidu_bind信息

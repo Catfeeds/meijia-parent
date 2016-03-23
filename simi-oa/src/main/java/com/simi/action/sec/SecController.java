@@ -35,6 +35,7 @@ import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserAddrsService;
@@ -66,6 +67,9 @@ public class SecController extends AdminController {
 
 	@Autowired
 	private UserDetailPayService userDetailPayService;
+	
+	@Autowired
+	private NoticeSmsAsyncService noticeSmsAsyncService;
 
 	
 	   /**
@@ -348,7 +352,7 @@ public class SecController extends AdminController {
 		}
     	//秘书审核通过(IsApproval==2)后通知助理
     	if (users.getIsApproval()==2) {
-    		usersService.userSecToUserPushSms(users);
+    		noticeSmsAsyncService.userSecToUserPushSms(users);
 		}
     	
     	return "redirect:/sec/applyList";

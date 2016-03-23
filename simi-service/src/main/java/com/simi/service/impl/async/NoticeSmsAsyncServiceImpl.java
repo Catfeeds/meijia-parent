@@ -1,6 +1,8 @@
 package com.simi.service.impl.async;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -229,5 +231,48 @@ public class NoticeSmsAsyncServiceImpl implements NoticeSmsAsyncService {
 		
 		return new AsyncResult<Boolean>(true);
 	}	
+	
+	// 运营人员收到新秘书注册的短信提醒
+	@Override
+	public Boolean userOrderAmPushSms(Users users) {
+		String name = users.getName();
+		String nameMobile = users.getMobile();
+		Long addTime = users.getAddTime();
+		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000);
+
+		// List<AdminAccount> adminAccounts = adminAccountService.selectByAll();
+		// 查出所有运营部的人员（roleId=3）
+		Long roleId = 3L;
+		List<AdminAccount> adminAccounts = adminAccountService.selectByRoleId(roleId);
+		List<String> mobileList = new ArrayList<String>();
+		for (AdminAccount item : adminAccounts) {
+			if (!StringUtil.isEmpty(item.getMobile())) {
+				mobileList.add(item.getMobile());
+			}
+		}
+		String[] content = new String[] { name, nameMobile, addTimeStr };
+		for (int i = 0; i < mobileList.size(); i++) {
+
+			HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobileList.get(i), Constants.SEC_REGISTER_ID, content);
+			System.out.println(sendSmsResult + "00000000000000");
+		}
+		return true;
+	}
+	
+	// 秘书审核通过后给助理发送短信提醒
+	@Override
+	public Boolean userSecToUserPushSms(Users users) {
+
+		String name = users.getName();
+		String mobile = users.getMobile();
+		String url = "";
+
+		String[] content = new String[] { name, url };
+		HashMap<String, String> sendSmsResult = SmsUtil.SendSms(mobile, Constants.SEC_REGISTER_USER_ID, content);
+		System.out.println(sendSmsResult + "00000000000000");
+
+		return true;
+	}
+
 	
 }

@@ -1,6 +1,7 @@
 package com.xcloud.action;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,8 +22,11 @@ import com.xcloud.vo.LoginVo;
 import com.meijia.utils.StringUtil;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 
 
 @Controller
@@ -31,6 +35,9 @@ public class LoginController extends BaseController {
 	
 	@Autowired
 	private XCompanyService xCompanyService;	
+	
+	@Autowired
+	private XcompanyStaffService xcompanyStaffService;
 	
 	@Autowired
 	private UsersService usersService;		
@@ -75,6 +82,18 @@ public class LoginController extends BaseController {
 		String companyName = xCompany.getCompanyName();
 		String shortName = xCompany.getShortName();
 		String headImg = usersService.getHeadImg(u);
+		
+		//员工信息
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		
+		List<XcompanyStaff> rsList = xcompanyStaffService.selectBySearchVo(searchVo);
+		XcompanyStaff xcompanyStaffExist = null;
+		if (!rsList.isEmpty()) {
+			xcompanyStaffExist = rsList.get(0);
+		}
 
 
         AccountAuth accountAuth= new AccountAuth();
@@ -85,6 +104,10 @@ public class LoginController extends BaseController {
         accountAuth.setCompanyId(companyId);
         accountAuth.setCompanyName(companyName);
         accountAuth.setShortName(shortName);
+        
+        if (xcompanyStaffExist != null) {
+        	accountAuth.setStaffId(xcompanyStaffExist.getId());
+        }
 
     	AuthHelper.setSessionAccountAuth(request, accountAuth);
 

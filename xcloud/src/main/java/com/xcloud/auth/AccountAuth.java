@@ -15,6 +15,8 @@ public class AccountAuth {
 	private String companyName;
 	
 	private String shortName;
+	
+	private Long staffId;
 
 	public Long getUserId() {
 		return userId;
@@ -70,6 +72,14 @@ public class AccountAuth {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public Long getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(Long staffId) {
+		this.staffId = staffId;
 	}
 
 

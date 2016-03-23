@@ -21,6 +21,7 @@ import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.sec.SecService;
 import com.simi.service.user.TagsUsersService;
@@ -61,6 +62,9 @@ public class SecController extends BaseController {
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;
+	
+	@Autowired
+	private NoticeSmsAsyncService noticeSmsAsyncService;
 
 	/**
 	 * 获取可用的秘书列表
@@ -384,7 +388,7 @@ public class SecController extends BaseController {
 					}
 				}
 				// 用户注册秘书成功给运营人员推送短信通知
-				userService.userOrderAmPushSms(record);
+				noticeSmsAsyncService.userOrderAmPushSms(record);
 			}
 			return result;
 		}

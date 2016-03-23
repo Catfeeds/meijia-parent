@@ -23,10 +23,7 @@ public interface UsersService {
 	
 	int updateByPrimaryKeySelective(Users user) ;
 	
-	//卡片提交接口
-	Users genUser(String mobile, String name, short addFrom);
-	
-	Users genUsers(String introduction, String mobile, String name, short addFrom);
+	Users genUser(String mobile, String name, short addFrom, String introduction);
 	
 	Users selectByPrimaryKey(Long id);
 	
@@ -49,6 +46,7 @@ public interface UsersService {
 	List<Users> selectUsersHaveOrdered(List<String> mobiles);
 	
 	PageInfo searchVoListPage(UserSearchVo searchVo,int pageNo,int pageSize);
+	
 	List<Users> selectByListPageYes(UsersSearchVo usersSearchVo, int pageNo,int pageSize);
 
 	List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo, int pageSize);
@@ -71,13 +69,11 @@ public interface UsersService {
 
 	UserRef3rd genImUser(Users user);
 
-	Boolean userOrderAmPushSms(Users users);
-
-	Boolean userSecToUserPushSms(Users users);
-
 	String getHeadImg(Users u);
 
 	UserBaseVo getUserBaseVo(Users user);
+
+	
 
 
 }

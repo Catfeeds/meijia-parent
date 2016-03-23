@@ -33,8 +33,10 @@ public class ApptoolsController extends BaseController {
 	 */
 	@RequestMapping(value = "get_appTools", method = RequestMethod.GET)
 	public AppResultData<Object> getAppTools(
+			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType,
-			@RequestParam("user_id") Long userId) {
+			@RequestParam(value = "t", required = false, defaultValue="0") Long t
+			) {
 		
 		List<AppTools> appTools = appToolsService.selectByAppTypeAll(appType);
          

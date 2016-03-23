@@ -248,7 +248,7 @@ public class PartnerUsersController extends BaseController {
 
 		// 创建新用户
 		if (u == null) {
-			u = userService.genUsers(partnerUserVo.getIntroduction(), mobile, name, (short) 2);
+			u = userService.genUser(mobile, name, (short) 2, partnerUserVo.getIntroduction());
 			userId = u.getId();
 		} else {
 			if (!u.getName().equals(name)) {
