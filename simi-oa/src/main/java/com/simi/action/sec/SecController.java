@@ -87,16 +87,13 @@ public class SecController extends AdminController {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		int pageNo = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 
 		// 分页
 		PageHelper.startPage(pageNo, pageSize);
 
-		List<UserSmsToken> lists = userSmsTokenService.selectByListPage(
-				usersSmsTokenVo, pageNo, pageSize);
+		List<UserSmsToken> lists = userSmsTokenService.selectByListPage(usersSmsTokenVo, pageNo, pageSize);
 
 		PageInfo result = new PageInfo(lists);
 		model.addAttribute("usersSmsTokenVo", usersSmsTokenVo);
@@ -121,9 +118,6 @@ public class SecController extends AdminController {
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 	
-
-		//分页
-		PageHelper.startPage(pageNo, pageSize);
 		//若搜索条件为空，则展示全部
 		if (searchVo == null) {
 			searchVo = new UserSearchVo();
@@ -132,8 +126,9 @@ public class SecController extends AdminController {
 		searchVo.setUserType((short)1);
 		
 		//设置中文 参数 编码，解决 中文 乱码
-		searchVo.setName(new String(searchVo.getName().getBytes("iso-8859-1"),"utf-8"));
-	
+		if (!StringUtil.isEmpty(searchVo.getName())) {
+			searchVo.setName(new String(searchVo.getName().getBytes("iso-8859-1"),"utf-8"));
+		}
 		
 	    PageInfo result = usersService.selectByListPage(searchVo, pageNo, pageSize);
 		
@@ -169,8 +164,10 @@ public class SecController extends AdminController {
 		searchVo.setUserType((short)1);
 		
 		//设置中文 参数 编码，解决 中文 乱码
-		searchVo.setName(new String(searchVo.getName().getBytes("iso-8859-1"),"utf-8"));
-				
+		if (!StringUtil.isEmpty(searchVo.getName())) {
+			searchVo.setName(new String(searchVo.getName().getBytes("iso-8859-1"),"utf-8"));
+		}
+		
 		PageInfo result = usersService.selectByListPage(searchVo, pageNo, pageSize);
 		model.addAttribute("userSearchVoModel", searchVo);
 		model.addAttribute("contentModel", result);

@@ -107,8 +107,7 @@ public class UserSmsTokenServiceImpl implements UserSmsTokenService{
 	}
 	
 	@Override
-	public List<UserSmsToken> selectByListPage(UsersSmsTokenVo usersSmsTokenVo,
-			int pageNo, int pageSize) {
+	public List<UserSmsToken> selectByListPage(UsersSmsTokenVo usersSmsTokenVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		List<UserSmsToken> lists = userSmsTokenMapper.selectUserSmsTokenByMobile(usersSmsTokenVo);
 		return lists;

@@ -278,24 +278,13 @@ public class PushUtil {
 			template.setTransmissionContent(transmissionContent);
 //		}
 
-		// template.setDuration("2015-01-16 11:40:00", "2015-01-16 12:24:00");
-//		template.setPushInfo("", 1, "", "", "", "", "", "");
-		
-		//**********APN简单推送********//
-//		APNPayload apnpayload = new APNPayload();
-//		com.gexin.rp.sdk.base.payload.APNPayload.SimpleAlertMsg alertMsg = new com.gexin.rp.sdk.base.payload.APNPayload.SimpleAlertMsg(
-//				"hahahaha");
-//		apnpayload.setAlertMsg(alertMsg);
-//		apnpayload.setBadge(5);
-//		apnpayload.setContentAvailable(1);
-//		apnpayload.setCategory("ACTIONABLE");
-//		template.setAPNInfo(apnpayload);
+
 		
 			//************APN高级推送*******************//
 			APNPayload apnpayload = new APNPayload();
 			apnpayload.setBadge(1);
 //			apnpayload.setSound("");
-			apnpayload.setContentAvailable(1);
+			apnpayload.setContentAvailable(0);
 //			apnpayload.setCategory("cardView");
 			
 //			if (pushType.equals("alertClock")) {
@@ -314,18 +303,7 @@ public class PushUtil {
 					alertMsg.setBody(remindContent);
 				}
 //			}
-			
-			
-			
-//			alertMsg.setActionLocKey("ActionLockey");
-//			alertMsg.setLocKey("LocKey");
-//			alertMsg.addLocArg("loc-args");
-//			alertMsg.setLaunchImage("launch-image");
-////			// IOS8.2以上版本支持
-//			alertMsg.setTitle("Title");
-//			alertMsg.setTitleLocKey("TitleLocKey");
-//			alertMsg.addTitleLocArg("TitleLocArg");
-//
+
 			apnpayload.setAlertMsg(alertMsg);
 			template.setAPNInfo(apnpayload);
 		
