@@ -64,10 +64,14 @@
 							<div class="am-u-sm-9">
 								
 								<div class="am-form-group am-form-file">
+									<div class="am-u-sm-5">
 									<button type="button" id="btnUpload" name="btnUpload" class="am-btn am-btn-danger am-btn-sm">
 										<i class="am-icon-cloud-upload"></i> 选择要上传的图片
 									</button>
 									<input id="file" type="file" name="file" accept="image/*">
+									</div>
+									<label id="file-list" class="am-u-sm-3 am-form-label"></label>
+									
 								</div>
 							</div>
 						</div>
@@ -124,7 +128,7 @@
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">邮箱:</label>
 							<div class="am-u-sm-9">
-								<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email" required="required"
+								<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email" 
 									maxLength="64"
 								/>
 								<small></small>
