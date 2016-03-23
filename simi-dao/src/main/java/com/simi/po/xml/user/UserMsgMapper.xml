@@ -84,8 +84,9 @@
 	<select id="totalByMonth" resultType="java.util.HashMap"
 		parameterType="com.simi.vo.UserMsgSearchVo">
 		select FROM_UNIXTIME(service_time ,'%Y-%m-%d') as service_date , count(distinct msg_id) as total
+		FROM
 		(SELECT msg_id, 
-		CASE WHEN service_time > add_time THEN service_time ELSE add_time END ) as service_time
+		<![CDATA[ (CASE WHEN service_time > add_time THEN service_time ELSE add_time END ) as service_time ]]>
 		from user_msg
 		where 1=1
 		<if test="fromUserId != null">

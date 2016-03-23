@@ -67,4 +67,19 @@ public class TestUserMsgController extends JUnitActionBase{
 		resultActions.andExpect(status().isOk());
 		System.out.println("RestultActons:" + resultActions.andReturn().getResponse().getContentAsString());
 	}	
+	
+	@Test
+    public void testTotalByMonth() throws Exception {
+
+		String url = "/app/user/msg/total_by_month.json";
+		String params = "?user_id=1035&year=2016&month=3";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
 }
