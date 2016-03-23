@@ -38,6 +38,8 @@ public class AppTools {
     private String qrCode;
 
     private long addTime;
+    
+    private Long updateTime;
 
     public Long gettId() {
         return tId;
@@ -189,5 +191,13 @@ public class AppTools {
 
 	public void setQrCode(String qrCode) {
 		this.qrCode = qrCode;
+	}
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
 	}
 }

@@ -142,7 +142,7 @@ public class AppToolsController extends BaseController {
 		}
 		// 更新或者新增
 		if (id != null && id > 0) {
-		
+			appTools.setUpdateTime(TimeStampUtil.getNowSecond());
 			appToolsService.updateByPrimaryKeySelective(appTools);
 		} else {
 

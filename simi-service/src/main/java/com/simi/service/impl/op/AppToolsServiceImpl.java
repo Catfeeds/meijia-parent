@@ -66,6 +66,7 @@ public class AppToolsServiceImpl implements AppToolsService {
 		    record.setAuthUrl("");
 		    record.setQrCode("");
 		    record.setAddTime(TimeStampUtil.getNow()/1000);
+		    record.setUpdateTime(TimeStampUtil.getNowSecond());
 			return record;
 		}
 

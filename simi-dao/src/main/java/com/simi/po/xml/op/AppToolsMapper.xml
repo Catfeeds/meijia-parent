@@ -21,9 +21,10 @@
 		<result column="auth_url" property="authUrl" jdbcType="VARCHAR" />
 		<result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		t_id,no,name,logo,app_type,menu_type,open_type,url,action,params,is_default,is_del,is_partner,is_online,app_provider,app_describe,auth_url, qr_code, add_time
+		t_id,no,name,logo,app_type,menu_type,open_type,url,action,params,is_default,is_del,is_partner,is_online,app_provider,app_describe,auth_url, qr_code, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -78,7 +79,7 @@
 		insert into app_tools (t_id, no, name,
 		logo, app_type,menu_type, open_type,
 		url,action,params,is_default,is_del, is_partner,is_online,app_provider,app_describe, auth_url, qr_code,
-		add_time)
+		add_time, update_time)
 		values (#{tId,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
 		#{logo,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR},
 		#{url,jdbcType=VARCHAR},
@@ -88,7 +89,7 @@
 		#{appProvider,jdbcType=VARCHAR},
 		#{appDescribe,jdbcType=VARCHAR},
 		#{authUrl,jdbcType=VARCHAR}, #{qrCode,jdbcType=VARCHAR},
-		#{addTime,jdbcType=NUMERIC})
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.op.AppTools">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="tId">
@@ -154,6 +155,9 @@
 			<if test="addTime != null">
 				add_time,
 			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="tId != null">
@@ -212,6 +216,9 @@
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
 			</if>
 		</trim>
 	</insert>
@@ -273,6 +280,9 @@
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
 		</set>
 		where t_id = #{tId,jdbcType=NUMERIC}
 	</update>
@@ -295,7 +305,8 @@
 		app_describe = #{appDescribe,jdbcType=VARCHAR},
 		auth_url = #{authUrl,jdbcType=VARCHAR},
 		qr_code = #{qrCode,jdbcType=VARCHAR},
-		add_time = #{addTime,jdbcType=NUMERIC}
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
 		where t_id = #{tId,jdbcType=NUMERIC}
 	</update>
 </mapper>
