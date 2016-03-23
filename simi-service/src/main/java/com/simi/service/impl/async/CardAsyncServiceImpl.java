@@ -262,7 +262,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			if (StringUtil.isEmpty(clientId)) continue;
 
 			//本人就不发了
-			if (createUserId.equals(toUserId)) continue;
+//			if (createUserId.equals(toUserId)) continue;
 			
 			//若果不是好友以及不是同一家团队不能发推送消息
 			AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
@@ -355,7 +355,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		}		
 		
 		for (UserPushBind p : userPushBinds) {
-			if (p.getUserId().equals(card.getCreateUserId())) continue;
+//			if (p.getUserId().equals(card.getCreateUserId())) continue;
 			
 			Long createUserId = card.getCreateUserId();
 			Long toUserId = p.getUserId();
