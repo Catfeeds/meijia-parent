@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserMsg;
-import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.vo.user.UserMsgVo;
 
 public interface UserMsgService {

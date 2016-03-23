@@ -34,6 +34,7 @@ import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.dict.DictCoupons;
@@ -150,7 +151,10 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         
         List<OrderPrices> orderPricesList = orderPricesService.selectByOrderIds(orderIds);
         
-        List<Users> userList = usersService.selectByUserIds(userIds);
+        
+        UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setUserIds(userIds);
+        List<Users> userList = usersService.selectBySearchVo(searchVo);
         
         List<UserAddrs> addrList = new ArrayList<UserAddrs>();
         if (addrIds.size() > 0) {

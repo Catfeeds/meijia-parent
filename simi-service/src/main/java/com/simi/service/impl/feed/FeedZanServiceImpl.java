@@ -11,6 +11,7 @@ import com.simi.service.feed.FeedZanService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.feed.FeedZanViewVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.feed.FeedZan;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.BeanUtilsExp;
@@ -75,7 +76,9 @@ public class FeedZanServiceImpl implements FeedZanService {
 
 		List<Users> userList = new ArrayList<Users>();
 		if (userIds.size() > 0) {
-			userList = usersService.selectByUserIds(userIds);
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			userList = usersService.selectBySearchVo(searchVo);
 		}
 
 		for (int i = 0; i < feedzans.size(); i++) {

@@ -29,8 +29,8 @@ import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendReqVo;
+import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
 
 @Controller

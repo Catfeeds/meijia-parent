@@ -12,6 +12,7 @@ import com.simi.service.feed.FeedCommentService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.feed.FeedCommentViewVo;
 import com.simi.vo.feed.FeedSearchVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.feed.FeedComment;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
@@ -68,7 +69,9 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		
 		List<Users> users = new ArrayList<Users>();
 		if (!userIds.isEmpty()) {
-			users = usersService.selectByUserIds(userIds);
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			users = usersService.selectBySearchVo(searchVo);
 		}
 		
 		FeedComment item = null;

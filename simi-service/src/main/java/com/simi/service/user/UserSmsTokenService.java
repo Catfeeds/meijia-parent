@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UsersSmsTokenVo;
+import com.simi.vo.user.UsersSmsTokenVo;
 
 public interface UserSmsTokenService {
 

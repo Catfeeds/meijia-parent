@@ -14,8 +14,9 @@ import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserFriendsMapper;
@@ -111,7 +112,9 @@ public class UserFriendServiceImpl implements UserFriendService {
 				userIds.add(item.getFriendId());
 		}
 		
-		List<Users> list = userService.selectByUserIds(userIds);
+		UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setUserIds(userIds);
+		List<Users> list = userService.selectBySearchVo(searchVo);
 		List<UserRef3rd> userRef3Rds = userRef3rdService.selectByUserIds(userIds);
 				
 		UserFriends item = null;

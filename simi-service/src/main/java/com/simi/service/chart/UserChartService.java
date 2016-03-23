@@ -5,6 +5,6 @@ import com.simi.vo.chart.ChartSearchVo;
 
 public interface UserChartService {
 	
-	int statTotalUser(ChartSearchVo chartSearchVo); 
+	int statByTotalUser(ChartSearchVo chartSearchVo); 
 	
 }

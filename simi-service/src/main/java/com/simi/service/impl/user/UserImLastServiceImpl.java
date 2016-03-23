@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import com.simi.service.user.UserImLastService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.UserImLastSearchVo;
+import com.simi.vo.user.UserImLastSearchVo;
 import com.simi.vo.user.UserImLastVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.dao.user.UserImLastMapper;
 import com.simi.po.model.user.UserImLast;
 import com.simi.po.model.user.UserRef3rd;
@@ -96,7 +97,9 @@ public class UserImLastServiceImpl implements UserImLastService {
 				userIds.add(um.getToUserId());
 		}
 		
-		List<Users> users = userService.selectByUserIds(userIds);
+		UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setUserIds(userIds);
+		List<Users> users = userService.selectBySearchVo(searchVo);
 		
 		List<UserRef3rd> userRef3rds = userRef3rdService.selectByUserIds(userIds);
 		

@@ -1,5 +1,7 @@
 package com.simi.action.app.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserPushBindVo;
+import com.simi.vo.user.UserSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -66,8 +69,16 @@ public class UserRef3rdController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
-
-		Users users = userService.selectByOpenidAndThirdType(openid, thirdType);
+		
+		UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setOpenid(openid);
+		searchVo.setThirdType(thirdType);
+		
+		List<Users> rs = userService.selectBySearchVo(searchVo);
+		Users users = null;
+		if (!rs.isEmpty()) {
+			users = rs.get(0);
+		}
 
 		// users不为空，表示用户可能通过手机号或者第三方账号注册
 		if (users != null) {

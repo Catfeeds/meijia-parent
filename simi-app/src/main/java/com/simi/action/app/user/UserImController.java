@@ -31,7 +31,7 @@ import com.simi.service.user.UserImLastService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserImLastSearchVo;
+import com.simi.vo.user.UserImLastSearchVo;
 import com.simi.vo.user.UserImLastVo;
 
 

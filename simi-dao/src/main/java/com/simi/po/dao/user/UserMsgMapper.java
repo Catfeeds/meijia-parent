@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.simi.po.model.user.UserMsg;
-import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.user.UserMsgSearchVo;
 
 public interface UserMsgMapper {
     int deleteByPrimaryKey(Long msgId);

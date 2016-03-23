@@ -3,7 +3,7 @@ package com.simi.po.dao.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserLeave;
-import com.simi.vo.UserLeaveSearchVo;
+import com.simi.vo.user.UserLeaveSearchVo;
 
 public interface UserLeaveMapper {
     int deleteByPrimaryKey(Long leaveId);

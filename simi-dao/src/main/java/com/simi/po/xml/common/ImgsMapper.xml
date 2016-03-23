@@ -19,7 +19,7 @@
 		where img_id = #{imgId,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserLeaveSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserLeaveSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from imgs

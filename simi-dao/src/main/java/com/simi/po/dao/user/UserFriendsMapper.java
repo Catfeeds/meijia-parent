@@ -3,7 +3,7 @@ package com.simi.po.dao.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserFriends;
-import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.user.UserFriendSearchVo;
 
 public interface UserFriendsMapper {
     int deleteByPrimaryKey(Long id);

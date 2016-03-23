@@ -3,7 +3,7 @@ package com.simi.po.dao.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserSmsToken;
-import com.simi.vo.UsersSmsTokenVo;
+import com.simi.vo.user.UsersSmsTokenVo;
 
 public interface UserSmsTokenMapper {
     int deleteByPrimaryKey(Long id);

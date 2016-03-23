@@ -11,6 +11,7 @@ import com.simi.service.card.CardZanService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardZanViewVo;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.user.Users;
 import com.meijia.utils.BeanUtilsExp;
@@ -71,7 +72,9 @@ public class CardZanServiceImpl implements CardZanService {
 			
 			List<Users> userList = new ArrayList<Users>();
 			if (userIds.size() > 0) {
-				userList = usersService.selectByUserIds(userIds);
+				UserSearchVo searchVo = new UserSearchVo();
+				searchVo.setUserIds(userIds);
+				userList = usersService.selectBySearchVo(searchVo);
 			}
 			
 			for (int i = 0; i < cardzans.size(); i++) {

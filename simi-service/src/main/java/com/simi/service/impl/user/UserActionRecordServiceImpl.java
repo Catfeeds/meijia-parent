@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.user.UserActionRecordService;
-import com.simi.vo.UserActionSearchVo;
+import com.simi.vo.user.UserActionSearchVo;
 import com.simi.po.dao.user.UserActionRecordMapper;
 import com.simi.po.model.user.UserActionRecord;
 import com.meijia.utils.TimeStampUtil;

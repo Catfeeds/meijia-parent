@@ -1,4 +1,4 @@
-package com.simi.vo;
+package com.simi.vo.user;
 
 import java.util.Date;
 import java.util.List;

@@ -57,134 +57,122 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 
-	<!-- add By SunWenbao@2014-11-19 -->
 	<select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from users
 		where mobile = #{mobile,jdbcType=VARCHAR}
 	</select>
-
-	<select id="selectUserByIdCard" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id_card = #{idCard,jdbcType=VARCHAR}
-	</select>
-
-	<select id="selectByIsAppRoval" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-
-		where is_approval = 0 and user_type = 1
-
-		order by id desc
-	</select>
-	<select id="selectByIsAppRovalYes" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-
-		where is_approval = 2 and user_type = 1
-
-		order by id desc
-	</select>
-
-	<!--根据手机号查询用户信息 -->
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from users
 		where 1=1
-		<if test="mobile != null">
-			and mobile like CONCAT('%','${mobile}','%' )
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
 		</if>
+		
 		<if test="name != null">
 			and name like CONCAT('%','${name}','%' )
 		</if>
+		
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+		
 		<if test="userType != null">
 			and user_type = #{userType,jdbcType=NUMERIC}
 		</if>
-		<if test="userIdList != null">
+		
+		<if test="isApproval != null">
+			and is_approval = #{isApproval,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="thirdType != null">
+			and third_type = #{thirdType,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="openid != null">
+			and openid = #{openid,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="idCard != null">
+			and id_card = #{idCard,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="userIds != null">
 			and id in
-			<foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
-
-		<if test="isApproval != null">
-			and is_approval = #{isApproval,jdbcType=NUMERIC}
+		
+		<if test="mobiles != null">
+			and mobile in
+			<foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+				#{item}
+			</foreach>
 		</if>
 
 		order by add_time desc
 	</select>
 	
-	<!-- 秘书申请列表列表 -->
-	<select id="selectVoByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where 1=1 and is_approval &lt; 2
-		<if test="userType == 0 or userType == 1 ">
-			and user_type = #{userType}
-		</if>
-		<if test="name != null and name !='' ">
-			and name like '%${name}%'
-		</if>
-		<if test="mobile !=null and mobile !='' ">
-			and mobile like '%${mobile}%'
-		</if>
-		<if test="id !=null and id !='' ">
-			and id = ${id}
-		</if>
-		order by add_time desc
-	</select>
-	<!-- 秘书列表 -->
-	<select id="selectVoByListPageYes" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSearchVo">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where 1=1 and is_approval = 2
-		<if test="userType == 0 or userType == 1 ">
-			and user_type = #{userType}
-		</if>
-		<if test="name != null and name !='' ">
-			and name like '%${name}%'
-		</if>
-		<if test="mobile !=null and mobile !='' ">
-			and mobile like '%${mobile}%'
-		</if>
-		<if test="id !=null and id !='' ">
-			and id = #{id,jdbcType=NUMERIC}
-		</if>
-		order by add_time desc
-	</select>
-
-	<!--根据openid和登录类型查询用户信息 -->
-	<select id="selectByOpenidAnd3rdType" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	<!--根据手机号查询用户信息 -->
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from users
 		where 1=1
-		<if test="openid != null">
-			and openid = #{openid,jdbcType=VARCHAR}
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="name != null">
+			and name like CONCAT('%','${name}','%' )
+		</if>
+		
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+		
+		<if test="userType != null">
+			and user_type = #{userType,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="isApproval != null">
+			and is_approval = #{isApproval,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="thirdType != null">
-			and 3rd_type = #{thirdType,jdbcType=VARCHAR}
+			and third_type = #{thirdType,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="openid != null">
+			and openid = #{openid,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="idCard != null">
+			and id_card = #{idCard,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="userIds != null">
+			and id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="mobiles != null">
+			and mobile in
+			<foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
 		order by add_time desc
 	</select>
-
-	<select id="selectByUserType" resultMap="BaseResultMap" parameterType="java.lang.Short">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where user_type = #{userType,jdbcType=NUMERIC}
-		and is_approval = 2
-		order by add_time asc
-	</select>
-
+	
 	<!--根据Ids查询Users -->
 	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
@@ -196,16 +184,7 @@
 		</foreach>
 		order by add_time asc
 	</select>
-	<!-- 根据手机号查询用户list -->
-	<select id="selectByMobiles" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where mobile in
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</select>
+		
 	<!-- 根据手机号查询用户list -->
 	<select id="selectNotInMobiles" resultMap="BaseResultMap">
 		select
@@ -217,14 +196,14 @@
 		</foreach>
 	</select>
 
-	<select id="selectUserStat" resultMap="statResultMap" parameterType="java.lang.Long">
+	<select id="statByMonth" resultMap="statResultMap" parameterType="java.lang.Long">
 		select FROM_UNIXTIME(add_time,'%Y-%m') as names, count(name) as value
 		from users
 		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
 	</select>
 	
 	<!-- 用户个数统计 -->
-	 <select id="statTotalUser" resultType="java.lang.Integer" parameterType="com.simi.vo.chart.ChartSearchVo">
+	 <select id="statByTotalUser" resultType="java.lang.Integer" parameterType="com.simi.vo.chart.ChartSearchVo">
 		SELECT 
 			   COUNT(*) AS total 
 			   FROM users

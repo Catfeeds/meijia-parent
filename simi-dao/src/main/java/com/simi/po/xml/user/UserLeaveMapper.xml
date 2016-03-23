@@ -26,7 +26,7 @@
 		where leave_id = #{leaveId,jdbcType=NUMERIC}
 	</select>
 
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UserLeaveSearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserLeaveSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_leave
@@ -61,7 +61,7 @@
 		order by update_time desc
 	</select>
 
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserLeaveSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserLeaveSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_leave

@@ -22,10 +22,10 @@ public class UserChartServiceImpl implements UserChartService {
 	 * 统计用户数
 	 */
 	@Override
-	public int statTotalUser(ChartSearchVo chartSearchVo) {
+	public int statByTotalUser(ChartSearchVo chartSearchVo) {
 		int totalUser = 0;
 
-		totalUser = usersMapper.statTotalUser(chartSearchVo);
+		totalUser = usersMapper.statByTotalUser(chartSearchVo);
 
 		return totalUser;
 	}

@@ -21,7 +21,7 @@ import com.simi.service.op.OpChannelService;
 import com.simi.service.user.UserActionRecordService;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserActionSearchVo;
+import com.simi.vo.user.UserActionSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/op")

@@ -6,8 +6,8 @@ import java.util.Map;
 
 import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
-import com.simi.vo.UsersSearchVo;
 import com.simi.vo.chart.ChartSearchVo;
+import com.simi.vo.user.UserSearchVo;
 
 
 
@@ -18,43 +18,27 @@ public interface UsersMapper {
     Long insert(Users record);
 
     Long insertSelective(Users record);
+    
+    int updateByPrimaryKeySelective(Users record);
 
-    List<Users> selectByAll();
+    int updateByPrimaryKey(Users record);    
 
     Users selectByPrimaryKey(Long id);
 
     Users selectByMobile(String mobile);
 
-    int updateByPrimaryKeySelective(Users record);
+    List<Users> selectByAll();
 
-    int updateByPrimaryKey(Users record);
-
-    List<Users> selectByListPage(Map<String,Object> conditions);
-
-    List<Users> selectByUserIds(List<Long> userIds);
-
-    List<Users> selectByMobiles(List<String> mobiles);
+    List<Users> selectByListPage(UserSearchVo searchVo);
+    
+    List<Users> selectBySearchVo(UserSearchVo searchVo);
 
     List<Users> selectNotInMobiles(List<String> mobiles);
 
-	List<UserDetailPay> selectByCount(int addTime);
-
-	List<HashMap> selectUserStat(HashMap map);
+	List<HashMap> statByMonth(HashMap map);
 	
-    Users selectByOpenidAnd3rdType(Map<String ,Object> conditions );
+	int statByTotalUser(ChartSearchVo chartSearchVo);
 
-	List<Users> selectByUserType(Short userType);
-
-	Users selectUserByIdCard(String idCard);
-
-	List<Users> selectByIsAppRoval();
-
-	List<Users> selectByIsAppRovalYes();
-
-	List<Users> selectVoByListPage(UsersSearchVo userSearchVo);
-
-	List<Users> selectVoByListPageYes(UsersSearchVo usersSearchVo);
-
-	int statTotalUser(ChartSearchVo chartSearchVo);
+	
 	
 }

@@ -13,7 +13,7 @@ import com.simi.vo.AppResultData;
 import com.simi.po.dao.user.UserSmsTokenMapper;
 import com.simi.po.model.user.UserSmsToken;
 import com.github.pagehelper.PageHelper;
-import com.simi.vo.UsersSmsTokenVo;
+import com.simi.vo.user.UsersSmsTokenVo;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

@@ -24,6 +24,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
@@ -145,7 +146,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		
 		List<Users> userLists = new ArrayList<Users>();
 		if (!userIds.isEmpty()) {
-			userLists = usersService.selectByUserIds(userIds);
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			userLists = usersService.selectBySearchVo(searchVo);
 		}
 		
 		List<XcompanyDept> deptList = new ArrayList<XcompanyDept>();

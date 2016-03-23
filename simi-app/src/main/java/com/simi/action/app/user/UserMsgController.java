@@ -25,7 +25,7 @@ import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.vo.user.UserMsgVo;
 
 @Controller

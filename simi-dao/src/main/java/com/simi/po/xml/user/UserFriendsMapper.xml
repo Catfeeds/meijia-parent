@@ -18,7 +18,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UserFriendSearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserFriendSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_friends
@@ -37,7 +37,7 @@
 		order by add_time desc
 	</select>	
 
-	<select id="selectByIsFirend" resultMap="BaseResultMap" parameterType="com.simi.vo.UserFriendSearchVo">
+	<select id="selectByIsFirend" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserFriendSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_friends

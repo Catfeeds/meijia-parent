@@ -42,9 +42,9 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.UsersSearchVo;
-import com.simi.vo.UsersSmsTokenVo;
 import com.simi.vo.user.UserApplyVo;
+import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.user.UsersSmsTokenVo;
 @Controller
 @RequestMapping(value = "/sec")
 public class SecController extends AdminController {
@@ -113,40 +113,31 @@ public class SecController extends AdminController {
 	 */
     @AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
-	public String secList(HttpServletRequest request, UsersSearchVo usersSearchVo,Model model) throws UnsupportedEncodingException {
+	public String secList(HttpServletRequest request, UserSearchVo searchVo, Model model) throws UnsupportedEncodingException {
     	
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		int pageNo = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 	
-		/*PageInfo result = usersService.selectByIsAppRovalYes(pageNo,
-				pageSize);*/
-		
-		/*PageInfo result = usersService.selectByIsAppRoval(pageNo,
-				pageSize);
-		*/
+
 		//分页
 		PageHelper.startPage(pageNo, pageSize);
 		//若搜索条件为空，则展示全部
-		if (usersSearchVo == null) {
-			usersSearchVo = new UsersSearchVo();
+		if (searchVo == null) {
+			searchVo = new UserSearchVo();
 		}
 		//助理人员的默认id为1
-		usersSearchVo.setUserType((short)1);
+		searchVo.setUserType((short)1);
 		
 		//设置中文 参数 编码，解决 中文 乱码
-	    usersSearchVo.setName(new String(usersSearchVo.getName().getBytes("iso-8859-1"),"utf-8"));
+		searchVo.setName(new String(searchVo.getName().getBytes("iso-8859-1"),"utf-8"));
 	
 		
-		List<Users> list = usersService.selectByListPageYes(usersSearchVo, pageNo, pageSize);
+	    PageInfo result = usersService.selectByListPage(searchVo, pageNo, pageSize);
 		
-		
-		PageInfo result = new PageInfo(list);
-		model.addAttribute("userSearchVoModel",usersSearchVo);
+		model.addAttribute("userSearchVoModel", searchVo);
 		
 		model.addAttribute("contentModel", result);
 
@@ -162,36 +153,26 @@ public class SecController extends AdminController {
 	 */
     @AuthPassport
 	@RequestMapping(value = "/applyList", method = { RequestMethod.GET })
-	public String applyList(HttpServletRequest request,UsersSearchVo usersSearchVo, Model model) throws UnsupportedEncodingException {
+	public String applyList(HttpServletRequest request,UserSearchVo searchVo, Model model) throws UnsupportedEncodingException {
     	
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		int pageNo = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 	
-		/*PageInfo result = usersService.selectByIsAppRoval(pageNo,
-				pageSize);
-		*/
-		//分页
-		PageHelper.startPage(pageNo, pageSize);
 		//若搜索条件为空，则展示全部
-		if (usersSearchVo == null) {
-			usersSearchVo = new UsersSearchVo();
+		if (searchVo == null) {
+			searchVo = new UserSearchVo();
 		}
 		//助理人员的默认id为1
-		usersSearchVo.setUserType((short)1);
+		searchVo.setUserType((short)1);
 		
 		//设置中文 参数 编码，解决 中文 乱码
-		usersSearchVo.setName(new String(usersSearchVo.getName().getBytes("iso-8859-1"),"utf-8"));
-		
-		List<Users> list = usersService.selectByListPage(usersSearchVo, pageNo, pageSize);
-		
-		
-		PageInfo result = new PageInfo(list);
-		model.addAttribute("userSearchVoModel",usersSearchVo);
+		searchVo.setName(new String(searchVo.getName().getBytes("iso-8859-1"),"utf-8"));
+				
+		PageInfo result = usersService.selectByListPage(searchVo, pageNo, pageSize);
+		model.addAttribute("userSearchVoModel", searchVo);
 		model.addAttribute("contentModel", result);
 
 		return "sec/applyList";

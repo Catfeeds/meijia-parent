@@ -18,7 +18,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserActionSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserActionSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_action_record

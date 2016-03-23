@@ -11,6 +11,7 @@ import com.simi.service.card.CardCommentService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardCommentViewVo;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.card.CardComment;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
@@ -70,7 +71,9 @@ public class CardCommentServiceImpl implements CardCommentService {
 		
 		List<Users> users = new ArrayList<Users>();
 		if (!userIds.isEmpty()) {
-			users = usersService.selectByUserIds(userIds);
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			users = usersService.selectBySearchVo(searchVo);
 		}
 		
 		CardComment item = null;

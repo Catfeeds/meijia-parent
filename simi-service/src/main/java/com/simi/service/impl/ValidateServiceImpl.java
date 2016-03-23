@@ -13,7 +13,7 @@ import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;

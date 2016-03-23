@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,6 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
@@ -54,12 +52,11 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.UserFriendSearchVo;
-import com.simi.vo.UserSearchVo;
-import com.simi.vo.UsersSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserBaseVo;
+import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserIndexVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
@@ -113,7 +110,55 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private XCompanyService xCompanyService;
-
+	
+	@Override
+	public Long insert(Users record) {
+		return usersMapper.insert(record);
+	}
+	
+	@Override
+	public Long insertSelective(Users u) {
+		// TODO Auto-generated method stub
+		return usersMapper.insertSelective(u);
+	}
+	
+	@Override
+	public int updateByPrimaryKeySelective(Users user) {
+		return usersMapper.updateByPrimaryKeySelective(user);
+	}	
+	
+	@Override
+	public Users initUsers() {
+		Users u = new Users();
+		u.setId(0L);
+		u.setMobile("");
+		u.setProvinceName("");
+		u.setThirdType(" ");
+		u.setOpenid(" ");
+		u.setName("");
+		u.setRealName("");
+		u.setBirthDay(new Date());
+		u.setIdCard("");
+		u.setDegreeId(0L);
+		u.setMajor("");
+		u.setSex(" ");
+		u.setHeadImg(" ");
+		u.setQrCode("");
+		u.setIntroduction("");
+		u.setLevel((short) 0);
+		u.setWorkStart("");
+		u.setWorkEnd("");
+		u.setIsDoor((short) 0);
+		u.setRestMoney(new BigDecimal(0));
+		u.setUserType((short) 0);
+		u.setIsApproval((short) 0);
+		u.setAddFrom((short) 0);
+		u.setScore(0);
+		u.setAddTime(TimeStampUtil.getNow() / 1000);
+		u.setUpdateTime(TimeStampUtil.getNow() / 1000);
+		return u;
+	}
+	
 	@Override
 	public Users genUser(String mobile, String name, short addFrom, String introduction) {
 		Users u = selectByMobile(mobile);
@@ -145,173 +190,19 @@ public class UsersServiceImpl implements UsersService {
 		return usersMapper.selectByAll();
 	}
 
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public UserViewVo getUserViewByUserId(Long userId) {
-		Users user = usersMapper.selectByPrimaryKey(userId);
-
-		UserViewVo userInfo = new UserViewVo();
-		if (user == null) {
-			return userInfo;
-		}
-
-		BeanUtilsExp.copyPropertiesIgnoreNull(user, userInfo);
-
-		String seniorRange = "";
-		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
-
-		if (!(seniorEndDate == null)) {
-			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
-		}
-		userInfo.setSeniorRange(seniorRange);
-
-		return userInfo;
-	}
-
-	@Override
-	public UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser) {
-
-		UserIndexVo vo = new UserIndexVo();
-
-		vo.setId(viewUser.getId());
-		vo.setSex(viewUser.getSex());
-		vo.setHeadImg(getHeadImg(viewUser));
-		vo.setProvinceName(viewUser.getProvinceName());
-		vo.setUserType(viewUser.getUserType());
-		vo.setName(viewUser.getName());
-		vo.setRestMoney(new BigDecimal(0));
-		vo.setMobile(viewUser.getMobile());
-		vo.setScore(viewUser.getScore());
-		if (user.getId().equals(viewUser.getId())) {
-			vo.setRestMoney(viewUser.getRestMoney());
-		}
-
-		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(viewUser.getId());
-
-		if (userRef3rd != null) {
-			vo.setImUserName(userRef3rd.getUsername());
-		}
-		vo.setPoiDistance("");
-
-		// 计算卡片的个数
-		vo.setTotalCard(0);
-		CardSearchVo searchVo = new CardSearchVo();
-		searchVo.setCardFrom((short) 0);
-		searchVo.setUserId(viewUser.getId());
-
-		PageInfo pageInfo = cardService.selectByListPage(searchVo, 1, Constants.PAGE_MAX_NUMBER);
-		if (pageInfo != null) {
-			Long totalCard = pageInfo.getTotal();
-			vo.setTotalCard(totalCard.intValue());
-		}
-
-		// 计算优惠劵个数
-		vo.setTotalCoupon(0);
-		List<UserCoupons> list = userCouponService.selectByUserId(viewUser.getId());
-		if (!list.isEmpty()) {
-
-			UserCoupons item = null;
-			List<Long> couponsIds = new ArrayList<Long>();
-			Long now = TimeStampUtil.getNow();
-			for (int i = 0; i < list.size(); i++) {
-				item = list.get(i);
-				// 已经使用过的
-				// 优惠券已经过期的，都不显示
-				if (item.getIsUsed().equals((short) 0) && item.getExpTime() > (now / 1000) || item.getExpTime() == 0) {
-					couponsIds.add(item.getCouponId());
-				} else {
-					list.remove(i);
-				}
-			}
-			vo.setTotalCoupon(list.size());
-
-		}
-
-		// 计算好友个数
-		vo.setTotalFriends(0);
-		UserFriendSearchVo searchVo1 = new UserFriendSearchVo();
-		searchVo1.setUserId(viewUser.getId());
-		PageInfo userFriendPage = userFriendService.selectByListPage(searchVo1, 1, Constants.PAGE_MAX_NUMBER);
-		if (userFriendPage != null) {
-			Long totalFriends = userFriendPage.getTotal();
-			vo.setTotalFriends(totalFriends.intValue());
-		}
-		
-		//是否为好友
-		vo.setIsFriend((short) 0);
-		Long userId = user.getId();
-		Long friendId = viewUser.getId();
-		
-		if (!userId.equals(friendId)) {
-			searchVo1 = new UserFriendSearchVo();
-			searchVo1.setUserId(userId);
-			searchVo1.setFriendId(friendId);
-			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo1);
-			
-			if (userFriend != null) {
-				vo.setIsFriend((short) 1);
-			}
-		}
-		
-		return vo;
+	public PageInfo selectByListPage(UserSearchVo searchVo, int pageNo, int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<Users> list = usersMapper.selectByListPage(searchVo);
+		PageInfo result = new PageInfo(list);
+		return result;
 	}
 	
 	@Override
-	public UserBaseVo getUserBaseVo(Users user) {
-
-		UserBaseVo vo = new UserBaseVo();
-		vo.setUserId(user.getId());
-		vo.setHeadImg(user.getHeadImg());
-		vo.setMobile(user.getMobile());
-		vo.setName(user.getName());
-		vo.setProvinceName(user.getProvinceName());
-		vo.setSex(user.getSex());
-		
-		return vo;
-	}	
-
-	@Override
-	public int updateByPrimaryKeySelective(Users user) {
-		return usersMapper.updateByPrimaryKeySelective(user);
-	}
-
-	@Override
-	public PageInfo searchVoListPage(UserSearchVo searchVo, int pageNo, int pageSize) {
-
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		String mobile = searchVo.getMobile();
-		String name = searchVo.getName();
-		Long secId = searchVo.getSecId();
-		List<Long> userIdList = new ArrayList<Long>();
-
-		if (mobile != null && !mobile.isEmpty()) {
-			conditions.put("mobile", mobile.trim());
-		}
-		if (name != null && !name.isEmpty()) {
-			conditions.put("name", name.trim());
-		}
-		if (secId != null) {
-			List<UserRefSec> list = userRefSecService.selectBySecId(secId);
-			for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-				UserRefSec userRefSec = (UserRefSec) iterator.next();
-				userIdList.add(userRefSec.getUserId());
-			}
-		}
-		if (userIdList != null && userIdList.size() > 0) {
-			conditions.put("userIdList", userIdList);
-		}
-
-		if (searchVo.getUserType() != null) {
-			conditions.put("userType", searchVo.getUserType());
-		}
-
-		if (searchVo.getIsApproval() != null) {
-			conditions.put("isApproval", searchVo.getIsApproval());
-		}
-
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> list = usersMapper.selectByListPage(conditions);
-		PageInfo result = new PageInfo(list);
-		return result;
+	public List<Users> selectBySearchVo(UserSearchVo searchVo) {
+		return usersMapper.selectBySearchVo(searchVo);
 	}
 
 	/**
@@ -442,7 +333,12 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public List<UserViewVo> getUserInfos(List<Long> userIds, Users secUser, UserRef3rd userRef3rd) {
 		List<UserViewVo> result = new ArrayList<UserViewVo>();
-		List<Users> userList = usersMapper.selectByUserIds(userIds);
+		
+		
+		UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setUserIds(userIds);
+		
+		List<Users> userList = usersMapper.selectBySearchVo(searchVo);
 
 		List<UserRef3rd> userRef3rds = userRef3rdMapper.selectByUserIds(userIds);
 
@@ -548,25 +444,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<Users> selectUsersHaveOrdered(List<String> mobiles) {
-		return usersMapper.selectByMobiles(mobiles);
-	}
-
-	@Override
-	public List<Users> selectUsersNoOrdered(List<String> mobiles) {
+	public List<Users> selectNotInMobiles(List<String> mobiles) {
 		return usersMapper.selectNotInMobiles(mobiles);
-	}
-
-	@Override
-	public Users selectByOpenidAndThirdType(String openid, String thirdType) {
-		Map<String, Object> conditions = new HashMap<String, Object>();
-		if (openid != null && !openid.isEmpty()) {
-			conditions.put("openid", openid);
-		}
-		if (thirdType != null && !thirdType.isEmpty()) {
-			conditions.put("thirdType", thirdType);
-		}
-		return usersMapper.selectByOpenidAnd3rdType(conditions);
 	}
 
 	/**
@@ -621,53 +500,8 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<Users> selectByUserIds(List<Long> ids) {
-		return usersMapper.selectByUserIds(ids);
-	}
-
-	@Override
-	public List<Users> selectByUserType(Short userType) {
-		return usersMapper.selectByUserType(userType);
-	}
-
-	@Override
-	public Long insert(Users record) {
-
-		return usersMapper.insert(record);
-	}
-
-	@Override
-	public Users selectUserByIdCard(String idCard) {
-		return usersMapper.selectUserByIdCard(idCard);
-	}
-
-	@Override
-	public PageInfo selectByIsAppRoval(int pageNo, int pageSize) {
-
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> list = usersMapper.selectByIsAppRoval();
-		PageInfo result = new PageInfo(list);
-		return result;
-	}
-
-	@Override
-	public PageInfo selectByIsAppRovalYes(int pageNo, int pageSize) {
-
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> list = usersMapper.selectByIsAppRovalYes();
-		PageInfo result = new PageInfo(list);
-		return result;
-	}
-
-	@Override
 	public Users selectByPrimaryKey(Long id) {
 		return usersMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public Long insertSelective(Users u) {
-		// TODO Auto-generated method stub
-		return usersMapper.insertSelective(u);
 	}
 
 	@Override
@@ -676,50 +510,129 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public List<Users> selectByListPage(UsersSearchVo usersSearchVo, int pageNo, int pageSize) {
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> lists = usersMapper.selectVoByListPage(usersSearchVo);
-		return lists;
+	public UserViewVo getUserViewByUserId(Long userId) {
+		Users user = usersMapper.selectByPrimaryKey(userId);
+
+		UserViewVo userInfo = new UserViewVo();
+		if (user == null) {
+			return userInfo;
+		}
+
+		BeanUtilsExp.copyPropertiesIgnoreNull(user, userInfo);
+
+		String seniorRange = "";
+		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
+
+		if (!(seniorEndDate == null)) {
+			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
+		}
+		userInfo.setSeniorRange(seniorRange);
+
+		return userInfo;
 	}
 
 	@Override
-	public Users initUsers() {
-		Users u = new Users();
-		u.setId(0L);
-		u.setMobile("");
-		u.setProvinceName("");
-		u.setThirdType(" ");
-		u.setOpenid(" ");
-		u.setName("");
-		u.setRealName("");
-		u.setBirthDay(new Date());
-		u.setIdCard("");
-		u.setDegreeId(0L);
-		u.setMajor("");
-		u.setSex(" ");
-		u.setHeadImg(" ");
-		u.setQrCode("");
-		u.setIntroduction("");
-		u.setLevel((short) 0);
-		u.setWorkStart("");
-		u.setWorkEnd("");
-		u.setIsDoor((short) 0);
-		u.setRestMoney(new BigDecimal(0));
-		u.setUserType((short) 0);
-		u.setIsApproval((short) 0);
-		u.setAddFrom((short) 0);
-		u.setScore(0);
-		u.setAddTime(TimeStampUtil.getNow() / 1000);
-		u.setUpdateTime(TimeStampUtil.getNow() / 1000);
-		return u;
-	}
+	public UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser) {
 
-	@Override
-	public List<Users> selectByListPageYes(UsersSearchVo usersSearchVo, int pageNo, int pageSize) {
-		PageHelper.startPage(pageNo, pageSize);
-		List<Users> lists = usersMapper.selectVoByListPageYes(usersSearchVo);
-		return lists;
+		UserIndexVo vo = new UserIndexVo();
+
+		vo.setId(viewUser.getId());
+		vo.setSex(viewUser.getSex());
+		vo.setHeadImg(getHeadImg(viewUser));
+		vo.setProvinceName(viewUser.getProvinceName());
+		vo.setUserType(viewUser.getUserType());
+		vo.setName(viewUser.getName());
+		vo.setRestMoney(new BigDecimal(0));
+		vo.setMobile(viewUser.getMobile());
+		vo.setScore(viewUser.getScore());
+		if (user.getId().equals(viewUser.getId())) {
+			vo.setRestMoney(viewUser.getRestMoney());
+		}
+
+		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(viewUser.getId());
+
+		if (userRef3rd != null) {
+			vo.setImUserName(userRef3rd.getUsername());
+		}
+		vo.setPoiDistance("");
+
+		// 计算卡片的个数
+		vo.setTotalCard(0);
+		CardSearchVo searchVo = new CardSearchVo();
+		searchVo.setCardFrom((short) 0);
+		searchVo.setUserId(viewUser.getId());
+
+		PageInfo pageInfo = cardService.selectByListPage(searchVo, 1, Constants.PAGE_MAX_NUMBER);
+		if (pageInfo != null) {
+			Long totalCard = pageInfo.getTotal();
+			vo.setTotalCard(totalCard.intValue());
+		}
+
+		// 计算优惠劵个数
+		vo.setTotalCoupon(0);
+		List<UserCoupons> list = userCouponService.selectByUserId(viewUser.getId());
+		if (!list.isEmpty()) {
+
+			UserCoupons item = null;
+			List<Long> couponsIds = new ArrayList<Long>();
+			Long now = TimeStampUtil.getNow();
+			for (int i = 0; i < list.size(); i++) {
+				item = list.get(i);
+				// 已经使用过的
+				// 优惠券已经过期的，都不显示
+				if (item.getIsUsed().equals((short) 0) && item.getExpTime() > (now / 1000) || item.getExpTime() == 0) {
+					couponsIds.add(item.getCouponId());
+				} else {
+					list.remove(i);
+				}
+			}
+			vo.setTotalCoupon(list.size());
+
+		}
+
+		// 计算好友个数
+		vo.setTotalFriends(0);
+		UserFriendSearchVo searchVo1 = new UserFriendSearchVo();
+		searchVo1.setUserId(viewUser.getId());
+		PageInfo userFriendPage = userFriendService.selectByListPage(searchVo1, 1, Constants.PAGE_MAX_NUMBER);
+		if (userFriendPage != null) {
+			Long totalFriends = userFriendPage.getTotal();
+			vo.setTotalFriends(totalFriends.intValue());
+		}
+		
+		//是否为好友
+		vo.setIsFriend((short) 0);
+		Long userId = user.getId();
+		Long friendId = viewUser.getId();
+		
+		if (!userId.equals(friendId)) {
+			searchVo1 = new UserFriendSearchVo();
+			searchVo1.setUserId(userId);
+			searchVo1.setFriendId(friendId);
+			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo1);
+			
+			if (userFriend != null) {
+				vo.setIsFriend((short) 1);
+			}
+		}
+		
+		return vo;
 	}
+	
+	@Override
+	public UserBaseVo getUserBaseVo(Users user) {
+
+		UserBaseVo vo = new UserBaseVo();
+		vo.setUserId(user.getId());
+		vo.setHeadImg(user.getHeadImg());
+		vo.setMobile(user.getMobile());
+		vo.setName(user.getName());
+		vo.setProvinceName(user.getProvinceName());
+		vo.setSex(user.getSex());
+		
+		return vo;
+	}	
+	
 
 	/**
 	 * 获得用户头像的方法

@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserFriendReq;
-import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendReqVo;
+import com.simi.vo.user.UserFriendSearchVo;
 
 public interface UserFriendReqService {
 

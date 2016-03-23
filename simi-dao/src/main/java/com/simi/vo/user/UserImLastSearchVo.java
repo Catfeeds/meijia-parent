@@ -1,4 +1,4 @@
-package com.simi.vo;
+package com.simi.vo.user;
 
 
 public class UserImLastSearchVo {

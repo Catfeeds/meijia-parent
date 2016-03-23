@@ -3,7 +3,7 @@ package com.simi.service.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserImLast;
-import com.simi.vo.UserImLastSearchVo;
+import com.simi.vo.user.UserImLastSearchVo;
 import com.simi.vo.user.UserImLastVo;
 
 

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.action.admin.AdminController;
+import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -33,9 +34,10 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.meijia.utils.ExcelUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserSearchVo;
+import com.simi.vo.user.UserSearchVo;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -52,7 +54,8 @@ public class UserController extends AdminController {
 	private UserDetailPayService userDetailPayService;
 
 	@RequestMapping(value = "/update_name", method = { RequestMethod.POST })
-	public AppResultData<Object> detail(@RequestParam("pk") Long userId,
+	public AppResultData<Object> updateName(
+			@RequestParam("pk") Long userId,
 			@RequestParam("value") String userName) {
 
 		AppResultData<Object> result = new AppResultData<Object>(
@@ -75,26 +78,22 @@ public class UserController extends AdminController {
 		return result;
 	}
 
-	// @AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String userList(HttpServletRequest request, Model model,
 			UserSearchVo searchVo,
-			@RequestParam(value="sec_id", required = false) Long secId,
-			@RequestParam(value="mobile", required = false) String mobile,
-			@RequestParam(value="name", required = false) String name) {
+			@RequestParam(value="mobile", required = false, defaultValue = "") String mobile,
+			@RequestParam(value="name", required = false, defaultValue = "" ) String name) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
 		model.addAttribute("searchModel", searchVo);
-		int pageNo = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-		searchVo.setSecId(secId);
-		searchVo.setMobile(mobile);
-		searchVo.setName(name);
-		PageInfo result = usersService.searchVoListPage(searchVo, pageNo,
-				pageSize);
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		
+		if (!StringUtil.isEmpty(mobile)) searchVo.setMobile(mobile);
+		if (!StringUtil.isEmpty(name)) searchVo.setName(name);
+		PageInfo result = usersService.selectByListPage(searchVo, pageNo, pageSize);
 		model.addAttribute("contentModel", result);
 
 		return "user/userList";

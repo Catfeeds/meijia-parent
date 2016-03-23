@@ -36,7 +36,8 @@ import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.user.UserFriendSearchVo;
+import com.simi.vo.user.UserSearchVo;
 
 @Service
 public class CardAsyncServiceImpl implements CardAsyncService {
@@ -408,7 +409,10 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		List<Users> userSms = new ArrayList<Users>();
 		
 		if (userSmsIds.isEmpty()) return true;
-		userSms = usersService.selectByUserIds(userSmsIds);
+		
+		UserSearchVo userSearchVo = new UserSearchVo();
+		userSearchVo.setUserIds(userSmsIds);
+		userSms = usersService.selectBySearchVo(userSearchVo);
 		
 		Users createUsers = usersService.selectByPrimaryKey(card.getCreateUserId());
 		

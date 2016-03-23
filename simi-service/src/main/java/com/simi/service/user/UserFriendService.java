@@ -6,7 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserFriendSearchVo;
+import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
 
 public interface UserFriendService {

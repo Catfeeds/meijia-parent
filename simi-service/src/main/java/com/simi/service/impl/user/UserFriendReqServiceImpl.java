@@ -17,8 +17,8 @@ import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserFriendReqService;
-import com.simi.vo.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendReqVo;
+import com.simi.vo.user.UserFriendSearchVo;
 
 @Service
 public class UserFriendReqServiceImpl implements UserFriendReqService {

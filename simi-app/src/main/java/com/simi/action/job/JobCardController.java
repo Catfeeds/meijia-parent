@@ -29,6 +29,7 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.user.UserSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/job/card")
@@ -84,7 +85,10 @@ public class JobCardController extends BaseController {
 		for (Cards item : list) {
 			secIdList.add(item.getUserId());
 		}
-		List<Users> secList = userService.selectByUserIds(secIdList);
+		
+		UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setUserIds(secIdList);
+		List<Users> secList = userService.selectBySearchVo(searchVo);
 		// 3.获得秘书手机号列表
 		List<String> secMobileList = new ArrayList<String>();
 		// 4.获得秘书昵称列表
@@ -129,7 +133,9 @@ public class JobCardController extends BaseController {
 		for (Cards item : list) {
 			secIdList.add(item.getUserId());
 		}
-		List<Users> secList = userService.selectByUserIds(secIdList);
+		UserSearchVo searchVo = new UserSearchVo();
+		searchVo.setUserIds(secIdList);
+		List<Users> secList = userService.selectBySearchVo(searchVo);
 		// 3.获得秘书手机号列表
 		List<String> secMobileList = new ArrayList<String>();
 		// 4.获得秘书昵称列表

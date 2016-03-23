@@ -31,8 +31,8 @@ import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserSearchVo;
 import com.simi.vo.sec.SecViewVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
 
 @Controller
@@ -73,6 +73,7 @@ public class SecController extends BaseController {
 	 * @param page
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
 	public AppResultData<Object> secList(
 			@RequestParam("user_id") Long userId,
@@ -94,8 +95,7 @@ public class SecController extends BaseController {
 		UserSearchVo searchVo = new UserSearchVo();
 		searchVo.setUserType((short) 1);
 		searchVo.setIsApproval((short) 2);
-		PageInfo userList = userService.searchVoListPage(searchVo, page,
-				Constants.PAGE_MAX_NUMBER);
+		PageInfo userList = userService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<Users> users = userList.getList();
 		List<SecViewVo> secList = new ArrayList<SecViewVo>();
 		if (!users.isEmpty()) {
@@ -360,7 +360,14 @@ public class SecController extends BaseController {
 				if (userRef3rd == null) {
 					userService.genImUser(record);
 				}
-				Users least = userService.selectUserByIdCard(idCard);
+				
+				UserSearchVo searchVo = new UserSearchVo();
+				searchVo.setIdCard(idCard);
+				List<Users> rs = userService.selectBySearchVo(searchVo);
+				Users least = null;
+				if (!rs.isEmpty()) {
+					least = rs.get(0);
+				}
 				// 像tagUsers表中插入用户的标签记录
 				if (!StringUtil.isEmpty(tagIds)) {
 					tagsUsersService.deleteByUserId(userId);

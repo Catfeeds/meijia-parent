@@ -32,7 +32,7 @@
 		from user_msg
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>	
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UserMsgSearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_msg
@@ -48,7 +48,7 @@
 		order by update_time desc
 	</select>
 	
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserMsgSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_msg
@@ -82,7 +82,7 @@
 	
 	<!-- 统计某个时间范围有消息的日期和个数 -->
 	<select id="totalByMonth" resultType="java.util.HashMap"
-		parameterType="com.simi.vo.UserMsgSearchVo">
+		parameterType="com.simi.vo.user.UserMsgSearchVo">
 		select FROM_UNIXTIME(service_time ,'%Y-%m-%d') as service_date , count(distinct msg_id) as total
 		FROM
 		(SELECT msg_id, 

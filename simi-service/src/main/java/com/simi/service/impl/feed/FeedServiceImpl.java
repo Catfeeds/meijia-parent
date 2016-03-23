@@ -18,6 +18,7 @@ import com.simi.vo.feed.FeedListVo;
 import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.feed.FeedViewVo;
 import com.simi.vo.feed.FeedZanViewVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.feed.FeedImgs;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.Users;
@@ -154,7 +155,9 @@ public class FeedServiceImpl implements FeedService {
 			
 			totalCardZans = feedZanService.totalByFids(fids);
 			totalCardComments = feedCommentService.totalByFids(fids);
-			userList = usersService.selectByUserIds(userIds);
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			userList = usersService.selectBySearchVo(searchVo);
 		}
 				
 		Feeds item = null;

@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserLeave;
-import com.simi.vo.UserLeaveSearchVo;
 import com.simi.vo.user.UserLeaveDetailVo;
 import com.simi.vo.user.UserLeaveListVo;
+import com.simi.vo.user.UserLeaveSearchVo;
 
 
 public interface UserLeaveService {

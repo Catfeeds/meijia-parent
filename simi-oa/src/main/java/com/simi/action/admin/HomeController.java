@@ -36,7 +36,7 @@ public class HomeController extends AdminController {
 		Long endTime = 0L;
 		
 		//总用户数
-    	int totalUser = userChartService.statTotalUser(chartSearchVo);
+    	int totalUser = userChartService.statByTotalUser(chartSearchVo);
     	
     	//总订单数
     	int totalOrder = orderChartService.statTotalOrder(chartSearchVo) ;    	
@@ -49,7 +49,7 @@ public class HomeController extends AdminController {
     	
 		chartSearchVo.setStartTime(startTime);
 		chartSearchVo.setEndTime(endTime);
-    	int totalUserToday = userChartService.statTotalUser(chartSearchVo);
+    	int totalUserToday = userChartService.statByTotalUser(chartSearchVo);
     	
     	//今日订单数
     	int totalOrderToday = orderChartService.statTotalOrder(chartSearchVo);

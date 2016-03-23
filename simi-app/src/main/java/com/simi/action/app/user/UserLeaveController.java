@@ -34,10 +34,10 @@ import com.simi.service.user.UserLeavePassService;
 import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.UserLeaveSearchVo;
 import com.simi.vo.card.LinkManVo;
 import com.simi.vo.user.UserLeaveDetailVo;
 import com.simi.vo.user.UserLeaveListVo;
+import com.simi.vo.user.UserLeaveSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/user")

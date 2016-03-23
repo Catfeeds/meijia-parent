@@ -23,6 +23,7 @@ import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
 import com.simi.vo.card.CardZanViewVo;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
@@ -245,7 +246,9 @@ public class CardsServiceImpl implements CardService {
 		}
 		
 		if (!userIds.isEmpty()) {
-			createUsers = usersService.selectByUserIds(userIds);
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			createUsers = usersService.selectBySearchVo(searchVo);
 		}
 				
 		Cards item = null;

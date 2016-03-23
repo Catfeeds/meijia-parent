@@ -25,7 +25,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.UserImLastSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserImLastSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_im_last

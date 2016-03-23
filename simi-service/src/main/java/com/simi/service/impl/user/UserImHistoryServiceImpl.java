@@ -12,7 +12,7 @@ import com.simi.service.user.UserImLastService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.UserImLastSearchVo;
+import com.simi.vo.user.UserImLastSearchVo;
 import com.simi.po.dao.user.UserImHistoryMapper;
 import com.simi.po.model.user.UserImHistory;
 import com.simi.po.model.user.UserImLast;

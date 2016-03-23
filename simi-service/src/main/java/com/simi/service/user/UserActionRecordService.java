@@ -3,7 +3,7 @@ package com.simi.service.user;
 import java.util.List;
 
 import com.simi.po.model.user.UserActionRecord;
-import com.simi.vo.UserActionSearchVo;
+import com.simi.vo.user.UserActionSearchVo;
 
 public interface UserActionRecordService {
     int deleteByPrimaryKey(Long id);

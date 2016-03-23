@@ -58,7 +58,7 @@ public class UserInterface extends BaseController {
 		HashMap map = new HashMap();
 		map.put("startTime", startTime);
 		map.put("endTime", endTime);
-		List<HashMap> usersList = usersMapper.selectUserStat(map);
+		List<HashMap> usersList = usersMapper.statByMonth(map);
 		
 
 		// 循环六个月之内的用户

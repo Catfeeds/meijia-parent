@@ -40,7 +40,7 @@
 		ORDER BY add_time DESC
 		LIMIT 0,1
 	</select>
-	<select id="selectUserSmsTokenByMobile" resultMap="BaseResultMap" parameterType="com.simi.vo.UsersSmsTokenVo">
+	<select id="selectUserSmsTokenByMobile" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UsersSmsTokenVo">
   	select
     <include refid="Base_Column_List" />
     from user_sms_token

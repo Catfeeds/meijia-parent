@@ -33,7 +33,7 @@ import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
-import com.simi.vo.UserMsgSearchVo;
+import com.simi.vo.user.UserMsgSearchVo;
 
 @Service
 public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {

@@ -25,7 +25,7 @@
 		from user_friend_req
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>
-	<select id="selectByIsFirend" resultMap="BaseResultMap" parameterType="com.simi.vo.UserFriendSearchVo">
+	<select id="selectByIsFirend" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserFriendSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_friend_req
@@ -38,7 +38,7 @@
 		</if>
 	</select>
 	
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.UserFriendSearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserFriendSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_friend_req
