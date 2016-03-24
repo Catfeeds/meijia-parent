@@ -169,7 +169,8 @@ public class JobCardController extends BaseController {
 	 */
 	@RequestMapping(value = "card_notify", method = RequestMethod.GET)
 	public AppResultData<Object> cardNotify() {
-
+		
+		System.out.println("======================card_notify"+ DateUtil.getNow() +"====================================");
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
 		//找出今天，明天，后天的卡片数据
