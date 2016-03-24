@@ -204,6 +204,7 @@ public class JobCardController extends BaseController {
 			}
 		}
 		
+		cardService.updateFinishByOvertime();
 		
 		return result;
 	}

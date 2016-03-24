@@ -169,7 +169,7 @@ public class PushUtil {
 		if (params.containsKey("transmissionContent")) 
 			transmissionContent = params.get("transmissionContent").toString();
 		
-		System.out.println("==============android推送setclock参数begin=============================");
+		System.out.println("==============android推送参数begin=============================");
 		System.out.println(params.toString());
 		
 		
@@ -200,7 +200,7 @@ public class PushUtil {
 			System.out.println("异常：" + ret.getResponse().toString());
 		}
 		
-		System.out.println("==============android推送setclock参数end=============================");
+		System.out.println("==============android推送参数end=============================");
 		return true;
 	}			
 	
