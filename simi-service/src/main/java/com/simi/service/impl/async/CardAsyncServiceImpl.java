@@ -227,13 +227,8 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		String isShow = "true";
 		
-		if (card.getSetNowSend().equals((short)0)) {
-			isShow = "false";
-			return true;
-		}
-		
-		if (card.getSetNowSend().equals((short)1)) isShow = "true";
-				
+		if (card.getSetNowSend().equals((short)0)) isShow = "false";
+
 		tranParams.put("is_show", isShow);
 		tranParams.put("action", "setclock");
 		tranParams.put("card_id", card.getCardId().toString());
@@ -266,16 +261,20 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 //			if (createUserId.equals(toUserId)) continue;
 			
 			//若果不是好友以及不是同一家团队不能发推送消息
-			AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
 			
-			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);
-			
-			if (isFriend == false) {
-				v = validateService.validateSameCompany(createUserId, toUserId);
-				if (v.getStatus() == Constants.ERROR_999) {
-					continue;
+			if (!createUserId.equals(toUserId)) {
+				Boolean isFriend = false;
+				AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
+				isFriend = (v.getStatus() != Constants.ERROR_999);
+				if (isFriend == false) {
+					v = validateService.validateSameCompany(createUserId, toUserId);
+					if (v.getStatus() == Constants.ERROR_999) {
+						continue;
+					}
 				}
 			}
+
+			
 
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", clientId);
@@ -343,7 +342,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		tranParams.put("remind_time", remindTime.toString());
 		tranParams.put("remind_title", cardTypeName);
 		tranParams.put("remind_content", pushContent);
-
+		
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		
@@ -362,21 +361,23 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			Long toUserId = p.getUserId();
 			String clientId = p.getClientId();
 			//若果不是好友以及不是同一家团队不能发推送消息
-			AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
-			
-			Boolean isFriend = (v.getStatus() != Constants.ERROR_999);
-			
-			if (isFriend == false) {
-				v = validateService.validateSameCompany(createUserId, toUserId);
-				if (v.getStatus() == Constants.ERROR_999) {
-					continue;
+			if (!createUserId.equals(toUserId)) {
+				Boolean isFriend = false;
+				AppResultData<Object> v = validateService.validateFriend(createUserId, toUserId);
+				isFriend = (v.getStatus() != Constants.ERROR_999);
+				if (isFriend == false) {
+					v = validateService.validateSameCompany(createUserId, toUserId);
+					if (v.getStatus() == Constants.ERROR_999) {
+						continue;
+					}
 				}
 			}
-			
+			System.out.println("====================push card alarm=======================================");
 			System.out.println("userId= " + p.getUserId() + "---cid = " + p.getClientId());
+			
 			params.put("transmissionContent", jsonParams);
 			params.put("cid", clientId);
-			
+			System.out.println(params);
 			String userStatus = PushUtil.getUserStatus(p.getClientId());
 			if (p.getDeviceType().equals("ios")) {
 				try {
