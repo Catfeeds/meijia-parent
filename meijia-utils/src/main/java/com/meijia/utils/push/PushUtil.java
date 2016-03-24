@@ -289,7 +289,7 @@ public class PushUtil {
 			APNPayload apnpayload = new APNPayload();
 			apnpayload.setBadge(1);
 //			apnpayload.setSound("");
-			apnpayload.setContentAvailable(0);
+			apnpayload.setContentAvailable(1);
 //			apnpayload.setCategory("cardView");
 			
 //			if (pushType.equals("alertClock")) {
