@@ -169,6 +169,9 @@ public class PushUtil {
 		if (params.containsKey("transmissionContent")) 
 			transmissionContent = params.get("transmissionContent").toString();
 		
+		System.out.println("==============android推送setclock参数begin=============================");
+		System.out.println(params.toString());
+		
 		
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
@@ -196,6 +199,8 @@ public class PushUtil {
 
 			System.out.println("异常：" + ret.getResponse().toString());
 		}
+		
+		System.out.println("==============android推送setclock参数end=============================");
 		return true;
 	}			
 	
@@ -326,7 +331,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "ca745b39a2cb53bbb93f54025309473e";
+		String clientId = "fc883ba0ec0a77e38b26d2b59e1a1676";
 		
 		getUserStatus(clientId);
 		
@@ -352,8 +357,8 @@ public class PushUtil {
 		 String timeStr = time1.toString();
 		 tranParams.put("is_show", "true");		
 		 tranParams.put("action", "alarm");		
-//		 tranParams.put("card_id", "0");
-//		 tranParams.put("card_type", "0");
+		 tranParams.put("card_id", "0");
+		 tranParams.put("card_type", "0");
 		 tranParams.put("service_time", "0");
 		 tranParams.put("remind_time", "0");
 		 tranParams.put("remind_title", "事务提醒");
@@ -369,9 +374,9 @@ public class PushUtil {
 
 //		 
 		params.put("transmissionContent", jsonParams);
-//		PushUtil.AndroidPushToSingle(params);
+		PushUtil.AndroidPushToSingle(params);
 		
-		PushUtil.IOSPushToSingle(params, "alertClock");
+//		PushUtil.IOSPushToSingle(params, "alertClock");
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);

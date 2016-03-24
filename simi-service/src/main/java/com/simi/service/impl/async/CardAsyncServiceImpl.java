@@ -242,7 +242,8 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		tranParams.put("remind_time", remindTime.toString());
 		tranParams.put("remind_title", cardTypeName);
 		tranParams.put("remind_content", pushContent);
-
+		
+		
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		
