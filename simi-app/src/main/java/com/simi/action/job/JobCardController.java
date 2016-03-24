@@ -202,9 +202,14 @@ public class JobCardController extends BaseController {
 				System.out.println("cardAlertClock begin ---" + vo.getCardId().toString());
 				cardAsyncService.cardAlertClock(vo);
 			}
+			
+			if (serviceTime > TimeStampUtil.getNowSecond()) {
+				vo.setStatus((short) 3);
+				cardService.updateByPrimaryKey(vo);
+			}
 		}
 		
-		cardService.updateFinishByOvertime();
+//		cardService.updateFinishByOvertime();
 		
 		return result;
 	}
