@@ -324,7 +324,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		record.setFromUserId(userId);
 		record.setToUserId(userId);
 		record.setCategory("app");
-		record.setAction("leave");
+		record.setAction("leave_pass");
 		record.setParams(leaveId.toString());
 		record.setTitle("请假申请");
 		record.setSummary("你申请了" + userLeave.getTotalDays() + "天请假.");
