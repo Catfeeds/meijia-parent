@@ -293,7 +293,7 @@ public class PushUtil {
 //			apnpayload.setCategory("cardView");
 			
 			if (pushType.equals("alertClock")) {
-				apnpayload.setSound("simivoice");
+				apnpayload.setSound("simivoice.caf");
 			}
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
 			
