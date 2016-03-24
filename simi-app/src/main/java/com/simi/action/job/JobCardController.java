@@ -193,7 +193,7 @@ public class JobCardController extends BaseController {
 			Long serviceTime = vo.getServiceTime();
 //			serviceTime = TimeStampUtil.timeStampToDateHour(serviceTime * 1000);
 			Long remindTime = serviceTime - remindMin * 60;
-			
+			remindTime = TimeStampUtil.timeStampToDateHour(remindTime * 1000) / 1000;
 			System.out.println("card content = " + vo.getServiceContent());
 			System.out.println("setRemind = " + setRemind.toString() + "----remindMin =" + remindMin);
 			System.out.println("nowMin = " + nowMin.toString() + " ---- remindTime = " + remindTime.toString());
