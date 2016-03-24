@@ -67,10 +67,10 @@ public class RequestParamFilter implements HandlerInterceptor{
 		}
 		
 		
-		if (requestUrl.indexOf("app/job") < 0) {
+//		if (requestUrl.indexOf("app/job") < 0) {
 			logger.info(params.toString());
-			System.out.println(params.toString());
-		}
+//			System.out.println(params.toString());
+//		}
 		return true;
 	}
 
