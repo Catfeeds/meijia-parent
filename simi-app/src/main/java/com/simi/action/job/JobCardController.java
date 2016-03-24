@@ -176,12 +176,12 @@ public class JobCardController extends BaseController {
 		//找出今天，明天，后天的卡片数据
 		CardSearchVo searchVo = new CardSearchVo();
 		
-		Long startTime = TimeStampUtil.getNowSecond();
+		Long startTime = TimeStampUtil.getBeginOfToday();
 		Date today = DateUtil.getNowOfDate();
 		
 		String toDateStr = DateUtil.addDay(today, 2, Calendar.DATE, DateUtil.DEFAULT_PATTERN);
 		toDateStr = toDateStr + " 23:59:59";
-		Long endTime = TimeStampUtil.getMillisOfDayFull(toDateStr);
+		Long endTime = TimeStampUtil.getMillisOfDayFull(toDateStr) / 1000;
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
 		List<Cards> cardList = cardService.selectByRemindAll(searchVo);
@@ -207,6 +207,7 @@ public class JobCardController extends BaseController {
 				System.out.println("========================cardAlertClock end===================================");
 			}
 			
+			System.out.println("serviceTime = " + serviceTime + " ===========now = " + TimeStampUtil.getNowSecond());
 			if (serviceTime < TimeStampUtil.getNowSecond()) {
 				vo.setStatus((short) 3);
 				cardService.updateByPrimaryKey(vo);
