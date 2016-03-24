@@ -203,7 +203,7 @@ public class JobCardController extends BaseController {
 				cardAsyncService.cardAlertClock(vo);
 			}
 			
-			if (serviceTime > TimeStampUtil.getNowSecond()) {
+			if (serviceTime < TimeStampUtil.getNowSecond()) {
 				vo.setStatus((short) 3);
 				cardService.updateByPrimaryKey(vo);
 			}
