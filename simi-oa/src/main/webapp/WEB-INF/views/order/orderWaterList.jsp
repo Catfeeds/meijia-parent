@@ -81,7 +81,7 @@
 		<table class="table table-striped table-advance table-hover">
 			<thead>
 				<tr>
-					<th>订单号</th>
+					<
 					<th>下单时间</th>
 					<th>用户手机号</th>
 					<th>服务日期</th>
@@ -97,7 +97,7 @@
 			<tbody>
 				<c:forEach items="${contentModel.list}" var="item">
 					<tr>
-						<td>${ item.orderNo }</td>
+						
 						<td><timestampTag:timestamp patten="yyyy-MM-dd HH:mm "
 								t="${item.addTime * 1000}" /></td>
 						<td>${ item.mobile }</td>
