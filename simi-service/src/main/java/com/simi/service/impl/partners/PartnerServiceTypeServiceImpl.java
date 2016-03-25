@@ -177,7 +177,7 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 				vo.setIsEnableName("已下架");
 			}
 			if (item.getIsEnable() != null && item.getIsEnable() == 1) {
-				vo.setIsEnableName("未下架");
+				vo.setIsEnableName("上架");
 			}
 			
 		}

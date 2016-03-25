@@ -67,8 +67,8 @@ public class OrderPartnerController extends BaseController {
 			OrderListVo listVo = new OrderListVo();
 			listVo = orderQueryService.getOrderListVo(item);
 			
-			//OrderDetailVo detailVo = orderQueryService.getOrderDetailVo(item, listVo);
-			orderListVo.add(listVo);
+			OrderDetailVo detailVo = orderQueryService.getOrderDetailVo(item, listVo);
+			orderListVo.add(detailVo);
 		}
 		result.setData(orderListVo);
 		

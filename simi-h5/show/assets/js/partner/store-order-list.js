@@ -43,6 +43,8 @@ function orderGetList (page) {
 				htmlPart = htmlPart.replace('{addTimeStr}',orderListVo[i].add_time_str);
 				htmlPart = htmlPart.replace('{orderMoney}',orderListVo[i].order_money);
 				
+				htmlPart = htmlPart.replace('{orderExtra}',orderListVo[i].order_extra);
+				
 				htmlPart = "<a href=\"store-order-detail.html?partner_user_id="+orderListVo[i].partner_user_id+"&order_id="+orderListVo[i].order_id+"\"> " + htmlPart + "</a>";
 				
 				partnerServiceTypeHtml += htmlPart;

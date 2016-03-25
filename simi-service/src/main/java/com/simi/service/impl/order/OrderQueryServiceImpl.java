@@ -406,20 +406,21 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			vo.setUserCouponName(coupon.getIntroduction());
 			vo.setUserCouponValue(coupon.getValue());
 		}
-		vo.setOrderExtra("");
-		
+
+		String orderExtra = "";
 		if (order.getServiceTypeId().equals(239L)) {
-			Map<String, String> orderExtraMap = new HashMap<String, String>();
 			
 			OrderExtWater orderExtWater = orderExtWaterService.selectByOrderId(order.getOrderId());
 			if (orderExtWater != null) {
 				Long servicePriceId = orderExtWater.getServicePriceId();
 				
 				PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-				orderExtraMap.put("servicePriceName", servicePrice.getName());
-				orderExtraMap.put("serviceNum", orderExtWater.getServiceNum().toString());
+				
+				orderExtra+= servicePrice.getName();
+				orderExtra+= "数量:"+ orderExtWater.getServiceNum().toString();
+				
 			}
-			String orderExtra = GsonUtil.GsonString(orderExtraMap);
+			
 			vo.setOrderExtra(orderExtra);
 		}
 		
