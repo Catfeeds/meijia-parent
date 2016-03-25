@@ -351,7 +351,7 @@ public class CardQueryController extends BaseController {
 
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
-		Long time1 = TimeStampUtil.getNow() + 120000;
+		Long time1 = TimeStampUtil.getNowSecond() + 120;
 
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 
@@ -397,7 +397,7 @@ public class CardQueryController extends BaseController {
 
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
-		Long time1 = TimeStampUtil.getNow();
+		Long time1 = TimeStampUtil.getNowSecond();
 
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 
@@ -443,7 +443,7 @@ public class CardQueryController extends BaseController {
 
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
-		Long time1 = TimeStampUtil.getNow();
+		Long time1 = TimeStampUtil.getNowSecond();
 
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 

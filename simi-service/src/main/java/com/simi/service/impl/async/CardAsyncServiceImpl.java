@@ -221,10 +221,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		int remindMin = CardUtil.getRemindMin(setRemind);
 		
 		Long remindTime = serviceTime - remindMin * 60;
-		
-		serviceTime = serviceTime * 1000;
-		remindTime = remindTime * 1000;
-		
+				
 		String isShow = "true";
 		
 		if (card.getSetNowSend().equals((short)0)) isShow = "false";
@@ -329,10 +326,7 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		int remindMin = CardUtil.getRemindMin(setRemind);
 		
 		Long remindTime = serviceTime - remindMin * 60;
-		
-		serviceTime = serviceTime * 1000;
-		remindTime = remindTime * 1000;
-		
+				
 		String isShow = "true";		
 		tranParams.put("is", isShow);
 		tranParams.put("ac", "a");
