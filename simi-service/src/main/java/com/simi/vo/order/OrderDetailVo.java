@@ -17,6 +17,8 @@ public class OrderDetailVo extends OrderListVo {
 	private String userCouponName;
 	
 	private BigDecimal userCouponValue;
+	
+	private String orderExtra;
 
 	public String getCityName() {
 		return cityName;
@@ -72,6 +74,14 @@ public class OrderDetailVo extends OrderListVo {
 
 	public void setUserCouponValue(BigDecimal userCouponValue) {
 		this.userCouponValue = userCouponValue;
+	}
+
+	public String getOrderExtra() {
+		return orderExtra;
+	}
+
+	public void setOrderExtra(String orderExtra) {
+		this.orderExtra = orderExtra;
 	}
 
 

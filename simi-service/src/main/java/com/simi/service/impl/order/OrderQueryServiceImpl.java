@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.dict.DictService;
+import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
@@ -38,6 +42,7 @@ import com.simi.vo.user.UserSearchVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.dict.DictCoupons;
+import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
@@ -84,6 +89,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	
 	@Autowired
 	private DictCouponsService couponService;
+	
+	@Autowired
+	private OrderExtWaterService orderExtWaterService;
 	/**
 	 * 根据订单主键进行查询
 	 * @param id  订单id
@@ -397,6 +405,22 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			DictCoupons coupon = couponService.selectByPrimaryKey(userCoupon.getCouponId());
 			vo.setUserCouponName(coupon.getIntroduction());
 			vo.setUserCouponValue(coupon.getValue());
+		}
+		vo.setOrderExtra("");
+		
+		if (order.getServiceTypeId().equals(239L)) {
+			Map<String, String> orderExtraMap = new HashMap<String, String>();
+			
+			OrderExtWater orderExtWater = orderExtWaterService.selectByOrderId(order.getOrderId());
+			if (orderExtWater != null) {
+				Long servicePriceId = orderExtWater.getServicePriceId();
+				
+				PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+				orderExtraMap.put("servicePriceName", servicePrice.getName());
+				orderExtraMap.put("serviceNum", orderExtWater.getServiceNum().toString());
+			}
+			String orderExtra = GsonUtil.GsonString(orderExtraMap);
+			vo.setOrderExtra(orderExtra);
 		}
 		
         return vo;
