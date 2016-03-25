@@ -375,7 +375,9 @@ public class OrderWaterController extends AdminController {
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		Long id = vo.getId();
 		Long userId = order.getUserId();
-
+		
+		
+		
 		Short orderExtStatus = 1;
 		if (id.equals(0L)) {
 			vo.setAddTime(TimeStampUtil.getNowSecond());
@@ -406,7 +408,18 @@ public class OrderWaterController extends AdminController {
 		OrderExtWater water = orderExtWaterService.selectByOrderId(orderId);
 		water.setOrderExtStatus(orderExtStatus);
 		orderExtWaterService.updateByPrimaryKeySelective(water);
-
+		
+		//更新此商品对于的服务人员信息
+		String servicePriceIdStr = request.getParameter("servicePriceList");
+		Long servicePriceId = 0L;
+		if (StringUtil.isEmpty(servicePriceIdStr)) servicePriceId = Long.valueOf(servicePriceIdStr);
+		
+		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		if (servicePriceDetail != null) {
+			order.setPartnerUserId(servicePriceDetail.getUserId());
+			ordersService.updateByPrimaryKey(order);
+		}
+		
 		return "redirect:/order/waterList";
 	}
 
@@ -513,8 +526,7 @@ public class OrderWaterController extends AdminController {
 		BigDecimal orderPay = new BigDecimal(0.0);// 折扣价
 
 		BigDecimal disPrice = servicePriceDetail.getDisPrice();
-		BigDecimal serviceNumDe = BigDecimal.valueOf(vo.getServiceNum()
-				.doubleValue());
+		BigDecimal serviceNumDe = BigDecimal.valueOf(vo.getServiceNum().doubleValue());
 		orderMoney = MathBigDecimalUtil.mul(disPrice, serviceNumDe);
 		orderPay = orderMoney;
 

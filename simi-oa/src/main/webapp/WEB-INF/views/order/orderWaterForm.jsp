@@ -221,14 +221,14 @@
 						</div>
 					</div>
 					<div class="form-group required">
-						<label class="col-md-2 control-label">服务商订单号:</label>
+						<label class="col-md-2 control-label">实际服务商订单号:</label>
 						<div class="col-md-5">
 							<form:input path="partnerOrderNo" class="form-control" maxLength="32" />
 							<form:errors path="partnerOrderNo" class="field-has-error"></form:errors>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-2 control-label">服务商订单价格:</label>
+						<label class="col-md-2 control-label">实际服务商订单价格:</label>
 						<div class="col-md-5">
 							<form:input path="partnerOrderMoney" class="form-control" maxLength="32" />
 							<form:errors path="partnerOrderMoney" class="field-has-error"></form:errors>
@@ -238,7 +238,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">备注</label>
 						<div class="col-md-5">
-							<form:textarea path="remarks" class="form-control" placeholder="请输入备注" />
+							<form:textarea path="remarks" class="form-control" placeholder="如果为自营商品，可以输入时间服务商名称" />
 						</div>
 					</div>
 					
