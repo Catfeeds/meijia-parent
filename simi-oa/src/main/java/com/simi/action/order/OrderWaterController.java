@@ -412,7 +412,7 @@ public class OrderWaterController extends AdminController {
 		//更新此商品对于的服务人员信息
 		String servicePriceIdStr = request.getParameter("servicePriceList");
 		Long servicePriceId = 0L;
-		if (StringUtil.isEmpty(servicePriceIdStr)) servicePriceId = Long.valueOf(servicePriceIdStr);
+		if (!StringUtil.isEmpty(servicePriceIdStr)) servicePriceId = Long.valueOf(servicePriceIdStr);
 		
 		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		if (servicePriceDetail != null) {

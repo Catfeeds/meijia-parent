@@ -238,7 +238,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">备注</label>
 						<div class="col-md-5">
-							<form:textarea path="remarks" class="form-control" placeholder="如果为自营商品，可以输入时间服务商名称" />
+							<form:textarea path="remarks" class="form-control" placeholder="如果为自营商品，可以输入实际服务商名称" />
 						</div>
 					</div>
 					
