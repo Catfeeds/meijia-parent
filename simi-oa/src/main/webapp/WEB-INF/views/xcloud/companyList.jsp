@@ -54,6 +54,7 @@
                                 	  <th >公司名称</th>
 		                              <th >公司简称</th>
 		                              <th >公司规模</th>
+		                              <th >创建人</th>
 		                              <th >联系人</th>
 		                              <th>邮箱</th>
 		                              <th>注册时间</th>
@@ -65,19 +66,12 @@
 	                                   <td>${ item.companyName }</td>
 	                                   <td>${ item.shortName }</td>
 							            <td><partneCompanySizeTag:companySize companySize="${ item.companySize }"/></td>
+							            <td>${ item.userName }</td>
 							            <td>${ item.linkMan }</td>
 							             <td>${ item.email }</td>
 							            <td>
-							               <timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
+							               <timestampTag:timestamp patten="yyyy-MM-dd HH:mm" t="${item.addTime * 1000}"/>
 							            </td>
-							           <%--  <td>
-							            	<button id="btn_update"  onClick="btn_update('partners/partnerAddNewForm?partnerId=${ item.partnerId }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-	                                  		<button id="btn_view" onClick="btn_update('partners/user_list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="查看服务人员"><i class="icon-search "></i></button>
-	                                  		<button id="btn_view" onClick="btn_update('partnerServicePrice/list?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="商品管理"><i class="icon-shopping-cart "></i></button>
-							                <button id="btn_view" onClick="btn_update('partners/partnerOrderlist?partnerId=${ item.partnerId }')" class="btn btn-danger btn-xs"  title="商品管理"><i class="icon-shopping-cart "></i></button>
-							               
-							                 <!-- //simi-h5/show/store-order-list.html?partner_user_id=274 -->
-							            </td> --%>
                               </tr>
                               </c:forEach>
                               </tbody>
