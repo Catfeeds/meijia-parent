@@ -81,15 +81,14 @@
 		<table class="table table-striped table-advance table-hover">
 			<thead>
 				<tr>
-					<
 					<th>下单时间</th>
 					<th>用户手机号</th>
-					<th>服务日期</th>
 					<th>服务大类</th>
 					<th>地址</th>
+					<th>商品名称</th>
 					<th>送水的数量</th>
 					<th>订单状态</th>
-					<th>订单总金额</th>
+					
 					<th>订单支付金额</th>
 					<!--   <th>操作</th> -->
 				</tr>
@@ -101,11 +100,16 @@
 						<td><timestampTag:timestamp patten="yyyy-MM-dd HH:mm "
 								t="${item.addTime * 1000}" /></td>
 						<td>${ item.mobile }</td>
-						<td><timestampTag:timestamp patten="yyyy-MM-dd"
-								t="${item.serviceDate * 1000}" /></td>
+						
 						<td>${ item.serviceTypeName }</td>
 
 						<td>${ item.addr }</td>
+						<td>
+							<c:if test="${ item.servicePriceImg != '' }">
+								<img src="${item.servicePriceImg }" width="50" height="50"/>
+							</c:if>
+							${ item.servicePriceName }
+						</td>
 						<td>${ item.serviceNum }</td>
 						<td><c:if test="${ item.orderStatus < 1 }">
 							            		${ item.orderStatusName }
@@ -114,7 +118,7 @@
 							</c:if> <c:if test="${ item.orderStatus > 1 }">
 								<span style="color: green; font-weight: bold;">${ item.orderStatusName }</span>
 							</c:if></td>
-						<td>${ item.orderMoney }</td>
+						
 						<td>${ item.orderPay }</td>
 						<td><button id="btn_update"
 								onClick="btn_update('order/orderWaterForm?orderNo=${item.orderNo }')"

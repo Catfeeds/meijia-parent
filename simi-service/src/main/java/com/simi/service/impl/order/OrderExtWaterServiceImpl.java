@@ -439,12 +439,20 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
         return result;
 	}
 	
-	/*@Override
-	public PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
-
-		 PageHelper.startPage(pageNo, pageSize);
-         List<OrderExtWater> list = orderExtWaterMapper.selectByListPage(orderSearchVo);
-         PageInfo result = new PageInfo(list);
-        return result;
-    }*/
+	@Override
+	public String getOrderExtra(Long orderId) {
+		String orderExtra = "";
+		OrderExtWater orderExtWater = selectByOrderId(orderId);
+		if (orderExtWater != null) {
+			Long servicePriceId = orderExtWater.getServicePriceId();
+			
+			PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+			
+			orderExtra+= servicePrice.getName() + ", ";
+			orderExtra+= "数量:"+ orderExtWater.getServiceNum().toString();
+			
+		}
+		
+		return orderExtra;
+	}
 }

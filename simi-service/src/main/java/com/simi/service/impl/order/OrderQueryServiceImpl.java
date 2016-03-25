@@ -409,21 +409,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		String orderExtra = "";
 		if (order.getServiceTypeId().equals(239L)) {
-			
-			OrderExtWater orderExtWater = orderExtWaterService.selectByOrderId(order.getOrderId());
-			if (orderExtWater != null) {
-				Long servicePriceId = orderExtWater.getServicePriceId();
-				
-				PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-				
-				orderExtra+= servicePrice.getName();
-				orderExtra+= "数量:"+ orderExtWater.getServiceNum().toString();
-				
-			}
-			
-			vo.setOrderExtra(orderExtra);
+			orderExtra = orderExtWaterService.getOrderExtra(order.getOrderId());
 		}
-		
+		vo.setOrderExtra(orderExtra);
         return vo;
 	}		
 	

@@ -5,7 +5,12 @@ import java.math.BigDecimal;
 import com.simi.vo.OrdersListVo;
 
 public class OrdersWaterListVo extends OrdersListVo{
-private Long servicePriceId;
+	
+	private Long servicePriceId;
+	
+	private String servicePriceName;
+	
+	private String servicePriceImg;
 	
 	private Integer serviceNum;
 	
@@ -83,6 +88,22 @@ private Long servicePriceId;
 
 	public void setOrderExtStatus(Short orderExtStatus) {
 		this.orderExtStatus = orderExtStatus;
+	}
+
+	public String getServicePriceName() {
+		return servicePriceName;
+	}
+
+	public void setServicePriceName(String servicePriceName) {
+		this.servicePriceName = servicePriceName;
+	}
+
+	public String getServicePriceImg() {
+		return servicePriceImg;
+	}
+
+	public void setServicePriceImg(String servicePriceImg) {
+		this.servicePriceImg = servicePriceImg;
 	}
 	
 }

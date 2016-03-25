@@ -126,17 +126,13 @@ public class OrderWaterController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/waterList", method = { RequestMethod.GET })
-	public String list(HttpServletRequest request, Model model,
-			OrderSearchVo searchVo,
-			@RequestParam(value = "user_id", required = false) Long userId) {
+	public String list(HttpServletRequest request, Model model, OrderSearchVo searchVo, @RequestParam(value = "user_id", required = false) Long userId) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
 		model.addAttribute("searchModel", searchVo);
-		int pageNo = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request,
-				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
+		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		searchVo.setUserId(userId);
 		// 绿植服务大类ID
 		searchVo.setServiceTypeId(239L);
@@ -144,8 +140,7 @@ public class OrderWaterController extends AdminController {
 		// 分页
 		PageHelper.startPage(pageNo, pageSize);
 
-		List<Orders> orderList = orderQueryService.selectByListPageList(
-				searchVo, pageNo, pageSize);
+		List<Orders> orderList = orderQueryService.selectByListPageList(searchVo, pageNo, pageSize);
 
 		Orders orders = null;
 		for (int i = 0; i < orderList.size(); i++) {
@@ -155,10 +150,15 @@ public class OrderWaterController extends AdminController {
 			OrdersWaterListVo vo = new OrdersWaterListVo();
 			BeanUtilsExp.copyPropertiesIgnoreNull(ordersListVo, vo);
 
-			OrderExtWater water = orderExtWaterService.selectByOrderId(vo
-					.getOrderId());
+			OrderExtWater water = orderExtWaterService.selectByOrderId(vo.getOrderId());
 			if (water != null) {
-				vo.setServicePriceId(water.getServicePriceId());
+				Long servicePriceId = water.getServicePriceId();
+				PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+				PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+				
+				vo.setServicePriceId(servicePriceId);
+				vo.setServicePriceName(servicePrice.getName());
+				vo.setServicePriceImg(servicePriceDetail.getImgUrl());
 				vo.setServiceNum(water.getServiceNum());
 				vo.setLinkMan(water.getLinkMan());
 				vo.setLinkTel(water.getLinkTel());
@@ -197,8 +197,7 @@ public class OrderWaterController extends AdminController {
 		OrdersWaterListVo vo = new OrdersWaterListVo();
 		// OrdersGreenPartnerVo vo = new OrdersGreenPartnerVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(listvo, vo);
-		OrderExtPartner orderExtPartner = orderExtPartnerService
-				.selectByOrderId(orders.getOrderId());
+		OrderExtPartner orderExtPartner = orderExtPartnerService.selectByOrderId(orders.getOrderId());
 		if (orderExtPartner == null) {
 			vo.setPartnerOrderNo("");
 			vo.setPartnerOrderMoney(new BigDecimal(0));
@@ -209,8 +208,7 @@ public class OrderWaterController extends AdminController {
 			vo.setPartnerId(orderExtPartner.getPartnerId());
 		}
 
-		OrderExtWater water = orderExtWaterService.selectByOrderId(vo
-				.getOrderId());
+		OrderExtWater water = orderExtWaterService.selectByOrderId(vo.getOrderId());
 
 		vo.setServicePriceId(water.getServicePriceId());
 		vo.setServiceNum(water.getServiceNum());
@@ -221,8 +219,7 @@ public class OrderWaterController extends AdminController {
 		model.addAttribute("contentModel", vo);
 
 		Long addTime = orders.getAddTime();
-		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000,
-				"yyyy-MM-dd HH:mm:ss");
+		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000, "yyyy-MM-dd HH:mm:ss");
 		model.addAttribute("addTimeStr", addTimeStr);
 
 		// 用户信息
@@ -231,16 +228,13 @@ public class OrderWaterController extends AdminController {
 
 		// 商品名称
 		Long servicePriceId = water.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService
-				.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService
-				.selectByServicePriceId(servicePriceId);
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		model.addAttribute("servicePrice", servicePrice);
 		model.addAttribute("servicePriceDetail", servicePriceDetail);
 
 		// 用户地址列表
-		List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(orders
-				.getUserId());
+		List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(orders.getUserId());
 		List<UserAddrVo> voList = new ArrayList<UserAddrVo>();
 		for (int i = 0; i < userAddrsList.size(); i++) {
 			UserAddrs addrs = userAddrsList.get(i);
@@ -263,8 +257,7 @@ public class OrderWaterController extends AdminController {
 
 		Long parnterUserId = partnerUser.getUserId();
 
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService
-				.selectByUserId(parnterUserId);
+		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
 
 		List<Long> servicePriceIds = new ArrayList<Long>();
 		for (PartnerServicePriceDetail item : servicePriceDetails) {
@@ -272,23 +265,19 @@ public class OrderWaterController extends AdminController {
 				servicePriceIds.add(item.getServicePriceId());
 			}
 		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService
-				.selectByIds(servicePriceIds);
+		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
 		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
 		PartnerServiceType serviceType = null;
 		for (PartnerServiceType item : serviceTypes) {
 			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService
-					.selectByServicePriceId(serviceType.getId());
+			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(serviceType.getId());
 			OrderWaterComVo waterComVo = new OrderWaterComVo();
 			waterComVo.setPrice(detail.getPrice());
 			waterComVo.setDisprice(detail.getDisPrice());
 			waterComVo.setImgUrl(detail.getImgUrl());
 			waterComVo.setServicePriceId(serviceType.getId());
 			waterComVo.setName(serviceType.getName());
-			waterComVo.setNamePrice(serviceType.getName() + "(原价:"
-					+ detail.getPrice().toString() + "元,折扣价："
-					+ detail.getDisPrice().toString() + "元)");
+			waterComVo.setNamePrice(serviceType.getName() + "(原价:" + detail.getPrice().toString() + "元,折扣价：" + detail.getDisPrice().toString() + "元)");
 			waterComVos.add(waterComVo);
 
 		}
@@ -297,8 +286,7 @@ public class OrderWaterController extends AdminController {
 		// 服务商信息
 		// 服务商列表
 
-		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService
-				.selectByServiceTypeId(serviceTypeId);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectByServiceTypeId(serviceTypeId);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
 			Long partnerId = partnerRefServiceType.get(i).getPartnerId();
@@ -331,9 +319,7 @@ public class OrderWaterController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/saveOrderWater", method = { RequestMethod.POST })
-	public String adForm(Model model,
-			@ModelAttribute("contentModel") OrdersWaterListVo vo,
-			BindingResult result, HttpServletRequest request)
+	public String adForm(Model model, @ModelAttribute("contentModel") OrdersWaterListVo vo, BindingResult result, HttpServletRequest request)
 			throws IOException {
 
 		Long orderId = vo.getOrderId();
@@ -366,18 +352,14 @@ public class OrderWaterController extends AdminController {
 
 	@AuthPassport
 	@RequestMapping(value = "/saveOrderWaterPartner", method = { RequestMethod.POST })
-	public String saveOrderWaterPartner(Model model,
-			@ModelAttribute("orderExtPartner") OrderExtPartner vo,
-			BindingResult result, HttpServletRequest request)
+	public String saveOrderWaterPartner(Model model, @ModelAttribute("orderExtPartner") OrderExtPartner vo, BindingResult result, HttpServletRequest request)
 			throws IOException {
 
 		Long orderId = vo.getOrderId();
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		Long id = vo.getId();
 		Long userId = order.getUserId();
-		
-		
-		
+
 		Short orderExtStatus = 1;
 		if (id.equals(0L)) {
 			vo.setAddTime(TimeStampUtil.getNowSecond());
@@ -389,11 +371,9 @@ public class OrderWaterController extends AdminController {
 			order.setUpdateTime(TimeStampUtil.getNowSecond());
 			ordersService.updateByPrimaryKey(order);
 
-
-			
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			String title = serviceType.getName();
-			String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+			String summary = OrderUtil.getOrderStausMsg(order.getOrderStatus());
 			userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");
 
 		} else {
@@ -408,18 +388,19 @@ public class OrderWaterController extends AdminController {
 		OrderExtWater water = orderExtWaterService.selectByOrderId(orderId);
 		water.setOrderExtStatus(orderExtStatus);
 		orderExtWaterService.updateByPrimaryKeySelective(water);
-		
-		//更新此商品对于的服务人员信息
+
+		// 更新此商品对于的服务人员信息
 		String servicePriceIdStr = request.getParameter("servicePriceList");
 		Long servicePriceId = 0L;
-		if (!StringUtil.isEmpty(servicePriceIdStr)) servicePriceId = Long.valueOf(servicePriceIdStr);
-		
+		if (!StringUtil.isEmpty(servicePriceIdStr))
+			servicePriceId = Long.valueOf(servicePriceIdStr);
+
 		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		if (servicePriceDetail != null) {
 			order.setPartnerUserId(servicePriceDetail.getUserId());
 			ordersService.updateByPrimaryKey(order);
 		}
-		
+
 		return "redirect:/order/waterList";
 	}
 
@@ -452,8 +433,7 @@ public class OrderWaterController extends AdminController {
 
 		Long parnterUserId = partnerUser.getUserId();
 
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService
-				.selectByUserId(parnterUserId);
+		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
 
 		List<Long> servicePriceIds = new ArrayList<Long>();
 		for (PartnerServicePriceDetail item : servicePriceDetails) {
@@ -461,23 +441,19 @@ public class OrderWaterController extends AdminController {
 				servicePriceIds.add(item.getServicePriceId());
 			}
 		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService
-				.selectByIds(servicePriceIds);
+		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
 		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
 		PartnerServiceType serviceType = null;
 		for (PartnerServiceType item : serviceTypes) {
 			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService
-					.selectByServicePriceId(serviceType.getId());
+			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(serviceType.getId());
 			OrderWaterComVo waterComVo = new OrderWaterComVo();
 			waterComVo.setPrice(detail.getPrice());
 			waterComVo.setDisprice(detail.getDisPrice());
 			waterComVo.setImgUrl(detail.getImgUrl());
 			waterComVo.setServicePriceId(serviceType.getId());
 			waterComVo.setName(serviceType.getName());
-			waterComVo.setNamePrice(serviceType.getName() + "(原价:"
-					+ detail.getPrice().toString() + "元,折扣价："
-					+ detail.getDisPrice().toString() + "元)");
+			waterComVo.setNamePrice(serviceType.getName() + "(原价:" + detail.getPrice().toString() + "元,折扣价：" + detail.getDisPrice().toString() + "元)");
 			waterComVos.add(waterComVo);
 
 		}
@@ -485,10 +461,8 @@ public class OrderWaterController extends AdminController {
 
 		// 商品名称
 		Long servicePriceId = water.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService
-				.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService
-				.selectByServicePriceId(servicePriceId);
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		model.addAttribute("servicePrice", servicePrice);
 		model.addAttribute("servicePriceDetail", servicePriceDetail);
 
@@ -509,18 +483,14 @@ public class OrderWaterController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/saveOrderWaterAdd", method = RequestMethod.POST)
-	public String orderTeamSave(Model model,
-			@ModelAttribute("contentModel") OrdersWaterAddOaVo vo,
-			BindingResult result, HttpServletRequest request)
+	public String orderTeamSave(Model model, @ModelAttribute("contentModel") OrdersWaterAddOaVo vo, BindingResult result, HttpServletRequest request)
 			throws UnsupportedEncodingException {
 
 		Long serviceTypeId = (long) 239;
 		Users u = usersService.selectByMobile(vo.getMobile());
 
-		PartnerServiceType serviceType = partnerServiceTypeService
-				.selectByPrimaryKey(serviceTypeId); 
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService
-				.selectByServicePriceId(vo.getServicePriceId());
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(vo.getServicePriceId());
 
 		BigDecimal orderMoney = new BigDecimal(0.0);// 原价
 		BigDecimal orderPay = new BigDecimal(0.0);// 折扣价
@@ -587,7 +557,7 @@ public class OrderWaterController extends AdminController {
 
 		// 异步产生首页消息信息.
 		String title = serviceType.getName();
-		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
+		String summary = OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		userMsgAsyncService.newActionAppMsg(vo.getUserId(), orderId, "water", title, summary, "");
 
 		return "redirect:/order/waterList";

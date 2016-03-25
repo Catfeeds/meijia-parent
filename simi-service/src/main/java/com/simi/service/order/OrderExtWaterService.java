@@ -38,4 +38,6 @@ public interface OrderExtWaterService {
 
 	PageInfo selectByPage(OrderSearchVo searchVo,  int pageNo, int pageSize);
 
+	String getOrderExtra(Long orderId);
+
 }
