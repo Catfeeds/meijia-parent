@@ -292,7 +292,7 @@ public class PushUtil {
 			apnpayload.setContentAvailable(1);
 //			apnpayload.setCategory("cardView");
 			
-			if (pushType.equals("alertClock")) {
+			if (pushType.equals("a")) {
 				apnpayload.setSound("simivoice.caf");
 			}
 			APNPayload.DictionaryAlertMsg alertMsg = new APNPayload.DictionaryAlertMsg();
@@ -302,8 +302,8 @@ public class PushUtil {
 				apnpayload.addCustomMsg("a", transmissionContent);
 				
 				HashMap<String, String> tranParams = GsonUtil.GsonToObject(transmissionContent, HashMap.class);
-				String isShow = tranParams.get("is_show").toString().trim();
-				String remindContent = tranParams.get("remind_content").toString();
+				String isShow = tranParams.get("is").toString().trim();
+				String remindContent = tranParams.get("rc").toString();
 				if (isShow.equals("true")) {
 					alertMsg.setBody(remindContent);
 				}
@@ -355,16 +355,16 @@ public class PushUtil {
 		 
 		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-21 14:43:00");
 		 String timeStr = time1.toString();
-		 tranParams.put("is_show", "true");		
-		 tranParams.put("action", "alarm");		
-		 tranParams.put("card_id", "0");
-		 tranParams.put("card_type", "0");
-		 tranParams.put("service_time", "0");
-		 tranParams.put("remind_time", "0");
-		 tranParams.put("remind_title", "事务提醒");
-		 tranParams.put("remind_content", "测试声音 	new-mail.caf");
-		 tranParams.put("sound", "new-mail");
-		 tranParams.put("sound_id", "1000");
+		 tranParams.put("is", "true");		
+		 tranParams.put("ac", "a");		
+		 tranParams.put("ci", "0");
+		 tranParams.put("ct", "0");
+		 tranParams.put("st", "0");
+		 tranParams.put("re", "0");
+		 tranParams.put("rt", "事务提醒");
+		 tranParams.put("rc", "测试声音 	new-mail.caf");
+//		 tranParams.put("sound", "new-mail");
+//		 tranParams.put("sound_id", "1000");
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);
 		 

@@ -56,14 +56,14 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
-		tranParams.put("is_show", "true");
-		tranParams.put("action", "msg");
-		tranParams.put("card_id", "0");
-		tranParams.put("card_type", "0");
-		tranParams.put("service_time", "");
-		tranParams.put("remind_time", "");
-		tranParams.put("remind_title", msgTitle);
-		tranParams.put("remind_content", msgContent);
+		tranParams.put("is", "true");
+		tranParams.put("ac", "m");
+		tranParams.put("ci", "0");
+		tranParams.put("ct", "0");
+		tranParams.put("st", "");
+		tranParams.put("re", "");
+		tranParams.put("rt", msgTitle);
+		tranParams.put("rc", msgContent);
 		
 		String clientId = userPushBind.getClientId();
 		String deviceType = userPushBind.getDeviceType();

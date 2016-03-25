@@ -229,14 +229,14 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		if (card.getSetNowSend().equals((short)0)) isShow = "false";
 
-		tranParams.put("is_show", isShow);
-		tranParams.put("action", "setclock");
-		tranParams.put("card_id", card.getCardId().toString());
-		tranParams.put("card_type", card.getCardType().toString());
-		tranParams.put("service_time", serviceTime.toString());
-		tranParams.put("remind_time", remindTime.toString());
-		tranParams.put("remind_title", cardTypeName);
-		tranParams.put("remind_content", pushContent);
+		tranParams.put("is", isShow);
+		tranParams.put("ac", "s");
+		tranParams.put("ci", card.getCardId().toString());
+		tranParams.put("ct", card.getCardType().toString());
+		tranParams.put("st", serviceTime.toString());
+		tranParams.put("re", remindTime.toString());
+		tranParams.put("rt", cardTypeName);
+		tranParams.put("rc", pushContent);
 		
 		System.out.println(tranParams.toString());
 
@@ -334,14 +334,14 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		remindTime = remindTime * 1000;
 		
 		String isShow = "true";		
-		tranParams.put("is_show", isShow);
-		tranParams.put("action", "alarm");
-		tranParams.put("card_id", card.getCardId().toString());
-		tranParams.put("card_type", card.getCardType().toString());
-		tranParams.put("service_time", serviceTime.toString());
-		tranParams.put("remind_time", remindTime.toString());
-		tranParams.put("remind_title", cardTypeName);
-		tranParams.put("remind_content", pushContent);
+		tranParams.put("is", isShow);
+		tranParams.put("ac", "a");
+		tranParams.put("ci", card.getCardId().toString());
+		tranParams.put("ct", card.getCardType().toString());
+		tranParams.put("st", serviceTime.toString());
+		tranParams.put("re", remindTime.toString());
+		tranParams.put("rt", cardTypeName);
+		tranParams.put("rc", pushContent);
 		
 
 		ObjectMapper objectMapper = new ObjectMapper();

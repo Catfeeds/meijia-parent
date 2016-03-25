@@ -356,14 +356,14 @@ public class CardQueryController extends BaseController {
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 
 		String timeStr = time1.toString();
-		tranParams.put("is_show", "true");
-		tranParams.put("action", "setclock");
-		tranParams.put("card_id", cardId.toString());
-		tranParams.put("card_type", "1");
-		tranParams.put("service_time", timeStr);
-		tranParams.put("remind_time", timeStr);
-		tranParams.put("remind_title", "会议安排");
-		tranParams.put("remind_content", timeStr1 + "请参加华北区电话会议,请提前10分钟进入会议室B11");
+		tranParams.put("is", "true");
+		tranParams.put("ac", "s");
+		tranParams.put("ci", cardId.toString());
+		tranParams.put("ct", "1");
+		tranParams.put("st", timeStr);
+		tranParams.put("re", timeStr);
+		tranParams.put("rt", "会议安排");
+		tranParams.put("rc", timeStr1 + "请参加华北区电话会议,请提前10分钟进入会议室B11");
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
@@ -402,15 +402,15 @@ public class CardQueryController extends BaseController {
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 
 		String timeStr = time1.toString();
-		tranParams.put("is_show", "true");
-		tranParams.put("action", "alarm");
-		tranParams.put("card_id", cardId.toString());
-		tranParams.put("card_type", "1");
-		tranParams.put("service_time", timeStr);
-		tranParams.put("remind_time", timeStr);
-		tranParams.put("remind_title", "会议安排");
-		tranParams.put("remind_content", timeStr1 + "请参加华北区电话会议,请提前10分钟进入会议室B11");
-
+		tranParams.put("is", "true");
+		tranParams.put("ac", "a");
+		tranParams.put("ci", cardId.toString());
+		tranParams.put("ct", "1");
+		tranParams.put("st", timeStr);
+		tranParams.put("re", timeStr);
+		tranParams.put("rt", "会议安排");
+		tranParams.put("rc", timeStr1 + "请参加华北区电话会议,请提前10分钟进入会议室B11");
+				
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -447,14 +447,14 @@ public class CardQueryController extends BaseController {
 
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 
-		tranParams.put("is_show", "true");
-		tranParams.put("action", "msg");
-		tranParams.put("card_id", "0");
-		tranParams.put("card_type", "0");
-		tranParams.put("service_time", "");
-		tranParams.put("remind_time", "");
-		tranParams.put("remind_title", "新消息");
-		tranParams.put("remind_content", "你在" + timeStr1 + "有一条新的消息");
+		tranParams.put("is", "true");
+		tranParams.put("ac", "m");
+		tranParams.put("ci", "0");
+		tranParams.put("ct", "0");
+		tranParams.put("st", "");
+		tranParams.put("re", "");
+		tranParams.put("rt", "新消息");
+		tranParams.put("rc", "你在" + timeStr1 + "有一条新的消息");
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
@@ -513,9 +513,9 @@ public class CardQueryController extends BaseController {
 
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "yyyy-MM-dd HH:mm:ss");
 				
-		tranParams.put("is_show", "false");
-		tranParams.put("action", "car-msg");
-		tranParams.put("car_no", "京EX9603");
+		tranParams.put("is", "false");
+		tranParams.put("ac", "car-msg");
+		tranParams.put("cn", "京EX9603");
 		tranParams.put("car_color", "白色");
 		tranParams.put("mobile", mobile);
 		tranParams.put("ocx_time", timeStr1);

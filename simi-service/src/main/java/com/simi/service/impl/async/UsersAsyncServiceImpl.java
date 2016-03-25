@@ -191,14 +191,14 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
-		tranParams.put("is_show", "true");
-		tranParams.put("action", "msg");
-		tranParams.put("card_id", "0");
-		tranParams.put("card_type", "0");
-		tranParams.put("service_time", "0");
-		tranParams.put("remind_time", "0");
-		tranParams.put("remind_title", "新用户注册");
-		tranParams.put("remind_content", "新用户:" + name + "在" + addTimeStr + "注册成功");
+		tranParams.put("is", "true");
+		tranParams.put("ac", "m");
+		tranParams.put("ci", "0");
+		tranParams.put("ct", "0");
+		tranParams.put("st", "0");
+		tranParams.put("re", "0");
+		tranParams.put("rt", "新用户注册");
+		tranParams.put("rc", "新用户:" + name + "在" + addTimeStr + "注册成功");
 
 		String jsonParams = GsonUtil.GsonString(tranParams);
 
