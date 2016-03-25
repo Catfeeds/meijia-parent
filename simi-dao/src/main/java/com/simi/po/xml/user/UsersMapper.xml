@@ -90,7 +90,7 @@
 		</if>
 		
 		<if test="thirdType != null">
-			and third_type = #{thirdType,jdbcType=NUMERIC}
+			and 3rd_type = #{thirdType,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="openid != null">
@@ -145,7 +145,7 @@
 		</if>
 		
 		<if test="thirdType != null">
-			and third_type = #{thirdType,jdbcType=NUMERIC}
+			and 3rd_type = #{thirdType,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="openid != null">
@@ -173,18 +173,6 @@
 		order by add_time desc
 	</select>
 	
-	<!--根据Ids查询Users -->
-	<select id="selectByUserIds" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from users
-		where id in
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		order by add_time asc
-	</select>
-		
 	<!-- 根据手机号查询用户list -->
 	<select id="selectNotInMobiles" resultMap="BaseResultMap">
 		select
