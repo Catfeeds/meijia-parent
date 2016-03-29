@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
 import com.simi.action.app.JUnitActionBase;
 
 
@@ -14,8 +15,10 @@ public class TestBaseDataController extends JUnitActionBase  {
 	@Test
     public void testGetBaseDatas() throws Exception {
 
-		MockHttpServletRequestBuilder getRequest = get("/app/dict/get_base_datas.json");
-
+		
+		String url = "/app/get_base_datas.json";
+		String params = "?user_id=18&t_user=1&t_city=1&t_apptools=1&t_express=1&t_assets=1";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
 
 	    resultActions.andExpect(content().contentType(this.mediaType));
@@ -25,20 +28,7 @@ public class TestBaseDataController extends JUnitActionBase  {
 
 	    System.out.print("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
-	    //判断status 是否为 0 = 正常.
 	    
-	    /*
-	     *  post
-	     	MockHttpServletRequestBuilder postRequest = post("/confirm");
-		    postRequest = postRequest.param("selection", "1");
-
-		    ResultActions resultActions = mockMvc.perform(postRequest);
-
-		    resultActions.andDo(print());
-		    resultActions.andExpect(content().contentType(mediaType));
-		    resultActions.andExpect(status().isOk());
-	     *
-	     */
 
     }
 

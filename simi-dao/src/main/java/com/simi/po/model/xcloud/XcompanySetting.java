@@ -14,6 +14,8 @@ public class XcompanySetting {
     private Short isEnable;
 
     private Long addTime;
+    
+    private Long updateTime;
 
     public Long getId() {
         return id;
@@ -70,4 +72,12 @@ public class XcompanySetting {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Long getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Long updateTime) {
+		this.updateTime = updateTime;
+	}
 }

@@ -5,6 +5,7 @@
 		<id column="express_id" property="expressId" jdbcType="NUMERIC" />
 		<result column="ecode" property="ecode" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="is_hot" property="isHot" jdbcType="NUMERIC" />
 		<result column="website" property="website" jdbcType="VARCHAR" />
 		<result column="api_order_url" property="apiOrderUrl" jdbcType="VARCHAR" />
 		<result column="api_search_url" property="apiSearchUrl" jdbcType="VARCHAR" />
@@ -12,7 +13,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		express_id, ecode, name, website, api_order_url, api_search_url, add_time, update_time
+		express_id, ecode, name, is_hot, website, api_order_url, api_search_url, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -27,15 +28,24 @@
 		from dict_express order by express_id asc
 	</select>
 	
+	<select id="selectByT" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from dict_express where 
+		<![CDATA[  update_time  >= #{T}]]>
+		order by express_id asc
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from dict_express
 		where express_id = #{expressId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.dict.DictExpress">
-		insert into dict_express (express_id, ecode, name, website,
+		insert into dict_express (express_id, ecode, name, is_hot, website,
 		api_order_url, api_search_url, add_time,
 		update_time)
-		values (#{expressId,jdbcType=NUMERIC}, #{ecode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR},
+		values (#{expressId,jdbcType=NUMERIC}, #{ecode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+		#{isHot,jdbcType=NUMERIC}, #{website,jdbcType=VARCHAR},
 		#{apiOrderUrl,jdbcType=VARCHAR}, #{apiSearchUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
 	</insert>
@@ -50,6 +60,9 @@
 			</if>
 			<if test="name != null">
 				name,
+			</if>
+			<if test="isHot != null">
+				is_hot,
 			</if>
 			<if test="website != null">
 				website,
@@ -77,6 +90,9 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
+			<if test="isHot != null">
+				#{isHot,jdbcType=VARCHAR},
+			</if>
 			<if test="website != null">
 				#{website,jdbcType=VARCHAR},
 			</if>
@@ -103,6 +119,9 @@
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
+			<if test="isHot != null">
+				is_hot = #{isHot,jdbcType=VARCHAR},
+			</if>
 			<if test="website != null">
 				website = #{website,jdbcType=VARCHAR},
 			</if>
@@ -123,8 +142,10 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.dict.DictExpress">
 		update dict_express
+		set
 		ecode = #{ecode,jdbcType=VARCHAR},
-		set name = #{name,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		is_hot = #{isHot,jdbcType=VARCHAR},
 		website = #{website,jdbcType=VARCHAR},
 		api_order_url = #{apiOrderUrl,jdbcType=VARCHAR},
 		api_search_url = #{apiSearchUrl,jdbcType=VARCHAR},

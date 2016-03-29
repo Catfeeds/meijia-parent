@@ -24,6 +24,11 @@ public class ExpressServiceImpl implements ExpressService {
 	public List<DictExpress> selectAll() {
 		return expressMapper.selectAll();
 	}
+	
+	@Override
+	public List<DictExpress> selectByT(Long t) {
+		return expressMapper.selectByT(t);
+	}
 
 
 }

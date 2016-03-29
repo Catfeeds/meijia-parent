@@ -14,19 +14,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.vo.AppResultData;
 import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.user.UserViewVo;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.dict.DictExpress;
 import com.simi.po.model.op.AppTools;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.dict.AdService;
 import com.simi.service.dict.CityService;
+import com.simi.service.dict.ExpressService;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XCompanySettingService;
 
 @Controller
-@RequestMapping(value = "/app/dict")
+@RequestMapping(value = "/app/")
 public class BaseDataController<T> {
 
 	@Autowired
@@ -37,6 +42,12 @@ public class BaseDataController<T> {
 	
 	@Autowired
 	private AppToolsService appToolsService;
+	
+	@Autowired
+	private ExpressService expressService;
+	
+	@Autowired
+	private XCompanySettingService xCompanySettingService;
 
 	/**
 	 * 
@@ -49,8 +60,8 @@ public class BaseDataController<T> {
 	 */
 	@RequestMapping(value = "get_base_datas", method = RequestMethod.GET)
 	public AppResultData<Object> baseDatas(
-			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId,
-			@RequestParam(value = "t_user", required = false, defaultValue = "0") Long tUser,
+//			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId,
+//			@RequestParam(value = "t_user", required = false, defaultValue = "0") Long tUser,
 			@RequestParam(value = "t_city", required = false, defaultValue = "0") Long tCity,
 			@RequestParam(value = "t_apptools", required = false, defaultValue = "0") Long tApptools,
 			@RequestParam(value = "t_express", required = false, defaultValue = "0") Long tExpress,
@@ -61,14 +72,14 @@ public class BaseDataController<T> {
 		
 		Map<String, Object> datas = new HashMap<String, Object>();
 		
-		datas.put("user", "");
-		if (userId > 0L && tUser > 0L) {
-			Users u = userService.selectByPrimaryKey(userId);
-			if (u.getUpdateTime() > tUser) {
-				UserViewVo vo = userService.getUserInfo(userId);
-				datas.put("user", vo);
-			}
-		}
+//		datas.put("user", "");
+//		if (userId > 0L && tUser > 0L) {
+//			Users u = userService.selectByPrimaryKey(userId);
+//			if (u.getUpdateTime() > tUser) {
+//				UserViewVo vo = userService.getUserInfo(userId);
+//				datas.put("user", vo);
+//			}
+//		}
 		
 		datas.put("city", "");
 		if (tCity > 0L) {
@@ -87,8 +98,23 @@ public class BaseDataController<T> {
 		datas.put("express", "");
 		
 		if (tExpress > 0L) {
-			
+			List<DictExpress> expressList = expressService.selectByT(tExpress);
+			if (!expressList.isEmpty()) {
+				datas.put("express", expressList);
+			}
 		}
+		
+		datas.put("asset_types", "") ;
+		if (tAssets > 0L) {
+			CompanySettingSearchVo s = new CompanySettingSearchVo();
+			s.setSettingType("asset_type");
+			List<XcompanySetting> assetTypeList = xCompanySettingService.selectBySearchVo(s);
+			if (!assetTypeList.isEmpty()) {
+				datas.put("asset_types", assetTypeList) ;
+			}
+		}
+		
+		result.setData(datas);
 		
 		return result;
 	}

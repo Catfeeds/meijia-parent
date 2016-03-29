@@ -9,9 +9,10 @@
 		<result column="setting_json" property="settingJson" jdbcType="VARCHAR" />
 		<result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, name, setting_type, setting_json, is_enable, add_time
+		id, company_id, name, setting_type, setting_json, is_enable, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -19,7 +20,7 @@
 		from xcompany_setting
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanySettingSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -30,16 +31,20 @@
 		</if>
 
 		<if test="settingType != null">
-			and setting_type =  #{settingType,jdbcType=VARCHAR}
+			and setting_type = #{settingType,jdbcType=VARCHAR}
 		</if>
-		
+
 		<if test="name != null">
-			and name =  #{name,jdbcType=VARCHAR}
+			and name = #{name,jdbcType=VARCHAR}
 		</if>
-		
+
+		<if test="updateTime != null">
+			<![CDATA[ and update_time >= #{updateTime,jdbcType=NUMERIC}]]>
+		</if>
+
 		order by id desc
 	</select>
-	
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from xcompany_setting
 		where id = #{id,jdbcType=NUMERIC}
@@ -47,10 +52,12 @@
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanySetting">
 		insert into xcompany_setting (id, company_id, name,
 		setting_type, setting_json, is_enable,
-		add_time)
-		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
-		#{settingType,jdbcType=VARCHAR}, #{settingJson,jdbcType=VARCHAR}, #{isEnable,jdbcType=NUMERIC},
-		#{addTime,jdbcType=NUMERIC})
+		add_time, update_time)
+		values
+		(#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{settingType,jdbcType=VARCHAR}, #{settingJson,jdbcType=VARCHAR},
+		#{isEnable,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanySetting">
 		insert into xcompany_setting
@@ -76,6 +83,9 @@
 			<if test="addTime != null">
 				add_time,
 			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -98,6 +108,9 @@
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
 			</if>
 		</trim>
 	</insert>
@@ -122,6 +135,9 @@
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
 		</set>
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
@@ -132,7 +148,9 @@
 		setting_type = #{settingType,jdbcType=VARCHAR},
 		setting_json = #{settingJson,jdbcType=VARCHAR},
 		is_enable = #{isEnable,jdbcType=NUMERIC},
-		add_time = #{addTime,jdbcType=NUMERIC}
+		add_time =
+		#{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 </mapper>

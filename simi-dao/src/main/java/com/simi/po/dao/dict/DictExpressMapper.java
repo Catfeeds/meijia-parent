@@ -18,4 +18,6 @@ public interface DictExpressMapper {
     int updateByPrimaryKey(DictExpress record);
 
 	List<DictExpress> selectAll();
+
+	List<DictExpress> selectByT(Long t);
 }

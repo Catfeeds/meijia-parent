@@ -11,4 +11,6 @@ public interface ExpressService {
 
 	List<DictExpress> selectAll();
 
+	List<DictExpress> selectByT(Long t);
+
 }

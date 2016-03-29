@@ -6,6 +6,8 @@ public class DictExpress {
     private String ecode;
 
     private String name;
+    
+    private Short  isHot;
 
     private String website;
 
@@ -79,5 +81,13 @@ public class DictExpress {
 
 	public void setEcode(String ecode) {
 		this.ecode = ecode;
+	}
+
+	public Short getIsHot() {
+		return isHot;
+	}
+
+	public void setIsHot(Short isHot) {
+		this.isHot = isHot;
 	}
 }
