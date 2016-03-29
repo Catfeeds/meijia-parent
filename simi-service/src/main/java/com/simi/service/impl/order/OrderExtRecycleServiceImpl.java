@@ -113,7 +113,10 @@ public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
 		vo.setAddrName("");
 		if (order.getAddrId() > 0L) {
 			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
-			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
+			if (userAddr != null) {
+				vo.setAddrName(userAddr.getName() + userAddr.getAddr());
+			}
+			
 		}
 		//订单状态
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
