@@ -15,6 +15,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.op.AppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.po.AppToolsVo;
 
 @Controller
@@ -38,7 +39,10 @@ public class ApptoolsController extends BaseController {
 			@RequestParam(value = "t", required = false, defaultValue="0") Long t
 			) {
 		
-		List<AppTools> appTools = appToolsService.selectByAppTypeAll(appType);
+		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+		searchVo.setAppType(appType);
+		searchVo.setIsOnline((short) 0);
+		List<AppTools> appTools = appToolsService.selectBySearchVo(searchVo);
          
 		List<AppToolsVo> vo = new ArrayList<AppToolsVo>();
 		

@@ -17,6 +17,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.zxing.WriterException;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.OpChannelService;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.po.AppToolsVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.op.AppToolsMapper;
@@ -101,36 +102,17 @@ public class AppToolsServiceImpl implements AppToolsService {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public PageInfo selectByListPage(int pageNo, int pageSize) {
+	public PageInfo selectByListPage(ApptoolsSearchVo searchVo, int pageNo, int pageSize) {
 
 		PageHelper.startPage(pageNo, pageSize);
 		
-		List<AppTools> list = appToolsMapper.selectByListPage();
+		List<AppTools> list = appToolsMapper.selectByListPage(searchVo);
 		
 		PageInfo result = new PageInfo(list);
 		
 		return result;
 	}
-
-
-	@Override
-	public List<AppTools> selectByAppType(String appType) {
-		
-		return appToolsMapper.selectByAppType(appType);
-	}
 	
-	@Override
-	public AppTools selectByAction(String action) {
-		
-		return appToolsMapper.selectByAction(action);
-	}
-
-	@Override
-	public List<AppTools> selectByAppTypeAndStatus(String appType) {
-		
-		return appToolsMapper.selectByAppTypeAndStatus(appType);
-	}
-
 	@Override
 	public AppToolsVo getAppToolsVo(AppTools item,Long userId) {
 		
@@ -153,41 +135,12 @@ public class AppToolsServiceImpl implements AppToolsService {
 		vo.setUserId(userId);
 		return vo;
 	}
-
-
-	@Override
-	public List<AppTools> selectByAppTypeAll(String appType) {
-
-		return appToolsMapper.selectByAppTypeAll(appType);
-	}
-
-
-	@Override
-	public PageInfo selectByListPage(String appType, int pageNo, int pageSize,Long userId) {
-		
-		PageHelper.startPage(pageNo, pageSize);
-		
-		//List<AppToolsVo> appToolsVoList = new ArrayList<AppToolsVo>();
-		List<AppTools> list = appToolsMapper.selectByAppTypeAll(appType);
-		if (!list.isEmpty()) {
-			/*for (AppTools item : list) {
-				AppToolsVo vo = getAppToolsVo(item, userId);
-				appToolsVoList.add(vo);
-			}*/
-			for (int i = 0; i < list.size(); i++) {
-				AppTools appTools = list.get(i);
-				AppToolsVo vo = getAppToolsVo(appTools, userId);
-				/*if (vo.getStatus() == null){
-					vo.setStatus((short)0);
-				}*/
-				list.set(i, vo);
-			}
-		}
-		
-		PageInfo result = new PageInfo(list);
-		return result;
-	}
 	
+	@Override
+	public List<AppTools> selectBySearchVo(ApptoolsSearchVo searchVo) {
+		return appToolsMapper.selectBySearchVo(searchVo);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public String genQrCode(AppTools item) {

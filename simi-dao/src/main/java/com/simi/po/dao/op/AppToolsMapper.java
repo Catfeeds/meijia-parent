@@ -3,6 +3,7 @@ package com.simi.po.dao.op;
 import java.util.List;
 
 import com.simi.po.model.op.AppTools;
+import com.simi.vo.ApptoolsSearchVo;
 
 public interface AppToolsMapper {
     int deleteByPrimaryKey(Long tId);
@@ -17,13 +18,7 @@ public interface AppToolsMapper {
 
     int updateByPrimaryKey(AppTools record);
 
-	List<AppTools> selectByListPage();
+	List<AppTools> selectBySearchVo(ApptoolsSearchVo searchVo);
 
-	List<AppTools> selectByAppType(String appType);
-
-	List<AppTools> selectByAppTypeAndStatus(String appType);
-
-	List<AppTools> selectByAppTypeAll(String appType);
-
-	AppTools selectByAction(String action);
+	List<AppTools> selectByListPage(ApptoolsSearchVo searchVo);
 }

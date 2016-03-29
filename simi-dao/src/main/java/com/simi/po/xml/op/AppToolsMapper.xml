@@ -32,41 +32,65 @@
 		from app_tools
 		where t_id = #{tId,jdbcType=NUMERIC}
 	</select>
-	<select id="selectByListPage" resultMap="BaseResultMap">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.ApptoolsSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from app_tools
+		where 1 = 1 
+		<if test="appType != null">
+			and app_type = #{appType,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="menuType != null">
+			and menu_type = #{menuType,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="action != null">
+			and action = #{action,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="isOnline != null">
+			and is_online = #{isOnline,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="isDefault != null">
+			and is_default = #{isDefault,jdbcType=NUMERIC}
+		</if>
 		order by no asc
 	</select>
-	<select id="selectByAppType" resultMap="BaseResultMap" parameterType="java.lang.String">
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.ApptoolsSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from app_tools
-		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0 and is_default = 1
+		where 1 = 1 
+		<if test="appType != null">
+			and app_type = #{appType,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="menuType != null">
+			and menu_type = #{menuType,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="action != null">
+			and action = #{action,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="isOnline != null">
+			and is_online = #{isOnline,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="isDefault != null">
+			and is_default = #{isDefault,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="updateTime != null">
+			<![CDATA[ and updateTime > #{update_time,jdbcType=NUMERIC}]]>
+		</if>
+				
 		order by no asc
 	</select>
-
-
-	<select id="selectByAction" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from app_tools
-		where action = #{action,jdbcType=VARCHAR}
-	</select>
-	<select id="selectByAppTypeAll" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from app_tools
-		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0
-		order by no asc
-	</select>
-	<select id="selectByAppTypeAndStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from app_tools
-		where app_type = #{appType,jdbcType=VARCHAR} and is_online = 0 and status = 0
-		order by no asc
-	</select>
+			
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from app_tools
 		where t_id = #{tId,jdbcType=NUMERIC}

@@ -33,6 +33,7 @@ import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
 @Service
@@ -531,7 +532,12 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 		if (StringUtil.isEmpty(iconUrl)) {
 			iconUrl = "http://img.51xingzheng.cn/437396cc0b49b04dc89a0552f7e90cae?p=0";
-			AppTools appTools = appToolsService.selectByAction(extType);
+			AppTools appTools = null;
+			ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+			searchVo.setAction(extType);
+			
+			List<AppTools> rs = appToolsService.selectBySearchVo(searchVo);
+			if (!rs.isEmpty()) appTools = rs.get(0);
 			if (appTools != null) {
 				iconUrl = appTools.getLogo();
 			}

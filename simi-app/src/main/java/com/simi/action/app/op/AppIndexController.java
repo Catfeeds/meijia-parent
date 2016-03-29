@@ -2,6 +2,7 @@ package com.simi.action.app.op;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.UserAppToolsService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.ApptoolsSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/op")
@@ -39,7 +41,11 @@ public class AppIndexController extends BaseController {
 			@RequestParam("user_id") Long userId) {
 		
 		//1. 读取 app_tools where is_default = 1 , 的到集合A 
-		List<AppTools> appToolsAList = appToolsService.selectByAppType(appType);
+		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+		searchVo.setAppType(appType);
+		searchVo.setIsOnline((short) 0);
+		searchVo.setIsDefault((short) 1);
+		List<AppTools> appToolsAList = appToolsService.selectBySearchVo(searchVo);
 		//2. 读取user_app_tools where status = 0  得到集合B 
 		List<UserAppTools> appToolsBList = userAppToolsService.selectByUserIdAndStatus(userId);
 		//查出默认显示中的用户选择不显示的  is_default = 1 is_del=0 得到集合C

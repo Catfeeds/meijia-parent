@@ -31,6 +31,7 @@ import com.simi.service.op.AppToolsService;
 import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.vo.ApptoolsSearchVo;
 
 @Controller
 @RequestMapping(value = "/op")
@@ -60,8 +61,10 @@ public class AppToolsController extends BaseController {
 			model.addAttribute("searchModel");
 			int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 			int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-
-			PageInfo result = appToolsService.selectByListPage(pageNo, pageSize);
+			
+			ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+			
+			PageInfo result = appToolsService.selectByListPage(searchVo, pageNo, pageSize);
 			
 			List<AppTools> list = result.getList();
 			for (AppTools item : list) {

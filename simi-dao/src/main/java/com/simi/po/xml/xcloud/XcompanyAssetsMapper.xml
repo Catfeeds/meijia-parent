@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyAssetsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyAssets">
+		<id column="asset_id" property="assetId" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="asset_type_id" property="assetTypeId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+		<result column="unit" property="unit" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+		<result column="place" property="place" jdbcType="VARCHAR" />
+		<result column="seq" property="seq" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		asset_id, company_id, asset_type_id, name, stock, unit, price, total_price, place,
+		seq, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_assets
+		where asset_id = #{assetId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.AssetSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_assets
+		where 1 = 1 
+		<if test="assetId != null">
+			and asset_id = #{assetId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyId != null">
+			and company_id = #{asset_id,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="assetTypeId != null">
+			and asset_type_id = #{assetTypeId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		
+		order by update_time desc;
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.AssetSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_assets
+		where 1 = 1 
+		<if test="assetId != null">
+			and asset_id = #{assetId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyId != null">
+			and company_id = #{asset_id,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="assetTypeId != null">
+			and asset_type_id = #{assetTypeId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		
+		order by update_time desc;
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_assets
+		where asset_id = #{assetId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyAssets">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="assetId">
+			SELECT LAST_INSERT_ID() AS asset_id
+		</selectKey>
+	
+	
+		insert into xcompany_assets (asset_id, company_id, asset_type_id,
+		name, stock, unit,
+		price, total_price, place,
+		seq, add_time, update_time
+		)
+		values (#{assetId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{assetTypeId,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR},
+		#{price,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{place,jdbcType=VARCHAR},
+		#{seq,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyAssets">
+	
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="assetId">
+			SELECT LAST_INSERT_ID() AS asset_id
+		</selectKey>
+	
+		insert into xcompany_assets
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="assetId != null">
+				asset_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="assetTypeId != null">
+				asset_type_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="stock != null">
+				stock,
+			</if>
+			<if test="unit != null">
+				unit,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="totalPrice != null">
+				total_price,
+			</if>
+			<if test="place != null">
+				place,
+			</if>
+			<if test="seq != null">
+				seq,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="assetId != null">
+				#{assetId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="assetTypeId != null">
+				#{assetTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="stock != null">
+				#{stock,jdbcType=INTEGER},
+			</if>
+			<if test="unit != null">
+				#{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="totalPrice != null">
+				#{totalPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="place != null">
+				#{place,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				#{seq,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyAssets">
+		update xcompany_assets
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="assetTypeId != null">
+				asset_type_id = #{assetTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="stock != null">
+				stock = #{stock,jdbcType=INTEGER},
+			</if>
+			<if test="unit != null">
+				unit = #{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="totalPrice != null">
+				total_price = #{totalPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="place != null">
+				place = #{place,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				seq = #{seq,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where asset_id = #{assetId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyAssets">
+		update xcompany_assets
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		asset_type_id = #{assetTypeId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		stock = #{stock,jdbcType=INTEGER},
+		unit = #{unit,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		total_price = #{totalPrice,jdbcType=DECIMAL},
+		place = #{place,jdbcType=VARCHAR},
+		seq = #{seq,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where asset_id = #{assetId,jdbcType=NUMERIC}
+	</update>
+</mapper>

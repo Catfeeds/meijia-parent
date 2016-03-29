@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.record.RecordAssetUseMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.record.RecordAssetUse">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="asset_json" property="assetJson" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="purpose" property="purpose" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, asset_json, user_id, purpose, status, add_time,
+		update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from record_asset_use
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.AssetSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_asset_use
+		where 1 = 1 
+		
+		<if test="companyId != null">
+			and company_id = #{asset_id,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+				
+		order by update_time desc;
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.AssetSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_asset_use
+		where 1 = 1 
+		
+		<if test="companyId != null">
+			and company_id = #{asset_id,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+				
+		order by update_time desc;
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from record_asset_use
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.record.RecordAssetUse">
+		insert into record_asset_use (id, company_id, asset_json, user_id,
+		purpose, status,
+		add_time, update_time)
+		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, 
+		#{assetJson,jdbcType=VARCHAR}, #{userId,jdbcType=NUMERIC},
+		#{purpose,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordAssetUse">
+		insert into record_asset_use
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="assetJson != null">
+				asset_json,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="purpose != null">
+				purpose,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="assetJson != null">
+				#{assetJson,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="purpose != null">
+				#{purpose,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.record.RecordAssetUse">
+		update record_asset_use
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="assetJson != null">
+				asset_json = #{assetJson,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="purpose != null">
+				purpose = #{purpose,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.record.RecordAssetUse">
+		update record_asset_use
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		asset_json = #{assetJson,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=NUMERIC},
+		purpose = #{purpose,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

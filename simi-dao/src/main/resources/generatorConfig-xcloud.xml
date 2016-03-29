@@ -208,5 +208,23 @@
 			
 			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
+
+		<table schema="simi" tableName="xcompany_assets"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="asset_id" property="assetId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+		</table>
 	</context>
 </generatorConfiguration>

@@ -1,42 +1,96 @@
 package com.simi.action.app.dict;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.simi.vo.AppResultData;
+import com.simi.vo.ApptoolsSearchVo;
+import com.simi.vo.user.UserViewVo;
+import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
+import com.simi.po.model.dict.DictCity;
+import com.simi.po.model.op.AppTools;
+import com.simi.po.model.user.Users;
 import com.simi.service.dict.AdService;
+import com.simi.service.dict.CityService;
+import com.simi.service.op.AppToolsService;
+import com.simi.service.user.UsersService;
 
 @Controller
-@RequestMapping(value="/app/dict")
+@RequestMapping(value = "/app/dict")
 public class BaseDataController<T> {
 
 	@Autowired
-	private AdService adService;
+	UsersService userService;
+	
+	@Autowired
+	private CityService cityService;
+	
+	@Autowired
+	private AppToolsService appToolsService;
 
-    @SuppressWarnings({"unchecked", "rawtypes" })
+	/**
+	 * 
+	 * @param t_user  用户信息
+	 * @param t_city  城市信息
+	 * @param t_apptools 应用中心信息.
+	 * @param t_express  快递供应商
+	 * @param t_assets   资产类型
+	 * @return
+	 */
 	@RequestMapping(value = "get_base_datas", method = RequestMethod.GET)
-    public AppResultData<HashMap<String, Object>> getBaseDatas() {
+	public AppResultData<Object> baseDatas(
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId,
+			@RequestParam(value = "t_user", required = false, defaultValue = "0") Long tUser,
+			@RequestParam(value = "t_city", required = false, defaultValue = "0") Long tCity,
+			@RequestParam(value = "t_apptools", required = false, defaultValue = "0") Long tApptools,
+			@RequestParam(value = "t_express", required = false, defaultValue = "0") Long tExpress,
+			@RequestParam(value = "t_assets", required = false, defaultValue = "0") Long tAssets
+			) {
 
-    	//获得广告配置定义列表项
-    	List<DictAd> listAd = adService.selectByAdType((short) 0);
-
-    	//组装成基础数据返回格式
-    	HashMap<String, Object> resultDatas = new HashMap<String, Object>();
-
-    	resultDatas.put("banner_ad", listAd);
-    	resultDatas.put("service_call", Constants.SERVICE_CALL);
-
-    	AppResultData<HashMap<String, Object>> result = null;
-    	result = new AppResultData<HashMap<String, Object>>(0, "ok", resultDatas);
-
-    	return result;
-    }
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Map<String, Object> datas = new HashMap<String, Object>();
+		
+		datas.put("user", "");
+		if (userId > 0L && tUser > 0L) {
+			Users u = userService.selectByPrimaryKey(userId);
+			if (u.getUpdateTime() > tUser) {
+				UserViewVo vo = userService.getUserInfo(userId);
+				datas.put("user", vo);
+			}
+		}
+		
+		datas.put("city", "");
+		if (tCity > 0L) {
+			List<DictCity> cityList = new ArrayList<DictCity>();
+			cityList = cityService.selectByT(tCity);
+			datas.put("city", cityList);
+		}
+		
+		datas.put("apptools", "");
+		if (tApptools > 0L) {
+			ApptoolsSearchVo asearchVo = new ApptoolsSearchVo();
+			List<AppTools> apptools = appToolsService.selectBySearchVo(asearchVo);
+			if (!apptools.isEmpty()) datas.put("apptools", apptools);
+		}
+		
+		datas.put("express", "");
+		
+		if (tExpress > 0L) {
+			
+		}
+		
+		return result;
+	}
 
 }

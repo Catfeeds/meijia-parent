@@ -45,8 +45,7 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-
-		<!--快递服务商字典表 -->
+		
 		<table schema="simi" tableName="record_express"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -70,6 +69,46 @@
 			<columnOverride  column="is_done" property="isDone" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="is_close" property="isClose" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
+
+		<!--资产登记表 -->
+		<table schema="simi" tableName="record_assets"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+		</table>
+		
+		<!--资产领用表 -->
+		<table schema="simi" tableName="record_asset_use"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="asset_id" property="assetId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
 		
 

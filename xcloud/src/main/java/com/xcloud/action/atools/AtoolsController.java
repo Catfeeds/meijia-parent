@@ -1,5 +1,7 @@
 package com.xcloud.action.atools;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.simi.po.model.op.AppTools;
 import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.op.UserAppToolsService;
+import com.simi.vo.ApptoolsSearchVo;
+import com.simi.vo.po.AppToolsVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
@@ -53,7 +58,23 @@ public class AtoolsController extends BaseController {
 		model.addAttribute("userId", userId);
 		
 		String appType = "xcloud";
-		PageInfo result = appToolsService.selectByListPage(appType, pageNo, pageSize,userId);
+		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+		searchVo.setAppType(appType);
+		PageInfo result = appToolsService.selectByListPage(searchVo, pageNo, pageSize);
+		
+		List<AppTools> list = result.getList();
+
+		for (int i = 0; i < list.size(); i++) {
+			AppTools appTools = list.get(i);
+			AppToolsVo vo = appToolsService.getAppToolsVo(appTools, userId);
+			/*if (vo.getStatus() == null){
+				vo.setStatus((short)0);
+			}*/
+			list.set(i, vo);
+		}
+		result = new PageInfo(list);
+		
+		
 		
 		model.addAttribute("contentModel", result);
 		return "atools/atools-index";

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.op.AppTools;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.po.AppToolsVo;
 
 public interface AppToolsService {
@@ -18,25 +19,12 @@ public interface AppToolsService {
 	
 	int deleteByPrimaryKey(Long tId);
 
-	PageInfo selectByListPage(int pageNo, int pageSize);
-
-	List<AppTools> selectByAppType(String appType);
-
 	AppToolsVo getAppToolsVo(AppTools item, Long userId);
-
-	List<AppTools> selectByAppTypeAndStatus(String appType);
-
-	List<AppTools> selectByAppTypeAll(String appType);
-
-	@SuppressWarnings("rawtypes")
-	PageInfo selectByListPage(String appType, int pageNo, int pageSize, Long userId);
-
-	AppTools selectByAction(String action);
 
 	String genQrCode(AppTools item);
 
-//	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
+	List<AppTools> selectBySearchVo(ApptoolsSearchVo searchVo);
 
-
+	PageInfo selectByListPage(ApptoolsSearchVo searchVo, int pageNo, int pageSize);
 
 }
