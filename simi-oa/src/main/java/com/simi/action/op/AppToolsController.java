@@ -151,6 +151,7 @@ public class AppToolsController extends BaseController {
 
 			appTools.setAddTime(TimeStampUtil.getNow() / 1000);
 			appTools.setLogo(imgUrl);
+			appTools.setQrCode("");
 			appToolsService.insertSelective(appTools);
 		}
 		
