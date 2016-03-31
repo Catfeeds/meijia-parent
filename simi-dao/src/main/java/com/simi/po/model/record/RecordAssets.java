@@ -12,6 +12,8 @@ public class RecordAssets {
     private Long userId;
 
     private Long assetTypeId;
+    
+    private String barcode;
 
     private String name;
 
@@ -141,5 +143,13 @@ public class RecordAssets {
 
 	public void setAssetId(Long assetId) {
 		this.assetId = assetId;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 }

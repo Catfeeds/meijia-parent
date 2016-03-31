@@ -29,6 +29,7 @@ public class XcompanyAssetServiceImpl implements XcompanyAssetService {
 		record.setAssetId(0L);
 		record.setCompanyId(0L);
 		record.setAssetTypeId(0L);
+		record.setBarcode("");
 		record.setName("");
 		record.setStock(0);
 		record.setUnit("");

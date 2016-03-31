@@ -5,6 +5,7 @@
 		<id column="asset_id" property="assetId" jdbcType="NUMERIC" />
 		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
 		<result column="asset_type_id" property="assetTypeId" jdbcType="NUMERIC" />
+		<result column="barcode" property="barcode" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="stock" property="stock" jdbcType="INTEGER" />
 		<result column="unit" property="unit" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		asset_id, company_id, asset_type_id, name, stock, unit, price, total_price, place,
+		asset_id, company_id, asset_type_id, barcode, name, stock, unit, price, total_price, place,
 		seq, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -84,13 +85,13 @@
 		</selectKey>
 	
 	
-		insert into xcompany_assets (asset_id, company_id, asset_type_id,
+		insert into xcompany_assets (asset_id, company_id, asset_type_id, barcode,
 		name, stock, unit,
 		price, total_price, place,
 		seq, add_time, update_time
 		)
 		values (#{assetId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{assetTypeId,jdbcType=NUMERIC},
-		#{name,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR},
+		#{barcode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR},
 		#{price,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{place,jdbcType=VARCHAR},
 		#{seq,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
 		)
@@ -111,6 +112,9 @@
 			</if>
 			<if test="assetTypeId != null">
 				asset_type_id,
+			</if>
+			<if test="barcode != null">
+				barcode,
 			</if>
 			<if test="name != null">
 				name,
@@ -150,6 +154,9 @@
 			<if test="assetTypeId != null">
 				#{assetTypeId,jdbcType=NUMERIC},
 			</if>
+			<if test="barcode != null">
+				#{barcode,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -188,6 +195,9 @@
 			<if test="assetTypeId != null">
 				asset_type_id = #{assetTypeId,jdbcType=NUMERIC},
 			</if>
+			<if test="barcode != null">
+				barcode = #{barcode,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
@@ -222,6 +232,7 @@
 		update xcompany_assets
 		set company_id = #{companyId,jdbcType=NUMERIC},
 		asset_type_id = #{assetTypeId,jdbcType=NUMERIC},
+		barcode = #{barcode,jdbcType=VARCHAR},
 		name = #{name,jdbcType=VARCHAR},
 		stock = #{stock,jdbcType=INTEGER},
 		unit = #{unit,jdbcType=VARCHAR},

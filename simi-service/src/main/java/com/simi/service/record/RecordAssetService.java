@@ -12,7 +12,7 @@ public interface RecordAssetService {
 
 	int deleteByPrimaryKey(Long id);
 
-	int insertSelective(RecordAssets RecordAssets);
+	Long insertSelective(RecordAssets RecordAssets);
 	
 	int updateByPrimaryKeySelective(RecordAssets RecordAssets);
 

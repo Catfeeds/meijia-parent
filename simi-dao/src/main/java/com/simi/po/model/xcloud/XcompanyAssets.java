@@ -8,6 +8,8 @@ public class XcompanyAssets {
     private Long companyId;
 
     private Long assetTypeId;
+    
+    private String barcode;
 
     private String name;
 
@@ -122,4 +124,12 @@ public class XcompanyAssets {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
 }

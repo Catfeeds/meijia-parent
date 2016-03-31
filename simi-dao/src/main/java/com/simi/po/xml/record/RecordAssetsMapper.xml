@@ -7,6 +7,7 @@
 		<result column="asset_id" property="assetId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="asset_type_id" property="assetTypeId" jdbcType="NUMERIC" />
+		<result column="barcode" property="barcode" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="total" property="total" jdbcType="INTEGER" />
 		<result column="unit" property="unit" jdbcType="VARCHAR" />
@@ -18,7 +19,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, asset_id，user_id, asset_type_id, name, total, unit, price, total_price, place,
+		id, company_id, asset_id，user_id, asset_type_id, barcode, name, total, unit, price, total_price, place,
 		seq, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -82,19 +83,29 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.record.RecordAssets">
+	
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	
 		insert into record_assets (id, company_id, asset_id，user_id,
-		asset_type_id, name, total,
+		asset_type_id, barcode, name, total,
 		unit, price, total_price,
 		place, seq, add_time,
 		update_time)
 		values (#{id,jdbcType=NUMERIC}, #{assetId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, 
 		#{userId,jdbcType=NUMERIC},
-		#{assetTypeId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{total,jdbcType=INTEGER},
+		#{assetTypeId,jdbcType=NUMERIC}, #{barcode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{total,jdbcType=INTEGER},
 		#{unit,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL},
 		#{place,jdbcType=VARCHAR}, #{seq,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordAssets">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	
+	
 		insert into record_assets
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -111,6 +122,9 @@
 			</if>
 			<if test="assetTypeId != null">
 				asset_type_id,
+			</if>
+			<if test="barcode != null">
+				barcode,
 			</if>
 			<if test="name != null">
 				name,
@@ -156,6 +170,9 @@
 			<if test="assetTypeId != null">
 				#{assetTypeId,jdbcType=NUMERIC},
 			</if>
+			<if test="barcode != null">
+				#{barcode,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -200,6 +217,9 @@
 			<if test="assetTypeId != null">
 				asset_type_id = #{assetTypeId,jdbcType=NUMERIC},
 			</if>
+			<if test="barcode != null">
+				barcode = #{barcode,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
@@ -236,6 +256,7 @@
 	asset_id = #{assetId,jdbcType=NUMERIC},
 	user_id = #{userId,jdbcType=NUMERIC},
 	asset_type_id = #{assetTypeId,jdbcType=NUMERIC},
+	barcode = #{barcode,jdbcType=VARCHAR},
 	name = #{name,jdbcType=VARCHAR},
 	total = #{total,jdbcType=INTEGER},
 	unit = #{unit,jdbcType=VARCHAR},

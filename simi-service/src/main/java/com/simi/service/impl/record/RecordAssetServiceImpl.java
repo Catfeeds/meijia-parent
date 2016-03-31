@@ -30,6 +30,7 @@ public class RecordAssetServiceImpl implements RecordAssetService {
 		record.setAssetId(0L);
 		record.setUserId(0L);
 		record.setAssetTypeId(0L);
+		record.setBarcode("");
 		record.setName("");
 		record.setTotal(0);
 		record.setUnit("");
@@ -65,7 +66,7 @@ public class RecordAssetServiceImpl implements RecordAssetService {
 	}
 	
 	@Override
-	public int insertSelective(RecordAssets RecordAssets) {
+	public Long insertSelective(RecordAssets RecordAssets) {
 		return recordAssetMapper.insertSelective(RecordAssets);
 	}
 
