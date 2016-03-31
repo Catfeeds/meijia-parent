@@ -1,6 +1,7 @@
 package com.simi.action.app.record;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -169,9 +171,13 @@ public class AssetUseController extends BaseController {
 				result.setMsg(xcompanyAsset.getName() + "库存不足");
 				return result;
 			}
-
+			
+			BigDecimal price = xcompanyAsset.getPrice();
+			BigDecimal totalPrice = MathBigDecimalUtil.mul(price, new BigDecimal(total));
 			item.put("name", xcompanyAsset.getName());
 			item.put("asset_type_id", xcompanyAsset.getAssetTypeId());
+			item.put("price", MathBigDecimalUtil.round2(price));
+			item.put("total_price", MathBigDecimalUtil.round2(totalPrice));
 			assetExt.add(item);
 			
 			//减库存
@@ -227,6 +233,19 @@ public class AssetUseController extends BaseController {
 			RecordAssetUseVo vo = new RecordAssetUseVo();
 			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
 			
+			Users fromUser = userService.selectByPrimaryKey(vo.getUserId());
+			vo.setFromHeadImg(fromUser.getHeadImg());
+			vo.setFromName(fromUser.getName());
+			vo.setFromMobile(fromUser.getMobile());
+			
+			vo.setToHeadImg("");
+			
+			if (vo.getToUserId() > 0L) {
+				Users toUser = userService.selectByPrimaryKey(vo.getToUserId());
+				vo.setToHeadImg(toUser.getHeadImg());
+			}
+			
+			
 			ImgSearchVo isearchVo = new ImgSearchVo();
 			isearchVo.setLinkId(vo.getId());
 			isearchVo.setLinkType("record_asset_use");
@@ -257,7 +276,19 @@ public class AssetUseController extends BaseController {
 		RecordAssetUse record = recordAssetUseService.selectByPrimarykey(id);
 		RecordAssetUseVo vo = new RecordAssetUseVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(record, vo);
-
+		
+		Users fromUser = userService.selectByPrimaryKey(vo.getUserId());
+		vo.setFromHeadImg(fromUser.getHeadImg());
+		vo.setFromName(fromUser.getName());
+		vo.setFromMobile(fromUser.getMobile());
+		
+		vo.setToHeadImg("");
+		
+		if (vo.getToUserId() > 0L) {
+			Users toUser = userService.selectByPrimaryKey(vo.getToUserId());
+			vo.setToHeadImg(toUser.getHeadImg());
+		}
+		
 		ImgSearchVo isearchVo = new ImgSearchVo();
 		isearchVo.setLinkId(vo.getId());
 		isearchVo.setLinkType("record_asset");
