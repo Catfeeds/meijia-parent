@@ -14,6 +14,8 @@ public interface ValidateService {
 	AppResultData<Object> validateFriend(Long userId, Long friendId);
 
 	AppResultData<Object> validateSameCompany(Long userId, Long friendId);
+
+	AppResultData<Object> validateIsCompanyStaff(Long userId, Long companyId);
 	
 	
 }

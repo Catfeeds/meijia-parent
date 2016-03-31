@@ -110,6 +110,20 @@
 			
 			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
+
+		<!-- 条形码数据表 -->
+		<table schema="simi" tableName="record_barcode"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>
 		
 
 	</context>

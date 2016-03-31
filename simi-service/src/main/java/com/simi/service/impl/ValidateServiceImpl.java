@@ -170,5 +170,41 @@ public class ValidateServiceImpl implements ValidateService {
 		
 		return result;
 	}	
+	
+	//验证是否为公司员工
+	@Override
+	public AppResultData<Object> validateIsCompanyStaff(Long userId, Long companyId) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		if (companyId.equals(0L)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("团队不存在");
+			return result;
+		}
+
+		// 判断员工是否为团队一员
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> staffList = xCompanyStaffService.selectBySearchVo(searchVo);
+
+		if (staffList.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您不是团队中一员,请查验.");
+			return result;
+		}
+
+		return result;
+	}
 
 }

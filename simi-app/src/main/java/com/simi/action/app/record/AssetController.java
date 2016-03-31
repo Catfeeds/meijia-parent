@@ -30,6 +30,7 @@ import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyAssets;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.ImgService;
+import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.record.RecordAssetService;
 import com.simi.service.user.UsersService;
@@ -66,6 +67,9 @@ public class AssetController extends BaseController {
 
 	@Autowired
 	private ImgService imgService;
+	
+	@Autowired
+	private ValidateService validateService;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/post_asset", method = { RequestMethod.POST })
@@ -83,7 +87,7 @@ public class AssetController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		AppResultData<Object> v = validateApi(userId, companyId);
+		AppResultData<Object> v = validateService.validateIsCompanyStaff(userId, companyId);
 
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
@@ -199,7 +203,7 @@ public class AssetController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		AppResultData<Object> v = validateApi(userId, companyId);
+		AppResultData<Object> v = validateService.validateIsCompanyStaff(userId, companyId);
 
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
@@ -238,7 +242,7 @@ public class AssetController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		AppResultData<Object> v = validateApi(userId, companyId);
+		AppResultData<Object> v = validateService.validateIsCompanyStaff(userId, companyId);
 
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
@@ -258,8 +262,7 @@ public class AssetController extends BaseController {
 		return result;
 	}
 	
-	//获得公司资产类别
-	@SuppressWarnings("unchecked")
+	//获得公司资产列表
 	@RequestMapping(value = "/get_asset_list", method = { RequestMethod.GET })
 	public AppResultData<Object> getAssetList(
 			@RequestParam("user_id") Long userId, 
@@ -269,7 +272,7 @@ public class AssetController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		AppResultData<Object> v = validateApi(userId, companyId);
+		AppResultData<Object> v = validateService.validateIsCompanyStaff(userId, companyId);
 
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
@@ -283,42 +286,6 @@ public class AssetController extends BaseController {
 		List<XcompanyAssets>  list = xcompanyAssetService.selectBySearchVo(searchVo);
 		
 		result.setData(list);
-		return result;
-	}
-	
-	
-
-	private AppResultData<Object> validateApi(Long userId, Long companyId) {
-		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
-		Users u = usersService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
-		}
-
-		if (companyId.equals(0L)) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("团队不存在");
-			return result;
-		}
-
-		// 判断员工是否为团队一员
-		UserCompanySearchVo searchVo = new UserCompanySearchVo();
-		searchVo.setCompanyId(companyId);
-		searchVo.setUserId(userId);
-		searchVo.setStatus((short) 1);
-		List<XcompanyStaff> staffList = xCompanyStaffService.selectBySearchVo(searchVo);
-
-		if (staffList.isEmpty()) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("您不是团队中一员,请查验.");
-			return result;
-		}
-
 		return result;
 	}
 }

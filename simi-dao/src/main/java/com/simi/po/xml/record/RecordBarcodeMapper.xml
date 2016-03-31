@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.record.RecordBarcodeMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.record.RecordBarcode">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="barcode" property="barcode" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="VARCHAR" />
+		<result column="spec" property="spec" jdbcType="VARCHAR" />
+		<result column="brand" property="brand" jdbcType="VARCHAR" />
+		<result column="country" property="country" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="prefix" property="prefix" jdbcType="VARCHAR" />
+		<result column="addr" property="addr" jdbcType="VARCHAR" />
+		<result column="res" property="res" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, barcode, name, price, spec, brand, country, company, prefix, addr, res, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from record_barcode
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByBarcode" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from record_barcode
+		where barcode = #{barcode,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from record_barcode
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.record.RecordBarcode">
+		insert into record_barcode (id, barcode, name,
+		price, spec, brand,
+		country, company, prefix,
+		addr, res, add_time)
+		values
+		(#{id,jdbcType=NUMERIC}, #{barcode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{price,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR},
+		#{country,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{prefix,jdbcType=VARCHAR},
+		#{addr,jdbcType=VARCHAR}, #{res,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordBarcode">
+		insert into record_barcode
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="barcode != null">
+				barcode,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="spec != null">
+				spec,
+			</if>
+			<if test="brand != null">
+				brand,
+			</if>
+			<if test="country != null">
+				country,
+			</if>
+			<if test="company != null">
+				company,
+			</if>
+			<if test="prefix != null">
+				prefix,
+			</if>
+			<if test="addr != null">
+				addr,
+			</if>
+			<if test="res != null">
+				res,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="barcode != null">
+				#{barcode,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=VARCHAR},
+			</if>
+			<if test="spec != null">
+				#{spec,jdbcType=VARCHAR},
+			</if>
+			<if test="brand != null">
+				#{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				#{country,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				#{company,jdbcType=VARCHAR},
+			</if>
+			<if test="prefix != null">
+				#{prefix,jdbcType=VARCHAR},
+			</if>
+			<if test="addr != null">
+				#{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="res != null">
+				#{res,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.record.RecordBarcode">
+		update record_barcode
+		<set>
+			<if test="barcode != null">
+				barcode = #{barcode,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=VARCHAR},
+			</if>
+			<if test="spec != null">
+				spec = #{spec,jdbcType=VARCHAR},
+			</if>
+			<if test="brand != null">
+				brand = #{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				country = #{country,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company = #{company,jdbcType=VARCHAR},
+			</if>
+			<if test="prefix != null">
+				prefix = #{prefix,jdbcType=VARCHAR},
+			</if>
+			<if test="addr != null">
+				addr = #{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="res != null">
+				res = #{res,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.record.RecordBarcode">
+		update record_barcode
+		set barcode = #{barcode,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		price =
+		#{price,jdbcType=VARCHAR},
+		spec = #{spec,jdbcType=VARCHAR},
+		brand = #{brand,jdbcType=VARCHAR},
+		country = #{country,jdbcType=VARCHAR},
+		company =
+		#{company,jdbcType=VARCHAR},
+		prefix = #{prefix,jdbcType=VARCHAR},
+		addr = #{addr,jdbcType=VARCHAR},
+		res = #{res,jdbcType=VARCHAR},
+		add_time =
+		#{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>
