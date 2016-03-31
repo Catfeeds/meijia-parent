@@ -10,7 +10,7 @@ public interface RecordAssetUseMapper {
 
     int insert(RecordAssetUse record);
 
-    int insertSelective(RecordAssetUse record);
+    Long insertSelective(RecordAssetUse record);
 
     RecordAssetUse selectByPrimaryKey(Long id);
 

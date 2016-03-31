@@ -156,40 +156,8 @@ public class AssetController extends BaseController {
 		
 		// 处理图片上传的信息.
 		if (imgs != null && imgs.length > 0) {
-
-			// 先删除指定的图片，再新增图片。
-			ImgSearchVo searchVo = new ImgSearchVo();
-			searchVo.setLinkId(record.getId());
-			searchVo.setLinkType("record_asset");
-			List<Imgs> imgList = imgService.selectBySearchVo(searchVo);
-			if (!imgList.isEmpty()) {
-				for (Imgs item : imgList) {
-					imgService.deleteByPrimaryKey(item.getImgId());
-				}
-			}
-
-			for (int i = 0; i < imgs.length; i++) {
-				String url = Constants.IMG_SERVER_HOST + "/upload/";
-				String fileName = imgs[i].getOriginalFilename();
-				String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-				fileType = fileType.toLowerCase();
-				String sendResult = ImgServerUtil.sendPostBytes(url, imgs[i].getBytes(), fileType);
-
-				ObjectMapper mapper = new ObjectMapper();
-
-				HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-				HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-				String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-				Imgs img = imgService.initImg();
-				img.setLinkId(record.getId());
-				img.setUserId(userId);
-				img.setLinkType("record_asset");
-				img.setImgUrl(imgUrl);
-				imgService.insert(img);
-
-			}
+			Long linkId = record.getId();
+			imgService.insertImgs(imgs, userId, linkId, "record_asset");
 		}
 
 		return result;

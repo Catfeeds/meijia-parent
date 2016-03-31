@@ -249,7 +249,7 @@ public class CardController extends BaseController {
 				cardAttendService.deleteByCardId(cardId);
 				LinkManVo item = null;
 				for (int i = 0; i < linkManList.size(); i++) {
-					System.out.println(linkManList.get(i).toString());
+//					System.out.println(linkManList.get(i).toString());
 					item = linkManList.get(i);
 					String mobile = item.getMobile();
 					mobile = mobile.replaceAll(" ", "");  

@@ -28,6 +28,9 @@ public class RecordAssetUseServiceImpl implements RecordAssetUseService {
 		record.setCompanyId(0L);
 		record.setAssetJson("");
 		record.setUserId(0L);
+		record.setToUserId(0L);
+		record.setName("");
+		record.setMobile("");
 		record.setPurpose("");
 		record.setStatus((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
@@ -58,7 +61,7 @@ public class RecordAssetUseServiceImpl implements RecordAssetUseService {
 	}
 	
 	@Override
-	public int insertSelective(RecordAssetUse RecordAssetUse) {
+	public Long insertSelective(RecordAssetUse RecordAssetUse) {
 		return recordAssetUseMapper.insertSelective(RecordAssetUse);
 	}
 

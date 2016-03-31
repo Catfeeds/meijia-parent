@@ -8,6 +8,12 @@ public class RecordAssetUse {
     private String assetJson;
 
     private Long userId;
+    
+    private Long toUserId;
+    
+    private String name;
+    
+    private String mobile;
 
     private String purpose;
 
@@ -79,5 +85,29 @@ public class RecordAssetUse {
 
 	public void setAssetJson(String assetJson) {
 		this.assetJson = assetJson;
+	}
+
+	public Long getToUserId() {
+		return toUserId;
+	}
+
+	public void setToUserId(Long toUserId) {
+		this.toUserId = toUserId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }

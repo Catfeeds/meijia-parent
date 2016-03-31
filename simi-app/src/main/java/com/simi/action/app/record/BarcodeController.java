@@ -92,17 +92,19 @@ public class BarcodeController extends BaseController {
 		record = recordBarcodeService.initRecordBarcode();
 
 		record.setBarcode(barcode);
-		record.setName(barcodeData.get("name").toString());
-		record.setPrice(String.valueOf(barcodeData.get("price")));
-		record.setSpec(barcodeData.get("spec").toString());
-		record.setBrand(barcodeData.get("brand").toString());
-		record.setCountry(barcodeData.get("country").toString());
-		record.setCompany(barcodeData.get("company").toString());
-		record.setPrefix(barcodeData.get("prefix").toString());
-		record.setAddr(barcodeData.get("addr").toString());
-		record.setRes(barcodeData.get("res").toString());
+		if (barcodeData.get("name") != null) {
+			record.setName(barcodeData.get("name").toString());
+			record.setPrice(String.valueOf(barcodeData.get("price")));
+			record.setSpec(barcodeData.get("spec").toString());
+			record.setBrand(barcodeData.get("brand").toString());
+			record.setCountry(barcodeData.get("country").toString());
+			record.setCompany(barcodeData.get("company").toString());
+			record.setPrefix(barcodeData.get("prefix").toString());
+			record.setAddr(barcodeData.get("addr").toString());
+			record.setRes(barcodeData.get("res").toString());
+		}
 		recordBarcodeService.insertSelective(record);
-		
+
 		if (totalCompany == null) totalCompany = totalCompanyService.initTotalCompany();
 		Integer totalBarcode = totalCompany.getTotalBarcode();
 		totalBarcode = totalBarcode + 1;
