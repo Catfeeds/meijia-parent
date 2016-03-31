@@ -1,54 +1,26 @@
 package com.simi.action.app.record;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BarcodeUtil;
-import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.common.Imgs;
-import com.simi.po.model.record.RecordAssets;
 import com.simi.po.model.record.RecordBarcode;
-import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.TotalCompany;
-import com.simi.po.model.xcloud.XcompanyAssets;
-import com.simi.po.model.xcloud.XcompanyStaff;
-import com.simi.service.ImgService;
 import com.simi.service.ValidateService;
-import com.simi.service.async.UserMsgAsyncService;
-import com.simi.service.record.RecordAssetService;
 import com.simi.service.record.RecordBarcodeService;
-import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.TotalCompanyService;
-import com.simi.service.xcloud.XCompanyService;
-import com.simi.service.xcloud.XcompanyAssetService;
-import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.AssetSearchVo;
-import com.simi.vo.ImgSearchVo;
-import com.simi.vo.record.RecordAssetVo;
 import com.simi.vo.xcloud.CompanySearchVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/app/record")
