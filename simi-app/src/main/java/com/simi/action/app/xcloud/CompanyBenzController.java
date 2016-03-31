@@ -86,7 +86,7 @@ public class CompanyBenzController extends BaseController {
 		
 		if (staffList.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("数据有错误：团队与员工未绑定");
+			result.setMsg("您不是团队中一员,请查验.");
 			return result;
 		}
 

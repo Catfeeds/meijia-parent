@@ -19,7 +19,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, asset_id，user_id, asset_type_id, barcode, name, total, unit, price, total_price, place,
+		id, company_id, asset_id, user_id, asset_type_id, barcode, name, total, unit, price, total_price, place,
 		seq, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -39,7 +39,7 @@
 		</if>
 		
 		<if test="companyId != null">
-			and company_id = #{asset_id,jdbcType=NUMERIC}
+			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="assetTypeId != null">
@@ -50,7 +50,7 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 				
-		order by update_time desc;
+		order by update_time desc
 	</select>
 	
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.AssetSearchVo">
@@ -63,7 +63,7 @@
 		</if>
 		
 		<if test="companyId != null">
-			and company_id = #{asset_id,jdbcType=NUMERIC}
+			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="assetTypeId != null">
@@ -74,7 +74,7 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 				
-		order by update_time desc;
+		order by update_time desc
 	</select>
 	
 	
