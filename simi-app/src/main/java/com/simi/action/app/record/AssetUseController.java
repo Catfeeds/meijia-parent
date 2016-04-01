@@ -131,11 +131,12 @@ public class AssetUseController extends BaseController {
 		
 		if (u != null) {
 			toUserId = u.getId();
+			name = StringUtil.isEmpty(name) ? u.getName() : name;
+			mobile = StringUtil.isEmpty(mobile) ? u.getMobile() : mobile;
 		}
-		name = StringUtil.isEmpty(name) ? u.getName() : name;
-		mobile = StringUtil.isEmpty(mobile) ? u.getMobile() : mobile;
+		
 		// 发起好友请求.
-		if (!userId.equals(toUserId)) {
+		if (toUserId > 0L && !userId.equals(toUserId)) {
 			UserFriendSearchVo searchVo = new UserFriendSearchVo();
 			searchVo.setUserId(userId);
 			searchVo.setFriendId(toUserId);
