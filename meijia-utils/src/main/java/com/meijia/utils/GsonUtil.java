@@ -1,8 +1,12 @@
 package com.meijia.utils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -103,5 +107,40 @@ public class GsonUtil {
 		}
 		return map;
 	}
+	
+	
+	public static Map<String, Object> sortMapByKey(Map<String, Object> oriMap) {  
+	    if (oriMap == null || oriMap.isEmpty()) {  
+	        return null;  
+	    }  
+	    Map<String, Object> sortedMap = new TreeMap<String, Object>(new Comparator<String>() {  
+	        public int compare(String key1, String key2) {  
+	            int intKey1 = 0, intKey2 = 0;  
+	            try {  
+	                intKey1 = getInt(key1);  
+	                intKey2 = getInt(key2);  
+	            } catch (Exception e) {  
+	                intKey1 = 0;   
+	                intKey2 = 0;  
+	            }  
+	            return intKey1 - intKey2;  
+	        }});  
+	    sortedMap.putAll(oriMap);  
+	    return sortedMap;  
+	}  
+	
+	private static int getInt(String str) {  
+	    int i = 0;  
+	    try {  
+	        Pattern p = Pattern.compile("^\\d+");  
+	        Matcher m = p.matcher(str);  
+	        if (m.find()) {  
+	            i = Integer.valueOf(m.group());  
+	        }  
+	    } catch (NumberFormatException e) {  
+	        e.printStackTrace();  
+	    }  
+	    return i;  
+	}  
 
 }

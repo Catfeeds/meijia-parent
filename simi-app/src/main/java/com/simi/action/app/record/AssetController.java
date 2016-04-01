@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -256,7 +257,7 @@ public class AssetController extends BaseController {
 		}
 		List<XcompanyAssets>  list = xcompanyAssetService.selectBySearchVo(searchVo);
 				
-		HashMap<String, Object> listMap = new HashMap<String, Object>();
+		Map<String, Object> listMap = new HashMap<String, Object>();
 		
 		List<XcompanyAssets> typeList = new ArrayList<XcompanyAssets>();
 		XcompanyAssets item = null;
@@ -275,7 +276,7 @@ public class AssetController extends BaseController {
 		
 		//最后的时候，增加一次。
 		((HashMap) listMap).put(tmpAssetTypeId.toString(), typeList);
-		
+		listMap = GsonUtil.sortMapByKey(listMap);
 		
 		result.setData(listMap);
 		return result;
