@@ -262,7 +262,7 @@ public class AssetController extends BaseController {
 		XcompanyAssets item = null;
 		Long tmpAssetTypeId = 0L;
 		for (int i = 0 ; i < list.size(); i++) {
-			item = list.get(0);
+			item = list.get(i);
 			if (tmpAssetTypeId.equals(0L)) tmpAssetTypeId = item.getAssetTypeId();
 			
 			if (!tmpAssetTypeId.equals(item.getAssetTypeId())) {

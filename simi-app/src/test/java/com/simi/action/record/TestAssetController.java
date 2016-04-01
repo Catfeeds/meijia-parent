@@ -72,7 +72,7 @@ public class TestAssetController extends JUnitActionBase  {
     public void testGetDetail() throws Exception {
 
 		String url = "/app/record/get_asset_list.json";
-		String params = "?user_id=18&company_id=6";
+		String params = "?user_id=927&company_id=29";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
