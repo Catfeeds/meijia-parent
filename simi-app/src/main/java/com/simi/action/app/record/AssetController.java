@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -231,6 +232,7 @@ public class AssetController extends BaseController {
 	}
 	
 	//获得公司资产列表
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/get_asset_list", method = { RequestMethod.GET })
 	public AppResultData<Object> getAssetList(
 			@RequestParam("user_id") Long userId, 
@@ -253,8 +255,29 @@ public class AssetController extends BaseController {
 			searchVo.setAssetTypeId(assetTypeId);
 		}
 		List<XcompanyAssets>  list = xcompanyAssetService.selectBySearchVo(searchVo);
+				
+		HashMap<String, Object> listMap = new HashMap<String, Object>();
 		
-		result.setData(list);
+		List<XcompanyAssets> typeList = new ArrayList<XcompanyAssets>();
+		XcompanyAssets item = null;
+		Long tmpAssetTypeId = 0L;
+		for (int i = 0 ; i < list.size(); i++) {
+			item = list.get(0);
+			if (tmpAssetTypeId.equals(0L)) tmpAssetTypeId = item.getAssetTypeId();
+			
+			if (!tmpAssetTypeId.equals(item.getAssetTypeId())) {
+				((HashMap<String, Object>) listMap).put(tmpAssetTypeId.toString(), typeList);
+				typeList = new ArrayList<XcompanyAssets>();
+				tmpAssetTypeId = item.getAssetTypeId();
+			}
+			typeList.add(item);
+		}
+		
+		//最后的时候，增加一次。
+		((HashMap) listMap).put(tmpAssetTypeId.toString(), typeList);
+		
+		
+		result.setData(listMap);
 		return result;
 	}
 }

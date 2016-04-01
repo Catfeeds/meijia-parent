@@ -71,8 +71,8 @@ public class TestAssetController extends JUnitActionBase  {
 	@Test
     public void testGetDetail() throws Exception {
 
-		String url = "/app/record/get_detail_express.json";
-		String params = "?id=1&user_id=1";
+		String url = "/app/record/get_asset_list.json";
+		String params = "?user_id=18&company_id=6";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
