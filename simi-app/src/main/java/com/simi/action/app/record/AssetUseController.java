@@ -129,8 +129,9 @@ public class AssetUseController extends BaseController {
 			}
 		}
 		
-		
-		toUserId = u.getId();
+		if (u != null) {
+			toUserId = u.getId();
+		}
 		name = StringUtil.isEmpty(name) ? u.getName() : name;
 		mobile = StringUtil.isEmpty(mobile) ? u.getMobile() : mobile;
 		// 发起好友请求.
