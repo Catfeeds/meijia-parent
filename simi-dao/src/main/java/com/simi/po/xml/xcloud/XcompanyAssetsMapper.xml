@@ -72,7 +72,7 @@
 			and name = #{name,jdbcType=VARCHAR}
 		</if>
 		
-		order by update_time desc
+		order by asset_type_id, name asc
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

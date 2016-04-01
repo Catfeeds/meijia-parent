@@ -235,7 +235,7 @@ public class AssetController extends BaseController {
 	public AppResultData<Object> getAssetList(
 			@RequestParam("user_id") Long userId, 
 			@RequestParam("company_id") Long companyId,
-			@RequestParam("asset_type_id") Long assetTypeId
+			@RequestParam(value = "asset_type_id", required = false, defaultValue = "0") Long assetTypeId
 			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -249,8 +249,9 @@ public class AssetController extends BaseController {
 		AssetSearchVo searchVo = new AssetSearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setCompanyId(companyId);
-		searchVo.setAssetTypeId(assetTypeId);
-		
+		if (assetTypeId > 0L) {
+			searchVo.setAssetTypeId(assetTypeId);
+		}
 		List<XcompanyAssets>  list = xcompanyAssetService.selectBySearchVo(searchVo);
 		
 		result.setData(list);
