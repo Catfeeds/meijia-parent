@@ -16,7 +16,7 @@
     id, no, img_url, goto_url, ad_type, add_time, update_time,enable
   </sql>
 
-  <select id="selectByAdType"  resultMap="BaseResultMap" parameterType="java.lang.Short" >
+  <select id="selectByAdType"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
     from dict_ad
