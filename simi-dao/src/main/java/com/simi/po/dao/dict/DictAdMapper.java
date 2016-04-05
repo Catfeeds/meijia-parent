@@ -22,6 +22,6 @@ public interface DictAdMapper {
 
 	int insert(DictAd record);
 
-	List<DictAd> selectByAdType(Short adType);
+	List<DictAd> selectByAdType(Long adType);
 
 }

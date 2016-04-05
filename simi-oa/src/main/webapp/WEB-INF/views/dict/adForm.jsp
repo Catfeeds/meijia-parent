@@ -91,7 +91,11 @@
 
 										<label class="col-md-2 control-label">广告类型</label>
 										<div class="col-md-5">
-											
+											<form:select path="adType" class="form-control">
+												<option value="">请选择</option>
+												<form:option value="0" label="首页"/>  
+												<form:options items="${apptools}" itemValue="tId" itemLabel="name"/>
+											</form:select>
 										</div>
 									</div>
 

@@ -19,6 +19,6 @@ public interface AdService {
 
 	int deleteByPrimaryKey(Long id);
 
-	List<DictAd> selectByAdType(Short adType);
+	List<DictAd> selectByAdType(Long adType);
 
 }

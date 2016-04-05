@@ -21,6 +21,7 @@
     <include refid="Base_Column_List" />
     from dict_ad
     where ad_type = #{adType,jdbcType=NUMERIC} and enable = 1 
+    order by no asc
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select
@@ -46,14 +47,14 @@
     delete from dict_ad
     where id = #{id,jdbcType=NUMERIC}
   </delete>
-  <insert id="insert" parameterType="com.simi.po.model.dict.DictAd" >
-    insert into dict_ad (id, no, img_url,
-      goto_url, ad_type, add_time,
-      update_time,enable)
-    values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC},  #{imgUrl,jdbcType=VARCHAR},
-      #{gotoUrl,jdbcType=VARCHAR}, #{adType,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
-      #{updateTime,jdbcType=NUMERIC},#{enable,jdbcType=NUMERIC})
-  </insert>
+  <insert id="insert" parameterType="com.simi.po.model.dict.DictAd">
+	insert into dict_ad (id, no, img_url,
+	goto_url, ad_type, add_time,
+	update_time,enable)
+	values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR},
+	#{gotoUrl,jdbcType=VARCHAR}, #{adType,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+	#{updateTime,jdbcType=NUMERIC},#{enable,jdbcType=NUMERIC})
+</insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.dict.DictAd" >
     insert into dict_ad
     <trim prefix="(" suffix=")" suffixOverrides="," >

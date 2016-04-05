@@ -63,7 +63,7 @@
                                   	        <td>${ item.no}</td>
 											<td><img src="${ item.imgUrl }?w=60&h=60"/></td>
 											<td>${ item.gotoUrl }</td>
-											<td>${ item.adType }</td>
+											<td>${ item.adTypeName }</td>
 											<td>${ item.addTime }</td>
 											<td>${ item.updateTime }</td>
 									<td>

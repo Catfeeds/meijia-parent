@@ -1,8 +1,10 @@
 package com.simi.action.dict;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
@@ -28,7 +31,11 @@ import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictAd;
+import com.simi.po.model.op.AppTools;
 import com.simi.service.dict.AdService;
+import com.simi.service.op.AppToolsService;
+import com.simi.vo.ApptoolsSearchVo;
+import com.simi.vo.dict.DictAdVo;
 
 @Controller
 @RequestMapping(value = "/dict")
@@ -36,7 +43,11 @@ public class DictAdController extends BaseController {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private AppToolsService appToolsService;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
 	@RequestMapping(value = "/ad", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model) {
@@ -49,7 +60,24 @@ public class DictAdController extends BaseController {
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 
 		PageInfo result = adService.searchVoListPage(pageNo, pageSize);
+		List<DictAd> list = result.getList();
 
+		for (int i = 0 ; i < list.size(); i++) {
+			DictAd item = list.get(i);
+			DictAdVo vo = new DictAdVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			vo.setAdTypeName("首页");
+			if (vo.getAdType() > 0L) {
+				AppTools tools = appToolsService.selectByPrimaryKey(vo.getAdType());
+				if (tools != null) {
+					vo.setAdTypeName(tools.getName());
+				}
+			}
+			list.set(i, vo);
+		}
+		result = new PageInfo(list);
+		
 		model.addAttribute("contentModel", result);
 
 		return "dict/ad";
@@ -66,14 +94,19 @@ public class DictAdController extends BaseController {
 		DictAd dictAd = adService.initAd();
 		if (id != null && id > 0) {
 			dictAd = adService.selectByPrimaryKey(id);
-
 		}
 
 		model.addAttribute("adModel", dictAd);
-
+		
+		//应用列表
+		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+		searchVo.setIsOnline((short) 0);
+		List<AppTools> apptools = appToolsService.selectBySearchVo(searchVo);
+		model.addAttribute("apptools", apptools);
 		return "dict/adForm";
 	}
 
+	@SuppressWarnings("unchecked")
 	@AuthPassport
 	@RequestMapping(value = "/adForm", method = { RequestMethod.POST })
 	public String doAdForm(HttpServletRequest request, Model model, @ModelAttribute("dictAd") DictAd dictAd, BindingResult result) throws IOException {
@@ -120,26 +153,14 @@ public class DictAdController extends BaseController {
 			adService.updateByPrimaryKeySelective(dictAd);
 		} else {
 			dictAd.setId(Long.valueOf(request.getParameter("id")));
-			// dictAd.setImgUrl("");
 			dictAd.setAddTime(TimeStampUtil.getNow() / 1000);
 			dictAd.setUpdateTime(0L);
 			dictAd.setEnable((short) 0);
-			// dictAd.setEnable((short)0);
+
 
 			adService.insertSelective(dictAd);
 		}
 
 		return "redirect:ad";
 	}
-
-	// 删除
-	/*
-	 * @RequestMapping(value ="/delete/{id}", method = {RequestMethod.GET})
-	 * public String deleterAdminRole(Model model,@PathVariable(value="id")
-	 * String id,HttpServletRequest response) { Long ids = 0L; if (id != null &&
-	 * NumberUtils.isNumber(id)) { ids = Long.valueOf(id.trim()); } String path
-	 * = "redirect:/dict/ad"; int result = adService.deleteByPrimaryKey(ids);
-	 * if(result>0){ return path; }else{ return "error"; } }
-	 */
-
 }

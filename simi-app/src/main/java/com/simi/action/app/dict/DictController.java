@@ -71,7 +71,7 @@ public class DictController<T> {
 
 	@RequestMapping(value = "get_ads", method = RequestMethod.GET)
     public AppResultData<Object> getAds(
-    		@RequestParam(value = "ad_type", required = false, defaultValue = "0") Short adType
+    		@RequestParam(value = "ad_type", required = false, defaultValue = "0") Long adType
     		) {
 
     	AppResultData<Object> result = null;

@@ -9,7 +9,7 @@ public class DictAd {
 
     private String gotoUrl;
 
-    private Short adType;
+    private Long adType;
 
     private Long addTime;
 
@@ -73,11 +73,11 @@ public class DictAd {
 		this.enable = enable;
 	}
 
-	public Short getAdType() {
+	public Long getAdType() {
 		return adType;
 	}
 
-	public void setAdType(Short adType) {
+	public void setAdType(Long adType) {
 		this.adType = adType;
 	}
 

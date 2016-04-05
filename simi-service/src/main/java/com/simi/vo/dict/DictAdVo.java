@@ -4,14 +4,14 @@ import com.simi.po.model.dict.DictAd;
 
 public class DictAdVo extends DictAd{
 
-	private String imgUrlNew;
+	private String adTypeName;
 
-	public String getImgUrlNew() {
-		return imgUrlNew;
+	public String getAdTypeName() {
+		return adTypeName;
 	}
 
-	public void setImgUrlNew(String imgUrlNew) {
-		this.imgUrlNew = imgUrlNew;
+	public void setAdTypeName(String adTypeName) {
+		this.adTypeName = adTypeName;
 	}
 
 }
