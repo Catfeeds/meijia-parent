@@ -83,16 +83,17 @@ public class ExpressController extends BaseController {
 		}
 		
 		//查询服务单号是否存在
-		RecordExpress express = recordExpressService.selectByExpressNo(expressNo);
-		if (express != null) {
-			if (!express.getUserId().equals(userId)) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("快递单号已经存在.");
-				return result;
-			}
+		RecordExpressSearchVo searchVo = new RecordExpressSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setExpressNo(expressNo);
+		List<RecordExpress> rs = recordExpressService.selectBySearchVo(searchVo);
+		if (!rs.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("快递单号已经存在.");
+			return result;
 		}
 		
-		if (express == null) express = recordExpressService.initRecordExpress();
+		RecordExpress express = recordExpressService.initRecordExpress();
 		express.setUserId(userId);
 		express.setExpressNo(expressNo);
 		express.setExpressType(expressType);
