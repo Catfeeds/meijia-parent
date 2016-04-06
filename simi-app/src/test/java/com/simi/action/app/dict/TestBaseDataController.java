@@ -31,5 +31,25 @@ public class TestBaseDataController extends JUnitActionBase  {
 	    
 
     }
+	
+	@Test
+    public void testGetBaseDataAda() throws Exception {
+
+		
+		String url = "/app/dict/get_ads.json";
+		String params = "";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+	    //打印所有的信息
+//	    resultActions.andDo(MockMvcResultHandlers.print());
+
+	    System.out.print("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+	    
+
+    }	
 
 }
