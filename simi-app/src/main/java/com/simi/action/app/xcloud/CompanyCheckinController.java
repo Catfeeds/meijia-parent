@@ -23,6 +23,7 @@ import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffBenz;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyBenzService;
@@ -61,6 +62,9 @@ public class CompanyCheckinController extends BaseController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private UserScoreAsyncService userScoreAsyncService;
 	
 	@RequestMapping(value = "/checkin", method = { RequestMethod.POST })
 	public AppResultData<Object> checkin(
@@ -136,6 +140,19 @@ public class CompanyCheckinController extends BaseController {
 		//生成消息
 		userMsgAsyncService.newCheckinMsg(userId, record.getId());
 		
+		//赠送积分
+		CompanyCheckinSearchVo searchVo1 = new CompanyCheckinSearchVo();
+		searchVo1.setUserId(userId);
+		searchVo1.setCompanyId(companyId);
+		Long startTime = TimeStampUtil.getBeginOfToday();
+		Long endTime = TimeStampUtil.getEndOfToday();
+		searchVo1.setStartTime(startTime);
+		searchVo1.setEndTime(endTime);
+		List<XcompanyCheckin> list = xCompanyCheckinService.selectBySearchVo(searchVo1);
+		if (list.size() <= 10) {
+			userScoreAsyncService.sendScore(userId, 1, "checkin", record.getId().toString(), "云考勤");
+		}
+
 		return result;
 	}
 	

@@ -90,22 +90,9 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		if (rs.size() > 50) return new AsyncResult<Boolean>(true);
 		
 		Integer score = 30;
-		//记录积分明细
-		UserDetailScore record = userDetailScoreService.initUserDetailScore();
-		record.setUserId(userId);
-		record.setMobile(u.getMobile());
-		record.setScore(score);
-		record.setAction("company_reg");
-		record.setParams(companyId.toString());
-		record.setRemarks("创建企业/团队");
 		
-		userDetailScoreService.insert(record);
+		return sendScore(userId, score, "company_reg", companyId.toString(), "创建企业/团队");
 		
-		//更新总积分
-		u.setScore(u.getScore() + score);
-		usersService.updateByPrimaryKeySelective(u);
-		
-		return new AsyncResult<Boolean>(true);
 	}
 
 	/**
@@ -135,22 +122,8 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String action = CardUtil.getCardAction(cardType);
-		//记录积分明细
-		UserDetailScore record = userDetailScoreService.initUserDetailScore();
-		record.setUserId(userId);
-		record.setMobile(u.getMobile());
-		record.setScore(score);
-		record.setAction(action);
-		record.setParams(cardId.toString());
-		record.setRemarks(cardTypeName);
 		
-		userDetailScoreService.insert(record);
-		
-		//更新总积分
-		u.setScore(u.getScore() + score);
-		usersService.updateByPrimaryKeySelective(u);
-		
-		return new AsyncResult<Boolean>(true);
+		return sendScore(userId, score, action, cardId.toString(), cardTypeName);
 	}
 	
 }

@@ -29,6 +29,7 @@ import com.simi.po.model.user.UserLeave;
 import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UserLeavePassService;
 import com.simi.service.user.UserLeaveService;
@@ -57,6 +58,9 @@ public class UserLeaveController extends BaseController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private UserScoreAsyncService userScoreAsyncService;
 	
 
 	// 用户请假接口
@@ -223,6 +227,16 @@ public class UserLeaveController extends BaseController {
 		
 		//生成请假消息，审批人推送消息
 		userMsgAsyncService.newLeaveMsg(userId, leaveId);
+		
+		//积分赠送
+		UserLeaveSearchVo searchVo1 = new UserLeaveSearchVo();
+		searchVo1.setUserId(userId);
+		searchVo1.setStartTime(TimeStampUtil.getBeginOfToday());
+		searchVo1.setEndTime(TimeStampUtil.getEndOfToday());
+		List<UserLeave> list = userLeaveService.selectBySearchVo(searchVo1);
+		if (list.size() <= 0) {
+			userScoreAsyncService.sendScore(userId, 1, "leave", leaveId.toString(), "请假申请");
+		}
 		
 		result.setData(leaveId);
 
