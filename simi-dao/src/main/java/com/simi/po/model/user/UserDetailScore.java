@@ -9,9 +9,13 @@ public class UserDetailScore {
 
     private Integer score;
 
-    private Short actionId;
+    private String action;
+    
+    private String params;
 
     private Short isConsume;
+    
+    private String remarks;
 
     private Long addTime;
 
@@ -47,14 +51,6 @@ public class UserDetailScore {
         this.score = score;
     }
 
-    public Short getActionId() {
-        return actionId;
-    }
-
-    public void setActionId(Short actionId) {
-        this.actionId = actionId;
-    }
-
     public Short getIsConsume() {
         return isConsume;
     }
@@ -70,4 +66,28 @@ public class UserDetailScore {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 }

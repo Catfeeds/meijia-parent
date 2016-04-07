@@ -9,7 +9,9 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -18,7 +20,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.meijia.utils.GsonUtil;
 import com.simi.action.app.JUnitActionBase;
+import com.simi.vo.card.LinkManVo;
 
 public class TestUserScoreController extends JUnitActionBase {
 
@@ -41,4 +45,24 @@ public class TestUserScoreController extends JUnitActionBase {
 		System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
 	}
+	
+	@Test
+    public void testDaySign() throws Exception {
+
+		String url = "/app/user/day_sign.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	     	
+	    postRequest = postRequest.param("user_id", "18");
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+	    
+	    Thread.sleep(60000); // 因为junit结束会结束jvm，所以让它等会异步线程  
+    }
 }

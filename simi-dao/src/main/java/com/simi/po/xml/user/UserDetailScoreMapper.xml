@@ -1,135 +1,197 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.user.UserDetailScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.user.UserDetailScore" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="score" property="score" jdbcType="INTEGER" />
-    <result column="action_id" property="actionId" jdbcType="NUMERIC" />
-    <result column="is_consume" property="isConsume" jdbcType="NUMERIC" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, mobile, score, action_id, is_consume, add_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from user_detail_score
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
+<mapper namespace="com.simi.po.dao.user.UserDetailScoreMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserDetailScore">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+		<result column="action" property="action" jdbcType="VARCHAR" />
+		<result column="params" property="params" jdbcType="VARCHAR" />
+		<result column="is_consume" property="isConsume" jdbcType="NUMERIC" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, mobile, score, action, params, is_consume, remarks, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_detail_score
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
 
-  <select id="selectByPage" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_detail_score
-    where mobile = #{0,jdbcType=VARCHAR}
-    order by add_time desc
-    limit #{1,jdbcType=NUMERIC}, #{2,jdbcType=NUMERIC}
-  </select>
-  <select id="selectByUserIdPage" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_detail_score
-    where user_id = #{0,jdbcType=VARCHAR}
-    order by add_time desc
-    limit #{1,jdbcType=NUMERIC}, #{2,jdbcType=NUMERIC}
-  </select>
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_detail_score
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from user_detail_score
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.user.UserDetailScore" >
-    insert into user_detail_score (id, user_id, mobile,
-      score, action_id, is_consume,
-      add_time)
-    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
-      #{score,jdbcType=INTEGER}, #{actionId,jdbcType=NUMERIC}, #{isConsume,jdbcType=NUMERIC},
-      #{addTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.user.UserDetailScore" >
-    insert into user_detail_score
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="mobile != null" >
-        mobile,
-      </if>
-      <if test="score != null" >
-        score,
-      </if>
-      <if test="actionId != null" >
-        action_id,
-      </if>
-      <if test="isConsume != null" >
-        is_consume,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="score != null" >
-        #{score,jdbcType=INTEGER},
-      </if>
-      <if test="actionId != null" >
-        #{actionId,jdbcType=NUMERIC},
-      </if>
-      <if test="isConsume != null" >
-        #{isConsume,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserDetailScore" >
-    update user_detail_score
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="mobile != null" >
-        mobile = #{mobile,jdbcType=CHAR},
-      </if>
-      <if test="score != null" >
-        score = #{score,jdbcType=INTEGER},
-      </if>
-      <if test="actionId != null" >
-        action_id = #{actionId,jdbcType=NUMERIC},
-      </if>
-      <if test="isConsume != null" >
-        is_consume = #{isConsume,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserDetailScore" >
-    update user_detail_score
-    set user_id = #{userId,jdbcType=NUMERIC},
-      mobile = #{mobile,jdbcType=CHAR},
-      score = #{score,jdbcType=INTEGER},
-      action_id = #{actionId,jdbcType=NUMERIC},
-      is_consume = #{isConsume,jdbcType=NUMERIC},
-      add_time = #{addTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="action != null">
+			and action = #{action,jdbcType=VARCHAR}
+		</if>
+
+		<if test="params != null">
+			and params = #{params,jdbcType=VARCHAR}
+		</if>
+
+		<if test="startTime != null">
+			<![CDATA[ and  add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+		</if>
+
+
+		order by add_time desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_detail_score
+
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="action != null">
+			and action = #{action,jdbcType=VARCHAR}
+		</if>
+
+		<if test="params != null">
+			and params = #{params,jdbcType=VARCHAR}
+		</if>
+
+		<if test="startTime != null">
+			<![CDATA[ and  add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+		</if>
+
+
+		order by add_time desc
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_detail_score
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserDetailScore">
+		insert into user_detail_score (id, user_id, mobile,
+		score, action, params, is_consume, remarks, add_time)
+		values
+		(#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+		#{score,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR},
+		#{params,jdbcType=VARCHAR}, #{isConsume,jdbcType=NUMERIC},
+		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserDetailScore">
+		insert into user_detail_score
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="action != null">
+				action,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="isConsume != null">
+				is_consume,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=INTEGER},
+			</if>
+			<if test="action != null">
+				#{action,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params,jdbcType=VARCHAR},
+			</if>
+			<if test="isConsume != null">
+				#{isConsume,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserDetailScore">
+		update user_detail_score
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="action != null">
+				action = #{action,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				params = #{params,jdbcType=VARCHAR},
+			</if>
+			<if test="isConsume != null">
+				is_consume = #{isConsume,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserDetailScore">
+		update user_detail_score
+		set user_id = #{userId,jdbcType=NUMERIC},
+		mobile = #{mobile,jdbcType=CHAR},
+		score =
+		#{score,jdbcType=INTEGER},
+		action = #{action,jdbcType=NUMERIC},
+		params = #{params,jdbcType=VARCHAR},
+		is_consume = #{isConsume,jdbcType=NUMERIC},
+		remarks =
+		#{remarks,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

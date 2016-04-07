@@ -2,8 +2,10 @@ package com.simi.service.user;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
+import com.simi.vo.user.UserMsgSearchVo;
 
 public interface UserDetailScoreService {
 
@@ -12,19 +14,16 @@ public interface UserDetailScoreService {
 
     int insert(UserDetailScore record);
 
-    int insert(Users users, UserDetailScore record);
-
     int insertSelective(UserDetailScore record);
 
     UserDetailScore selectByPrimaryKey(Long id);
-
-    List<UserDetailScore> selectByPage(String mobile, int page);
 
 	UserDetailScore initUserDetailScore();
 
 	int updateByPrimaryKeySelective(UserDetailScore record);
 
+	PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize);
 
-	List<UserDetailScore> selectByUserIdPage(Long userId, int page);
+	List<UserDetailScore> selectBySearchVo(UserMsgSearchVo searchVo);
 
 }

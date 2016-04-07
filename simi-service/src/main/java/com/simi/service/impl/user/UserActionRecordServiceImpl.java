@@ -22,12 +22,12 @@ public class UserActionRecordServiceImpl implements UserActionRecordService {
 	}
 
 	@Override
-	public int insert(UserActionRecord record) {
+	public Long insert(UserActionRecord record) {
 		return userActionRecordMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(UserActionRecord record) {
+	public Long insertSelective(UserActionRecord record) {
 		return userActionRecordMapper.insertSelective(record);
 	}
 

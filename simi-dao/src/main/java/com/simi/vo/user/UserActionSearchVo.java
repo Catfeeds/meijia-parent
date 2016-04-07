@@ -8,6 +8,10 @@ public class UserActionSearchVo {
 	  private String actionType;
 	  
 	  private String params;
+	  
+	  private Long startTime;
+	  
+	  private Long endTime;
 
 	public Long getUserId() {
 		return userId;
@@ -31,6 +35,22 @@ public class UserActionSearchVo {
 
 	public void setParams(String params) {
 		this.params = params;
+	}
+
+	public Long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+
+	public Long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
 	}
 
 }

@@ -8,9 +8,9 @@ import com.simi.vo.user.UserActionSearchVo;
 public interface UserActionRecordService {
     int deleteByPrimaryKey(Long id);
 
-    int insert(UserActionRecord record);
+    Long insert(UserActionRecord record);
 
-    int insertSelective(UserActionRecord record);
+    Long insertSelective(UserActionRecord record);
 
     UserActionRecord selectByPrimaryKey(Long id);
 

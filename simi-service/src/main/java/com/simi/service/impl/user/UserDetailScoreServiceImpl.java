@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.simi.common.Constants;
 import com.simi.service.user.UserDetailScoreService;
+import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.po.dao.user.UserDetailScoreMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -33,25 +36,21 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	}
 
 	@Override
-	public int insert(Users users, UserDetailScore record) {
-		usersMapper.updateByPrimaryKeySelective(users);
-		return userDetailScoreMapper.insert(record);
-	}
-
-	@Override
 	public int insertSelective(UserDetailScore record) {
 		return userDetailScoreMapper.insertSelective(record);
 	}
 
 	@Override
-	public List<UserDetailScore> selectByPage(String mobile, int page) {
-		int start = 0;
-		int end = Constants.PAGE_MAX_NUMBER;
-		if (page > 1) {
-			start = (page - 1) * Constants.PAGE_MAX_NUMBER;
-//			end = page * Constants.PAGE_MAX_NUMBER;
-		}
-		return userDetailScoreMapper.selectByPage(mobile, start, end);
+	public PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<UserDetailScore> list = userDetailScoreMapper.selectByListPage(searchVo);
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
+	
+	@Override
+	public List<UserDetailScore> selectBySearchVo(UserMsgSearchVo searchVo) {
+		return userDetailScoreMapper.selectBySearchVo(searchVo);
 	}
 
 	@Override
@@ -60,8 +59,10 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 		record.setId(0L);
 		record.setUserId(0L);
 		record.setMobile("");
-		record.setActionId((short) 0);
+		record.setAction("");
+		record.setParams("");
 		record.setIsConsume((short) 0);
+		record.setRemarks("");
 		record.setScore(0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
@@ -76,16 +77,5 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	public int updateByPrimaryKeySelective(UserDetailScore record) {
 		
 		return userDetailScoreMapper.updateByPrimaryKeySelective(record);
-	}
-
-	@Override
-	public List<UserDetailScore> selectByUserIdPage(Long userId, int page) {
-		int start = 0;
-		int end = Constants.PAGE_MAX_NUMBER;
-		if (page > 1) {
-			start = (page - 1) * Constants.PAGE_MAX_NUMBER;
-//			end = page * Constants.PAGE_MAX_NUMBER;
-		}
-		return userDetailScoreMapper.selectByUserIdPage(userId, start, end);
 	}
 }

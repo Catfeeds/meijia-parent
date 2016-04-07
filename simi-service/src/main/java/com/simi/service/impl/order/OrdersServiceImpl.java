@@ -142,19 +142,19 @@ public class OrdersServiceImpl implements OrdersService {
 	@Override
 	public void orderRatedTodo(Orders orders) {
 		
-		Users users = usersService.selectByPrimaryKey(orders.getUserId());
+//		Users users = usersService.selectByPrimaryKey(orders.getUserId());
 		
-		UserDetailScore userDetailScore = userDetailScoreService.initUserDetailScore();
-		userDetailScore.setUserId(users.getId());
-		userDetailScore.setMobile(users.getMobile());
+//		UserDetailScore userDetailScore = userDetailScoreService.initUserDetailScore();
+//		userDetailScore.setUserId(users.getId());
+//		userDetailScore.setMobile(users.getMobile());
 		
-		userDetailScore.setScore(0);
-		userDetailScore.setActionId(Constants.ACTION_ORDER_RATE);		
-		userDetailScore.setIsConsume(Constants.CONSUME_SCORE_GET);
-		userDetailScoreService.insert(userDetailScore);
+//		userDetailScore.setScore(0);
+//		userDetailScore.setActionId(Constants.ACTION_ORDER_RATE);		
+//		userDetailScore.setIsConsume(Constants.CONSUME_SCORE_GET);
+//		userDetailScoreService.insert(userDetailScore);
 		
-		users.setScore(users.getScore()+0);
-		usersService.updateByPrimaryKeySelective(users);				
+//		users.setScore(users.getScore()+0);
+//		usersService.updateByPrimaryKeySelective(users);				
 	}
 
 	@Override
