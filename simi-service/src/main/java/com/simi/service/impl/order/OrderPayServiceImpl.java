@@ -167,7 +167,8 @@ public class OrderPayServiceImpl implements OrderPayService {
 		BigDecimal orderMoney = orderPrice.getOrderMoney();
 		if (!orderMoney.equals(new BigDecimal(0))) {
 			if (StringUtil.isEmpty(serviceTypeName)) serviceTypeName = "订单支付";
-			userScoreAsyncService.sendScore(userId, 5, "order", orderId.toString(), serviceTypeName);
+			Integer score = orderMoney.intValue();
+			userScoreAsyncService.sendScore(userId, score, "order", orderId.toString(), serviceTypeName);
 		}
 		
 	}
