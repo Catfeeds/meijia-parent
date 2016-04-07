@@ -65,4 +65,34 @@ public class TestUserScoreController extends JUnitActionBase {
 	    
 	    Thread.sleep(60000); // 因为junit结束会结束jvm，所以让它等会异步线程  
     }
+	
+	@Test
+    public void testNotifySocre() throws Exception {
+
+		String url = "/app/user/notfiy_score.json";
+		String params = "";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+		ResultActions resultActions = this.mockMvc.perform(getRequest);
+		resultActions.andExpect(content().contentType(this.mediaType));
+		resultActions.andExpect(status().isOk());
+
+		System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
+	
+	@Test
+    public void testResultSocre() throws Exception {
+
+		String url = "/app/user/result_score.do";
+		String params = "";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+		ResultActions resultActions = this.mockMvc.perform(getRequest);
+		resultActions.andExpect(content().contentType(this.mediaType));
+		resultActions.andExpect(status().isOk());
+
+		System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
 }

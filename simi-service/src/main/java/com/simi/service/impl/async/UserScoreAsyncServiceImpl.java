@@ -126,4 +126,34 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		return sendScore(userId, score, action, cardId.toString(), cardTypeName);
 	}
 	
+	/**
+	 * 消费积分
+	 */
+	@Async
+	@Override
+	public Future<Boolean> consumeScore(Long userId, Integer score, String action, String params, String remarks) {
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		if (u == null) return new AsyncResult<Boolean>(true);
+		
+		//记录积分明细
+		UserDetailScore record = userDetailScoreService.initUserDetailScore();
+		record.setUserId(userId);
+		record.setMobile(u.getMobile());
+		record.setScore(score);
+		record.setAction(action);
+		record.setParams(params);
+		record.setIsConsume((short) 1);
+		record.setRemarks(remarks);
+		
+		userDetailScoreService.insert(record);
+		
+		//更新总积分
+		u.setScore(u.getScore() - score);
+		usersService.updateByPrimaryKeySelective(u);
+		
+		return new AsyncResult<Boolean>(true);
+	}
+	
 }

@@ -10,5 +10,7 @@ public interface UserScoreAsyncService {
 
 	Future<Boolean> sendScoreCard(Long userId, Long cardId, Short cardType);
 
+	Future<Boolean> consumeScore(Long userId, Integer score, String action, String params, String remarks);
+
 
 }

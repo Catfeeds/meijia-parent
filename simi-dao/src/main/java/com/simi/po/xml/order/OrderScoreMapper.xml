@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.order.OrderScoreMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.order.OrderScore">
+		<id column="order_id" property="orderId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="mobile" property="mobile" jdbcType="CHAR" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_status" property="orderStatus" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+		<result column="credits" property="credits" jdbcType="INTEGER" />
+		<result column="appKey" property="appkey" jdbcType="VARCHAR" />
+		<result column="timestamp" property="timestamp" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="orderNum" property="ordernum" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="facePrice" property="faceprice" jdbcType="VARCHAR" />
+		<result column="actualPrice" property="actualprice" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="waitAudit" property="waitaudit" jdbcType="VARCHAR" />
+		<result column="params" property="params" jdbcType="VARCHAR" />
+		<result column="sign" property="sign" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		order_id, user_id, mobile, order_no, order_status, add_time, update_time, credits,
+		appKey, timestamp, description, orderNum, type, facePrice, actualPrice, ip, waitAudit,
+		params, sign
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_score
+		where order_id = #{orderId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from order_score
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from order_score
+		where order_no = #{orderNo,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByOrderNum" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from order_score
+		where orderNum = #{orderNum,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from order_score
+		where order_id = #{orderId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.order.OrderScore">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="orderId">
+			SELECT LAST_INSERT_ID() AS order_id
+		</selectKey>	
+	
+		insert into order_score (order_id, user_id, mobile,
+		order_no, order_status, add_time,
+		update_time, credits, appKey,
+		timestamp, description, orderNum,
+		type, facePrice, actualPrice,
+		ip, waitAudit, params,
+		sign)
+		values (#{orderId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
+		#{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC}, #{credits,jdbcType=INTEGER}, #{appkey,jdbcType=VARCHAR},
+		#{timestamp,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ordernum,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{faceprice,jdbcType=VARCHAR}, #{actualprice,jdbcType=VARCHAR},
+		#{ip,jdbcType=VARCHAR}, #{waitaudit,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
+		#{sign,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.order.OrderScore">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="orderId">
+			SELECT LAST_INSERT_ID() AS order_id
+		</selectKey>	
+	
+		insert into order_score
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="orderNo != null">
+				order_no,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="credits != null">
+				credits,
+			</if>
+			<if test="appkey != null">
+				appKey,
+			</if>
+			<if test="timestamp != null">
+				timestamp,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="ordernum != null">
+				orderNum,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="faceprice != null">
+				facePrice,
+			</if>
+			<if test="actualprice != null">
+				actualPrice,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="waitaudit != null">
+				waitAudit,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="sign != null">
+				sign,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=CHAR},
+			</if>
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+			<if test="credits != null">
+				#{credits,jdbcType=INTEGER},
+			</if>
+			<if test="appkey != null">
+				#{appkey,jdbcType=VARCHAR},
+			</if>
+			<if test="timestamp != null">
+				#{timestamp,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="ordernum != null">
+				#{ordernum,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="faceprice != null">
+				#{faceprice,jdbcType=VARCHAR},
+			</if>
+			<if test="actualprice != null">
+				#{actualprice,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="waitaudit != null">
+				#{waitaudit,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params,jdbcType=VARCHAR},
+			</if>
+			<if test="sign != null">
+				#{sign,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.order.OrderScore">
+		update order_score
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=CHAR},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+			<if test="credits != null">
+				credits = #{credits,jdbcType=INTEGER},
+			</if>
+			<if test="appkey != null">
+				appKey = #{appkey,jdbcType=VARCHAR},
+			</if>
+			<if test="timestamp != null">
+				timestamp = #{timestamp,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="ordernum != null">
+				orderNum = #{ordernum,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="faceprice != null">
+				facePrice = #{faceprice,jdbcType=VARCHAR},
+			</if>
+			<if test="actualprice != null">
+				actualPrice = #{actualprice,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="waitaudit != null">
+				waitAudit = #{waitaudit,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				params = #{params,jdbcType=VARCHAR},
+			</if>
+			<if test="sign != null">
+				sign = #{sign,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.order.OrderScore">
+		update order_score
+		set user_id = #{userId,jdbcType=NUMERIC},
+		mobile = #{mobile,jdbcType=CHAR},
+		order_no = #{orderNo,jdbcType=VARCHAR},
+		order_status = #{orderStatus,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC},
+		credits = #{credits,jdbcType=INTEGER},
+		appKey = #{appkey,jdbcType=VARCHAR},
+		timestamp = #{timestamp,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		orderNum = #{ordernum,jdbcType=VARCHAR},
+		type = #{type,jdbcType=VARCHAR},
+		facePrice = #{faceprice,jdbcType=VARCHAR},
+		actualPrice = #{actualprice,jdbcType=VARCHAR},
+		ip = #{ip,jdbcType=VARCHAR},
+		waitAudit = #{waitaudit,jdbcType=VARCHAR},
+		params = #{params,jdbcType=VARCHAR},
+		sign = #{sign,jdbcType=VARCHAR}
+		where order_id = #{orderId,jdbcType=NUMERIC}
+	</update>
+</mapper>
