@@ -44,6 +44,7 @@ import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.DictCouponsService;
+import com.simi.service.feed.FeedService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
@@ -54,6 +55,7 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserIndexVo;
@@ -114,6 +116,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private FeedService feedService;
 	
 	@Override
 	public Long insert(Users record) {
@@ -622,6 +627,15 @@ public class UsersServiceImpl implements UsersService {
 			if (userFriend != null) {
 				vo.setIsFriend((short) 1);
 			}
+		}
+		
+		//计算动态个数
+		FeedSearchVo searchVo2 = new FeedSearchVo();
+		searchVo2.setUserId(viewUser.getId());
+		PageInfo  feedPage = feedService.selectByListPage(searchVo2, 1, Constants.PAGE_MAX_NUMBER);
+		if (feedPage != null) {
+			Long totalFeed = feedPage.getTotal();
+			vo.setTotalFeed(totalFeed.intValue());
 		}
 		
 		return vo;

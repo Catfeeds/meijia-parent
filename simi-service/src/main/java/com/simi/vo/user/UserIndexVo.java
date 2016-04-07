@@ -25,15 +25,17 @@ public class UserIndexVo  {
 	//与当前用户的距离.
 	private String poiDistance;
 	
-	private int	TotalCard;
+	private int	totalCard;
 	
-	private int TotalCoupon;
+	private int totalCoupon;
 	
-	private int TotalFriends;
+	private int totalFriends;
 	
 	private Integer score;
 	
 	private Short isFriend;
+	
+	private int totalFeed;
 	
 
 	public long getId() {
@@ -100,28 +102,12 @@ public class UserIndexVo  {
 		this.poiDistance = poiDistance;
 	}
 
-	public int getTotalCard() {
-		return TotalCard;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setTotalCard(int totalCard) {
-		TotalCard = totalCard;
-	}
-
-	public int getTotalCoupon() {
-		return TotalCoupon;
-	}
-
-	public void setTotalCoupon(int totalCoupon) {
-		TotalCoupon = totalCoupon;
-	}
-
-	public int getTotalFriends() {
-		return TotalFriends;
-	}
-
-	public void setTotalFriends(int totalFriends) {
-		TotalFriends = totalFriends;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getName() {
@@ -132,12 +118,28 @@ public class UserIndexVo  {
 		this.name = name;
 	}
 
-	public String getMobile() {
-		return mobile;
+	public int getTotalCard() {
+		return totalCard;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setTotalCard(int totalCard) {
+		this.totalCard = totalCard;
+	}
+
+	public int getTotalCoupon() {
+		return totalCoupon;
+	}
+
+	public void setTotalCoupon(int totalCoupon) {
+		this.totalCoupon = totalCoupon;
+	}
+
+	public int getTotalFriends() {
+		return totalFriends;
+	}
+
+	public void setTotalFriends(int totalFriends) {
+		this.totalFriends = totalFriends;
 	}
 
 	public Integer getScore() {
@@ -154,5 +156,13 @@ public class UserIndexVo  {
 
 	public void setIsFriend(Short isFriend) {
 		this.isFriend = isFriend;
+	}
+
+	public int getTotalFeed() {
+		return totalFeed;
+	}
+
+	public void setTotalFeed(int totalFeed) {
+		this.totalFeed = totalFeed;
 	}
 }
