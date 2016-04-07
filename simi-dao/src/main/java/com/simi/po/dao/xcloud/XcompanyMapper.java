@@ -18,17 +18,9 @@ public interface XcompanyMapper {
 
     int updateByPrimaryKey(Xcompany record);
 
-	Xcompany selectByUserName(String userName);
-
-	Xcompany selectByUserNameAndPass(String userName, String passMd5);
-	
-	Xcompany selectByCompanyName(String companyName);
-
-	Xcompany selectByInvitationCode(String invitationCode);
-
-	Xcompany selectByCompanyNameAndUserName(String companyName, String userName);
-
 	List<Xcompany> selectByIds(List<Long> ids);
 	
 	List<Xcompany> selectByListPage(CompanySearchVo searchVo);
+
+	List<Xcompany> selectBySearchVo(CompanySearchVo searchVo);
 }

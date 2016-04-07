@@ -16,10 +16,10 @@ import com.simi.po.dao.xcloud.XcompanyMapper;
 
 @Service
 public class XcompanyServiceImpl implements XCompanyService {
-	
+
 	@Autowired
 	XcompanyMapper xCompanyMapper;
-		
+
 	@Override
 	public Xcompany initXcompany() {
 		Xcompany record = new Xcompany();
@@ -33,7 +33,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 		record.setRegionId(0L);
 		record.setLongitude(" ");
 		record.setLatitude(" ");
-		record.setPoiType((short)0);
+		record.setPoiType((short) 0);
 		record.setAddrName(" ");
 		record.setAddr("");
 		record.setUserName("");
@@ -52,12 +52,12 @@ public class XcompanyServiceImpl implements XCompanyService {
 	public int deleteByPrimaryKey(Long id) {
 		return xCompanyMapper.deleteByPrimaryKey(id);
 	}
-	
+
 	@Override
 	public Long insert(Xcompany record) {
 		return xCompanyMapper.insert(record);
 	}
-	
+
 	@Override
 	public int insertSelective(Xcompany record) {
 		return xCompanyMapper.insertSelective(record);
@@ -67,7 +67,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 	public Xcompany selectByPrimaryKey(Long id) {
 		return xCompanyMapper.selectByPrimaryKey(id);
 	}
-	
+
 	@Override
 	public int updateByPrimaryKey(Xcompany record) {
 		return xCompanyMapper.updateByPrimaryKey(record);
@@ -77,48 +77,18 @@ public class XcompanyServiceImpl implements XCompanyService {
 	public int updateByPrimaryKeySelective(Xcompany record) {
 		return xCompanyMapper.updateByPrimaryKeySelective(record);
 	}
-	
-	@Override
-	public Xcompany selectByCompanyName(String companyName) {
-		return xCompanyMapper.selectByCompanyName(companyName);
-	}	
-	
-	@Override
-	public Xcompany selectByUserName(String userName) {
-		return xCompanyMapper.selectByUserName(userName);
-	}
-	
-	@Override
-	public Xcompany selectByCompanyNameAndUserName(String companyName, String userName) {
-		return xCompanyMapper.selectByCompanyNameAndUserName(companyName, userName);
-	}		
-	
-	@Override
-	public Xcompany selectByInvitationCode(String invitationCode) {
-		return xCompanyMapper.selectByInvitationCode(invitationCode);
-	}	
-	
-	/**
-	 * 登陆方式
-	 * @param userName
-	 * @param password， 必须为md5的值. passMd5 = md5(password+xcloud)
-	 * @return
-	 */
-	@Override
-	public Xcompany selectByUserNameAndPass(String userName, String passMd5) {
-		return xCompanyMapper.selectByUserNameAndPass(userName, passMd5);
-	}
 
 	@Override
-	public List<Xcompany> selectByListPage(CompanySearchVo searchVo,
-			int pageNo, int pageSize) {
-	
+	public List<Xcompany> selectByListPage(CompanySearchVo searchVo, int pageNo, int pageSize) {
 		List<Xcompany> list = xCompanyMapper.selectByListPage(searchVo);
-		
 		return list;
-		
-	}	
+	}
 	
+	@Override
+	public List<Xcompany> selectBySearchVo(CompanySearchVo searchVo) {
+		return xCompanyMapper.selectBySearchVo(searchVo);
+	}
+
 	@Override
 	public List<Xcompany> selectByIds(List<Long> ids) {
 		return xCompanyMapper.selectByIds(ids);

@@ -6,4 +6,6 @@ public interface UserScoreAsyncService {
 
 	Future<Boolean> sendScore(Long userId, Integer score, String action, String params, String remarks);
 
+	Future<Boolean> sendScoreLimitCompany(Long userId, Integer score, String action, String params, String remarks);
+
 }

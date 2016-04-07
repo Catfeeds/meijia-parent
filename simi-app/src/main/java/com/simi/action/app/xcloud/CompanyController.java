@@ -32,6 +32,7 @@ import com.simi.service.xcloud.XcompanyStaffReqService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
@@ -91,8 +92,11 @@ public class CompanyController extends BaseController {
 		}
 
 		// 验证是否出现重名的情况.
-		Xcompany xCompany = xCompanyService.selectByCompanyNameAndUserName(companyName, userName);
-		if (xCompany != null) {
+		CompanySearchVo searchVo = new CompanySearchVo();
+		searchVo.setCompanyName(companyName);
+		searchVo.setUserName(userName);
+		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo);
+		if (!rs.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("您已经注册过" + companyName);
 			return result;
@@ -100,7 +104,7 @@ public class CompanyController extends BaseController {
 
 		String passwordMd5 = StringUtil.md5(password.trim());
 
-		xCompany = xCompanyService.initXcompany();
+		Xcompany xCompany = xCompanyService.initXcompany();
 		if (companyId > 0L) {
 			xCompany = xCompanyService.selectByPrimaryKey(companyId);
 		}

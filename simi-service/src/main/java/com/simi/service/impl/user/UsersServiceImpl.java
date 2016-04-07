@@ -40,6 +40,7 @@ import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.dict.DictCouponsService;
@@ -111,6 +112,9 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private XCompanyService xCompanyService;
 	
+	@Autowired
+	private UserScoreAsyncService userScoreAsyncService;
+	
 	@Override
 	public Long insert(Users record) {
 		return usersMapper.insert(record);
@@ -181,6 +185,10 @@ public class UsersServiceImpl implements UsersService {
 			
 			// 发送默认欢迎消息
 			userMsgAsyncService.newUserMsg(u.getId());
+			
+			//新用户注册赠送积分
+			userScoreAsyncService.sendScore(u.getId(), 10, "new_user", u.getId().toString(), "新用户注册");
+			
 		}
 		return u;
 	}

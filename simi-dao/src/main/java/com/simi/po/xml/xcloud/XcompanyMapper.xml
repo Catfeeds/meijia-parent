@@ -27,7 +27,8 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		company_id, company_type, company_name, short_name, company_size, company_trade, province_id, city_id, region_id,
-		latitude, longitude, poi_type, addr_name, addr, user_name, password, invitation_code, qr_code,
+		latitude, longitude, poi_type,
+		addr_name, addr, user_name, password, invitation_code, qr_code,
 		link_man, email, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -36,30 +37,7 @@
 		from xcompany
 		where company_id = #{companyId,jdbcType=NUMERIC}
 	</select>
-	
-	<select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany
-		where user_name = #{userName,jdbcType=VARCHAR}
-	</select>
-	
-	<select id="selectByUserNameAndPass" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany
-		where 
-		user_name = #{0, jdbcType=VARCHAR} and password = #{1, jdbcType=VARCHAR}
-	</select>	
-	
-	<select id="selectByCompanyNameAndUserName" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany
-		where 
-		company_name = #{0, jdbcType=VARCHAR} and user_name = #{1, jdbcType=VARCHAR}
-	</select>
-	
+
 	<select id="selectByIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -70,45 +48,87 @@
 		</foreach>
 		order by add_time asc
 	</select>
-	
-	
-	
-	<select id="selectByCompanyName" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany
-		where 
-		company_name = #{companyName, jdbcType=VARCHAR}
-	</select>	
-	
+
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanySearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany
 		where 1=1
+		
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="companyName != null">
 			and company_name = #{companyName,jdbcType=VARCHAR}
-		</if>	
+		</if>
+		
+		<if test="userName != null">
+			and user_name = #{userName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="passMd5 != null">
+			and password = #{passMd5,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="invitationCode != null">
+			and invitation_code = #{invitationCode,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="startTime != null">
+			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+		</if>
+		
 		order by add_time desc
 	</select>
-	
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanySearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyName != null">
+			and company_name = #{companyName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="userName != null">
+			and user_name = #{userName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="passMd5 != null">
+			and password = #{passMd5,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="invitationCode != null">
+			and invitation_code = #{invitationCode,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="startTime != null">
+			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+		</if>
+		order by add_time desc
+	</select>
+
 	<select id="selectByInvitationCode" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany
-		where 
+		where
 		invitation_code = #{invitationCode, jdbcType=VARCHAR}
-	</select>	
-		
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from xcompany
 		where company_id = #{companyId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.Xcompany">
-		<selectKey resultType="java.lang.Long" order="AFTER"
-			keyProperty="companyId">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="companyId">
 			SELECT LAST_INSERT_ID() AS company_id
-		</selectKey>	
+		</selectKey>
 		insert into xcompany (company_id, company_type, company_name, short_name, company_size,
 		company_trade, province_id, city_id,
 		region_id, latitude, longitude,
@@ -116,20 +136,23 @@
 		user_name, password, invitation_code, qr_code,
 		link_man, email, add_time,
 		update_time)
-		values (#{companyId,jdbcType=NUMERIC}, #{companyType,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
+		values (#{companyId,jdbcType=NUMERIC},
+		#{companyType,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
 		#{companyTrade,jdbcType=SMALLINT}, #{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC},
-		#{regionId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR},
+		#{regionId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR},
+		#{longitude,jdbcType=VARCHAR},
 		#{poiType,jdbcType=NUMERIC}, #{addrName,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
-		#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{invitationCode,jdbcType=CHAR}, #{qrCode,jdbcType=CHAR},
-		#{linkMan,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
+		#{userName,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR}, #{invitationCode,jdbcType=CHAR}, #{qrCode,jdbcType=CHAR},
+		#{linkMan,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.Xcompany">
-		<selectKey resultType="java.lang.Long" order="AFTER"
-			keyProperty="companyId">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="companyId">
 			SELECT LAST_INSERT_ID() AS company_id
 		</selectKey>
-	
+
 		insert into xcompany
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="companyId != null">
@@ -340,25 +363,30 @@
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.Xcompany">
 		update xcompany
 		set company_type = #{companyType,jdbcType=NUMERIC},
-		company_name = #{companyName,jdbcType=VARCHAR},
+		company_name =
+		#{companyName,jdbcType=VARCHAR},
 		short_name = #{shortName,jdbcType=VARCHAR},
 		company_size = #{companySize,jdbcType=NUMERIC},
-		company_trade = #{companyTrade,jdbcType=SMALLINT},
+		company_trade =
+		#{companyTrade,jdbcType=SMALLINT},
 		province_id = #{provinceId,jdbcType=NUMERIC},
 		city_id = #{cityId,jdbcType=NUMERIC},
 		region_id = #{regionId,jdbcType=NUMERIC},
 		latitude = #{latitude,jdbcType=VARCHAR},
 		longitude = #{longitude,jdbcType=VARCHAR},
 		poi_type = #{poiType,jdbcType=NUMERIC},
-		addr_name = #{addrName,jdbcType=VARCHAR},
+		addr_name =
+		#{addrName,jdbcType=VARCHAR},
 		addr = #{addr,jdbcType=VARCHAR},
 		user_name = #{userName,jdbcType=VARCHAR},
 		password = #{password,jdbcType=VARCHAR},
-		invitation_code = #{invitationCode,jdbcType=CHAR},
+		invitation_code
+		= #{invitationCode,jdbcType=CHAR},
 		qr_code = #{qrCode,jdbcType=CHAR},
 		link_man = #{linkMan,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
-		add_time = #{addTime,jdbcType=NUMERIC},
+		add_time =
+		#{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where company_id = #{companyId,jdbcType=NUMERIC}
 	</update>

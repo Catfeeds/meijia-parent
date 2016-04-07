@@ -3,6 +3,7 @@ package com.xcloud.action;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +33,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
@@ -94,9 +96,14 @@ public class RegisterController extends BaseController {
 		
 		String companyName = xCompanyVo.getCompanyName().trim();
 		//验证团队与用户是否已经存在
-		Xcompany xCompanyExist = xCompanyService.selectByCompanyNameAndUserName(companyName, mobile);
+		CompanySearchVo searchVo1 = new CompanySearchVo();
+		searchVo1.setUserName(mobile);
+		searchVo1.setCompanyName(companyName);
 		
-		if (xCompanyExist != null) {
+		
+		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+		
+		if (!rs.isEmpty()) {
 			result.addError(new FieldError("contentModel","userName","您已经注册过此团队."));
 			model.addAttribute("contentModel", xCompanyVo);
 			return register(model);

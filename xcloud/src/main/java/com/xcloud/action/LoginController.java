@@ -26,6 +26,7 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 
@@ -66,11 +67,24 @@ public class LoginController extends BaseController {
         String password = loginVo.getPassword().trim();
         
         String passwordMd5 = StringUtil.md5(password.trim());
-        Xcompany xCompany = xCompanyService.selectByUserNameAndPass(userName, passwordMd5);
+        
+        CompanySearchVo searchVo1 = new CompanySearchVo();
+		searchVo1.setUserName(userName);
+		searchVo1.setPassMd5(passwordMd5);
+        
+        
+        Xcompany xCompany = null;
+        List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+        
+        if (rs.isEmpty()) {
+        	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
+        	return login(model);
+        } else {
+        	xCompany = rs.get(0);
+        }
         
         if ( xCompany == null ) {
         	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
-//        	result.addError(new FieldError("contentModel","password","用户名或密码错误。"));
         	return login(model);
     	}
         

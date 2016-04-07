@@ -30,6 +30,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffReqService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.XcompanyStaffReqVo;
 
@@ -88,14 +89,27 @@ public class CompanyStaffController extends BaseController {
 			u = usersService.genUser(userName, "", Constants.USER_XCOULD, "");
 		}
 		userId = u.getId();
-
-		Xcompany xCompany = xCompanyService.selectByInvitationCode(invitationCode);
+		
+		CompanySearchVo searchVo1 = new CompanySearchVo();
+		searchVo1.setInvitationCode(invitationCode);
+		
+		Xcompany xCompany = null;
+		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
 		Long companyId = 0L;
+		if (rs.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("邀请码不存在!");
+			return result;
+		} else {
+			xCompany = rs.get(0);
+		}
+		
 		if (xCompany == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("邀请码不存在!");
 			return result;
 		}
+		
 		companyId = xCompany.getCompanyId();
 		
 		//是否已经加入团队
@@ -174,13 +188,18 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg("用户不存在.");
 			return result;
 		}
-
-		Xcompany xCompany = xCompanyService.selectByUserName(adminUser.getMobile());
+		CompanySearchVo searchVo1 = new CompanySearchVo();
+		searchVo1.setUserName(adminUser.getMobile());
 		
-		if (xCompany == null) {
+		Xcompany xCompany = null;
+		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+		
+		if (rs.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("你不是团队管理员.");
 			return result;
+		} else {
+			xCompany = rs.get(0);
 		}
 		
 		companyId = xCompany.getCompanyId();
@@ -376,10 +395,15 @@ public class CompanyStaffController extends BaseController {
 			return result;
 		}
 		String mobile = u.getMobile();
-		Xcompany xCompany = xCompanyService.selectByUserName(mobile);
+		CompanySearchVo searchVo1 = new CompanySearchVo();
+		searchVo1.setUserName(mobile);
+		
+		Xcompany xCompany = null;
+		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
 		
 		Long companyId = 0L;
-		if (xCompany != null) {
+		if (rs != null) {
+			xCompany = rs.get(0);
 			companyId = xCompany.getCompanyId();
 		}
 		
