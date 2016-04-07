@@ -1,5 +1,8 @@
 package com.simi.service.impl.order;
 
+import java.math.BigDecimal;
+
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.async.OrderAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
@@ -79,6 +83,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	private NoticeAppAsyncService noticeAppAsyncService;
+	
+	@Autowired
+	private UserScoreAsyncService userScoreAsyncService;
 
 	/**
 	 * 订单支付成功,后续通知功能 1. 如果为
@@ -92,7 +99,11 @@ public class OrderPayServiceImpl implements OrderPayService {
 		Long partnerUserId = order.getPartnerUserId();
 
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(order.getOrderId());
-		
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		String serviceTypeName = "";
+		if (serviceType != null) {
+			serviceTypeName = serviceType.getName();
+		}
 		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
 		if (serviceTypeId.equals(75L)) {
 			//分配秘书
@@ -150,6 +161,13 @@ public class OrderPayServiceImpl implements OrderPayService {
 		//团建扩展后续操作
 		if (serviceTypeId.equals(246L)) {
 			orderRecyclePaySuccessToDo(order);
+		}
+		
+		//积分赠送
+		BigDecimal orderMoney = orderPrice.getOrderMoney();
+		if (!orderMoney.equals(new BigDecimal(0))) {
+			if (StringUtil.isEmpty(serviceTypeName)) serviceTypeName = "订单支付";
+			userScoreAsyncService.sendScore(userId, 5, "order", orderId.toString(), serviceTypeName);
 		}
 		
 	}
