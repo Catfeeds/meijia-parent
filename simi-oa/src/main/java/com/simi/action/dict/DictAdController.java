@@ -155,7 +155,7 @@ public class DictAdController extends BaseController {
 			dictAd.setId(Long.valueOf(request.getParameter("id")));
 			dictAd.setAddTime(TimeStampUtil.getNow() / 1000);
 			dictAd.setUpdateTime(0L);
-			dictAd.setEnable((short) 0);
+			dictAd.setEnable((short) 1);
 
 
 			adService.insertSelective(dictAd);
