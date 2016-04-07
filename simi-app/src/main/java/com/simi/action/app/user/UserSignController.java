@@ -51,7 +51,7 @@ public class UserSignController extends BaseController {
 		List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
 		if (!rs.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("今天已经签过到.");
+			result.setMsg("您今日已签到");
 			return result;
 		}
 		
