@@ -39,6 +39,7 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyAssetService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.AssetSearchVo;
 import com.simi.vo.ImgSearchVo;
@@ -161,6 +162,12 @@ public class AssetController extends BaseController {
 			Long linkId = record.getId();
 			imgService.insertImgs(imgs, userId, linkId, "record_asset");
 		}
+		Long id = record.getId();
+
+		//异步产生首页消息信息.
+		String title = "资产登记";
+		String summary =  "你生成了新的资产登记.";
+		userMsgAsyncService.newActionAppMsg(userId, id, "asset", title, summary, "");
 
 		return result;
 

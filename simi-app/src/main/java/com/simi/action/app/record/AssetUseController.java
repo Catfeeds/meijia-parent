@@ -205,6 +205,12 @@ public class AssetUseController extends BaseController {
 			Long linkId = record.getId();
 			imgService.insertImgs(imgs, userId, linkId, "record_asset_use");
 		}
+		
+		Long id = record.getId();
+		//异步产生首页消息信息.
+		String title = "资产领用";
+		String summary =  name + "进行了资产领用.";
+		userMsgAsyncService.newActionAppMsg(userId, id, "asset", title, summary, "");
 
 		return result;
 	}
