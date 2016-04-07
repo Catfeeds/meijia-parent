@@ -335,4 +335,38 @@ public class CardUtil {
 		return iconUrl;
 	}		
 	
+	public static String getCardAction(Short cardType) {
+		String action = "";
+		switch (cardType) {
+			case 0:
+//				cardTypeName = "通用";
+				action = "";
+				break;
+			case 1:
+//				cardTypeName = "会议安排";
+				action = "meeting";
+				break;
+			case 2:
+//				cardTypeName = "通知公告";
+				action = "notice";
+				break;
+			case 3:
+//				cardTypeName = "事务提醒";
+				action = "alarm";
+				break;
+			case 4:
+//				cardTypeName = "面试邀约";
+				action = "interview";
+				break;
+			case 5:
+//				cardTypeName = "差旅规划";
+				action = "trip";
+				break;
+			default:
+//				cardTypeName = "";
+				action = "alarm";
+		}
+		return action;
+	}		
+	
 }

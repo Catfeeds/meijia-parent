@@ -24,6 +24,7 @@ import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
@@ -59,6 +60,9 @@ public class CompanyController extends BaseController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private UserScoreAsyncService userScoreAsyncService;
 
 	@RequestMapping(value = "/reg", method = { RequestMethod.POST })
 	public AppResultData<Object> companyReg(@RequestParam("user_name") String userName, @RequestParam("sms_token") String smsToken,
@@ -91,6 +95,7 @@ public class CompanyController extends BaseController {
 			u = usersService.genUser(mobile, "", Constants.USER_XCOULD, "");
 		}
 
+		Long userId = u.getId();
 		// 验证是否出现重名的情况.
 		CompanySearchVo searchVo = new CompanySearchVo();
 		searchVo.setCompanyName(companyName);
@@ -130,6 +135,9 @@ public class CompanyController extends BaseController {
 
 			xCompany.setQrCode(imgUrl);
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
+			
+			//积分赠送
+			userScoreAsyncService.sendScoreCompany(userId, companyId);
 		}
 
 		// 团队部门预置信息.
