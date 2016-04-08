@@ -210,7 +210,7 @@ public class UserScoreController extends BaseController {
 			
 			if (record != null) {
 				
-				
+				System.out.println("积分兑换成功");
 				
 				record.setOrderStatus((short) 1);
 				record.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -228,6 +228,8 @@ public class UserScoreController extends BaseController {
 				userMsgAsyncService.newActionAppMsg(userId, orderId, "duiba", "积分兑换", desc, "");
 			}
 			
+		} else {
+			System.out.println("积分兑换失败.");
 		}
 		
 		response.getOutputStream().write("ok".getBytes());
