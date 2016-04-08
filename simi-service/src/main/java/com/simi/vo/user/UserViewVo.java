@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class UserViewVo {
 	
+	private Long id;
+	
 	private long userId;
 	
 	private String mobile;
@@ -260,6 +262,14 @@ public class UserViewVo {
 
 	public void setImSecNickname(String imSecNickname) {
 		this.imSecNickname = imSecNickname;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
