@@ -208,7 +208,7 @@ public class UserScoreController extends BaseController {
 		if (!params.isSuccess()) {
 			OrderScore record = orderScoreService.selectByOrderNum(orderNum);
 			
-			if (record != null) {
+			if (record != null && !record.getOrderStatus().equals((short)1)) {
 				
 				System.out.println("积分兑换成功");
 				
