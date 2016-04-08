@@ -205,7 +205,7 @@ public class UserScoreController extends BaseController {
 		
 		
 		String orderNum = params.getOrderNum();
-		if (!params.isSuccess()) {
+		if (params.isSuccess()) {
 			OrderScore record = orderScoreService.selectByOrderNum(orderNum);
 			
 			if (record != null && !record.getOrderStatus().equals((short)1)) {
