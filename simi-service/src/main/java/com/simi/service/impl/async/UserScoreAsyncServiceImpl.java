@@ -61,6 +61,11 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		
 		//更新总积分
 		u.setScore(u.getScore() + score);
+		
+		
+		if (!action.equals("order")) {
+			u.setExp(u.getExp() + score);
+		}
 		usersService.updateByPrimaryKeySelective(u);
 		
 		return new AsyncResult<Boolean>(true);
@@ -87,9 +92,9 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		searchVo.setEndTime(endTime);
 		
 		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo);
-		if (rs.size() > 50) return new AsyncResult<Boolean>(true);
+		if (rs.size() > 300) return new AsyncResult<Boolean>(true);
 		
-		Integer score = 30;
+		Integer score = 300;
 		
 		return sendScore(userId, score, "company_reg", companyId.toString(), "创建企业/团队");
 		
@@ -116,9 +121,13 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		searchVo.setEndTime(endTime);
 		
 		List<Cards> rs = cardService.selectBySearchVo(searchVo);
-		if (rs.size() > 10) return new AsyncResult<Boolean>(true);
 		
-		Integer score = 1;
+		if (cardType.equals((short)3)) {
+			if (rs.size() > 200) return new AsyncResult<Boolean>(true);
+		} else {
+			if (rs.size() > 10) return new AsyncResult<Boolean>(true);
+		}
+		Integer score = 10;
 		
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String action = CardUtil.getCardAction(cardType);

@@ -163,6 +163,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setIsApproval((short) 0);
 		u.setAddFrom((short) 0);
 		u.setScore(0);
+		u.setExp(0);
 		u.setAddTime(TimeStampUtil.getNow() / 1000);
 		u.setUpdateTime(TimeStampUtil.getNow() / 1000);
 		return u;
@@ -192,7 +193,7 @@ public class UsersServiceImpl implements UsersService {
 			userMsgAsyncService.newUserMsg(u.getId());
 			
 			//新用户注册赠送积分
-			userScoreAsyncService.sendScore(u.getId(), 10, "new_user", u.getId().toString(), "新用户注册");
+			userScoreAsyncService.sendScore(u.getId(), 100, "new_user", u.getId().toString(), "新用户注册");
 			
 		}
 		return u;
