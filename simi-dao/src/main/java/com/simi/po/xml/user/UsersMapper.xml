@@ -25,6 +25,7 @@
 		<result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
 		<result column="rest_money" jdbcType="DECIMAL" property="restMoney" />
 		<result column="score" jdbcType="INTEGER" property="score" />
+		<result column="exp" jdbcType="INTEGER" property="exp" />
 		<result column="user_type" jdbcType="NUMERIC" property="userType" />
 		<result column="is_approval" jdbcType="NUMERIC" property="isApproval" />
 		<result column="add_from" jdbcType="NUMERIC" property="addFrom" />
@@ -40,7 +41,7 @@
 	<sql id="Base_Column_List">
 		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex,
 		introduction, level,work_start, work_end,is_door,
-		birth_day,degree_id, major, head_img, qr_code, rest_money, score,
+		birth_day,degree_id, major, head_img, qr_code, rest_money, score, exp,
 		user_type, is_approval,add_from,add_time, update_time
 	</sql>
 
@@ -220,7 +221,7 @@
 		introduction, level,work_start, work_end,is_door,
 		birth_day,
 		degree_id, major,
-		head_img, qr_code, rest_money, score,
+		head_img, qr_code, rest_money, score, exp,
 		user_type, is_approval, add_from,
 		add_time, update_time)
 		values (#{id,jdbcType=NUMERIC},
@@ -233,6 +234,7 @@
 		#{birthDay,jdbcType=DATE}, #{degreeId,jdbcType=NUMERIC}, #{major,jdbcType=VARCHAR},
 		#{headImg,jdbcType=VARCHAR},
 		#{qrCode,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
+		#{exp,jdbcType=INTEGER},
 		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC},
 		#{addFrom,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
@@ -308,6 +310,9 @@
 			</if>
 			<if test="score != null">
 				score,
+			</if>
+			<if test="exp != null">
+				exp,
 			</if>
 			<if test="userType != null">
 				user_type,
@@ -389,6 +394,9 @@
 			<if test="score != null">
 				#{score,jdbcType=INTEGER},
 			</if>
+			<if test="exp != null">
+				#{exp,jdbcType=INTEGER},
+			</if>
 			<if test="userType != null">
 				#{userType,jdbcType=NUMERIC},
 			</if>
@@ -469,6 +477,9 @@
 			<if test="score != null">
 				score = #{score,jdbcType=INTEGER},
 			</if>
+			<if test="exp != null">
+				exp = #{exp,jdbcType=INTEGER},
+			</if>
 			<if test="userType != null">
 				user_type = #{userType,jdbcType=NUMERIC},
 			</if>
@@ -513,6 +524,7 @@
 		rest_money =
 		#{restMoney,jdbcType=DECIMAL},
 		score = #{score,jdbcType=INTEGER},
+		exp = #{exp,jdbcType=INTEGER},
 		user_type = #{userType,jdbcType=NUMERIC},
 		is_approval = #{isApproval,jdbcType=NUMERIC},
 		add_from = #{addFrom,jdbcType=NUMERIC},

@@ -34,6 +34,8 @@ public class Users {
     private BigDecimal restMoney;
 
     private Integer score;
+    
+    private Integer exp;
 
     private Short userType;
     
@@ -314,6 +316,16 @@ public class Users {
 
 	public void setQrCode(String qrCode) {
 		this.qrCode = qrCode;
+	}
+
+
+	public Integer getExp() {
+		return exp;
+	}
+
+
+	public void setExp(Integer exp) {
+		this.exp = exp;
 	}
 
 	

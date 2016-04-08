@@ -62,7 +62,7 @@ public class UserSignController extends BaseController {
 		userActionRecordService.insert(record);
 		
 		//积分赠送
-		userScoreAsyncService.sendScore(userId, 5, "day_sign", record.getId().toString(), "签到");
+		userScoreAsyncService.sendScore(userId, 30, "day_sign", record.getId().toString(), "签到");
 		
 		result.setMsg("签到成功");
 		result.setData(5);
