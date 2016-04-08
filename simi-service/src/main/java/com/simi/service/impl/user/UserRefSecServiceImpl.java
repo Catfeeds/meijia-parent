@@ -2,13 +2,17 @@ package com.simi.service.impl.user;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.user.UserRefSecMapper;
+import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.user.UserRefSec;
+import com.simi.po.model.user.Users;
+import com.simi.service.admin.AdminAccountService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.vo.user.UserViewVo;
 
@@ -17,6 +21,9 @@ public class UserRefSecServiceImpl implements UserRefSecService{
   
 	@Autowired
 	private UserRefSecMapper userRefSecMapper;
+	
+	@Autowired
+	private AdminAccountService adminAccountService;
 	
 	/*
 	 * 初始化用户对象
@@ -70,6 +77,35 @@ public class UserRefSecServiceImpl implements UserRefSecService{
 	@Override
 	public int updateByPrimaryKeySelective(UserRefSec record) {
 		return userRefSecMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	/**
+	 * 查询用户与管家绑定的环信账号 1. 如果用户没有购买过管家卡，则为默认Constans.YGGJ_AMEI 2.
+	 * 如果用户购买过管家卡，则为真人管家绑定的环信IM账号
+	 */
+	@Override
+	public Map<String, String> getSeniorImUsername(Users user) {
+
+		Map<String, String> map = new HashMap<String, String>();
+		if (user == null) {
+			return map;
+		}
+		// 先找出真人管家的admin_id
+		Long userId = user.getId();
+
+		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
+		if (userRefSec == null) {
+			return map;
+		}
+
+		Long adminId = userRefSec.getSecId();
+		AdminAccount adminAccount = adminAccountService.selectByPrimaryKey(adminId);
+
+		String seniorImUsername = adminAccount.getImUsername();
+		String seniorImNickname = adminAccount.getNickname();
+		map.put("seniorImUsername", seniorImUsername);
+		map.put("seniorImNickname", seniorImNickname);
+		return map;
 	}
 	
 

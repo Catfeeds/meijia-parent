@@ -1,6 +1,5 @@
 package com.simi.action.app.user;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,14 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.duiba.credits.sdk.CreditConsumeParams;
-import com.duiba.credits.sdk.CreditConsumeResult;
 import com.duiba.credits.sdk.CreditNotifyParams;
 import com.duiba.credits.sdk.CreditTool;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.GsonUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;

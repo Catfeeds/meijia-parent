@@ -2,9 +2,6 @@ package com.simi.po.dao.user;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.simi.po.model.user.UserDetailPay;
 import com.simi.po.model.user.Users;
 import com.simi.vo.chart.ChartSearchVo;
 import com.simi.vo.user.UserSearchVo;

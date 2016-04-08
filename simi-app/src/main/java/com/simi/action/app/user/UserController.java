@@ -144,11 +144,6 @@ public class UserController extends BaseController {
 		return result;
 	}
 
-	
-	
-
-	
-
 	// 6. 账号信息
 	/**
 	 * mobile:手机号 rest_money 余额 score会员积分
@@ -254,7 +249,7 @@ public class UserController extends BaseController {
 			return result;
 		}
 
-		UserIndexVo vo = userService.getUserIndexVoByUserId(u, viewUser);
+		UserIndexVo vo = userService.getUserIndexVo(u, viewUser);
 		result.setData(vo);
 
 		return result;

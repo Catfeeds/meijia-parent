@@ -37,6 +37,8 @@ public class UserIndexVo  {
 	
 	private int totalFeed;
 	
+	private Integer exp;
+	
 
 	public long getId() {
 		return Id;
@@ -164,5 +166,13 @@ public class UserIndexVo  {
 
 	public void setTotalFeed(int totalFeed) {
 		this.totalFeed = totalFeed;
+	}
+
+	public Integer getExp() {
+		return exp;
+	}
+
+	public void setExp(Integer exp) {
+		this.exp = exp;
 	}
 }

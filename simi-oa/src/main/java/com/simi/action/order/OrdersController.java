@@ -148,7 +148,7 @@ public class OrdersController extends AdminController {
 		}
 		model.addAttribute("orderModel", orderViewVo);
 
-		UserViewVo user = usersService.getUserViewByUserId(userId);
+		UserViewVo user = usersService.getUserInfo(userId);
 		model.addAttribute("userModel", user);
 
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);

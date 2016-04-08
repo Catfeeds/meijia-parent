@@ -14,7 +14,6 @@ import com.simi.po.dao.user.UserFriendReqMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserFriendReq;
-import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserFriendReqService;
 import com.simi.vo.user.UserFriendReqVo;

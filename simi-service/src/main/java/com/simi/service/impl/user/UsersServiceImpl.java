@@ -6,39 +6,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UsersMapper;
-import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
-import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
@@ -84,8 +74,7 @@ public class UsersServiceImpl implements UsersService {
 	@Autowired
 	private UserRefSecService userRefSecService;
 
-	@Autowired
-	private AdminAccountService adminAccountService;
+	
 
 	@Autowired
 	private DictCouponsService couponService;
@@ -238,50 +227,8 @@ public class UsersServiceImpl implements UsersService {
 			vo.setName(vo.getMobile());
 		}
 
-		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
-
-		// 获取用户与绑定的秘书的环信IM账号
-		Map imRobot = this.getImRobot(u);
-		vo.setImRobotUsername(imRobot.get("username").toString());
-		vo.setImRobotNickname(imRobot.get("nickname").toString());
-		vo.setSecId(0L);
-		if (userRefSec != null) {
-
-			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
-			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userRefSec.getSecId());
-
-			if (userRef3rd != null) {
-				vo.setImSecUsername(userRef3rd.getUsername());
-				vo.setImSecNickname(secUser.getName());
-				vo.setSecId(userRefSec.getSecId());
-			}
-		} else {
-			vo.setImSecUsername("");
-			vo.setImSecNickname("");
-		}
-
-		vo.setIsSenior((short) 0);
-		String seniorRange = "";
-
-		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
-
-		if (!(seniorEndDate == null)) {
-
-			String endDateStr = DateUtil.formatDate(seniorEndDate);
-			String nowStr = DateUtil.getToday();
-			if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
-				vo.setIsSenior((short) 1);
-				seniorRange = "截止" + endDateStr;
-			} else {
-				seniorRange = "已过期";
-			}
-
-		}
-
-		vo.setSeniorRange(seniorRange);
-
 		// 用户环信IM信息
-		UserRef3rd userRef3rd = this.genImUser(u);
+		UserRef3rd userRef3rd = userRef3rdService.genImUser(u);
 		if (userRef3rd.getUsername().length() > 0) {
 			vo.setImUsername(userRef3rd.getUsername());
 			vo.setImPassword(userRef3rd.getPassword());
@@ -370,39 +317,6 @@ public class UsersServiceImpl implements UsersService {
 				vo.setName(vo.getMobile());
 			}
 
-			// 获取用户与绑定的秘书的环信IM账号
-			Map imRobot = this.getImRobot(u);
-			vo.setImRobotUsername(imRobot.get("username").toString());
-			vo.setImRobotNickname(imRobot.get("nickname").toString());
-
-			vo.setImSecUsername(userRef3rd.getUsername());
-			vo.setImSecNickname(secUser.getName());
-			vo.setSecId(secUser.getId());
-
-			vo.setIsSenior((short) 0);
-			String seniorRange = "";
-
-			Date seniorEndDate = orderQueryService.getSeniorRangeDate(u.getId());
-
-			if (!(seniorEndDate == null)) {
-
-				String endDateStr = DateUtil.formatDate(seniorEndDate);
-				String nowStr = DateUtil.getToday();
-				if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
-					vo.setIsSenior((short) 1);
-					seniorRange = "截止" + endDateStr;
-				} else {
-					seniorRange = "已过期";
-				}
-
-			}
-
-			// 去掉已经到期的用户
-			if (vo.getIsSenior().equals((short) 0))
-				continue;
-
-			vo.setSeniorRange(seniorRange);
-
 			for (UserRef3rd item : userRef3rds) {
 				if (item.getUserId().equals(u.getId())) {
 					vo.setImUsername(item.getUsername());
@@ -416,101 +330,9 @@ public class UsersServiceImpl implements UsersService {
 		return result;
 	}
 
-	/**
-	 * 查询用户与管家绑定的环信账号 1. 如果用户没有购买过管家卡，则为默认Constans.YGGJ_AMEI 2.
-	 * 如果用户购买过管家卡，则为真人管家绑定的环信IM账号
-	 */
-	@Override
-	public Map<String, String> getSeniorImUsername(Users user) {
-
-		Map<String, String> map = new HashMap<String, String>();
-		if (user == null) {
-			return map;
-		}
-		// 先找出真人管家的admin_id
-		Long userId = user.getId();
-
-		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
-		if (userRefSec == null) {
-			return map;
-		}
-
-		Long adminId = userRefSec.getSecId();
-		AdminAccount adminAccount = adminAccountService.selectByPrimaryKey(adminId);
-
-		String seniorImUsername = adminAccount.getImUsername();
-		String seniorImNickname = adminAccount.getNickname();
-		map.put("seniorImUsername", seniorImUsername);
-		map.put("seniorImNickname", seniorImNickname);
-		return map;
-	}
-
-	/**
-	 * 获得环信机器人账号 后续需要根据用户的性别来进行判断，目前都统一为女性.
-	 */
-	@Override
-	public Map<String, String> getImRobot(Users user) {
-
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", Constants.ROBOT_FEMALE_USERNAME);
-		map.put("nickname", Constants.ROBOT_FEMALE_NICKNAME);
-		return map;
-	}
-
 	@Override
 	public List<Users> selectNotInMobiles(List<String> mobiles) {
 		return usersMapper.selectNotInMobiles(mobiles);
-	}
-
-	/**
-	 * 第三方登录，注册绑定环信账号
-	 */
-	@Override
-	public UserRef3rd genImUser(Users user) {
-		UserRef3rd record = new UserRef3rd();
-		Long userId = user.getId();
-		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
-		if (userRef3rd != null) {
-			return userRef3rd;
-		}
-
-		String uuid = "";
-		// 如果不存在则新增.并且存入数据库
-		String username = "simi-user-" + user.getId().toString();
-		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
-
-		// 1. 先去环信查找是否有用户:
-		ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
-
-		JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
-		if (statusCode.toString().equals("404")) {
-			ObjectNode datanode = JsonNodeFactory.instance.objectNode();
-			datanode.put("username", username);
-			datanode.put("password", defaultPassword);
-			if (user.getName() != null && user.getName().length() > 0) {
-				datanode.put("nickname", user.getName());
-			}
-			ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
-
-			JsonNode entity = createNewIMUserSingleNode.get("entities");
-			uuid = entity.get(0).get("uuid").toString();
-		} else {
-			JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
-			uuid = entity.get(0).get("uuid").toString();
-		}
-
-		// username = entity.get(0).get("username").toString();
-
-		record.setId(0L);
-		record.setUserId(userId);
-		record.setRefType(Constants.IM_PROVIDE);
-		record.setMobile(user.getMobile());
-		record.setUsername(username);
-		record.setPassword(defaultPassword);
-		record.setRefPrimaryKey(uuid);
-		record.setAddTime(TimeStampUtil.getNowSecond());
-		userRef3rdMapper.insert(record);
-		return record;
 	}
 
 	@Override
@@ -524,29 +346,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public UserViewVo getUserViewByUserId(Long userId) {
-		Users user = usersMapper.selectByPrimaryKey(userId);
-
-		UserViewVo userInfo = new UserViewVo();
-		if (user == null) {
-			return userInfo;
-		}
-
-		BeanUtilsExp.copyPropertiesIgnoreNull(user, userInfo);
-
-		String seniorRange = "";
-		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
-
-		if (!(seniorEndDate == null)) {
-			seniorRange = "截止" + DateUtil.formatDate(seniorEndDate);
-		}
-		userInfo.setSeniorRange(seniorRange);
-
-		return userInfo;
-	}
-
-	@Override
-	public UserIndexVo getUserIndexVoByUserId(Users user, Users viewUser) {
+	public UserIndexVo getUserIndexVo(Users user, Users viewUser) {
 
 		UserIndexVo vo = new UserIndexVo();
 
@@ -559,6 +359,7 @@ public class UsersServiceImpl implements UsersService {
 		vo.setRestMoney(new BigDecimal(0));
 		vo.setMobile(viewUser.getMobile());
 		vo.setScore(viewUser.getScore());
+		vo.setExp(viewUser.getScore());
 		if (user.getId().equals(viewUser.getId())) {
 			vo.setRestMoney(viewUser.getRestMoney());
 		}
@@ -729,5 +530,4 @@ public class UsersServiceImpl implements UsersService {
 
 		return headImg;
 	}
-
 }

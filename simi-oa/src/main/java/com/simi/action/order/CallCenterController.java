@@ -47,7 +47,7 @@ public class CallCenterController extends AdminController {
 
 		//用户信息
 		Users u = usersService.selectByMobile(customerNumber);
-		UserViewVo users = usersService.getUserViewByUserId(u.getId());
+		UserViewVo users = usersService.getUserInfo(u.getId());
 		model.addAttribute("userModel", users);
 
 		//用户订单信息

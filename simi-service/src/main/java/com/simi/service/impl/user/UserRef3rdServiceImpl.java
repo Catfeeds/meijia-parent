@@ -7,8 +7,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.huanxin.EasemobIMUsers;
+import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
@@ -71,7 +76,7 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 		
 		if (userRef3rd == null) {
 			Users u =  usersService.selectByPrimaryKey(userId);
-			usersService.genImUser(u);
+			this.genImUser(u);
 		}
 		
 		userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
@@ -102,6 +107,57 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 			conditions.put("refType",thirdType);
 		}
 		return userRef3rdMapper.selectByUserNameAnd3rdType(conditions);
+	}
+	
+	/**
+	 * 第三方登录，注册绑定环信账号
+	 */
+	@Override
+	public UserRef3rd genImUser(Users user) {
+		UserRef3rd record = new UserRef3rd();
+		Long userId = user.getId();
+		UserRef3rd userRef3rd = userRef3rdMapper.selectByUserIdForIm(userId);
+		if (userRef3rd != null) {
+			return userRef3rd;
+		}
+
+		String uuid = "";
+		// 如果不存在则新增.并且存入数据库
+		String username = "simi-user-" + user.getId().toString();
+		String defaultPassword = com.meijia.utils.huanxin.comm.Constants.DEFAULT_PASSWORD;
+
+		// 1. 先去环信查找是否有用户:
+		ObjectNode getIMUsersByPrimaryKeyNode = EasemobIMUsers.getIMUsersByPrimaryKey(username);
+
+		JsonNode statusCode = getIMUsersByPrimaryKeyNode.get("statusCode");
+		if (statusCode.toString().equals("404")) {
+			ObjectNode datanode = JsonNodeFactory.instance.objectNode();
+			datanode.put("username", username);
+			datanode.put("password", defaultPassword);
+			if (user.getName() != null && user.getName().length() > 0) {
+				datanode.put("nickname", user.getName());
+			}
+			ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
+
+			JsonNode entity = createNewIMUserSingleNode.get("entities");
+			uuid = entity.get(0).get("uuid").toString();
+		} else {
+			JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
+			uuid = entity.get(0).get("uuid").toString();
+		}
+
+		// username = entity.get(0).get("username").toString();
+
+		record.setId(0L);
+		record.setUserId(userId);
+		record.setRefType(Constants.IM_PROVIDE);
+		record.setMobile(user.getMobile());
+		record.setUsername(username);
+		record.setPassword(defaultPassword);
+		record.setRefPrimaryKey(uuid);
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		userRef3rdMapper.insert(record);
+		return record;
 	}	
 	
 	@Override

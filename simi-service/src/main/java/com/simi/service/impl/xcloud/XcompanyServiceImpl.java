@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.vo.xcloud.CompanySearchVo;
-import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.xcloud.Xcompany;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyMapper;
 

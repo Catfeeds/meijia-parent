@@ -5,13 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.common.Constants;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.po.dao.user.UserDetailScoreMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserDetailScore;
-import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;

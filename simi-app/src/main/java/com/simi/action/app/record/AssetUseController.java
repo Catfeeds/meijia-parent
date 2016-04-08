@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.GsonUtil;
-import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -28,7 +26,6 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.common.Imgs;
 import com.simi.po.model.record.RecordAssetUse;
-import com.simi.po.model.record.RecordAssets;
 import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.Users;
@@ -46,7 +43,6 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.AssetSearchVo;
 import com.simi.vo.ImgSearchVo;
 import com.simi.vo.record.RecordAssetUseVo;
-import com.simi.vo.record.RecordAssetVo;
 import com.simi.vo.user.UserFriendSearchVo;
 
 @Controller

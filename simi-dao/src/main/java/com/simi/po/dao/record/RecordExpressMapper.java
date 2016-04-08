@@ -3,7 +3,6 @@ package com.simi.po.dao.record;
 import java.util.List;
 
 import com.simi.po.model.record.RecordExpress;
-import com.simi.vo.OrderSearchVo;
 import com.simi.vo.record.RecordExpressSearchVo;
 
 public interface RecordExpressMapper {

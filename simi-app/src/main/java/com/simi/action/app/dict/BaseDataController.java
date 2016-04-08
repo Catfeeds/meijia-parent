@@ -13,17 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.simi.vo.AppResultData;
 import com.simi.vo.ApptoolsSearchVo;
-import com.simi.vo.user.UserViewVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictExpress;
 import com.simi.po.model.op.AppTools;
-import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanySetting;
-import com.simi.service.dict.AdService;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.ExpressService;
 import com.simi.service.op.AppToolsService;

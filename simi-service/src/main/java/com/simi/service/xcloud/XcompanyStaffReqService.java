@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyStaffReq;
-import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.XcompanyStaffReqVo;
 

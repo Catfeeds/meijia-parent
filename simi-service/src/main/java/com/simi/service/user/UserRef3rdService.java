@@ -34,4 +34,6 @@ public interface UserRef3rdService {
 
 		List<UserRef3rd> selectByUserIds(List<Long> userIds);
 
+		UserRef3rd genImUser(Users user);
+
 }

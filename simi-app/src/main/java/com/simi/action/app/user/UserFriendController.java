@@ -133,7 +133,7 @@ public class UserFriendController extends BaseController {
 			//如果第一次登陆未注册时未成功注册环信，则重新注册
 			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(friendUser.getId());
 			if(userRef3rd == null){
-				userService.genImUser(friendUser);
+				userRef3rdService.genImUser(friendUser);
 			}
 			//2. 发出邀请短信.
 		}

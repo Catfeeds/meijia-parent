@@ -95,7 +95,7 @@ public class UserRef3rdController extends BaseController {
 			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(users.getId());
 			//如果第一次登陆未注册时未成功注册环信，则重新注册
 			if(userRef3rd == null){
-				userService.genImUser(users);
+				userRef3rdService.genImUser(users);
 			}
 //			UserRefSec userRefSec  = userRefSecService.selectByUserId(users.getId());
 //			//如果第一次登录未注册时未成功分配秘书，则重新分配
@@ -123,7 +123,7 @@ public class UserRef3rdController extends BaseController {
 			userService.insertSelective(users);
 
 			// 第三方账号注册绑定环信账号
-			userService.genImUser(users);
+			userRef3rdService.genImUser(users);
 			//为第三方登录的用户分配秘书
 //			userRef3rdService.allotSec(users);
 			

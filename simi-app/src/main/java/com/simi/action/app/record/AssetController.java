@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.GsonUtil;
-import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -28,9 +26,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.common.Imgs;
 import com.simi.po.model.record.RecordAssets;
-import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyAssets;
-import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.ImgService;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
@@ -39,12 +35,10 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyAssetService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.utils.OrderUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.AssetSearchVo;
 import com.simi.vo.ImgSearchVo;
 import com.simi.vo.record.RecordAssetVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/app/record")
