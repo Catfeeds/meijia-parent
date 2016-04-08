@@ -170,7 +170,7 @@ public class JobCardController extends BaseController {
 	@RequestMapping(value = "card_notify", method = RequestMethod.GET)
 	public AppResultData<Object> cardNotify() {
 		
-		System.out.println("======================card_notify"+ DateUtil.getNow() +"====================================");
+//		System.out.println("======================card_notify"+ DateUtil.getNow() +"====================================");
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 		
 		//找出今天，明天，后天的卡片数据
@@ -196,18 +196,18 @@ public class JobCardController extends BaseController {
 			Long remindTime = serviceTime - remindMin * 60;
 			remindTime = TimeStampUtil.timeStampToDateHour(remindTime * 1000) / 1000;
 			
-			System.out.println("card content = " + vo.getServiceContent());
-			System.out.println("setRemind = " + setRemind.toString() + "----remindMin =" + remindMin);
-			System.out.println("nowMin = " + nowMin.toString() + " ---- remindTime = " + remindTime.toString());
-			System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime * 1000,DateUtil.DEFAULT_FULL_PATTERN));
+//			System.out.println("card content = " + vo.getServiceContent());
+//			System.out.println("setRemind = " + setRemind.toString() + "----remindMin =" + remindMin);
+//			System.out.println("nowMin = " + nowMin.toString() + " ---- remindTime = " + remindTime.toString());
+//			System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime * 1000,DateUtil.DEFAULT_FULL_PATTERN));
 			if (nowMin.equals(remindTime * 1000)) {
-				System.out.println("========================cardAlertClock begin===================================");
+//				System.out.println("========================cardAlertClock begin===================================");
 				
 				cardAsyncService.cardAlertClock(vo);
-				System.out.println("========================cardAlertClock end===================================");
+//				System.out.println("========================cardAlertClock end===================================");
 			}
 			
-			System.out.println("serviceTime = " + serviceTime + " ===========now = " + TimeStampUtil.getNowSecond());
+//			System.out.println("serviceTime = " + serviceTime + " ===========now = " + TimeStampUtil.getNowSecond());
 			if (serviceTime < TimeStampUtil.getNowSecond()) {
 				vo.setStatus((short) 3);
 				cardService.updateByPrimaryKey(vo);
