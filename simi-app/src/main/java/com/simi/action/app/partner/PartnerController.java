@@ -148,7 +148,7 @@ public class PartnerController extends BaseController {
 		for (PartnerServiceType item : servicePrices) {
 			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
 			PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
-			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(item.getId());
+//			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(item.getId());
 			//排除掉不是此大类默认的报价和不是此服务人员自己添加的报价
 			//排除掉已经下架的商品
 			if (!servicePriceDetail.getUserId().equals(0L)){
@@ -161,6 +161,11 @@ public class PartnerController extends BaseController {
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetail, servicePriceVo);
 			servicePriceVo.setName(item.getName());
+			
+			//图片处理成190x140大小
+			String imgUrl = servicePriceVo.getImgUrl();
+			imgUrl = imgUrl + "?w=190&h=140";
+			servicePriceVo.setImgUrl(imgUrl);
 			
 			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_type_id=" + item.getId();
 			

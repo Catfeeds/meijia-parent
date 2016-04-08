@@ -12,6 +12,8 @@ public class PartnerServicePriceListVo {
 	
 	private Long servicePriceId;
 	
+	private String serviceTitle;
+	
     private BigDecimal price;
 
     private BigDecimal disPrice;
@@ -19,6 +21,8 @@ public class PartnerServicePriceListVo {
     private String detailUrl;
     
     private Short isAddr;
+    
+    private String imgUrl;
 
 	public String getName() {
 		return name;
@@ -74,5 +78,21 @@ public class PartnerServicePriceListVo {
 
 	public void setIsAddr(Short isAddr) {
 		this.isAddr = isAddr;
+	}
+
+	public String getServiceTitle() {
+		return serviceTitle;
+	}
+
+	public void setServiceTitle(String serviceTitle) {
+		this.serviceTitle = serviceTitle;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	} 
 }
