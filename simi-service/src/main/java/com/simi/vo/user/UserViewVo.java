@@ -51,6 +51,28 @@ public class UserViewVo {
     
     //所属团队个数
     private int companyCount;
+    
+	/**
+	 * 私秘卡有效期
+	 */
+    private String seniorRange;
+    
+    /**
+     * 是否可以使用真人秘书服务 1=是 0=否
+     */
+    private Short isSenior;
+    
+    private Long secId;
+    
+    /**
+     * 秘书IM账号
+     */
+    private String imSecUsername;
+    
+    /**
+     * 秘书IM昵称
+     */
+    private String imSecNickname;    
         
 	public String getImUsername() {
 		return ImUsername;
@@ -198,6 +220,46 @@ public class UserViewVo {
 
 	public void setQrCode(String qrCode) {
 		this.qrCode = qrCode;
+	}
+
+	public String getSeniorRange() {
+		return seniorRange;
+	}
+
+	public void setSeniorRange(String seniorRange) {
+		this.seniorRange = seniorRange;
+	}
+
+	public Short getIsSenior() {
+		return isSenior;
+	}
+
+	public void setIsSenior(Short isSenior) {
+		this.isSenior = isSenior;
+	}
+
+	public Long getSecId() {
+		return secId;
+	}
+
+	public void setSecId(Long secId) {
+		this.secId = secId;
+	}
+
+	public String getImSecUsername() {
+		return imSecUsername;
+	}
+
+	public void setImSecUsername(String imSecUsername) {
+		this.imSecUsername = imSecUsername;
+	}
+
+	public String getImSecNickname() {
+		return imSecNickname;
+	}
+
+	public void setImSecNickname(String imSecNickname) {
+		this.imSecNickname = imSecNickname;
 	}
 
 }

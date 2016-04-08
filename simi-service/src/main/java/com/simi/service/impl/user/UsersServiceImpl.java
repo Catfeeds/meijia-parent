@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -26,6 +28,7 @@ import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
+import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
@@ -226,6 +229,44 @@ public class UsersServiceImpl implements UsersService {
 		if (StringUtil.isEmpty(vo.getName())) {
 			vo.setName(vo.getMobile());
 		}
+		
+		// 获取用户与绑定的秘书的环信IM账号
+		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
+		vo.setSecId(0L);
+		if (userRefSec != null) {
+
+			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userRefSec.getSecId());
+
+			if (userRef3rd != null) {
+				vo.setImSecUsername(userRef3rd.getUsername());
+				vo.setImSecNickname(secUser.getName());
+				vo.setSecId(userRefSec.getSecId());
+			}
+		} else {
+			vo.setImSecUsername("");
+			vo.setImSecNickname("");
+		}
+
+		vo.setIsSenior((short) 0);
+		String seniorRange = "";
+
+		Date seniorEndDate = orderQueryService.getSeniorRangeDate(userId);
+
+		if (!(seniorEndDate == null)) {
+
+			String endDateStr = DateUtil.formatDate(seniorEndDate);
+			String nowStr = DateUtil.getToday();
+			if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+				vo.setIsSenior((short) 1);
+				seniorRange = "截止" + endDateStr;
+			} else {
+				seniorRange = "已过期";
+			}
+
+		}
+
+		vo.setSeniorRange(seniorRange);
 
 		// 用户环信IM信息
 		UserRef3rd userRef3rd = userRef3rdService.genImUser(u);
@@ -316,6 +357,36 @@ public class UsersServiceImpl implements UsersService {
 			if (StringUtil.isEmpty(vo.getName())) {
 				vo.setName(vo.getMobile());
 			}
+			
+			// 获取用户与绑定的秘书的环信IM账号
+
+			vo.setImSecUsername(userRef3rd.getUsername());
+			vo.setImSecNickname(secUser.getName());
+			vo.setSecId(secUser.getId());
+
+			vo.setIsSenior((short) 0);
+			String seniorRange = "";
+
+			Date seniorEndDate = orderQueryService.getSeniorRangeDate(u.getId());
+
+			if (!(seniorEndDate == null)) {
+
+				String endDateStr = DateUtil.formatDate(seniorEndDate);
+				String nowStr = DateUtil.getToday();
+				if (DateUtil.compareDateStr(nowStr, endDateStr) >= 0) {
+					vo.setIsSenior((short) 1);
+					seniorRange = "截止" + endDateStr;
+				} else {
+					seniorRange = "已过期";
+				}
+
+			}
+
+			// 去掉已经到期的用户
+			if (vo.getIsSenior().equals((short) 0))
+				continue;
+
+			vo.setSeniorRange(seniorRange);			
 
 			for (UserRef3rd item : userRef3rds) {
 				if (item.getUserId().equals(u.getId())) {
