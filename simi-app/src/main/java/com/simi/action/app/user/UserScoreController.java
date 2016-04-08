@@ -219,7 +219,7 @@ public class UserScoreController extends BaseController {
 				Long orderId = record.getOrderId();
 				Long userId = record.getUserId();
 				Integer score = record.getCredits();
-				String desc = record.getDescription();
+				String desc = "积分兑换:" + record.getDescription();
 				
 				//积分消费
 				userScoreAsyncService.consumeScore(userId, score, "duiba", orderId.toString(), desc);
