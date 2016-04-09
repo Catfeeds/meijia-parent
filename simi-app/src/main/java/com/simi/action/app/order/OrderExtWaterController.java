@@ -200,9 +200,13 @@ public class OrderExtWaterController extends BaseController {
 		}
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-//		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
-		
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		PartnerServicePriceDetail servicePriceDetail = null;
+		String servicePriceName = "";
+		if (servicePrice != null) {
+			servicePriceName = servicePrice.getName();
+			servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		}
 		BigDecimal orderMoney = new BigDecimal(0.0);//原价
 		BigDecimal orderPay = new BigDecimal(0.0);//折扣价
 		
@@ -250,13 +254,14 @@ public class OrderExtWaterController extends BaseController {
 		orderPrice.setOrderId(orderId);
 		orderPrice.setOrderNo(orderNo);
 		orderPrice.setServicePriceId(servicePriceId);
+		orderPrice.setServicePriceName(servicePriceName);
 		orderPrice.setUserId(userId);
 		orderPrice.setMobile(u.getMobile());
 		orderPrice.setOrderMoney(orderMoney);
 		orderPrice.setOrderPay(orderPay);
 		orderPricesService.insert(orderPrice);
 		
-		//保存绿植订单扩展表信息
+		//保存送水订单扩展表信息
 		OrderExtWater water = orderExtWaterService.initOrderExtWater();
 		water.setOrderId(orderId);
 		water.setOrderNo(orderNo);

@@ -1,5 +1,6 @@
 package com.simi.action.app.order;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +11,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.OrderNoUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.order.OrderLog;
+import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
+import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.NoticeAppAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
+import com.simi.service.async.UsersAsyncService;
+import com.simi.service.order.OrderLogService;
+import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
+import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
@@ -33,7 +44,22 @@ public class OrderPartnerController extends BaseController {
     private OrderQueryService orderQueryService;
 	
 	@Autowired
+	private OrderLogService orderLogService;
+	
+	@Autowired
+	OrderPricesService orderPricesService;
+	
+	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private UsersAsyncService usersAsyncService;	
+	
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAppAsyncService;
 
 	// 18.订单列表接口
 	/**
@@ -112,5 +138,80 @@ public class OrderPartnerController extends BaseController {
 		
 		return result;
 	}	
+	
+	/**
+	 * 服务商人员生成订单。
+	 */
+	@RequestMapping(value = "parnter_order", method = RequestMethod.POST)
+	public AppResultData<Object> partnerOrder(
+			@RequestParam("partner_user_id") Long partnerUserId, 
+			@RequestParam("mobile") String mobile, 
+			@RequestParam("service_type_id") Long serviceTypeId, 
+			@RequestParam("service_price_name") String servicePriceName,
+			@RequestParam("order_money") BigDecimal orderMoney,
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId,
+			@RequestParam(value = "service_price_id", required = false, defaultValue = "0") Long servicePriceId,
+			@RequestParam(value = "remarks", required = false, defaultValue = "0") String remarks) {	
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (partnerUserId.equals(0L) || serviceTypeId.equals(0L)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数据错误");
+			return result;
+		}
+		
+		//判断是否需要新增用户.
+		Users u = userService.selectByMobile(mobile);
+		
+		if (u == null) {
+			u = userService.genUser(mobile, "", (short) 0, "");					
+			usersAsyncService.genImUser(u.getId());
+		}
+		
+		userId = u.getId();
+		
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+		String serviceTypeName = serviceType.getName();
+		//创建订单    
+    	String orderNo = String.valueOf(OrderNoUtil.genOrderNo());
+    	Orders order = ordersService.initOrders();
+    	
+    	order.setOrderNo(orderNo);
+		order.setPartnerUserId(partnerUserId);
+		order.setServiceTypeId(serviceTypeId);
+		order.setUserId(userId);
+		order.setMobile(mobile);
+		order.setServiceContent(serviceTypeName + "" + servicePriceName);
+		order.setRemarks(remarks);
+		order.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
+		ordersService.insert(order);
+		Long orderId = order.getOrderId();
+		
+		//记录订单日志.
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLogService.insert(orderLog);
+		
+		//保存订单价格信息
+		OrderPrices orderPrice = orderPricesService.initOrderPrices();
+		orderPrice.setOrderId(orderId);
+		orderPrice.setOrderNo(orderNo);
+		
+		if (servicePriceId == null) servicePriceId = 0L;
+		orderPrice.setServicePriceId(servicePriceId);
+		orderPrice.setServicePriceName(servicePriceName);
+		orderPrice.setPartnerUserId(partnerUserId);
+		orderPrice.setUserId(userId);
+		orderPrice.setMobile(mobile);
+		orderPrice.setOrderMoney(orderMoney);
+		orderPrice.setOrderPay(orderMoney);
+		orderPricesService.insert(orderPrice);
+		
+		//推送消息到app
+		noticeAppAsyncService.pushMsgToDevice(userId, "新的订单", serviceTypeName + "" + servicePriceName);
+
+		return result;
+	}
+	
 	
 }

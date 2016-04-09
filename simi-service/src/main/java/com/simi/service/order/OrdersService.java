@@ -36,6 +36,8 @@ public interface OrdersService {
 
 	Orders selectByPrimaryKey(Long orderId);
 
+	List<Long> getByPartnerUserId(Long partnerUseId);
+
 
 
 	

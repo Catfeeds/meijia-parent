@@ -23,5 +23,7 @@ public interface PartnerRefServiceTypeService {
 	int deleteByPartnerId(Long partnerId);
 
 	List<PartnerRefServiceType> selectByServiceTypeId(Long serviceTypeId);
+	
+	List<PartnerRefServiceType> selectByPartnerId(Long partnerId);
 
 }

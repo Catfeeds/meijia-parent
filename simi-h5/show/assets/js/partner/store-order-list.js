@@ -1,6 +1,7 @@
 
 
 var partnerUserId = getUrlParam("user_id");
+var serviceTypeId = getUrlParam("service_type_id");
 //alert(window.location.href);
 var $partnerListPage = 1;
 
@@ -22,7 +23,6 @@ function orderGetList (page) {
 				return;
 			}
 			var orderListVo = data.data;
-			console.log(orderListVo);
 			var html = $('#order-list-part').html();
 			//var resultHtml = '';
             
@@ -32,11 +32,14 @@ function orderGetList (page) {
 				var htmlPart = html;
 				var partnerUserHeadImg = '<img alt="" src="'+orderListVo[i].partner_user_head_img+'">';
 				htmlPart = htmlPart.replace('{orderId}',orderListVo[i].order_id);
+				htmlPart = htmlPart.replace('{userId}',orderListVo[i].user_id);
 				htmlPart = htmlPart.replace('{partnerUserId}',orderListVo[i].partner_user_id);
 				htmlPart = htmlPart.replace('{partnerUserHeadImg}', partnerUserHeadImg);
 				htmlPart = htmlPart.replace('{partnerUserName}',orderListVo[i].partner_user_name);
 				htmlPart = htmlPart.replace('{name}',orderListVo[i].name);
-				htmlPart = htmlPart.replace('{serviceTypeName}',orderListVo[i].service_type_name);
+				
+				htmlPart = htmlPart.replace('{serviceTypeId}',orderListVo[i].service_type_id);
+				htmlPart = htmlPart.replace('{serviceTypeName}',orderListVo[i].service_type_name + " " + orderListVo[i].service_price_name);
 				htmlPart = htmlPart.replace('{servicePriceName}',orderListVo[i].service_price_name);
 				htmlPart = htmlPart.replace('{addrName}',orderListVo[i].addr_name);
 				htmlPart = htmlPart.replace('{orderStatusName}',orderListVo[i].order_status_name);
@@ -48,10 +51,6 @@ function orderGetList (page) {
 				htmlPart = "<a href=\"store-order-detail.html?partner_user_id="+orderListVo[i].partner_user_id+"&order_id="+orderListVo[i].order_id+"\"> " + htmlPart + "</a>";
 				
 				partnerServiceTypeHtml += htmlPart;
-				console.log("0001000000000000000");
-				console.log(htmlPart);
-				console.log("111111111111111111");
-			
 			}	
 			$("#scroller").append(partnerServiceTypeHtml);
 			
@@ -77,10 +76,17 @@ $("#btn-get-more").on('click', function(e) {
 	orderGetList($partnerListPage);
 });
 
-function clickJieDanList (partnerUserId) {
-	alert(partnerUserId.partnerUserId);
-	console.log(partnerUserId.partnerUserId);
-};
+//function clickJieDanList (userId) {
+//	alert(userId.userId);
+//	console.log(userId.userId);
+//};
 
+function orderAddForm(userId, serviceTypeId) {
+	//alert("user_id = " + userId + "-- order_id=" + orderId + "---service_type_id="+serviceTypeId);
+	var url = "store-order-form.html?user_id=" + userId;
+		url+= "&partner_user_id=" + partnerUserId;
+		url+= "&service_type_id=" + serviceTypeId;
+	window.location.href = url;
+}
 
 

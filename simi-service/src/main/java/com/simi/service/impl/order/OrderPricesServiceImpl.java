@@ -69,6 +69,7 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 		record.setOrderId(0L);
 		record.setOrderNo("");
 		record.setServicePriceId(0L);
+		record.setServicePriceName("");
 		record.setPartnerUserId(0L);
 		record.setUserId(0L);
 		record.setMobile("");

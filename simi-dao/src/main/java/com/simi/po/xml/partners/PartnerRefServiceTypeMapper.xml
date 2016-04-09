@@ -1,136 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.partners.PartnerRefServiceTypeMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerRefServiceType" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
-    <result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="parent_id" property="parentId" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, partner_id, service_type_id, name, price, parent_id
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from partner_ref_service_type
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <!--根据partnerId查询所有对应的服务 -->
-  <select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from partner_ref_service_type
-    where partner_id = #{partneId,jdbcType=NUMERIC}
-  </select>
-  <select id="selectByServiceTypeId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from partner_ref_service_type
-    where service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
-  </select>
-  <!--查询出服务商对应到的服务类型-->
-  <select id="selectServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from partner_ref_service_type
-    where partner_id = #{0} and parent_id = #{1}
-  </select>
-  <select id="selectSubServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from partner_ref_service_type
-    where partner_id = #{0} and parent_id != #{1}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from partner_ref_service_type
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <delete id="deleteByPartnerId" parameterType="java.lang.Long" >
-    delete from partner_ref_service_type
-    where partner_id = #{partnerId,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.partners.PartnerRefServiceType" >
-    insert into partner_ref_service_type (id, partner_id, service_type_id, 
-      name, price, parent_id
-      )
-    values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC}, 
-      #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{parentId,jdbcType=NUMERIC}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerRefServiceType" >
-    insert into partner_ref_service_type
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="partnerId != null" >
-        partner_id,
-      </if>
-      <if test="serviceTypeId != null" >
-        service_type_id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="partnerId != null" >
-        #{partnerId,jdbcType=NUMERIC},
-      </if>
-      <if test="serviceTypeId != null" >
-        #{serviceTypeId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerRefServiceType" >
-    update partner_ref_service_type
-    <set >
-      <if test="partnerId != null" >
-        partner_id = #{partnerId,jdbcType=NUMERIC},
-      </if>
-      <if test="serviceTypeId != null" >
-        service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerRefServiceType" >
-    update partner_ref_service_type
-    set partner_id = #{partnerId,jdbcType=NUMERIC},
-      service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
-      name = #{name,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      parent_id = #{parentId,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+<mapper namespace="com.simi.po.dao.partners.PartnerRefServiceTypeMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerRefServiceType">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="parent_id" property="parentId" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, partner_id, service_type_id, name, price, parent_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_ref_service_type
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<!--根据partnerId查询所有对应的服务 -->
+	<select id="selectByPartnerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_ref_service_type
+		where partner_id = #{partneId,jdbcType=NUMERIC}
+	</select>
+	<select id="selectByServiceTypeId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from partner_ref_service_type
+		where service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+	</select>
+	<!--查询出服务商对应到的服务类型 -->
+	<select id="selectServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from partner_ref_service_type
+		where partner_id = #{0} and parent_id = #{1}
+	</select>
+	<select id="selectSubServiceTypeByPartnerIdAndParentId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from partner_ref_service_type
+		where partner_id = #{0} and parent_id != #{1}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from partner_ref_service_type
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<delete id="deleteByPartnerId" parameterType="java.lang.Long">
+		delete from partner_ref_service_type
+		where partner_id = #{partnerId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerRefServiceType">
+		insert into partner_ref_service_type (id, partner_id, service_type_id,
+		name, price, parent_id
+		)
+		values (#{id,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC}, #{serviceTypeId,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{parentId,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerRefServiceType">
+		insert into partner_ref_service_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="partnerId != null">
+				partner_id,
+			</if>
+			<if test="serviceTypeId != null">
+				service_type_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="price != null">
+				price,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="partnerId != null">
+				#{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTypeId != null">
+				#{serviceTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerRefServiceType">
+		update partner_ref_service_type
+		<set>
+			<if test="partnerId != null">
+				partner_id = #{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTypeId != null">
+				service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerRefServiceType">
+		update partner_ref_service_type
+		set partner_id = #{partnerId,jdbcType=NUMERIC},
+		service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		parent_id = #{parentId,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

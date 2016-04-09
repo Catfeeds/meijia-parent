@@ -145,18 +145,15 @@ public class PartnerServicePriceController extends BaseController {
 		searchVo.setParentId(serviceTypeId);
 		searchVo.setViewType((short) 1);
 		searchVo.setPartnerIds(partnerIds);
-		List<PartnerServiceType> list = partnerServiceTypeService
-				.selectBySearchVo(searchVo);
+		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
 
 		List<PartnerServiceType> listNew = new ArrayList<PartnerServiceType>();
 		if (list != null) {
 			for (int i = 0; i < list.size(); i++) {
 				PartnerServiceType partnerServiceType = list.get(i);
-				PartnerServicePriceDetail detail = partnerServicePriceDetailService
-						.selectByServicePriceId(partnerServiceType.getId());
+				PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(partnerServiceType.getId());
 				if (detail != null) {
-					if (detail.getUserId() != 0
-							&& detail.getUserId().equals(userId)) {
+					if (detail.getUserId() != 0 && detail.getUserId().equals(userId)) {
 						listNew.add(partnerServiceType);
 					}
 				}
@@ -167,8 +164,6 @@ public class PartnerServicePriceController extends BaseController {
 		for (PartnerServiceType item : listNew) {
 			PartnerServicePriceDetailVoAll vo = new PartnerServicePriceDetailVoAll();
 			vo = partnerServiceTypeService.getPartnerPriceList(item, userId);
-
-	
 			listVo.add(vo);
 		}
 		result.setData(listVo);

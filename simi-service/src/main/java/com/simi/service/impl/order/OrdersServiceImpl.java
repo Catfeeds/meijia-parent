@@ -197,6 +197,11 @@ public class OrdersServiceImpl implements OrdersService {
 		return ordersMapper.selectByOrderIds(orderIds);
 	}
 	
+	@Override
+	public List<Long> getByPartnerUserId(Long partnerUseId) {
+		return ordersMapper.getByPartnerUserId(partnerUseId);
+	}
+	
 
 
 

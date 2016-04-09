@@ -211,8 +211,12 @@ public class OrderController extends BaseController {
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		// 服务内容及备注信息需要进行urldecode;
-		String serviceContent = serviceType.getName() + " " + serviceTypePrice.getName();
+		String serviceTypeName = serviceType.getName();
+		String servicePriceName = "";
+		
+		if (servicePrice != null) servicePriceName = serviceTypePrice.getName();
+		
+		String serviceContent = serviceTypeName + " " + servicePriceName;
 		
 		if (!StringUtil.isEmpty(remarks)) {
 			remarks = URLDecoder.decode(remarks,Constants.URL_ENCODE);
@@ -249,6 +253,7 @@ public class OrderController extends BaseController {
 		orderPrice.setOrderId(orderId);
 		orderPrice.setOrderNo(orderNo);
 		orderPrice.setServicePriceId(servicePriceId);
+		orderPrice.setServicePriceName(servicePriceName);
 		orderPrice.setPartnerUserId(partnerUserId);
 		orderPrice.setUserId(userId);
 		orderPrice.setMobile(mobile);

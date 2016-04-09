@@ -15,7 +15,7 @@ public class PartnerRefServiceTypeServiceImpl implements PartnerRefServiceTypeSe
 
 	@Autowired
 	private PartnerRefServiceTypeMapper partnerRefServiceTypeMapper;
-	
+
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return partnerRefServiceTypeMapper.deleteByPrimaryKey(id);
@@ -48,7 +48,7 @@ public class PartnerRefServiceTypeServiceImpl implements PartnerRefServiceTypeSe
 
 	@Override
 	public PartnerRefServiceType initPartnerRefServiceType() {
-		
+
 		PartnerRefServiceType partnerRefServiceType = new PartnerRefServiceType();
 
 		partnerRefServiceType.setId(0L);
@@ -57,23 +57,27 @@ public class PartnerRefServiceTypeServiceImpl implements PartnerRefServiceTypeSe
 		partnerRefServiceType.setName("");
 		partnerRefServiceType.setPrice(new BigDecimal(0L));
 		partnerRefServiceType.setPartnerId(0L);
-		
+
 		return partnerRefServiceType;
-		
+
 	}
+
 	@Override
 	public int deleteByPartnerId(Long partnerId) {
-		
+
 		return partnerRefServiceTypeMapper.deleteByPartnerId(partnerId);
 	}
 
 	@Override
-	public List<PartnerRefServiceType> selectByServiceTypeId(
-			Long serviceTypeId) {
-		
+	public List<PartnerRefServiceType> selectByServiceTypeId(Long serviceTypeId) {
+
 		return partnerRefServiceTypeMapper.selectByServiceTypeId(serviceTypeId);
 	}
-	
-	
+
+	@Override
+	public List<PartnerRefServiceType> selectByPartnerId(Long partnerId) {
+
+		return partnerRefServiceTypeMapper.selectByPartnerId(partnerId);
+	}
 
 }

@@ -487,11 +487,18 @@ public class OrderWaterController extends AdminController {
 			throws UnsupportedEncodingException {
 
 		Long serviceTypeId = (long) 239;
+		Long servicePriceId = vo.getServicePriceId();
 		Users u = usersService.selectByMobile(vo.getMobile());
 
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(vo.getServicePriceId());
-
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		PartnerServicePriceDetail servicePriceDetail = null;
+		String servicePriceName = "";
+		if (servicePrice != null) {
+			servicePriceName = servicePrice.getName();
+			servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		}
+		
 		BigDecimal orderMoney = new BigDecimal(0.0);// 原价
 		BigDecimal orderPay = new BigDecimal(0.0);// 折扣价
 
@@ -533,10 +540,11 @@ public class OrderWaterController extends AdminController {
 
 		// 保存订单价格信息
 		OrderPrices orderPrice = orderPricesService.initOrderPrices();
-
+		
 		orderPrice.setOrderId(orderId);
 		orderPrice.setOrderNo(orderNo);
-		orderPrice.setServicePriceId(vo.getServicePriceId());
+		orderPrice.setServicePriceId(servicePriceId);
+		orderPrice.setServicePriceName(servicePriceName);
 		orderPrice.setUserId(u.getId());
 		orderPrice.setMobile(u.getMobile());
 		orderPrice.setOrderMoney(orderMoney);

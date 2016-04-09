@@ -10,6 +10,8 @@ public class OrderPrices {
     
     private Long servicePriceId;
     
+    private String servicePriceName;
+    
     private Long partnerUserId;
     
     private Long userId;
@@ -152,5 +154,13 @@ public class OrderPrices {
 
 	public void setUserCouponId(Long userCouponId) {
 		this.userCouponId = userCouponId;
+	}
+
+	public String getServicePriceName() {
+		return servicePriceName;
+	}
+
+	public void setServicePriceName(String servicePriceName) {
+		this.servicePriceName = servicePriceName;
 	}
 }

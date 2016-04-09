@@ -251,6 +251,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		//订单价格信息
 		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
+		if (orderPrice == null) orderPrice = orderPricesService.initOrderPrices();
 		
 		vo.setPayType(orderPrice.getPayType());
 		vo.setOrderMoney(orderPrice.getOrderMoney());
@@ -319,33 +320,42 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		
 		Users user = usersService.selectByPrimaryKey(order.getUserId());
-		vo.setName(user.getName());
+		String name = (!StringUtil.isEmpty(user.getName())) ? user.getName() : user.getMobile();
+		vo.setName(name);
 		
 		//服务类型名称
 		vo.setServiceTypeId(order.getServiceTypeId());
+		
 		vo.setServiceTypeName("");
 		if (order.getServiceTypeId() > 0L) {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			vo.setServiceTypeName(serviceType.getName());
-		}		
+		}
 		
 		//服务报价ID和名称
-		vo.setServicePriceId(orderPrice.getServicePriceId());
-		vo.setServicePriceName("");
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(orderPrice.getServicePriceId());
-		if (servicePrice != null) {
-			vo.setServicePriceName(servicePrice.getName());
+		Long servicePriceId = 0L;
+		String servicePriceName = "";
+		if (orderPrice != null) {
+			servicePriceId = orderPrice.getServicePriceId();
+			servicePriceName = orderPrice.getServicePriceName();
 		}
 		
-		
-		
+		if (StringUtil.isEmpty(servicePriceName)) {
+			PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+			if (servicePrice != null) servicePriceName = servicePrice.getName();
+		}
+		vo.setServicePriceId(servicePriceId);
+		vo.setServicePriceName(servicePriceName);
+
 		//用户地址
 		vo.setAddrId(order.getAddrId());
-		vo.setAddrName("");
+		String addrName = "";
 		if (order.getAddrId() > 0L) {
 			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
-			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
+			addrName = userAddr.getName() + userAddr.getAddr();
 		}
+		vo.setAddrName(addrName);
+		
 		vo.setOrderStatus(order.getOrderStatus());
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		
@@ -353,13 +363,17 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		//订单价格信息
 		
-		Long servciePriceId = orderPrice.getServicePriceId();
+//		Long servciePriceId = orderPrice.getServicePriceId();
 		
-		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servciePriceId);
+		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		
+		vo.setOrderMoney(new BigDecimal(0));
+		vo.setOrderPay(new BigDecimal(0));
 		
-		vo.setOrderMoney(orderPrice.getOrderMoney());
-		vo.setOrderPay(orderPrice.getOrderPay());
+		if (orderPrice != null) {
+			vo.setOrderMoney(orderPrice.getOrderMoney());
+			vo.setOrderPay(orderPrice.getOrderPay());
+		}
 		
 		//设置订单的是否需要地址.
 		vo.setIsAddr((short) 0);
@@ -377,15 +391,23 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		OrderDetailVo vo = new OrderDetailVo();
 		BeanUtils.copyProperties(listVo, vo);
 		
+		Long userId = order.getUserId();
+		Users u = usersService.selectByPrimaryKey(userId);
+		
 		//订单价格信息
 		OrderPrices orderPrice = orderPricesService.selectByPrimaryKey(order.getOrderId());
-		
+		if (orderPrice == null) orderPrice = orderPricesService.initOrderPrices();
 		//城市名称
-		vo.setCityName("");
+		String cityName = "";
+		
 		if (order.getCityId() > 0L) {
-			String cityName = dictService.getCityName(order.getCityId());
-			vo.setCityName(cityName);
-		}		
+			cityName = dictService.getCityName(order.getCityId());
+		} else {
+			cityName = u.getProvinceName();
+		}
+		vo.setCityName(cityName);
+		
+		if (StringUtil.isEmpty(vo.getAddrName())) vo.setAddrName(cityName);
 		
 		vo.setPayTypeName(OrderUtil.getPayTypeName(orderPrice.getPayType()));
 		vo.setRemarks(order.getRemarks());

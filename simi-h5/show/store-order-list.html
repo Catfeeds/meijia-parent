@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
-	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link rel="stylesheet" href="assets/css/amazeui.min.css">
@@ -17,54 +18,57 @@
 			<div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
 				<div class="am-list-news-bd card-am-list" id="wrapper">
 					<div>
-					<a href="###" class="">
-						<ul id="scroller">
-						
-						</ul>
-					</a>
+						<a href="#" class="">
+							<ul id="scroller">
+
+							</ul>
+						</a>
 					</div>
 				</div>
-				<button type="button" id="btn-get-more" class="am-btn am-btn-primary am-btn-block" style="display:none">加载更多</button>
+				<button type="button" id="btn-get-more" class="am-btn am-btn-primary am-btn-block" style="display: none">加载更多</button>
 			</div>
 
-			<div id="order-list-part" style="display:none">
-				
+			<div id="order-list-part" style="display: none">
+
 				<li class="am-g am-list-item-desced pet_list_one_block">
-					
+
 					<div class="pet_list_one_info">
 						<div class="pet_list_one_info_l">
-							<div class="pet_list_one_info_ico">
-								{partnerUserHeadImg}
-							</div>
-							<div class="pet_list_one_info_name" >{partnerUserName}</div>
+							<div class="pet_list_one_info_ico">{partnerUserHeadImg}</div>
+							<div class="pet_list_one_info_name">{partnerUserName}</div>
 						</div>
 						<div class="pet_list_one_info_r">
-							<div class="pet_list_tag pet_list_tag_zzs" >{orderStatusName}</div>
+							<div class="pet_list_tag pet_list_tag_zzs">{orderStatusName}</div>
 						</div>
 					</div>
 					<div class=" am-list-main">
-						
+
 						<h3 class="am-list-item-hd pet_list_one_bt">
-						<a href="###" class="">价格：{orderMoney}元</a>
+							<a href="###" class="">价格：{orderMoney}元  </a>
 						</h3>
-						<div class="am-list-item-text pet_list_two_text" id="serviceTypeName">{serviceTypeName}</div>
-						<div class="pet_article_user_time pet_hd_con_time" id="addTimeStr">{addTimeStr}
+						<div class="pet_kjdt_user_pl_block_name" id="serviceTypeName">
+							{serviceTypeName}
+						</div>
+						<div class="pet_kjdt_user_pl_block_name" id="addTimeStr">
 							<i class="iconfont">&#xe617;</i>
+							{addTimeStr}
 						</div>
-						<div class="pet_article_user_time pet_hd_con_map" id="addrName">{addrName}
+						<div class="pet_kjdt_user_pl_block_name" id="addrName">
 							<i class="iconfont">&#xe632;</i>
+							{addrName}
 						</div>
-						<div class="pet_article_user_time pet_hd_con_map" id="name">{name}
-							<i class="iconfont">&#xe615;</i>
+						<div class="pet_kjdt_user_pl_block_name" id="name">
+							<i class="iconfont">&#xe615;</i> {name}
+							<button type="button" onclick="orderAddForm({userId}, {serviceTypeId})" class="am-btn am-btn-success am-align-right">追加订单</button>
 						</div>
-						
+
+
 						<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
-						
+
 						<div class="pet_article_user_time pet_hd_con_map" id="orderExtra">{orderExtra}</div>
 					</div>
-					
-				</li>
-				</a>
+
+				</li> </a>
 			</div>
 		</div>
 	</div>
@@ -79,6 +83,6 @@
 	<script src="assets/js/partner/store-order-list.js"></script>
 
 
-</script>
+	</script>
 </body>
 </html>

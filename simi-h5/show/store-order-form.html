@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>订单添加</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+
+<style>
+.header {
+	text-align: center;
+}
+
+.header h1 {
+	font-size: 200%;
+	color: #333;
+	margin-top: 30px;
+}
+
+.header p {
+	font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+	<div class="am-g">
+
+		<div class="am-u-md-centered">
+			<form action="" id="store-order-form" class="am-form" data-am-validator>
+				<input type="hidden" id="user_id" name="user_id"/> 
+				<input type="hidden" id="partner_user_id" name="partner_user_id" />
+
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">客户手机:</label>
+
+					<div class="am-g">
+
+						<div class="am-u-sm-8">
+							<input type="text" id="mobile" name="mobile" class="am-form-field js-pattern-mobile" placeholder="请输入名称" required>
+						</div>
+
+						<div class="am-u-sm-4">
+							<select id="select-user" data-am-selected="{btnWidth: '100%', btnSize: 'sm', btnStyle: 'secondary'}">
+								<option value="">可选客户</option>
+							</select>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">服务大类</label> <select id="select-service-type"
+						data-am-selected="{btnWidth: '100%', btnSize: 'sm', btnStyle: 'secondary'}"
+					>
+						<option value="">请选择</option>
+					</select>
+
+				</div>
+
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">服务品类</label>
+					
+					<div class="am-g">
+						<div class="am-u-sm-8">
+							<input type="text" id="service_price_name" name="service_price_name" class="am-form-field" placeholder="请输入名称" required>
+						</div>
+	
+						<div class="am-u-sm-4">
+							<select id="select-service-price" data-am-selected="{btnWidth: '100%', btnSize: 'sm', btnStyle: 'secondary'}">
+								<option value="">可选品类</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="am-form-group">
+					<label for="doc-ipt-email-1">价格</label> 
+					<input type="text" id="order_money" name="order_money"
+						class="am-form-field js-pattern-price" 
+						placeholder="请输入正确类型的金额" 
+						maxLength="7" required>
+				</div>
+				
+				<div class="am-form-group">
+			      <label for="doc-ta-1">备注</label>
+			      <textarea class="" rows="5" id="remarks" name="remarks"></textarea>
+			    </div>
+
+				<div class="am-form-group">
+					<!--  <button type="button" id="information_btn" class="am-btn am-btn-primary am-radius">提&nbsp;&nbsp;&nbsp;&nbsp;交</button> -->
+					<button type="button" id="add_btn" class="am-btn am-btn-danger am-btn-block">提交</button>
+
+				</div>
+			</form>
+			<hr>
+			<p align="center">© 云行政 版权所有</p>
+		</div>
+	</div>
+
+	<script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+
+	<script src="assets/js/partner/store-order-form.js"></script>
+
+</body>
+</html>

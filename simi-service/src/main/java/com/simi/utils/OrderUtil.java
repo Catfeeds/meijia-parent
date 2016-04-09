@@ -109,7 +109,7 @@ public class OrderUtil {
 				statusName = "管理平台";
 				break;
 			case 3:
-				statusName = "好友邀请";
+				statusName = "云平台";
 				break;				
 			case 999:
 				statusName = "所用来源";
@@ -125,6 +125,7 @@ public class OrderUtil {
 		list.add(0,"APP");
 		list.add(1,"微网站");
 		list.add(2,"管理平台");
+		list.add(3,"云平台");
 		return list;
 	}
 	

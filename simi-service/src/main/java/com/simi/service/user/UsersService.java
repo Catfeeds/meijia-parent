@@ -44,4 +44,6 @@ public interface UsersService {
 
 	UserIndexVo getUserIndexVo(Users user, Users viewUser);
 
+	List<UserBaseVo> getUserBaseVos(List<Users> list);
+
 }

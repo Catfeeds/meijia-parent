@@ -5,6 +5,7 @@
 		<result column="order_id" property="orderId" jdbcType="NUMERIC" />
 		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
 		<result column="service_price_id" property="servicePriceId" jdbcType="NUMERIC" />
+		<result column="service_price_name" property="servicePriceName" jdbcType="VARCHAR" />
 		<result column="partner_user_id" property="partnerUserId" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="mobile" property="mobile" jdbcType="CHAR" />
@@ -19,7 +20,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		order_id, order_no, service_price_id, partner_user_id, user_id, mobile, pay_type,
+		order_id, order_no, service_price_id, service_price_name, partner_user_id, user_id, mobile, pay_type,
 		user_coupon_id, used_score, order_money, order_pay, order_pay_back, order_pay_back_fee,
 		add_time, update_time
 	</sql>
@@ -68,13 +69,14 @@
 	</delete>
 	
 	<insert id="insert" parameterType="com.simi.po.model.order.OrderPrices">
-		insert into order_prices (order_id, order_no, service_price_id, partner_user_id, user_id, mobile, pay_type,
+		insert into order_prices (order_id, order_no, service_price_id, service_price_name, partner_user_id, user_id, mobile, pay_type,
 		user_coupon_id, used_score, order_money, order_pay, order_pay_back, order_pay_back_fee,
 		add_time, update_time)
 		values (
 		#{orderId,jdbcType=NUMERIC}, 
 		#{orderNo,jdbcType=VARCHAR},
 		#{servicePriceId,jdbcType=NUMERIC}, 
+		#{servicePriceName,jdbcType=VARCHAR}, 
 		#{partnerUserId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC},
 		#{mobile,jdbcType=CHAR},
@@ -99,6 +101,9 @@
 			</if>
 			<if test="servicePriceId != null">
 				service_price_id,
+			</if>
+			<if test="servicePriceName != null">
+				service_price_name,
 			</if>
 			<if test="partnerUserId != null">
 				partner_user_id,
@@ -147,6 +152,9 @@
 			<if test="servicePriceId != null">
 				#{servicePriceId,jdbcType=NUMERIC},
 			</if>
+			<if test="servicePriceName != null">
+				#{servicePriceName,jdbcType=VARCHAR},
+			</if>
 			<if test="partnerUserId != null">
 				#{partnerUserId,jdbcType=NUMERIC},
 			</if>
@@ -194,8 +202,11 @@
 			<if test="servicePriceId != null">
 				service_price_id = #{servicePriceId,jdbcType=NUMERIC},
 			</if>
+			<if test="servicePriceName != null">
+				service_price_name = #{servicePriceName,jdbcType=VARCHAR},
+			</if>
 			<if test="partnerUserId != null">
-				
+				partner_user_id = #{partnerUserId,jdbcType=NUMERIC},
 			</if>
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
@@ -240,6 +251,7 @@
 		set 
 		order_no = #{orderNo,jdbcType=VARCHAR},
 		service_price_id = #{servicePriceId,jdbcType=NUMERIC},
+		service_price_name = #{servicePriceName,jdbcType=VARCHAR},
 		partner_user_id = #{partnerUserId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
 		mobile = #{mobile,jdbcType=CHAR},

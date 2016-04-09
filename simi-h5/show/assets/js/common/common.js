@@ -15,6 +15,7 @@ function getUrlParam(name) {
 		$.AMUI.validator.patterns.sms_token = /^\d{4}$/;
 		$.AMUI.validator.patterns.email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 		$.AMUI.validator.patterns.pinteger = /^[0-9]*[1-9][0-9]*$/;
+		$.AMUI.validator.patterns.price = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/ ;
 
 	}
 })(jQuery);

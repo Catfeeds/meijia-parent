@@ -528,6 +528,24 @@ public class UsersServiceImpl implements UsersService {
 		return vo;
 	}	
 	
+	@Override
+	public List<UserBaseVo> getUserBaseVos(List<Users> list) {
+		List<UserBaseVo> result = new ArrayList<UserBaseVo>();
+		
+		for (Users user : list) {
+			UserBaseVo vo = new UserBaseVo();
+			vo.setUserId(user.getId());
+			vo.setHeadImg(user.getHeadImg());
+			vo.setMobile(user.getMobile());
+			vo.setName(user.getName());
+			vo.setProvinceName(user.getProvinceName());
+			vo.setSex(user.getSex());
+			result.add(vo);
+		}
+		
+		return result;
+	}		
+	
 
 	/**
 	 * 获得用户头像的方法

@@ -39,5 +39,7 @@ public interface OrdersMapper {
 	List<Orders> selectIdsByListPage(List<Long> partnerUserIdList);
 
 	List<Orders> selectByOrderIds(List<Long> orderIds);
+
+	List<Long> getByPartnerUserId(Long partnerUseId);
 	
 }
