@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -245,6 +246,8 @@ public class OrderController extends BaseController {
 		
 		//记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLog.setAction("order-create");
+		orderLog.setAction("创建订单");
 		orderLogService.insert(orderLog);
 		
 		//保存订单价格信息
@@ -291,6 +294,8 @@ public class OrderController extends BaseController {
 //			System.out.println();
 			//记录订单日志.
 			orderLog = orderLogService.initOrderLog(order);
+			orderLog.setAction("order-pay");
+			orderLog.setAction("订单支付成功:" + MathBigDecimalUtil.round2(orderPay) + "元");
 			orderLogService.insert(orderLog);
 			
 			//记录用户消费明细

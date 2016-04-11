@@ -21,6 +21,8 @@ public class OrderListVo {
 	//用户称呼
 	private String name;    
 	
+	private String headImg;
+	
 	private Long serviceTypeId;
     
     private String serviceTypeName;
@@ -203,5 +205,13 @@ public class OrderListVo {
 
 	public void setAddrId(Long addrId) {
 		this.addrId = addrId;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
 	}
 }

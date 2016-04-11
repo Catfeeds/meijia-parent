@@ -18,8 +18,6 @@ public interface OrdersService {
 
     int updateByPrimaryKey(Orders record);
 
-	Boolean orderSuccessTodo(String orderNo);
-
 	void orderRatedTodo(Orders orders);
 
 	List<Orders> selectByUserId(Long userId);

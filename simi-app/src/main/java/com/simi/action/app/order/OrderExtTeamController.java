@@ -216,6 +216,8 @@ public class OrderExtTeamController extends BaseController {
 		
 		//记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLog.setAction("order-create");
+		orderLog.setRemarks("订单创建");
 		orderLogService.insert(orderLog);
 		
 		//保存订单价格信息

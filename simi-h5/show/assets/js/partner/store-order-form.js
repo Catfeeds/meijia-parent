@@ -2,7 +2,6 @@ var userId = getUrlParam("user_id");
 var partnerUserId = getUrlParam("partner_user_id");
 
 var serviceTypeId = getUrlParam("service_type_id");
-console.log("user_id =" + userId);
 $("#partner_user_id").val(partnerUserId);
 $("#user_id").val(userId);
 //获取客户列表
@@ -153,6 +152,7 @@ function storeOrderSubmit() {
 	params.service_price_name = $("#service_price_name").val();
 	params.service_price_id = $("#select-service-price").val();
 	params.order_money = $("#order_money").val();
+	params.remarks = $("#remarks").val();
 	
 	console.log(params);
 	

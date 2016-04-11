@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.user.Users;
+import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.user.UsersService;
@@ -22,6 +26,7 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
+import com.simi.vo.order.OrderLogVo;
 
 @Controller
 @RequestMapping(value = "/app/order")
@@ -31,6 +36,9 @@ public class OrderQueryController extends BaseController {
 
 	@Autowired
     private OrderQueryService orderQueryService;
+	
+	@Autowired
+	private OrderLogService orderLogService;
 	
 	@Autowired
 	private UsersService userService;
@@ -109,5 +117,47 @@ public class OrderQueryController extends BaseController {
 		
 		return result;
 	}	
+	
+	/**
+	 * mobile:手机号 order_id订单ID
+	 */
+	@RequestMapping(value = "get_log", method = RequestMethod.GET)
+	public AppResultData<Object> getLog(
+			@RequestParam("user_id") Long userId, 
+			@RequestParam("order_id") Long orderId) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}		
+		
+		OrderSearchVo searchVo = new OrderSearchVo();
+		searchVo.setOrderId(orderId);
+		List<OrderLog> list = orderLogService.selectBySearchVo(searchVo);
+		
+		List<OrderLogVo> listvo = new ArrayList<OrderLogVo>();
+		
+		OrderLog item = null;
+		for(int i = 0 ; i < list.size(); i++) {
+			item = list.get(i);
+			OrderLogVo vo = new OrderLogVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			Long addTime = vo.getAddTime();
+			String addTimeStr = TimeStampUtil.fromTodayStr(addTime * 1000);
+			vo.setAddTimeStr(addTimeStr);
+			listvo.add(vo);
+		}
+		result.setData(listvo);
+		
+		return result;
+	}		
 	
 }

@@ -106,34 +106,7 @@ public class OrdersServiceImpl implements OrdersService {
 	public int updateByPrimaryKeySelective(Orders record) {
 		return ordersMapper.updateByPrimaryKeySelective(record);
 	}
-	
-	/**
-	 * 下单成功后的操作
-	 * 1. 记录订单日志.
-	 * 2. 环信透传功能.
-	 * 3. 百度推送功能.(todo)
-	 */
-	@Override
-	public Boolean orderSuccessTodo(String orderNo) {
-		
-		Orders order = ordersMapper.selectByOrderNo(orderNo);
-		
-		if (order == null) {
-			return false;
-		}
-		
-		//记录订单日志.
-		OrderLog orderLog = orderLogService.initOrderLog(order);
-		orderLogService.insert(orderLog);
-		
-		OrderViewVo orderViewVo = orderQueryService.getOrderView(order);
-
-		Users u = usersService.selectByPrimaryKey(order.getUserId());
-		
-		return true;
-		
-	}
-		
+			
 	/**
 	 * 订单评价成功后的操作
 	 * 1. 更新用户的积分，并添加到积分明细

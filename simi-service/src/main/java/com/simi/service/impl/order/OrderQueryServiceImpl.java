@@ -322,6 +322,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		Users user = usersService.selectByPrimaryKey(order.getUserId());
 		String name = (!StringUtil.isEmpty(user.getName())) ? user.getName() : user.getMobile();
 		vo.setName(name);
+		vo.setHeadImg(user.getHeadImg());
 		
 		//服务类型名称
 		vo.setServiceTypeId(order.getServiceTypeId());

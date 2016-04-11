@@ -536,6 +536,8 @@ public class OrderWaterController extends AdminController {
 
 		// 记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLog.setAction("order-create");
+		orderLog.setRemarks("创建订单");
 		orderLogService.insert(orderLog);
 
 		// 保存订单价格信息

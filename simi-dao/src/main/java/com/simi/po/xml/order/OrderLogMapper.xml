@@ -41,7 +41,7 @@
 		<if test="action != null">
 			and action = #{action,jdbcType=VARCHAR}
 		</if>
-		order by add_time desc
+		order by id desc
 	</select>
 
 	<select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">

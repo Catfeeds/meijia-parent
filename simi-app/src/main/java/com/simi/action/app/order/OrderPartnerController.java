@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.OrderNoUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -21,7 +23,6 @@ import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.NoticeAppAsyncService;
-import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -33,6 +34,7 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
+import com.simi.vo.order.OrderLogVo;
 
 @Controller
 @RequestMapping(value = "/app/order")
@@ -190,7 +192,7 @@ public class OrderPartnerController extends BaseController {
 		
 		//记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
-		orderLog.setAction("create");
+		orderLog.setAction("order-create");
 		orderLog.setRemarks("创建订单");
 		orderLogService.insert(orderLog);
 		
@@ -216,9 +218,9 @@ public class OrderPartnerController extends BaseController {
 	}
 	
 	/**
-	 * 服务商人员生成订单。
+	 * 服务商人员添加进度。
 	 */
-	@RequestMapping(value = "parnter_process", method = RequestMethod.POST)
+	@RequestMapping(value = "parnter_order_process", method = RequestMethod.POST)
 	public AppResultData<Object> partnerOrder(
 			@RequestParam("partner_user_id") Long partnerUserId, 
 			@RequestParam("order_id") Long orderId, 
@@ -235,9 +237,16 @@ public class OrderPartnerController extends BaseController {
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		
 		OrderLog orderLog = orderLogService.initOrderLog(order);
-		orderLog.setAction("process");
+		orderLog.setAction("order-process");
 		orderLog.setRemarks(remarks);
 		orderLogService.insert(orderLog);
+		
+		OrderLogVo vo = new OrderLogVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(orderLog, vo);
+		Long addTime = vo.getAddTime();
+		String addTimeStr = TimeStampUtil.fromTodayStr(addTime * 1000);
+		vo.setAddTimeStr(addTimeStr);
+		result.setData(vo);
 		
 		return result;
 	}	

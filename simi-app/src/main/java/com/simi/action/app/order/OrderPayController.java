@@ -26,6 +26,7 @@ import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.order.OrderListVo;
@@ -175,6 +176,8 @@ public class OrderPayController extends BaseController {
 			
 			//记录订单日志.
 			OrderLog orderLog = orderLogService.initOrderLog(order);
+			orderLog.setAction("order-pay");
+			orderLog.setAction("订单支付成功:" + MathBigDecimalUtil.round2(orderPay) + "元");
 			orderLogService.insert(orderLog);
 			
 			//记录用户消费明细
