@@ -14,3 +14,6 @@ rm -rf /data/tomcat/webapps/xcloud
 
 /data/tomcat/bin/startup.sh
 
+cd /data/tomcat/webapps/simi-h5
+svn up
+
