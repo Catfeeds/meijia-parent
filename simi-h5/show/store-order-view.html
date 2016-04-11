@@ -12,7 +12,7 @@
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
 <link rel="stylesheet" href="assets/css/amazeui.min.css" />
-
+<link rel="stylesheet" href="assets/css/timeline.css" />
 <style>
 .header {
 	text-align: center;
@@ -35,15 +35,16 @@
 
 		<div class="am-u-md-centered">
 			<form action="" id="store-order-form" class="am-form" data-am-validator>
-				<input type="hidden" id="order_id" name="order_id"/> 
-				<input type="hidden" id="partner_user_id" name="partner_user_id" />
-				
+				<input type="hidden" id="order_id" name="order_id" /> <input type="hidden" id="partner_user_id"
+					name="partner_user_id"
+				/>
+
 				<div class="am-form-group">
 					<label for="doc-ipt-email-1">客户姓名:</label>
 
 					<div id="name"></div>
 				</div>
-				
+
 				<div class="am-form-group">
 					<label for="doc-ipt-email-1">客户手机:</label>
 
@@ -61,18 +62,37 @@
 				</div>
 
 				<div class="am-form-group">
-					<label for="doc-ipt-email-1">价格</label> 
+					<label for="doc-ipt-email-1">价格</label>
 					<div id="order_money"></div>
 				</div>
-				
+
 				<div class="am-form-group">
-			      <label for="doc-ta-1">备注</label>
-			     <div id="remarks"></div>
-			    </div>
+					<label for="doc-ta-1">备注</label>
+					<div id="remarks"></div>
+				</div>
 			</form>
+			<hr>
+			<div class="about4">
+			<div class="about4_ch">订单进程</div>
+			<div class="about4_main">
+
+				<div class="line"></div>
+				<ul>
+					<li>创建订单</li>
+					<li>订单支付</li>
+					<li>已上门收取资料</li>
+					<li>已递交朝阳工商局办理</li>
+					<li>正在进行公司名核准</li>
+				</ul>
+			</div>
+		</div>
+			
+			
 			<hr>
 			<p align="center">© 云行政 版权所有</p>
 		</div>
+
+		
 	</div>
 
 	<script src="assets/js/jquery.min.js"></script>
@@ -85,6 +105,15 @@
 	<script src="assets/js/common/validate-methods.js"></script>
 
 	<script src="assets/js/partner/store-order-view.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(e) {
+	var h = $(".about4_main ul li:first-child").height()/2;<!--第一个li高度的一半-->
+	var h1 = $(".about4_main ul li:last-child").height()/2;<!--最后一个li高度的一半-->
+	$(".line").css("top",h);
+	$(".line").height($(".about4_main").height()-h1-h);
+});
+</script>
 
 </body>
 </html>

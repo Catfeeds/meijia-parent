@@ -190,6 +190,8 @@ public class OrderPartnerController extends BaseController {
 		
 		//记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLog.setAction("create");
+		orderLog.setRemarks("创建订单");
 		orderLogService.insert(orderLog);
 		
 		//保存订单价格信息
@@ -212,6 +214,33 @@ public class OrderPartnerController extends BaseController {
 
 		return result;
 	}
+	
+	/**
+	 * 服务商人员生成订单。
+	 */
+	@RequestMapping(value = "parnter_process", method = RequestMethod.POST)
+	public AppResultData<Object> partnerOrder(
+			@RequestParam("partner_user_id") Long partnerUserId, 
+			@RequestParam("order_id") Long orderId, 
+			@RequestParam("remarks") String remarks) {	
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (partnerUserId.equals(0L) || orderId.equals(0L)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数据错误");
+			return result;
+		}
+		
+		Orders order = ordersService.selectByPrimaryKey(orderId);
+		
+		OrderLog orderLog = orderLogService.initOrderLog(order);
+		orderLog.setAction("process");
+		orderLog.setRemarks(remarks);
+		orderLogService.insert(orderLog);
+		
+		return result;
+	}	
 	
 	
 }
