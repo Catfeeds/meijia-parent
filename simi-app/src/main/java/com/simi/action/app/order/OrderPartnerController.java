@@ -182,7 +182,7 @@ public class OrderPartnerController extends BaseController {
 		order.setServiceTypeId(serviceTypeId);
 		order.setUserId(userId);
 		order.setMobile(mobile);
-		order.setServiceContent(serviceTypeName + "" + servicePriceName);
+		order.setServiceContent(serviceTypeName + " " + servicePriceName);
 		order.setRemarks(remarks);
 		order.setOrderStatus(Constants.ORDER_STATUS_1_PAY_WAIT);
 		ordersService.insert(order);
