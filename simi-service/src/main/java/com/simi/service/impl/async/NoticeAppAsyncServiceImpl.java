@@ -61,7 +61,7 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 		tranParams.put("ci", "0");
 		tranParams.put("ct", "0");
 		tranParams.put("st", "");
-		tranParams.put("re", "");
+		tranParams.put("re", "0");
 		tranParams.put("rt", msgTitle);
 		tranParams.put("rc", msgContent);
 		

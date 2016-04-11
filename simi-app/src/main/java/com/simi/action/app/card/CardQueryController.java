@@ -452,7 +452,7 @@ public class CardQueryController extends BaseController {
 		tranParams.put("ci", "0");
 		tranParams.put("ct", "0");
 		tranParams.put("st", "");
-		tranParams.put("re", "");
+		tranParams.put("re", "0");
 		tranParams.put("rt", "新消息");
 		tranParams.put("rc", "你在" + timeStr1 + "有一条新的消息");
 
