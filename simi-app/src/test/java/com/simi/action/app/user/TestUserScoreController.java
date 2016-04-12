@@ -35,7 +35,7 @@ public class TestUserScoreController extends JUnitActionBase {
 	public void testGetScore() throws Exception {
 
 		String url = "/app/user/get_score.json";
-		String params = "?user_id=77&page=1";
+		String params = "?user_id=273&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 		ResultActions resultActions = this.mockMvc.perform(getRequest);

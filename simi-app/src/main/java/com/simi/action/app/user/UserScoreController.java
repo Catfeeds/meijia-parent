@@ -1,5 +1,6 @@
 package com.simi.action.app.user;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.duiba.credits.sdk.CreditConsumeParams;
 import com.duiba.credits.sdk.CreditNotifyParams;
 import com.duiba.credits.sdk.CreditTool;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -89,10 +92,21 @@ public class UserScoreController extends BaseController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get_score", method = RequestMethod.GET)
-	public AppResultData<Object> myScore(@RequestParam("user_id") Long userId, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+	public AppResultData<Object> myScore(
+			@RequestParam("user_id") Long userId, 
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();
-
+		searchVo.setUserId(userId);
+		
+		//最近30天.
+		Date today = DateUtil.getNowOfDate();
+		String startTimeStr = DateUtil.addDay(today , -30, Calendar.DATE, "yyyy-MM-dd 00:00:00");
+		Long startTime = TimeStampUtil.getMillisOfDay(startTimeStr) / 1000;
+		Long endTime = TimeStampUtil.getEndOfToday();
+		
+		searchVo.setStartTime(startTime);
+		searchVo.setEndTime(endTime);
 		PageInfo rs = userDetailScoreService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<UserDetailScore> list = rs.getList();
 		result.setData(list);

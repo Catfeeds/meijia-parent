@@ -55,7 +55,7 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
 		
 		//若订单支付金额(orderPay)不为0, 则对积分进行累加，并更新User表
 		// 若为0则不做操作
-		if (orderPay != null) {
+		if (orderPay != null && !orderPay.equals(new BigDecimal(0))) {
 			
 			//BigDecimal类型转成Integer类型
 			Integer orderPayInteger = orderPay.intValue();
