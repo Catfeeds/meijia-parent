@@ -32,7 +32,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from dict_express where 
-		<![CDATA[  update_time  >= #{T}]]>
+		<![CDATA[  update_time  > #{T}]]>
 		order by express_id asc
 	</select>
 	
