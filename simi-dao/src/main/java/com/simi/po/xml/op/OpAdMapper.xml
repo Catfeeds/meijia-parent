@@ -61,7 +61,7 @@
 		</if>
 		
 		<if test="updateTime != null">
-			and updateTime >  #{updateTime,jdbcType=NUMERIC}
+			<![CDATA[ and updateTime >  #{updateTime,jdbcType=NUMERIC} ]]>  
 		</if>
 		
 		order by id asc
