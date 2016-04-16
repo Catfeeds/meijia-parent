@@ -68,7 +68,7 @@ public class BaseDataController<T> {
 			@RequestParam(value = "t_apptools", required = false, defaultValue = "0") Long tApptools,
 			@RequestParam(value = "t_express", required = false, defaultValue = "0") Long tExpress,
 			@RequestParam(value = "t_assets", required = false, defaultValue = "0") Long tAssets,
-			@RequestParam(value = "t_channel", required = false, defaultValue = "0") Long tChannel
+			@RequestParam(value = "t_opads", required = false, defaultValue = "0") Long tOpads
 			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -108,14 +108,14 @@ public class BaseDataController<T> {
 			}
 		}
 		
-		datas.put("channels", "");
-		if (tChannel > 0L) {
+		datas.put("opads", "");
+		if (tOpads > 0L) {
 			AdSearchVo searchVo = new AdSearchVo();
-			searchVo.setUpdateTime(tChannel);
+			searchVo.setUpdateTime(tOpads);
 			searchVo.setAdType("99");
 			List<OpAd> channelList = opAdService.selectBySearchVo(searchVo);
 			if (!channelList.isEmpty()) {
-				datas.put("channels", channelList) ;
+				datas.put("opads", channelList) ;
 			}
 		}
 		
