@@ -18,8 +18,8 @@ $.ajax({
 		var exp = user.exp;
 		var levelMax = user.level_max;
 		
-		var per = (Number(exp)/Number(levelMax)).toFix(2);
-		
+		var per = (Number(exp)/Number(levelMax)).toFixed(2);
+
 		$("#level-progress").css("width", per + "%")
 	}
 });
