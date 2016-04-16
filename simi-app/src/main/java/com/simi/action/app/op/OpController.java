@@ -64,7 +64,10 @@ public class OpController extends BaseController {
 		
 		
 		AdSearchVo searchVo = new AdSearchVo();
-		searchVo.setUpdateTime(t);
+		if (t > 0L) {
+			searchVo.setUpdateTime(t);
+		}
+		
 		searchVo.setAdType(channelId);
 		List<OpAd> list = opAdService.selectBySearchVo(searchVo);
 		
