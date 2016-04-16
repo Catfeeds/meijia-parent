@@ -13,6 +13,7 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.op.AppTools;
+import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.ApptoolsSearchVo;
@@ -56,5 +57,25 @@ public class ApptoolsController extends BaseController {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, vo);
 		return result;
 	}
+	
+	/**
+	 * 获得应用中心列表接口
+	 * @param appType
+	 * @return
+	 */
+	@RequestMapping(value = "get_apptools_status", method = RequestMethod.GET)
+	public AppResultData<Object> getAppToolsStatus(
+			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType,
+			@RequestParam(value = "t", required = false, defaultValue="0") Long t
+			) {
+		
+		
+		List<UserAppTools> list = appToolsService.getUserAppToos(userId);
+		
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
+		return result;
+	}	
 	
 }

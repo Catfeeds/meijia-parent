@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.op.AppTools;
+import com.simi.po.model.op.UserAppTools;
 import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.po.AppToolsVo;
 
@@ -26,5 +27,7 @@ public interface AppToolsService {
 	List<AppTools> selectBySearchVo(ApptoolsSearchVo searchVo);
 
 	PageInfo selectByListPage(ApptoolsSearchVo searchVo, int pageNo, int pageSize);
+
+	List<UserAppTools> getUserAppToos(Long userId);
 
 }

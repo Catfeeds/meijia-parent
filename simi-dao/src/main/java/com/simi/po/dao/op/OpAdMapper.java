@@ -15,6 +15,8 @@ public interface OpAdMapper {
 	int updateByPrimaryKeySelective(OpAd record);
 
 	List<OpAd> selectByAdType(String adType);
+	
+	List<OpAd> selectBySearchVo(AdSearchVo searchVo);
 
 	List<OpAd> selectByListPage(AdSearchVo searchVo);
 }

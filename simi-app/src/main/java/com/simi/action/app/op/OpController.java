@@ -21,6 +21,7 @@ import com.simi.service.op.OpChannelService;
 import com.simi.service.user.UserActionRecordService;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.user.UserActionSearchVo;
 
 @Controller
@@ -52,14 +53,20 @@ public class OpController extends BaseController {
 	
 	@RequestMapping(value = "get_ads", method = RequestMethod.GET)
 	public AppResultData<Object> getAds(
-			@RequestParam(value = "channel_id", required = false, defaultValue="1") String channelId
+			@RequestParam(value = "channel_id", required = false, defaultValue="1") String channelId,
+			@RequestParam(value = "t", required = false, defaultValue="0") Long t
 			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		if (StringUtil.isEmpty(channelId)) return result;
 		
 		channelId+= ",";
-		List<OpAd> list = opAdService.selectByAdType(channelId);
+		
+		
+		AdSearchVo searchVo = new AdSearchVo();
+		searchVo.setUpdateTime(t);
+		searchVo.setAdType(channelId);
+		List<OpAd> list = opAdService.selectBySearchVo(searchVo);
 		
 		if (list.isEmpty()) return result;
 		

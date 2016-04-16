@@ -137,6 +137,11 @@ public class AppToolsServiceImpl implements AppToolsService {
 	}
 	
 	@Override
+	public List<UserAppTools> getUserAppToos(Long userId) {
+		return userAppToolsMapper.selectByUserIdAndStatusOne(userId);
+	}
+	
+	@Override
 	public List<AppTools> selectBySearchVo(ApptoolsSearchVo searchVo) {
 		return appToolsMapper.selectBySearchVo(searchVo);
 	}

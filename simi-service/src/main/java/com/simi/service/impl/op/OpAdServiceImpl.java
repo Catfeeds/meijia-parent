@@ -49,10 +49,7 @@ public class OpAdServiceImpl implements OpAdService {
 			String channelNames = "";
 			
 			String[] adTypeAry = StringUtil.convertStrToArray(adType);
-			
-			
-			
-			
+
 			for (int j = 0; j < adTypeAry.length; j++) {
 				if (StringUtil.isEmpty(adTypeAry[j].toString())) continue;
 				
@@ -101,6 +98,11 @@ public class OpAdServiceImpl implements OpAdService {
 	@Override
 	public List<OpAd> selectByAdType(String adType) {
 		return opAdMapper.selectByAdType(adType);
+	}	
+	
+	@Override
+	public List<OpAd> selectBySearchVo(AdSearchVo searchVo) {
+		return opAdMapper.selectBySearchVo(searchVo);
 	}	
 
 	@Override

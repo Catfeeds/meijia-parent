@@ -20,6 +20,8 @@ public interface OpAdService {
 
 	PageInfo searchVoListPage(AdSearchVo searchVo, int pageNo, int pageSize);
 
+	List<OpAd> selectBySearchVo(AdSearchVo searchVo);
+
 
 
 }

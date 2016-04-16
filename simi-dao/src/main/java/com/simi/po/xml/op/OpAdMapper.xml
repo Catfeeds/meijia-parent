@@ -43,6 +43,27 @@
 		<if test="adType != null">
 			and ad_type like CONCAT('%','${adType}','%' )
 		</if>
+				
+		order by id asc
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.po.AdSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from op_ad
+		where 1=1
+		<if test="title != null">
+			and title like CONCAT('%','${title}','%' )
+		</if>
+		
+		<if test="adType != null">
+			and ad_type like CONCAT('%','${adType}','%' )
+		</if>
+		
+		<if test="updateTime != null">
+			and updateTime >  #{updateTime,jdbcType=NUMERIC}
+		</if>
+		
 		order by id asc
 	</select>
 

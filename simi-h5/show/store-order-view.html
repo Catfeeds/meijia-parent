@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="assets/css/amazeui.min.css">
 <link rel="stylesheet" href="assets/css/store.css">
 <link rel="stylesheet" href="assets/css/timeline.css" />
+<link rel="stylesheet" href="assets/js/lib/dropzone/dropzone.min.css" />
 <title>订单详情</title>
 </head>
 <body style="background: #ececec">
@@ -79,15 +80,23 @@
 								</div>
 
 								<hr>
-								<form action="" id="order-process-form" class="am-form" data-am-validator>
+								<form action="" id="order-process-form" class="am-form dropzone" data-am-validator>
 									<input type="hidden" id="order_id" name="order_id"/> 
 									<input type="hidden" id="partner_user_id" name="partner_user_id" />
 									<div class="am-form-group">
-										<div class="am-form-group">
+										
 									      <label for="doc-ta-1">订单进程</label>
 									      <textarea class="" rows="5" id="process" name="process" placeholder="输入订单的进展说明" minLength="1" MaxLength="255"></textarea>
-									    </div>
 									</div>
+									
+									<div class="am-form-group">
+										  <label for="doc-ta-1">上传图片</label>
+										  <div class="fallback">
+										    <input name="file" type="file" multiple />
+										  </div>
+									</div>
+									
+									
 									<div class="am-form-group">
 										<button type="button" id="process_btn" class="am-btn am-btn-danger am-btn-block">提交</button>
 									</div>
@@ -110,6 +119,8 @@
 
 	<!--本页面使用的js-->
 	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/lib/dropzone/dropzone.min.js"></script>
+	
 	<script src="assets/js/timeline.js"></script>
 	<script src="assets/js/partner/store-order-view.js"></script>
 

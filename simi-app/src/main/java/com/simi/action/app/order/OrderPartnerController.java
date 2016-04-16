@@ -248,6 +248,14 @@ public class OrderPartnerController extends BaseController {
 		vo.setAddTimeStr(addTimeStr);
 		result.setData(vo);
 		
+		//发送订单进程通知. 推送消息到app
+		Long userId = order.getUserId();
+		
+		if (remarks.length() > 20) {
+			remarks = remarks.substring(0, 20) ;
+		}
+		noticeAppAsyncService.pushMsgToDevice(userId, "订单进度更新", "您的订单有了新的进展:" + remarks + "...");
+		
 		return result;
 	}	
 	
