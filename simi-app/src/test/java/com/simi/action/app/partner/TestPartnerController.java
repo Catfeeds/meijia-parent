@@ -43,7 +43,7 @@ public class TestPartnerController extends JUnitActionBase  {
     public void testGetUserDetail() throws Exception {
 
 		String url = "/app/partner/get_user_detail.json";
-		String params = "?partner_user_id=554&service_type_id=201";
+		String params = "?partner_user_id=533&service_type_id=79";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

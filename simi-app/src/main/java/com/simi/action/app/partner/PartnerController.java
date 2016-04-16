@@ -151,6 +151,9 @@ public class PartnerController extends BaseController {
 //			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(item.getId());
 			//排除掉不是此大类默认的报价和不是此服务人员自己添加的报价
 			//排除掉已经下架的商品
+			if (servicePriceDetail == null) continue;
+			
+			
 			if (!servicePriceDetail.getUserId().equals(0L)){
 				if(!servicePriceDetail.getUserId().equals(partnerUserId)) continue;
 			}
