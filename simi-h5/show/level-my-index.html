@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="assets/css/amazeui.min.css">
+<link rel="stylesheet" href="assets/css/store.css">
+<title>我的等级</title>
+</head>
+<body>
+	<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+		<a href="#top" title=""> <img class="am-gotop-icon-custom" src="images/goTop.png" />
+		</a>
+	</div>
+
+	<div class="pet_mian" id="top">
+		<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}'>
+			<ul class="am-slides">
+				<li><img src="images/level-banner-1.jpg" id="level-img">
+					<div class="pet_slider_font">
+						<span class="pet_slider_emoji"></span> <span></span>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="pet_content_block">
+			<article data-am-widget="paragraph" class="am-paragraph am-paragraph-default pet_content_article"
+				data-am-paragraph="{ tableScrollable: true, pureview: true }"
+			>
+
+				<h1 class="pet_article_title" align="center">您的等级：<label id="level-name"></label></h1>
+				<div class="pet_article_user_time" align="center">经验值：<label id="exp"></label></div>
+
+				<div class="am-progress am-progress-striped am-progress-sm am-active ">
+					<div class="am-progress-bar am-progress-bar-warning" style="width: 57%" id="level-progress"></div>
+				</div>
+
+				<p>
+				<blockquote>
+					<p>您的等级见证了您的成长！伴随经验值的不断提升，等级将加速提升~</p>
+				</blockquote>
+				</p>
+
+
+				<div class="pet_hd_con_gp_list_nr">
+					<div class="pet_hd_con_gp_list_nr_tag">通用</div>
+
+					<table class="am-table">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th>经验值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>新用户注册</td>
+								<td>+1000</td>
+							</tr>
+							<tr>
+								<td>创建企业/团队</td>
+								<td>+3000</td>
+							</tr>
+							<tr>
+								<td>好友邀请</td>
+								<td>+1000</td>
+							</tr>
+							<tr>
+								<td>每日签到</td>
+								<td>+300</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="pet_hd_con_gp_list_nr">
+					<div class="pet_hd_con_gp_list_nr_tag">工作应用类</div>
+					<p></p>
+
+					<table class="am-table">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th>经验值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>创建工作（例如事务提醒）</td>
+								<td>+100（上限2000）</td>
+							</tr>
+							<tr>
+								<td>创建服务（例如团建）</td>
+								<td>+200（上限4000）</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="pet_hd_con_gp_list_nr">
+					<div class="pet_hd_con_gp_list_nr_tag">社区贡献类</div>
+					<p></p>
+
+					<table class="am-table">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th>经验值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>发布动态（或知识）</td>
+								<td>+100（上限2000）</td>
+							</tr>
+							<tr>
+								<td>参与评论</td>
+								<td>+50（上限1000）</td>
+							</tr>
+							<tr>
+								<td>上传资料</td>
+								<td>+200（上限4000）</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</article>
+
+		</div>
+	</div>
+	<script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+
+	<script src="assets/js/user/level-my-index.js"></script>
+</body>
+</html>

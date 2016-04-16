@@ -1,0 +1,148 @@
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/store.css">
+    <title>积分规则说明</title>
+</head>
+<body style="background:#ececec">
+
+<div class="pet_content_block pet_hd_con">
+<div class="pet_hd_con_head"><img src="images/score-ad.jpg" alt=""></div>
+  <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default pet_content_article" data-am-paragraph="{ tableScrollable: true, pureview: true }">
+  <h1 class="pet_article_title">积分规则说明</h1>
+  <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe617;</i>更新时间：2016年4月</div>
+  
+  <div class="pet_hd_con_gp_list_nr">
+    <div class="pet_hd_con_gp_list_nr_tag">通用</div>
+
+		<table class="am-table">
+		    <thead>
+		        <tr>
+		            <th>操作</th>
+		            <th>积分数</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <td>新用户注册</td>
+		            <td>+100</td>
+		        </tr>
+		        <tr>
+		            <td>创建企业/团队</td>
+		            <td>+300</td>
+		        </tr>
+		        <tr>
+		            <td>好友邀请</td>
+		            <td>+100</td>
+		        </tr>
+		        <tr>
+		            <td>每日签到</td>
+		            <td>+30</td>
+		        </tr>
+		    </tbody>
+		</table>
+  </div>
+
+    <div class="pet_hd_con_gp_list_nr">
+    <div class="pet_hd_con_gp_list_nr_tag">工作应用类</div>
+    <p></p>
+
+		<table class="am-table">
+		    <thead>
+		        <tr>
+		            <th>操作</th>
+		            <th>积分数</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <td>创建工作（例如事务提醒）</td>
+		            <td>+10（上限200）</td>
+		        </tr>
+		        <tr>
+		            <td>创建服务（例如团建）</td>
+		            <td>+20（上限400）</td>
+		        </tr>
+		        <tr>
+		            <td>服务订单支付</td>
+		            <td>+订单金额</td>
+		        </tr>
+		    </tbody>
+		</table>
+  </div>
+
+    <div class="pet_hd_con_gp_list_nr">
+    <div class="pet_hd_con_gp_list_nr_tag">社区贡献类</div>
+    <p></p>
+
+		<table class="am-table">
+		    <thead>
+		        <tr>
+		            <th>操作</th>
+		            <th>积分数</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <td>发布动态（或知识）</td>
+		            <td>+10（上限200）</td>
+		        </tr>
+		        <tr>
+		            <td>参与评论</td>
+		            <td>+5（上限100）</td>
+		        </tr>
+		        <tr>
+		            <td>上传资料</td>
+		            <td>+20（上限400）</td>
+		        </tr>
+		    </tbody>
+		</table>
+  </div>
+
+  </article>
+
+</div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script>
+$(function(){
+
+    // 动态计算新闻列表文字样式
+    auto_resize();
+    $(window).resize(function() {
+        auto_resize();
+    });
+    $('.am-list-thumb img').load(function(){
+        auto_resize();
+    });
+    $('.pet_article_like li:last-child').css('border','none');
+        function auto_resize(){
+        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
+                // alert($('.pet_list_one_nr').height());
+    }
+        $('.pet_article_user').on('click',function(){
+            if($('.pet_article_user_info_tab').hasClass('pet_article_user_info_tab_show')){
+                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_show').addClass('pet_article_user_info_tab_cloes');
+            }else{
+                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_cloes').addClass('pet_article_user_info_tab_show');
+            }
+        });
+
+        $('.pet_head_gd_ico').on('click',function(){
+            $('.pet_more_list').addClass('pet_more_list_show');
+       });
+        $('.pet_more_close').on('click',function(){
+            $('.pet_more_list').removeClass('pet_more_list_show');
+        });
+});
+
+</script>
+</body>
+</html>

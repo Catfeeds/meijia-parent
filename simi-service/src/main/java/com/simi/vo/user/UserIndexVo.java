@@ -24,21 +24,22 @@ public class UserIndexVo  {
 	
 	//与当前用户的距离.
 	private String poiDistance;
-	
-	private int	totalCard;
-	
-	private int totalCoupon;
-	
+			
 	private int totalFriends;
 	
 	private Integer score;
 	
 	private Short isFriend;
-	
-	private int totalFeed;
-	
+		
 	private Integer exp;
 	
+	private String level;
+	
+	private Integer levelMin;
+	
+	private Integer levelMax;
+	
+	private String levelBanner;
 
 	public long getId() {
 		return Id;
@@ -120,22 +121,6 @@ public class UserIndexVo  {
 		this.name = name;
 	}
 
-	public int getTotalCard() {
-		return totalCard;
-	}
-
-	public void setTotalCard(int totalCard) {
-		this.totalCard = totalCard;
-	}
-
-	public int getTotalCoupon() {
-		return totalCoupon;
-	}
-
-	public void setTotalCoupon(int totalCoupon) {
-		this.totalCoupon = totalCoupon;
-	}
-
 	public int getTotalFriends() {
 		return totalFriends;
 	}
@@ -160,19 +145,43 @@ public class UserIndexVo  {
 		this.isFriend = isFriend;
 	}
 
-	public int getTotalFeed() {
-		return totalFeed;
-	}
-
-	public void setTotalFeed(int totalFeed) {
-		this.totalFeed = totalFeed;
-	}
-
 	public Integer getExp() {
 		return exp;
 	}
 
 	public void setExp(Integer exp) {
 		this.exp = exp;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public Integer getLevelMin() {
+		return levelMin;
+	}
+
+	public void setLevelMin(Integer levelMin) {
+		this.levelMin = levelMin;
+	}
+
+	public Integer getLevelMax() {
+		return levelMax;
+	}
+
+	public void setLevelMax(Integer levelMax) {
+		this.levelMax = levelMax;
+	}
+
+	public String getLevelBanner() {
+		return levelBanner;
+	}
+
+	public void setLevelBanner(String levelBanner) {
+		this.levelBanner = levelBanner;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -31,6 +33,7 @@ import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
@@ -46,6 +49,7 @@ import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.feed.FeedSearchVo;
@@ -54,6 +58,7 @@ import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Service
@@ -111,6 +116,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private FeedService feedService;
+	
+	@Autowired
+	private XCompanySettingService xCompanySettingService;
 	
 	@Override
 	public Long insert(Users record) {
@@ -442,39 +450,6 @@ public class UsersServiceImpl implements UsersService {
 		}
 		vo.setPoiDistance("");
 
-		// 计算卡片的个数
-		vo.setTotalCard(0);
-		CardSearchVo searchVo = new CardSearchVo();
-		searchVo.setCardFrom((short) 0);
-		searchVo.setUserId(viewUser.getId());
-
-		PageInfo pageInfo = cardService.selectByListPage(searchVo, 1, Constants.PAGE_MAX_NUMBER);
-		if (pageInfo != null) {
-			Long totalCard = pageInfo.getTotal();
-			vo.setTotalCard(totalCard.intValue());
-		}
-
-		// 计算优惠劵个数
-		vo.setTotalCoupon(0);
-		List<UserCoupons> list = userCouponService.selectByUserId(viewUser.getId());
-		if (!list.isEmpty()) {
-
-			UserCoupons item = null;
-			List<Long> couponsIds = new ArrayList<Long>();
-			Long now = TimeStampUtil.getNow();
-			for (int i = 0; i < list.size(); i++) {
-				item = list.get(i);
-				// 已经使用过的
-				// 优惠券已经过期的，都不显示
-				if (item.getIsUsed().equals((short) 0) && item.getExpTime() > (now / 1000) || item.getExpTime() == 0) {
-					couponsIds.add(item.getCouponId());
-				} else {
-					list.remove(i);
-				}
-			}
-			vo.setTotalCoupon(list.size());
-
-		}
 
 		// 计算好友个数
 		vo.setTotalFriends(0);
@@ -502,14 +477,43 @@ public class UsersServiceImpl implements UsersService {
 			}
 		}
 		
-		//计算动态个数
-		FeedSearchVo searchVo2 = new FeedSearchVo();
-		searchVo2.setUserId(viewUser.getId());
-		PageInfo  feedPage = feedService.selectByListPage(searchVo2, 1, Constants.PAGE_MAX_NUMBER);
-		if (feedPage != null) {
-			Long totalFeed = feedPage.getTotal();
-			vo.setTotalFeed(totalFeed.intValue());
+		//用户等级
+		String level = "LV1";
+		Integer levelMin = 0;
+		Integer levelMax = 0;
+		String levelBanner = "http://app.51xingzheng.cn/simi-h5/show/images/level-banner-1.jpg";
+		
+		Integer exp = vo.getExp();
+		
+		CompanySettingSearchVo s = new CompanySettingSearchVo();
+		s.setSettingType("user-level");
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(s);
+		XcompanySetting setting = null;
+		if (!list.isEmpty()) {
+			setting = list.get(0);
+			String gsonString = setting.getSettingJson();
+			List<Map<String, Object>> levels = GsonUtil.GsonToListMaps(gsonString);
+			
+			for(int i =0; i < levels.size(); i++) {
+				Map<String, Object> item = levels.get(i);
+				levelMin = Integer.valueOf(item.get("min").toString());
+				levelMax = Integer.valueOf(item.get("max").toString());
+				
+				if (exp > levelMin && exp < levelMax) {
+					level = item.get("name").toString();
+					levelBanner = item.get("banner").toString();
+					break;
+				}
+				
+			}
+			
 		}
+		
+		vo.setLevel(level);
+		vo.setLevelMin(levelMin);
+		vo.setLevelMax(levelMax);
+		vo.setLevelBanner(levelBanner);
+		
 		
 		return vo;
 	}
