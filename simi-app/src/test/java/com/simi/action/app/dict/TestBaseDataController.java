@@ -17,7 +17,7 @@ public class TestBaseDataController extends JUnitActionBase  {
 
 		
 		String url = "/app/get_base_datas.json";
-		String params = "?user_id=18&t_user=1&t_city=1&t_apptools=1&t_express=1&t_assets=1";
+		String params = "?user_id=18&t_city=1441036800&t_apptools=1460694481&t_express=1457523382&t_assets=1459233449";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
 

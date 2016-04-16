@@ -8,7 +8,7 @@ public class CompanySettingSearchVo{
 	
 	private String name;
 	
-	private String updateTime;
+	private Long updateTime;
 			
 	public Long getCompanyId() {
 		return companyId;
@@ -34,13 +34,12 @@ public class CompanySettingSearchVo{
 		this.name = name;
 	}
 
-	public String getUpdateTime() {
+	public Long getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateTime(String updateTime) {
+	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
 	}
-
 
 }

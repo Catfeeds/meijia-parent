@@ -85,6 +85,7 @@ public class BaseDataController<T> {
 		datas.put("apptools", "");
 		if (tApptools > 0L) {
 			ApptoolsSearchVo asearchVo = new ApptoolsSearchVo();
+			asearchVo.setUpdateTime(tApptools);
 			List<AppTools> apptools = appToolsService.selectBySearchVo(asearchVo);
 			if (!apptools.isEmpty()) datas.put("apptools", apptools);
 		}
@@ -102,6 +103,7 @@ public class BaseDataController<T> {
 		if (tAssets > 0L) {
 			CompanySettingSearchVo s = new CompanySettingSearchVo();
 			s.setSettingType("asset_type");
+			s.setUpdateTime(tAssets);
 			List<XcompanySetting> assetTypeList = xCompanySettingService.selectBySearchVo(s);
 			if (!assetTypeList.isEmpty()) {
 				datas.put("asset_types", assetTypeList) ;

@@ -85,7 +85,7 @@
 		</if>
 		
 		<if test="updateTime != null">
-			<![CDATA[ and updateTime > #{update_time,jdbcType=NUMERIC}]]>
+			<![CDATA[ and update_time > #{updateTime,jdbcType=NUMERIC}]]>
 		</if>
 				
 		order by no asc
