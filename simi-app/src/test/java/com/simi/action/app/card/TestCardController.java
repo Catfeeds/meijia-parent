@@ -35,15 +35,15 @@ public class TestCardController extends JUnitActionBase  {
      	//新增
      	postRequest = postRequest.param("card_id", "0");
 	    postRequest = postRequest.param("card_type", "3");
-	    postRequest = postRequest.param("create_user_id", "77");
-	    postRequest = postRequest.param("user_id", "77");
+	    postRequest = postRequest.param("create_user_id", "927");
+	    postRequest = postRequest.param("user_id", "927");
 	    
 	    //参会人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
 	    LinkManVo a1 = new LinkManVo();
-	    a1.setMobile("13146012753");
-	    a1.setName("kerry");
-	    a1.setUser_id(77L);
+	    a1.setMobile("19910109208");
+	    a1.setName("自己");
+	    a1.setUser_id(927L);
 //	    LinkManVo a2 = new LinkManVo();
 //	    a2.setMobile("18037338893");
 //	    a2.setName("A");
@@ -59,9 +59,9 @@ public class TestCardController extends JUnitActionBase  {
 	    String attends = GsonUtil.GsonString(attendsList);
 	    
 	    postRequest = postRequest.param("attends", attends);
-	    postRequest = postRequest.param("service_time", "1458791400");
+	    postRequest = postRequest.param("service_time", "1460818322");
 //	    postRequest = postRequest.param("service_addr", "宇飞大厦612");
-	    postRequest = postRequest.param("service_content", "你快看看");
+	    postRequest = postRequest.param("service_content", "突突l");
 	    postRequest = postRequest.param("set_remind", "1");
 	    postRequest = postRequest.param("set_now_send", "0");
 	    postRequest = postRequest.param("set_sec_do", "0");

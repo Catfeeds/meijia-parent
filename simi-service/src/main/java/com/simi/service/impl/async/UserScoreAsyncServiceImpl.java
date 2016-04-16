@@ -119,7 +119,7 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		searchVo.setCardType(cardType);
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
-		
+		searchVo.setCardFrom((short) 1);
 		List<Cards> rs = cardService.selectBySearchVo(searchVo);
 		
 		if (cardType.equals((short)3)) {
