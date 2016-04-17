@@ -53,7 +53,7 @@ public class UserDetailPayController extends BaseController {
 			return result;
 		} else {
 			AppResultData<List<UserDetailPay>> result = new AppResultData<List<UserDetailPay>>(
-					Constants.ERROR_999, ConstantMsg.ERROR_999_MSG_10,
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG,
 					new ArrayList<UserDetailPay>());
 			return result;
 		}
