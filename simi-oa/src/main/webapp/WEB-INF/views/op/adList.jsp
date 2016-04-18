@@ -71,7 +71,7 @@
 						<tr>
 							<td>${ item.no}</td>
 							<td>${ item.title}</td>
-							<td><img src="${ item.imgUrl }?w=100&h=100" /></td>
+							<td><img src="${ item.imgUrl }" /></td>
 							<td>${ item.channelNames}</td>
 							<td><a href="${ item.gotoUrl }" target="_blank">点击</a></td>
 
