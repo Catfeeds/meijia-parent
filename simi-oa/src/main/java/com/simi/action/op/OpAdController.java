@@ -148,7 +148,7 @@ public class OpAdController extends BaseController {
 
 			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
-			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
+			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString() + "?p=0";
 			
 		}
 		
