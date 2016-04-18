@@ -74,15 +74,16 @@ public class BaseDataController<T> {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		Map<String, Object> datas = new HashMap<String, Object>();
-				
-		datas.put("city", "");
+		
+		List<Map<String, Object>> defualtArray = new ArrayList<Map<String, Object>>();
+		datas.put("city", defualtArray);
 		if (tCity > 0L) {
 			List<DictCity> cityList = new ArrayList<DictCity>();
 			cityList = cityService.selectByT(tCity);
 			datas.put("city", cityList);
 		}
 		
-		datas.put("apptools", "");
+		datas.put("apptools", defualtArray);
 		if (tApptools > 0L) {
 			ApptoolsSearchVo asearchVo = new ApptoolsSearchVo();
 			asearchVo.setUpdateTime(tApptools);
@@ -90,7 +91,7 @@ public class BaseDataController<T> {
 			if (!apptools.isEmpty()) datas.put("apptools", apptools);
 		}
 		
-		datas.put("express", "");
+		datas.put("express", defualtArray);
 		
 		if (tExpress > 0L) {
 			List<DictExpress> expressList = expressService.selectByT(tExpress);
@@ -99,7 +100,7 @@ public class BaseDataController<T> {
 			}
 		}
 		
-		datas.put("asset_types", "") ;
+		datas.put("asset_types", defualtArray) ;
 		if (tAssets > 0L) {
 			CompanySettingSearchVo s = new CompanySettingSearchVo();
 			s.setSettingType("asset_type");
@@ -110,7 +111,7 @@ public class BaseDataController<T> {
 			}
 		}
 		
-		datas.put("opads", "");
+		datas.put("opads", defualtArray);
 		if (tOpads > 0L) {
 			AdSearchVo searchVo = new AdSearchVo();
 			searchVo.setUpdateTime(tOpads);
