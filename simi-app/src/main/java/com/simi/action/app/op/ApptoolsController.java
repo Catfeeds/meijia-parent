@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.meijia.utils.ImgServerUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.op.AppTools;
+import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.ApptoolsSearchVo;
+import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.po.AppToolsVo;
 
 @Controller
@@ -75,6 +78,28 @@ public class ApptoolsController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, list);
+		return result;
+	}	
+	
+	@RequestMapping(value = "app_tools_gen_icon", method = RequestMethod.GET)
+	public AppResultData<Object> genIcon() throws Exception {
+		
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+//		searchVo.setAppType(appType);
+//		searchVo.setIsOnline((short) 0);
+		List<AppTools> appTools = appToolsService.selectBySearchVo(searchVo);
+		
+		
+		String iconPath = "/Users/lnczx/Downloads/icons/";
+		for(AppTools item : appTools) {
+			String filename = "apptools_" + item.gettId() + "_" + item.getUpdateTime() + ".png";
+			System.out.println(item.getLogo());
+			ImgServerUtil.download(item.getLogo(), filename, iconPath);
+		}
+		
 		return result;
 	}	
 	

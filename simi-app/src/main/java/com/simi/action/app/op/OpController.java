@@ -165,7 +165,7 @@ public class OpController extends BaseController {
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 			
 			AdSearchVo searchVo = new AdSearchVo();
-			searchVo.setAdType("99");
+//			searchVo.setAdType("99");
 			List<OpAd> list = opAdService.selectBySearchVo(searchVo);
 			
 			
