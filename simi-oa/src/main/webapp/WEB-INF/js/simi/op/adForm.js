@@ -21,6 +21,12 @@ var formVal = $('#dict-form').validate({
 		gotoType: {
 			required: true
 		},
+		
+		action: {
+			required: true
+		},
+		
+		
 
 		adType: {
 			required: true
@@ -46,7 +52,10 @@ var formVal = $('#dict-form').validate({
 		gotoType: {
 			required: "请选择跳转类型。"
 		},
-
+		
+		action: {
+			required: "请输入操作标识."
+		},
 
 	},
 

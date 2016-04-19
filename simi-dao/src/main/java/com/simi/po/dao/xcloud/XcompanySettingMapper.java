@@ -19,4 +19,6 @@ public interface XcompanySettingMapper {
     int updateByPrimaryKey(XcompanySetting record);
 
 	List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo);
+
+	List<XcompanySetting> selectByListPage(CompanySettingSearchVo searchVo);
 }

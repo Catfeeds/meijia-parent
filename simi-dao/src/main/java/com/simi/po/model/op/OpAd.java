@@ -14,6 +14,8 @@ public class OpAd {
     private String imgUrl;
     
     private String gotoType;
+    
+    private String action;
 
     private String gotoUrl;
 
@@ -109,5 +111,13 @@ public class OpAd {
 
 	public void setGotoType(String gotoType) {
 		this.gotoType = gotoType;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 }

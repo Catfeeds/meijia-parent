@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
+import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.xcloud.XcompanySetting;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
 
@@ -66,6 +70,17 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	@Override
 	public List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo) {
 		return xcompanySettingMapper.selectBySearchVo(searchVo);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public PageInfo selectByListPage(CompanySettingSearchVo searchVo, int pageNo, int pageSize) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+		List<XcompanySetting> list = xcompanySettingMapper.selectByListPage(searchVo);
+		PageInfo result = new PageInfo(list);
+		
+		return result;
 	}
 
 	@Override

@@ -9,6 +9,7 @@
 		<result column="service_type_ids" property="serviceTypeIds" jdbcType="VARCHAR" />
 		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
 		<result column="goto_type" property="gotoType" jdbcType="VARCHAR" />
+		<result column="action" property="action" jdbcType="VARCHAR" />
 		<result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
@@ -16,17 +17,17 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, no, title,ad_type,service_type_ids,img_url, goto_type, goto_url,add_time, update_time,enable
+		id, no, title,ad_type,service_type_ids,img_url, goto_type, action, goto_url,add_time, update_time,enable
 	</sql>
 
 	<insert id="insert" parameterType="com.simi.po.model.op.OpAd">
 		insert into op_ad (id, no, title,
-		ad_type, service_type_ids, img_url, goto_type,
+		ad_type, service_type_ids, img_url, goto_type, action,
 		goto_url, add_time, update_time,
 		enable)
 		values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
 		#{adType,jdbcType=VARCHAR}, #{serviceTypeIds,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
-		#{gotoType,jdbcType=VARCHAR},
+		#{gotoType,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR},
 		#{gotoUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC},
 		#{enable,jdbcType=NUMERIC})
 	</insert>
@@ -99,6 +100,9 @@
 			<if test="gotoType != null">
 				goto_type = #{gotoType,jdbcType=VARCHAR},
 			</if>
+			<if test="action != null">
+				action = #{action,jdbcType=VARCHAR},
+			</if>
 			<if test="gotoUrl != null">
 				goto_url = #{gotoUrl,jdbcType=VARCHAR},
 			</if>
@@ -142,6 +146,9 @@
 			<if test="gotoType != null">
 				goto_type,
 			</if>
+			<if test="action != null">
+				action,
+			</if>
 			<if test="gotoUrl != null">
 				goto_url,
 			</if>
@@ -176,6 +183,9 @@
 			</if>
 			<if test="gotoType != null">
 				#{gotoType,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				#{action,jdbcType=VARCHAR},
 			</if>
 			<if test="gotoUrl != null">
 				#{gotoUrl,jdbcType=VARCHAR},

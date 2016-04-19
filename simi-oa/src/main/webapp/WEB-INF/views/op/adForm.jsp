@@ -109,6 +109,14 @@
 						</div>
 						
 						<div class="form-group required">
+							<label class="col-md-2 control-label">操作标识</label>
+							<div class="col-md-5">
+								<form:input path="action" class="form-control"  placeholder="操作标识" maxLength="255" />
+								<form:errors path="action" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						
+						<div class="form-group required">
 							<label class="col-md-2 control-label">跳转地址</label>
 							<div class="col-md-5">
 								<form:input path="gotoUrl" class="form-control" placeholder="跳转地址" maxLength="255" />

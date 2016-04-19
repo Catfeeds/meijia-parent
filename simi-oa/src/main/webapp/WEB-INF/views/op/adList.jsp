@@ -58,9 +58,11 @@
 						<th>标题</th>
 						<th>图片地址</th>
 						<th>频道</th>
+						<th>跳转标识</th>
+						<th>操作标识</th>
 						<th>跳转地址</th>
 
-						<th>是否可用</th>
+
 						<th>添加时间</th>
 
 						<th>操作</th>
@@ -73,16 +75,11 @@
 							<td>${ item.title}</td>
 							<td><img src="${ item.imgUrl }" /></td>
 							<td>${ item.channelNames}</td>
+							<td>${ item.gotoType}</td>
+							<td>${ item.action}</td>
 							<td><a href="${ item.gotoUrl }" target="_blank">点击</a></td>
 
-							<td><c:choose>
-									<c:when test="${item.enable  == 0}">
-														不可用
-												</c:when>
-									<c:when test="${item.enable  == 1}">
-														可用
-												</c:when>
-								</c:choose></td>
+							
 
 							<td><timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}" /></td>
 							<td>

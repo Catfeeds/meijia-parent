@@ -57,7 +57,7 @@ public class OpAdController extends BaseController {
 
 		//获取频道信息
 		OpChannel cardChannel = opChannelService.initOpChannel();
-		cardChannel.setName("日程广告位卡片");
+		cardChannel.setName("首页广告位");
 		List<OpChannel> opChannels = opChannelService.selectByAll();
 		opChannels.add(0, cardChannel);
 		model.addAttribute("opChannels", opChannels);
@@ -105,7 +105,7 @@ public class OpAdController extends BaseController {
 		
 		//获取频道信息
 		OpChannel cardChannel = opChannelService.initOpChannel();
-		cardChannel.setName("日程广告位卡片");
+		cardChannel.setName("首页广告位");
 		List<OpChannel> opChannels = opChannelService.selectByAll();
 		opChannels.add(0, cardChannel);
 		model.addAttribute("opChannels", opChannels);
