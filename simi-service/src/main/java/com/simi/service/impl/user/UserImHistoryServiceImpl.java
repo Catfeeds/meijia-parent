@@ -107,7 +107,7 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 		try {
 		
 	        ArrayNode data =(ArrayNode)messages.get("entities");
-	
+	        if (data == null) return false;
 	        for (int i=0; i < data.size(); i++) {
 	          String uuid = getDataItemValue(data.get(i), "uuid");
 	          
