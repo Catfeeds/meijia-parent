@@ -29,7 +29,7 @@ public interface CardService {
 
 	CardViewVo changeToCardViewVo(Cards card);
 
-	PageInfo selectByListPage(CardSearchVo vo, int pageNo, int pageSize);
+	PageInfo selectByUserListPage(CardSearchVo vo, int pageNo, int pageSize);
 
 	List<HashMap> totalByMonth(CardSearchVo vo);
 
@@ -51,5 +51,9 @@ public interface CardService {
 
 	List<CardListVo> changeToCardListVo(List<Cards> cards);
 
+	List<Cards> selectByUserSearchVo(CardSearchVo vo);
+
 	List<Cards> selectBySearchVo(CardSearchVo vo);
+
+	PageInfo selectByListPage(CardSearchVo searchVo, int pageNo, int pageSize);
 }

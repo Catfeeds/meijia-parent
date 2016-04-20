@@ -347,6 +347,19 @@ public class CardsServiceImpl implements CardService {
 	
 	@Override
 	public List<Cards> selectBySearchVo(CardSearchVo vo) {
+		return cardsMapper.selectBySearchVo(vo);
+	}
+	
+	@Override
+	public PageInfo selectByListPage(CardSearchVo searchVo, int pageNo, int pageSize) {
+		PageHelper.startPage(pageNo, pageSize);
+		List<Cards> list = cardsMapper.selectByListPage(searchVo);
+		PageInfo result = new PageInfo(list);
+		return result;
+	}
+	
+	@Override
+	public List<Cards> selectByUserSearchVo(CardSearchVo vo) {
 		
 		List<Cards> list = new ArrayList<Cards>();
 		
@@ -359,19 +372,19 @@ public class CardsServiceImpl implements CardService {
 		
 		//某个用户发布的卡片
 		if (cardFrom.equals((short)1)) {
-			list = cardsMapper.selectMineBySearchVo(vo);
+			list = cardsMapper.selectByMineSearchVo(vo);
 		}
 		
 		//某个用户参与的卡片
 		if (cardFrom.equals((short)2)) {
-			list = cardsMapper.selectAttendBySearchVo(vo);
+			list = cardsMapper.selectByAttendSearchVo(vo);
 		}
 		
 		return list;
 	}	
 	
 	@Override
-	public PageInfo selectByListPage(CardSearchVo vo, int pageNo, int pageSize) {
+	public PageInfo selectByUserListPage(CardSearchVo vo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		
 		List<Cards> list = new ArrayList<Cards>();
@@ -385,12 +398,12 @@ public class CardsServiceImpl implements CardService {
 		
 		//某个用户发布的卡片
 		if (cardFrom.equals((short)1)) {
-			list = cardsMapper.selectMineByListPage(vo);
+			list = cardsMapper.selectByMineListPage(vo);
 		}
 		
 		//某个用户参与的卡片
 		if (cardFrom.equals((short)2)) {
-			list = cardsMapper.selectAttendByListPage(vo);
+			list = cardsMapper.selectByAttendListPage(vo);
 		}
 		
 		PageInfo result = new PageInfo(list);

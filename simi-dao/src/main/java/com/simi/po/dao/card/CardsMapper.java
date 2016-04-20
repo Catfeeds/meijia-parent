@@ -17,18 +17,22 @@ public interface CardsMapper {
     int updateByPrimaryKeySelective(Cards record);
 
     int updateByPrimaryKey(Cards record);
+    
+    List<Cards> selectByListPage(CardSearchVo searchVo);
 
-	List<Cards> selectByListPage(CardSearchVo vo);
+	List<Cards> selectByUserListPage(CardSearchVo vo);
 	
-	List<Cards> selectMineByListPage(CardSearchVo vo);
+	List<Cards> selectByMineListPage(CardSearchVo vo);
 	
-	List<Cards> selectAttendByListPage(CardSearchVo vo);
+	List<Cards> selectByAttendListPage(CardSearchVo vo);
 	
 	List<Cards> selectBySearchVo(CardSearchVo vo);
 	
-	List<Cards> selectMineBySearchVo(CardSearchVo vo);
+	List<Cards> selectByUserSearchVo(CardSearchVo vo);
 	
-	List<Cards> selectAttendBySearchVo(CardSearchVo vo);	
+	List<Cards> selectByMineSearchVo(CardSearchVo vo);
+	
+	List<Cards> selectByAttendSearchVo(CardSearchVo vo);	
 
 	List<HashMap> totalByMonth(CardSearchVo vo);
 
@@ -36,11 +40,11 @@ public interface CardsMapper {
 
 	List<Cards> selectByRemindAll(CardSearchVo vo);	
 	
-	List<Cards> selectByOverTime(Object v);
-
 	int updateFinishByOvertime();
 
 	List<Cards> selectListByAddtimeTwo();
 
 	List<Cards> selectListByAddtimeThirty();
+
+	
 }

@@ -14,7 +14,7 @@
 		<result column="set_remind" property="setRemind" jdbcType="SMALLINT" />
 		<result column="set_now_send" property="setNowSend" jdbcType="NUMERIC" />
 		<result column="set_sec_do" property="setSecDo" jdbcType="NUMERIC" />
-		<result column="set_sec_remarks" property="setSecRemarks" jdbcType="VARCHAR" />		
+		<result column="set_sec_remarks" property="setSecRemarks" jdbcType="VARCHAR" />
 		<result column="sec_remarks" property="secRemarks" jdbcType="VARCHAR" />
 		<result column="set_friend_view" property="setFriendView" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="NUMERIC" />
@@ -23,8 +23,9 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		card_id, create_user_id, user_id, card_type, title, service_time, service_addr,
-		service_content, card_extra, set_remind, set_now_send, set_sec_do, set_sec_remarks, sec_remarks,
-		set_friend_view, status,  add_time, update_time
+		service_content, card_extra, set_remind, set_now_send, set_sec_do,
+		set_sec_remarks, sec_remarks,
+		set_friend_view, status, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -37,268 +38,323 @@
 		<include refid="Base_Column_List" />
 		from cards
 		where set_sec_do = 1 and status = 1 and add_time + 120 &lt; unix_timestamp(now())
-		
+
 	</select>
 	<select id="selectListByAddtimeThirty" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from cards
 		where set_sec_do = 1 and status = 1 and add_time + 1800 &lt; unix_timestamp(now())
-		
+
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where 1 = 1
+		<if test="cardType != null">
+			and card_type = #{cardType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+		order by card_id desc
 	</select>
 	
-	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where 1 = 1
+		<if test="cardType != null">
+			and card_type = #{cardType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+		order by card_id desc
+	</select>
+
+
 	<sql id="selectAll">
-		select <include refid="Base_Column_List" />
+		select
+		<include refid="Base_Column_List" />
 		from
 		(
-			select <include refid="Base_Column_List" /> from cards 
-			where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC})
-			<if test="cardType != null">
-				and card_type = #{cardType,jdbcType=NUMERIC}
-			</if>
-			
-			<if test="startTime != null">
-				<![CDATA[	and service_time >= ${startTime} ]]>   
-			</if>	
-				
-			<if test="endTime != null">
-				<![CDATA[	and service_time <= ${endTime} ]]>   
-			</if>
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC})
+		<if test="cardType != null">
+			and card_type = #{cardType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+		union
+
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+
+		<if test="cardType != null">
+			and card_type = #{cardType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+
+		<if test="userType == 1">
 			union
-			
-			select <include refid="Base_Column_List" /> from cards 
-			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
-			
+			select
+			<include refid="Base_Column_List" />
+			from cards
+			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			and set_sec_do = 1
+
 			<if test="cardType != null">
 				and card_type = #{cardType,jdbcType=NUMERIC}
 			</if>
-			
+
 			<if test="startTime != null">
-				<![CDATA[	and service_time >= ${startTime} ]]>   
-			</if>	
-				
-			<if test="endTime != null">
-				<![CDATA[	and service_time <= ${endTime} ]]>   
+					<![CDATA[	and service_time >= ${startTime} ]]>
 			</if>
-						
-			<if test="userType == 1">
-				union
-				select <include refid="Base_Column_List" /> from cards 
-				where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
-				and set_sec_do = 1
-				
-				<if test="cardType != null">
-					and card_type = #{cardType,jdbcType=NUMERIC}
-				</if>
-				
-				<if test="startTime != null">
-					<![CDATA[	and service_time >= ${startTime} ]]>   
-				</if>	
-					
-				<if test="endTime != null">
-					<![CDATA[	and service_time <= ${endTime} ]]>   
-				</if>			
-			
-			</if>	
+
+			<if test="endTime != null">
+					<![CDATA[	and service_time <= ${endTime} ]]>
+			</if>
+
+		</if>
 		) as T
 		order by add_time desc
 	</sql>
-	
-	<sql id="selectMine" >
+
+	<sql id="selectMine">
 		select
 		<include refid="Base_Column_List" />
 		from cards
 		where 1=1
-		
+
 		<if test="userId != null">
 			and create_user_id = #{userId,jdbcType=NUMERIC}
-		</if>	
-		
-		<if test="cardType != null">
-				and card_type = #{cardType,jdbcType=NUMERIC}
 		</if>
-				
+
+		<if test="cardType != null">
+			and card_type = #{cardType,jdbcType=NUMERIC}
+		</if>
+
 		<if test="startTime != null">
-		<![CDATA[	and service_time >= ${startTime} ]]>   
-		</if>	
-		
+		<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
 		<if test="endTime != null">
-		<![CDATA[	and service_time <= ${endTime} ]]>   
-		</if>			
-		
+		<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+
 		order by add_time desc
 	</sql>
-	
+
 	<sql id="selectAttend">
-		select <include refid="Base_Column_List" />
+		select
+		<include refid="Base_Column_List" />
 		from
 		(
 
-			select <include refid="Base_Column_List" /> from cards 
-			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
-			
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+
+		<if test="cardType != null">
+			and card_type = #{cardType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+		<if test="userType == 1">
+			union
+			select
+			<include refid="Base_Column_List" />
+			from cards
+			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			and set_sec_do = 1
 			<if test="cardType != null">
 				and card_type = #{cardType,jdbcType=NUMERIC}
 			</if>
-			
+
 			<if test="startTime != null">
-				<![CDATA[	and service_time >= ${startTime} ]]>   
-			</if>	
-				
-			<if test="endTime != null">
-				<![CDATA[	and service_time <= ${endTime} ]]>   
+					<![CDATA[	and service_time >= ${startTime} ]]>
 			</if>
-			<if test="userType == 1">
-			union
-			select <include refid="Base_Column_List" /> from cards 
-			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
-			and set_sec_do = 1
-				<if test="cardType != null">
-					and card_type = #{cardType,jdbcType=NUMERIC}
-				</if>
-			
-				<if test="startTime != null">
-					<![CDATA[	and service_time >= ${startTime} ]]>   
-				</if>	
-					
-				<if test="endTime != null">
-					<![CDATA[	and service_time <= ${endTime} ]]>   
-				</if>
-			</if>	
+
+			<if test="endTime != null">
+					<![CDATA[	and service_time <= ${endTime} ]]>
+			</if>
+		</if>
 		) as T
 		order by add_time desc
-	</sql>	
-	
-	
+	</sql>
+
+
 	<!-- 卡片列表方法 某个用户所有的卡片 -分页 -->
-	<select id="selectByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	<select id="selectByUserListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
 		<include refid="selectAll" />
-	</select>	
-	
+	</select>
+
 	<!-- 卡片列表方法 某个用户所有的卡片 -->
-	<select id="selectBySearchVo" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	<select id="selectByUserSearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
 		<include refid="selectAll" />
-	</select>	
-	
-	<!-- 卡片列表方法 某个用户发布的卡片 分页-->
-	<select id="selectMineByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	</select>
+
+	<!-- 卡片列表方法 某个用户发布的卡片 分页 -->
+	<select id="selectByMineListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
 		<include refid="selectMine" />
 	</select>
-	
-	<!-- 卡片列表方法 某个用户发布的卡片-->
-	<select id="selectMineBySearchVo" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+
+	<!-- 卡片列表方法 某个用户发布的卡片 -->
+	<select id="selectByMineSearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
 		<include refid="selectMine" />
-	</select>	
-	
-	<!-- 卡片列表方法 某个用户参与的卡片 分页-->
-	<select id="selectAttendByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	</select>
+
+	<!-- 卡片列表方法 某个用户参与的卡片 分页 -->
+	<select id="selectByAttendListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
 		<include refid="selectAttend" />
-	</select>	
-	
+	</select>
+
 	<!-- 卡片列表方法 某个用户参与的卡片 -->
-	<select id="selectAttendBySearchVo" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	<select id="selectByAttendSearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
 		<include refid="selectAttend" />
-	</select>		
-	
+	</select>
+
 	<!-- 统计某个时间点有卡片的日期和个数 -->
-	<select id="totalByMonth" resultType="java.util.HashMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
+	<select id="totalByMonth" resultType="java.util.HashMap" parameterType="com.simi.vo.card.CardSearchVo">
 		select FROM_UNIXTIME(service_time ,'%Y-%m-%d') as service_date , count(distinct card_id) as total
 		from
 		(
-			select <include refid="Base_Column_List" /> from cards 
-			where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC} )
-			<if test="startTime != null">
-				<![CDATA[	and service_time >= ${startTime} ]]>   
-			</if>
-				
-			<if test="endTime != null">
-				<![CDATA[	and service_time <= ${endTime} ]]>   
-			</if>
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC} )
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+		union
+
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+		<if test="startTime != null">
+				<![CDATA[	and service_time >= ${startTime} ]]>
+		</if>
+
+		<if test="endTime != null">
+				<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+
+		<if test="userType == 1">
 			union
-			
-			select <include refid="Base_Column_List" /> from cards 
-			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+			select
+			<include refid="Base_Column_List" />
+			from cards
+			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			and set_sec_do = 1
 			<if test="startTime != null">
-				<![CDATA[	and service_time >= ${startTime} ]]>   
-			</if>	
-				
-			<if test="endTime != null">
-				<![CDATA[	and service_time <= ${endTime} ]]>   
+					<![CDATA[	and service_time >= ${startTime} ]]>
 			</if>
-						
-			<if test="userType == 1">
-				union
-				select <include refid="Base_Column_List" /> from cards 
-				where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
-				and set_sec_do = 1
-				<if test="startTime != null">
-					<![CDATA[	and service_time >= ${startTime} ]]>   
-				</if>	
-					
-				<if test="endTime != null">
-					<![CDATA[	and service_time <= ${endTime} ]]>   
-				</if>			
-			
-			</if>	
+
+			<if test="endTime != null">
+					<![CDATA[	and service_time <= ${endTime} ]]>
+			</if>
+
+		</if>
 		) as T
 		GROUP BY service_date
 		order by service_date asc
-	</select>	
-	
-	
+	</select>
+
+
 	<!-- 获得即将闹钟提醒的卡片列表 -->
-	<select id="selectByReminds" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
-		select <include refid="Base_Column_List" />
+	<select id="selectByReminds" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
 		from
 		(
-			select <include refid="Base_Column_List" /> from cards 
-			where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC} )
-				<![CDATA[	and service_time > unix_timestamp(now()) ]]>   
-				and set_remind > 0 
-			union	
-			select <include refid="Base_Column_List" /> from cards 
-			where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
-				<![CDATA[	and service_time > unix_timestamp(now()) ]]>   
-				and set_remind > 0 	
-			<if test="userType == 1">
-				union
-				select <include refid="Base_Column_List" /> from cards 
-				where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
-				and set_sec_do = 1
-				<![CDATA[	and service_time > unix_timestamp(now()) ]]>   			
-				and set_remind > 0 
-			</if>	
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC} )
+				<![CDATA[	and service_time > unix_timestamp(now()) ]]>
+		and set_remind > 0
+		union
+		select
+		<include refid="Base_Column_List" />
+		from cards
+		where card_id in (select card_id from card_attend where user_id = #{userId,jdbcType=NUMERIC})
+				<![CDATA[	and service_time > unix_timestamp(now()) ]]>
+		and set_remind > 0
+		<if test="userType == 1">
+			union
+			select
+			<include refid="Base_Column_List" />
+			from cards
+			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			and set_sec_do = 1
+				<![CDATA[	and service_time > unix_timestamp(now()) ]]>
+			and set_remind > 0
+		</if>
 		) as T
 		order by service_time asc
 	</select>
-	
-<!-- 获得即将闹钟提醒的卡片列表 -->
-	<select id="selectByRemindAll" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.card.CardSearchVo">
-		select <include refid="Base_Column_List" />
+
+	<!-- 获得即将闹钟提醒的卡片列表 -->
+	<select id="selectByRemindAll" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
 		from cards
 		WHERE 1 = 1
 		<if test="startTime != null">
-			<![CDATA[	and service_time >= ${startTime} ]]>   
-		</if>	
-			
-		<if test="endTime != null">
-			<![CDATA[	and service_time <= ${endTime} ]]>   
+			<![CDATA[	and service_time >= ${startTime} ]]>
 		</if>
-		
+
+		<if test="endTime != null">
+			<![CDATA[	and service_time <= ${endTime} ]]>
+		</if>
+
 		and status in ( 1, 2)
 		order by service_time asc
-	</select>	
-		
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cards
 		where card_id = #{cardId,jdbcType=NUMERIC}
@@ -306,21 +362,26 @@
 	<insert id="insert" parameterType="com.simi.po.model.card.Cards">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="cardId">
 			SELECT LAST_INSERT_ID() AS card_id
-		</selectKey>	
-	
+		</selectKey>
+
 		insert into cards (card_id, create_user_id, user_id,
 		card_type, title, service_time,
 		service_addr, service_content, card_extra, set_remind,
-		set_now_send, set_sec_do, set_sec_remarks,
+		set_now_send,
+		set_sec_do, set_sec_remarks,
 		set_friend_view, status, sec_remarks, add_time, update_time
 		)
-		values (#{cardId,jdbcType=NUMERIC}, #{createUserId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		values (#{cardId,jdbcType=NUMERIC}, #{createUserId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC},
 		#{cardType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, #{serviceTime,jdbcType=NUMERIC},
-		#{serviceAddr,jdbcType=VARCHAR}, #{serviceContent,jdbcType=VARCHAR}, #{cardExtra,jdbcType=VARCHAR},
+		#{serviceAddr,jdbcType=VARCHAR},
+		#{serviceContent,jdbcType=VARCHAR}, #{cardExtra,jdbcType=VARCHAR},
 		#{setRemind,jdbcType=SMALLINT},
-		#{setNowSend,jdbcType=NUMERIC}, #{setSecDo,jdbcType=NUMERIC}, #{setSecRemarks,jdbcType=VARCHAR},
+		#{setNowSend,jdbcType=NUMERIC}, #{setSecDo,jdbcType=NUMERIC},
+		#{setSecRemarks,jdbcType=VARCHAR},
 		#{setFriendView,jdbcType=NUMERIC},
-		#{status,jdbcType=NUMERIC}, #{secRemarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		#{status,jdbcType=NUMERIC}, #{secRemarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.card.Cards">
@@ -435,7 +496,7 @@
 			<if test="status != null">
 				#{status,jdbcType=NUMERIC},
 			</if>
-			
+
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
@@ -505,24 +566,28 @@
 		card_type = #{cardType,jdbcType=NUMERIC},
 		title = #{title,jdbcType=VARCHAR},
 		service_time = #{serviceTime,jdbcType=NUMERIC},
-		service_addr = #{serviceAddr,jdbcType=VARCHAR},
+		service_addr =
+		#{serviceAddr,jdbcType=VARCHAR},
 		service_content = #{serviceContent,jdbcType=VARCHAR},
 		card_extra = #{cardExtra,jdbcType=VARCHAR},
-		set_remind = #{setRemind,jdbcType=SMALLINT},
+		set_remind =
+		#{setRemind,jdbcType=SMALLINT},
 		set_now_send = #{setNowSend,jdbcType=NUMERIC},
 		set_sec_do = #{setSecDo,jdbcType=NUMERIC},
-		set_sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
+		set_sec_remarks =
+		#{setSecRemarks,jdbcType=VARCHAR},
 		sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
 		set_friend_view = #{setFriendView,jdbcType=NUMERIC},
-		status = #{status,jdbcType=NUMERIC},
+		status =
+		#{status,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
 		where card_id = #{cardId,jdbcType=NUMERIC}
 	</update>
-	
+
 	<update id="updateFinishByOvertime" parameterType="com.simi.po.model.card.Cards">
 		update cards
 		set status = 3
-		where <![CDATA[ service_time < unix_timestamp(now()) ]]>   		
+		where <![CDATA[ service_time < unix_timestamp(now()) ]]>
 	</update>
 </mapper>
