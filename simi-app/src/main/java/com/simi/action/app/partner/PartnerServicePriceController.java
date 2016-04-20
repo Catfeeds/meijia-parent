@@ -403,9 +403,9 @@ public class PartnerServicePriceController extends BaseController {
 		
 		PartnerUsers partnerUser = list.get(0);
 		
-		Long parnterUserId = partnerUser.getUserId();
+		Long partnerUserId = partnerUser.getUserId();
 		
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
+		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(partnerUserId);
 		
 		List<Long> servicePriceIds = new ArrayList<Long>();
 		for (PartnerServicePriceDetail item : servicePriceDetails) {
@@ -439,7 +439,7 @@ public class PartnerServicePriceController extends BaseController {
 			BeanUtilsExp.copyPropertiesIgnoreNull(item, servicePriceVo);
 			servicePriceVo.setName(serviceType.getName());
 			servicePriceVo.setServiceTypeId(serviceType.getId());
-			
+			servicePriceVo.setPartnerUserId(partnerUserId);
 			//图片处理成190x140大小
 			String imgUrl = servicePriceVo.getImgUrl();
 			imgUrl = imgUrl + "?w=190&h=140";

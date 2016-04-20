@@ -14,6 +14,8 @@ public class PartnerServicePriceListVo {
 	
 	private Long servicePriceId;
 	
+	private Long partnerUserId;
+	
 	private String serviceTitle;
 	
     private BigDecimal price;
@@ -104,5 +106,13 @@ public class PartnerServicePriceListVo {
 
 	public void setServiceTypeId(Long serviceTypeId) {
 		this.serviceTypeId = serviceTypeId;
+	}
+
+	public Long getPartnerUserId() {
+		return partnerUserId;
+	}
+
+	public void setPartnerUserId(Long partnerUserId) {
+		this.partnerUserId = partnerUserId;
 	} 
 }
