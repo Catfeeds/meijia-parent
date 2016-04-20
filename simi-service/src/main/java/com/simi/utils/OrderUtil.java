@@ -210,6 +210,12 @@ public class OrderUtil {
 		case 3:
 			cleaTypeName = "其他";
 			break;
+		case 4:
+			cleaTypeName = "绿植购买";
+			break;
+		case 5:
+			cleaTypeName = "绿植租摆";
+			break;
 		default:
 			cleaTypeName = "";
 		}
