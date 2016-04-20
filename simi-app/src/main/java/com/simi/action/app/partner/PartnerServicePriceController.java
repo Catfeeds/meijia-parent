@@ -37,6 +37,7 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
+import com.simi.vo.partners.PartnerServicePriceListVo;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 
@@ -420,11 +421,10 @@ public class PartnerServicePriceController extends BaseController {
 		// List<PartnerServiceType> list =
 		// partnerServiceTypeService.selectByPartnerIdIn(partnerId);
 		// 服务价格
-		List<Map> resultList = new ArrayList<Map>();
+		List<PartnerServicePriceListVo> servicePriceVos = new ArrayList<PartnerServicePriceListVo>();
+		
 		for (PartnerServicePriceDetail item : servicePriceDetails) {
-			
-			String name = "";
-			
+						
 			PartnerServiceType serviceType = null;
 			for (PartnerServiceType item1 : serviceTypes) {
 				if (item1.getId().equals(item.getServicePriceId())) {
@@ -434,19 +434,31 @@ public class PartnerServicePriceController extends BaseController {
 			}
 			
 			
-			Map<String, String> resultMap = new HashMap<String, String>();
-			resultMap.put("name", serviceType.getName());
-			resultMap.put("servce_price_id", serviceType.getId().toString());
-			resultMap.put("price", MathBigDecimalUtil.round2(item.getPrice()));
-			resultMap.put("dis_price", MathBigDecimalUtil.round2(item.getDisPrice()));
-			resultMap.put("img_url", item.getImgUrl());
+			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
 			
-			resultList.add(resultMap);
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, servicePriceVo);
+			servicePriceVo.setName(serviceType.getName());
+			
+			//图片处理成190x140大小
+			String imgUrl = servicePriceVo.getImgUrl();
+			imgUrl = imgUrl + "?w=190&h=140";
+			servicePriceVo.setImgUrl(imgUrl);
+			
+			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_type_id=" + item.getId();
+			
+			if (item.getContentDesc().equals("") &&
+				item.getContentFlow().equals("") &&
+				item.getContentDesc().equals("")) {
+				detailUrl = "";
+			}
+			
+			servicePriceVo.setDetailUrl(detailUrl);
+			servicePriceVos.add(servicePriceVo);
 			
 		}
 		
 
-		result.setData(resultList);
+		result.setData(servicePriceVos);
 
 		return result;
 
