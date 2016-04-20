@@ -10,6 +10,8 @@ public class PartnerServicePriceListVo {
 	
 	private String name;
 	
+	private Long serviceTypeId;
+	
 	private Long servicePriceId;
 	
 	private String serviceTitle;
@@ -94,5 +96,13 @@ public class PartnerServicePriceListVo {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
 	} 
 }

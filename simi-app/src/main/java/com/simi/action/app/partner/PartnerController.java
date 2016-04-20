@@ -164,6 +164,7 @@ public class PartnerController extends BaseController {
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetail, servicePriceVo);
 			servicePriceVo.setName(item.getName());
+			servicePriceVo.setServicePriceId(item.getId());
 			
 			//图片处理成190x140大小
 			String imgUrl = servicePriceVo.getImgUrl();
