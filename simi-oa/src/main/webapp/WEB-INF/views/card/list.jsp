@@ -34,12 +34,11 @@
 					卡片类型：
 					<form:select path="cardType">
 						<option value="">请选择卡片类型</option>
-						<form:option value="0">已关闭</form:option>
-						<form:option value="1">待支付</form:option>
-						<form:option value="2">已支付</form:option>
-						<form:option value="3">处理中</form:option>
-						<form:option value="7">待评价</form:option>
-						<form:option value="9">已完成</form:option>
+						<form:option value="1">会议安排</form:option>
+						<form:option value="2">通知公告</form:option>
+						<form:option value="3">事务提醒</form:option>
+						<form:option value="4">面试邀约</form:option>
+						<form:option value="5">差旅规划</form:option>
 					</form:select>
 
 					<input type="submit" value="搜索">
@@ -55,14 +54,12 @@
 		<table class="table table-striped table-advance table-hover">
 			<thead>
 				<tr>
+					<th>手机号</th>
 					<th>用户</th>
 					<th>卡片时间</th>
 					<th>卡片类型</th>
-					<th>卡片标题</th>
 					<th>卡片内容</th>
 					<th>卡片状态</th>
-					<th>赞个数</th>
-					<th>评论数</th>
 					<th>创建时间</th>
 
 				</tr>
@@ -70,19 +67,17 @@
 			<tbody>
 				<c:forEach items="${contentModel.list}" var="item">
 					<tr>
-						<td>${ item.userName }</td>
+						<td>${ item.mobile }</td>
+						<td>${ item.name }</td>
 						<td><timestampTag:timestamp patten="MM-dd HH:mm" t="${item.serviceTime * 1000}" /></td>
 						<td>${ item.cardTypeName }</td>
-						<td>${ item.title }</td>
 						<td>${ item.serviceContent }</td>
 						<td><c:if test="${ item.status < 1 }">取消</c:if> 
 							<c:if test="${ item.status == 1 }">处理中</c:if> 
 							<c:if test="${ item.status == 2 }">秘书处理中</c:if> 
 							<c:if test="${ item.status == 3 }">已完成</c:if> 
 						</td>
-						<td>${ item.totalZan }</td>
-						<td>${ item.totalComment }</td>
-						<td><timestampTag:timestamp patten="MM-dd HH:mm" t="${item.addTime * 1000}" /></td>			
+						<td>${ item.addTimeStr }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

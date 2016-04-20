@@ -22,6 +22,7 @@ import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
+import com.simi.vo.card.CardVo;
 import com.simi.vo.card.CardZanViewVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.card.CardAttend;
@@ -325,6 +326,45 @@ public class CardsServiceImpl implements CardService {
 		return result;
 	}	
 	
+	/**
+	 * 批量转换card 对象为 cardViewVo对象
+	 * @param List<card>
+	 * @return
+	 */
+	@Override
+	public CardVo changeToCardVo(Cards item) {
+						
+
+		CardVo vo = new CardVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+					
+		Users u = usersService.selectByPrimaryKey(item.getUserId());
+		vo.setMobile(u.getMobile());
+		vo.setName(u.getName());
+		
+		//卡片类型名称
+		String cardTypeName = CardUtil.getCardTypeName(vo.getCardType());
+		vo.setCardTypeName(cardTypeName);
+		
+		if (!StringUtil.isEmpty(item.getServiceContent())) {
+			if (item.getServiceContent().length() > 200) {
+				vo.setServiceContent(item.getServiceContent().substring(0, 200));
+			} else {
+				vo.setServiceContent(item.getServiceContent());
+			}
+		}
+	
+		//服务时间字符串
+		Date addTimeDate = TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, null);
+		String addTimeStr = DateUtil.fromToday(addTimeDate);
+		vo.setAddTimeStr(addTimeStr);			
+			
+		
+		
+		return vo;
+	}		
+	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return cardsMapper.deleteByPrimaryKey(id);
@@ -463,77 +503,6 @@ public class CardsServiceImpl implements CardService {
 		return cardsMapper.selectListByAddtimeThirty();
 	}
 		
-	@Override
-	public CardListVo getWeatherCard(String serviceDate, String lat, String lng) {
-		
-		Cards card = initCards();
-
-		CardListVo result = this.initCardListVo();
-
-		BeanUtilsExp.copyPropertiesIgnoreNull(card, result);
-		//如果没有地理位置信息，默认则为北京市
-		String cityName = "北京市";
-		if (StringUtil.isEmpty(lat) || StringUtil.isEmpty(lng)) {
-			cityName = "北京市";
-		} else {
-			cityName = BaiduMapUtil.getCityByPoi(lat, lng);
-		}
-		
-		if (StringUtil.isEmpty(cityName)) cityName = "北京市";
-		
-		Long cityId = 0L;
-		cityId = DictUtil.getCityId(cityName);
-		
-		if (cityId.equals(0L)) cityId = 2L;
-		
-		Date weatherDate = DateUtil.parse(serviceDate);
-		Weathers weatherInfo = weatherService.selectByCityIdAndDate(cityId, weatherDate);
-		
-		
-		if (weatherInfo == null) return result;
-		
-		List<WeatherDataVo> weatherDatas =GsonUtil.GsonToList(weatherInfo.getWeatherData(), WeatherDataVo.class);
-		
-		String nowDateStr = DateUtil.getToday();
-		
-		WeatherDataVo curItem = weatherDatas.get(0);
-		String realTemp = curItem.getDate();
-		
-		realTemp = realTemp.substring(realTemp.indexOf("(") + 1, realTemp.indexOf(")"));
-		realTemp = realTemp.substring(realTemp.indexOf("：") + 1);
-
-		WeatherIndexVo weatherIndex = null;
-		List<WeatherIndexVo> weatherIndexs =GsonUtil.GsonToList(weatherInfo.getWeatherIndex(), WeatherIndexVo.class);
-		for (WeatherIndexVo item : weatherIndexs) {
-			System.out.println(item.getTitle());
-			
-			if (item.getTitle().equals("穿衣")) {
-				weatherIndex = item;
-				break;
-			}
-			
-		}
-		
-		Short cardType = 99;
-		result.setCardTypeName(CardUtil.getCardTypeName(cardType));
-		result.setCardType(cardType);
-		
-		String lastTime = weatherInfo.getLastTime();
-		result.setAddTimeStr(lastTime);
-		
-		Map<String, Object> cardExtraMap = new HashMap<String, Object>();
-		cardExtraMap.put("cityName", cityName);
-		cardExtraMap.put("weatherDatas",weatherDatas);
-		cardExtraMap.put("weatherIndex", weatherIndex);
-		cardExtraMap.put("real_temp", realTemp);
-		
-		String cardExtra = GsonUtil.GsonString(cardExtraMap);
-		
-		result.setCardExtra(cardExtra);
-		
-//		result.setServiceContent(serviceContent);
-		
-		return result;
-	}
+	
 
 }

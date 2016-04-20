@@ -20,6 +20,7 @@ import com.simi.service.card.CardService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
+import com.simi.vo.card.CardVo;
 
 @Controller
 @RequestMapping(value = "/card")
@@ -53,7 +54,7 @@ public class CardController extends AdminController {
 		List<Cards> list = result.getList();
 		for (int i = 0; i < list.size(); i++) {
 			Cards item = list.get(i);
-			CardViewVo vo = cardService.changeToCardViewVo(item);
+			CardVo vo = cardService.changeToCardVo(item);
 			list.set(i, vo);
 		}
 		result = new PageInfo(list);

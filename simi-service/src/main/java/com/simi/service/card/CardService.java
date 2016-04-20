@@ -8,6 +8,7 @@ import com.simi.po.model.card.Cards;
 import com.simi.vo.card.CardListVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.CardViewVo;
+import com.simi.vo.card.CardVo;
 
 
 
@@ -43,8 +44,6 @@ public interface CardService {
 
 	List<Cards> selectByRemindAll(CardSearchVo vo);
 
-	CardListVo getWeatherCard(String serviceDate, String lat, String lng);
-
 	CardViewVo initCardView();
 
 	CardListVo initCardListVo();
@@ -56,4 +55,6 @@ public interface CardService {
 	List<Cards> selectBySearchVo(CardSearchVo vo);
 
 	PageInfo selectByListPage(CardSearchVo searchVo, int pageNo, int pageSize);
+
+	CardVo changeToCardVo(Cards item);
 }
