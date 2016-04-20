@@ -1,6 +1,7 @@
 package com.simi.service.impl.order;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -21,9 +22,10 @@ import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
-import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
+import com.simi.vo.user.UserRefSearchVo;
 import com.simi.po.dao.order.OrderCardsMapper;
 import com.simi.po.dao.order.OrderSeniorMapper;
 import com.simi.po.dao.user.UserCouponsMapper;
@@ -32,7 +34,7 @@ import com.simi.po.model.order.OrderSenior;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
-import com.simi.po.model.user.UserRefSec;
+import com.simi.po.model.user.UserRef;
 
 @Service
 public class OrderPayServiceImpl implements OrderPayService {
@@ -67,9 +69,6 @@ public class OrderPayServiceImpl implements OrderPayService {
 	OrderSeniorService orderSeniorService;
 
 	@Autowired
-	private UserRefSecService userRefSecService;
-
-	@Autowired
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;
 
 	@Autowired
@@ -86,6 +85,9 @@ public class OrderPayServiceImpl implements OrderPayService {
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private UserRefService userRefService;
 
 	/**
 	 * 订单支付成功,后续通知功能 1. 如果为
@@ -107,17 +109,24 @@ public class OrderPayServiceImpl implements OrderPayService {
 		//如果为秘书订单，则需要做指派用户与秘书的绑定信息.
 		if (serviceTypeId.equals(75L)) {
 			//分配秘书
-			UserRefSec userRefSec  = userRefSecService.selectByUserId(userId);
 			
-			if (userRefSec == null) {
-				userRefSec = userRefSecService.initUserRefSec();
-				userRefSec.setUserId(userId);
-				userRefSec.setSecId(partnerUserId);
-				userRefSecService.insert(userRefSec);
+			UserRefSearchVo searchVo = new UserRefSearchVo();
+			searchVo.setUserId(userId);
+			searchVo.setRefType("sec");
+			List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
+			
+			UserRef userRef = null;
+			if (!rs.isEmpty()) userRef = rs.get(0);
+			if (userRef == null) {
+				userRef = userRefService.initUserRef();
+				userRef.setUserId(userId);
+				userRef.setRefId(partnerUserId);
+				userRef.setRefType("sec");
+				userRefService.insert(userRef);
 			} else {
-				userRefSec.setUserId(userId);
-				userRefSec.setSecId(partnerUserId);
-				userRefSecService.updateByPrimaryKeySelective(userRefSec);
+				userRef.setUserId(userId);
+				userRef.setRefId(partnerUserId);
+				userRefService.updateByPrimaryKeySelective(userRef);
 			}			
 		}
 		
@@ -180,19 +189,25 @@ public class OrderPayServiceImpl implements OrderPayService {
 		Long userId = orderSenior.getUserId();
 		Long secId = orderSenior.getSecId();
 		// 分配秘书
-		UserRefSec userRefSec = userRefSecService.selectByUserId(userId);
-
-		if (userRefSec == null) {
-			userRefSec = userRefSecService.initUserRefSec();
-			userRefSec.setUserId(userId);
-			userRefSec.setSecId(secId);
-			userRefSecService.insert(userRefSec);
+		UserRefSearchVo searchVo = new UserRefSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setRefType("sec");
+		List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
+		
+		UserRef userRef = null;
+		if (!rs.isEmpty()) userRef = rs.get(0);
+		if (userRef == null) {
+			userRef = userRefService.initUserRef();
+			userRef.setUserId(userId);
+			userRef.setRefId(secId);
+			userRef.setRefType("sec");
+			userRefService.insert(userRef);
 		} else {
-			userRefSec.setUserId(userId);
-			userRefSec.setSecId(secId);
-			userRefSecService.updateByPrimaryKeySelective(userRefSec);
-		}
-
+			userRef.setUserId(userId);
+			userRef.setRefId(secId);
+			userRefService.updateByPrimaryKeySelective(userRef);
+		}			
+		
 		// 购买秘书成功后给同事给运营人员和秘书发送信息.
 		noticeSmsAsyncService.noticeOrderPartner(orderId);
 		

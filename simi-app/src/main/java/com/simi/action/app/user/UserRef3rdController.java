@@ -24,7 +24,6 @@ import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
@@ -53,9 +52,6 @@ public class UserRef3rdController extends BaseController {
 	@Autowired
 	private UserSmsTokenService userSmsTokenService;
 	
-	@Autowired
-	private UserRefSecService userRefSecService;
-
 	// 1、第三方登录接口
 	@RequestMapping(value = "login-3rd", method = RequestMethod.POST)
 	public AppResultData<Object> login3rd(

@@ -34,7 +34,7 @@ import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
-import com.simi.po.model.user.UserRefSec;
+import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.CardAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
@@ -49,13 +49,14 @@ import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.LinkManVo;
 import com.simi.vo.user.UserFriendSearchVo;
+import com.simi.vo.user.UserRefSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/card")
@@ -91,7 +92,7 @@ public class CardController extends BaseController {
 	private UserRef3rdService userRef3rdService;
 	
 	@Autowired
-	private UserRefSecService userRefSecService;
+	private UserRefService userRefService;
 	
 	@Autowired
 	private UserFriendService userFriendService;
@@ -326,9 +327,14 @@ public class CardController extends BaseController {
 		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
 		if (record.getSetSecDo().equals((short)1)) {
 			//找出对应的秘书信息
-			UserRefSec userRefSec = userRefSecService.selectByUserId(userId);
-			if (userRefSec != null) {
-				Users secUser = userService.selectByPrimaryKey(userRefSec.getSecId());
+			UserRefSearchVo searchVo = new UserRefSearchVo();
+			searchVo.setUserId(userId);
+			searchVo.setRefType("sec");
+			List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
+			UserRef userRef = null;
+			if (!rs.isEmpty()) userRef = rs.get(0);
+			if (userRef != null) {
+				Users secUser = userService.selectByPrimaryKey(userRef.getRefId());
 				String secMobile = secUser.getMobile();
 				if (RegexUtil.isMobile(secMobile)) {
 					String[] content = new String[] { userName, CardUtil.getCardTypeName(record.getCardType()),  ""};

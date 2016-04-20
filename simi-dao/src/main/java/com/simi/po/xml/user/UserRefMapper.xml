@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.user.UserRefMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.user.UserRef">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="ref_id" property="refId" jdbcType="NUMERIC" />
+		<result column="ref_type" property="refType" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<resultMap id="countByResultMap" type="java.util.HashMap">
+		<result column="id" property="id" jdbcType="NUMERIC" />
+		<result column="total" property="total" jdbcType="NUMERIC" />
+	</resultMap>
+	
+	
+	<sql id="Base_Column_List">
+		id, user_id, ref_id, ref_type, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_ref
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserRefSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_ref
+		where 1=1
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="refId != null">
+			and ref_id = #{refId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="refType != null">
+			and ref_type = #{refType,jdbcType=VARCHAR}
+		</if>
+
+		<if test="startTime != null">
+			<![CDATA[ and  (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC})   ]]>
+		</if>
+		order by id desc
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserRefSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_ref
+		where 1=1
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="refId != null">
+			and ref_id = #{refId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="refType != null">
+			and ref_type = #{refType,jdbcType=VARCHAR}
+		</if>
+
+		<if test="startTime != null">
+			<![CDATA[ and  (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC})   ]]>
+		</if>
+		order by id desc
+	</select>
+	
+	<select id="statByRefId" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserRefSearchVo">
+	    select ref_id as id, count(*) as total
+		from user_ref
+		where 1=1
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="refId != null">
+			and ref_id = #{refId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="refType != null">
+			and ref_type = #{refType,jdbcType=VARCHAR}
+		</if>
+
+		<if test="startTime != null">
+			<![CDATA[ and  (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC})   ]]>
+		</if> 
+		group by ref_id order by total asc
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from user_ref
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.user.UserRef">
+		insert into user_ref (id, user_id, ref_id,
+		ref_type, add_time)
+		values (#{id,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{refId,jdbcType=NUMERIC},
+		#{refType,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.user.UserRef">
+		insert into user_ref
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="refId != null">
+				ref_id,
+			</if>
+			<if test="refType != null">
+				ref_type,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="refId != null">
+				#{refId,jdbcType=NUMERIC},
+			</if>
+			<if test="refType != null">
+				#{refType,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.user.UserRef">
+		update user_ref
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="refId != null">
+				ref_id = #{refId,jdbcType=NUMERIC},
+			</if>
+			<if test="refType != null">
+				ref_type = #{refType,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.user.UserRef">
+		update user_ref
+		set user_id = #{userId,jdbcType=NUMERIC},
+		ref_id = #{refId,jdbcType=NUMERIC},
+		ref_type =
+		#{refType,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

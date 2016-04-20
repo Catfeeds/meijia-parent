@@ -17,7 +17,6 @@ import com.simi.service.sec.SecService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.sec.SecViewVo;
 
@@ -29,9 +28,6 @@ public class SecServiceImpl implements SecService {
 	
 	@Autowired
 	private DictService dictService;
-
-	@Autowired
-	private UserRefSecService userRefSecService;
 
 	@Autowired
 	private UsersService usersService;

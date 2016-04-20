@@ -19,19 +19,20 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
+import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserFriendReqService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserFriendReqVo;
 import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserFriendViewVo;
+import com.simi.vo.user.UserRefSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/user")
@@ -50,7 +51,7 @@ public class UserFriendController extends BaseController {
 	private UserRef3rdService userRef3rdService;	
 	
 	@Autowired
-	private UserRefSecService userRefSecService;
+	private UserRefService userRefService;
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
@@ -195,15 +196,22 @@ public class UserFriendController extends BaseController {
 		
 		List<UserFriends> userFriends = new ArrayList<UserFriends>();
 		
-		UserRefSec userRefSec = userRefSecService.selectByUserId(userId);
 		
-		if (userRefSec == null) return result;
+		UserRefSearchVo searchVo = new UserRefSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setRefType("sec");
+		List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
+		
+		UserRef userRef = null;
+		if (!rs.isEmpty()) userRef = rs.get(0);
+		
+		if (userRef == null) return result;
 		
 		UserFriends vo = userFriendService.initUserFriend();
 		vo.setUserId(userId);
-		vo.setFriendId(userRefSec.getSecId());
-		vo.setAddTime(userRefSec.getAddTime());
-		vo.setUpdateTime(userRefSec.getAddTime());
+		vo.setFriendId(userRef.getRefId());
+		vo.setAddTime(userRef.getAddTime());
+		vo.setUpdateTime(userRef.getAddTime());
 		
 		userFriends.add(vo);
 		

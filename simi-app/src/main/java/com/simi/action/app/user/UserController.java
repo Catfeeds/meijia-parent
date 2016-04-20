@@ -30,7 +30,6 @@ import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
@@ -66,9 +65,6 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;
-
-	@Autowired
-	private UserRefSecService userRefSecService;
 	
 	@Autowired
 	private UsersAsyncService usersAsyncService;

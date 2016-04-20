@@ -24,13 +24,12 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
-import com.simi.po.dao.user.UserRefSecMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
+import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanySetting;
@@ -46,7 +45,7 @@ import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
@@ -56,6 +55,7 @@ import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserIndexVo;
+import com.simi.vo.user.UserRefSearchVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
@@ -80,15 +80,7 @@ public class UsersServiceImpl implements UsersService {
 	private UserRef3rdService userRef3rdService;
 
 	@Autowired
-	private UserRefSecService userRefSecService;
-
-	
-
-	@Autowired
 	private DictCouponsService couponService;
-
-	@Autowired
-	private UserRefSecMapper userRefSecMapper;
 
 	@Autowired
 	private CardService cardService;
@@ -119,6 +111,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private XCompanySettingService xCompanySettingService;
+	
+	@Autowired
+	private UserRefService userRefService;
 	
 	@Override
 	public Long insert(Users record) {
@@ -239,17 +234,24 @@ public class UsersServiceImpl implements UsersService {
 		}
 		
 		// 获取用户与绑定的秘书的环信IM账号
-		UserRefSec userRefSec = userRefSecMapper.selectByUserId(userId);
+		UserRefSearchVo refSearchVo = new UserRefSearchVo();
+		refSearchVo.setUserId(userId);
+		refSearchVo.setRefType("sec");
+		List<UserRef> rs = userRefService.selectBySearchVo(refSearchVo);
+		
+		UserRef userRef = null;
+		if (!rs.isEmpty()) userRef = rs.get(0);
+		
 		vo.setSecId(0L);
-		if (userRefSec != null) {
-
-			Users secUser = usersMapper.selectByPrimaryKey(userRefSec.getSecId());
-			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(userRefSec.getSecId());
+		if (userRef != null) {
+			Long refId = userRef.getRefId();
+			Users secUser = usersMapper.selectByPrimaryKey(refId);
+			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(refId);
 
 			if (userRef3rd != null) {
 				vo.setImSecUsername(userRef3rd.getUsername());
 				vo.setImSecNickname(secUser.getName());
-				vo.setSecId(userRefSec.getSecId());
+				vo.setSecId(refId);
 			}
 		} else {
 			vo.setImSecUsername("");

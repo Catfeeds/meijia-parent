@@ -103,11 +103,13 @@
 
                                        <td>
                                             <button id="btn_update" onClick="btn_update('order/list?user_id=${ item.id }')" class="btn btn-primary btn-xs" title="订单"><i class=" icon-ambulance"></i></button>
+                                       		<button id="btn1" onClick="btn_update('/user/userForm?id=${item.id}')" class="btn btn-primary btn-xs"
+											title="修改">
+												<i class="icon-pencil"></i>
+											</button>
+                                       
                                        </td>
-							           <%--  <td>
-							            <button id="btn_update" onClick="btn_update('msg/msgForm?id=${ item.id }')" class="btn btn-primary btn-xs" title="修改"><i class="icon-pencil"></i></button>
-	                                  	<button id="btn_del" onClick="btn_del('/account/delete/${item.id}')" class="btn btn-danger btn-xs"  title="删除"><i class="icon-trash "></i></button>
-							            </td> --%>
+							           
                               </tr>
                               </c:forEach>
                               </tbody>

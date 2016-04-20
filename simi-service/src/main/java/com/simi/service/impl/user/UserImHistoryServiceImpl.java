@@ -10,7 +10,6 @@ import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserImHistoryService;
 import com.simi.service.user.UserImLastService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.user.UserImLastSearchVo;
 import com.simi.po.dao.user.UserImHistoryMapper;
@@ -29,10 +28,7 @@ public class UserImHistoryServiceImpl implements UserImHistoryService {
 	
 	@Autowired 
 	UserImHistoryMapper userImHistoryMapper;
-	
-	@Autowired
-	private UserRefSecService userRefSecService;	
-	
+		
 	@Autowired
 	private UsersService userService;	
 	

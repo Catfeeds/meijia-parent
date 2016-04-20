@@ -29,15 +29,25 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.op.OpAd;
+import com.simi.po.model.op.OpChannel;
+import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XCompanySettingService;
 import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.user.UserRefSearchVo;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -46,12 +56,17 @@ public class UserController extends AdminController {
 	@Autowired
 	private UsersService usersService;
 
-	
 	@Autowired
 	private UserAddrsService userAddrsService;
 
 	@Autowired
 	private UserDetailPayService userDetailPayService;
+	
+	@Autowired
+	private XCompanySettingService settingService;
+	
+	@Autowired
+	private UserRefService userRefService;
 
 	@RequestMapping(value = "/update_name", method = { RequestMethod.POST })
 	public AppResultData<Object> updateName(
@@ -97,6 +112,57 @@ public class UserController extends AdminController {
 		model.addAttribute("contentModel", result);
 
 		return "user/userList";
+	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/userForm", method = { RequestMethod.GET })
+	public String userForm(
+		HttpServletRequest request, Model model, @RequestParam(value = "id") Long id) {
+
+		Users u = usersService.selectByPrimaryKey(id);
+		
+		model.addAttribute("contentModel", u);
+		
+		//渠道列表
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setSettingType("op_ext");
+		List<XcompanySetting> opExtList = settingService.selectBySearchVo(searchVo);
+		model.addAttribute("opExtList", opExtList);
+		return "user/userForm";
+	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/userForm", method = { RequestMethod.POST })
+	public String doUserForm(
+		HttpServletRequest request, Model model, @RequestParam(value = "id") Long id) {
+
+		Users u = usersService.selectByPrimaryKey(id);
+		
+		String opExtIdStr = request.getParameter("op_ext_id").toString();
+		
+		if (!StringUtil.isEmpty(opExtIdStr)) {
+			Long opExtId = Long.valueOf(opExtIdStr);
+			//保存到
+			UserRefSearchVo searchVo = new UserRefSearchVo();
+			searchVo.setUserId(id);
+			searchVo.setRefType("op_ext");
+			List<UserRef> rs = userRefService.selectBySearchVo(searchVo);
+			
+			UserRef record = userRefService.initUserRef();
+			if (!rs.isEmpty()) record = rs.get(0);
+			
+			record.setUserId(id);
+			record.setRefId(opExtId);
+			record.setRefType("op_ext");
+			
+			if (record.getId() > 0L) {
+				userRefService.updateByPrimaryKeySelective(record); 
+			} else {
+				userRefService.insert(record);
+			}
+		}
+		
+		return "user/list";
 	}
 
 	/**

@@ -18,8 +18,8 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.TagUsers;
+import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.order.OrderQueryService;
@@ -27,11 +27,12 @@ import com.simi.service.sec.SecService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.sec.SecViewVo;
+import com.simi.vo.user.UserRefSearchVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.user.UserViewVo;
 
@@ -58,7 +59,7 @@ public class SecController extends BaseController {
 	private SecService secService;
 
 	@Autowired
-	private UserRefSecService userRefSecService;
+	private UserRefService userRefService;
 
 	@Autowired
 	private UserRef3rdService userRef3rdService;
@@ -139,10 +140,14 @@ public class SecController extends BaseController {
 		}
 
 		// 获取用户列表
-		List<UserRefSec> userRefSecs = userRefSecService.selectBySecId(secId);
+		UserRefSearchVo searchVo = new UserRefSearchVo();
+		searchVo.setRefId(secId);
+		searchVo.setRefType("sec");
+		List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
+
 		List<Long> userIds = new ArrayList<Long>();
 
-		for (UserRefSec item : userRefSecs) {
+		for (UserRef item : rs) {
 			if (!userIds.contains(item.getUserId())) {
 				userIds.add(item.getUserId());
 			}

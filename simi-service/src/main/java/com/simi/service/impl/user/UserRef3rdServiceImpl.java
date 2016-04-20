@@ -15,24 +15,25 @@ import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
+import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.UserRef3rd;
-import com.simi.po.model.user.UserRefSec;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefSecService;
+import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.user.UserRefSearchVo;
 
 @Service
 public class UserRef3rdServiceImpl implements UserRef3rdService {
 
 	@Autowired
 	private UserRef3rdMapper userRef3rdMapper;
-	
-	@Autowired
-	private UserRefSecService userRefSecService;
-	
+		
 	@Autowired
 	private UsersService usersService;	
+	
+	@Autowired
+	private UserRefService userRefService;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -181,21 +182,26 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 		
 		Long userId = user.getId();
 		//如果之前用户已经分配过秘书，则不需要再分配
-		UserRefSec record = userRefSecService.selectByUserId(userId);
-		if (record != null) {
+		UserRefSearchVo searchVo = new UserRefSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setRefType("sec");
+		List<UserRef> rs = userRefService.selectBySearchVo(searchVo);
+		if (!rs.isEmpty()) {
 			return true;
 		}
 
 		Long adminId = 0L;
-
-		List<HashMap> statBySenior = userRefSecService.statBySecId();
+		
+		searchVo = new UserRefSearchVo();
+		searchVo.setRefType("sec");
+		List<HashMap> statBySenior = userRefService.statByRefId(searchVo);
 
 		if (statBySenior == null || statBySenior.size() <= 0) {
 			return false;
 		}
 		String secId = "";
 		for (int i =0; i < statBySenior.size(); i++) {
-			secId = statBySenior.get(i).get("sec_id").toString();
+			secId = statBySenior.get(i).get("id").toString();
 			if (StringUtil.isEmpty(secId)) continue;
 			
 			adminId = Long.valueOf(secId);
@@ -208,11 +214,13 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 			}
 		}
 		
-		record = userRefSecService.initUserRefSec();
-		record.setUserId(userId);
-		record.setSecId(adminId);
+		UserRef record = userRefService.initUserRef();
 
-		userRefSecService.insertSelective(record);
+		record.setUserId(userId);
+		record.setRefId(adminId);
+		record.setRefType("sec");
+
+		userRefService.insertSelective(record);
 		return true;
 	}
 
