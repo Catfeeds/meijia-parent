@@ -442,7 +442,7 @@ public class PartnerServicePriceController extends BaseController {
 			servicePriceVo.setPartnerUserId(partnerUserId);
 			//图片处理成190x140大小
 			String imgUrl = servicePriceVo.getImgUrl();
-			imgUrl = imgUrl + "?w=190&h=140";
+			imgUrl = imgUrl + "?p=0";
 			servicePriceVo.setImgUrl(imgUrl);
 			
 			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_type_id=" + item.getServicePriceId();
