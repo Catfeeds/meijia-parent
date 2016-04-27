@@ -217,6 +217,7 @@ public class OpController extends BaseController {
 			item.setTotal(item.getTotal() + 1);
 			opAutoFeedService.updateByPrimaryKeySelective(item);
 			
+			result.setData(vo);
 			return result;
 		}				
 	
