@@ -95,9 +95,9 @@
 							            </td>
 							          
 							            <td>
-							            	<orderFromTag:orderfrom orderFrom="${item.addFrom }"/>
+							            	
 							            	<c:if test="${item.mobile != ''}"> 手机号注册</c:if>
-							            	<c:if test="${item.mobile == ''}"> ${item.thirdType} }</c:if>
+							            	<c:if test="${item.mobile == ''}"> ${item.thirdType} </c:if>
 							            </td>
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>

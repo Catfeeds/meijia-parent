@@ -146,7 +146,7 @@
 		</if>
 		
 		<if test="thirdType != null">
-			and 3rd_type = #{thirdType,jdbcType=NUMERIC}
+			and lower(3rd_type) = lower(#{thirdType,jdbcType=NUMERIC})
 		</if>
 		
 		<if test="openid != null">
