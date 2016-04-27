@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyAssetsMapper;
 import com.simi.po.model.xcloud.XcompanyAssets;
 import com.simi.service.xcloud.XcompanyAssetService;
 import com.simi.vo.AssetSearchVo;
+import com.simi.vo.xcloud.XcompanyAssetVo;
 
 
 @Service
@@ -49,7 +51,19 @@ public class XcompanyAssetServiceImpl implements XcompanyAssetService {
 
 		PageHelper.startPage(pageNo, pageSize);
 		List<XcompanyAssets> list = xCompanyAssetMapper.selectByListPage(searchVo);
-
+		
+		for (int i = 0; i < list.size(); i++) {
+			XcompanyAssets assets = list.get(i);
+			
+			XcompanyAssetVo assetVo = new XcompanyAssetVo();
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(assets, assetVo);
+			
+			assetVo.setAddTimeStr(TimeStampUtil.fromTodayStr(assets.getAddTime() * 1000));
+			
+			list.set(i, assetVo);
+		}
+		
 		PageInfo result = new PageInfo(list);
 		return result;
 	}

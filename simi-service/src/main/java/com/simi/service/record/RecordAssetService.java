@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.record.RecordAssets;
 import com.simi.vo.AssetSearchVo;
+import com.simi.vo.record.RecordAssetVo;
 
 public interface RecordAssetService {
 
@@ -22,5 +23,7 @@ public interface RecordAssetService {
 	PageInfo selectByListPage(AssetSearchVo searchVo, int pageNo, int pageSize);
 	
 	List<RecordAssets> selectBySearchVo(AssetSearchVo searchVo);
+	
+	RecordAssetVo getListVo(RecordAssets assets);
 	
 }

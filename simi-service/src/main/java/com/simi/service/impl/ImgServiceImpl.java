@@ -91,7 +91,6 @@ public class ImgServiceImpl implements ImgService {
 				try {
 					sendResult = ImgServerUtil.sendPostBytes(url, imgs[i].getBytes(), fileType);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

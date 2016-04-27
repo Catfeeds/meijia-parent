@@ -1,10 +1,12 @@
 package com.simi.service.record;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.record.RecordAssetUse;
 import com.simi.vo.AssetSearchVo;
+import com.simi.vo.record.RecordAssetUseVo;
 
 public interface RecordAssetUseService {
 
@@ -22,5 +24,8 @@ public interface RecordAssetUseService {
 	PageInfo selectByListPage(AssetSearchVo searchVo, int pageNo, int pageSize);
 	
 	List<RecordAssetUse> selectBySearchVo(AssetSearchVo searchVo);
+	
+	RecordAssetUseVo getUserAssetVo(RecordAssetUse assetUse) throws UnsupportedEncodingException;
+	
 	
 }
