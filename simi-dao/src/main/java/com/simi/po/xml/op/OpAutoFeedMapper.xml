@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.op.OpAutoFeedMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.op.OpAutoFeed">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="auto_type" property="autoType" jdbcType="NUMERIC" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
+		<result column="total" property="total" jdbcType="INTEGER" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, auto_type, title, content, status, total, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from op_auto_feed
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByTotal" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from op_auto_feed
+		where status = 1 order by total asc limit 10
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from op_auto_feed order by id desc
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from op_auto_feed
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.op.OpAutoFeed">
+	    
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	    
+		insert into op_auto_feed (id, auto_type, title,
+		content, status, total,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{autoType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{total,jdbcType=INTEGER},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.op.OpAutoFeed">
+	    
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	    
+	    
+		insert into op_auto_feed
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="autoType != null">
+				auto_type,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="total != null">
+				total,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="autoType != null">
+				#{autoType,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
+			</if>
+			<if test="total != null">
+				#{total,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.OpAutoFeed">
+		update op_auto_feed
+		<set>
+			<if test="autoType != null">
+				auto_type = #{autoType,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
+			</if>
+			<if test="total != null">
+				total = #{total,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.OpAutoFeed">
+		update op_auto_feed
+		set auto_type = #{autoType,jdbcType=NUMERIC},
+		title = #{title,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC},
+		total = #{total,jdbcType=INTEGER},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

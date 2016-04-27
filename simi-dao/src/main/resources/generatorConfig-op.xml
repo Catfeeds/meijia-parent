@@ -161,7 +161,22 @@
             
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
 		</table>
+	
+	<table schema="simi" tableName="op_auto_feed"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.long" jdbcType="NUMERIC"/>
 			
+			<columnOverride  column="auto_type" property="autoType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
 		
 
 	</context>

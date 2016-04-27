@@ -1,5 +1,6 @@
 package com.simi.action.app.op;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.common.Imgs;
 import com.simi.po.model.op.AppHelp;
 import com.simi.po.model.op.OpAd;
+import com.simi.po.model.op.OpAutoFeed;
 import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.user.UserActionRecord;
+import com.simi.service.ImgService;
 import com.simi.service.op.AppHelpService;
 import com.simi.service.op.OpAdService;
+import com.simi.service.op.OpAutoFeedService;
 import com.simi.service.op.OpChannelService;
 import com.simi.service.user.UserActionRecordService;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.ImgSearchVo;
+import com.simi.vo.op.OpAutoFeedVo;
 import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.user.UserActionSearchVo;
 
@@ -40,6 +48,12 @@ public class OpController extends BaseController {
 
 	@Autowired
 	private UserActionRecordService userActionRecordService;
+	
+	@Autowired
+	private OpAutoFeedService opAutoFeedService;
+	
+	@Autowired
+	ImgService imgService;	
 
 	@RequestMapping(value = "get_channels", method = RequestMethod.GET)
 	public AppResultData<Object> getChannels(
@@ -178,6 +192,33 @@ public class OpController extends BaseController {
 			
 			return result;
 		}		
+		
+		@RequestMapping(value = "op_auto_feed", method = RequestMethod.GET)
+		public AppResultData<Object> opAutoFeed()  {
+			
+			AppResultData<Object> result = new AppResultData<Object>(
+					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+			
+			List<OpAutoFeed> list =  opAutoFeedService.selectByTotal();
+			
+			Collections.shuffle(list);  
+			
+			OpAutoFeed item = list.get(0);
+			
+			OpAutoFeedVo vo = new OpAutoFeedVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			ImgSearchVo isearchVo = new ImgSearchVo();
+			isearchVo.setLinkId(vo.getId());
+			isearchVo.setLinkType("op_auto_feed");
+			List<Imgs> imgList = imgService.selectBySearchVo(isearchVo);
+			vo.setImgs(imgList);
+			
+			//使用数加1;
+			item.setTotal(item.getTotal() + 1);
+			opAutoFeedService.updateByPrimaryKeySelective(item);
+			
+			return result;
+		}				
 	
 	
 }
