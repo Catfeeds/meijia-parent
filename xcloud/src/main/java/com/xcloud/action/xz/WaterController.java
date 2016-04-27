@@ -143,16 +143,16 @@ public class WaterController extends BaseController {
 		model.addAttribute("servicePriceDetail", servicePriceDetail);
 
 		// 用户地址列表
-				List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(userId);
-				List<UserAddrVo> voList = new ArrayList<UserAddrVo>();
-				for (int i = 0; i < userAddrsList.size(); i++) {
-					UserAddrs addrs = userAddrsList.get(i);
-					UserAddrVo vos = new UserAddrVo();
-					vos.setAddrId(addrs.getId());
-					vos.setAddrName(addrs.getAddress() + addrs.getAddr());
-					voList.add(vos);
-				}
-				model.addAttribute("userAddrVo", voList);
+		List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(userId);
+		List<UserAddrVo> voList = new ArrayList<UserAddrVo>();
+		for (int i = 0; i < userAddrsList.size(); i++) {
+			UserAddrs addrs = userAddrsList.get(i);
+			UserAddrVo vos = new UserAddrVo();
+			vos.setAddrId(addrs.getId());
+			vos.setAddrName(addrs.getAddress() + addrs.getAddr());
+			voList.add(vos);
+		}
+		model.addAttribute("userAddrVo", voList);
 		
 		model.addAttribute("contentModel", vo);
 		return "xz/water-form";

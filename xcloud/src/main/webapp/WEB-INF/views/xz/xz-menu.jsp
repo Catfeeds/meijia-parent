@@ -104,9 +104,9 @@
 						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
 					></span>
 				</a></li>
-				<li><a href="/xloud/xz/assets/use"> <span class="am-icon-plane"></span> 领用与借用
+				<li><a href="/xcloud/xz/assets/use_asset_list"> <span class="am-icon-plane"></span> 领用与借用
 				</a></li>
-				<li><a href="/xloud/xz/assets/list"> <span class="am-icon-calendar"></span> 库存管理
+				<li><a href="/xcloud/xz/assets/commpany_asset_list"> <span class="am-icon-calendar"></span> 库存管理
 				</a></li>
 				<li><a href="admin-404.html"> <span class="am-icon-plane"></span> 办公用品采购
 				</a></li>
