@@ -37,7 +37,7 @@ public class TestCardQueryController extends JUnitActionBase  {
     public void testGetList() throws Exception {
 
 		String url = "/app/card/get_list.json";
-		String params = "?user_id=1&card_from=0&page=1&service_date=2015-12-12";
+		String params = "?user_id=1284&card_from=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

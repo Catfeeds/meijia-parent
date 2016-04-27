@@ -169,7 +169,7 @@ public class CardQueryController extends BaseController {
 			searchVo.setEndTime(endTime);
 		}
 
-		PageInfo pageInfo = cardService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		PageInfo pageInfo = cardService.selectByUserListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<Cards> cards = pageInfo.getList();
 		List<CardListVo> cardList = new ArrayList<CardListVo>();
 		if (!cards.isEmpty()) {
