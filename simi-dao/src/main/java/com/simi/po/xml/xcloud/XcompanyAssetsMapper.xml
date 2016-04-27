@@ -44,7 +44,7 @@
 			and asset_type_id = #{assetTypeId,jdbcType=NUMERIC}
 		</if>
 		
-		<if test="name != null">
+		<if test="name != null and name !='' ">
 			and name = #{name,jdbcType=VARCHAR}
 		</if>
 		
