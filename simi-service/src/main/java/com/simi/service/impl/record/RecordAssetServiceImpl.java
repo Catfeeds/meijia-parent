@@ -1,7 +1,6 @@
 package com.simi.service.impl.record;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import com.simi.po.model.user.Users;
 import com.simi.service.record.RecordAssetService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AssetSearchVo;
-import com.simi.vo.order.OrderExtWaterXcloudVo;
-import com.simi.vo.record.RecordAssetUseVo;
 import com.simi.vo.record.RecordAssetVo;
 
 
@@ -64,8 +61,14 @@ public class RecordAssetServiceImpl implements RecordAssetService {
 		RecordAssets assets = null;
 		for (int i = 0; i < list.size(); i++) {
 			assets = list.get(i);
-			RecordAssetVo vo = getListVo(assets);
-			list.set(i, vo);
+			
+			RecordAssetVo assetVo = new RecordAssetVo();
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(assets, assetVo);
+			
+			assetVo.setAddTimeStr(TimeStampUtil.fromTodayStr(assets.getAddTime() * 1000));
+			
+			list.set(i, assetVo);
 		}
 		
 		PageInfo result = new PageInfo(list);
