@@ -22,11 +22,10 @@ $("#btn-commpany-asset-form-submit").on('click', function(e) {
 		params.seq = $("#seq").val();
 		params.place = $("#place").val();
 		
-		alert(xCloudRootUrl + "/xz/assets/company_post_asset.json");
 		
 		$.ajax({
 			type : "POST",
-			url : xCloudRootUrl + "/xz/assets/company_post_asset.json", 	//TODO 此处是 云平台的 url
+			url : appRootUrl + "/app/record/post_asset", 	
 			data : params,
 			dataType : "json",
 			async : false,

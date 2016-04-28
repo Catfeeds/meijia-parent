@@ -98,7 +98,7 @@
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号:</label>
 							<div class="am-u-sm-9">
-								<form:input path="mobile" type="number"
+								<form:input path="mobile" type="text"
 									class="am-form-field am-radius js-pattern-mobile"
 									maxLength="11" required="required" />
 								<small>*必填项</small>

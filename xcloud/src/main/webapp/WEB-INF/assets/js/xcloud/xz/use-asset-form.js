@@ -29,19 +29,19 @@ $("#btn-use-asset-form-submit").on('click', function(e) {
 	var formValidity = $('#use-asset-form').validator().data('amui.validator').validateForm().valid;
 	
 	//校验 select
-	var selectOp = 0;
-	
-	$("#asset-maxchecked").find("option").each(function(k,v){
-		
-		if($(this).selected){
-			selectOp += 1;
-		}
-	});
-	
-	if(selectOp === 0){
-		alert("请您至少选择一种物品")
-		return false;
-	}
+//	var selectOp = 0;
+//	
+//	$("#asset-maxchecked").find("option").each(function(k,v){
+//		
+//		if($(this).selected){
+//			selectOp += 1;
+//		}
+//	});
+//	
+//	if(selectOp === 0){
+//		alert("请您至少选择一种物品")
+//		return false;
+//	}
 	
 	
 	if (formValidity) {
@@ -61,15 +61,13 @@ $("#btn-use-asset-form-submit").on('click', function(e) {
 		
 		var total = $("#assetNum").val();
 		
-		//TODO 应该组个 数组比较好？
-		
 		assetArray.push({"asset_id":assetId,"total":total});
 		
 		params.asset_json = JSON.stringify(assetArray);
 		
 		$.ajax({
 			type : "POST",
-			url : xCloudRootUrl + "/xz/assets/post_asset_use.json", 	//TODO 此处是 云平台的 url
+			url : appRootUrl + "/app/record/post_asset_use", 	
 			data : params,
 			dataType : "json",
 			async : false,

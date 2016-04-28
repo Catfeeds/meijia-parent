@@ -59,7 +59,7 @@
 							<div class="am-u-sm-9">
 								
 								<form:select path="assetTypeId" class="am-form-field am-radius">
-									<form:options items="${contentModel.xCompAssetList}" itemValue="assetId" itemLabel="name" />
+									<form:options items="${contentModel.xCompSettingList}" itemValue="id" itemLabel="name" />
 								</form:select>
 								
 							</div>
@@ -79,8 +79,8 @@
 						<div class="am-form-group">
 							<label  class="am-u-sm-3 am-form-label">数量:</label>
 							<div class="am-u-sm-9">
-								<form:input path="total" type="number"
-									class="am-form-field am-radius"
+								<form:input path="total" 
+									class="am-form-field am-radius js-pattern-pinteger"
 									maxLength="32" required="required"/>
 								<small>*必填项</small>	
 							</div>
@@ -90,8 +90,8 @@
 						<div class="am-form-group">
 							<label class="am-u-sm-3 am-form-label">单价:</label>
 							<div class="am-u-sm-9">
-								<form:input path="price" type="number"
-									class="am-form-field am-radiu"
+								<form:input path="price" 
+									class="am-form-field am-radiu js-pattern-pinteger"
 									maxLength="32" required="required" />
 								<small>*必填项</small>
 							</div>
@@ -110,7 +110,7 @@
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">编号:</label>
 							<div class="am-u-sm-9">
-								<form:input path="seq" type="number"
+								<form:input path="seq" 
 									class="am-form-field am-radius js-pattern-pinteger"
 									maxLength="32" required="required" />
 								<small>*必填项</small>

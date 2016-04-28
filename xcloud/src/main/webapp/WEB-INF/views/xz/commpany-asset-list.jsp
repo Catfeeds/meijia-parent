@@ -72,8 +72,8 @@
 								<tr>
 									<th class="table-title">资产名称</th>
 									<th class="table-title">编号</th>
-									<th class="table-title">库存</th>
-									<th class="table-title">规格</th>
+									<th class="table-title">数量</th>
+									<th class="table-title">规格/单位</th>
 									<th class="table-title">单价</th>
 									<th class="table-title">添加时间</th>
 									<th >操作</th>
@@ -84,7 +84,7 @@
 									<tr>
 										<td>${item.name}</td>
 										<td>${item.seq }</td>
-										<td>${item.stock}</td>
+										<td>${item.total}</td>
 										<td>${item.unit }</td>
 										<td>${item.price}</td>
 										<td>${item.addTimeStr }</td>
