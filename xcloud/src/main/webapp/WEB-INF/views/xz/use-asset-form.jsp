@@ -76,8 +76,8 @@
 					 	<div class="am-form-group">
 							<label  class="am-u-sm-3 am-form-label">数量:</label>
 							<div class="am-u-sm-9">
-								<form:input path="assetNum"  type="number"
-									class="am-form-field am-radius"
+								<form:input path="assetNum"  type="text"
+									class="am-form-field am-radius js-pattern-pinteger"
 									maxLength="32" required="required"/>
 								<small>*必填项</small>	
 							</div>
@@ -99,7 +99,7 @@
 							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号:</label>
 							<div class="am-u-sm-9">
 								<form:input path="mobile" type="number"
-									class="am-form-field am-radius js-pattern-pinteger"
+									class="am-form-field am-radius js-pattern-mobile"
 									maxLength="11" required="required" />
 								<small>*必填项</small>
 							</div>
