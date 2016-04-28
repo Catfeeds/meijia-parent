@@ -1,0 +1,114 @@
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/store.css">
+    <title>赏金猎人列表</title>
+</head>
+<body style="background:#ececec">
+
+<div class="pet_content_block pet_hd_con">
+<div class="pet_hd_con_head"><img src="images/ad-banner-xuanshang.jpg" alt=""></div>
+  <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
+
+          <div class="am-list-news-bd">
+              <ul class="am-list">
+                <!--缩略图在标题右边-->
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
+                  <a href="job-req-detail.html" class="pet_hd_block">
+                    <div class="pet_hd_block_title">技术总监1名</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
+                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
+                  </a>
+                </li>
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
+                  <a href="job-req-detail.html" class="pet_hd_block">
+                    <div class="pet_hd_block_title">iOS开发工程师1名</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
+                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
+                  </a>
+                </li>
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
+                  <a href="job-req-detail.html" class="pet_hd_block">
+                    <div class="pet_hd_block_title">行政专员1名</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
+                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
+                  </a>
+                </li>
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
+                  <a href="job-req-detail.html" class="pet_hd_block">
+                    <div class="pet_hd_block_title">WEB开发工程师1名</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
+                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
+                  </a>
+                </li>
+                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
+                  <a href="###" class="pet_hd_block">
+                    <div class="pet_hd_block_title">财务总监1名</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
+                    <div class="pet_hd_block_tag"><span class="hd_tag_js">已截止</span> 以成功入职为准</div>
+                  </a>
+                </li>
+                </ul>
+              </div>
+    </div>
+</div>
+
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+      id="">
+      <ul class="am-navbar-nav am-cf am-avg-sm-4">
+          <li >
+            <a href="job-req-publish.html" class="">
+                <span class="am-navbar-label">发布悬赏需求</span>
+            </a>
+          </li>
+      </ul>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script>
+$(function(){
+
+    // 动态计算新闻列表文字样式
+    auto_resize();
+    $(window).resize(function() {
+        auto_resize();
+    });
+    $('.am-list-thumb img').load(function(){
+        auto_resize();
+    });
+    $('.pet_article_like li:last-child').css('border','none');
+        function auto_resize(){
+        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
+                // alert($('.pet_list_one_nr').height());
+    }
+        $('.pet_article_user').on('click',function(){
+            if($('.pet_article_user_info_tab').hasClass('pet_article_user_info_tab_show')){
+                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_show').addClass('pet_article_user_info_tab_cloes');
+            }else{
+                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_cloes').addClass('pet_article_user_info_tab_show');
+            }
+        });
+
+        $('.pet_head_gd_ico').on('click',function(){
+            $('.pet_more_list').addClass('pet_more_list_show');
+       });
+        $('.pet_more_close').on('click',function(){
+            $('.pet_more_list').removeClass('pet_more_list_show');
+        });
+});
+
+</script>
+</body>
+</html>
