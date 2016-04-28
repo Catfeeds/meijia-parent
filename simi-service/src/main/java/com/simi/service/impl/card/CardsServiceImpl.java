@@ -433,7 +433,7 @@ public class CardsServiceImpl implements CardService {
 		
 		//某个用户所有的卡片
 		if (cardFrom.equals((short)0)) {
-			list = cardsMapper.selectByListPage(vo);
+			list = cardsMapper.selectByUserListPage(vo);
 		}
 		
 		//某个用户发布的卡片
