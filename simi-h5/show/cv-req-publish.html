@@ -1,6 +1,7 @@
 <!doctype html>
 
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
@@ -15,70 +16,65 @@
 <div class="pet_content_block pet_hd_con">
 <div class="pet_hd_con_head"></div>
   
-<form class="am-form">
+<form class="am-form" id="cvReqPublishForm" data-am-validator>
   <fieldset>
     <legend>电脑登陆 51xingzheng.cn 体验更爽的功能</legend>
-
-    <div class="am-form-group">
-      <label for="doc-ipt-email-1">标题</label>
-      <input type="email" class="" id="doc-ipt-email-1" placeholder="一句话告诉大家">
-    </div>
-
-    <div class="am-form-group">
-      <label for="doc-select-1">时间有效期</label>
-      <select id="doc-select-1">
-        <option value="option1">长期有效</option>
-        <option value="option2">30天有效</option>
-        <option value="option3">180天有效</option>
-      </select>
-      <span class="am-form-caret"></span>
-    </div>
-
-    <div class="am-form-group">
-      <label for="doc-ta-1">需求内容</label>
-      <textarea class="" rows="4" id="doc-ta-1"></textarea>
-    </div>
-<div data-am-sticky>
-  <button class="am-btn am-btn-primary am-btn-block">提交</button>
-</div>
+		
+		
+		<input type="hidden" id="publishUserId" name="publishUserId" value="">	
+		<input type="hidden" id="publishUserName" name="publishUserName" value=""> 		
+		<input type="hidden" id="publishCityName" name="publishCityName" value="">
+		
+		<div class="am-form-group">
+	      <label for="publishUser">发布人</label>
+	      <span id="publishUser"></span>
+	      
+	    </div>
+			
+		<div class="am-form-group">
+	      <label for="publishCity">所在城市</label>
+	      <span id="publishCity"></span>
+	    </div>	
+			
+	    <div class="am-form-group">
+	      <label for="publishTitle">标题</label>
+	      <input type="text" class="am-form-field" required id="publishTitle" maxlength="32" placeholder="一句话告诉大家,不超过32字">
+	    </div>
+	
+	    <div class="am-form-group">
+	      <label for="publishTimeSelect">时间有效期</label>
+	      <select id="publishTimeSelect" required>
+	        	<option value="">请选择有效期限</option>
+	      </select>
+	      <span class="am-form-caret"></span>
+	    </div>
+	
+	    <div class="am-form-group">
+	      <label for="publishNeedContent">需求内容</label>
+	      <textarea id="publishNeedContent" class="am-form-field" required rows="4" maxlength="200" placeholder="不超过200字" ></textarea>
+	    </div>
+	    
+	    <div class="am-form-group">
+	      <label for="publishNeedContent">联系方式</label>
+	      <textarea id="publishLink" class="am-form-field" required rows="4" maxlength="200" placeholder="不超过200字" ></textarea>
+	    </div>
+	    
+		<div data-am-sticky>
+		  <button id="submitPublish" class="am-btn am-btn-primary am-btn-block">提交</button>
+		</div>
   </fieldset>
 </form>
 
 </div>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/amazeui.min.js"></script>
-<script>
-$(function(){
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/amazeui.min.js"></script>
 
-    // 动态计算新闻列表文字样式
-    auto_resize();
-    $(window).resize(function() {
-        auto_resize();
-    });
-    $('.am-list-thumb img').load(function(){
-        auto_resize();
-    });
-    $('.pet_article_like li:last-child').css('border','none');
-        function auto_resize(){
-        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
-                // alert($('.pet_list_one_nr').height());
-    }
-        $('.pet_article_user').on('click',function(){
-            if($('.pet_article_user_info_tab').hasClass('pet_article_user_info_tab_show')){
-                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_show').addClass('pet_article_user_info_tab_cloes');
-            }else{
-                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_cloes').addClass('pet_article_user_info_tab_show');
-            }
-        });
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+	
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/resume/cv-req-publish.js"></script>
 
-        $('.pet_head_gd_ico').on('click',function(){
-            $('.pet_more_list').addClass('pet_more_list_show');
-       });
-        $('.pet_more_close').on('click',function(){
-            $('.pet_more_list').removeClass('pet_more_list_show');
-        });
-});
-
-</script>
 </body>
 </html>

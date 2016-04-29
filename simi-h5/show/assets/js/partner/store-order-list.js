@@ -1,5 +1,4 @@
 
-
 var partnerUserId = getUrlParam("user_id");
 var serviceTypeId = getUrlParam("service_type_id");
 //alert(window.location.href);

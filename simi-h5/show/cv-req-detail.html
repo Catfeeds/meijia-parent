@@ -15,25 +15,30 @@
 <div class="pet_content_block pet_hd_con">
 <div class="pet_hd_con_head"></div>
   <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default pet_content_article" data-am-paragraph="{ tableScrollable: true, pureview: true }">
-  <h1 class="pet_article_title">互联网开发人员多份简历</h1>
-  <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe615;</i>发布人：张三</div>
-  <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe617;</i>有效时间：30天</div>
-  <div class="pet_article_user_time pet_hd_con_map"><i class="iconfont">&#xe632;</i>所在地区：北京</div>
-
-  <div class="pet_hd_con_gp_list_nr">
-    <div class="pet_hd_con_gp_list_nr_tag">交换需求说明</div>
-    <p>欲交换互联网行业运营人员相关简历，谢谢~~</p>
-  </div>
-
- 
-    <div class="pet_hd_con_gp_list_nr">
-    <div class="pet_hd_con_gp_list_nr_tag">联系方式</div>
-    <p>
-    	点头像IM沟通，或qq：412341234
-
-    </p>
-  </div>
-
+	  <h1 class="pet_article_title" id="resumeTitle">互联网开发人员多份简历</h1>
+	  <div class="pet_article_user_time pet_hd_con_time" id="userName">
+	  	<i class="iconfont">&#xe615;</i>
+	  </div>
+	  <div class="pet_article_user_time pet_hd_con_time" id="limitDay">
+	  	<i class="iconfont">&#xe617;</i>
+	  </div>
+	  <div class="pet_article_user_time pet_hd_con_map" id="cityName">
+	  	<i class="iconfont">&#xe632;</i>
+	  </div>
+	
+	  <div class="pet_hd_con_gp_list_nr">
+	    <div class="pet_hd_con_gp_list_nr_tag">交换需求说明</div>
+	    <p id="needContent"></p>
+	  </div>
+	
+	 
+	    <div class="pet_hd_con_gp_list_nr">
+	    <div class="pet_hd_con_gp_list_nr_tag">联系方式</div>
+	    <p id="resumeLink">
+	    	
+	
+	    </p>
+	  </div>
 
   </article>
 
@@ -49,40 +54,15 @@
           </li>
       </ul>
 </div>
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
-<script>
-$(function(){
 
-    // 动态计算新闻列表文字样式
-    auto_resize();
-    $(window).resize(function() {
-        auto_resize();
-    });
-    $('.am-list-thumb img').load(function(){
-        auto_resize();
-    });
-    $('.pet_article_like li:last-child').css('border','none');
-        function auto_resize(){
-        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
-                // alert($('.pet_list_one_nr').height());
-    }
-        $('.pet_article_user').on('click',function(){
-            if($('.pet_article_user_info_tab').hasClass('pet_article_user_info_tab_show')){
-                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_show').addClass('pet_article_user_info_tab_cloes');
-            }else{
-                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_cloes').addClass('pet_article_user_info_tab_show');
-            }
-        });
+<script src="assets/js/app.js"></script>
+<script src="assets/js/common/common.js"></script>
 
-        $('.pet_head_gd_ico').on('click',function(){
-            $('.pet_more_list').addClass('pet_more_list_show');
-       });
-        $('.pet_more_close').on('click',function(){
-            $('.pet_more_list').removeClass('pet_more_list_show');
-        });
-});
+<script src="assets/js/resume/cv-req-detail.js"></script>
 
-</script>
+
 </body>
 </html>
