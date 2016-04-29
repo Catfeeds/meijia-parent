@@ -65,15 +65,17 @@ public class ResumeChangeController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		//1. 校验 用户
-		Users u = userService.selectByPrimaryKey(partnerUserId);
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("用户不存在");
-			return result;
+		if (partnerUserId > 0L) {
+			Users u = userService.selectByPrimaryKey(partnerUserId);
+			if (u == null) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("用户不存在");
+				return result;
+			}
 		}
 		
 		ResumeSearchVo searchVo = new ResumeSearchVo();
-		searchVo.setUserId(partnerUserId);
+		if (partnerUserId > 0L) searchVo.setUserId(partnerUserId);
 		
 		//分页
 		PageInfo info = resumeChangeService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);

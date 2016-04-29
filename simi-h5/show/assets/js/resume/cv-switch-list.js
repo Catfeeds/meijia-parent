@@ -1,4 +1,13 @@
 var partnerUserId = getUrlParam("user_id");
+
+if (partnerUserId == undefined || partnerUserId == '') {
+	partnerUserId = 0;
+}
+
+if (partnerUserId == 0) {
+	$("#btn-change").css("display", "none");
+}
+
 var $partnerListPage = 1;
 
 
@@ -15,7 +24,7 @@ function resumeList (page) {
 		success : function(data) {
 
 			if (data.status == "999"){
-				alert(result.msg);
+				alert(data.msg);
 				return;
 			}
 			
