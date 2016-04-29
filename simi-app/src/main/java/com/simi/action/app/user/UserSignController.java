@@ -65,7 +65,7 @@ public class UserSignController extends BaseController {
 		userScoreAsyncService.sendScore(userId, 30, "day_sign", record.getId().toString(), "签到");
 		
 		result.setMsg("签到成功");
-		result.setData(5);
+		result.setData(30);
 		
 		return result;
 	}
