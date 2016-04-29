@@ -109,7 +109,7 @@ public class HrJobHunterServiceImpl implements HrJobHunterService {
 		
 		String flag = "enable";
 		
-		if(now > limitTimeSta){
+		if(now > limitTimeSta && hunter.getLimitDay() != 0){
 			flag = "disable";
 		}
 		
