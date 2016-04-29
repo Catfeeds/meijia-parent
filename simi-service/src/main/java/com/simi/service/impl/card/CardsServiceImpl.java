@@ -264,6 +264,9 @@ public class CardsServiceImpl implements CardService {
 				if (us.getId().equals(item.getCreateUserId())) {
 					vo.setCreateUserId(item.getCreateUserId());
 					vo.setHeadImgCreateUser(us.getHeadImg());
+					vo.setCardTypeName(us.getName());
+					vo.setCreateUserName(us.getName());
+					vo.setCreateMobile(us.getMobile());
 					break;
 				}
 			}

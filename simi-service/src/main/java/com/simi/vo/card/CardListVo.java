@@ -18,6 +18,10 @@ public class CardListVo {
 	
 	private Long createUserId;
 	
+	private String createUserName;
+	
+	private String createMobile;
+	
 	private String title;
 	
 	private Long serviceTime;
@@ -154,6 +158,22 @@ public class CardListVo {
 
 	public void setCreateUserId(Long createUserId) {
 		this.createUserId = createUserId;
+	}
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public String getCreateMobile() {
+		return createMobile;
+	}
+
+	public void setCreateMobile(String createMobile) {
+		this.createMobile = createMobile;
 	}
 		
 }
