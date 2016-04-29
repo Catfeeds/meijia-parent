@@ -15,44 +15,35 @@
 <div class="pet_content_block pet_hd_con">
 <div class="pet_hd_con_head"></div>
   <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default pet_content_article" data-am-paragraph="{ tableScrollable: true, pureview: true }">
-  <h1 class="pet_article_title">技术总监</h1>
-  <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe615;</i>发布人：张三</div>
-  <div class="pet_article_user_time pet_hd_con_time"><i class="iconfont">&#xe617;</i>有效时间：30天</div>
-  <div class="pet_article_user_time pet_hd_con_map"><i class="iconfont">&#xe632;</i>所在地区：北京</div>
+  <h1 class="pet_article_title" id="title">{title}</h1>
+  <div class="pet_article_user_time pet_hd_con_time" id="userName">
+  	<i class="iconfont">&#xe615;</i>
+  </div>
+  <div class="pet_article_user_time pet_hd_con_time" id="limitDay">
+  	<i class="iconfont">&#xe617;</i>
+  </div>
+  <div class="pet_article_user_time pet_hd_con_map" id="cityName">
+  	<i class="iconfont">&#xe632;</i>
+  </div>
   <div class="pet_hd_con_gp_list">
-      <span class="pet_hd_con_gp_list_on"><i>赏金：￥500</i></span>
+      <span class="pet_hd_con_gp_list_on"><i id="reward"></i></span>
       <div class="pet_hd_con_gp_list_sm">说明：最终以入职签署用人合同为准</div>
   </div>
   <div class="pet_hd_con_gp_list_nr">
     <div class="pet_hd_con_gp_list_nr_tag">岗位职责</div>
-    <p></p>
-1、负责公司学历、资格证推广的企业、学校等团体的客户开发工作，并维护良好的客户关系；</p>
-2、根据公司业务定位，收集市场信息并开展潜在客户开发活动；</p>
-3、根据客户的职业发展需求，设计符合客户的学历和资格证培养计划，并促成签订进一步的学历提升合约；</p>
-4、组织实施培训，包括前期培训资料的准备，讲师沟通、培训现场的协助等；</p>
-5、按时完成工作计划及每月学历销售任务，维护潜在顾客以及学员数据库；</p>
+    <p id="jobRes"></p>
   </div>
 
     <div class="pet_hd_con_gp_list_nr">
     <div class="pet_hd_con_gp_list_nr_tag">任职要求</div>
-    <p>
-    	1、24--40岁，大专以上学历，立志于在人力资源领域长期发展；</p>
-2、8年以上企业销售或5年以上学历、培训机构销售、招生等相关工作经验；</p>
-3、有敏锐洞察力和判断力，学习能力强，对行业信息扑捉敏感；</p>
-4、性格开朗、乐观积极、有责任感和亲和力；</p>
-5、优秀的分析、判断、协调能力和出色的沟通、说服、引导能力；
-    </p>
+    <p id="jobReq"></p>
 
   </div>
 
     <div class="pet_hd_con_gp_list_nr">
     <div class="pet_hd_con_gp_list_nr_tag">补充说明</div>
-    <p>
-    	需从事相关专业者
-
-    </p>
+    <p id="remarks"></p>
   </div>
-
 
   </article>
 
@@ -61,46 +52,20 @@
       id="">
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
           <li data-am-navbar-share>
-            <a href="job-req-publish.html" class="">
+            <a href="##" class="">
                 <span class="am-navbar-label">找发布者私聊</span>
             </a>
           </li>
       </ul>
 </div>
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
-<script>
-$(function(){
 
-    // 动态计算新闻列表文字样式
-    auto_resize();
-    $(window).resize(function() {
-        auto_resize();
-    });
-    $('.am-list-thumb img').load(function(){
-        auto_resize();
-    });
-    $('.pet_article_like li:last-child').css('border','none');
-        function auto_resize(){
-        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
-                // alert($('.pet_list_one_nr').height());
-    }
-        $('.pet_article_user').on('click',function(){
-            if($('.pet_article_user_info_tab').hasClass('pet_article_user_info_tab_show')){
-                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_show').addClass('pet_article_user_info_tab_cloes');
-            }else{
-                $('.pet_article_user_info_tab').removeClass('pet_article_user_info_tab_cloes').addClass('pet_article_user_info_tab_show');
-            }
-        });
+<script src="assets/js/app.js"></script>
+<script src="assets/js/common/common.js"></script>
 
-        $('.pet_head_gd_ico').on('click',function(){
-            $('.pet_more_list').addClass('pet_more_list_show');
-       });
-        $('.pet_more_close').on('click',function(){
-            $('.pet_more_list').removeClass('pet_more_list_show');
-        });
-});
+<script src="assets/js/resume/job-req-detail.js"></script>
 
-</script>
 </body>
 </html>
