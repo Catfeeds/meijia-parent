@@ -2,6 +2,7 @@ var partnerUserId = getUrlParam("user_id");
 
 if (partnerUserId == undefined || partnerUserId == '') {
 	partnerUserId = 0;
+	
 }
 
 if (partnerUserId == 0) {

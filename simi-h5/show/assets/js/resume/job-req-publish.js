@@ -1,9 +1,6 @@
 
 var partnerUserId = getUrlParam("user_id");
 
-if(partnerUserId == undefined || partnerUserId == null || partnerUserId == ""){
-	partnerUserId = 0;
-}
 
 //隐藏域
 $("#publishUserId").val(partnerUserId);

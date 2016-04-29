@@ -1,4 +1,13 @@
 var partnerUserId = getUrlParam("user_id");
+
+if(partnerUserId == undefined || partnerUserId == null || partnerUserId == ""){
+	partnerUserId = 0;
+	
+	//隐藏 发布信息按钮
+	$("#publishJobDiv").hide();
+	
+}
+
 var $partnerListPage = 1;
 
 
