@@ -31,7 +31,14 @@ function initFormPage(){
 				
 				for(var map in result.time_map){
 					
-					var html = "<option value='"+map+"'>"+result.time_map[map] +"</option>";
+					var html = "";
+					
+					if(map == 0){
+						html = "<option value='"+map+"selected'>"+result.time_map[map] +"</option>";
+					}else{
+						html = "<option value='"+map+"'>"+result.time_map[map] +"</option>";
+					}
+					
 					
 					$("#publishTimeSelect").append(html);
 				}
