@@ -125,7 +125,7 @@ public class ResumeChangeController extends BaseController {
 		//有效期选择
 		Map<Long, String> map = new HashMap<Long, String>();
 		
-		map.put(9999L, "长期有效");
+		map.put(0L, "长期有效");
 		map.put(30L, "30天有效");
 		map.put(180L, "180天有效");
 		

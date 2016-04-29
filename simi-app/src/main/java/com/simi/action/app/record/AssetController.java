@@ -160,7 +160,7 @@ public class AssetController extends BaseController {
 
 		//异步产生首页消息信息.
 		String title = "资产登记";
-		String summary =  "你生成了新的资产登记.";
+		String summary =  "你生成了新的资产登记";
 		userMsgAsyncService.newActionAppMsg(userId, id, "asset", title, summary, "");
 
 		return result;
