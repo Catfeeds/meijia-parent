@@ -129,7 +129,7 @@ public class ResumeChangeController extends BaseController {
 		
 		map.put(0L, "长期有效");
 		map.put(30L, "30天有效");
-		map.put(180L, "180天有效");
+		map.put(180L, "6个月有效");
 		
 		vo.setTimeMap(map);
 		
