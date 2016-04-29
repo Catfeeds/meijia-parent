@@ -34,7 +34,7 @@ function initFormPage(){
 					var html = "";
 					
 					if(map == 0){
-						html = "<option value='"+map+"selected'>"+result.time_map[map] +"</option>";
+						html = "<option value='"+map+"' selected>"+result.time_map[map] +"</option>";
 					}else{
 						html = "<option value='"+map+"'>"+result.time_map[map] +"</option>";
 					}

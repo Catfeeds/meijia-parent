@@ -15,33 +15,78 @@
 <div class="pet_content_block pet_hd_con">
 <div class="pet_hd_con_head"></div>
   
-<form class="am-form">
+<form class="am-form" id="jobHunterReqPublishForm" data-am-validator>
   <fieldset>
     <legend>电脑登陆 51xingzheng.cn 体验更爽的功能</legend>
-
+	
+	
+	<input type="hidden" id="publishUserId" name="publishUserId" value="">	
+	<input type="hidden" id="publishUserName" name="publishUserName" value=""> 		
+	<input type="hidden" id="publishCityName" name="publishCityName" value="">
+	
+	<div class="am-form-group">
+      <label for="publishUser">发布人</label>
+      <span id="publishUser"></span>
+      
+    </div>
+		
+	<div class="am-form-group">
+      <label for="publishCity">所在城市</label>
+      <span id="publishCity"></span>
+    </div>	
+		
     <div class="am-form-group">
-      <label for="doc-ipt-email-1">标题</label>
-      <input type="email" class="" id="doc-ipt-email-1" placeholder="一句话告诉大家">
+      <label for="publishTitle">标题</label>
+      <input type="text" class="am-form-field" required id="publishTitle" maxlength="32" placeholder="一句话告诉大家,不超过32字">
     </div>
 
     <div class="am-form-group">
-      <label for="doc-ipt-email-1">赏金</label>
-      <input type="email" class="" id="doc-ipt-email-2" placeholder="输入职位悬赏金额">
+      <label for="publishTimeSelect">时间有效期</label>
+      <select id="publishTimeSelect" required>
+      </select>
+      <span class="am-form-caret"></span>
     </div>
 
     <div class="am-form-group">
-      <label for="doc-ta-1">需求内容</label>
-      <textarea class="" rows="4" id="doc-ta-1"></textarea>
+      <label for="reward">赏金</label>
+      <input type="text" id="reward" class="am-form-field js-pattern-pinteger" required maxlength="10" placeholder="输入职位悬赏金额">
     </div>
+	
+	<div class="am-form-group">
+      <label for="jobRes">岗位职责</label>
+      <textarea id="jobRes" class="am-form-field" required rows="6" maxlength="1020" placeholder="不超过1000字" ></textarea>
+    </div>
+    
+    <div class="am-form-group">
+      <label for="jobReq">任职要求</label>
+      <textarea id="jobReq" class="am-form-field" required rows="6" maxlength="1020" placeholder="不超过1000字" ></textarea>
+    </div>
+	
+	 <div class="am-form-group">
+      <label for="remarks">补充说明</label>
+      <textarea id="remarks" class="am-form-field" required rows="6" maxlength="1020" placeholder="不超过1000字" ></textarea>
+    </div>
+	
+	
 <div data-am-sticky>
-  <button class="am-btn am-btn-primary am-btn-block">提交</button>
+  <button id="jobHunterSubmit" class="am-btn am-btn-primary am-btn-block">提交</button>
 </div>
   </fieldset>
 </form>
 
 </div>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/amazeui.min.js"></script>
+
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/amazeui.min.js"></script>
+
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+	
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/resume/job-req-publish.js"></script>
+
+
 <script>
 $(function(){
 

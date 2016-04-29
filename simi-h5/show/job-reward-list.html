@@ -17,58 +17,42 @@
   <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
 
           <div class="am-list-news-bd">
-              <ul class="am-list">
-                <!--缩略图在标题右边-->
-                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
-                  <a href="job-req-detail.html" class="pet_hd_block">
-                    <div class="pet_hd_block_title">技术总监1名</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
-                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
-                  </a>
-                </li>
-                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
-                  <a href="job-req-detail.html" class="pet_hd_block">
-                    <div class="pet_hd_block_title">iOS开发工程师1名</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
-                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
-                  </a>
-                </li>
-                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
-                  <a href="job-req-detail.html" class="pet_hd_block">
-                    <div class="pet_hd_block_title">行政专员1名</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
-                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
-                  </a>
-                </li>
-                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
-                  <a href="job-req-detail.html" class="pet_hd_block">
-                    <div class="pet_hd_block_title">WEB开发工程师1名</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
-                    <div class="pet_hd_block_tag"><span>赏金500元</span> 以成功入职为准</div>
-                  </a>
-                </li>
-                <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
-                  <a href="###" class="pet_hd_block">
-                    <div class="pet_hd_block_title">财务总监1名</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：北京</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>2015年10月26日前</div>
-                    <div class="pet_hd_block_tag"><span class="hd_tag_js">已截止</span> 以成功入职为准</div>
-                  </a>
-                </li>
-                </ul>
-              </div>
+               <ul class="am-list" id="displayContainer">
+               
+              	
+              </ul>
+          </div>
+          
+          <button type="button" id="btn-get-more" class="am-btn am-btn-primary am-btn-block" >加载更多</button>
     </div>
+    
+    
+       <div id="resumeListModel" style="display:none">
+    
+         
+         <li  id="resultCard" 
+		 	 onclick = "resumeDetailForm({userId},{resumeId})"	 
+         	class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
+                  <a href="###" class="pet_hd_block">
+                    <div class="pet_hd_block_title">{title}</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：{cityName}</div>
+                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>{endTimeStr}前</div>
+                    
+                    
+                    <div class="pet_hd_block_tag">{rewardCss} 以成功入职为准</div>
+                    
+                  </a>
+          </li>
+         
+    </div>
+    
 </div>
 
 <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
       id="">
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
-          <li >
-            <a href="job-req-publish.html" class="">
+          <li id="publishJobHunter" >
+            <a href="##" >
                 <span class="am-navbar-label">发布悬赏需求</span>
             </a>
           </li>
@@ -77,6 +61,10 @@
 
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/common/common.js"></script>
+
+<script src="assets/js/resume/job-reward-list.js"></script>
 <script>
 $(function(){
 
