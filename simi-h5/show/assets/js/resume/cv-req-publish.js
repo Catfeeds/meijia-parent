@@ -104,7 +104,9 @@ function submitPublish(){
 			
 			var userId = $("#publishUserId").val()
 			var url = "cv-switch-list.html?user_id="+userId;
-			window.location.href = url;
+			console.log(url);
+			
+			//window.location.href = url;
 		},
 		error : function() {
 			return false;
