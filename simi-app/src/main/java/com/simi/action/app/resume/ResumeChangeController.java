@@ -57,7 +57,7 @@ public class ResumeChangeController extends BaseController {
 	  * @return AppResultData<Object>    返回类型
 	  * @throws
 	 */
-	@RequestMapping(value = "hr_resume_change_list.json",method = RequestMethod.GET)
+	@RequestMapping(value = "hr_resume_change_list",method = RequestMethod.GET)
 	public AppResultData<Object> hrResumeChangeList(
 			@RequestParam("partner_user_id") Long partnerUserId, 
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page){
@@ -106,7 +106,7 @@ public class ResumeChangeController extends BaseController {
 	  * @return AppResultData<Object>    返回类型
 	  * @throws
 	 */
-	@RequestMapping(value = "hr_resume_change_form.json",method = RequestMethod.GET)
+	@RequestMapping(value = "hr_resume_change_form",method = RequestMethod.GET)
 	public AppResultData<Object> hrResumeChangeForm(
 			@RequestParam("partner_user_id") Long partnerUserId){
 		
@@ -155,7 +155,7 @@ public class ResumeChangeController extends BaseController {
 	  * @param link				联系方式
 	  * @throws
 	 */
-	@RequestMapping(value = "hr_resume_change_form.json",method = RequestMethod.POST)
+	@RequestMapping(value = "hr_resume_change_form",method = RequestMethod.POST)
 	public AppResultData<Object> submitHrResumeChangeForm(
 			@RequestParam("user_id") Long userId,
 			@RequestParam("user_name")String userName,
@@ -208,7 +208,7 @@ public class ResumeChangeController extends BaseController {
 	  * @param resumeId			主键
 	  * @throws
 	 */
-	@RequestMapping(value = "hr_resume_detail.json",method = RequestMethod.GET)
+	@RequestMapping(value = "hr_resume_detail",method = RequestMethod.GET)
 	public AppResultData<Object> resumeDetailForm(
 			@RequestParam("partner_user_id")Long userId,
 			@RequestParam("resume_id")Long resumeId){

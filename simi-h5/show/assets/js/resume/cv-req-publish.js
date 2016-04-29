@@ -94,7 +94,6 @@ function submitPublish(){
 		data : params,
 		dataType : "json",
 		cache : true,
-		async : false,	
 		success : function(data) {
 			
 			if (data.status == "999") {
@@ -106,7 +105,7 @@ function submitPublish(){
 			var url = "cv-switch-list.html?user_id="+userId;
 			console.log(url);
 			
-			//window.location.href = url;
+			window.location.href = url;
 		},
 		error : function() {
 			return false;
