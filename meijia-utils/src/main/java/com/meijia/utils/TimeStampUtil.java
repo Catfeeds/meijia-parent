@@ -177,7 +177,17 @@ public class TimeStampUtil {
         	return TimeStampUtil.timeStampToDateStr(time, "yyyy-MM-dd HH:mm");
         }
     }	    
-
+    
+    /**
+	 *  根据时间戳 -> String yyyy-MM-dd HH:MM:ss
+	 */
+	public static String timeStampToChineseDateStr(Long t, String patten) {
+		SimpleDateFormat df = new SimpleDateFormat(patten);
+		String str = df.format(t);
+		return str;
+	}
+    
+    
 	public static void main(String[] args) {
 //		Long serviceTime = (long) 1458294331;
 		
@@ -194,9 +204,15 @@ public class TimeStampUtil {
 		
 		Long nowMin = 1458295140000L;
 		Long serviceTime = 1458295440L;
+		
+		System.out.println((long)180*3600*24*1000); 
+		
+		System.out.println(timeStampToChineseDateStr(serviceTime,"yyyy年MM月dd日"));
+		
+		
 //		serviceTime = TimeStampUtil.timeStampToDateHour(serviceTime * 1000);
-		int remindMin = 5;
-		Long remindTime = serviceTime - remindMin * 60;
-		System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime * 1000,DateUtil.DEFAULT_FULL_PATTERN));
+//		int remindMin = 5;
+//		Long remindTime = serviceTime - remindMin * 60;
+//		System.out.println(TimeStampUtil.timeStampToDateStr(nowMin,DateUtil.DEFAULT_FULL_PATTERN) + "----" + TimeStampUtil.timeStampToDateStr(remindTime * 1000,DateUtil.DEFAULT_FULL_PATTERN));
 	}
 }
