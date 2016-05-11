@@ -72,7 +72,7 @@ public class UserQRController extends BaseController {
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
 	
-	@RequestMapping(value = "qr", method = { RequestMethod.POST })
+	@RequestMapping(value = "qr", method = { RequestMethod.GET })
 	public AppResultData<Object> doQr(@RequestParam("user_id") Long userId) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
