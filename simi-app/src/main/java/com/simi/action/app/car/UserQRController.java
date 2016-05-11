@@ -115,6 +115,10 @@ public class UserQRController extends BaseController {
 			return result;
 		}
 		
+		u.setRestMoney(u.getRestMoney().subtract(orderPay));
+		u.setUpdateTime(TimeStampUtil.getNowSecond());
+		userService.updateByPrimaryKeySelective(u);
+		
 		//生成订单扣款
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 		
