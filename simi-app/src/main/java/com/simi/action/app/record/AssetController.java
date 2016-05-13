@@ -27,21 +27,18 @@ import com.simi.common.Constants;
 import com.simi.po.model.common.Imgs;
 import com.simi.po.model.record.RecordAssets;
 import com.simi.po.model.xcloud.XcompanyAssets;
-import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.ImgService;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.record.RecordAssetService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
-import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyAssetService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.AssetSearchVo;
 import com.simi.vo.ImgSearchVo;
 import com.simi.vo.record.RecordAssetVo;
-import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/record")
@@ -61,9 +58,6 @@ public class AssetController extends BaseController {
 
 	@Autowired
 	private XcompanyStaffService xCompanyStaffService;
-	
-	@Autowired
-	private XCompanySettingService xCompanySettingService;
 
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
@@ -255,13 +249,7 @@ public class AssetController extends BaseController {
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
 		}
-		
-		//获取全部资产类型
-		CompanySettingSearchVo s = new CompanySettingSearchVo();
-		s.setSettingType("asset_type");
-		List<XcompanySetting> assetTypeList = xCompanySettingService.selectBySearchVo(s);
-		
-		//获取已登记的资产列表
+
 		AssetSearchVo searchVo = new AssetSearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setCompanyId(companyId);
@@ -272,21 +260,23 @@ public class AssetController extends BaseController {
 				
 		Map<String, Object> listMap = new HashMap<String, Object>();
 		
-		
+		List<XcompanyAssets> typeList = new ArrayList<XcompanyAssets>();
 		XcompanyAssets item = null;
-		XcompanySetting settingItem = null;
-		for (int i = 0 ; i < assetTypeList.size(); i++) {
-			settingItem = assetTypeList.get(i);
-			List<XcompanyAssets> typeList = new ArrayList<XcompanyAssets>();
-			for (int j = 0; j < list.size(); j++) {
-				item = list.get(j);
-				if (settingItem.getId().equals(item.getAssetTypeId())) {
-					typeList.add(item);
-				}
+		Long tmpAssetTypeId = 0L;
+		for (int i = 0 ; i < list.size(); i++) {
+			item = list.get(i);
+			if (tmpAssetTypeId.equals(0L)) tmpAssetTypeId = item.getAssetTypeId();
+			
+			if (!tmpAssetTypeId.equals(item.getAssetTypeId())) {
+				((HashMap<String, Object>) listMap).put(tmpAssetTypeId.toString(), typeList);
+				typeList = new ArrayList<XcompanyAssets>();
+				tmpAssetTypeId = item.getAssetTypeId();
 			}
-			((HashMap<String, Object>) listMap).put(settingItem.getId().toString(), typeList);
+			typeList.add(item);
 		}
 		
+		//最后的时候，增加一次。
+		((HashMap) listMap).put(tmpAssetTypeId.toString(), typeList);
 		listMap = GsonUtil.sortMapByKey(listMap);
 		
 		result.setData(listMap);
