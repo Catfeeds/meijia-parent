@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.OrderNoUtil;
@@ -201,7 +202,27 @@ public class UserCarController extends BaseController {
 		Long userId = userCar.getUserId();
 
 		Users u = userService.selectByPrimaryKey(userId);
-
+		
+		//两次订单间隔为10秒
+		Long serviceTypeId = 258L;
+		OrderSearchVo searchVo = new OrderSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setServiceTypeId(serviceTypeId);
+		PageInfo list = orderQueryService.selectByListPage(searchVo, 1, 1);
+		List<Orders> orderList = list.getList();
+		if (!orderList.isEmpty()) {
+			Orders order = orderList.get(0);
+			Long addTime = order.getAddTime();
+			Long nowTime = TimeStampUtil.getNowSecond();
+			if ( (nowTime - addTime) < 10 ) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("10秒内重复操作.");
+				return result;
+			}
+		}
+		
+		
+		
 		BigDecimal orderMoney = new BigDecimal(1.0);// 原价
 		BigDecimal orderPay = new BigDecimal(1.0);// 折扣价
 		// 查询用户余额
@@ -216,7 +237,7 @@ public class UserCarController extends BaseController {
 		u.setUpdateTime(TimeStampUtil.getNowSecond());
 		userService.updateByPrimaryKeySelective(u);
 
-		Long serviceTypeId = 258L;
+		
 		// 生成订单扣款
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 
