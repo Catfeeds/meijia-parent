@@ -176,7 +176,7 @@ public class CarController extends BaseController {
 			
 			//推送信息
 			String capImg = "http://img.51xingzheng.cn/9790863671ef3249011398e23f137fc6";
-			noticeAppAsyncService.pushMsgToExpr(orderId, carNo, carColor, capImg);
+			noticeAppAsyncService.pushMsgToExpr(orderId, carNo, carColor, capImg, "成功");
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
