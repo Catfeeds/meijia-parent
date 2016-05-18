@@ -18,6 +18,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
@@ -57,10 +59,8 @@ public class HttpClientUtil {
 		connectionManager = new MultiThreadedHttpConnectionManager();
 		connectionManager.getParams().setConnectionTimeout(connectionTimeOut);
 		connectionManager.getParams().setSoTimeout(socketTimeOut);
-		connectionManager.getParams().setDefaultMaxConnectionsPerHost(
-				maxConnectionPerHost);
-		connectionManager.getParams().setMaxTotalConnections(
-				maxTotalConnections);
+		connectionManager.getParams().setDefaultMaxConnectionsPerHost(maxConnectionPerHost);
+		connectionManager.getParams().setMaxTotalConnections(maxTotalConnections);
 		client = new HttpClient(connectionManager);
 	}
 
@@ -83,9 +83,7 @@ public class HttpClientUtil {
 		PostMethod postMethod = null;
 		try {
 			postMethod = new PostMethod(url);
-			postMethod.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded;charset="
-							+ URL_PARAM_DECODECHARSET_UTF8);
+			postMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + URL_PARAM_DECODECHARSET_UTF8);
 			// 将表单的值放入postMethod中
 			Set<String> keySet = params.keySet();
 			for (String key : keySet) {
@@ -114,6 +112,59 @@ public class HttpClientUtil {
 
 		return response;
 	}
+	
+	/**
+	 * POST方式提交数据
+	 *
+	 * @param url
+	 *            待请求的URL
+	 * @param params
+	 *            要提交的数据
+	 * @param enc
+	 *            编码
+	 * @return 响应结果
+	 * @throws IOException
+	 *             IO异常
+	 */
+	public static String postByAuth(String url, String username, String password, Map<String, String> params) {
+
+		String response = EMPTY;
+		PostMethod postMethod = null;
+		
+		UsernamePasswordCredentials creds = new UsernamePasswordCredentials(username, password);  
+
+		client.getState().setCredentials(AuthScope.ANY, creds); 
+		try {
+			postMethod = new PostMethod(url);
+			postMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + URL_PARAM_DECODECHARSET_UTF8);
+			// 将表单的值放入postMethod中
+			Set<String> keySet = params.keySet();
+			for (String key : keySet) {
+				String value = params.get(key);
+				postMethod.addParameter(key, value);
+			}
+			// 执行postMethod
+			int statusCode = client.executeMethod(postMethod);
+			if (statusCode == HttpStatus.SC_OK) {
+				response = postMethod.getResponseBodyAsString();
+			} else {
+				log.error("响应状态码 = " + postMethod.getStatusCode());
+			}
+		} catch (HttpException e) {
+			log.error("发生致命的异常，可能是协议不对或者返回的内容有问题", e);
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.error("发生网络异常", e);
+			e.printStackTrace();
+		} finally {
+			if (postMethod != null) {
+				postMethod.releaseConnection();
+				postMethod = null;
+			}
+		}
+
+		return response;
+	}	
 
 	/**
 	 * GET方式提交数据
@@ -143,9 +194,7 @@ public class HttpClientUtil {
 
 		try {
 			getMethod = new GetMethod(strtTotalURL.toString());
-			getMethod.setRequestHeader("Content-Type",
-					"application/x-www-form-urlencoded;charset="
-							+ URL_PARAM_DECODECHARSET_UTF8);
+			getMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + URL_PARAM_DECODECHARSET_UTF8);
 			// 执行getMethod
 			int statusCode = client.executeMethod(getMethod);
 			if (statusCode == HttpStatus.SC_OK) {
@@ -178,17 +227,15 @@ public class HttpClientUtil {
 			con.setRequestProperty("Cache-Control", "no-cache");
 			con.setRequestProperty("Content-Type", "text/xml");
 
-			OutputStreamWriter out = new OutputStreamWriter(
-					con.getOutputStream());
+			OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
 			System.out.println("urlStr=" + urlStr);
 			System.out.println("xmlInfo=" + xml);
-//			xml = new String(xml.getBytes("ISO-8859-1"));
-			
+			// xml = new String(xml.getBytes("ISO-8859-1"));
+
 			out.write(xml);
 			out.flush();
 			out.close();
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String line = "";
 			String result = "";
 			for (line = br.readLine(); line != null; line = br.readLine()) {
@@ -231,14 +278,12 @@ public class HttpClientUtil {
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-				url.append(key).append("=").append(str)
-						.append(URL_PARAM_CONNECT_FLAG);
+				url.append(key).append("=").append(str).append(URL_PARAM_CONNECT_FLAG);
 			}
 		}
 		String strURL = EMPTY;
 		strURL = url.toString();
-		if (URL_PARAM_CONNECT_FLAG.equals(EMPTY
-				+ strURL.charAt(strURL.length() - 1))) {
+		if (URL_PARAM_CONNECT_FLAG.equals(EMPTY + strURL.charAt(strURL.length() - 1))) {
 			strURL = strURL.substring(0, strURL.length() - 1);
 		}
 
@@ -246,22 +291,30 @@ public class HttpClientUtil {
 	}
 
 	public static void main(String[] args) {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("merNo", "301100100001630");
-		params.put("signType", "MD5");
-		params.put("merBindAgrNo", "00003018007000006450000013866742");
-		params.put("interfaceVersion", "1.0.0.0");
-		params.put("amount", "1000");
-		params.put("orderDate", "20120823");
-		params.put("orderNo", "UDP1208230917531231111");
-		params.put("merReqTime", "20120823091802");
-		params.put("goodsDesc", "为号码交费充值元");
-		params.put("goodsName", "中国联通交费充值");
-		params.put("userIdeMark", "3");
-		params.put("bankAgrMode", "9");
-		params.put("signMsg", "3ced24a118461043901d47815e6905a9");
-		System.out.println(HttpClientUtil.getUrl(params));
+		 Map<String, String> params = new HashMap<String, String>();
+		// params.put("merNo", "301100100001630");
+		// params.put("signType", "MD5");
+		// params.put("merBindAgrNo", "00003018007000006450000013866742");
+		// params.put("interfaceVersion", "1.0.0.0");
+		// params.put("amount", "1000");
+		// params.put("orderDate", "20120823");
+		// params.put("orderNo", "UDP1208230917531231111");
+		// params.put("merReqTime", "20120823091802");
+		// params.put("goodsDesc", "为号码交费充值元");
+		// params.put("goodsName", "中国联通交费充值");
+		// params.put("userIdeMark", "3");
+		// params.put("bankAgrMode", "9");
+		// params.put("signMsg", "3ced24a118461043901d47815e6905a9");
+		// System.out.println(HttpClientUtil.getUrl(params));
 		// System.out.println(HttpClientUtil.post("xxxx", params));
+		//开门
+		String username = "admin";
+		String password = "888888";
+		String url = "http://192.168.0.67/cdor.cgi?open=1";
+//		params.put("open", "1");
+		System.out.println(HttpClientUtil.postByAuth(url, username, password, params));
+		
+		//
 	}
 
 }
