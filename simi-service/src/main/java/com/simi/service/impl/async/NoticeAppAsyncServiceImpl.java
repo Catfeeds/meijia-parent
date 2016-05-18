@@ -76,7 +76,7 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 	// 发送推送消息-速通宝
 	@Async
 	@Override
-	public Future<Boolean> pushMsgToExpr(Long orderId, String carNo, String carColor, String capImg) {	
+	public Future<Boolean> pushMsgToExpr(Long orderId, String carNo, String carColor, String capImg, String remindContent) {	
 		
 		Orders order = ordersService.selectByPrimaryKey(orderId);
 		if (order == null) return new AsyncResult<Boolean>(true);
@@ -111,7 +111,7 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 		tranParams.put("rest_money", restMoneyStr);
 		tranParams.put("user_id", userId.toString());
 		tranParams.put("cap_img", capImg);
-		tranParams.put("remind_content", "");
+		tranParams.put("remind_content", remindContent);
 		
 		String clientId = userPushBind.getClientId();
 		String deviceType = userPushBind.getDeviceType();
