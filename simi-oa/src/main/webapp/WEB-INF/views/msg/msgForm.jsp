@@ -107,9 +107,9 @@
 										<label class="col-md-2 control-label">应用类型</label>
 										<div class=col-md-5>
 												<form:select path="appType" class="form-control">
-												<form:option value="" label="请选择应用类型"/>  
-												<form:option value="0" label="jhj-am"/>  
-												<form:option value="1" label="jhj-u"/>  
+												<form:option value="xcloud" label="云行政"/>  
+												<form:option value="simi" label="私秘"/>  
+												<form:option value="timechick" label="时光机"/>  
 												</form:select>
 										</div>
 									</div>
