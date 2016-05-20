@@ -208,7 +208,60 @@ public class FeedController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "post_zan", method = RequestMethod.POST)
-	public AppResultData<Object> postZan(@RequestParam("fid") Long fid, @RequestParam("user_id") Long userId) {
+	public AppResultData<Object> postZan(
+			@RequestParam("fid") Long fid, 
+			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "action", required = false, defaultValue = "add") String action
+			) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = userService.selectByPrimaryKey(userId);
+
+		// 判断是否为注册用户，非注册用户返回 999
+		if (u == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+			return result;
+		}
+
+		FeedSearchVo searchVo = new FeedSearchVo();
+		searchVo.setFid(fid);
+		searchVo.setUserId(userId);
+		FeedZan feedZan = feedZanService.selectBySearchVo(searchVo);
+		
+		if (action.equals("add")) {
+			if (feedZan == null) {
+				feedZan = feedZanService.initFeedZan();
+				feedZan.setFid(fid);
+				feedZan.setUserId(userId);
+				feedZanService.insert(feedZan);
+			}
+		}
+		
+		if (action.equals("del")) {
+			if (feedZan != null) {
+				feedZanService.deleteByPrimaryKey(feedZan.getId());
+			}
+		}
+		
+		int totalZan = feedZanService.totalByFid(fid);
+		result.setData(totalZan);
+
+		return result;
+	}
+	
+	// 卡片点赞接口
+	/**
+	 * @param fid
+	 *            动态ID
+	 * @param user_id
+	 *            用户ID
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "get_zan", method = RequestMethod.GET)
+	public AppResultData<Object> getZan(@RequestParam("fid") Long fid, @RequestParam("user_id") Long userId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -227,17 +280,14 @@ public class FeedController extends BaseController {
 		FeedZan feedZan = feedZanService.selectBySearchVo(searchVo);
 
 		if (feedZan == null) {
-			feedZan = feedZanService.initFeedZan();
-			feedZan.setFid(fid);
-			feedZan.setUserId(userId);
-			feedZanService.insert(feedZan);
+			return result;
 		}
 
-		int totalZan = feedZanService.totalByFid(fid);
-		result.setData(totalZan);
+		
+		result.setData(feedZan);
 
 		return result;
-	}
+	}	
 
 	// 卡片评论接口
 	/**
