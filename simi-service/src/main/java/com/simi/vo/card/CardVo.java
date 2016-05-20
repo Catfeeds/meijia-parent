@@ -20,6 +20,16 @@ public class CardVo extends Cards {
 	private String cardTypeName;
 		
 	private String addTimeStr;
+	
+	private String attendUserName;
+	
+	public String getAttendUserName() {
+		return attendUserName;
+	}
+
+	public void setAttendUserName(String attendUserName) {
+		this.attendUserName = attendUserName;
+	}
 
 	public String getName() {
 		return name;

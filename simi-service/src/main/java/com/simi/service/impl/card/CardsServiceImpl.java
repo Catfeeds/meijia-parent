@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,6 @@ import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.dict.CityService;
-import com.simi.service.dict.DictUtil;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardListVo;
@@ -28,7 +27,6 @@ import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
-import com.simi.po.model.common.Weathers;
 import com.simi.po.model.user.Users;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -36,12 +34,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.GsonUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.baidu.BaiduMapUtil;
-import com.meijia.utils.weather.WeatherDataVo;
-import com.meijia.utils.weather.WeatherIndexVo;
 import com.simi.po.dao.card.CardImgsMapper;
 import com.simi.po.dao.card.CardsMapper;
 
@@ -363,8 +357,35 @@ public class CardsServiceImpl implements CardService {
 		String addTimeStr = DateUtil.fromToday(addTimeDate);
 		vo.setAddTimeStr(addTimeStr);			
 			
+		//参与人员
+		List<CardAttend> list = cardAttendService.selectByCardId(item.getCardId());
 		
+		HashSet<Long> set = new HashSet<Long>();
+		for (CardAttend cardAttend : list) {
+			set.add(cardAttend.getUserId());
+		}
 		
+		UserSearchVo userSearchVo = new UserSearchVo();
+		userSearchVo.setUserIds(new ArrayList<Long>(set));
+		
+		List<Users> userList = usersService.selectBySearchVo(userSearchVo);
+		
+		StringBuffer userName = new StringBuffer();
+		
+		for (Users users : userList) {
+			if(!StringUtil.isEmpty(users.getName())){
+				userName.append(users.getName());	
+				userName.append(",");
+			}
+		}
+		
+		//去除最后一个逗号
+		if(userName.length() > 1){
+			userName.deleteCharAt(userName.length() - 1);
+		}
+		
+		//参与人员
+		vo.setAttendUserName(userName.toString());
 		return vo;
 	}		
 	
