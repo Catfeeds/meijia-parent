@@ -51,52 +51,6 @@
 		from users
 	</select>
 	
-	<select id="selectUsersByPushUserType" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from users AS a
-		<if test="pushUserType = 1">
-			where user_type = 1			
-		</if>
-		<if test="pushUserType = 2">
-			where user_type = 2
-		</if>
-		<if test="pushUserType = 0">
-		
-			LEFT JOIN  
-	 			user_logined AS b  
-	 		ON  a.id = b.user_id
-			WHERE  
-			(a.user_type = 0 AND b.add_time > (UNIX_TIMESTAMP(NOW())- 3600*24*30)) 
-		</if>
-		<if test="pushUserType = 3">
-			
-			LEFT JOIN  
-	 			user_logined AS b  
-	 		ON a.id = b.user_id
-			WHERE  
-			(a.user_type = 0 AND b.add_time > (UNIX_TIMESTAMP(NOW())- 3600*24*30)) 
-			OR 
-			(a.user_type IN (1,2)) 
-		</if>
-		
-	</select>
-	
-	<select id="selectUserIdsForPushAll" resultType="java.lang.Long">
-		SELECT  
-	 		DISTINCT(a.id) 
-	 	FROM 
-	 		users AS a 
-	 	LEFT JOIN  
-	 		user_logined AS b  
-	 	ON a.id = b.user_id
-		WHERE  
-		(a.user_type = 0 AND b.add_time > (UNIX_TIMESTAMP(NOW())- 3600*24*30)) 
-		OR 
-		(a.user_type IN (1,2)) 
-	</select>
-	
-	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />

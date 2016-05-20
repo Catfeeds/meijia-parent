@@ -18,6 +18,17 @@
 		from user_logined
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="selectUserIdsLastMonth" resultType="java.lang.Long">
+		select
+			distinct(user_id)
+		from user_logined
+		where
+		add_time > (UNIX_TIMESTAMP(NOW())- 3600*24*30)
+	</select>
+	
+	
+	
 	<select id="selectByCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
 		select count(*)
 		from user_logined

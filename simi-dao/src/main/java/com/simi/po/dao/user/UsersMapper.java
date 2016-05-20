@@ -37,10 +37,4 @@ public interface UsersMapper {
 	
 	int statByTotalUser(ChartSearchVo chartSearchVo);
 
-	//全部推送。所有用户 =  普通用户（最近一个月）+ 所有秘书 + 所有服务商
-	List<Long> selectUserIdsForPushAll();
-	
-	//根据 推送 类型，得到 需要 推送的用户。。
-	List<Users> selectUsersByPushUserType(Short pushUserType);
-	
 }
