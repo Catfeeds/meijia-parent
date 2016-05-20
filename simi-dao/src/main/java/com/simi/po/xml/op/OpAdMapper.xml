@@ -14,11 +14,10 @@
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
     <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
     <result column="enable" property="enable" jdbcType="NUMERIC" />
-    <result column="click_times" property="clickTimes" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, no, title, ad_type, service_type_ids, img_url, goto_type, action, goto_url, add_time, 
-    update_time, enable, click_times
+    update_time, enable
   </sql>
   
   	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.po.AdSearchVo">
@@ -80,13 +79,11 @@
     insert into op_ad (id, no, title, 
       ad_type, service_type_ids, img_url, 
       goto_type, action, goto_url, 
-      add_time, update_time, enable, 
-      click_times)
+      add_time, update_time, enable)
     values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, 
       #{adType,jdbcType=VARCHAR}, #{serviceTypeIds,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
       #{gotoType,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{gotoUrl,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC}, 
-      #{clickTimes,jdbcType=INTEGER})
+      #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.op.OpAd" >
     insert into op_ad
@@ -127,9 +124,6 @@
       <if test="enable != null" >
         enable,
       </if>
-      <if test="clickTimes != null" >
-        click_times,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -167,9 +161,6 @@
       </if>
       <if test="enable != null" >
         #{enable,jdbcType=NUMERIC},
-      </if>
-      <if test="clickTimes != null" >
-        #{clickTimes,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -209,9 +200,6 @@
       <if test="enable != null" >
         enable = #{enable,jdbcType=NUMERIC},
       </if>
-      <if test="clickTimes != null" >
-        click_times = #{clickTimes,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=NUMERIC}
   </update>
@@ -227,8 +215,7 @@
       goto_url = #{gotoUrl,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=NUMERIC},
       update_time = #{updateTime,jdbcType=NUMERIC},
-      enable = #{enable,jdbcType=NUMERIC},
-      click_times = #{clickTimes,jdbcType=INTEGER}
+      enable = #{enable,jdbcType=NUMERIC}
     where id = #{id,jdbcType=NUMERIC}
   </update>
 </mapper>
