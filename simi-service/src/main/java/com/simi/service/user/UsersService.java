@@ -46,10 +46,4 @@ public interface UsersService {
 
 	List<UserBaseVo> getUserBaseVos(List<Users> list);
 	
-	//全部推送。的所有用户 =  普通用户（最近一个月）+ 所有秘书 + 所有服务商
-	List<Long>	selectUsersForPushAll();
-	
-	//根据 推送类型，得到用户
-	List<Users> selectUsersByPushUserType(Short pushUserType);
-	
 }

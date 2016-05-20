@@ -149,11 +149,12 @@ public class Constants {
 	
 	
 	/*
-	 *  平台 用户 类型
+	 *  平台   推送  用户 类型
 	 */
 	public static Short OA_PUSH_USER_TYPE_0 = 0;	//普通用户,最近一个月登录过的
 	public static Short OA_PUSH_USER_TYPE_1 = 1;	//秘书
 	public static Short OA_PUSH_USER_TYPE_2 = 2;	//服务商
 	public static Short OA_PUSH_USER_TYPE_3 = 3;	//全部用户
+	
 	
 }

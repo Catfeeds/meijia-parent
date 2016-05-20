@@ -14,6 +14,16 @@ public class OaMsgVo extends Msg {
 	private Short sendWay;	// 消息 发送方式  0=测试  1=保存并推送
 	
 	private String sendTestUser;
+	
+	private Short selectUserType;	// 下拉选的 userType
+	
+	public Short getSelectUserType() {
+		return selectUserType;
+	}
+
+	public void setSelectUserType(Short selectUserType) {
+		this.selectUserType = selectUserType;
+	}
 
 	public Short getSendWay() {
 		return sendWay;

@@ -126,6 +126,7 @@ public class MsgServiceImpl implements MsgService {
 		
 		oaMsgVo.setSendWay((short)1);	//1= 保存并立即发送  0= 发送测试人员
 		oaMsgVo.setSendTestUser("");
+		oaMsgVo.setSelectUserType((short)0);	// 0 = 普通用户   1= 秘书 2=服务商  3=全部用户
 		
 		return oaMsgVo;
 	}

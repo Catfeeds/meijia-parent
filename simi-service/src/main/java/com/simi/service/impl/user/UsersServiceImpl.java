@@ -625,15 +625,4 @@ public class UsersServiceImpl implements UsersService {
 		return headImg;
 	}
 	
-	
-	@Override
-	public List<Long> selectUsersForPushAll() {
-		return usersMapper.selectUserIdsForPushAll();
-	}
-
-	@Override
-	public List<Users> selectUsersByPushUserType(Short pushUserType) {
-		return usersMapper.selectUsersByPushUserType(pushUserType);
-	}
-	
 }

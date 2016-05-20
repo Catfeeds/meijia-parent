@@ -1,5 +1,7 @@
 package com.simi.service.impl.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +60,11 @@ public class UserLoginedServiceImpl implements UserLoginedService{
 	@Override
 	public int selectByCount(Long userId) {
 		return userLoginedMapper.selectByCount(userId);
+	}
+
+	@Override
+	public List<Long> selectUserIdsLastMonth() {
+		return userLoginedMapper.selectUserIdsLastMonth();
 	}
 
 }
