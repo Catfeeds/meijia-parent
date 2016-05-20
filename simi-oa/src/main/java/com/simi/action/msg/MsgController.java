@@ -42,10 +42,12 @@ import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
+import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.MsgSearchVo;
 import com.simi.vo.msg.OaMsgVo;
+import com.simi.vo.user.UserSearchVo;
 @Controller
 @RequestMapping(value = "/msg")
 public class MsgController extends AdminController {
@@ -76,6 +78,9 @@ public class MsgController extends AdminController {
 	
 	@Autowired
 	private NoticeAppAsyncService noticeAsyncService;
+	
+	@Autowired
+	private UserLoginedService userLoginedService;
 	
 	/**
 	 * 消息列表
@@ -237,33 +242,61 @@ public class MsgController extends AdminController {
     		}
     	}else{
     		
-    		Short userType = msgVo.getUserType();
+    		Short selectUserType = msgVo.getUserType();
     		
-    		List<Users> list = usersService.selectUsersByPushUserType(userType);
-			for (Users users : list) {
-				noticeAsyncService.pushMsgToDevice(users.getId(), title, content);
+    		List<Users> userList = new ArrayList<Users>();
+    		
+    		//最近一个月 登录过的用户。
+    		List<Long> lastMonthUser = userLoginedService.selectUserIdsLastMonth();
+    		
+    		UserSearchVo  searchVo = new UserSearchVo();
+    		
+    		if(selectUserType == 0){
+    			//选择 普通用户（一个月的）
+    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_0);
+    			searchVo.setUserIds(lastMonthUser);
+    			
+    			userList = usersService.selectBySearchVo(searchVo);
+    			
+    		}
+    		if(selectUserType == 1){
+    			//选择秘书
+    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_1);
+    			
+    			userList = usersService.selectBySearchVo(searchVo);
+    			
+    		}
+    		if(selectUserType == 2){
+    			//选择 服务商
+    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_2);
+    			
+    			userList = usersService.selectBySearchVo(searchVo);
+    		}
+    		
+    		if(selectUserType == 3){
+    			
+    			//选择 的 全部用户 = 一个月的普通用户+秘书+服务商
+    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_0);
+    			searchVo.setUserIds(lastMonthUser);
+    			userList = usersService.selectBySearchVo(searchVo);
+    			
+    			searchVo = new UserSearchVo();
+    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_1);
+    			List<Users> msList = usersService.selectBySearchVo(searchVo);
+    			
+    			userList.addAll(msList);
+    			
+    			searchVo = new UserSearchVo();
+    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_2);
+    			List<Users> fwList = usersService.selectBySearchVo(searchVo);
+    			
+    			userList.addAll(fwList);
+    		}
+    		
+    		//异步推送
+			for (Users users : userList) {
+				noticeAsyncService.pushMsgToDevice(users.getId(), title,content);
 			}	
-    		
-//    		/*
-//    		 * 
-//    		 * 如果选择的 全部 用户
-//    		 * 发送 给 用户（最近一个月登录）+ 秘书 + 服务商
-//    		 */
-//    		
-//    		if(userType == Constants.OA_PUSH_USER_TYPE_3){
-//    			//如果 是 选择的 全部用户
-//    			List<Long> list = usersService.selectUsersForPushAll();
-//    			
-//    			for (Long userId : list) {
-//    				noticeAsyncService.pushMsgToDevice(userId, title, content);
-//				}
-//    		}else{
-//    			//选择的 特定类型的 用户， 其中 普通用户 ，也只发送 最近一个月登录过的
-//    			List<Users> list = usersService.selectUsersByPushUserType(userType);
-//    			for (Users users : list) {
-//    				noticeAsyncService.pushMsgToDevice(users.getId(), title, content);
-//				}	
-//    		}
 			
     	}
     	
