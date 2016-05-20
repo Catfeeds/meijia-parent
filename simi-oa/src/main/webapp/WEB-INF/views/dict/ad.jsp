@@ -52,6 +52,7 @@
 										<th>图片地址</th>
 										<th>跳转地址</th>
 										<th>广告类型</th>
+										<th>点击次数</th>
 										<th>添加时间戳</th>
 										<th>更新时间戳</th>
                                         <th>操作</th>
@@ -64,6 +65,7 @@
 											<td><img src="${ item.imgUrl }?w=60&h=60"/></td>
 											<td>${ item.gotoUrl }</td>
 											<td>${ item.adTypeName }</td>
+											<td>${ item.totalHit }</td>
 											<td>${ item.addTime }</td>
 											<td>${ item.updateTime }</td>
 									<td>

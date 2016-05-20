@@ -1,6 +1,9 @@
 package com.simi.action.msg;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +17,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
+import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.vo.AppResultData;
 import com.simi.action.admin.AdminController;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
+import com.simi.oa.auth.AccountAuth;
+import com.simi.oa.auth.AuthHelper;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.msg.Msg;
+import com.simi.po.model.user.Users;
+import com.simi.service.admin.AdminAccountService;
+import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.msg.MsgService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
@@ -28,6 +45,7 @@ import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.MsgSearchVo;
+import com.simi.vo.msg.OaMsgVo;
 @Controller
 @RequestMapping(value = "/msg")
 public class MsgController extends AdminController {
@@ -52,7 +70,13 @@ public class MsgController extends AdminController {
 
 	@Autowired
 	private UserDetailPayService userDetailPayService;
-
+	
+	@Autowired
+	private AdminAccountService accountService;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAsyncService;
+	
 	/**
 	 * 消息列表
 	 * @param request
@@ -86,22 +110,18 @@ public class MsgController extends AdminController {
 		
 		PageInfo result = new PageInfo(list);
 		
-		
-		
 		model.addAttribute("contentModel", result);
 
 		return "msg/msgList";
 	}
-    /**
-     * 秘书详细信息列表展示
-     * @param id
-     * @param model
-     * @return
+    
+    /*
+     * 消息 信息 form
      */
-    //@AuthPassport
+    @AuthPassport
 	@RequestMapping(value = "/msgForm",method = RequestMethod.GET)
 	public String  orderDetail(HttpServletRequest request,
-			@RequestParam(value = "msg_id") Long msgId,Model model){
+			@RequestParam(value = "id") Long msgId,Model model) throws ParseException{
 		
     	//Long msgIdsss = Long.valueOf(request.getParameter("msgId"));
     	
@@ -113,41 +133,146 @@ public class MsgController extends AdminController {
 		if (msgId != null && msgId > 0) {
 			msg = msgService.selectByPrimaryKey(msgId);
 		}
-
-		model.addAttribute("contentModel", msg);
+//		Long sendTime = msg.getSendTime();
+//		
+//		// 时间戳 转为 UTC格式 date类型的 时间，供前台展示
+//		Date date = DateUtil.timeStampToDate(sendTime);
+//		
+		//转换 发送时间  sendTime 时间戳--> utc 时间
+//		model.addAttribute("sendTimeDate", date);
+		
+		AccountAuth auth = AuthHelper.getSessionAccountAuth(request);
+		
+		String name = auth.getName();
+		
+		Long id = auth.getId();
+		
+		AdminAccount account = accountService.selectByPrimaryKey(id);
+		
+		String mobile = account.getMobile();
+		
+		String testUser = "名称:"+name+ " 手机:"+mobile;
+		
+		//默认 保存 并立即 发送 
+		OaMsgVo msgVo = msgService.initOaMsgVo(msg);
+		
+		msgVo.setSendTestUser(testUser);
+		
+		model.addAttribute("contentModel", msgVo);
 		
 		return "msg/msgForm";
 	}
     
+    
     /**
-     * 信息修改保存
+     * 保存并 发送  消息
      * @param model
      * @param id
      * @param request
      * @return
      */
-  //  @AuthPassport
-	@RequestMapping(value = "/saveMsgForm", method = { RequestMethod.POST})
-	public String adForm(Model model,
-			/*@RequestParam(value = "id") Long id,
-			@RequestParam(value = "isApproval") short isApproval,*/
-			@ModelAttribute("contentModel") Msg msg,
+    @AuthPassport
+	@RequestMapping(value = "/saveMsgForm.json", method = { RequestMethod.POST})
+	public AppResultData<Object> adForm(Model model,
+			@ModelAttribute("contentModel") OaMsgVo msgVo,
 			BindingResult result,HttpServletRequest request)throws IOException {
     	
-    	Long msgId = msg.getMsgId();
+    	AppResultData<Object> returnRe = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+    	
+    	Long msgId = msgVo.getMsgId();
     	
     	Msg record = msgService.initMsg();
-
-    //	BeanUtilsExp.copyPropertiesIgnoreNull(msg, record);
-    
+    	
+    	BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
+    	
+    	//入库
     	if (msgId > 0L ) {
-    		record = msg;
     		msgService.updateByPrimaryKeySelective(record);
-		}else {
-			msgService.insertSelective(record);
 		}
     	
-    	return "redirect:/msg/list";
+    	Short send = msgVo.getIsSend();
+    	
+    	//只有 msgId 和 发送状态 同时 为 0 ，才视为新增 
+    	if(msgId == 0L && send == 0){
+    		msgService.insertSelective(record);
+    	}else{
+    		msgService.updateByPrimaryKeySelective(record);
+    	}
+    	
+    	//是否 可用
+    	Short isEnable = msgVo.getIsEnable();
+    	
+    	if(isEnable == 0){
+    		// 如果 选择 不可用. 则 不发送
+    		returnRe.setStatus(Constants.ERROR_100);
+    		return returnRe;
+    	}
+    	
+    	//发送方式    1= 保存并立即发送   0= 测试发送
+    	Short sendWay = msgVo.getSendWay();
+    	
+    	String title = msgVo.getTitle();
+    	String content = msgVo.getContent();
+    	
+    	if(sendWay == 0){
+    		
+    		//如果是 测试 发送, 发消息 给 当前 登录 用户
+    		AccountAuth auth = AuthHelper.getSessionAccountAuth(request);
+    		
+    		Long id = auth.getId();
+    		
+    		AdminAccount account = accountService.selectByPrimaryKey(id);
+    		String mobile = account.getMobile();
+    		
+    		// admin 账户竟然没有 手机号。。
+    		if(!StringUtil.isEmpty(mobile)){
+    			
+    			/*
+    			 *  根据 登录 角色 的 手机号, 从 users 表 得到 userId
+    			 */
+    			Users users = usersService.selectByMobile(mobile);
+    			//异步推送 给 测试 人员（当前登录者），消息
+    			noticeAsyncService.pushMsgToDevice(users.getId(), title,content);
+    			
+    		}
+    	}else{
+    		
+    		Short userType = msgVo.getUserType();
+    		
+    		List<Users> list = usersService.selectUsersByPushUserType(userType);
+			for (Users users : list) {
+				noticeAsyncService.pushMsgToDevice(users.getId(), title, content);
+			}	
+    		
+//    		/*
+//    		 * 
+//    		 * 如果选择的 全部 用户
+//    		 * 发送 给 用户（最近一个月登录）+ 秘书 + 服务商
+//    		 */
+//    		
+//    		if(userType == Constants.OA_PUSH_USER_TYPE_3){
+//    			//如果 是 选择的 全部用户
+//    			List<Long> list = usersService.selectUsersForPushAll();
+//    			
+//    			for (Long userId : list) {
+//    				noticeAsyncService.pushMsgToDevice(userId, title, content);
+//				}
+//    		}else{
+//    			//选择的 特定类型的 用户， 其中 普通用户 ，也只发送 最近一个月登录过的
+//    			List<Users> list = usersService.selectUsersByPushUserType(userType);
+//    			for (Users users : list) {
+//    				noticeAsyncService.pushMsgToDevice(users.getId(), title, content);
+//				}	
+//    		}
+			
+    	}
+    	
+    	if(send == 0){
+    		record.setIsSend((short)1);
+    		msgService.updateByPrimaryKeySelective(record);
+    	}
+    	
+    	return returnRe;
     }
  
 }

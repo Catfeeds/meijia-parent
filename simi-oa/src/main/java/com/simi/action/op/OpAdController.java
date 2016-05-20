@@ -48,7 +48,7 @@ public class OpAdController extends BaseController {
 	@Autowired
 	private OpChannelService opChannelService;	
 
-	 @AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/ad_list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model, AdSearchVo searchVo) {
 
@@ -69,7 +69,6 @@ public class OpAdController extends BaseController {
 		model.addAttribute("searchModel", searchVo);
 		
 		
-		
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		
@@ -82,8 +81,6 @@ public class OpAdController extends BaseController {
 		PageInfo result = opAdService.searchVoListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);
-		
-
 
 		return "op/adList";
 	}

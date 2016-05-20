@@ -3,30 +3,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-<%@ taglib prefix="citySelectTag" uri="/WEB-INF/tags/citySelect.tld"%>
 <html>
 <head>
 
 <!--common css for all pages-->
-<%@ include file="../shared/importCss.jsp"%>
+<%@ include file="../shared/importCss.jsp"%> 
 
 <!--css for this page-->
-<link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>"
+<link rel="stylesheet" href="<c:url value='/assets/bootstrap-datetimepicker/css/datetimepicker.css'/>"
 	type="text/css" />
-
-<link
-	href="<c:url value='/assets/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'/>"
-	rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
-	<section id="container"> <!--header start--> <%@ include
-		file="../shared/pageHeader.jsp"%> <!--header end-->
+	<section id="container"> 
+	<!--header start--> 
+	<%@ include file="../shared/pageHeader.jsp"%> 
+	<!--header end-->
 
-	<!--sidebar start--> <%@ include file="../shared/sidebarMenu.jsp"%>
-	<!--sidebar end--> <!--main content start--> <section id="main-content">
-	<section class="wrapper"> <!-- page start-->
+	<!--sidebar start--> 
+	<%@ include file="../shared/sidebarMenu.jsp"%>
+	<!--sidebar end--> 
+	<!--main content start--> 
+	<section id="main-content">
+	<section class="wrapper"> 
+	<!-- page start-->
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
@@ -36,113 +37,166 @@
 				style="width: 100%; color: black; height: 1px; background-color: black;" />
 
 			<div class="panel-body">
-				<form:form modelAttribute="contentModel"
-								class="form-horizontal" method="POST" action="saveMsgForm"
-								id="msg-form">
+				<form:form modelAttribute="contentModel" class="form-horizontal"
+					method="POST" action="saveMsgForm" id="msg-form">
 
-								<form:hidden path="msgId" />
-								<input type="hidden" name="type" id="type"/>
-									<div class="form-group required">
-										<label class="col-md-2 control-label">标题</label>
-										<div class="col-md-5">
-											<form:input path="title" class="form-control" placeholder="标题" id="title"
-												maxLength="32" />
-											<form:errors path="title" class="field-has-error"></form:errors>
-										</div>
-									</div>
-								<div class="form-group required">
-									<label class="col-md-2 control-label">摘要</label>
-									<div class="col-md-5">
-										<form:input path="summary" class="form-control" id="summary"
-											placeholder="摘要" maxSize="10" />
-										<form:errors path="summary" class="field-has-error"></form:errors>
-									</div>
-								</div>
-								
-								<div class="form-group required">
-									<label class="col-md-2 control-label">消息详细内容</label>
-									<div class="col-md-9">
-									<form:textarea  class="textarea" id="some-textarea" path="content"  placeholder="全文"></form:textarea>
-									<form:errors path="content" class="field-has-error"></form:errors>
-									</div>
-								</div>
-									<div class="form-group required">
-										<label class="col-md-2 control-label">跳转url</label>
-										<div class="col-md-5">
-											<form:input path="gotoUrl" class="form-control" placeholder="跳转url" id="gotoUrl"
-												maxLength="32" />
-											<form:errors path="gotoUrl" class="field-has-error"></form:errors>
-										</div>
-									</div>
-								
-									<div class="form-group required">
-										<label class="col-md-2 control-label">用户类型</label>
-										<div class=col-md-5>
-												<form:select path="userType" class="form-control">
-												<form:option value="" label="请选择用户类型"/>  
-												<form:option value="0" label="普通用户"/>  
-												<form:option value="1" label="秘书"/>  
-												<form:option value="2" label="服务商"/>  
-												</form:select>
-										</div>
-									</div>
-								
-									<div class="form-group required">
-										<label class="col-md-2 control-label">发送时间</label>
-										
-										<div class="col-md-5">
-										<!-- <div class="input-group date"> -->
+					<form:hidden path="msgId" />
+					<form:hidden path="isSend" />
+					
+					<input type="hidden" name="type" id="type" />
+					
+					 <div class="form-group required">
+						<label class="col-md-2 control-label">标题</label>
+						<div class="col-md-5">
+							<form:input path="title" class="form-control" placeholder="标题"
+								id="title" maxLength="32" />
+							<form:errors path="title" class="field-has-error"></form:errors>
+						</div>
+					</div>
+					
+					<%--
+					<div class="form-group required">
+						<label class="col-md-2 control-label">摘要</label>
+						<div class="col-md-5">
+							<form:input path="summary" class="form-control" id="summary"
+								placeholder="摘要" maxSize="10" />
+							<form:errors path="summary" class="field-has-error"></form:errors>
+						</div>
+					</div> --%>
 
-									<%-- <fmt:formatDate var='formattedDate' value='${contentModel.sendTime}' type='both'
-										pattern="yyyy-MM-dd" /> --%>
-									<form:input path="isSend" class="form-control form_datetime" style="width:110px;" readonly="true"  />
-									<%-- <input type="text" path="sendTime" id="sendTime" name="sendTime"
-										value="${formattedDate}" readonly class="form-control"><span
-										class="input-group-addon"><i
-										class="glyphicon glyphicon-th"></i></span>
-								     </div> --%>
-										</div>
+					<div class="form-group required">
+						<label class="col-md-2 control-label">消息详细内容</label>
+						<div class="col-md-9">
+							<form:textarea class="textarea" path="content"  rows="5" cols="30"
+								placeholder="消息内容,不超过120字" maxlength="120"></form:textarea>
+						</div>
+					</div>
+
+
+					<div class="form-group required">
+						<label class="col-md-2 control-label">跳转类型*</label>
+						<div class="col-md-5">
+							<form:select path="category" class="form-control">
+								<option value="">请选择</option>
+								<form:option value="h5">h5</form:option>
+								<form:option value="app">app</form:option>
+							</form:select>
+						</div>
+					</div>
+
+					<div class="form-group required">
+						<label class="col-md-2 control-label">跳转url</label>
+						<div class="col-md-5">
+							<form:input path="gotoUrl" class="form-control"
+								placeholder="跳转url"  maxLength="32" />
+							<form:errors path="gotoUrl" class="field-has-error"></form:errors>
+						</div>
+					</div>
+
+					<div class="form-group required">
+
+						<label class="col-md-2 control-label">动作标识</label>
+						<div class="col-md-5">
+							<form:input path="action" class="form-control" placeholder="动作标识,不超过32字"
+								maxLength="32" />
+							<form:errors path="action" class="field-has-error"></form:errors>
+						</div>
+					</div>
+					<div class="form-group required">
+
+						<label class="col-md-2 control-label">操作相关参数</label>
+						<div class="col-md-5">
+							<form:input path="params" class="form-control" placeholder="操作相关参数,不超过32字"
+								maxLength="32" />
+							<form:errors path="params" class="field-has-error"></form:errors>
+						</div>
+					</div>
+
+
+					<div class="form-group required">
+						<label class="col-md-2 control-label">用户类型*</label>
+						<div class=col-md-5>
+							<form:select path="userType" class="form-control">
+								<form:option value="" label="请选择用户类型" />
+								<form:option value="0" label="普通用户" />
+								<form:option value="1" label="秘书" />
+								<form:option value="2" label="服务商" />
+								<form:option value="3" label="全部用户"/>
+							</form:select>
+						</div>
+						
+						<div class="col-md-5" id="useTypeTip" style="display:none">
+							<font color="red">只发送给最近一个月登录过的用户</font>
+						</div>
+					</div>
+
+					<%-- <div class="form-group required">
+						<label class="col-md-2 control-label">发送时间</label>
+						<div class="col-md-5">
+							 <fmt:formatDate var='formattedDate' value='${sendTimeDate}' type='both'
+											pattern="yyyy-MM-dd HH:mm" />  
+							
+								<input type="text" name="sendTime" id="sendTime"
+											value="${formattedDate }" readonly class="form-control form_datetime">
+						</div>
+					</div> --%>
+					
+					<div class="form-group required">
+						<label class="col-md-2 control-label">应用类型</label>
+						<div class=col-md-5>
+							
+							<form:select path="appType" class="form-control">
+								<form:option value="" label="请选择应用类型" />
+								<form:option value="xcloud" label="xcloud"/>
+								<form:option value="simi" label="simi"/>
+								<form:option value="timechick" label="timechick"/>
+							</form:select>
+							
+						</div>
+					</div>
+
+					<div class="form-group required">
+						<label class="col-md-2 control-label">是否可用</label>
+						<div class="col-md-10">
+							<form:radiobutton path="isEnable" value="1" label="可用" />
+							<form:radiobutton path="isEnable" value="0" label="不可用" />
+						</div>
+					</div>
+					
+					
+					<div class="form-group required" id="sendWayDiv" >
+						<label class="col-md-2 control-label"><font color="green">选择发送方式</font></label>
+						<div class=col-md-5>
+						
+							<form:select path="sendWay" class="form-control">
+								<form:option value="0" label="测试发送"/>
+								<form:option value="1" label="保存并立即发送"/>
+							</form:select>
+						</div>
+							
+						<div class="col-md-5" id="sendWayTip" style="display:none">
+							<font color="red">只发送测试账户 : ${contentModel.sendTestUser }</font>
+						</div>
+					</div>
+					
+					
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="col-md-offset-7">
+									<button type="button" id="editMsg_btn" class="btn btn-success">保存</button>
 								</div>
-									<div class="form-group required">
-										<label class="col-md-2 control-label">应用类型</label>
-										<div class=col-md-5>
-												<form:select path="appType" class="form-control">
-												<form:option value="xcloud" label="云行政"/>  
-												<form:option value="simi" label="私秘"/>  
-												<form:option value="timechick" label="时光机"/>  
-												</form:select>
-										</div>
-									</div>
-								
-								<div class="form-group required">
-									<!-- Text input-->
-									<label class="col-md-2 control-label">是否可用</label>
-									<div class="col-md-10">
-										<div class="row">
-											<div class="col-md-2" align="right">
-												<label class="radio">
-												<input value="0" name="isEnable" type="radio">不可用</label>
-											</div>
-											<div class="col-md-2" align="left">
-												<label class="radio">
-												 <input checked="checked" value="1" name="isEnable" type="radio">可用</label>
-											</div>
-										</div>
-                                     </div>
-                                    </div>
-									<div class="form-actions">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="col-md-offset-7">
-													<button type="submit" id="editMsg_btn" class="btn btn-success">保存</button>
-												</div>
-											</div>
-										
-										</div>
-									</div>
-							</form:form>
+
 							</div>
-						</section>
+							
+							<div class="col-md-5" id="sendStatusTip" style="display:none">
+								<font color="red"></font>
+							</div>
+						</div>
+					</div>
+				</form:form>
+			</div>
+			</section>
 		</div>
 	</div>
 	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> <%@ include
@@ -155,20 +209,17 @@
 
 
 	<!--script for this page-->
-	<script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js'/>"></script>
-	<script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js'/>"></script>
-	<script
+	
+	<script type="text/javascript"	src="<c:url value='/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'/>"></script>
+	<script type="text/javascript"	src="<c:url value='/assets/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js'/>"></script>
+	
+	<script 
 		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
 		type="text/javascript"></script>
 	<script type="text/javascript"
 		src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>"></script>
 
-	<%-- <script src="<c:url value='/js/simi/sec/listForm.js'/>"
-		type="text/javascript"></script> --%>
-
-	<script src="<c:url value='/js/simi/demo.js'/>"></script>
+	<script src="<c:url value='/js/simi/msg/msgForm.js'/>"></script>
 
 </body>
 </html>

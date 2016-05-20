@@ -31,10 +31,13 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.op.AppTools;
+import com.simi.po.model.total.TotalHit;
 import com.simi.service.dict.AdService;
 import com.simi.service.op.AppToolsService;
+import com.simi.service.total.TotalHitService;
 import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.dict.DictAdVo;
+import com.simi.vo.total.TotalHitSearchVo;
 
 @Controller
 @RequestMapping(value = "/dict")
@@ -45,7 +48,15 @@ public class DictAdController extends BaseController {
 	
 	@Autowired
 	private AppToolsService appToolsService;
-
+	
+	@Autowired
+	private TotalHitService hitService;
+	
+	/*
+	 * 
+	 *  运营平台--运营策略--广告位管理
+	 * 
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
 	@RequestMapping(value = "/ad", method = { RequestMethod.GET })
@@ -73,6 +84,25 @@ public class DictAdController extends BaseController {
 					vo.setAdTypeName(tools.getName());
 				}
 			}
+			
+			//点击次数
+			TotalHitSearchVo hitSearchVo = new TotalHitSearchVo();
+			
+			hitSearchVo.setLinkId(item.getId());
+			//广告位点击
+			hitSearchVo.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_DICT_AD);
+			
+			List<TotalHit> hitList = hitService.selectBySearchVo(hitSearchVo);
+			
+			Long total = 0L;
+			
+			if(hitList.size() > 0){
+				TotalHit totalHit = hitList.get(0);
+				total = totalHit.getTotal();
+			}
+			
+			vo.setTotalHit(total);
+			
 			list.set(i, vo);
 		}
 		result = new PageInfo(list);
