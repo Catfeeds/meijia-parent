@@ -560,7 +560,50 @@ public class DateUtil {
 		return quarters[month-1];
 	}			
 	
-	public static void main(String[] args) {
+	
+	/*
+	 * 根据 时间戳 得到  日期时间 （UTC 格式）-->  Thu May 19 14:19:54 CST 2016
+		
+		运营平台--  <fmt:formatDate> 日期格式化标签  ,需要 date类型时间,用来 展示
+		
+	 */
+	public static Date timeStampToDate(Long time) throws ParseException{
+			
+		  //如果 时间 戳小于  12位 数字, 表示为 秒值，转换为 毫秒值	
+		  if(time < 100000000000L){
+			  time *= 1000;
+		  }	
+		
+		  //时间戳转化为Sting或Date
+	      SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	      String d = format.format(time);
+	      Date date= format.parse(d);
+	      
+//	      System.out.println(date);
+	      return date;
+	}
+	
+	/*
+	 * 根据 时间戳 得到  字符串类型的 日期 格式 时间--> "2016-5-19 14:44:21"
+	 */
+	public static String timeStampToDateStr(Long time){
+			
+		  //如果 时间 戳小于  12位 数字, 表示为 秒值，转换为 毫秒值	
+		  if(time < 100000000000L){
+			  time *= 1000;
+		  }
+		
+		  //时间戳转化为Sting 格式的日期字符串
+	      SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	      String d = format.format(time);
+	      
+//	      System.out.println("Format To String(Date):"+d);
+	      
+	      return d;
+	}
+	
+	
+	public static void main(String[] args) throws ParseException {
 //		List<String> result = DateUtil.getLastMonth(6, 12);
 //		
 //		System.out.println(result);
@@ -571,7 +614,7 @@ public class DateUtil {
 //		String dateStr = "11-五月-2015";
 //		System.out.println(DateUtil.isDate(dateStr));
 		
-		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
-		
+//		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
+		timeStampToDate(0L);
 	}
 }
