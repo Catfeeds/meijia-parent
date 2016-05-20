@@ -1,4 +1,4 @@
-package com.meijia.utils.alipay.util;
+package com.alipay.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,8 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import com.meijia.utils.alipay.config.AlipayConfig;
-import com.meijia.utils.alipay.sign.MD5;
+import com.alipay.config.AlipayConfig;
+import com.alipay.sign.MD5;
 
 /* *
  *类名：AlipayNotify
@@ -39,7 +39,7 @@ public class AlipayNotify {
         //判断responsetTxt是否为true，isSign是否为true
         //responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关
         //isSign不是true，与安全校验码、请求时的参数格式（如：带自定义参数等）、编码格式有关
-    	String responseTxt = "true";
+    	String responseTxt = "false";
 		if(params.get("notify_id") != null) {
 			String notify_id = params.get("notify_id");
 			responseTxt = verifyResponse(notify_id);

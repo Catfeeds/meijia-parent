@@ -2,6 +2,7 @@ package com.meijia.utils.htmlparse;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,15 +47,21 @@ public class JSoupUtil {
 	 * @param replaceStr 最终结果替换的字符串
 	 * @return
 	 */
-	public static String parseByPatten(Document doc, String patten, String attrName, String replaceStr) {
+	public static String parseByPatten(Document doc, String patten, String textOrHtml,String attrName, String removeRegex) {
 		String content = "";
 		Element item = doc.select(patten).first();
-		content = item.text();
+		
+		if (textOrHtml.equals("html")) {
+			content = item.html();
+		} else {
+			content = item.text();
+		}
+		
 		if (!StringUtil.isEmpty(attrName))
 			content = item.attr(attrName);
 
-		if (!StringUtil.isEmpty(replaceStr))
-			content = content.replace(replaceStr, "");
+		if (!StringUtil.isEmpty(removeRegex))
+			content = content.replaceAll(removeRegex, "");
 
 		content.replace(" ", "");
 		return content;
@@ -191,10 +198,18 @@ public class JSoupUtil {
 		}
 		return keyword;
 	}
+	
+	public static String getClassResource(Class<?> c) {
+		  String path = c.getResource(c.getSimpleName() + ".class").getPath().replace(c.getSimpleName() + ".class", "");
+		  return path;
+	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		File input = new File("/Users/lnczx/Downloads/resume-test.html");
+		//智联简历
+		String path = JSoupUtil.getClassResource(JSoupUtil.class) + "/src/";
+		String filename = "resume-template-zhilian.html";
+		File input = new File(path + filename);
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 
 		// Element item = doc.select("meta[charset]").first();
@@ -202,10 +217,10 @@ public class JSoupUtil {
 		// String item1 = item.attr("charset");
 		// System.out.print(item1);
 		
-		System.out.println("match chartset = " + JSoupUtil.parseByPatten(doc, "meta[charset]", "charset", ""));
-		System.out.println("match ID = " + JSoupUtil.parseByPatten(doc, "span.resume-left-tips-id", "", "ID:"));
-		System.out.println("match 姓名 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fl", "", ""));
-		System.out.println("match 手机号 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fr", "", "手机 ："));
+		System.out.println("match chartset = " + JSoupUtil.parseByPatten(doc, "meta[charset]", "text", "charset", ""));
+		System.out.println("match ID = " + JSoupUtil.parseByPatten(doc, "span.resume-left-tips-id", "text", "", "ID:"));
+		System.out.println("match 姓名 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fl", "text", "", ""));
+		System.out.println("match 手机号 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fr", "text", "", "手机 ："));
 		System.out.println("match 性别 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "/男|女"));
 		System.out.println("match 生日 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "(([0-9]+年[0-9]+月))"));
 		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "(([0-9]+年工作经验))"));
@@ -217,18 +232,24 @@ public class JSoupUtil {
 		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "", "有海外工作\\/学习经验"));
 		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "身份证：", " ", ""));
 		System.out.println("match 手机 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "手机：", " ", ""));
-		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "", ""));
-		System.out.println("match 头像 = " + JSoupUtil.parseByPatten(doc, "img.headerImg", "src", ""));
+		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "text", "", ""));
+		System.out.println("match 头像 = " + JSoupUtil.parseByPatten(doc, "img.headerImg", "text", "src", ""));
 		System.out.println("match 期望工作地区 = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作地区：", 1));
 		System.out.println("match 期望月薪： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望月薪：", 1));
 		System.out.println("match 目前状况： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","目前状况：", 1));
 		System.out.println("match 期望工作性质： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作性质：", 1));
 		System.out.println("match 期望从事职业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事职业：", 1));
 		System.out.println("match 期望从事行业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事行业：", 1));
-		System.out.println("match 自我评价 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-dl","", ""));
-		
-		
-		
+		System.out.println("match 自我评价 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-dl", "html", "", ""));
+		System.out.println("match 工作经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(工作经历)", "html", "", "<h3.*>工作经历</h3>"));
+		System.out.println("match 项目经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(项目经历)", "html","", "<h3.*>项目经历</h3>"));
+		System.out.println("match 教育经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(教育经历)", "html","", "<h3.*>教育经历</h3>"));
+		System.out.println("match 培训经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(培训经历)", "html","", "<h3.*>培训经历</h3>"));
+		System.out.println("match 证书 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(证书)","", "html", "<h3.*>证书</h3>"));
+		System.out.println("match 语言能力 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(语言能力)", "html", "", "<h3.*>语言能力</h3>"));
+		System.out.println("match 专业技能 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(专业技能)", "html", "", "<h3.*>专业技能</h3>"));
+		System.out.println("match 兴趣爱好 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(兴趣爱好)", "text", "", "兴趣爱好"));	
+		System.out.println("match 附件 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(附件)", "html", "", "<h3.*>附件</h3>"));		
 	}
 
 }

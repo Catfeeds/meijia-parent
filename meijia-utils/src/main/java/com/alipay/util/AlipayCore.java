@@ -1,4 +1,4 @@
-package com.meijia.utils.alipay.util;
+package com.alipay.util;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,12 +8,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.methods.multipart.FilePartSource;
 import org.apache.commons.httpclient.methods.multipart.PartSource;
 
-import com.meijia.utils.alipay.config.AlipayConfig;
+import com.alipay.config.AlipayConfig;
 
 /* *
  *类名：AlipayFunction
