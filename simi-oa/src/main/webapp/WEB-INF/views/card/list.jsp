@@ -56,12 +56,12 @@
 				<tr>
 					<th>手机号</th>
 					<th>用户</th>
+					<th>参与人员</th>
 					<th>卡片时间</th>
 					<th>卡片类型</th>
 					<th>卡片内容</th>
 					<th>卡片状态</th>
 					<th>创建时间</th>
-
 				</tr>
 			</thead>
 			<tbody>
@@ -69,6 +69,7 @@
 					<tr>
 						<td>${ item.mobile }</td>
 						<td>${ item.name }</td>
+						<td>${ item.attendUserName }</td>
 						<td><timestampTag:timestamp patten="MM-dd HH:mm" t="${item.serviceTime * 1000}" /></td>
 						<td>${ item.cardTypeName }</td>
 						<td>${ item.serviceContent }</td>
