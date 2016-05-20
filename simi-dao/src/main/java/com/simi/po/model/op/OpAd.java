@@ -12,9 +12,9 @@ public class OpAd {
     private String serviceTypeIds;
 
     private String imgUrl;
-    
+
     private String gotoType;
-    
+
     private String action;
 
     private String gotoUrl;
@@ -24,6 +24,8 @@ public class OpAd {
     private Long updateTime;
 
     private Short enable;
+
+    private Integer clickTimes;
 
     public Long getId() {
         return id;
@@ -73,6 +75,22 @@ public class OpAd {
         this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 
+    public String getGotoType() {
+        return gotoType;
+    }
+
+    public void setGotoType(String gotoType) {
+        this.gotoType = gotoType == null ? null : gotoType.trim();
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action == null ? null : action.trim();
+    }
+
     public String getGotoUrl() {
         return gotoUrl;
     }
@@ -105,19 +123,11 @@ public class OpAd {
         this.enable = enable;
     }
 
-	public String getGotoType() {
-		return gotoType;
-	}
+    public Integer getClickTimes() {
+        return clickTimes;
+    }
 
-	public void setGotoType(String gotoType) {
-		this.gotoType = gotoType;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
+    public void setClickTimes(Integer clickTimes) {
+        this.clickTimes = clickTimes;
+    }
 }

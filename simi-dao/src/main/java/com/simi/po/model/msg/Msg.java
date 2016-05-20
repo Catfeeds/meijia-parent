@@ -21,8 +21,13 @@ public class Msg {
 
     private Long addTime;
 
-    private String content; 
-    
+    private String category;
+
+    private String action;
+
+    private String params;
+
+    private String content;
 
     public Long getMsgId() {
         return msgId;
@@ -104,6 +109,30 @@ public class Msg {
         this.addTime = addTime;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category == null ? null : category.trim();
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action == null ? null : action.trim();
+    }
+
+    public String getParams() {
+        return params;
+    }
+
+    public void setParams(String params) {
+        this.params = params == null ? null : params.trim();
+    }
+
     public String getContent() {
         return content;
     }
@@ -111,5 +140,4 @@ public class Msg {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
-    
 }

@@ -12,29 +12,23 @@
     <result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
     <result column="app_type" property="appType" jdbcType="VARCHAR" />
     <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="action" property="action" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.simi.po.model.msg.Msg" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     msg_id, title, summary, goto_url, user_type, send_time, is_send, is_enable, app_type, 
-    add_time
+    add_time, category, action, params
   </sql>
   <sql id="Blob_Column_List" >
     content
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from msg
-    where msg_id = #{msgId,jdbcType=NUMERIC}
-  </select>
-
-  <select id="selectUserListByUserType" resultMap="BaseResultMap"
-  parameterType="com.simi.vo.MsgSearchVo">
+  
+  
+  <select id="selectUserListByUserType" resultMap="BaseResultMap"  parameterType="com.simi.vo.MsgSearchVo">
 		select
 		 <include refid="Base_Column_List" />
 		from msg where 1=1
@@ -63,6 +57,16 @@
 			 </if>
 		order by add_time desc
 	</select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from msg
+    where msg_id = #{msgId,jdbcType=NUMERIC}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from msg
     where msg_id = #{msgId,jdbcType=NUMERIC}
@@ -71,11 +75,13 @@
     insert into msg (msg_id, title, summary, 
       goto_url, user_type, send_time, 
       is_send, is_enable, app_type, 
-      add_time, content)
+      add_time, category, action, 
+      params, content)
     values (#{msgId,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
       #{gotoUrl,jdbcType=VARCHAR}, #{userType,jdbcType=NUMERIC}, #{sendTime,jdbcType=NUMERIC}, 
       #{isSend,jdbcType=NUMERIC}, #{isEnable,jdbcType=NUMERIC}, #{appType,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=NUMERIC}, #{content,jdbcType=LONGVARCHAR})
+      #{addTime,jdbcType=NUMERIC}, #{category,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, 
+      #{params,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.simi.po.model.msg.Msg" >
     insert into msg
@@ -110,11 +116,18 @@
       <if test="addTime != null" >
         add_time,
       </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="params != null" >
+        params,
+      </if>
       <if test="content != null" >
         content,
       </if>
-    
-     
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="msgId != null" >
@@ -147,11 +160,18 @@
       <if test="addTime != null" >
         #{addTime,jdbcType=NUMERIC},
       </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        #{params,jdbcType=VARCHAR},
+      </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
       </if>
-     
-      
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.msg.Msg" >
@@ -184,10 +204,18 @@
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=NUMERIC},
       </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        params = #{params,jdbcType=VARCHAR},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
-     
     </set>
     where msg_id = #{msgId,jdbcType=NUMERIC}
   </update>
@@ -202,7 +230,10 @@
       is_enable = #{isEnable,jdbcType=NUMERIC},
       app_type = #{appType,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=NUMERIC},
-      content = #{content,jdbcType=LONGVARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
     where msg_id = #{msgId,jdbcType=NUMERIC}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simi.po.model.msg.Msg" >
@@ -216,6 +247,9 @@
       is_enable = #{isEnable,jdbcType=NUMERIC},
       app_type = #{appType,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=NUMERIC},
+      category = #{category,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR}
     where msg_id = #{msgId,jdbcType=NUMERIC}
   </update>
 </mapper>

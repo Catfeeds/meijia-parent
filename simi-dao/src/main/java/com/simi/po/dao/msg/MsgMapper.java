@@ -6,7 +6,7 @@ import com.simi.po.model.msg.Msg;
 import com.simi.vo.MsgSearchVo;
 
 public interface MsgMapper {
-    int deleteByPrimaryKey(Long msgId);
+	int deleteByPrimaryKey(Long msgId);
 
     int insert(Msg record);
 

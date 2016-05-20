@@ -6,16 +6,16 @@ import com.simi.po.model.op.OpAd;
 import com.simi.vo.po.AdSearchVo;
 
 public interface OpAdMapper {
-    int insert(OpAd record);
+	int insert(OpAd record);
 
-    int insertSelective(OpAd record);
+	int insertSelective(OpAd record);
 
 	OpAd selectByPrimaryKey(Long id);
 
 	int updateByPrimaryKeySelective(OpAd record);
 
 	List<OpAd> selectByAdType(String adType);
-	
+
 	List<OpAd> selectBySearchVo(AdSearchVo searchVo);
 
 	List<OpAd> selectByListPage(AdSearchVo searchVo);
