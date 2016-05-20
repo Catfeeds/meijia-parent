@@ -146,22 +146,9 @@ public class MsgController extends AdminController {
 		//转换 发送时间  sendTime 时间戳--> utc 时间
 //		model.addAttribute("sendTimeDate", date);
 		
-		AccountAuth auth = AuthHelper.getSessionAccountAuth(request);
-		
-		String name = auth.getName();
-		
-		Long id = auth.getId();
-		
-		AdminAccount account = accountService.selectByPrimaryKey(id);
-		
-		String mobile = account.getMobile();
-		
-		String testUser = "名称:"+name+ " 手机:"+mobile;
 		
 		//默认 保存 并立即 发送 
 		OaMsgVo msgVo = msgService.initOaMsgVo(msg);
-		
-		msgVo.setSendTestUser(testUser);
 		
 		model.addAttribute("contentModel", msgVo);
 		
@@ -221,25 +208,21 @@ public class MsgController extends AdminController {
     	
     	if(sendWay == 0){
     		
-    		//如果是 测试 发送, 发消息 给 当前 登录 用户
-    		AccountAuth auth = AuthHelper.getSessionAccountAuth(request);
+    		//如果是 测试 发送, 发消息 给 运营部人员
     		
-    		Long id = auth.getId();
+    		Long roleId = 3L;
+    		List<AdminAccount> adminAccounts = accountService.selectByRoleId(roleId);
     		
-    		AdminAccount account = accountService.selectByPrimaryKey(id);
-    		String mobile = account.getMobile();
-    		
-    		// admin 账户竟然没有 手机号。。
-    		if(!StringUtil.isEmpty(mobile)){
+    		for (AdminAccount adminAccount : adminAccounts) {
+				
+    			if (!StringUtil.isEmpty(adminAccount.getMobile())) {
+    				Users uu = usersService.selectByMobile(adminAccount.getMobile());
+    				
+    				//异步推送 给 测试 人员（运营部），消息
+    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content);
+    			}
+			}
     			
-    			/*
-    			 *  根据 登录 角色 的 手机号, 从 users 表 得到 userId
-    			 */
-    			Users users = usersService.selectByMobile(mobile);
-    			//异步推送 给 测试 人员（当前登录者），消息
-    			noticeAsyncService.pushMsgToDevice(users.getId(), title,content);
-    			
-    		}
     	}else{
     		
     		Short selectUserType = msgVo.getUserType();

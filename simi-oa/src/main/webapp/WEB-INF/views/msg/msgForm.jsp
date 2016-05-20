@@ -175,7 +175,7 @@
 						</div>
 							
 						<div class="col-md-5" id="sendWayTip" style="display:none">
-							<font color="red">只发送测试账户 : ${contentModel.sendTestUser }</font>
+							<font color="red">只发送给运营部人员</font>
 						</div>
 					</div>
 					

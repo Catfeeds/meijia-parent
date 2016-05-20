@@ -133,11 +133,11 @@ $("#previewMsg_btn").click(function() {
 
 
 /*
- *  选择 用户类型--> 全部用户，动态添加 注释。
+ *  选择 用户类型--> 全部用户/普通用户，动态添加 注释。
  */
 $("#userType").on("change",function(){
 	
-	if($(this).val() == 3){
+	if($(this).val() == 3 || $(this).val() == 0 ){
 		$("#useTypeTip").show();
 	}else{
 		$("#useTypeTip").hide();
