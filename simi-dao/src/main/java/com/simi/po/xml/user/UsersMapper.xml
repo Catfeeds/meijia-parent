@@ -157,14 +157,14 @@
 			and id_card = #{idCard,jdbcType=VARCHAR}
 		</if>
 		
-		<if test="userIds != null">
+		<if test="userIds != null and userIds.size() > 0 ">
 			and id in
 			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		
-		<if test="mobiles != null">
+		<if test="mobiles != null and mobiles.size() > 0">
 			and mobile in
 			<foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
 				#{item}
