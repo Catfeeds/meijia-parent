@@ -13,6 +13,10 @@ public interface OpAdMapper {
 	OpAd selectByPrimaryKey(Long id);
 
 	int updateByPrimaryKeySelective(OpAd record);
+	
+	int updateByPrimaryKey(OpAd record);
+	
+	int deleteByPrimaryKey(Long id);
 
 	List<OpAd> selectByAdType(String adType);
 

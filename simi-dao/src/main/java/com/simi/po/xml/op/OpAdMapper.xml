@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.op.OpAdMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.op.OpAd" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="no" property="No" jdbcType="NUMERIC" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="ad_type" property="adType" jdbcType="VARCHAR" />
-    <result column="service_type_ids" property="serviceTypeIds" jdbcType="VARCHAR" />
-    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
-    <result column="goto_type" property="gotoType" jdbcType="VARCHAR" />
-    <result column="action" property="action" jdbcType="VARCHAR" />
-    <result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-    <result column="enable" property="enable" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, no, title, ad_type, service_type_ids, img_url, goto_type, action, goto_url, add_time, 
-    update_time, enable
-  </sql>
-  
-  	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.po.AdSearchVo">
+<mapper namespace="com.simi.po.dao.op.OpAdMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.op.OpAd">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="no" property="No" jdbcType="NUMERIC" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="ad_type" property="adType" jdbcType="VARCHAR" />
+		<result column="service_type_ids" property="serviceTypeIds" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="goto_type" property="gotoType" jdbcType="VARCHAR" />
+		<result column="action" property="action" jdbcType="VARCHAR" />
+		<result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+		<result column="enable" property="enable" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, no, title, ad_type, service_type_ids, img_url, goto_type, action, goto_url, add_time,
+		update_time, enable
+	</sql>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.po.AdSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from op_ad
@@ -28,14 +28,14 @@
 		<if test="title != null">
 			and title like CONCAT('%','${title}','%' )
 		</if>
-		
+
 		<if test="adType != null">
 			and ad_type like CONCAT('%','${adType}','%' )
 		</if>
-				
+
 		order by id asc
 	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.po.AdSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -44,15 +44,15 @@
 		<if test="title != null">
 			and title like CONCAT('%','${title}','%' )
 		</if>
-		
+
 		<if test="adType != null">
 			and ad_type like CONCAT('%','${adType}','%' )
 		</if>
-		
+
 		<if test="updateTime != null">
-			<![CDATA[ and update_time >  #{updateTime,jdbcType=NUMERIC} ]]>  
+			<![CDATA[ and update_time >  #{updateTime,jdbcType=NUMERIC} ]]>
 		</if>
-		
+
 		order by id asc
 	</select>
 
@@ -62,160 +62,163 @@
 		from op_ad
 		where ad_type like CONCAT('%',#{adType},'%' )
 	</select>
-  
-  
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from op_ad
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from op_ad
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.op.OpAd" >
-    insert into op_ad (id, no, title, 
-      ad_type, service_type_ids, img_url, 
-      goto_type, action, goto_url, 
-      add_time, update_time, enable)
-    values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, 
-      #{adType,jdbcType=VARCHAR}, #{serviceTypeIds,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
-      #{gotoType,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{gotoUrl,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.op.OpAd" >
-    insert into op_ad
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="No != null" >
-        no,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="adType != null" >
-        ad_type,
-      </if>
-      <if test="serviceTypeIds != null" >
-        service_type_ids,
-      </if>
-      <if test="imgUrl != null" >
-        img_url,
-      </if>
-      <if test="gotoType != null" >
-        goto_type,
-      </if>
-      <if test="action != null" >
-        action,
-      </if>
-      <if test="gotoUrl != null" >
-        goto_url,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="enable != null" >
-        enable,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="No != null" >
-        #{No,jdbcType=NUMERIC},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="adType != null" >
-        #{adType,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceTypeIds != null" >
-        #{serviceTypeIds,jdbcType=VARCHAR},
-      </if>
-      <if test="imgUrl != null" >
-        #{imgUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="gotoType != null" >
-        #{gotoType,jdbcType=VARCHAR},
-      </if>
-      <if test="action != null" >
-        #{action,jdbcType=VARCHAR},
-      </if>
-      <if test="gotoUrl != null" >
-        #{gotoUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-      <if test="enable != null" >
-        #{enable,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.OpAd" >
-    update op_ad
-    <set >
-      <if test="No != null" >
-        no = #{No,jdbcType=NUMERIC},
-      </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="adType != null" >
-        ad_type = #{adType,jdbcType=VARCHAR},
-      </if>
-      <if test="serviceTypeIds != null" >
-        service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR},
-      </if>
-      <if test="imgUrl != null" >
-        img_url = #{imgUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="gotoType != null" >
-        goto_type = #{gotoType,jdbcType=VARCHAR},
-      </if>
-      <if test="action != null" >
-        action = #{action,jdbcType=VARCHAR},
-      </if>
-      <if test="gotoUrl != null" >
-        goto_url = #{gotoUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-      <if test="enable != null" >
-        enable = #{enable,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.OpAd" >
-    update op_ad
-    set no = #{No,jdbcType=NUMERIC},
-      title = #{title,jdbcType=VARCHAR},
-      ad_type = #{adType,jdbcType=VARCHAR},
-      service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR},
-      img_url = #{imgUrl,jdbcType=VARCHAR},
-      goto_type = #{gotoType,jdbcType=VARCHAR},
-      action = #{action,jdbcType=VARCHAR},
-      goto_url = #{gotoUrl,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC},
-      enable = #{enable,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from op_ad
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from op_ad
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	
+	<insert id="insert" parameterType="com.simi.po.model.op.OpAd">
+		insert into op_ad (id, no, title,
+		ad_type, service_type_ids, img_url,
+		goto_type, action, goto_url,
+		add_time, update_time, enable)
+		values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
+		#{adType,jdbcType=VARCHAR}, #{serviceTypeIds,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
+		#{gotoType,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{gotoUrl,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.op.OpAd">
+		insert into op_ad
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="No != null">
+				no,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="adType != null">
+				ad_type,
+			</if>
+			<if test="serviceTypeIds != null">
+				service_type_ids,
+			</if>
+			<if test="imgUrl != null">
+				img_url,
+			</if>
+			<if test="gotoType != null">
+				goto_type,
+			</if>
+			<if test="action != null">
+				action,
+			</if>
+			<if test="gotoUrl != null">
+				goto_url,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="enable != null">
+				enable,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="No != null">
+				#{No,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="adType != null">
+				#{adType,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceTypeIds != null">
+				#{serviceTypeIds,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="gotoType != null">
+				#{gotoType,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				#{action,jdbcType=VARCHAR},
+			</if>
+			<if test="gotoUrl != null">
+				#{gotoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+			<if test="enable != null">
+				#{enable,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.op.OpAd">
+		update op_ad
+		<set>
+			<if test="No != null">
+				no = #{No,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="adType != null">
+				ad_type = #{adType,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceTypeIds != null">
+				service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="gotoType != null">
+				goto_type = #{gotoType,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				action = #{action,jdbcType=VARCHAR},
+			</if>
+			<if test="gotoUrl != null">
+				goto_url = #{gotoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+			<if test="enable != null">
+				enable = #{enable,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.op.OpAd">
+		update op_ad
+		set no = #{No,jdbcType=NUMERIC},
+		title = #{title,jdbcType=VARCHAR},
+		ad_type = #{adType,jdbcType=VARCHAR},
+		service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR},
+		img_url = #{imgUrl,jdbcType=VARCHAR},
+		goto_type = #{gotoType,jdbcType=VARCHAR},
+		action = #{action,jdbcType=VARCHAR},
+		goto_url = #{gotoUrl,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC},
+		enable = #{enable,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

@@ -25,8 +25,6 @@ public class OpAd {
 
     private Short enable;
 
-    private Integer clickTimes;
-
     public Long getId() {
         return id;
     }
@@ -123,11 +121,4 @@ public class OpAd {
         this.enable = enable;
     }
 
-    public Integer getClickTimes() {
-        return clickTimes;
-    }
-
-    public void setClickTimes(Integer clickTimes) {
-        this.clickTimes = clickTimes;
-    }
 }
