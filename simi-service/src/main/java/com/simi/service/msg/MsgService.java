@@ -5,6 +5,7 @@ import java.util.List;
 import com.simi.po.model.msg.Msg;
 import com.simi.vo.MsgSearchVo;
 import com.simi.vo.msg.MsgVo;
+import com.simi.vo.msg.OaMsgVo;
 
 public interface MsgService {
 	
@@ -26,6 +27,8 @@ public interface MsgService {
 
 	List<Msg> selectMsgListBySearchVo(MsgSearchVo searchVo, int pageNo,
 			int pageSize);
-
-
+	
+	OaMsgVo initOaMsgVo(Msg msg);
+	
+	void pushByUserType(Short userType);
 }

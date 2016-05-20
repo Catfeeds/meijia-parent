@@ -131,7 +131,6 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 		try {
 			jsonParams = objectMapper.writeValueAsString(tranParams);
 		} catch (JsonProcessingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -142,7 +141,6 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 			try {
 				PushUtil.IOSPushToSingle(params, "notification");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -150,7 +148,6 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 			try {
 				PushUtil.AndroidPushToSingle(params);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

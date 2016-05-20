@@ -12,7 +12,8 @@ public class MsgVo {
 	
 	//时间，精确为   MM-dd HH:mm
 	private String addTimeStr;
-
+	
+	
 	public Long getMsgId() {
 		return msgId;
 	}

@@ -22,6 +22,4 @@ public interface OpAdService {
 
 	List<OpAd> selectBySearchVo(AdSearchVo searchVo);
 
-
-
 }

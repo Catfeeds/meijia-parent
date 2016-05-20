@@ -7,7 +7,7 @@ import com.simi.po.model.op.OpAd;
 public class OpAdVo extends OpAd{
 
 	private String channelNames;
-
+	
 	public String getChannelNames() {
 		return channelNames;
 	}

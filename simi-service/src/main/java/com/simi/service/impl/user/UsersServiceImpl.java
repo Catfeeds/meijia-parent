@@ -609,7 +609,6 @@ public class UsersServiceImpl implements UsersService {
 		try {
 			o = mapper.readValue(sendResult, HashMap.class);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(o.toString());
@@ -625,4 +624,16 @@ public class UsersServiceImpl implements UsersService {
 
 		return headImg;
 	}
+	
+	
+	@Override
+	public List<Long> selectUsersForPushAll() {
+		return usersMapper.selectUserIdsForPushAll();
+	}
+
+	@Override
+	public List<Users> selectUsersByPushUserType(Short pushUserType) {
+		return usersMapper.selectUsersByPushUserType(pushUserType);
+	}
+	
 }

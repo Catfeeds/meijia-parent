@@ -7,17 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
+import com.simi.common.Constants;
 import com.simi.po.dao.msg.MsgMapper;
 import com.simi.po.model.msg.Msg;
+import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.msg.MsgService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.MsgSearchVo;
 import com.simi.vo.msg.MsgVo;
+import com.simi.vo.msg.OaMsgVo;
 
 @Service
 public class MsgServiceImpl implements MsgService {
 	@Autowired
 	private MsgMapper msgMapper;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAsynvService;
+	
+	@Autowired
+	private UsersService userService;
+	
 	
 	@Override
 	public Msg initMsg() {
@@ -31,9 +43,13 @@ public class MsgServiceImpl implements MsgService {
 	    record.setAppType("");
 	    record.setSendTime(TimeStampUtil.getNow()/1000);
 	    record.setIsSend((short)0L);
-	    record.setIsEnable((short)0L);
+	    record.setIsEnable((short)1L);
 	    record.setContent("");
 	    record.setAddTime(TimeStampUtil.getNow() / 1000);
+	    
+	    record.setCategory("");
+	    record.setAction("");
+	    record.setParams("");
 		return record;
 	}
 
@@ -99,8 +115,29 @@ public class MsgServiceImpl implements MsgService {
 	
 		return vo;
 	}
-
 	
+	
+	@Override
+	public OaMsgVo initOaMsgVo(Msg msg) {
+		
+		OaMsgVo oaMsgVo = new OaMsgVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(msg, oaMsgVo);
+		
+		oaMsgVo.setSendWay((short)1);	//1= 保存并立即发送  0= 发送测试人员
+		oaMsgVo.setSendTestUser("");
+		
+		return oaMsgVo;
+	}
+
+	@Override
+	public void pushByUserType(Short userType) {
+		
+		
+		
+		
+		
+	}
 }
 	
 

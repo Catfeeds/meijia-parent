@@ -140,4 +140,20 @@ public class Constants {
 	
 	//云行政logo
 	public static String DEFAULT_LOGO = "http://img.51xingzheng.cn/3f20537c7e3a6e09545d66649746f680?p=0";
+	
+	
+	/*
+	 *   点击次数 -- linkType 字段 可选值
+	 */
+	public static String TOTAL_HIT_LINK_TYPE_DICT_AD = "dict_ad";	//广告位 点击
+	
+	
+	/*
+	 *  平台 用户 类型
+	 */
+	public static Short OA_PUSH_USER_TYPE_0 = 0;	//普通用户,最近一个月登录过的
+	public static Short OA_PUSH_USER_TYPE_1 = 1;	//秘书
+	public static Short OA_PUSH_USER_TYPE_2 = 2;	//服务商
+	public static Short OA_PUSH_USER_TYPE_3 = 3;	//全部用户
+	
 }
