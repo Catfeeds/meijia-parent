@@ -12,7 +12,17 @@ public class MsgSearchVo {
 	
 	private String isSendStr;
 
+	private Short sendAtOnce;	//是否立即发送
 	
+	
+	public Short getSendAtOnce() {
+		return sendAtOnce;
+	}
+
+	public void setSendAtOnce(Short sendAtOnce) {
+		this.sendAtOnce = sendAtOnce;
+	}
+
 	public String getTitle() {
 		return title = title !=null ? title.trim():new String();
 	}

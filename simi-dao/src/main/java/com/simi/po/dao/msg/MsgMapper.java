@@ -21,4 +21,8 @@ public interface MsgMapper {
     int updateByPrimaryKey(Msg record);
 
 	List<Msg> selectUserListByUserType(MsgSearchVo searchVo);
+	
+	
+	// 需要 定时发送的 消息
+	List<Msg> selectMsgPushByTime();
 }

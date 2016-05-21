@@ -27,6 +27,19 @@
     content
   </sql>
   
+  <select id="selectMsgPushByTime" resultMap="BaseResultMap" >
+ 	 select
+	 	<include refid="Base_Column_List" />
+	 	 ,
+    	<include refid="Blob_Column_List" />
+	 from 
+	 	msg 
+	 where 
+		send_time > UNIX_TIMESTAMP(NOW())		
+		and
+		is_enable = 1	
+  </select>
+  
   
   <select id="selectUserListByUserType" resultMap="BaseResultMap"  parameterType="com.simi.vo.MsgSearchVo">
 		select
