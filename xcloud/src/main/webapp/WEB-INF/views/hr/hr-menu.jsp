@@ -126,7 +126,7 @@
 			</ul>
 		</li>
 		
-		<li class="admin-parent">
+		<!-- <li class="admin-parent">
 			<a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-insurance'}"> 
 				<span class="am-icon-flag"></span> 保险业务
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
@@ -155,9 +155,9 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> -->
 		
-		<li class="admin-parent">
+		<!-- <li class="admin-parent">
 			<a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav-checkin'}">
 				<span class="am-icon-clock-o"></span> 考勤管理 
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
@@ -179,8 +179,8 @@
 					</a>
 				</li>
 			</ul>
-		</li>
-		<li class="admin-parent">
+		</li> -->
+		<!-- <li class="admin-parent">
 			<a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-teamwork'}"> 
 				<span class="am-icon-flag"></span> 企业团建 
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
@@ -202,7 +202,7 @@
 					</a>
 				</li>
 			</ul>
-		</li>
+		</li> -->
 	</ul>
 </div>
 <!-- sidebar end -->
