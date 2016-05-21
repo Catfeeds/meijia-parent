@@ -41,7 +41,7 @@ public class MsgServiceImpl implements MsgService {
 	    record.setGotoUrl("");
 	    record.setUserType((short)0L);
 	    record.setAppType("");
-	    record.setSendTime(TimeStampUtil.getNow()/1000);
+	    record.setSendTime(0L);		// 发送时间
 	    record.setIsSend((short)0L);
 	    record.setIsEnable((short)1L);
 	    record.setContent("");
@@ -130,14 +130,10 @@ public class MsgServiceImpl implements MsgService {
 		
 		return oaMsgVo;
 	}
-
+	
 	@Override
-	public void pushByUserType(Short userType) {
-		
-		
-		
-		
-		
+	public List<Msg> selectMsgPushByTime() {
+		return msgMapper.selectMsgPushByTime();
 	}
 }
 	

@@ -30,5 +30,7 @@ public interface MsgService {
 	
 	OaMsgVo initOaMsgVo(Msg msg);
 	
-	void pushByUserType(Short userType);
+	
+	// 需要 定时发送的 消息
+	List<Msg> selectMsgPushByTime();
 }
