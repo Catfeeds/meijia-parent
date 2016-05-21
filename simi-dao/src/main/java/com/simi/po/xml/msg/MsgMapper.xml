@@ -43,11 +43,9 @@
 		 		send_time > 0 
 		 	and
 		 		is_enable = 1	
-		 	and
-		 		is_send = 0	
 		</if> 		
   	 </if>	
-    
+	
      <if test="title !=null and title !='' ">
 		and title = #{title,jdbcType=VARCHAR}
 	 </if>
