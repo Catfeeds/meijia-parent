@@ -125,6 +125,6 @@
 	
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/xcloud/common/validate-methods.js'/>" type="text/javascript"></script>
-	<script src="<c:url value='/assets/js/xcloud/xz/team-form.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/hr/team-form.js'/>"></script>
 </body>
 </html>

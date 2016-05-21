@@ -106,6 +106,6 @@
 
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/xz/team-list.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/hr/team-list.js'/>"></script>
 </body>
 </html>
