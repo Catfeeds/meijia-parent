@@ -67,7 +67,7 @@
 					<div class="form-group required">
 						<label class="col-md-2 control-label">消息详细内容</label>
 						<div class="col-md-9">
-							<form:textarea class="textarea" path="content"  rows="5" cols="30"
+							<form:textarea class="textarea" path="content"  rows="4" cols="60"
 								placeholder="消息内容,不超过120字" maxlength="120"></form:textarea>
 						</div>
 					</div>
@@ -122,6 +122,7 @@
 								<form:option value="1" label="秘书" />
 								<form:option value="2" label="服务商" />
 								<form:option value="3" label="全部用户"/>
+								<form:option value="4" label="测试用户"/>
 							</form:select>
 						</div>
 						
@@ -130,16 +131,6 @@
 						</div>
 					</div>
 
-					<%-- <div class="form-group required">
-						<label class="col-md-2 control-label">发送时间</label>
-						<div class="col-md-5">
-							 <fmt:formatDate var='formattedDate' value='${sendTimeDate}' type='both'
-											pattern="yyyy-MM-dd HH:mm" />  
-							
-								<input type="text" name="sendTime" id="sendTime"
-											value="${formattedDate }" readonly class="form-control form_datetime">
-						</div>
-					</div> --%>
 					
 					<div class="form-group required">
 						<label class="col-md-2 control-label">应用类型</label>
@@ -167,17 +158,39 @@
 					<div class="form-group required" id="sendWayDiv" >
 						<label class="col-md-2 control-label"><font color="green">选择发送方式</font></label>
 						<div class=col-md-5>
-						
 							<form:select path="sendWay" class="form-control">
-								<form:option value="0" label="测试发送"/>
+								<form:option value="0" label="测试并立即发送"/>
 								<form:option value="1" label="保存并立即发送"/>
+								<form:option value="2" label="测试并定时发送"/>
+								<form:option value="3" label="保存并定时发送"/>
 							</form:select>
 						</div>
-							
-						<div class="col-md-5" id="sendWayTip" style="display:none">
+						
+						<div class="col-md-5" id="sendWayTestTip" style="display:none">
 							<font color="red">只发送给运营部人员</font>
 						</div>
+						
+						<!-- 默认是 保存并立即发送 -->	
+						<div class="col-md-5" id="sendWaySaveTip" >
+							<font color="red">发送给选择的用户类型</font>
+						</div>
 					</div>
+					
+					
+					<div class="form-group required" style="display:none"  id="sendTimeDiv">
+						<label class="col-md-2 control-label">发送时间</label>
+						<div class="col-md-5">
+							 <fmt:formatDate var='formattedDate' value='${sendTimeDate}' type='both'
+											pattern="yyyy-MM-dd HH:mm" />  
+							
+								<input type="text" name="sendTime" id="sendTime"
+											value="${formattedDate }" readonly class="form-control form_datetime">
+						</div>
+					</div> 
+					
+					
+					
+					
 					
 					
 					<div class="form-actions">

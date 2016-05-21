@@ -138,13 +138,13 @@ public class MsgController extends AdminController {
 		if (msgId != null && msgId > 0) {
 			msg = msgService.selectByPrimaryKey(msgId);
 		}
-//		Long sendTime = msg.getSendTime();
-//		
-//		// 时间戳 转为 UTC格式 date类型的 时间，供前台展示
-//		Date date = DateUtil.timeStampToDate(sendTime);
-//		
-		//转换 发送时间  sendTime 时间戳--> utc 时间
-//		model.addAttribute("sendTimeDate", date);
+		Long sendTime = msg.getSendTime();
+		
+		// 时间戳 转为 UTC格式 date类型的 时间，供前台展示
+		Date date = DateUtil.timeStampToDate(sendTime);
+		
+        //转换 发送时间  sendTime 时间戳--> utc 时间
+		model.addAttribute("sendTimeDate", date);
 		
 		
 		//默认 保存 并立即 发送 
@@ -175,19 +175,17 @@ public class MsgController extends AdminController {
     	
     	Msg record = msgService.initMsg();
     	
-    	BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
-    	
-    	//入库
-    	if (msgId > 0L ) {
-    		msgService.updateByPrimaryKeySelective(record);
-		}
-    	
     	Short send = msgVo.getIsSend();
     	
     	//只有 msgId 和 发送状态 同时 为 0 ，才视为新增 
     	if(msgId == 0L && send == 0){
+    		
+    		BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
     		msgService.insertSelective(record);
     	}else{
+    		
+    		record = msgService.selectByPrimaryKey(msgId);
+    		BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
     		msgService.updateByPrimaryKeySelective(record);
     	}
     	
@@ -200,16 +198,25 @@ public class MsgController extends AdminController {
     		return returnRe;
     	}
     	
-    	//发送方式    1= 保存并立即发送   0= 测试发送
+    	//发送方式    0= 测试并立即发送  1= 保存并立即发送    2= 测试并定时发送  3= 保存并 定时发送 
     	Short sendWay = msgVo.getSendWay();
     	
     	String title = msgVo.getTitle();
     	String content = msgVo.getContent();
     	
+    	if(sendWay == 2 || sendWay == 3){
+    		//定时发送
+    		return returnRe;
+    	}
+    	
+    	
+    	/*
+    	 * 如果选择的立即发送    0= 测试立即    1= 保存立即
+    	 */
+    	
     	if(sendWay == 0){
     		
     		//如果是 测试 发送, 发消息 给 运营部人员
-    		
     		Long roleId = 3L;
     		List<AdminAccount> adminAccounts = accountService.selectByRoleId(roleId);
     		
@@ -276,11 +283,26 @@ public class MsgController extends AdminController {
     			userList.addAll(fwList);
     		}
     		
+    		
     		//异步推送
 			for (Users users : userList) {
 				noticeAsyncService.pushMsgToDevice(users.getId(), title,content);
 			}	
 			
+			
+			if(selectUserType == 4){
+    			//如果选择的 测试用户
+	    		Long roleId = 3L;
+	    		List<AdminAccount> adminAccounts = accountService.selectByRoleId(roleId);
+	    		
+	    		for (AdminAccount adminAccount : adminAccounts) {
+	    			if (!StringUtil.isEmpty(adminAccount.getMobile())) {
+	    				Users uu = usersService.selectByMobile(adminAccount.getMobile());
+	    				//异步推送 给 测试 人员（运营部），消息
+	    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content);
+	    			}
+				}
+    		}
     	}
     	
     	if(send == 0){

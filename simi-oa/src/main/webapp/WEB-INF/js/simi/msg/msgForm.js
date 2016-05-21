@@ -137,7 +137,9 @@ $("#previewMsg_btn").click(function() {
  */
 $("#userType").on("change",function(){
 	
-	if($(this).val() == 3 || $(this).val() == 0 ){
+	var val = $(this).val();
+	
+	if($(this).val() === "3" || $(this).val() === "0" ){
 		$("#useTypeTip").show();
 	}else{
 		$("#useTypeTip").hide();
@@ -154,23 +156,61 @@ $("input[name='isEnable']").on("change",function(){
 	
 	if(thisVal == 0){
 		$("#sendWayDiv").hide();
+		$("#sendTimeDiv").hide();
 	}
 	
 	if(thisVal == 1){
 		$("#sendWayDiv").show();
+		$("#sendTimeDiv").show();
 	}
 })
 
 
 /*
- *  选择 发送方式--测试发送
+ *  选择 发送方式
  */
 $("#sendWay").on("change",function(){
 	
-	if($(this).val() == 1){
-		$("#sendWayTip").hide();
+	
+	var val = $(this).val();
+	
+	//提示信息
+	if(val === "0" || val === "2"){
+		$("#sendWayTestTip").show();
+		$("#sendWaySaveTip").hide();
 	}else{
-		$("#sendWayTip").show();
+		$("#sendWayTestTip").hide();
+		$("#sendWaySaveTip").show();
+	}
+	
+	//时间选择
+	if(val === "2" || val === "3"){
+		$("#sendTimeDiv").show();
+	}else{
+		$("#sendTimeDiv").hide();
+		
+		//如果选择的立即发送。。每次需要重置  发送时间为 初始时间
+		// 保证时间戳的正确
+		
+		$("#sendTime").val("1970-01-01 08:00");
+	}
+	
+	
+	//其中 ，如果选择的  测试定时发送， 则 用户类型 只能是  运营人员
+	if(val === "2"){
+		$("#userType").val(4);
+		
+		$.each($("#userType").find("option"),function(){
+			
+			if($(this).val() != 4){
+				$(this).attr("disabled","disabled");
+			}
+		});
+	}else{
+		
+		$.each($("#userType").find("option"),function(){
+			$(this).removeAttr("disabled");
+		});
 	}
 });
 
@@ -193,6 +233,16 @@ $("#editMsg_btn").click(function() {
 			}else{
 				$("#sendStatusTip").find("font").text("消息不可用,保存但不发送");
 			}
+			
+			
+			/*
+			 * 表单数据转换为 array后, 根据 sendTime 在数组中的顺序 (name 属性 在 表单出现的顺序，从上至下。。 ), 
+			 * 
+			 * 将 “ 2016-05-01 08:00 ” 格式的日期转为 时间戳
+			 */ 
+			var date = new Date($("#sendTime").val()).getTime();
+			
+			msg[msg.length-1].value = date/1000;
 			
 			$.ajax({
 				type:"post",
