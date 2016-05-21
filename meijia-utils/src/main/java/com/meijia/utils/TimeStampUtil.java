@@ -1,5 +1,6 @@
 package com.meijia.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,13 +24,29 @@ public class TimeStampUtil {
 	}
 	
 	/**
-	 * 当前时间戳, 注意为精确到毫秒
+	 * 当前时间戳, 注意为精确到秒
 	 * @return long
 	 */
 	public static Long getNowSecond() {
 		return getMillisOfDate(DateUtil.getNowOfDate())/1000;
 	}
-
+	
+	
+	/*
+	 *  当前 时间戳, 精确到秒。
+	 *  
+	 *  	但  日期   精确到分钟, 针对 精确到 分钟的 定时任务
+	 */
+	public static Long getNowSecondByMinute() throws ParseException{
+		
+		 SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	     Date date=	simpleDateFormat.parse(DateUtil.getNow("yyyy-MM-dd HH:mm"));
+	     Long timeStemp = date.getTime()/1000;
+	     return timeStemp;
+	}
+	
+	
+	
 	/**
 	 * 返回日期字符串的毫秒数
 	 * @param date
