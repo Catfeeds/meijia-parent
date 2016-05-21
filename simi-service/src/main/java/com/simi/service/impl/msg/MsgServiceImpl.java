@@ -132,8 +132,8 @@ public class MsgServiceImpl implements MsgService {
 	}
 	
 	@Override
-	public List<Msg> selectMsgPushByTime() {
-		return msgMapper.selectMsgPushByTime();
+	public List<Msg> selectMsgBySearchVo(MsgSearchVo searchVo) {
+		return msgMapper.selectMsgBySearchVo(searchVo);
 	}
 }
 	

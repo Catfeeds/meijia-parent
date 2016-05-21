@@ -31,6 +31,6 @@ public interface MsgService {
 	OaMsgVo initOaMsgVo(Msg msg);
 	
 	
-	// 需要 定时发送的 消息
-	List<Msg> selectMsgPushByTime();
+	List<Msg> selectMsgBySearchVo(MsgSearchVo searchVo);
+	
 }
