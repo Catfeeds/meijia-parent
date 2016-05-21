@@ -54,6 +54,12 @@
 						<span class="am-icon-bell"></span> 简历查询
 					</a>
 				</li>
+				
+				<li>
+					<a href="#" class="am-cf"> 
+						<span class="am-icon-bell"></span> 公司简历库
+					</a>
+				</li>
 				<li>
 					<a href="#"> 
 						<span class="am-icon-search-plus"></span> 简历上传
