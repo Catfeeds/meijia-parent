@@ -17,6 +17,7 @@
 			<li class="am-nav"><a href="/xcloud/index" title="首页">首页</a></li>
 			<li><a href="/xcloud/schedule/list" title="工作日程">日程</a></li>
 			<li><a href="/xcloud/staff/list" title="通讯录" target="_top">通讯录</a></li>
+			<li><a href="/xcloud/hr/index" title="人事" target="_top">人事</a></li>
 			<li><a href="/xcloud/xz/index" title="工作日程" target="_top">行政</a></li>
 			
 			<li><a href="/xcloud/atools/index" title="应用中心" target="_top">应用中心</a></li>

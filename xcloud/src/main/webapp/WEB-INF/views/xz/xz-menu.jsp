@@ -4,17 +4,7 @@
 <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 
 	<ul class="am-list admin-sidebar-list">
-		<li class="admin-parent"><a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav-checkin'}">
-				<span class="am-icon-clock-o"></span> 考勤管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
-		</a>
-			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-checkin">
-				<li><a href="admin-user.html" class="am-cf"> <span class="am-icon-search-plus"></span> 统计报表
-				</a></li>
-				<li><a href="admin-404.html"> <span class="am-icon-calculator"></span> 排班管理
-				</a></li>
-				<li><a href="admin-log.html"> <span class="am-icon-cog"></span> 基础设置
-				</a></li>
-			</ul></li>
+		
 
 		<li class="admin-parent"><a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav-express'}">
 
@@ -55,19 +45,7 @@
 				</a></li>
 			</ul></li>
 
-		<li class="admin-parent"><a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-teamwork'}"> <span
-				class="am-icon-flag"
-			></span> 企业团建 <span class="am-icon-angle-right am-fr am-margin-right"></span>
-		</a>
-			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-teamwork">
-				<li><a href="/xcloud/xz/teamwork/teamwork-form" class="am-cf"> <span class="am-icon-bell"></span> 团建预约
-				</a></li>
-				<li><a href="/xcloud/xz/teamwork/list"> <span class="am-icon-search-plus"></span> 查询与结算
-				</a></li>
-				<li><a href="/xcloud/xz/teamwork/service"> <span class="am-icon-star"></span> 团建服务商
-				</a></li>
-			</ul></li>
-
+		
 		<li class="admin-parent"><a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-recycle'}"> <span
 				class="am-icon-recycle"
 			></span> 废品回收 <span class="am-icon-angle-right am-fr am-margin-right"></span>
