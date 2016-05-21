@@ -4,6 +4,26 @@
 	<ul class="am-list admin-sidebar-list">
 		
 		<li class="admin-parent">
+			<a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-hrexcel'}"> 
+				<span class="am-icon-flag"></span> 人事报表
+				<span class="am-icon-angle-right am-fr am-margin-right"></span>
+			</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hrexcel">
+				<li>
+					<a href="#" class="am-cf"> 
+						<span class="am-icon-bell"></span> 月报表
+					</a>
+				</li>
+				<li>
+					<a href="#"> 
+						<span class="am-icon-search-plus"></span> 报表配置
+					</a>
+				</li>
+				
+			</ul>
+		</li>
+		
+		<li class="admin-parent">
 			<a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-jobhunter'}"> 
 				<span class="am-icon-flag"></span> 赏金猎人
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
