@@ -27,17 +27,39 @@
     content
   </sql>
   
-  <select id="selectMsgPushByTime" resultMap="BaseResultMap" >
- 	 select
-	 	<include refid="Base_Column_List" />
-	 	 ,
-    	<include refid="Blob_Column_List" />
-	 from 
-	 	msg 
-	 where 
-		send_time > UNIX_TIMESTAMP(NOW())		
-		and
-		is_enable = 1	
+  <select id="selectMsgBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.MsgSearchVo">
+  	 select
+		<include refid="Base_Column_List" />
+	 from msg 
+	 where 1=1
+  	 <if test="sendAtOnce != null ">
+  	 	<if test="sendAtOnce == 0">
+			and  	 	
+  	 		send_time = 0
+  	 	</if>
+  	 	
+		<if test="sendAtOnce != 0">
+		 	and
+		 		send_time > 0
+		 	and
+		 		is_enable = 1	
+		</if> 		
+  	 </if>	
+    
+     <if test="title !=null and title !='' ">
+		and title = #{title,jdbcType=VARCHAR}
+	 </if>
+
+	 <if test="isSend !=null">
+		and is_send = #{isSend,jdbcType=NUMERIC}
+	 </if>
+	 
+	 <if test="userType !=null">
+		and user_type = #{userType,jdbcType=NUMERIC}
+	 </if>
+	order by add_time desc 	
+    
+    
   </select>
   
   

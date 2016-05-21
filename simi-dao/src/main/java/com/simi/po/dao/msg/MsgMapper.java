@@ -23,6 +23,5 @@ public interface MsgMapper {
 	List<Msg> selectUserListByUserType(MsgSearchVo searchVo);
 	
 	
-	// 需要 定时发送的 消息
-	List<Msg> selectMsgPushByTime();
+	List<Msg> selectMsgBySearchVo(MsgSearchVo searchVo);
 }
