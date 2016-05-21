@@ -81,6 +81,8 @@ public class JobMsgController extends BaseController {
 		//标志位
 		msgSearchVo.setSendAtOnce((short)1);
 		
+		msgSearchVo.setIsSend((short)0);
+		
 		List<Msg> list = msgService.selectMsgBySearchVo(msgSearchVo);
 		
 		// 发送时间 精确到  分钟的  时间戳 == 当前分钟时间的 时间戳（ 但都是  11位的 秒值时间戳）
