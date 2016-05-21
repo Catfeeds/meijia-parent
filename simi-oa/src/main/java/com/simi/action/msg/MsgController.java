@@ -175,18 +175,56 @@ public class MsgController extends AdminController {
     	
     	Msg record = msgService.initMsg();
     	
+    	
+    	//是否 已经 发送过
     	Short send = msgVo.getIsSend();
     	
-    	//只有 msgId 和 发送状态 同时 为 0 ，才视为新增 
-    	if(msgId == 0L && send == 0){
+    	//发送方式    0= 测试并立即发送  1= 保存并立即发送    2= 测试并定时发送  3= 保存并 定时发送 
+    	Short sendWay = msgVo.getSendWay();
+    	
+    	/**
+    	 * 
+    	 *  1. 非测试数据   入库
+    	 *  
+    	 *  2. 检查是否可用
+    	 * 
+    	 *  3. 是否是 定时任务
+    	 * 
+    	 *  4.   
+    	 *     1> 针对 立即发送的  信息, 做发送操作 
+    	 *     2> 定时发送, 交给定时任务 
+    	 */
+    	
+    	/*
+    	 * 1. 非测试  数据 才有 入库 操作。
+    	 */
+    	if(sendWay == 1 || sendWay == 3){
     		
-    		BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
-    		msgService.insertSelective(record);
-    	}else{
+    		//只有 msgId 和 发送状态 同时 为 0 ，才视为新增 
+    		if(msgId == 0L ){
+    			
+    			if(sendWay == 3){
+    				
+    				//对于   选择定时发送。。每次都生成一条新记录
+    				BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
+    				msgService.insertSelective(record);
+    			}
+    			
+    			if(send == 0 && sendWay == 1){
+    				
+    				//对于  立即发送的消息。。始终都只有一条
+    				BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
+    				msgService.insertSelective(record);
+    			}
+    			
+    		}else{
+    			
+				record = msgService.selectByPrimaryKey(msgId);
+				BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
+				
+				msgService.updateByPrimaryKeySelective(record);
+    		}
     		
-    		record = msgService.selectByPrimaryKey(msgId);
-    		BeanUtilsExp.copyPropertiesIgnoreNull(msgVo, record);
-    		msgService.updateByPrimaryKeySelective(record);
     	}
     	
     	//是否 可用
@@ -198,16 +236,17 @@ public class MsgController extends AdminController {
     		return returnRe;
     	}
     	
-    	//发送方式    0= 测试并立即发送  1= 保存并立即发送    2= 测试并定时发送  3= 保存并 定时发送 
-    	Short sendWay = msgVo.getSendWay();
+    	
+    	
+    	if(sendWay == 2 || sendWay == 3){
+    		//定时发送, 由定时任务处理
+    		return returnRe;
+    	}
+    	
+    	
     	
     	String title = msgVo.getTitle();
     	String content = msgVo.getContent();
-    	
-    	if(sendWay == 2 || sendWay == 3){
-    		//定时发送
-    		return returnRe;
-    	}
     	
     	
     	/*
@@ -241,7 +280,7 @@ public class MsgController extends AdminController {
     		
     		UserSearchVo  searchVo = new UserSearchVo();
     		
-    		if(selectUserType == 0){
+    		if(selectUserType == 0 ){
     			//选择 普通用户（一个月的）
     			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_0);
     			searchVo.setUserIds(lastMonthUser);
@@ -249,16 +288,9 @@ public class MsgController extends AdminController {
     			userList = usersService.selectBySearchVo(searchVo);
     			
     		}
-    		if(selectUserType == 1){
-    			//选择秘书
-    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_1);
-    			
-    			userList = usersService.selectBySearchVo(searchVo);
-    			
-    		}
-    		if(selectUserType == 2){
-    			//选择 服务商
-    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_2);
+    		if(selectUserType == 1 || selectUserType == 2){
+    			//选择秘书 或 服务商
+    			searchVo.setUserType(selectUserType);
     			
     			userList = usersService.selectBySearchVo(searchVo);
     		}
@@ -296,7 +328,7 @@ public class MsgController extends AdminController {
 	    		List<AdminAccount> adminAccounts = accountService.selectByRoleId(roleId);
 	    		
 	    		for (AdminAccount adminAccount : adminAccounts) {
-	    			if (!StringUtil.isEmpty(adminAccount.getMobile())) {
+	    	 		if (!StringUtil.isEmpty(adminAccount.getMobile())) {
 	    				Users uu = usersService.selectByMobile(adminAccount.getMobile());
 	    				//异步推送 给 测试 人员（运营部），消息
 	    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content);
@@ -305,7 +337,8 @@ public class MsgController extends AdminController {
     		}
     	}
     	
-    	if(send == 0){
+    	// 只有状态 未发送, 发送方式为   保存并 立即发送的。。才修改为已发送
+    	if(send == 0 && sendWay == 1){
     		record.setIsSend((short)1);
     		msgService.updateByPrimaryKeySelective(record);
     	}
