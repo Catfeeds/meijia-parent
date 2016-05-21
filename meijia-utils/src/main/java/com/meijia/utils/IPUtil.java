@@ -1,6 +1,12 @@
 package com.meijia.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class IPUtil {
 	public static long getIpAddr(HttpServletRequest request) {
@@ -62,6 +68,49 @@ public class IPUtil {
 		sb.append(".");
 		return sb.toString();
 	}
+	
+	
+	/**
+	 * 淘宝ip查询城市接口
+	 * http://ip.taobao.com/instructions.php
+	 * String res = "{\"code\":0,\"data\":{\"country\":\"\u4e2d\u56fd\",\"country_id\":\"CN\",\"area\":\"\u534e\u5317\",\"area_id\":\"100000\",\"region\":\"\u5317\u4eac\u5e02\",\"region_id\":\"110000\",\"city\":\"\u5317\u4eac\u5e02\",\"city_id\":\"110100\",\"county\":\"\",\"county_id\":\"-1\",\"isp\":\"\u6559\u80b2\u7f51\",\"isp_id\":\"100027\",\"ip\":\"202.112.96.163\"}}";
+	 * @param ip
+	 * @return city
+	 */
+	public static String getCityByIp(String ip) {
+		String result = "";
+		
+		if (StringUtil.isEmpty(ip)) return result;
+		
+		String url = "http://ip.taobao.com//service/getIpInfo.php";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("ip", ip);
+		
+		String res = HttpClientUtil.get(url, params);
+		
+		if (StringUtil.isEmpty(res)) return result;
+		
+		 String jsonString2 = "[" + res + "]";
+		JSONArray array = JSONArray.fromObject(jsonString2);
+			
+		JSONObject jsonObject = array.getJSONObject(0);    
+			
+		String code = jsonObject.getString("code");
+		
+		if (code.equals("0")) {
+			String data = jsonObject.getString("data");
+			
+			String dataStr = "[" + data + "]";
+			
+			JSONArray dataArray = JSONArray.fromObject(dataStr);
+			JSONObject dataObject = dataArray.getJSONObject(0);
+			
+			result = dataObject.getString("city");
+		}
+
+
+		return result;
+	}
 
 	public static void main(String[] args) {
 		System.out.println("IP地址的各种表现形式：\r\n");
@@ -71,5 +120,11 @@ public class IPUtil {
 		System.out.println(ipToLong("202.112.96.163"));
 		System.out.print("普通形式：");
 		System.out.println(longToIP(3396362403L));
+		
+		System.out.println(IPUtil.getCityByIp("202.112.96.163"));
+		
+		
+		
+
 	}
 }
