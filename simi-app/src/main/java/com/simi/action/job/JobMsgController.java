@@ -30,6 +30,7 @@ import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.MsgSearchVo;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserSearchVo;
 
@@ -71,10 +72,16 @@ public class JobMsgController extends BaseController {
 		/*
 		 *  定时发送的消息。。
 		 *  		
-		 *     1. 发送时间大于 当前时间 
+		 *     1. is_send = 0
 		 *     2. 消息 可用   isEnable = 1
 		 */
-		List<Msg> list = msgService.selectMsgPushByTime();
+		
+		MsgSearchVo msgSearchVo = new MsgSearchVo();
+		
+		//标志位
+		msgSearchVo.setSendAtOnce((short)1);
+		
+		List<Msg> list = msgService.selectMsgBySearchVo(msgSearchVo);
 		
 		// 发送时间 精确到  分钟的  时间戳 == 当前分钟时间的 时间戳（ 但都是  11位的 秒值时间戳）
 		Long minute = TimeStampUtil.getNowSecondByMinute();
@@ -126,15 +133,8 @@ public class JobMsgController extends BaseController {
 		    			userList = usersService.selectBySearchVo(searchVo);
 		    			
 		    		}
-		    		if(userType == 1){
-		    			//选择秘书
-		    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_1);
-		    			
-		    			userList = usersService.selectBySearchVo(searchVo);
-		    			
-		    		}
-		    		if(userType == 2){
-		    			//选择 服务商
+		    		if(userType == 1 || userType == 2){
+		    			//选择 秘书或 服务商
 		    			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_2);
 		    			
 		    			userList = usersService.selectBySearchVo(searchVo);
@@ -166,7 +166,6 @@ public class JobMsgController extends BaseController {
 					}	
 					
 		    	}
-				
 			
 				if(msg.getIsSend() == 0){
 					//设置为已发送
