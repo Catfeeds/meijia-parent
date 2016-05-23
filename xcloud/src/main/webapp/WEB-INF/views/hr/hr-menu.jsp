@@ -30,12 +30,12 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-jobhunter">
 				<li>
-					<a href="#" class="am-cf"> 
+					<a href="/xcloud/hr/hunter/job_publish_list" class="am-cf"> 
 						<span class="am-icon-bell"></span> 职位悬赏大厅
 					</a>
 				</li>
 				<li>
-					<a href="#"> 
+					<a href="/xcloud/hr/hunter/job_hunter_form?id=0"> 
 						<span class="am-icon-search-plus"></span> 悬赏职位发布
 					</a>
 				</li>
@@ -50,12 +50,12 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-resumechange">
 				<li>
-					<a href="#" class="am-cf"> 
+					<a href="/xcloud/hr/resume/resume_exchange_list" class="am-cf"> 
 						<span class="am-icon-bell"></span> 简历交换大厅
 					</a>
 				</li>
 				<li>
-					<a href="#"> 
+					<a href="/xcloud/hr/resume/resume_exchange_form?id=0"> 
 						<span class="am-icon-search-plus"></span> 交换简历发布
 					</a>
 				</li>

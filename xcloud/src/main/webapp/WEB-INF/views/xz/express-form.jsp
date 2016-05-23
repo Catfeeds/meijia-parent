@@ -50,9 +50,8 @@
 					<form:form modelAttribute="contentModel" method="POST"
 						id="express-form" class="am-form am-form-horizontal"
 						enctype="multipart/form-data">
-				<input type="hidden" id="userId" value="${userId }" />
+					<input type="hidden" id="userId" value="${userId }" />
 						
-
 
 
 						<div class="am-form-group">
