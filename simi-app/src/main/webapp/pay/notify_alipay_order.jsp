@@ -17,9 +17,8 @@
 %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.meijia.utils.alipay.util.*"%>
-<%@ page import="com.meijia.utils.alipay.util.config.*"%>
-<%@ page import="com.meijia.utils.AppSubmit"%>
+<%@ page import="com.alipay.config.*"%>
+<%@ page import="com.alipay.util.*"%>
 <%
 	//获取支付宝POST过来反馈信息
 	Map<String,String> params = new HashMap<String,String>();
@@ -79,7 +78,7 @@
 
 //	if(AlipayNotify.verify(notify_params)) {//验证成功
 		String url = "http://localhost:8080/simi/app/order/online_pay_notify.json";
-		AppSubmit.appAliay(url, params);
+		com.meijia.utils.AppSubmit.appAliay(url, params);
 		out.println("success");	//请不要修改或删除
 //	} else {//验证失败
 //		out.println("fail");
