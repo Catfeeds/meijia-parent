@@ -1,5 +1,6 @@
 package com.simi.service.impl.resume;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.IPUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.resume.HrJobHunterMapper;
 import com.simi.po.model.resume.HrJobHunter;
@@ -79,9 +81,12 @@ public class HrJobHunterServiceImpl implements HrJobHunterService {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(hunter, hunterVo);
 		
-		Users users = userService.selectByPrimaryKey(hunter.getUserId());
+		if(hunter.getUserId() != 0L){
 		
-		hunterVo.setUserName(users.getName());
+			Users users = userService.selectByPrimaryKey(hunter.getUserId());
+			
+			hunterVo.setUserName(users.getName());
+		}
 		
 		// 截止日期 = 添加时间+有效天数的毫秒时间戳
 		Long addTime = hunter.getAddTime()*1000;
@@ -114,6 +119,7 @@ public class HrJobHunterServiceImpl implements HrJobHunterService {
 		}
 		
 		hunterVo.setEndTimeFlag(flag);
+		
 		
 		return hunterVo;
 	}
@@ -151,6 +157,40 @@ public class HrJobHunterServiceImpl implements HrJobHunterService {
 		BeanUtilsExp.copyPropertiesIgnoreNull(hunter, vo);
 		
 		vo.setUserName("");
+		
+		
+		//下拉时间选择
+		Map<Long, String> limitDayMap = new LinkedHashMap<Long, String>();
+		
+		limitDayMap.put(0L, "长期有效");
+		limitDayMap.put(30L, "30天有效");
+		limitDayMap.put(180L, "6个月有效");
+		
+		vo.setTimeMap(limitDayMap);
+		
+		
+		//下拉选择城市
+		//北京   上海  杭州 广州 深圳 成都 武汉 南京
+		Map<String, String> citySelectMap = new LinkedHashMap<String, String>();
+		
+		
+		citySelectMap.put("北京市", "北京");
+		citySelectMap.put("上海市", "上海");
+		citySelectMap.put("杭州市", "杭州");
+		citySelectMap.put("广州市", "广州");
+		citySelectMap.put("深圳市", "深圳");
+		citySelectMap.put("成都市", "成都");
+		citySelectMap.put("武汉市", "武汉");
+		citySelectMap.put("南京市", "南京");
+		
+		vo.setCitySelectMap(citySelectMap);
+		
+		vo.setLimitDayStr("");
+		vo.setEndTimeStr("");
+		vo.setEndTimeFlag("");
+		
+		//app字段
+		vo.setCityName("北京市");
 		
 		return vo;
 	}

@@ -21,12 +21,32 @@ public class JobHunterVo extends HrJobHunter {
 	//form页 字段
 	private Map<Long, String> timeMap;	// 有效期下拉选择
 	
+	private Map<String, String> citySelectMap;	// 城市下拉
+	
+	private String ipTransCity;		//当前 Ip 地址对应的 城市。
+	
 	//列表页字段
 	private String endTimeStr;	//截止日期
 	
 	private String endTimeFlag;	// 是否已到 截止日期
 	
 	
+	public String getIpTransCity() {
+		return ipTransCity;
+	}
+
+	public void setIpTransCity(String ipTransCity) {
+		this.ipTransCity = ipTransCity;
+	}
+
+	public Map<String, String> getCitySelectMap() {
+		return citySelectMap;
+	}
+
+	public void setCitySelectMap(Map<String, String> citySelectMap) {
+		this.citySelectMap = citySelectMap;
+	}
+
 	public String getEndTimeFlag() {
 		return endTimeFlag;
 	}

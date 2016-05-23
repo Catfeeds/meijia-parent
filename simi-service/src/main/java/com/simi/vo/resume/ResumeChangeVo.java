@@ -26,7 +26,38 @@ public class ResumeChangeVo extends HrResumeChange {
 	//detail页字段
 	private String limitDayStr;	//有效时间
 	
+	private Map<String, String> citySelectMap;	// 城市下拉
 	
+	private String ipTransCity;		//当前 Ip 地址对应的 城市。
+	
+	private String endTimeFlag;	// 是否已到 截止日期
+	
+	
+	
+	public Map<String, String> getCitySelectMap() {
+		return citySelectMap;
+	}
+
+	public void setCitySelectMap(Map<String, String> citySelectMap) {
+		this.citySelectMap = citySelectMap;
+	}
+
+	public String getIpTransCity() {
+		return ipTransCity;
+	}
+
+	public void setIpTransCity(String ipTransCity) {
+		this.ipTransCity = ipTransCity;
+	}
+
+	public String getEndTimeFlag() {
+		return endTimeFlag;
+	}
+
+	public void setEndTimeFlag(String endTimeFlag) {
+		this.endTimeFlag = endTimeFlag;
+	}
+
 	public String getLimitDayStr() {
 		return limitDayStr;
 	}

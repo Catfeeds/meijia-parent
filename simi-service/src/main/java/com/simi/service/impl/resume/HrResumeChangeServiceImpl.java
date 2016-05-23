@@ -1,6 +1,8 @@
 package com.simi.service.impl.resume;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +102,40 @@ public class HrResumeChangeServiceImpl implements HrResumeChangeService {
 		BeanUtilsExp.copyPropertiesIgnoreNull(change, changeVo);
 		
 		changeVo.setUserName("");
+		
+		
+		//下拉时间选择
+		Map<Long, String> limitDayMap = new LinkedHashMap<Long, String>();
+		
+		limitDayMap.put(0L, "长期有效");
+		limitDayMap.put(30L, "30天有效");
+		limitDayMap.put(180L, "6个月有效");
+		
+		changeVo.setTimeMap(limitDayMap);
+		
+		
+		//下拉选择城市
+		//北京   上海  杭州 广州 深圳 成都 武汉 南京
+		Map<String, String> citySelectMap = new LinkedHashMap<String, String>();
+		
+		
+		citySelectMap.put("北京市", "北京");
+		citySelectMap.put("上海市", "上海");
+		citySelectMap.put("杭州市", "杭州");
+		citySelectMap.put("广州市", "广州");
+		citySelectMap.put("深圳市", "深圳");
+		citySelectMap.put("成都市", "成都");
+		citySelectMap.put("武汉市", "武汉");
+		citySelectMap.put("南京市", "南京");
+		
+		changeVo.setCitySelectMap(citySelectMap);
+		
+		changeVo.setLimitDayStr("");
+		changeVo.setEndTimeStr("");
+		changeVo.setEndTimeFlag("");
+		
+		//app字段
+		changeVo.setCityName("北京市");
 		
 		return changeVo;
 	}
