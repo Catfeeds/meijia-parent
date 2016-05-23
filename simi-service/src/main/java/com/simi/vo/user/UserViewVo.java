@@ -18,7 +18,7 @@ public class UserViewVo {
     
     private	String headImg;
 
-    private BigDecimal restMoney;
+    private String restMoney;
 
     private Integer score;
     
@@ -184,11 +184,11 @@ public class UserViewVo {
 		this.headImg = headImg;
 	}
 
-	public BigDecimal getRestMoney() {
+	public String getRestMoney() {
 		return restMoney;
 	}
 
-	public void setRestMoney(BigDecimal restMoney) {
+	public void setRestMoney(String restMoney) {
 		this.restMoney = restMoney;
 	}
 

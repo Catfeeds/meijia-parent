@@ -20,6 +20,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
@@ -233,6 +234,12 @@ public class UsersServiceImpl implements UsersService {
 			vo.setName(vo.getMobile());
 		}
 		
+		//用户余额
+		BigDecimal restMoney = u.getRestMoney();
+		String restMoneyStr = MathBigDecimalUtil.round2(restMoney);
+		vo.setRestMoney(restMoneyStr);
+		
+		
 		// 获取用户与绑定的秘书的环信IM账号
 		UserRefSearchVo refSearchVo = new UserRefSearchVo();
 		refSearchVo.setUserId(userId);
@@ -361,9 +368,13 @@ public class UsersServiceImpl implements UsersService {
 			u = userList.get(i);
 
 			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
-
+			
 			vo.setUserId(u.getId());
 
+			BigDecimal restMoney = u.getRestMoney();
+			String restMoneyStr = MathBigDecimalUtil.round2(restMoney);
+			vo.setRestMoney(restMoneyStr);
+			
 			if (StringUtil.isEmpty(vo.getName())) {
 				vo.setName(vo.getMobile());
 			}
