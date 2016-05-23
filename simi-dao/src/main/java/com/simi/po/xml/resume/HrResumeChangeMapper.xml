@@ -37,8 +37,6 @@
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeSearchVo">
 		select
 		<include refid="Base_Column_List" />
-		from record_assets
-		where 1 = 1 
 		from hr_resume_change
 		where 1 = 1 
 		<if test="userId != null">
