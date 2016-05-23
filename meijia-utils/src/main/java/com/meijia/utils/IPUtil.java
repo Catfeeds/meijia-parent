@@ -65,7 +65,9 @@ public class IPUtil {
 		sb.append(String.valueOf((longIP & 0x0000FFFF) >>> 8));
 		sb.append(".");
 		sb.append(String.valueOf(longIP & 0x000000FF));
-		sb.append(".");
+		
+		//多了一个点
+//		sb.append(".");
 		return sb.toString();
 	}
 	
@@ -121,10 +123,15 @@ public class IPUtil {
 		System.out.print("普通形式：");
 		System.out.println(longToIP(3396362403L));
 		
-		System.out.println(IPUtil.getCityByIp("202.112.96.163"));
+//		System.out.println(IPUtil.getCityByIp("202.112.96.163."));
 		
 		
+		System.out.println(IPUtil.getCityByIp(longToIP(3396362403L)));
 		
-
+		
+//		String longToIP = IPUtil.longToIP(2130706433L);
+//		System.out.println(longToIP);
+//		String cityByIp = IPUtil.getCityByIp(longToIP);
+//		System.out.println(cityByIp);
 	}
 }
