@@ -115,17 +115,21 @@ public class JobHunterController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		JobHunterVo hunterVo = hunterService.initHunterVo();
+
+		//所在城市	
 		UserTrailReal trailReal = userTrRealService.selectByUserId(partnerUserId);
-		String city = trailReal.getCity();
+		
+		if(trailReal !=null){
+			String city = trailReal.getCity();
+			hunterVo.setCityName(city);
+		}
+		
 		
 		Users users = userService.selectByPrimaryKey(partnerUserId);
 		String name = users.getName();	
-		
-		JobHunterVo hunterVo = hunterService.initHunterVo();
-		
 		//用户信息
 		hunterVo.setUserName(name);
-		hunterVo.setCityName(city);
 		
 		//有效期选择
 		Map<Long, String> map = new HashMap<Long, String>();

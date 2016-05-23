@@ -112,17 +112,22 @@ public class ResumeChangeController extends BaseController {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		ResumeChangeVo vo = resumeChangeService.initResumeChangeVo();
+		
 		UserTrailReal trailReal = userTrRealService.selectByUserId(partnerUserId);
-		String city = trailReal.getCity();
+		
+		if(trailReal != null){
+			
+			String city = trailReal.getCity();
+			vo.setCityName(city);
+		}
 		
 		Users users = userService.selectByPrimaryKey(partnerUserId);
 		String name = users.getName();	
 		
-		ResumeChangeVo vo = resumeChangeService.initResumeChangeVo();
 		
 		//用户信息
 		vo.setUserName(name);
-		vo.setCityName(city);
 		
 		//有效期选择
 		Map<Long, String> map = new HashMap<Long, String>();
