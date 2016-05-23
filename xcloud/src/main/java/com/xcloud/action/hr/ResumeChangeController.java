@@ -81,6 +81,12 @@ public class ResumeChangeController extends BaseController {
 		
 		PageHelper.startPage(pageNo, pageSize);
 		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		Long userId = accountAuth.getUserId();
+		
+		//显示 当前登录人的 简历
+		searchVo.setUserId(userId);
+		
 		List<HrResumeChange> list = resumeService.selectBySearchVo(searchVo);
 		
 		HrResumeChange change = null;

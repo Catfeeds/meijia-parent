@@ -77,6 +77,13 @@ public class JobPublishController extends BaseController {
 		
 		PageHelper.startPage(pageNo, pageSize);
 		
+		
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		Long userId = accountAuth.getUserId();
+		
+		//显示 当前登录人的 简历
+		searchVo.setUserId(userId);
+		
 		List<HrJobHunter> list = jobHunterService.selectBySearchVo(searchVo);
 		
 		HrJobHunter hunter  = null;
