@@ -3,6 +3,7 @@ package com.simi.service.xcloud;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.StaffListVo;
@@ -38,5 +39,7 @@ public interface XcompanyStaffService {
 	AppResultData<Object> staffImport(Long companyId, List<Object> datas) throws Exception;
 
 	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
+
+	Xcompany getDefaultCompanyByUserId(Long userId);
 
 }

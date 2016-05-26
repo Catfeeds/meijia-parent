@@ -7,7 +7,7 @@ import com.simi.po.model.resume.HrJobHunter;
 import com.simi.po.model.resume.HrResumeChange;
 import com.simi.vo.resume.JobHunterVo;
 import com.simi.vo.resume.ResumeChangeVo;
-import com.simi.vo.resume.ResumeSearchVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 
 /**
  *
@@ -25,9 +25,9 @@ public interface HrJobHunterService {
 
     int updateByPrimaryKey(HrJobHunter record);
     
-    List<HrJobHunter> selectBySearchVo(ResumeSearchVo searchVo);
+    List<HrJobHunter> selectBySearchVo(ResumeChangeSearchVo searchVo);
 
-    PageInfo selectByListPage(ResumeSearchVo searchVo, int pageNo, int pageSize);
+    PageInfo selectByListPage(ResumeChangeSearchVo searchVo, int pageNo, int pageSize);
 	
     HrJobHunter initHrJobHunter();
      

@@ -17,9 +17,11 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
@@ -36,6 +38,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 	@Autowired
 	XcompanyDeptService xcompanyDeptService;
+	
+	@Autowired
+	private XCompanyService xCompanyService;
 
 	@Autowired
 	UsersService usersService;
@@ -579,6 +584,49 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		}
 		
 		return result;
+	}
+	
+	//获取userId 默认的公司ID
+	@Override
+	public Xcompany getDefaultCompanyByUserId(Long userId) {
+		Xcompany xcompany = null;
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> companyList = selectBySearchVo(searchVo);
+		
+		if (!companyList.isEmpty()) {
+			
+			Long defaultCompanyId = 0L;
+			
+			//获取默认团队ID.
+			if (companyList.size() == 1) {
+				XcompanyStaff item = companyList.get(0);
+				defaultCompanyId = item.getCompanyId();
+			} else {
+				for (XcompanyStaff xs : companyList) {
+					if (xs.getIsDefault().equals((short)1)) {
+						defaultCompanyId = xs.getCompanyId();
+						break;
+					}
+				}
+				
+				if (defaultCompanyId.equals(0L)) {
+					XcompanyStaff item = companyList.get(0);
+					defaultCompanyId = item.getCompanyId();
+				}
+				
+			}
+			
+		
+			
+			if (defaultCompanyId > 0L) {
+				xcompany = xCompanyService.selectByPrimaryKey(defaultCompanyId);
+			}
+		}
+		
+		return xcompany;
 	}
 
 		

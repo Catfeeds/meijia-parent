@@ -35,7 +35,5 @@ public interface RecordExpressService {
 
 	RecordExpressVo getListVo(RecordExpress item);
 
-	PageInfo selectByPage(RecordExpressSearchVo searchVo, int pageNo, int pageSize);
-
-	
+	PageInfo selectByListPageVos(RecordExpressSearchVo searchVo, int pageNo, int pageSize);	
 }

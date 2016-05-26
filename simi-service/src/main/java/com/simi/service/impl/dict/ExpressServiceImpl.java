@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.dict.ExpressService;
+import com.simi.vo.ExpressSearchVo;
 import com.simi.po.dao.dict.DictExpressMapper;
 import com.simi.po.model.dict.DictExpress;
 
@@ -19,15 +20,10 @@ public class ExpressServiceImpl implements ExpressService {
 	public DictExpress selectByPrimaryKey(Long id) {
 		return expressMapper.selectByPrimaryKey(id);
 	}
-
-	@Override
-	public List<DictExpress> selectAll() {
-		return expressMapper.selectAll();
-	}
 	
 	@Override
-	public List<DictExpress> selectByT(Long t) {
-		return expressMapper.selectByT(t);
+	public List<DictExpress> selectBySearchVo(ExpressSearchVo searchVo) {
+		return expressMapper.selectBySearchVo(searchVo);
 	}
 
 

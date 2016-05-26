@@ -302,6 +302,8 @@ public class UsersServiceImpl implements UsersService {
 		vo.setHasCompany((short) 0);
 		vo.setCompanyId(0L);
 		vo.setCompanyCount(0);
+		vo.setCompanyId(0L);
+		vo.setCompanyName("");
 
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setUserId(userId);
@@ -311,38 +313,17 @@ public class UsersServiceImpl implements UsersService {
 		if (!companyList.isEmpty()) {
 			vo.setHasCompany((short) 1);
 			vo.setCompanyCount(companyList.size());
-			
-			Long defaultCompanyId = 0L;
-			
-			//获取默认团队ID.
-			if (companyList.size() == 1) {
-				XcompanyStaff item = companyList.get(0);
-				defaultCompanyId = item.getCompanyId();
-			} else {
-				for (XcompanyStaff xs : companyList) {
-					if (xs.getIsDefault().equals((short)1)) {
-						defaultCompanyId = xs.getCompanyId();
-					}
-				}
-				
-				if (defaultCompanyId.equals(0L)) {
-					XcompanyStaff item = companyList.get(0);
-					defaultCompanyId = item.getCompanyId();
-				}
-				
-			}
-			
-			vo.setCompanyId(defaultCompanyId);
-			vo.setCompanyName("");
-			
-			if (defaultCompanyId > 0L) {
-				Xcompany xcompany = xCompanyService.selectByPrimaryKey(defaultCompanyId);
-				if (xcompany != null) {
-					vo.setCompanyName(xcompany.getCompanyName());
-				}
-			}
 		}
-
+		
+		
+		
+		Xcompany defaultXcompany = xcompanyStaffService.getDefaultCompanyByUserId(userId);
+		
+		if (defaultXcompany != null) {
+			vo.setCompanyId(defaultXcompany.getCompanyId());
+			vo.setCompanyName(defaultXcompany.getCompanyName());
+		}
+		
 		return vo;
 	}
 

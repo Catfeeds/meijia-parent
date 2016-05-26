@@ -13,13 +13,16 @@ import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.card.CardService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.xcloud.CompanyAdminSearchVo;
 import com.simi.vo.xcloud.CompanySearchVo;
 
 @Service
@@ -33,6 +36,9 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 	
 	@Autowired
 	private XCompanyService xCompanyService;
+	
+	@Autowired
+	private XcompanyAdminService xCompanyAdminService;
 	
 	@Autowired
 	private CardService cardService;
@@ -86,12 +92,13 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		Long startTime = TimeStampUtil.getBeginOfToday();
 		Long endTime = TimeStampUtil.getEndOfToday();
 		
-		CompanySearchVo searchVo = new CompanySearchVo();
-		searchVo.setUserName(mobile);
+		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setIsCreate(1);
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
 		
-		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo);
+		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo);
 		if (rs.size() > 300) return new AsyncResult<Boolean>(true);
 		
 		Integer score = 300;

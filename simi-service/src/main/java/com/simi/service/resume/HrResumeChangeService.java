@@ -5,7 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.resume.HrResumeChange;
 import com.simi.vo.resume.ResumeChangeVo;
-import com.simi.vo.resume.ResumeSearchVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 
 /**
  *
@@ -23,9 +23,9 @@ public interface HrResumeChangeService {
 
     int updateByPrimaryKey(HrResumeChange record);
     
-    List<HrResumeChange> selectBySearchVo(ResumeSearchVo searchVo);
+    List<HrResumeChange> selectBySearchVo(ResumeChangeSearchVo searchVo);
 
-    PageInfo selectByListPage(ResumeSearchVo searchVo, int pageNo, int pageSize);
+    PageInfo selectByListPage(ResumeChangeSearchVo searchVo, int pageNo, int pageSize);
 	
    	HrResumeChange	initHrResumeChange();
    	

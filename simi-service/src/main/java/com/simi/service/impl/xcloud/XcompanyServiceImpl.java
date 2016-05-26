@@ -33,8 +33,6 @@ public class XcompanyServiceImpl implements XCompanyService {
 		record.setPoiType((short) 0);
 		record.setAddrName(" ");
 		record.setAddr("");
-		record.setUserName("");
-		record.setPassword("");
 		record.setLinkMan("");
 		record.setInvitationCode("");
 		record.setQrCode("");

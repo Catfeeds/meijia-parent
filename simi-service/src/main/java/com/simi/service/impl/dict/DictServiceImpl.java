@@ -15,6 +15,7 @@ import com.simi.service.dict.ExpressService;
 import com.simi.service.dict.ProvinceService;
 import com.simi.service.dict.RegionService;
 import com.simi.service.user.UserAddrsService;
+import com.simi.vo.ExpressSearchVo;
 import com.simi.po.dao.dict.DictCityMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictExpress;
@@ -164,7 +165,8 @@ public class DictServiceImpl implements DictService {
 		// 城市信息
 		List<DictExpress> listExpress = memDictMap.get("listExpress");
 		if (listExpress == null || listExpress.isEmpty()) {
-			listExpress = expressService.selectAll();
+			ExpressSearchVo searchVo = new ExpressSearchVo();
+			listExpress = expressService.selectBySearchVo(searchVo);
 			memDictMap.put("listExpress", listExpress);
 		}
 

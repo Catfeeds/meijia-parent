@@ -17,7 +17,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.resume.HrResumeChangeService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.resume.ResumeChangeVo;
-import com.simi.vo.resume.ResumeSearchVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 
 /**
  *
@@ -56,13 +56,13 @@ public class HrResumeChangeServiceImpl implements HrResumeChangeService {
 	}
 
 	@Override
-	public List<HrResumeChange> selectBySearchVo(ResumeSearchVo searchVo) {
+	public List<HrResumeChange> selectBySearchVo(ResumeChangeSearchVo searchVo) {
 		return changeMapper.selectBySearchVo(searchVo);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public PageInfo selectByListPage(ResumeSearchVo searchVo, int pageNo, int pageSize) {
+	public PageInfo selectByListPage(ResumeChangeSearchVo searchVo, int pageNo, int pageSize) {
 		
 		PageHelper.startPage(pageNo, pageSize);
 		

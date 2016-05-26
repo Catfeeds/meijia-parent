@@ -8,7 +8,11 @@ public class RecordExpressXcloudVo extends RecordExpress{
 	//快递服务商名称
     private String expressName;
     
+    private String ecode;
+    
     private String expressTypeName;
+    
+    private String payTypeName;
     
     private String isDoneName;
 
@@ -64,6 +68,22 @@ public class RecordExpressXcloudVo extends RecordExpress{
 
 	public void setUpdateTimeStr(String updateTimeStr) {
 		this.updateTimeStr = updateTimeStr;
+	}
+
+	public String getPayTypeName() {
+		return payTypeName;
+	}
+
+	public void setPayTypeName(String payTypeName) {
+		this.payTypeName = payTypeName;
+	}
+
+	public String getEcode() {
+		return ecode;
+	}
+
+	public void setEcode(String ecode) {
+		this.ecode = ecode;
 	}
     
     

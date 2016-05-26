@@ -19,7 +19,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.resume.HrJobHunterService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.resume.JobHunterVo;
-import com.simi.vo.resume.ResumeSearchVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 
 /**
  *
@@ -58,12 +58,12 @@ public class HrJobHunterServiceImpl implements HrJobHunterService {
 	}
 
 	@Override
-	public List<HrJobHunter> selectBySearchVo(ResumeSearchVo searchVo) {
+	public List<HrJobHunter> selectBySearchVo(ResumeChangeSearchVo searchVo) {
 		return jobMapper.selectBySearchVo(searchVo);
 	}
 
 	@Override
-	public PageInfo selectByListPage(ResumeSearchVo searchVo, int pageNo, int pageSize) {
+	public PageInfo selectByListPage(ResumeChangeSearchVo searchVo, int pageNo, int pageSize) {
 		
 		PageHelper.startPage(pageNo, pageSize);
 		
