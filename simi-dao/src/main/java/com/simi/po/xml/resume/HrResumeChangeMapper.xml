@@ -18,7 +18,7 @@
   </sql>
   
    
-  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeSearchVo">
+  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from hr_resume_change
@@ -34,7 +34,7 @@
 		order by update_time desc
 	</select>
 	
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from hr_resume_change

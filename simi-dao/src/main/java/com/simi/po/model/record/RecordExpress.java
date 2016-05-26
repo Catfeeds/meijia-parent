@@ -1,5 +1,7 @@
 package com.simi.po.model.record;
 
+import java.math.BigDecimal;
+
 public class RecordExpress {
     private Long id;
 
@@ -18,8 +20,14 @@ public class RecordExpress {
     private Short isDone;
 
     private Short isClose;
-
+    
+    private Long isCloseTime;
+    
+    private Long isCloseUserId;
+    
     private Short payType;
+    
+    private BigDecimal price;
 
     private Long fromCityId;
 
@@ -229,5 +237,29 @@ public class RecordExpress {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public Long getIsCloseTime() {
+		return isCloseTime;
+	}
+
+	public void setIsCloseTime(Long isCloseTime) {
+		this.isCloseTime = isCloseTime;
+	}
+
+	public Long getIsCloseUserId() {
+		return isCloseUserId;
+	}
+
+	public void setIsCloseUserId(Long isCloseUserId) {
+		this.isCloseUserId = isCloseUserId;
 	}
 }

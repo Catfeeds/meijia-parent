@@ -17,12 +17,11 @@ public interface RecordExpressMapper {
     int updateByPrimaryKeySelective(RecordExpress record);
 
     int updateByPrimaryKey(RecordExpress record);
-
+    
 	List<RecordExpress> selectBySearchVo(RecordExpressSearchVo searchVo);
 
 	List<RecordExpress> selectByListPage(RecordExpressSearchVo searchVo);
 
 	RecordExpress selectByExpressNo(String expressNo);
 
-	List<RecordExpress> selectByPage(RecordExpressSearchVo searchVo);
 }

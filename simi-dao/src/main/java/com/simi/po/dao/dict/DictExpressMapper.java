@@ -3,6 +3,7 @@ package com.simi.po.dao.dict;
 import java.util.List;
 
 import com.simi.po.model.dict.DictExpress;
+import com.simi.vo.ExpressSearchVo;
 
 public interface DictExpressMapper {
     int deleteByPrimaryKey(Long expressId);
@@ -17,7 +18,5 @@ public interface DictExpressMapper {
 
     int updateByPrimaryKey(DictExpress record);
 
-	List<DictExpress> selectAll();
-
-	List<DictExpress> selectByT(Long t);
+	List<DictExpress> selectBySearchVo(ExpressSearchVo searchVo);
 }

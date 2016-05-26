@@ -3,7 +3,7 @@ package com.simi.po.dao.resume;
 import java.util.List;
 
 import com.simi.po.model.resume.HrJobHunter;
-import com.simi.vo.resume.ResumeSearchVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 
 public interface HrJobHunterMapper {
     int deleteByPrimaryKey(Long id);
@@ -18,8 +18,8 @@ public interface HrJobHunterMapper {
 
     int updateByPrimaryKey(HrJobHunter record);
     
-    List<HrJobHunter> selectBySearchVo(ResumeSearchVo searchVo);
+    List<HrJobHunter> selectBySearchVo(ResumeChangeSearchVo searchVo);
 
-   	List<HrJobHunter> selectByListPage(ResumeSearchVo searchVo);
+   	List<HrJobHunter> selectByListPage(ResumeChangeSearchVo searchVo);
     
 }

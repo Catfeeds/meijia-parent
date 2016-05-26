@@ -1,5 +1,7 @@
 package com.simi.vo.record;
 
+import java.util.Date;
+
 public class RecordExpressSearchVo {
 	
     private Long companyId;
@@ -17,6 +19,14 @@ public class RecordExpressSearchVo {
     private Short isClose;
 
     private Short payType;
+    
+    private String startDate;
+    
+    private String endDate;
+    
+    private Long startTime;
+    
+    private Long endTime;
 
 	public Long getCompanyId() {
 		return companyId;
@@ -80,6 +90,38 @@ public class RecordExpressSearchVo {
 
 	public void setPayType(Short payType) {
 		this.payType = payType;
+	}
+
+	public Long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+
+	public Long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 

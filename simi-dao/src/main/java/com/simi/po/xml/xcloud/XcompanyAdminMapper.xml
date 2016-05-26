@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyAdminMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyAdmin">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="is_create" property="isCreate" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, company_name, user_id, user_name, password, is_create, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_admin
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanyAdminSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_admin
+		where 1 = 1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyName != null">
+			and company_name = #{companyName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="userId != null">
+			and userId = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userName != null">
+			and user_name = #{userName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="passMd5 != null">
+			and password = #{passMd5,jdbcType=VARCHAR}
+		</if>
+		
+		
+		<if test="isCreate != null">
+			and is_create = #{isCreate,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="startTime != null">
+			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+		</if>
+		
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanyAdminSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_admin
+		where 1 = 1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyName != null">
+			and company_name = #{companyName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="userId != null">
+			and userId = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userName != null">
+			and user_name = #{userName,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="passMd5 != null">
+			and password = #{passMd5,jdbcType=VARCHAR}
+		</if>
+				
+		<if test="isCreate != null">
+			and is_create = #{isCreate,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="startTime != null">
+			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
+		</if>
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_admin
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyAdmin">
+		insert into xcompany_admin (id, company_id, company_name, user_id,
+		user_name, password, is_create,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, 
+		#{companyName,jdbcType=VARCHAR},
+		#{userId,jdbcType=NUMERIC},
+		#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+		#{isCreate,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyAdmin">
+		insert into xcompany_admin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="companyName != null">
+				company_name,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="isCreate != null">
+				is_create,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyName != null">
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="isCreate != null">
+				#{isCreate,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyAdmin">
+		update xcompany_admin
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="companyName != null">
+				company_name = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="isCreate != null">
+				is_create = #{isCreate,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyAdmin">
+		update xcompany_admin
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		company_name = #{companyName,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=NUMERIC},
+		user_name = #{userName,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		is_create = #{isCreate,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

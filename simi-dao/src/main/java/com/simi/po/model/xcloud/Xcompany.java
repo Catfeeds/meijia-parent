@@ -29,10 +29,6 @@ public class Xcompany {
 
     private String addr;
 
-    private String userName;
-
-    private String password;
-
     private String invitationCode;
     
     private String qrCode;
@@ -139,22 +135,6 @@ public class Xcompany {
 
     public void setAddr(String addr) {
         this.addr = addr == null ? null : addr.trim();
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
     }
 
     public String getLinkMan() {

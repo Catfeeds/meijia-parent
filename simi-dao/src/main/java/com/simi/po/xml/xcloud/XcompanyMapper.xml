@@ -16,8 +16,6 @@
 		<result column="poi_type" property="poiType" jdbcType="NUMERIC" />
 		<result column="addr_name" property="addrName" jdbcType="VARCHAR" />
 		<result column="addr" property="addr" jdbcType="VARCHAR" />
-		<result column="user_name" property="userName" jdbcType="VARCHAR" />
-		<result column="password" property="password" jdbcType="VARCHAR" />
 		<result column="invitation_code" property="invitationCode" jdbcType="CHAR" />
 		<result column="qr_code" property="qrCode" jdbcType="CHAR" />
 		<result column="link_man" property="linkMan" jdbcType="VARCHAR" />
@@ -28,7 +26,7 @@
 	<sql id="Base_Column_List">
 		company_id, company_type, company_name, short_name, company_size, company_trade, province_id, city_id, region_id,
 		latitude, longitude, poi_type,
-		addr_name, addr, user_name, password, invitation_code, qr_code,
+		addr_name, addr, invitation_code, qr_code,
 		link_man, email, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -54,31 +52,23 @@
 		<include refid="Base_Column_List" />
 		from xcompany
 		where 1=1
-		
+
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="companyName != null">
 			and company_name = #{companyName,jdbcType=VARCHAR}
 		</if>
-		
-		<if test="userName != null">
-			and user_name = #{userName,jdbcType=VARCHAR}
-		</if>
-		
-		<if test="passMd5 != null">
-			and password = #{passMd5,jdbcType=VARCHAR}
-		</if>
-		
+
 		<if test="invitationCode != null">
 			and invitation_code = #{invitationCode,jdbcType=VARCHAR}
 		</if>
-		
+
 		<if test="startTime != null">
 			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
-		
+
 		order by add_time desc
 	</select>
 
@@ -90,35 +80,19 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="companyName != null">
 			and company_name = #{companyName,jdbcType=VARCHAR}
 		</if>
-		
-		<if test="userName != null">
-			and user_name = #{userName,jdbcType=VARCHAR}
-		</if>
-		
-		<if test="passMd5 != null">
-			and password = #{passMd5,jdbcType=VARCHAR}
-		</if>
-		
+
 		<if test="invitationCode != null">
 			and invitation_code = #{invitationCode,jdbcType=VARCHAR}
 		</if>
-		
+
 		<if test="startTime != null">
 			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
 		order by add_time desc
-	</select>
-
-	<select id="selectByInvitationCode" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from xcompany
-		where
-		invitation_code = #{invitationCode, jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -133,7 +107,7 @@
 		company_trade, province_id, city_id,
 		region_id, latitude, longitude,
 		poi_type, addr_name, addr,
-		user_name, password, invitation_code, qr_code,
+		invitation_code, qr_code,
 		link_man, email, add_time,
 		update_time)
 		values (#{companyId,jdbcType=NUMERIC},
@@ -142,8 +116,8 @@
 		#{regionId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR},
 		#{longitude,jdbcType=VARCHAR},
 		#{poiType,jdbcType=NUMERIC}, #{addrName,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
-		#{userName,jdbcType=VARCHAR},
-		#{password,jdbcType=VARCHAR}, #{invitationCode,jdbcType=CHAR}, #{qrCode,jdbcType=CHAR},
+		#{invitationCode,jdbcType=CHAR},
+		#{qrCode,jdbcType=CHAR},
 		#{linkMan,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
 		#{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
@@ -196,12 +170,6 @@
 			</if>
 			<if test="addr != null">
 				addr,
-			</if>
-			<if test="userName != null">
-				user_name,
-			</if>
-			<if test="password != null">
-				password,
 			</if>
 			<if test="invitationCode != null">
 				invitation_code,
@@ -265,12 +233,6 @@
 			<if test="addr != null">
 				#{addr,jdbcType=VARCHAR},
 			</if>
-			<if test="userName != null">
-				#{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				#{password,jdbcType=VARCHAR},
-			</if>
 			<if test="invitationCode != null">
 				#{invitationCode,jdbcType=CHAR},
 			</if>
@@ -333,12 +295,6 @@
 			<if test="addr != null">
 				addr = #{addr,jdbcType=VARCHAR},
 			</if>
-			<if test="userName != null">
-				user_name = #{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="password != null">
-				password = #{password,jdbcType=VARCHAR},
-			</if>
 			<if test="invitationCode != null">
 				invitation_code = #{invitationCode,jdbcType=CHAR},
 			</if>
@@ -378,16 +334,16 @@
 		addr_name =
 		#{addrName,jdbcType=VARCHAR},
 		addr = #{addr,jdbcType=VARCHAR},
-		user_name = #{userName,jdbcType=VARCHAR},
-		password = #{password,jdbcType=VARCHAR},
 		invitation_code
 		= #{invitationCode,jdbcType=CHAR},
 		qr_code = #{qrCode,jdbcType=CHAR},
-		link_man = #{linkMan,jdbcType=VARCHAR},
+		link_man =
+		#{linkMan,jdbcType=VARCHAR},
 		email = #{email,jdbcType=VARCHAR},
 		add_time =
 		#{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
-		where company_id = #{companyId,jdbcType=NUMERIC}
+		where
+		company_id = #{companyId,jdbcType=NUMERIC}
 	</update>
 </mapper>

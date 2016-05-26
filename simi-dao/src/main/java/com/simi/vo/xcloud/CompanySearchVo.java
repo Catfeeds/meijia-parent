@@ -6,11 +6,7 @@ public class CompanySearchVo{
 	private Long companyId;
 	
 	private String companyName;
-	
-	private String userName;
-	
-	private String passMd5;
-	
+		
 	private String invitationCode;
 	
 	private Long startTime;
@@ -23,22 +19,6 @@ public class CompanySearchVo{
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassMd5() {
-		return passMd5;
-	}
-
-	public void setPassMd5(String passMd5) {
-		this.passMd5 = passMd5;
 	}
 
 	public String getInvitationCode() {

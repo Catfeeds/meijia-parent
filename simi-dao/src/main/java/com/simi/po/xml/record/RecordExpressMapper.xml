@@ -11,7 +11,10 @@
 		<result column="express_type" property="expressType" jdbcType="NUMERIC" />
 		<result column="is_done" property="isDone" jdbcType="NUMERIC" />
 		<result column="is_close" property="isClose" jdbcType="NUMERIC" />
+		<result column="is_close_time" property="isCloseTime" jdbcType="NUMERIC" />
+		<result column="is_close_user_id" property="isCloseUserId" jdbcType="NUMERIC" />
 		<result column="pay_type" property="payType" jdbcType="NUMERIC" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
 		<result column="from_city_id" property="fromCityId" jdbcType="NUMERIC" />
 		<result column="from_addr" property="fromAddr" jdbcType="VARCHAR" />
 		<result column="from_name" property="fromName" jdbcType="VARCHAR" />
@@ -28,7 +31,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, company_id, user_id, to_user_id, express_id, express_no, express_type, is_done,
-		is_close, pay_type, from_city_id, from_addr, from_name,
+		is_close, is_close_time, is_close_user_id, pay_type, price, from_city_id, from_addr, from_name,
 		from_tel, from_company_name,
 		to_city_id, to_addr, to_name, to_tel, to_company_name, remarks, add_time, update_time
 	</sql>
@@ -83,48 +86,18 @@
 		<if test="payType != null">
 			and pay_type = #{payType,jdbcType=NUMERIC}
 		</if>
-
-		order by add_time desc
-	</select>
-	<select id="selectByPage" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordExpressSearchVo">
-		select
-		<include refid="Base_Column_List" />
-		from record_express
-		where 1=1
-		<if test="companyId != null">
-			and company_id = #{companyId,jdbcType=NUMERIC}
-		</if>
-
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-
-		<if test="expressId != null">
-			and express_id = #{expressId,jdbcType=NUMERIC}
-		</if>
-
-		<if test="expressNo != null">
-			and express_no like CONCAT('%','${expressNo}','%' )
-		</if>
-
-		<if test="expressType != null">
-			and express_type = #{expressType,jdbcType=NUMERIC}
-		</if>
-
-		<if test="isDone != null">
-			and is_done = #{isDone,jdbcType=NUMERIC}
-		</if>
-
-		<if test="isClose != null">
-			and is_close = #{isClose,jdbcType=NUMERIC}
-		</if>
-
-		<if test="payType != null">
-			and pay_type = #{payType,jdbcType=NUMERIC}
+		
+		<if test="startTime !=null">
+			<![CDATA[ and add_time >= #{startTime, jdbcType=NUMERIC}]]>
 		</if>
 		
+		<if test="endTime !=null">
+			<![CDATA[ and add_time <= #{endTime, jdbcType=NUMERIC}]]>
+		</if>
+
 		order by add_time desc
 	</select>
+	
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordExpressSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -162,6 +135,14 @@
 		<if test="payType != null">
 			and pay_type = #{payType,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="startTime !=null">
+			<![CDATA[ and add_time >= #{startTime, jdbcType=NUMERIC}]]>
+		</if>
+		
+		<if test="endTime !=null">
+			<![CDATA[ and add_time <= #{endTime, jdbcType=NUMERIC}]]>
+		</if>
 
 		order by add_time desc
 	</select>
@@ -177,8 +158,8 @@
 		insert into record_express (id, company_id, user_id,
 		to_user_id, express_id, express_no,
 		express_type, is_done,
-		is_close,
-		pay_type, from_city_id, from_addr,
+		is_close, is_close_time, is_close_user_id,
+		pay_type, price, from_city_id, from_addr,
 		from_name, from_tel, from_company_name,
 		to_city_id, to_addr, to_name,
 		to_tel, to_company_name, remarks, add_time,
@@ -187,8 +168,9 @@
 		#{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
 		#{toUserId,jdbcType=NUMERIC}, #{expressId,jdbcType=NUMERIC},
 		#{expressNo,jdbcType=VARCHAR},
-		#{expressType,jdbcType=NUMERIC}, #{isDone,jdbcType=NUMERIC}, #{isClose,jdbcType=NUMERIC},
-		#{payType,jdbcType=NUMERIC},
+		#{expressType,jdbcType=NUMERIC}, #{isDone,jdbcType=NUMERIC}, 
+		#{isClose,jdbcType=NUMERIC}, #{isCloseTime,jdbcType=NUMERIC}, #{isCloseUserId,jdbcType=NUMERIC},
+		#{payType,jdbcType=NUMERIC}, #{price,jdbcType=DECIMAL},
 		#{fromCityId,jdbcType=NUMERIC},
 		#{fromAddr,jdbcType=VARCHAR},
 		#{fromName,jdbcType=VARCHAR}, #{fromTel,jdbcType=VARCHAR}, #{fromCompanyName,jdbcType=VARCHAR},
@@ -231,8 +213,17 @@
 			<if test="isClose != null">
 				is_close,
 			</if>
+			<if test="isCloseTime != null">
+				is_close_time,
+			</if>
+			<if test="isCloseUserId != null">
+				is_close_user_id,
+			</if>
 			<if test="payType != null">
 				pay_type,
+			</if>
+			<if test="price != null">
+				price,
 			</if>
 			<if test="fromCityId != null">
 				from_city_id,
@@ -302,8 +293,17 @@
 			<if test="isClose != null">
 				#{isClose,jdbcType=NUMERIC},
 			</if>
+			<if test="isCloseTime != null">
+				#{isCloseTime,jdbcType=NUMERIC},
+			</if>
+			<if test="isCloseUserId != null">
+				#{isCloseUserId,jdbcType=NUMERIC},
+			</if>
 			<if test="payType != null">
 				#{payType,jdbcType=NUMERIC},
+			</if>
+			<if test="price != null">
+				#{price,jdbcType=DECIMAL},
 			</if>
 			<if test="fromCityId != null">
 				#{fromCityId,jdbcType=NUMERIC},
@@ -373,8 +373,17 @@
 			<if test="isClose != null">
 				is_close = #{isClose,jdbcType=NUMERIC},
 			</if>
+			<if test="isCloseTime != null">
+				is_close_time = #{isCloseTime,jdbcType=NUMERIC},
+			</if>
+			<if test="isCloseUserId != null">
+				is_close_user_id = #{isCloseUserId,jdbcType=NUMERIC},
+			</if>
 			<if test="payType != null">
 				pay_type = #{payType,jdbcType=NUMERIC},
+			</if>
+			<if test="price != null">
+				price = #{price,jdbcType=DECIMAL},
 			</if>
 			<if test="fromCityId != null">
 				from_city_id = #{fromCityId,jdbcType=NUMERIC},
@@ -425,11 +434,13 @@
 		to_user_id = #{toUserId,jdbcType=NUMERIC},
 		express_id = #{expressId,jdbcType=NUMERIC},
 		express_no = #{expressNo,jdbcType=VARCHAR},
-		express_type =
-		#{expressType,jdbcType=NUMERIC},
+		express_type = #{expressType,jdbcType=NUMERIC},
 		is_done = #{isDone,jdbcType=NUMERIC},
 		is_close = #{isClose,jdbcType=NUMERIC},
+		is_close_time = #{isCloseTime,jdbcType=NUMERIC},
+		is_close_user_id = #{isCloseUserId,jdbcType=NUMERIC},
 		pay_type = #{payType,jdbcType=NUMERIC},
+		price = #{price,jdbcType=DECIMAL},
 		from_city_id = #{fromCityId,jdbcType=NUMERIC},
 		from_addr = #{fromAddr,jdbcType=VARCHAR},
 		from_name = #{fromName,jdbcType=VARCHAR},
