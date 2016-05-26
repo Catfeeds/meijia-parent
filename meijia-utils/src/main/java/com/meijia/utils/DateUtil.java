@@ -266,6 +266,20 @@ public class DateUtil {
 		//Long firstDayLong = TimeStampUtil.getMillisOfDay(format(cal.getTime(), DEFAULT_PATTERN));
 		return firstDay;
 	}
+	
+	/**
+	 * 获得某年某月某日时间戳
+	 * @return yyyy-MM-dd
+	 */
+	public static String  getSomeDayOfMonth(int year,int month, int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		cal.  set(Calendar.DATE, day);
+		String  lastDay =format(cal.getTime(), DEFAULT_PATTERN);
+		//Long lastDayLong = TimeStampUtil.getMillisOfDay(format(cal.getTime(), DEFAULT_PATTERN));
+		return lastDay;
+	}	
 
 	/**
 	 * 本周第一天
