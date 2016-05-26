@@ -28,6 +28,7 @@ import com.simi.service.resume.HrResumeChangeService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.resume.JobHunterVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 import com.simi.vo.resume.ResumeChangeVo;
 import com.simi.vo.resume.ResumeSearchVo;
 import com.xcloud.action.BaseController;
@@ -71,7 +72,7 @@ public class ResumeChangeController extends BaseController {
 	  * @throws
 	 */
 	@RequestMapping(value = "resume_exchange_list",method = RequestMethod.GET)
-	public String jobPubList(ResumeSearchVo searchVo, HttpServletRequest request,Model model){
+	public String jobPubList(ResumeChangeSearchVo searchVo, HttpServletRequest request,Model model){
 		
 		int pageNo = ServletRequestUtils.getIntParameter(request,
 				Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);

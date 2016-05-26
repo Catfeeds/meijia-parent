@@ -24,17 +24,21 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanyAdminSearchVo;
 import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.XcompanyVo;
 
 @Controller
 @RequestMapping(value = "/")
@@ -42,6 +46,9 @@ public class RegisterController extends BaseController {
 
 	@Autowired
 	private XCompanyService xCompanyService;
+	
+	@Autowired
+	private XcompanyAdminService xCompanyAdminService;
 
 	@Autowired
 	private UsersService usersService;	
@@ -60,7 +67,11 @@ public class RegisterController extends BaseController {
 		
 		if (!model.containsAttribute("contentModel")) {
 			Xcompany xCompany = xCompanyService.initXcompany();
-			model.addAttribute("contentModel", xCompany);
+			XcompanyVo xCompanyVo = new XcompanyVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(xCompany, xCompanyVo);
+			xCompanyVo.setUserName("");
+			xCompanyVo.setPassword("");
+			model.addAttribute("contentModel", xCompanyVo);
 		}
 		
         return "/home/register";
@@ -72,7 +83,7 @@ public class RegisterController extends BaseController {
     public String doRegister(HttpServletRequest request, 
     						 HttpServletResponse response,  
     						 Model model,
-    						 @ModelAttribute("contentModel") Xcompany xCompanyVo, 
+    						 @ModelAttribute("contentModel") XcompanyVo xCompanyVo, 
     						 BindingResult result) throws NoSuchAlgorithmException, WriterException, IOException {
         
 		String mobile = xCompanyVo.getUserName();
@@ -96,12 +107,10 @@ public class RegisterController extends BaseController {
 		
 		String companyName = xCompanyVo.getCompanyName().trim();
 		//验证团队与用户是否已经存在
-		CompanySearchVo searchVo1 = new CompanySearchVo();
-		searchVo1.setUserName(mobile);
-		searchVo1.setCompanyName(companyName);
-		
-		
-		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
+		searchVo.setCompanyName(companyName);
+		searchVo.setUserName(mobile);
+		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo);
 		
 		if (!rs.isEmpty()) {
 			result.addError(new FieldError("contentModel","userName","您已经注册过此团队."));
@@ -123,28 +132,37 @@ public class RegisterController extends BaseController {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(xCompanyVo, xCompany);
 		
-		xCompany.setPassword(passwordMd5);
+//		xCompany.setPassword(passwordMd5);
 		
 		if (companyId > 0L) {
 			xCompany.setUpdateTime(TimeStampUtil.getNowSecond());
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
-		} else {
-			
-			//生成团队唯一邀请码
-			String invitationCode = StringUtil.generateShortUuid();
-			xCompany.setInvitationCode(invitationCode);
-			xCompanyService.insert(xCompany);
-			companyId = xCompany.getCompanyId();
-			
-			//生成团队邀请二维码
-			String imgUrl = XcompanyUtil.genQrCode(invitationCode);
-
-			xCompany.setQrCode(imgUrl);
-			xCompanyService.updateByPrimaryKeySelective(xCompany);
-			
+			return "redirect:/register-ok";
 		}
 		
+			
+		//生成团队唯一邀请码
+		String invitationCode = StringUtil.generateShortUuid();
+		xCompany.setInvitationCode(invitationCode);
+		xCompanyService.insert(xCompany);
+		companyId = xCompany.getCompanyId();
 		
+		//生成团队邀请二维码
+		String imgUrl = XcompanyUtil.genQrCode(invitationCode);
+
+		xCompany.setQrCode(imgUrl);
+		xCompanyService.updateByPrimaryKeySelective(xCompany);
+		
+		//创建管理员关联表
+		XcompanyAdmin xcompanyAdmin = xCompanyAdminService.initXcompanyAdmin();
+		xcompanyAdmin.setCompanyId(companyId);
+		xcompanyAdmin.setCompanyName(companyName);
+		xcompanyAdmin.setUserId(userId);
+		xcompanyAdmin.setUserName(mobile);
+		xcompanyAdmin.setPassword(passwordMd5);
+		xcompanyAdmin.setIsCreate(1);
+		
+		xCompanyAdminService.insert(xcompanyAdmin);
 		
 		//团队部门预置信息.
 		List<String> defaultDepts = MeijiaUtil.getDefaultDept();
@@ -164,11 +182,11 @@ public class RegisterController extends BaseController {
 		
 		
 		//将用户加入团队员工中
-		UserCompanySearchVo searchVo = new UserCompanySearchVo();
-		searchVo.setCompanyId(companyId);
-		searchVo.setUserId(userId);
+		UserCompanySearchVo searchVo2 = new UserCompanySearchVo();
+		searchVo2.setCompanyId(companyId);
+		searchVo2.setUserId(userId);
 
-		List<XcompanyStaff> rsList = xCompanyStaffService.selectBySearchVo(searchVo);
+		List<XcompanyStaff> rsList = xCompanyStaffService.selectBySearchVo(searchVo2);
 		XcompanyStaff record = null;
 		if (!rsList.isEmpty()) {
 			record = rsList.get(0);

@@ -8,6 +8,8 @@
 	
 	<script src="<c:url value='/assets/js/moment.min.js'/>" ></script>
 	
+	<script src="<c:url value='/assets/js/jquery.cookie.js'/>" ></script>
+	
 	<script src="<c:url value='/assets/js/xcloud/common/common.js'/>" ></script>
 
 	

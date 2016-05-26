@@ -36,6 +36,7 @@ var xCloudRootUrl = "http://" + host +"/xcloud";
 		$.AMUI.validator.patterns.sms_token = /^\d{4}$/;
 		$.AMUI.validator.patterns.email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 		$.AMUI.validator.patterns.pinteger = /^[0-9]*[1-9][0-9]*$/;
+		$.AMUI.validator.patterns.price = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/ ;
 
 	}
 })(jQuery);
@@ -65,3 +66,24 @@ function pad(num, n) {
 		num = "0" + num;
 	return num;
 }
+
+//菜单点击展开
+function setMenuId(menuId) {
+	$.cookie("xcloud-menu-id", menuId, { path: "/"}); 
+	menuCollapse();
+}
+
+function menuCollapse() {
+	var menuId = $.cookie('xcloud-menu-id'); 
+	
+	if (menuId == undefined) return false;
+	if (menuId == "") return false;
+	
+	if ($("#"+ menuId).hasClass("am-in")) {
+		$("#"+ menuId).collapse('close');
+	} else {
+		$("#"+ menuId).collapse('open');
+	}
+	//console.log($("#"+ menuId).collapse());
+}
+menuCollapse();

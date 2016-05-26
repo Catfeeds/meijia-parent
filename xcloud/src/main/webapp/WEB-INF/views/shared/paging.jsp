@@ -35,7 +35,7 @@
 		} else {
 	%>
 
-	共<%=pageInfo.getTotal()%>条记录
+	<div id="page-total" class="am-vertical-align-bottom">共<%=pageInfo.getTotal()%>条记录</div>
 
 	<div class="am-fr">
 		<ul class="am-pagination">

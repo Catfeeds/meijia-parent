@@ -1,5 +1,7 @@
 package com.xcloud.action.xz;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,33 +17,17 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.utils.CardUtil;
-import com.simi.common.ConstantMsg;
-import com.simi.common.Constants;
-import com.simi.po.model.card.Cards;
-import com.simi.po.model.order.OrderExtClean;
+import com.simi.po.model.dict.DictExpress;
 import com.simi.po.model.record.RecordExpress;
-import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.Xcompany;
-import com.simi.po.model.xcloud.XcompanyDept;
-import com.simi.po.model.xcloud.XcompanySetting;
-import com.simi.po.model.xcloud.XcompanyStaff;
-import com.simi.service.card.CardAttendService;
-import com.simi.service.card.CardService;
+import com.simi.service.dict.ExpressService;
 import com.simi.service.record.RecordExpressService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
-import com.simi.vo.AppResultData;
-import com.simi.vo.OrderSearchVo;
-import com.simi.vo.card.CardSearchVo;
-import com.simi.vo.order.OrdersCleanAddOaVo;
+import com.simi.vo.ExpressSearchVo;
 import com.simi.vo.order.RecordExpressXcloudVo;
 import com.simi.vo.record.RecordExpressSearchVo;
-import com.simi.vo.user.UserAddrVo;
-import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.StaffListVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
@@ -63,69 +49,106 @@ public class ExpressController extends BaseController {
 
 	@Autowired
 	private RecordExpressService recordExpressService;
+	
+	@Autowired
+	private ExpressService expressService;
 
 	// 查询与登记
 	@AuthPassport
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(HttpServletRequest request, Model model,
-			RecordExpressSearchVo searchVo,
-			@RequestParam(value = "express_no",required = false,defaultValue = "") String expressNo) {
+			RecordExpressSearchVo searchVo) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		model.addAttribute("searchModel", searchVo);
+
 		int pageNo = ServletRequestUtils.getIntParameter(request,
 				Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);
-		searchVo.setExpressNo(expressNo);
+		
+		if (searchVo == null) searchVo = new RecordExpressSearchVo();
+
+		if (searchVo.getStartDate() == null) {
+			//开始时间和结束时间，默认为上月25号到本月25号			
+			String startDateStr = DateUtil.getSomeDayOfMonth(DateUtil.getYear(), DateUtil.getMonth()-2 , 25);
+			searchVo.setStartDate(startDateStr);
+		}
+		
+		if (searchVo.getEndDate() == null) {
+			String endDateStr = DateUtil.getSomeDayOfMonth(DateUtil.getYear(), DateUtil.getMonth()-1, 25);
+			searchVo.setEndDate(endDateStr);
+		}
+		
+		Long startTime = TimeStampUtil.getMillisOfDayFull(searchVo.getStartDate() + " 00:00:00") / 1000;
+		searchVo.setStartTime(startTime);
+		Long endTime = TimeStampUtil.getMillisOfDayFull(searchVo.getEndDate() + " 23:59:59") / 1000;
+		searchVo.setEndTime(endTime);
+		
+
+		model.addAttribute("searchModel", searchVo);
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
 		Long userId = accountAuth.getUserId();
+		Long companyId = accountAuth.getCompanyId();
+		model.addAttribute("userId", userId);
+		model.addAttribute("companyId", companyId);
+		
+		searchVo.setCompanyId(companyId);
 
-		searchVo.setUserId(userId);
-
-		PageInfo result = recordExpressService.selectByPage(searchVo, pageNo,
-				pageSize);
-
+		PageInfo result = recordExpressService.selectByListPageVos(searchVo, pageNo, pageSize);
+		
 		model.addAttribute("contentModel", result);
-
+		
+		//快递公司列表
+		ExpressSearchVo searchVo1 = new ExpressSearchVo();
+		searchVo1.setIsHot((short) 1);
+		List<DictExpress> expressList = expressService.selectBySearchVo(searchVo1);
+		model.addAttribute("expressList", expressList);
+		
 		return "xz/express-list";
 	}
 
 
 	@AuthPassport
 	@RequestMapping(value = "/express-form", method = { RequestMethod.GET })
-	public String expressForm(Model model, HttpServletRequest request) {
+	public String expressForm(Model model, HttpServletRequest request, @RequestParam(value = "id") Long id) {
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		Long userId = accountAuth.getUserId();
+		Long companyId = accountAuth.getCompanyId();
 		model.addAttribute("userId", userId);
-		Users users = usersService.selectByPrimaryKey(userId);
-
+		model.addAttribute("companyId", companyId);
+		
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		if (id == null) id = 0L;
+		
 		RecordExpressXcloudVo vo = new RecordExpressXcloudVo();
 		RecordExpress express = recordExpressService.initRecordExpress();
+		
+		if (id > 0L) {
+			express = recordExpressService.selectByPrimaryKey(id);
+		}
+		
 		BeanUtilsExp.copyPropertiesIgnoreNull(express, vo);
-		vo.setRemarks("");
+		
+		if (id.equals(0L)) {
+			vo.setFromName(u.getName());
+			vo.setFromTel(u.getMobile());
+		}
+		
 
 		model.addAttribute("contentModel", vo);
+		
+		//快递公司列表
+		ExpressSearchVo searchVo = new ExpressSearchVo();
+		searchVo.setIsHot((short) 1);
+		List<DictExpress> expressList = expressService.selectBySearchVo(searchVo);
+		
+		model.addAttribute("expressList", expressList);
+		
 		return "xz/express-form";
-	}
-
-	// 快递结算
-	@AuthPassport
-	@RequestMapping(value = "close", method = RequestMethod.GET)
-	public String setting(HttpServletRequest request, Model model) {
-
-		model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
-
-		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-
-		Long companyId = accountAuth.getCompanyId();
-
-		return "xz/express-close";
-
 	}
 
 	// 快递服务商

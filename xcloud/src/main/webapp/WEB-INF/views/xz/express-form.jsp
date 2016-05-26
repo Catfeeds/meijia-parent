@@ -50,110 +50,135 @@
 					<form:form modelAttribute="contentModel" method="POST"
 						id="express-form" class="am-form am-form-horizontal"
 						enctype="multipart/form-data">
-					<input type="hidden" id="userId" value="${userId }" />
+						<form:hidden path="id"/>
+						<input type="hidden" id="userId" value="${userId }" />
+						<input type="hidden" id="companyId" value="${companyId }"/>
 						
-
-
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">快递单号:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">快递单号<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="expressNo"
 									class="am-form-field am-radius js-pattern-pinteger"
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">快递公司ID:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">快递公司<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
-								<form:input path="expressId"
-									class="am-form-field am-radius js-pattern-pinteger"
-									maxLength="32" />
+								<form:select path="expressId" class="am-form-field am-radius">
+									<form:option value="">请选择快递公司</form:option>
+									<form:options items="${expressList}" itemValue="expressId" itemLabel="name" />
+								</form:select>
 							</div>
 						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">发送或接收:</label>
-							<div class="am-u-sm-9">
-							<label class="am-radio-inline">
-							<input type="radio"  value="0" name="expressType"> 收件
-							 </label>
-							 <label class="am-radio-inline">
-							<input type="radio" value="1" name="expressType" checked> 发件
-							 </label>
-							</div>
-						</div>
-
-						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">付费方式:</label>
-							<div class="am-u-sm-9">
-								      <label class="am-radio-inline">
-								        <input type="radio"  value="0" name="payType"> 工费
-								      </label>
-								      <label class="am-radio-inline">
-								        <input type="radio" value="1" name="payType" checked> 自费
-								      </label>
-							</div>
-						</div>
+						
 						<div class="am-form-group">
 							<label class="am-u-sm-3 am-form-label">寄件人地址:</label>
 							<div class="am-u-sm-9">
 								<form:input path="fromAddr"
-								class="form-control"
-									maxLength="32" required="required" />
-								<small>*必填项</small>
+									class="form-control"
+									maxLength="32"  />
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label class="am-u-sm-3 am-form-label">寄件人姓名:</label>
+							<label class="am-u-sm-3 am-form-label">寄件人姓名<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="fromName"
 									class="form-control"
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">寄件人联系方式:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">寄件人联系方式<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="fromTel"
-									class="am-form-field am-radius js-pattern-pinteger"
+									class="am-form-field am-radius "
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label class="am-u-sm-3 am-form-label">收件人地址:</label>
+							<label class="am-u-sm-3 am-form-label">收件人地址<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="toAddr"
 									class="form-control"
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
 						<div class="am-form-group">
-							<label class="am-u-sm-3 am-form-label">收件人姓名:</label>
+							<label class="am-u-sm-3 am-form-label">收件人姓名<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="toName"
 									class="form-control"
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">收件人电话:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">收件人联系方式<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="toTel"
-									class="am-form-field am-radius js-pattern-pinteger"
+									class="am-form-field am-radius "
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
+						
+						<div class="am-form-group">
+							<label class="am-u-sm-3 am-form-label">发送或接收:</label>
+								<div class="am-u-sm-9">
+								<label class="am-radio-inline"> 
+									<form:radiobutton path="expressType" value="0" />收件
+								</label> 
+								<label class="am-radio-inline"> 
+									<form:radiobutton path="expressType" value="1" />寄件
+								</label>
+							</div>
+							
+						</div>
+						
+						
+						<div id="payTypeDiv" class="am-form-group" style="display:none">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">付费方式:</label>
+							<div class="am-u-sm-9">
+								<label class="am-radio-inline"> 
+									<form:radiobutton path="payType" value="0" />公费
+								</label> 
+								<label class="am-radio-inline"> 
+									<form:radiobutton path="payType" value="1" />自费
+								</label>	      
+								    
+							</div>
+						</div>
+						
+						<div id="priceDiv" class="am-form-group" style="display:none">
+							<label class="am-u-sm-3 am-form-label">价格:</label>
+							<div class="am-u-sm-9">
+								<form:input path="price" class="form-control js-pattern-price" maxLength="7" required="required" />
+							</div>
+						</div>
+						
+						
+						<div id="isCloseDiv" class="am-form-group" style="display:none">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">是否结算:</label>
+							<div class="am-u-sm-9">
+								<label class="am-radio-inline"> 
+									<form:radiobutton path="isClose" value="0" />未结算
+								</label> 
+								<label class="am-radio-inline"> 
+									<form:radiobutton path="isClose" value="1" />已结算
+								</label>    
+							</div>
+						</div>
+
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">备注:</label>
 							<div class="am-u-sm-9">

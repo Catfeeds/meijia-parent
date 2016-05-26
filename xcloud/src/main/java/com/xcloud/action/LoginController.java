@@ -22,10 +22,13 @@ import com.xcloud.vo.LoginVo;
 import com.meijia.utils.StringUtil;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.xcloud.CompanyAdminSearchVo;
 import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
@@ -36,6 +39,9 @@ public class LoginController extends BaseController {
 	
 	@Autowired
 	private XCompanyService xCompanyService;	
+	
+	@Autowired
+	private XcompanyAdminService xCompanyAdminService;	
 	
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
@@ -68,33 +74,34 @@ public class LoginController extends BaseController {
         
         String passwordMd5 = StringUtil.md5(password.trim());
         
-        CompanySearchVo searchVo1 = new CompanySearchVo();
+        CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
 		searchVo1.setUserName(userName);
 		searchVo1.setPassMd5(passwordMd5);
         
         
-        Xcompany xCompany = null;
-        List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+        XcompanyAdmin xCompanyAdmn = null;
+        List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
         
         if (rs.isEmpty()) {
         	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
         	return login(model);
         } else {
-        	xCompany = rs.get(0);
+        	xCompanyAdmn = rs.get(0);
         }
         
-        if ( xCompany == null ) {
+        if ( xCompanyAdmn == null ) {
         	result.addError(new FieldError("contentModel","username","用户名或密码错误。"));
         	return login(model);
     	}
-        
+        Long companyId = xCompanyAdmn.getCompanyId();
+        Xcompany xcompany = xCompanyService.selectByPrimaryKey(companyId);
         
         Users u = usersService.selectByMobile(userName);
         
-		Long companyId = xCompany.getCompanyId();
+		
 		Long userId = u.getId();
-		String companyName = xCompany.getCompanyName();
-		String shortName = xCompany.getShortName();
+		String companyName = xcompany.getCompanyName();
+		String shortName = xcompany.getShortName();
 		String headImg = usersService.getHeadImg(u);
 		
 		//员工信息

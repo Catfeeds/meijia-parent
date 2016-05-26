@@ -6,7 +6,7 @@
 	<ul class="am-list admin-sidebar-list">
 		
 		<li class="admin-parent">
-			<a class="am-collapsed" data-am-collapse="{target: '#collapse-nav-xzexcel'}"> 
+			<a class="am-collapsed" onclick="setMenuId('collapse-nav-xzexcel')" > 
 				<span class="am-icon-flag"></span> 行政报表
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
@@ -25,12 +25,12 @@
 			</ul>
 		</li>
 
-		<li class="admin-parent"><a class="am-cf am-collapsed" data-am-collapse="{target: '#collapse-nav-express'}">
+		<li class="admin-parent"><a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-express')" >
 
 				<span class="am-icon-truck"></span> 快递管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
 		</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-express">
-				<li><a href="/xcloud/xz/express/express-form" class="am-cf"> <span class="am-icon-bell"></span> 快递登记
+				<li><a href="/xcloud/xz/express/express-form?id=0" class="am-cf"> <span class="am-icon-bell"></span> 快递登记
 				</a></li>
 				<li><a href="/xcloud/xz/express/list" class="am-cf"> <span class="am-icon-search-plus"></span> 查询与结算
 				</a></li>
