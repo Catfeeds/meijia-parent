@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.simi.vo.AppResultData;
 import com.simi.vo.ApptoolsSearchVo;
+import com.simi.vo.ExpressSearchVo;
 import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.common.ConstantMsg;
@@ -94,7 +95,9 @@ public class BaseDataController<T> {
 		datas.put("express", defualtArray);
 		
 		if (tExpress > 0L) {
-			List<DictExpress> expressList = expressService.selectByT(tExpress);
+			ExpressSearchVo searchVo = new ExpressSearchVo();
+			searchVo.setUpdateTime(tExpress);
+			List<DictExpress> expressList = expressService.selectBySearchVo(searchVo);
 			if (!expressList.isEmpty()) {
 				datas.put("express", expressList);
 			}

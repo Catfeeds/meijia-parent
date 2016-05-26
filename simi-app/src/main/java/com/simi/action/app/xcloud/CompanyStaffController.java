@@ -19,6 +19,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffReq;
@@ -26,10 +27,12 @@ import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffReqService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanyAdminSearchVo;
 import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.XcompanyStaffReqVo;
@@ -40,6 +43,9 @@ public class CompanyStaffController extends BaseController {
 
 	@Autowired
 	private XCompanyService xCompanyService;
+	
+	@Autowired
+	private XcompanyAdminService xCompanyAdminService;
 
 	@Autowired
 	private UserSmsTokenService smsTokenService;
@@ -158,15 +164,16 @@ public class CompanyStaffController extends BaseController {
 		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
 		
 		//2.给审批者发出msg信息。
-		String adminMobile = xCompany.getUserName();
-		Users xCompanyAdmin = usersService.selectByMobile(adminMobile);
-		if (xCompanyAdmin == null) return result;
-		Long adminId = xCompanyAdmin.getId();
+		CompanyAdminSearchVo adminSearchVo = new CompanyAdminSearchVo();
+		adminSearchVo.setCompanyId(companyId);
+		List<XcompanyAdmin> adminList = xCompanyAdminService.selectBySearchVo(adminSearchVo);
 		
-		String staffName = (StringUtil.isEmpty(u.getName())) ? u.getMobile() : u.getName();
-		summary = staffName + "申请加入" + xCompany.getCompanyName() + ".";
-		userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
-		
+		for (XcompanyAdmin item : adminList) {
+			Long adminId = item.getUserId();
+			String staffName = (StringUtil.isEmpty(u.getName())) ? u.getMobile() : u.getName();
+			summary = staffName + "申请加入" + xCompany.getCompanyName() + ".";
+			userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		}
 		return result;
 
 	}
@@ -188,21 +195,26 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg("用户不存在.");
 			return result;
 		}
-		CompanySearchVo searchVo1 = new CompanySearchVo();
-		searchVo1.setUserName(adminUser.getMobile());
+
+		Xcompany company = xCompanyService.selectByPrimaryKey(companyId);
+		if (company == null) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("公司信息不存在.");
+			return result;
+		}
 		
-		Xcompany xCompany = null;
-		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+		String companyName = company.getCompanyName();
+
+		CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
+		searchVo1.setCompanyId(companyId);
+		searchVo1.setUserId(userId);
 		
+		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
 		if (rs.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("你不是团队管理员.");
 			return result;
-		} else {
-			xCompany = rs.get(0);
-		}
-		
-		companyId = xCompany.getCompanyId();
+		} 
 		
 		//是否已经加入团队
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
@@ -213,10 +225,6 @@ public class CompanyStaffController extends BaseController {
 
 		XcompanyStaff vo = null;
 		if (!rsList.isEmpty()) {
-			vo = rsList.get(0);
-		}
-
-		if (vo != null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("您已经加入该团队.");
 			return result;
@@ -260,26 +268,19 @@ public class CompanyStaffController extends BaseController {
 		//1. 给申请者发送
 		String title = "团队申请";
 		
-		String summary =  "你已经通过"+ xCompany.getCompanyName() + "申请.";
+		String summary =  "你已经通过"+ companyName + "申请.";
 		if (status.equals((short)2)) {
-			summary =  "你申请加入"+ xCompany.getCompanyName() + "已被拒绝.";
+			summary =  "你申请加入"+ companyName + "已被拒绝.";
 		}
 		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
 		
 		//2.给审批者发出msg信息。
-		String adminMobile = xCompany.getUserName();
-		Users xCompanyAdmin = usersService.selectByMobile(adminMobile);
-		if (xCompanyAdmin == null) return result;
-		Long adminId = xCompanyAdmin.getId();
-		
-
 		String staffName = (StringUtil.isEmpty(reqUser.getName())) ? reqUser.getMobile() : reqUser.getName();
-		summary = "你已经通过" + staffName + "申请加入" + xCompany.getCompanyName() + "的请求.";
+		summary = "你已经通过" + staffName + "申请加入" +companyName + "的请求.";
 		if (status.equals((short)2)) {
-			summary = "你已经拒绝" + staffName + "申请加入" + xCompany.getCompanyName() + "的请求.";
+			summary = "你已经拒绝" + staffName + "申请加入" + companyName + "的请求.";
 		}
-
-		userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
 
 		return result;
 
@@ -383,6 +384,7 @@ public class CompanyStaffController extends BaseController {
 	@RequestMapping(value = "/get_pass", method = { RequestMethod.GET })
 	public AppResultData<Object> getPass(
 			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -394,17 +396,18 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
-		String mobile = u.getMobile();
-		CompanySearchVo searchVo1 = new CompanySearchVo();
-		searchVo1.setUserName(mobile);
 		
-		Xcompany xCompany = null;
-		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
-		
-		Long companyId = 0L;
-		if (rs != null) {
-			xCompany = rs.get(0);
-			companyId = xCompany.getCompanyId();
+		if (companyId.equals(0L)) {
+			CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
+			searchVo1.setUserId(userId);
+			searchVo1.setIsCreate(1);
+			XcompanyAdmin xCompanyAdmin = null;
+			List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
+			
+			if (rs != null) {
+				xCompanyAdmin = rs.get(0);
+				companyId = xCompanyAdmin.getCompanyId();
+			}
 		}
 		
 		List<XcompanyStaffReq> xCompanyStaffReqs = new ArrayList<XcompanyStaffReq>();

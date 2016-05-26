@@ -21,6 +21,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.async.UserMsgAsyncService;
@@ -28,11 +29,13 @@ import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffReqService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.CompanyAdminSearchVo;
 import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
@@ -42,6 +45,9 @@ public class CompanyController extends BaseController {
 
 	@Autowired
 	private XCompanyService xCompanyService;
+	
+	@Autowired
+	private XcompanyAdminService xCompanyAdminService;
 
 	@Autowired
 	private UserSmsTokenService smsTokenService;
@@ -65,8 +71,11 @@ public class CompanyController extends BaseController {
 	private UserScoreAsyncService userScoreAsyncService;
 
 	@RequestMapping(value = "/reg", method = { RequestMethod.POST })
-	public AppResultData<Object> companyReg(@RequestParam("user_name") String userName, @RequestParam("sms_token") String smsToken,
-			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId, @RequestParam("company_name") String companyName,
+	public AppResultData<Object> companyReg(
+			@RequestParam("user_name") String userName, 
+			@RequestParam("sms_token") String smsToken,
+			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId, 
+			@RequestParam("company_name") String companyName,
 			@RequestParam("short_name") String shortName, @RequestParam("password") String password) throws NoSuchAlgorithmException, WriterException,
 			IOException {
 
@@ -97,10 +106,10 @@ public class CompanyController extends BaseController {
 
 		Long userId = u.getId();
 		// 验证是否出现重名的情况.
-		CompanySearchVo searchVo = new CompanySearchVo();
+		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
 		searchVo.setCompanyName(companyName);
 		searchVo.setUserName(userName);
-		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo);
+		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo);
 		if (!rs.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("您已经注册过" + companyName);
@@ -114,31 +123,40 @@ public class CompanyController extends BaseController {
 			xCompany = xCompanyService.selectByPrimaryKey(companyId);
 		}
 
-		xCompany.setUserName(userName);
-		xCompany.setPassword(passwordMd5);
 		xCompany.setCompanyName(companyName);
 		xCompany.setShortName(shortName);
 
 		if (companyId > 0L) {
 			xCompany.setUpdateTime(TimeStampUtil.getNowSecond());
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
-		} else {
-
-			// 生成团队唯一邀请码
-			String invitationCode = StringUtil.generateShortUuid();
-			xCompany.setInvitationCode(invitationCode);
-			xCompanyService.insert(xCompany);
-			companyId = xCompany.getCompanyId();
-
-			// 生成团队邀请二维码
-			String imgUrl = XcompanyUtil.genQrCode(invitationCode);
-
-			xCompany.setQrCode(imgUrl);
-			xCompanyService.updateByPrimaryKeySelective(xCompany);
-			
-			//积分赠送
-			userScoreAsyncService.sendScoreCompany(userId, companyId);
+			return result;
 		}
+
+
+		// 生成团队唯一邀请码
+		String invitationCode = StringUtil.generateShortUuid();
+		xCompany.setInvitationCode(invitationCode);
+		xCompanyService.insert(xCompany);
+		companyId = xCompany.getCompanyId();
+
+		// 生成团队邀请二维码
+		String imgUrl = XcompanyUtil.genQrCode(invitationCode);
+
+		xCompany.setQrCode(imgUrl);
+		xCompanyService.updateByPrimaryKeySelective(xCompany);
+		
+		//创建管理员关联表
+		XcompanyAdmin xcompanyAdmin = xCompanyAdminService.initXcompanyAdmin();
+		xcompanyAdmin.setCompanyId(companyId);
+		xcompanyAdmin.setCompanyName(companyName);
+		xcompanyAdmin.setUserId(userId);
+		xcompanyAdmin.setUserName(userName);
+		xcompanyAdmin.setPassword(passwordMd5);
+		xcompanyAdmin.setIsCreate(1);
+		
+		xCompanyAdminService.insert(xcompanyAdmin);
+		//积分赠送
+		userScoreAsyncService.sendScoreCompany(userId, companyId);
 
 		// 团队部门预置信息.
 		List<String> defaultDepts = MeijiaUtil.getDefaultDept();

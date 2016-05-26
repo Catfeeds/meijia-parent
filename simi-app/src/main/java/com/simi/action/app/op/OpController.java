@@ -185,9 +185,12 @@ public class OpController extends BaseController {
 			
 			String iconPath = "/Users/lnczx/Downloads/icons/";
 			for(OpAd item : list) {
-				String filename = "opad_" + item.getId() + "_" + item.getUpdateTime() + ".png";
+				if (item.getAdType().indexOf("99") >= 0) {
+
+				String filename = "opad_" + item.getId() + ".jpg";
 				System.out.println(item.getImgUrl());
 				ImgServerUtil.download(item.getImgUrl(), filename, iconPath);
+				}
 			}
 			
 			return result;

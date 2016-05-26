@@ -23,7 +23,7 @@ import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.resume.ResumeChangeVo;
-import com.simi.vo.resume.ResumeSearchVo;
+import com.simi.vo.resume.ResumeChangeSearchVo;
 
 /**
  *
@@ -74,7 +74,7 @@ public class ResumeChangeController extends BaseController {
 			}
 		}
 		
-		ResumeSearchVo searchVo = new ResumeSearchVo();
+		ResumeChangeSearchVo searchVo = new ResumeChangeSearchVo();
 		if (partnerUserId > 0L) searchVo.setUserId(partnerUserId);
 		
 		//分页
