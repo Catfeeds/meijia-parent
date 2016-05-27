@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanySetting">
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="setting_type" property="settingType" jdbcType="VARCHAR" />
 		<result column="setting_json" property="settingJson" jdbcType="VARCHAR" />
@@ -12,7 +13,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_id, name, setting_type, setting_json, is_enable, add_time, update_time
+		id, company_id, user_id, name, setting_type, setting_json, is_enable, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -29,9 +30,20 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
 
 		<if test="settingType != null">
 			and setting_type = #{settingType,jdbcType=VARCHAR}
+		</if>
+				
+		<if test="settingTypes != null">
+			and setting_type in
+			<foreach item="item" index="index" collection="settingTypes" open="(" separator="," close=")">
+				#{item}
+			</foreach>
 		</if>
 
 		<if test="name != null">
@@ -53,9 +65,20 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
 
 		<if test="settingType != null">
 			and setting_type = #{settingType,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="settingTypes != null">
+			and setting_type in
+			<foreach item="item" index="index" collection="settingTypes" open="(" separator="," close=")">
+				#{item}
+			</foreach>
 		</if>
 
 		<if test="name != null">
@@ -74,11 +97,12 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanySetting">
-		insert into xcompany_setting (id, company_id, name,
+		insert into xcompany_setting (id, company_id, user_id, name,
 		setting_type, setting_json, is_enable,
 		add_time, update_time)
 		values
-		(#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		(#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, 
+		#{userId,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR},
 		#{settingType,jdbcType=VARCHAR}, #{settingJson,jdbcType=VARCHAR},
 		#{isEnable,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
@@ -91,6 +115,9 @@
 			</if>
 			<if test="companyId != null">
 				company_id,
+			</if>
+			<if test="userId != null">
+				user_id,
 			</if>
 			<if test="name != null">
 				name,
@@ -118,6 +145,9 @@
 			<if test="companyId != null">
 				#{companyId,jdbcType=NUMERIC},
 			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
@@ -144,6 +174,9 @@
 			<if test="companyId != null">
 				company_id = #{companyId,jdbcType=NUMERIC},
 			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
@@ -167,7 +200,9 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanySetting">
 		update xcompany_setting
-		set company_id = #{companyId,jdbcType=NUMERIC},
+		set 
+		company_id = #{companyId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
 		name = #{name,jdbcType=VARCHAR},
 		setting_type = #{settingType,jdbcType=VARCHAR},
 		setting_json = #{settingJson,jdbcType=VARCHAR},

@@ -4,6 +4,8 @@ public class XcompanySetting {
     private Long id;
 
     private Long companyId;
+    
+    private Long userId;
 
     private String name;
 
@@ -79,5 +81,13 @@ public class XcompanySetting {
 
 	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }
