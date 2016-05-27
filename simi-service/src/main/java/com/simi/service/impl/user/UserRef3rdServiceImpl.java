@@ -141,10 +141,14 @@ public class UserRef3rdServiceImpl implements UserRef3rdService {
 			ObjectNode createNewIMUserSingleNode = EasemobIMUsers.createNewIMUserSingle(datanode);
 
 			JsonNode entity = createNewIMUserSingleNode.get("entities");
-			uuid = entity.get(0).get("uuid").toString();
+			if (entity != null && entity.get(0) != null && entity.get(0).get("uuid") != null) {
+				uuid = entity.get(0).get("uuid").toString();
+			}
 		} else {
 			JsonNode entity = getIMUsersByPrimaryKeyNode.get("entities");
-			uuid = entity.get(0).get("uuid").toString();
+			if (entity != null && entity.get(0) != null && entity.get(0).get("uuid") != null) {
+				uuid = entity.get(0).get("uuid").toString();
+			}
 		}
 
 		// username = entity.get(0).get("username").toString();
