@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.vo.xcloud.CompanySearchVo;
+import com.simi.vo.xcloud.XcompanyVo;
 
 public interface XCompanyService {
 
@@ -26,5 +27,7 @@ public interface XCompanyService {
 	List<Xcompany> selectByListPage(CompanySearchVo searchVo, int pageNo, int pageSize);
 
 	List<Xcompany> selectBySearchVo(CompanySearchVo searchVo);
+
+	List<XcompanyVo> getVos(List<Xcompany> list);
 
 }

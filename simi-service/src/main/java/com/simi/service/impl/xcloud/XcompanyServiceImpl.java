@@ -1,13 +1,19 @@
 package com.simi.service.impl.xcloud;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.xcloud.XCompanyService;
+import com.simi.service.xcloud.XcompanyAdminService;
+import com.simi.vo.xcloud.CompanyAdminSearchVo;
 import com.simi.vo.xcloud.CompanySearchVo;
+import com.simi.vo.xcloud.XcompanyVo;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyAdmin;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyMapper;
 
@@ -16,6 +22,9 @@ public class XcompanyServiceImpl implements XCompanyService {
 
 	@Autowired
 	XcompanyMapper xCompanyMapper;
+	
+	@Autowired
+	private XcompanyAdminService xCompanyAdminService;
 
 	@Override
 	public Xcompany initXcompany() {
@@ -87,6 +96,42 @@ public class XcompanyServiceImpl implements XCompanyService {
 	@Override
 	public List<Xcompany> selectByIds(List<Long> ids) {
 		return xCompanyMapper.selectByIds(ids);
+	}
+	
+	@Override
+	public List<XcompanyVo> getVos(List<Xcompany> list) {
+		List<XcompanyVo> result = new ArrayList<XcompanyVo>();
+		
+		if (list.isEmpty()) return result;
+		
+		List<Long> companyIds = new ArrayList<Long>();
+		for (Xcompany item : list) {
+			if (!companyIds.contains(item.getCompanyId())) {
+				companyIds.add(item.getCompanyId());
+			}
+		}
+		
+		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
+		searchVo.setCompanyIds(companyIds);
+		searchVo.setIsCreate(1);
+		
+		List<XcompanyAdmin> companyAdmins = xCompanyAdminService.selectBySearchVo(searchVo);
+		
+		for (int i = 0; i < list.size(); i++) {
+			Xcompany item = list.get(i);
+			XcompanyVo vo = new XcompanyVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			for (XcompanyAdmin x : companyAdmins) {
+				if (x.getCompanyId().equals(vo.getCompanyId())) {
+					vo.setUserName(x.getUserName());
+					break;
+				}
+			}
+			result.add(vo);
+		}
+		
+		return result;
 	}
 
 }
