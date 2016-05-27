@@ -206,10 +206,10 @@ public class JobOrderController extends BaseController {
 					Constants.USER_ORDER_MORE_1HOUR, content);
 			
 			
-			orderLog = orderLogService.initOrderLog(orders);
-			orderLog.setAction("remind");
-			orderLog.setAction("订单未支付，短信提醒用户.");
-			orderLogService.insert(orderLog);
+//			orderLog = orderLogService.initOrderLog(orders);
+//			orderLog.setAction("remind");
+//			orderLog.setRemarks("订单未支付，短信提醒用户.");
+//			orderLogService.insert(orderLog);
 			
 			
 			

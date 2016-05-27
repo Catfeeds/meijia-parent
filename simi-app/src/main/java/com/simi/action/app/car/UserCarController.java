@@ -265,7 +265,7 @@ public class UserCarController extends BaseController {
 		// 记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
 		orderLog.setAction("create");
-		orderLog.setAction("创建订单");
+		orderLog.setRemarks("创建订单");
 		orderLogService.insert(orderLog);
 
 		// 保存订单价格信息
