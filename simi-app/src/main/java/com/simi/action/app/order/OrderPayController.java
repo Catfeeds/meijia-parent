@@ -177,7 +177,7 @@ public class OrderPayController extends BaseController {
 			//记录订单日志.
 			OrderLog orderLog = orderLogService.initOrderLog(order);
 			orderLog.setAction("order-pay");
-			orderLog.setAction("订单支付成功:" + MathBigDecimalUtil.round2(orderPay) + "元");
+			orderLog.setRemarks("订单支付成功:" + MathBigDecimalUtil.round2(orderPay) + "元");
 			orderLogService.insert(orderLog);
 			
 			//记录用户消费明细

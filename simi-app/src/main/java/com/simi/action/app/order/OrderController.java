@@ -247,7 +247,7 @@ public class OrderController extends BaseController {
 		//记录订单日志.
 		OrderLog orderLog = orderLogService.initOrderLog(order);
 		orderLog.setAction("order-create");
-		orderLog.setAction("创建订单");
+		orderLog.setRemarks("创建订单");
 		orderLogService.insert(orderLog);
 		
 		//保存订单价格信息
@@ -295,7 +295,7 @@ public class OrderController extends BaseController {
 			//记录订单日志.
 			orderLog = orderLogService.initOrderLog(order);
 			orderLog.setAction("order-pay");
-			orderLog.setAction("订单支付成功:" + MathBigDecimalUtil.round2(orderPay) + "元");
+			orderLog.setRemarks("订单支付成功:" + MathBigDecimalUtil.round2(orderPay) + "元");
 			orderLogService.insert(orderLog);
 			
 			//记录用户消费明细
