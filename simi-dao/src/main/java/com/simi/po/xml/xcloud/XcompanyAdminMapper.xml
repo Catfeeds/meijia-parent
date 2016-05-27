@@ -30,6 +30,13 @@
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="companyIds != null">
+			and company_id in
+			<foreach item="item" index="index" collection="companyIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
 		<if test="companyName != null">
 			and company_name = #{companyName,jdbcType=VARCHAR}
 		</if>
@@ -64,6 +71,13 @@
 		where 1 = 1
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="companyIds != null">
+			and company_id in
+			<foreach item="item" index="index" collection="companyIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
 		</if>
 		
 		<if test="companyName != null">

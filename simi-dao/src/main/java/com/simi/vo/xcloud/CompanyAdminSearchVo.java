@@ -1,9 +1,13 @@
 package com.simi.vo.xcloud;
 
+import java.util.List;
+
 
 public class CompanyAdminSearchVo{
 
 	private Long companyId;
+	
+	private List<Long> companyIds;
 	
 	private String companyName;
 	
@@ -81,6 +85,14 @@ public class CompanyAdminSearchVo{
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public List<Long> getCompanyIds() {
+		return companyIds;
+	}
+
+	public void setCompanyIds(List<Long> companyIds) {
+		this.companyIds = companyIds;
 	}
 	
 
