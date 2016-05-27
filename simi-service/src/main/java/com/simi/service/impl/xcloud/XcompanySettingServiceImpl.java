@@ -29,6 +29,7 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		
 		record.setId(0L);
 		record.setCompanyId(0L);
+		record.setUserId(0L);
 		record.setName("");
 		record.setSettingJson("");
 		record.setSettingType("");
