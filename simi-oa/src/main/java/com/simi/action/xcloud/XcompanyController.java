@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.action.admin.AdminController;
@@ -18,6 +19,7 @@ import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.vo.xcloud.CompanySearchVo;
+import com.simi.vo.xcloud.XcompanyVo;
 @Controller
 @RequestMapping(value = "/company")
 public class XcompanyController extends AdminController {
@@ -47,9 +49,20 @@ public class XcompanyController extends AdminController {
 		// 分页
 		PageHelper.startPage(pageNo, pageSize);
 
-		List<Xcompany> lists = xCompanyService.selectByListPage(
-				searchVo, pageNo, pageSize);
-
+		List<Xcompany> lists = xCompanyService.selectByListPage(searchVo, pageNo, pageSize);
+		
+		List<XcompanyVo> vos = xCompanyService.getVos(lists);
+		
+		for (int i = 0 ; i< lists.size(); i++) {
+			Xcompany item = lists.get(i);
+			for (XcompanyVo vo : vos) {
+				if (vo.getCompanyId().equals(item.getCompanyId())) {
+					lists.set(i, vo);
+					break;
+				}
+			}
+		}
+		
 		PageInfo result = new PageInfo(lists);
 
 		model.addAttribute("searchModel", searchVo);
