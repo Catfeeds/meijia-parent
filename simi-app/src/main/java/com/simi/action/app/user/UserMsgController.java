@@ -170,4 +170,31 @@ public class UserMsgController extends BaseController {
 		result.setData(monthDatas);
 		return result;
 	}
+	
+	/** 
+	 *  设置常用提醒
+	 */
+	@RequestMapping(value = "/set_alarm", method = RequestMethod.POST)
+	public AppResultData<Object> setAlarm(
+		@RequestParam("user_id") Long userId,
+		@RequestParam("alarm") String alarm
+		) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		return result;
+	}
+	
+	/** 
+	 *  设置常用提醒
+	 */
+	@RequestMapping(value = "/get_alarm", method = RequestMethod.POST)
+	public AppResultData<Object> getAlarm(
+		@RequestParam("user_id") Long userId
+		) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		return result;
+	}
 }
