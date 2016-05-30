@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -54,7 +55,7 @@ public class UserSettingController extends BaseController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/get_user_subscribe_tags", method = RequestMethod.POST)
+	@RequestMapping(value = "/get_user_subscribe_tags", method = RequestMethod.GET)
 	public AppResultData<Object> getUserSubScribeTags(
 			@RequestParam("user_id") Long userId) {
 		
@@ -114,10 +115,17 @@ public class UserSettingController extends BaseController {
 		if (!list.isEmpty()) {
 			record = list.get(0);
 		}
-		
+		record.setCompanyId(0L);
 		record.setUserId(userId);
 		record.setSettingType("subscribe-tags");
 		record.setSettingJson(subscribeTags);
+		
+		if (record.getId() >  0L) {
+			record.setUpdateTime(TimeStampUtil.getNowSecond());
+			xCompanySettingService.updateByPrimaryKeySelective(record);
+		} else {
+			xCompanySettingService.insert(record);
+		}
 		
 		return result;
 	}
