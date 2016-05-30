@@ -66,6 +66,7 @@
 												<form:option value="xcloud">云行政</form:option>
 												<form:option value="timecheck">时光机</form:option>
 												<form:option value="simi">私秘</form:option>
+												<form:option value="sutongbao">速通宝</form:option>
 											</form:select>
 										</div>
 									</div>

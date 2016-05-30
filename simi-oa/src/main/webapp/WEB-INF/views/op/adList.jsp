@@ -35,6 +35,16 @@
 						<form:options items="${opChannels}" itemValue="channelId" itemLabel="name" />
 
 					</form:select>
+					应用类型
+					<form:select path="appType">
+						<option value="">全部</option>
+						<form:option value="xcloud" >云行政</form:option>
+						<form:option value="timechick">时光机</form:option>
+						<form:option value="simi">私秘</form:option>
+						<form:option value="sutongbao">速通宝</form:option>
+
+					</form:select>
+					
 
 					<input type="submit" value="搜索">
 				</div>
@@ -55,6 +65,7 @@
 				<thead>
 					<tr>
 						<th>序号</th>
+						<th>应用类型</th>
 						<th>标题</th>
 						<th>图片地址</th>
 						<th>频道</th>
@@ -72,6 +83,7 @@
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
 							<td>${ item.no}</td>
+							<td>${ item.appType}</td>
 							<td>${ item.title}</td>
 							<td><img src="${ item.imgUrl }" /></td>
 							<td>${ item.channelNames}</td>

@@ -51,6 +51,19 @@
 								<form:errors path="No" class="field-has-error"></form:errors>
 							</div>
 						</div>
+						
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">应用类型</label>
+							<div class="col-md-5">
+								<form:select path="appType" class="form-control">
+									<form:option value="xcloud" selected="selected">云行政</form:option>
+									<form:option value="timechick">时光机</form:option>
+									<form:option value="simi">私秘</form:option>
+									<form:option value="sutongbao">速通宝</form:option>
+								</form:select>
+							</div>
+						</div>
 
 						<c:if test="${contentModel.imgUrl != null && contentModel.imgUrl != '' }">
 							<div class="form-group ">
