@@ -228,6 +228,7 @@ public class UsersServiceImpl implements UsersService {
 		}
 
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+		vo.setJobName("");
 		vo.setUserId(u.getId());
 
 		if (StringUtil.isEmpty(vo.getName())) {

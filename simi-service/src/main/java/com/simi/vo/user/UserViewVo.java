@@ -51,6 +51,8 @@ public class UserViewVo {
     
     private String companyName;
     
+    private String jobName;
+    
     //所属团队个数
     private int companyCount;
     
@@ -270,6 +272,14 @@ public class UserViewVo {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
 }
