@@ -1,36 +1,22 @@
 package com.simi.action.app.user;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageInfo;
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.user.UserMsg;
-import com.simi.po.model.user.UserTrailReal;
-import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.ValidateService;
-import com.simi.service.user.UserMsgService;
-import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserMsgSearchVo;
-import com.simi.vo.user.UserMsgVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 @Controller
