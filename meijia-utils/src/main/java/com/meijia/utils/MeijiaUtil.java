@@ -483,6 +483,9 @@ public class MeijiaUtil {
 			case "simi":
 				appTypeName = "私秘";
 				break;
+			case "sutongbao" : 
+				appTypeName = "速通宝";
+				break;
 			default:
 				appTypeName = "云行政";
 		}
