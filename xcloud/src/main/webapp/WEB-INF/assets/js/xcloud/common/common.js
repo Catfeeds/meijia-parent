@@ -67,6 +67,37 @@ function pad(num, n) {
 	return num;
 }
 
+//顶部菜单点击高亮
+function setTopMenuId(menuId) {
+	console.log("menuId = " + menuId);
+	$.cookie("xcloud-top-menu-id", menuId, { path: "/"}); 
+
+}
+
+function setTopMenuHl() {
+	var topMenuId = $.cookie('xcloud-top-menu-id');
+	if (topMenuId == undefined) return false;
+	if (topMenuId == "") return false;
+	$("#top-ul").each(function () {
+		$(this).find('li').each(function() {
+			var menuId = $(this).attr("id");
+			
+			if (menuId == topMenuId) {
+				if (!$(this).hasClass("am-topbar-inverse")) {
+					$(this).addClass("am-topbar-inverse");
+				}
+			} else {
+				if ($(this).hasClass("am-topbar-inverse")) {
+					$(this).removeClass("am-topbar-inverse");
+				}
+			}
+			
+	    });
+	});
+}
+
+setTopMenuHl();
+
 //菜单点击展开
 function setMenuId(menuId) {
 	$.cookie("xcloud-menu-id", menuId, { path: "/"}); 
