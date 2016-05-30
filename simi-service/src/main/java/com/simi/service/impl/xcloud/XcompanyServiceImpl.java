@@ -113,7 +113,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 		
 		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
 		searchVo.setCompanyIds(companyIds);
-		searchVo.setIsCreate(1);
+		searchVo.setIsCreate((short) 1);
 		
 		List<XcompanyAdmin> companyAdmins = xCompanyAdminService.selectBySearchVo(searchVo);
 		

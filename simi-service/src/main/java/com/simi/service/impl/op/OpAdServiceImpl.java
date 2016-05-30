@@ -89,6 +89,7 @@ public class OpAdServiceImpl implements OpAdService {
 		record.setImgUrl("");
 		record.setGotoUrl("");
 		record.setTitle("");
+		record.setAppType("");
 		record.setAdType("");
 		record.setServiceTypeIds("");
 		record.setAddTime(TimeStampUtil.getNow()/1000);

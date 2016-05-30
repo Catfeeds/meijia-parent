@@ -423,11 +423,12 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		}
 		return result;
 	}
-//@SuppressWarnings({ "rawtypes", "unchecked" })
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public PageInfo selectByPage(OrderSearchVo searchVo,int pageNo, int pageSize) {
 		 PageHelper.startPage(pageNo, pageSize);
-		 List<OrderExtWaterXcloudVo> listVo = new ArrayList<OrderExtWaterXcloudVo>();
+		 
          List<OrderExtWater> list = orderExtWaterMapper.selectByListPage(searchVo);
          OrderExtWater item = null;
          for (int i = 0; i < list.size(); i++) {

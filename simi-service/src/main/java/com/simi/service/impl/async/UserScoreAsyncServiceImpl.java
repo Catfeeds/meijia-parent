@@ -94,7 +94,7 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		
 		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
 		searchVo.setUserId(userId);
-		searchVo.setIsCreate(1);
+		searchVo.setIsCreate((short) 1);
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
 		
