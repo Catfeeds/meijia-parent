@@ -37,7 +37,7 @@ public class TestBaseDataController extends JUnitActionBase  {
 
 		
 		String url = "/app/dict/get_ads.json";
-		String params = "";
+		String params = "?";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
 

@@ -1,6 +1,9 @@
 package com.simi.action.app.user;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,10 +140,44 @@ public class UserSettingController extends BaseController {
 	@RequestMapping(value = "/set_alarm", method = RequestMethod.POST)
 	public AppResultData<Object> setAlarm(
 		@RequestParam("user_id") Long userId,
-		@RequestParam("alarm") String alarm
+		@RequestParam("setting_id") Long setttingId,
+		@RequestParam("alarm_day") String alarmDay
 		) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		// 判断是否为注册用户，非注册用户返回 999		
+		AppResultData<Object> v = validateService.validateUser(userId);
+		if (v.getStatus() == Constants.ERROR_999) {
+			return v;
+		}
+		
+		XcompanySetting vo = xCompanySettingService.selectByPrimaryKey(setttingId);
+		String name = vo.getName();
+		String settingType = vo.getSettingType();
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setSettingType(settingType);
+		
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		XcompanySetting record = xCompanySettingService.initXcompanySetting();
+		
+		if (!list.isEmpty()) {
+			record = list.get(0);
+		}
+		record.setName(name);
+		record.setUserId(userId);
+		record.setSettingType(settingType);
+		record.setSettingJson(alarmDay);
+		
+		if (record.getId() > 0L) {
+			record.setUpdateTime(TimeStampUtil.getNowSecond());
+			xCompanySettingService.updateByPrimaryKeySelective(record);
+		} else {
+			xCompanySettingService.insert(record);
+		}
 		
 		return result;
 	}
@@ -148,13 +185,47 @@ public class UserSettingController extends BaseController {
 	/** 
 	 *  设置常用提醒
 	 */
-	@RequestMapping(value = "/get_alarm", method = RequestMethod.POST)
-	public AppResultData<Object> getAlarm(
-		@RequestParam("user_id") Long userId
-		) {
+	@RequestMapping(value = "/get_alarm", method = RequestMethod.GET)
+	public AppResultData<Object> getAlarm(@RequestParam("user_id") Long userId) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		List<String> settingTypes = new ArrayList<String>();
+		settingTypes.add("alarm-holiday");
+		settingTypes.add("alarm-shebao");		
 		
+		//默认的设置项
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setUserId(0L);
+		searchVo.setSettingTypes(settingTypes);
+
+		List<XcompanySetting> defaultList = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		//用户已经配置过的设置项
+		searchVo = new CompanySettingSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setSettingTypes(settingTypes);
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		List<Map> datas = new ArrayList<Map>();
+		for (XcompanySetting item : defaultList) {
+			Map<String, String> vo = new HashMap<String, String>();
+			vo.put("setting_id", item.getId().toString());
+			vo.put("name", item.getName());
+			
+			String alarmDay = item.getSettingJson();
+			for (XcompanySetting x : list) {
+				if (x.getSettingType().equals(item.getSettingType())) {
+					alarmDay = x.getSettingJson();
+					break;
+				}
+			}
+			
+			
+			vo.put("alarm_day", alarmDay);
+			datas.add(vo);
+		}
+		result.setData(datas);
 		return result;
 	}
 }
