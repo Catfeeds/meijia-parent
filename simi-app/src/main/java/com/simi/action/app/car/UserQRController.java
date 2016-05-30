@@ -97,9 +97,9 @@ public class UserQRController extends BaseController {
 			Orders order = orderList.get(0);
 			Long addTime = order.getAddTime();
 			Long nowTime = TimeStampUtil.getNowSecond();
-			if ( (nowTime - addTime) < 10 ) {
+			if ( (nowTime - addTime) < 5 ) {
 				result.setStatus(Constants.ERROR_999);
-				result.setMsg("10秒内重复操作.");
+				result.setMsg("5秒内重复操作.");
 				return result;
 			}
 		}
