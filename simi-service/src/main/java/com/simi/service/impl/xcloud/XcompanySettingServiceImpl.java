@@ -35,6 +35,7 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		record.setSettingType("");
 		record.setIsEnable((short)1);
 		record.setAddTime(TimeStampUtil.getNowSecond());
+		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
 
