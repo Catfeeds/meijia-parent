@@ -4,6 +4,8 @@ public class AdSearchVo {
 
 	private String title;
 	
+	private String appType;
+	
 	private String adType;
 	
 	private Long updateTime;
@@ -30,6 +32,14 @@ public class AdSearchVo {
 
 	public void setUpdateTime(Long updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getAppType() {
+		return appType;
+	}
+
+	public void setAppType(String appType) {
+		this.appType = appType;
 	}
 	
 

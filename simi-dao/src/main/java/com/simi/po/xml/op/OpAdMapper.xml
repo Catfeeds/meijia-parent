@@ -5,6 +5,7 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="no" property="No" jdbcType="NUMERIC" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="app_type" property="appType" jdbcType="VARCHAR" />
 		<result column="ad_type" property="adType" jdbcType="VARCHAR" />
 		<result column="service_type_ids" property="serviceTypeIds" jdbcType="VARCHAR" />
 		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
@@ -16,7 +17,7 @@
 		<result column="enable" property="enable" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, no, title, ad_type, service_type_ids, img_url, goto_type, action, goto_url, add_time,
+		id, no, title, app_type, ad_type, service_type_ids, img_url, goto_type, action, goto_url, add_time,
 		update_time, enable
 	</sql>
 
@@ -27,6 +28,10 @@
 		where 1=1
 		<if test="title != null">
 			and title like CONCAT('%','${title}','%' )
+		</if>
+		
+		<if test="appType != null">
+			and app_type = #{appType,jdbcType=VARCHAR}
 		</if>
 
 		<if test="adType != null">
@@ -43,6 +48,10 @@
 		where 1=1
 		<if test="title != null">
 			and title like CONCAT('%','${title}','%' )
+		</if>
+		
+		<if test="appType != null">
+			and app_type = #{appType,jdbcType=VARCHAR}
 		</if>
 
 		<if test="adType != null">
@@ -78,11 +87,12 @@
 	</delete>
 	
 	<insert id="insert" parameterType="com.simi.po.model.op.OpAd">
-		insert into op_ad (id, no, title,
+		insert into op_ad (id, no, title, app_type,
 		ad_type, service_type_ids, img_url,
 		goto_type, action, goto_url,
 		add_time, update_time, enable)
 		values (#{id,jdbcType=NUMERIC}, #{No,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
+		#{appType,jdbcType=VARCHAR},
 		#{adType,jdbcType=VARCHAR}, #{serviceTypeIds,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR},
 		#{gotoType,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, #{gotoUrl,jdbcType=VARCHAR},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}, #{enable,jdbcType=NUMERIC})
@@ -98,6 +108,9 @@
 			</if>
 			<if test="title != null">
 				title,
+			</if>
+			<if test="appType != null">
+				app_type,
 			</if>
 			<if test="adType != null">
 				ad_type,
@@ -137,6 +150,9 @@
 			<if test="title != null">
 				#{title,jdbcType=VARCHAR},
 			</if>
+			<if test="appType != null">
+				#{appType,jdbcType=VARCHAR},
+			</if>
 			<if test="adType != null">
 				#{adType,jdbcType=VARCHAR},
 			</if>
@@ -175,6 +191,9 @@
 			<if test="title != null">
 				title = #{title,jdbcType=VARCHAR},
 			</if>
+			<if test="appType != null">
+				app_type = #{appType,jdbcType=VARCHAR},
+			</if>
 			<if test="adType != null">
 				ad_type = #{adType,jdbcType=VARCHAR},
 			</if>
@@ -210,6 +229,7 @@
 		update op_ad
 		set no = #{No,jdbcType=NUMERIC},
 		title = #{title,jdbcType=VARCHAR},
+		app_type = #{appType,jdbcType=VARCHAR},
 		ad_type = #{adType,jdbcType=VARCHAR},
 		service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR},
 		img_url = #{imgUrl,jdbcType=VARCHAR},

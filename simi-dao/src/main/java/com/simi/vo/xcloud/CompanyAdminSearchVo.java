@@ -17,7 +17,7 @@ public class CompanyAdminSearchVo{
 	
 	private String passMd5;
 		
-	private int isCreate;
+	private Short isCreate;
 	
 	private Long startTime;
 	
@@ -55,11 +55,11 @@ public class CompanyAdminSearchVo{
 		this.passMd5 = passMd5;
 	}
 
-	public int getIsCreate() {
+	public Short getIsCreate() {
 		return isCreate;
 	}
 
-	public void setIsCreate(int isCreate) {
+	public void setIsCreate(Short isCreate) {
 		this.isCreate = isCreate;
 	}
 

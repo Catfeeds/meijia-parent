@@ -53,10 +53,11 @@
 		<if test="orderNo != null">
 			and order_no like CONCAT('%','${orderNo}','%' )
 		</if>
-
-		<if test="serviceTypeId != null">
-			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+		
+		<if test="orderStatusIN != null">
+			and order_id in (select order_id from orders where user_id = #{userId,jdbcType=NUMERIC} and service_type_id = #{serviceTypeId,jdbcType=NUMERIC})
 		</if>
+		
 		order by add_time desc
 	</select>
 

@@ -6,6 +6,8 @@ public class OpAd {
     private Short No;
 
     private String title;
+    
+    private String appType;
 
     private String adType;
 
@@ -120,5 +122,13 @@ public class OpAd {
     public void setEnable(Short enable) {
         this.enable = enable;
     }
+
+	public String getAppType() {
+		return appType;
+	}
+
+	public void setAppType(String appType) {
+		this.appType = appType;
+	}
 
 }
