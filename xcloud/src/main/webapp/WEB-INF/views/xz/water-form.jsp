@@ -51,55 +51,72 @@
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
 							<div class="am-u-sm-9">
-								<img id="imgUrl" wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
+								<div class="am-u-sm-6">
+									<img id="imgUrl" wight="120" height="120" src="${servicePriceDetail.imgUrl }" />
+								</div>
+								
+								<div class="am-u-sm-6">
+									原&nbsp;&nbsp;&nbsp;价:<del id="view-price"></del>元.
+									<br>
+									折扣价:<label id="view-disprice" style="color:red"></label>元.
+								</div>
 							</div>
 						</div>
 						<div class="am-form-group" required>
 							<label for="user-phone" class="am-u-sm-3 am-form-label">商品:</label>
 							<div class="am-u-sm-9">
 								<form:select path="servicePriceId" id="servicePriceId" name="servicePriceId" class="am-form-field am-radius" autocomplete="off">
-									<option value = "" required="required" >请选择商品</option>
+									
 									<c:forEach items="${waterComVos}" var="item">
-										<option value="${item.servicePriceId}" disprice="${item.disprice }" imgUrl="${item.imgUrl }" required="required" 
-										<c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>  >
-										${item.namePrice}</option>
-							
+										<option value="${item.servicePriceId}" 
+												price="${item.price }" 
+												disprice="${item.disprice }" 
+												imgUrl="${item.imgUrl }" 
+											<c:if test="${contentModel.servicePriceId == item.servicePriceId }"> selected="true" </c:if>  >
+											${item.name}
+										</option>
 									</c:forEach>
 								</form:select>
 							</div>
 						</div>
 						<div class="am-form-group" required>
-							<label for="user-phone" class="am-u-sm-3 am-form-label">送水的数量:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">送水的数量<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="serviceNum" class="am-form-field am-radius js-pattern-pinteger" maxLength="32"
 									required="required" />
-								<small>*必填项</small>
+								
 							</div>
 						</div>
+						
+						<div class="am-form-group" required>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">应付金额:</label>
+							<div class="am-u-sm-9">
+								<label id="order-pay"></label>
+								
+							</div>
+						</div>
+						
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">服务地址:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">服务地址<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:select path="addrId" class="am-form-field am-radius">
 									<form:options items="${userAddrVo}" itemValue="addrId" itemLabel="addrName" />
 								</form:select>
-								<small></small>
 							</div>
 						</div>
 						
 						<div class="am-form-group" required>
-							<label for="user-phone" class="am-u-sm-3 am-form-label">联系人:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">联系人<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="linkMan" class="am-form-field am-radius" maxLength="32" required="required"/>
-								<small></small>
 							</div>
 						</div>
 						
 						<div class="am-form-group" required>
-							<label for="user-phone" class="am-u-sm-3 am-form-label">联系电话:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">联系电话<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="linkTel" class="am-form-field am-radius js-pattern-pinteger" maxLength="32"
 								required="required" />
-								<small></small>
 							</div>
 						</div>
 						<div class="am-form-group">
@@ -140,5 +157,8 @@
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/xcloud/common/validate-methods.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/xcloud/xz/water-form.js'/>"></script>
+	<script>
+		$("#servicePriceId").trigger("change");
+	</script>
 </body>
 </html>

@@ -58,7 +58,7 @@
 						<div class="am-g am-padding-sm">
 							<div class="am-form-group am-form-icon">
 								<span class="am-icon-user"></span> 
-								<form:input path="username" class="js-pattern-mobile am-form-field am-radius"  placeholder="用户名" data-validation-message="请输入用户名"  required="required"/> 	
+								<form:input path="username" class="js-pattern-mobile am-form-field am-radius"  placeholder="用户名" data-validation-message="管理员手机号"  required="required"/> 	
 							</div>
 							<div class="am-form-group am-form-icon">
 								<span class="am-icon-lock"></span>

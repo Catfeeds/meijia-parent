@@ -63,10 +63,10 @@ public class WaterController extends BaseController {
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
-	
+
 	@Autowired
 	private UserAddrsService userAddrsService;
-	
+
 	@Autowired
 	private OrderQueryService orderQueryService;
 
@@ -80,9 +80,9 @@ public class WaterController extends BaseController {
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		Long userId = accountAuth.getUserId();
 		model.addAttribute("userId", userId);
-		
+
 		Users users = usersService.selectByPrimaryKey(userId);
-		
+
 		OrdersWaterAddOaVo vo = new OrdersWaterAddOaVo();
 		OrderExtWater water = orderExtWaterService.initOrderExtWater();
 		BeanUtilsExp.copyPropertiesIgnoreNull(water, vo);
@@ -102,8 +102,7 @@ public class WaterController extends BaseController {
 
 		Long parnterUserId = partnerUser.getUserId();
 
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService
-				.selectByUserId(parnterUserId);
+		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
 
 		List<Long> servicePriceIds = new ArrayList<Long>();
 		for (PartnerServicePriceDetail item : servicePriceDetails) {
@@ -111,23 +110,21 @@ public class WaterController extends BaseController {
 				servicePriceIds.add(item.getServicePriceId());
 			}
 		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService
-				.selectByIds(servicePriceIds);
+		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
 		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
 		PartnerServiceType serviceType = null;
 		for (PartnerServiceType item : serviceTypes) {
 			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService
-					.selectByServicePriceId(serviceType.getId());
+			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(serviceType.getId());
 			OrderWaterComVo waterComVo = new OrderWaterComVo();
 			waterComVo.setPrice(detail.getPrice());
 			waterComVo.setDisprice(detail.getDisPrice());
 			waterComVo.setImgUrl(detail.getImgUrl());
 			waterComVo.setServicePriceId(serviceType.getId());
 			waterComVo.setName(serviceType.getName());
-			waterComVo.setNamePrice(serviceType.getName() + "(原价:"
-					+ detail.getPrice().toString() + "元,折扣价："
-					+ detail.getDisPrice().toString() + "元)");
+			// waterComVo.setNamePrice(serviceType.getName() + "(原价:"
+			// + detail.getPrice().toString() + "元,折扣价："
+			// + detail.getDisPrice().toString() + "元)");
 			waterComVos.add(waterComVo);
 
 		}
@@ -135,10 +132,8 @@ public class WaterController extends BaseController {
 
 		// 商品名称
 		Long servicePriceId = water.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService
-				.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService
-				.selectByServicePriceId(servicePriceId);
+		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		model.addAttribute("servicePrice", servicePrice);
 		model.addAttribute("servicePriceDetail", servicePriceDetail);
 
@@ -153,7 +148,7 @@ public class WaterController extends BaseController {
 			voList.add(vos);
 		}
 		model.addAttribute("userAddrVo", voList);
-		
+
 		model.addAttribute("contentModel", vo);
 		return "xz/water-form";
 	}
@@ -161,25 +156,38 @@ public class WaterController extends BaseController {
 	// 查询与登记
 	@AuthPassport
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model model,OrderSearchVo searchVo
-		) {
+	public String list(HttpServletRequest request, Model model, OrderSearchVo searchVo) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 		model.addAttribute("searchModel", searchVo);
 		int pageNo = ServletRequestUtils.getIntParameter(request, Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);
 		
+		Long serviceTypeId = 239L;
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
 		Long userId = accountAuth.getUserId();
 		
+		if (searchVo == null) searchVo = new OrderSearchVo();
+		
 		searchVo.setUserId(userId);
-	
-		PageInfo result = orderExtWaterService.selectByPage(searchVo, pageNo,pageSize);
 		
+//		List<Integer> orderStatusIn = new ArrayList<Integer>();
+//		orderStatusIn.add(1);
+//		orderStatusIn.add(2);
+//		orderStatusIn.add(3);
+//		orderStatusIn.add(7);
+//		orderStatusIn.add(8);
+//		searchVo.setOrderStatusIn(orderStatusIn);
+		
+		searchVo.setServiceTypeId(serviceTypeId);
+		
+
+		PageInfo result = orderExtWaterService.selectByPage(searchVo, pageNo, pageSize);
+
 		model.addAttribute("contentModel", result);
-		
+
 		return "xz/water-list";
 	}
 

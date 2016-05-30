@@ -18,13 +18,16 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.model.dict.DictExpress;
+import com.simi.po.model.op.AppTools;
 import com.simi.po.model.record.RecordExpress;
 import com.simi.po.model.user.Users;
 import com.simi.service.dict.ExpressService;
+import com.simi.service.op.AppToolsService;
 import com.simi.service.record.RecordExpressService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.ExpressSearchVo;
 import com.simi.vo.order.RecordExpressXcloudVo;
 import com.simi.vo.record.RecordExpressSearchVo;
@@ -52,6 +55,9 @@ public class ExpressController extends BaseController {
 	
 	@Autowired
 	private ExpressService expressService;
+	
+	@Autowired
+	private AppToolsService appToolsService;
 
 	// 查询与登记
 	@AuthPassport
@@ -147,6 +153,19 @@ public class ExpressController extends BaseController {
 		List<DictExpress> expressList = expressService.selectBySearchVo(searchVo);
 		
 		model.addAttribute("expressList", expressList);
+		
+		//二维码
+		String qrCode = "";
+		ApptoolsSearchVo searchVo1 = new ApptoolsSearchVo();
+		searchVo1.setAction("express");
+		List<AppTools> apptools = appToolsService.selectBySearchVo(searchVo1);
+		if (!apptools.isEmpty()) {
+			AppTools a = apptools.get(0);
+			qrCode = a.getQrCode();
+		}
+		
+		if (StringUtil.isEmpty(qrCode)) qrCode = "/assets/img/erweima.png";
+		model.addAttribute("qrCode", qrCode);
 		
 		return "xz/express-form";
 	}

@@ -46,8 +46,33 @@ $("#btn-water-submit").on('click', function(e) {
 		console.log("fail");
 	};
 });
+
 $("#servicePriceId").change(function(){ 
 	var imgUrl = $("#servicePriceId").find("option:selected").attr('imgUrl');
+	var price = $("#servicePriceId").find("option:selected").attr('price');
+	var disprice = $("#servicePriceId").find("option:selected").attr('disprice');
 	$("#imgUrl").attr("src", imgUrl);
+	$("#view-price").html(price);
+	$("#view-disprice").html(disprice);
 	
+	//设定应付金额
+	var serviceNum = $("#serviceNum").val();
+	if (serviceNum == undefined) return false;
+	if (serviceNum == "") return false;
+	
+	var orderPay = disprice * serviceNum;
+	$("#order-pay").html(orderPay);
+});
+
+$("#serviceNum").keyup(function(){ 
+	
+	var disprice = $("#servicePriceId").find("option:selected").attr('disprice');
+
+	//设定应付金额
+	var serviceNum = $("#serviceNum").val();
+	if (serviceNum == undefined) return false;
+	if (serviceNum == "") return false;
+	
+	var orderPay = disprice * serviceNum;
+	$("#order-pay").html(orderPay);
 });

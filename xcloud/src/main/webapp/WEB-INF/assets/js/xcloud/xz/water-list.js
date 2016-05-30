@@ -20,7 +20,7 @@ function waterSign(userId, orderId) {
 		});
 
 }
-//添加员工
-$("#btn-express-add").click(function() {
+
+$("#btn-water-add").click(function() {
 	location.href = "/xcloud/xz/water/water-form";
 });

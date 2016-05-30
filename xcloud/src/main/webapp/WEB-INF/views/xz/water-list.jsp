@@ -34,30 +34,32 @@
 				<div class="am-fl am-cf">
 					<strong class="am-text-primary am-text-lg">送水列表</strong> / <small>drinking water</small>
 				</div>
-			</div>
-			<hr>
-			<div class="am-g">
-				<div class="am-u-sm-12 am-u-md-6">
-					<div class="am-btn-toolbar">
-						<div class="am-btn-group am-btn-group-sm">
-							<button type="button" id="btn-express-add" class="am-btn am-btn-default am-radius">
+				
+				<div class="am-u-sm-12 am-u-md-3 am-fr">
+					<div class="am-btn-toolbar am-fr">
+						<div class="am-btn-group am-btn-group-sm ">
+							<button type="button" id="btn-water-add" class="am-btn am-btn-warning am-radius">
 								<span class="am-icon-plus"></span> 一键下单
-							</button>							
+							</button>
+
+							
+
 						</div>
 					</div>
 				</div>
-
 			</div>
-			<br>
+			<hr>
+
 				<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
 								<tr>
-									<th class="table-date am-hide-sm-only">服务大类名称</th>
+									<!-- <th class="table-date am-hide-sm-only">服务大类名称</th> -->
 									<th class="table-title">商品名称</th>
 									<th class="table-id">数量</th>
+									<th class="table-title">金额</th>
 									<th class="table-title">地址</th>
 									<th >订单状态</th>
 									<th >是否签收</th>
@@ -68,17 +70,19 @@
 							<tbody>
 								<c:forEach items="${contentModel.list}" var="item">
 									<tr>
-										<td>${item.serviceTypeName}</td>
+										<%-- <td>${item.serviceTypeName}</td> --%>
 										<td>${item.servicePriceName}</td>
-										<td>${ item.serviceNum }桶</td>
+										<td>${ item.serviceNum }</td>
+										<td>${ item.orderPay }元</td>
 										<td>${item.addrName}</td>
 										<td class="am-hide-sm-only">${item.orderStatusName}</td>
 										<td class="am-hide-sm-only">${item.orderExtStatusName}</td>
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
 										<c:if test="${item.orderExtStatus == 0 || item.orderExtStatus == 1 }">
-										<td><button type="button" class="am-btn am-btn-success" id="qianshou_btn"
-											onclick="waterSign(${item.userId},${item.orderId})">签&nbsp;&nbsp;&nbsp;&nbsp;收</button>
-										</td>
+											<td>
+												<button type="button" class="am-btn am-btn-success" id="qianshou_btn"
+												onclick="waterSign(${item.userId},${item.orderId})">签&nbsp;&nbsp;&nbsp;&nbsp;收</button>
+											</td>
 										</c:if>
 										<c:if test="${item.orderExtStatus == 2 }">
 										<td><input type="button" class="am-btn am-btn-default" id="qianshou_btn" value="已签收"/>
