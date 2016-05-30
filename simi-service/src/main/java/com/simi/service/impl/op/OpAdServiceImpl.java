@@ -19,6 +19,7 @@ import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.total.TotalHit;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
@@ -71,6 +72,9 @@ public class OpAdServiceImpl implements OpAdService {
 			
 			vo.setChannelNames(channelNames);
 			
+			String appType = item.getAppType();
+			appType = MeijiaUtil.getAppTypeName(appType);
+			item.setAppType(appType);
 			
 			list.set(i, vo);
 		}
