@@ -400,7 +400,7 @@ public class CompanyStaffController extends BaseController {
 		if (companyId.equals(0L)) {
 			CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
 			searchVo1.setUserId(userId);
-			searchVo1.setIsCreate(1);
+			searchVo1.setIsCreate((short) 1);
 			XcompanyAdmin xCompanyAdmin = null;
 			List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
 			

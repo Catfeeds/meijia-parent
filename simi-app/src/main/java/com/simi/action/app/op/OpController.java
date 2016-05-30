@@ -69,6 +69,7 @@ public class OpController extends BaseController {
 	@RequestMapping(value = "get_ads", method = RequestMethod.GET)
 	public AppResultData<Object> getAds(
 			@RequestParam(value = "channel_id", required = false, defaultValue="1") String channelId,
+			@RequestParam(value = "app_type", required = false, defaultValue="xlcoud") String appType,
 			@RequestParam(value = "t", required = false, defaultValue="0") Long t
 			) {
 
@@ -83,6 +84,7 @@ public class OpController extends BaseController {
 			searchVo.setUpdateTime(t);
 		}
 		
+		searchVo.setAppType(appType);
 		searchVo.setAdType(channelId);
 		List<OpAd> list = opAdService.selectBySearchVo(searchVo);
 		
