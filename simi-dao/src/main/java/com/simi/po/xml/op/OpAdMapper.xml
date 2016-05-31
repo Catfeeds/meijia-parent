@@ -37,6 +37,10 @@
 		<if test="adType != null">
 			and ad_type like CONCAT('%','${adType}','%' )
 		</if>
+		
+		<if test="serviceTypeIds != null">
+			and service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR}
+		</if>
 
 		order by id asc
 	</select>
@@ -59,7 +63,7 @@
 		</if>
 		
 		<if test="serviceTypeIds != null">
-			and serviceTypeIds = #{serviceTypeIds,jdbcType=VARCHAR}
+			and service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR}
 		</if>
 
 		<if test="updateTime != null">
