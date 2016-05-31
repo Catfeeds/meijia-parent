@@ -27,22 +27,22 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
-public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
-    @Autowired
-    private OrderExtRecycleMapper orderExtRecycleMapper;
-    
-    @Autowired
-    private UsersService usersService;
-    
-    @Autowired
-    private UserAddrsService userAddrsService;
-    
-    @Autowired
-    private OrdersService ordersService;
-    
-    @Autowired
-    private PartnerServiceTypeService partnerServiceTypeService;
-    
+public class OrderExtRecycleServiceImpl implements OrderExtRecycleService {
+	@Autowired
+	private OrderExtRecycleMapper orderExtRecycleMapper;
+
+	@Autowired
+	private UsersService usersService;
+
+	@Autowired
+	private UserAddrsService userAddrsService;
+
+	@Autowired
+	private OrdersService ordersService;
+
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
+
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return orderExtRecycleMapper.deleteByPrimaryKey(id);
@@ -75,14 +75,14 @@ public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
 
 	@Override
 	public OrderExtRecycle initOrderExtRecycle() {
-		
+
 		OrderExtRecycle record = new OrderExtRecycle();
 		record.setId(0L);
 		record.setUserId(0L);
 		record.setOrderId(0L);
 		record.setOrderNo("");
-		record.setOrderExtStatus((short)0);
-		record.setRecycleType((short)0);
+		record.setOrderExtStatus((short) 0);
+		record.setRecycleType((short) 0);
 		record.setMobile("");
 		record.setLinkMan("");
 		record.setLinkTel("");
@@ -92,60 +92,59 @@ public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
 
 	@Override
 	public List<OrderExtRecycle> selectByUserId(Long userId) {
-		
+
 		return orderExtRecycleMapper.selectByUserId(userId);
 	}
 
 	@Override
 	public OrderExtRecycleListVo getOrderExtRecycleListVo(OrderExtRecycle item) {
-		
+
 		OrderExtRecycleListVo vo = new OrderExtRecycleListVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-		
+
 		Users users = usersService.selectByPrimaryKey(item.getUserId());
 		vo.setName(users.getName());
-		
-		//vo.setServiceTypeName("绿植设计租摆");
+
+		// vo.setServiceTypeName("绿植设计租摆");
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
-		PartnerServiceType  serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 		vo.setServiceTypeName(serviceType.getName());
-		//用户地址
+		// 用户地址
 		vo.setAddrName("");
 		if (order.getAddrId() > 0L) {
 			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
 			if (userAddr != null) {
 				vo.setAddrName(userAddr.getName() + userAddr.getAddr());
 			}
-			
+
 		}
-		//订单状态
+		// 订单状态
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
-		
-		Long addTime = order.getAddTime()*1000;	
+
+		Long addTime = order.getAddTime() * 1000;
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
-		
+
 		vo.setRecycleTypeName(OrderUtil.getOrderRecycleTypeName(item.getRecycleType()));
-		
+
 		return vo;
 	}
 
 	@Override
 	public OrderExtRecycle selectByOrderId(Long orderId) {
-		
+
 		return orderExtRecycleMapper.selectByOrderId(orderId);
 	}
 
 	@Override
-	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo,
-			int pageSize) {
+	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		List<OrderExtRecycleXcloudVo> listVo = new ArrayList<OrderExtRecycleXcloudVo>();
 		List<OrderExtRecycle> list = orderExtRecycleMapper.selectByListPage(searchVo);
 		OrderExtRecycle item = null;
 		for (int i = 0; i < list.size(); i++) {
-			 item = list.get(i);
-			 OrderExtRecycleXcloudVo vo = this.getXcloudList(item);
-        	 list.set(i, vo);
+			item = list.get(i);
+			OrderExtRecycleXcloudVo vo = this.getXcloudList(item);
+			list.set(i, vo);
 		}
 		PageInfo result = new PageInfo(list);
 		return result;
@@ -154,26 +153,26 @@ public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
 	private OrderExtRecycleXcloudVo getXcloudList(OrderExtRecycle item) {
 		OrderExtRecycleXcloudVo vo = new OrderExtRecycleXcloudVo();
 		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-		
+
 		Users users = usersService.selectByPrimaryKey(item.getUserId());
-		//vo.setName(users.getName());
-		
-		//vo.setServiceTypeName("绿植设计租摆");
+		// vo.setName(users.getName());
+
+		// vo.setServiceTypeName("绿植设计租摆");
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
-		PartnerServiceType  serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 		vo.setServiceTypeName(serviceType.getName());
-		//用户地址
+		// 用户地址
 		vo.setAddrName("");
 		if (order.getAddrId() > 0L) {
 			UserAddrs userAddr = userAddrsService.selectByPrimaryKey(order.getAddrId());
 			vo.setAddrName(userAddr.getName() + userAddr.getAddr());
 		}
-		//订单状态
-		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
-		
-		Long addTime = order.getAddTime()*1000;	
+		// 订单状态
+		vo.setOrderStatusName(OrderUtil.getOrderStausNameRecycle(order.getOrderStatus(), vo.getOrderExtStatus()));
+
+		Long addTime = order.getAddTime() * 1000;
 		vo.setAddTimeStr(TimeStampUtil.timeStampToDateStr(addTime));
-		
+
 		vo.setOrderExtStatusName("");
 		if (item.getOrderExtStatus() == 0) {
 			vo.setOrderExtStatusName("运营人员处理中");
@@ -181,11 +180,11 @@ public class OrderExtRecycleServiceImpl implements OrderExtRecycleService{
 		if (item.getOrderExtStatus() == 1) {
 			vo.setOrderExtStatusName("已转派服务商");
 		}
-	
+
 		vo.setRecycleTypeName(OrderUtil.getOrderRecycleTypeName(item.getRecycleType()));
-		
+
 		return vo;
-	
+
 	}
 
 }
