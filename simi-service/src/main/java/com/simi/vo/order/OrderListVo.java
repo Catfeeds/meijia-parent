@@ -7,7 +7,7 @@ public class OrderListVo {
     private Long orderId;
     
     private String orderNo;
-    
+ 
     private Long partnerUserId;
     
     private String partnerUserName;
@@ -30,6 +30,8 @@ public class OrderListVo {
     private Long servicePriceId;
     
     private String servicePriceName;
+    
+    private String serviceTypeImg;
     
     private Short isAddr;
     
@@ -213,5 +215,13 @@ public class OrderListVo {
 
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
+	}
+
+	public String getServiceTypeImg() {
+		return serviceTypeImg;
+	}
+
+	public void setServiceTypeImg(String serviceTypeImg) {
+		this.serviceTypeImg = serviceTypeImg;
 	}
 }

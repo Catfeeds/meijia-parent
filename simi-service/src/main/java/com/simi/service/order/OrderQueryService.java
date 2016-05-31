@@ -35,4 +35,6 @@ public interface OrderQueryService {
 	List<Orders> selectByUserIdsListPageList(List<Long> partnerUserIdList,
 			int pageNo, int pageSize);
 
+	String getServiceTypeImg(Orders order);
+
 }

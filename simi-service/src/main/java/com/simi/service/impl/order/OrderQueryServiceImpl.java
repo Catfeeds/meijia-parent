@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.dict.DictService;
+import com.simi.service.op.AppToolsService;
+import com.simi.service.op.OpAdService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -29,15 +32,19 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.OrderUtil;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderDetailVo;
 import com.simi.vo.order.OrderListVo;
 import com.simi.vo.order.OrderViewVo;
+import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.common.Constants;
 import com.simi.po.dao.order.OrdersMapper;
 import com.simi.po.model.dict.DictCoupons;
+import com.simi.po.model.op.AppTools;
+import com.simi.po.model.op.OpAd;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
@@ -87,6 +94,13 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	
 	@Autowired
 	private OrderExtWaterService orderExtWaterService;
+	
+	@Autowired
+	private AppToolsService appToolsService;
+	
+	@Autowired
+	private OpAdService opAdService;
+	
 	/**
 	 * 根据订单主键进行查询
 	 * @param id  订单id
@@ -308,8 +322,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setPartnerUserHeadImg(Constants.DEFAULT_HEAD_IMG);
 		if (order.getPartnerUserId() > 0L) {
 			Users partnerUser = usersService.selectByPrimaryKey(order.getPartnerUserId());
-			
-			
+
 			vo.setPartnerUserId(partnerUser.getId());
 			vo.setPartnerUserName(partnerUser.getName());
 			
@@ -332,6 +345,9 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
 			vo.setServiceTypeName(serviceType.getName());
 		}
+		
+		//订单图标
+		vo.setServiceTypeImg(getServiceTypeImg(order));
 		
 		//服务报价ID和名称
 		Long servicePriceId = 0L;
@@ -567,6 +583,68 @@ public class OrderQueryServiceImpl implements OrderQueryService {
          List<Orders> list = ordersMapper.selectIdsByListPage(partnerUserIdList);
          return list;
  
-}	
+	}
+	
+	@Override
+	public String getServiceTypeImg(Orders order) {
+		
+		String imgUrl = "";
+		
+
+		Long serviceTypeId = order.getServiceTypeId();
+		
+		//查找应用中心
+		String extType = "";
+		switch(serviceTypeId.intValue()) {
+			//送水
+			case 239:
+				extType = "water";
+				break;
+			
+			//废旧物品回收
+			case 246:
+				extType = "recycle";
+				break;
+				
+			//车辆服务
+			case 259:
+				extType = "expy";
+				break;
+			//保洁
+			case 204:
+				extType = "clean";
+				break;
+		}
+		
+		if (!StringUtil.isEmpty(extType)) {
+			AppTools appTools = null;
+			ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+			searchVo.setAction(extType);
+			
+			List<AppTools> rs = appToolsService.selectBySearchVo(searchVo);
+			if (!rs.isEmpty()) appTools = rs.get(0);
+			if (appTools != null) {
+				imgUrl = appTools.getLogo();
+			}
+		}
+		
+		//查找op_ads
+		if (StringUtil.isEmpty(imgUrl)) {
+			AdSearchVo searchVo = new AdSearchVo();
+			searchVo.setAdType(serviceTypeId.toString() + ",");
+			
+			List<OpAd> list = opAdService.selectBySearchVo(searchVo);
+			if (!list.isEmpty()) {
+				OpAd opAd = list.get(0);
+				imgUrl = opAd.getImgUrl();
+			}
+		}
+		
+		if (StringUtil.isEmpty(imgUrl)) {
+			imgUrl = "http://img.51xingzheng.cn/5d553848efcbe873128e49beb6b9c840";
+		}
+		
+		return imgUrl;
+	}
 
 }
