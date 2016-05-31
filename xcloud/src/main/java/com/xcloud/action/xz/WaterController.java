@@ -122,9 +122,6 @@ public class WaterController extends BaseController {
 			waterComVo.setImgUrl(detail.getImgUrl());
 			waterComVo.setServicePriceId(serviceType.getId());
 			waterComVo.setName(serviceType.getName());
-			// waterComVo.setNamePrice(serviceType.getName() + "(原价:"
-			// + detail.getPrice().toString() + "元,折扣价："
-			// + detail.getDisPrice().toString() + "元)");
 			waterComVos.add(waterComVo);
 
 		}
@@ -173,13 +170,13 @@ public class WaterController extends BaseController {
 		
 		searchVo.setUserId(userId);
 		
-//		List<Integer> orderStatusIn = new ArrayList<Integer>();
-//		orderStatusIn.add(1);
-//		orderStatusIn.add(2);
-//		orderStatusIn.add(3);
-//		orderStatusIn.add(7);
-//		orderStatusIn.add(8);
-//		searchVo.setOrderStatusIn(orderStatusIn);
+		List<Integer> orderStatusIn = new ArrayList<Integer>();
+		orderStatusIn.add(1);
+		orderStatusIn.add(2);
+		orderStatusIn.add(3);
+		orderStatusIn.add(7);
+		orderStatusIn.add(8);
+		searchVo.setOrderStatusIn(orderStatusIn);
 		
 		searchVo.setServiceTypeId(serviceTypeId);
 		

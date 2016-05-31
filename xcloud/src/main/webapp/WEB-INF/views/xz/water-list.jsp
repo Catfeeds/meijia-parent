@@ -62,7 +62,7 @@
 									<th class="table-title">金额</th>
 									<th class="table-title">地址</th>
 									<th >订单状态</th>
-									<th >是否签收</th>
+									
 									<th class="table-set">下单时间</th>
 									<th>操作</th>
 								</tr>
@@ -76,7 +76,7 @@
 										<td>${ item.orderPay }元</td>
 										<td>${item.addrName}</td>
 										<td class="am-hide-sm-only">${item.orderStatusName}</td>
-										<td class="am-hide-sm-only">${item.orderExtStatusName}</td>
+										
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
 										<c:if test="${item.orderExtStatus == 0 || item.orderExtStatus == 1 }">
 											<td>
@@ -84,10 +84,7 @@
 												onclick="waterSign(${item.userId},${item.orderId})">签&nbsp;&nbsp;&nbsp;&nbsp;收</button>
 											</td>
 										</c:if>
-										<c:if test="${item.orderExtStatus == 2 }">
-										<td><input type="button" class="am-btn am-btn-default" id="qianshou_btn" value="已签收"/>
-										</td>
-										</c:if>
+										
 									</tr>
 								</c:forEach>
 							</tbody>
