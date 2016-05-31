@@ -39,6 +39,36 @@ public class OrderUtil {
 		return statusName;
 	}
 	
+	public static String getOrderStausNameWater(Short status, Short orderExtStatus) {
+		String statusName = "";
+		
+		switch (status) {
+			case 0:
+				statusName = "已取消";
+				break;
+			case 1:
+				statusName = "待支付";
+				break;
+			case 2:	
+			case 3:
+			case 7:
+				statusName = "处理中";
+				break;
+			case 8:
+				statusName = "已完成";
+				break;	
+			case 9:
+				statusName = "已关闭";
+				break;
+			default:
+				statusName = "";
+		}
+		
+		if (orderExtStatus == 2) statusName = "已签收";
+		
+		return statusName;
+	}
+	
 	public static String getOrderStausMsg(Short status) {
 		String statusName = "";
 		switch (status) {

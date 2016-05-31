@@ -185,7 +185,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		}
 		
 		vo.setServiceNum(item.getServiceNum());
-		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
+		vo.setOrderStatusName(OrderUtil.getOrderStausNameWater(order.getOrderStatus(), vo.getOrderExtStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 		
 		vo.setIsDone(item.getIsDone());
