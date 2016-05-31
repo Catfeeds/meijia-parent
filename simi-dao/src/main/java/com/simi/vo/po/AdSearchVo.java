@@ -8,6 +8,8 @@ public class AdSearchVo {
 	
 	private String adType;
 	
+	private String serviceTypeIds;
+	
 	private Long updateTime;
 
 	public String getAdType() {
@@ -40,6 +42,14 @@ public class AdSearchVo {
 
 	public void setAppType(String appType) {
 		this.appType = appType;
+	}
+
+	public String getServiceTypeIds() {
+		return serviceTypeIds;
+	}
+
+	public void setServiceTypeIds(String serviceTypeIds) {
+		this.serviceTypeIds = serviceTypeIds;
 	}
 	
 

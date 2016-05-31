@@ -57,6 +57,10 @@
 		<if test="adType != null">
 			and ad_type like CONCAT('%','${adType}','%' )
 		</if>
+		
+		<if test="serviceTypeIds != null">
+			and serviceTypeIds = #{serviceTypeIds,jdbcType=VARCHAR}
+		</if>
 
 		<if test="updateTime != null">
 			<![CDATA[ and update_time >  #{updateTime,jdbcType=NUMERIC} ]]>
