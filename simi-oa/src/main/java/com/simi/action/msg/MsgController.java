@@ -265,7 +265,7 @@ public class MsgController extends AdminController {
     				Users uu = usersService.selectByMobile(adminAccount.getMobile());
     				
     				//异步推送 给 测试 人员（运营部），消息
-    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content);
+    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content, msgVo.getCategory(), msgVo.getAction(),  msgVo.getParams(), msgVo.getGotoUrl());
     			}
 			}
     			
@@ -318,7 +318,7 @@ public class MsgController extends AdminController {
     		
     		//异步推送
 			for (Users users : userList) {
-				noticeAsyncService.pushMsgToDevice(users.getId(), title,content);
+				noticeAsyncService.pushMsgToDevice(users.getId(), title,content, msgVo.getCategory(), msgVo.getAction(),  msgVo.getParams(), msgVo.getGotoUrl());
 			}	
 			
 			
@@ -331,7 +331,7 @@ public class MsgController extends AdminController {
 	    	 		if (!StringUtil.isEmpty(adminAccount.getMobile())) {
 	    				Users uu = usersService.selectByMobile(adminAccount.getMobile());
 	    				//异步推送 给 测试 人员（运营部），消息
-	    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content);
+	    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content, msgVo.getCategory(), msgVo.getAction(),  msgVo.getParams(), msgVo.getGotoUrl());
 	    			}
 				}
     		}
