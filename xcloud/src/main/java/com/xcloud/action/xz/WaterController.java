@@ -11,14 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.StringUtil;
+import com.simi.po.model.op.AppTools;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
+import com.simi.service.op.AppToolsService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
@@ -28,6 +32,7 @@ import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.order.OrdersWaterAddOaVo;
@@ -69,6 +74,9 @@ public class WaterController extends BaseController {
 
 	@Autowired
 	private OrderQueryService orderQueryService;
+
+	@Autowired
+	private AppToolsService appToolsService;	
 
 	// 一键送水
 	@AuthPassport
@@ -147,6 +155,21 @@ public class WaterController extends BaseController {
 		model.addAttribute("userAddrVo", voList);
 
 		model.addAttribute("contentModel", vo);
+		
+		//二维码
+		String qrCode = "";
+		ApptoolsSearchVo searchVo1 = new ApptoolsSearchVo();
+		searchVo1.setAction("water");
+		List<AppTools> apptools = appToolsService.selectBySearchVo(searchVo1);
+		if (!apptools.isEmpty()) {
+			AppTools a = apptools.get(0);
+			qrCode = a.getQrCode();
+		}
+		
+		if (StringUtil.isEmpty(qrCode)) qrCode = "/assets/img/erweima.png";
+		model.addAttribute("qrCode", qrCode);
+		
+		
 		return "xz/water-form";
 	}
 

@@ -12,8 +12,7 @@
 <!--css for this page-->
 
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
-	rel="stylesheet">
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
 
 </head>
 
@@ -34,32 +33,31 @@
 				<div class="am-fl am-cf">
 					<strong class="am-text-primary am-text-lg">废品回收列表</strong> / <small>recycle</small>
 				</div>
-			</div>
-			<hr>
-			<div class="am-g">
-				<div class="am-u-sm-12 am-u-md-6">
-					<div class="am-btn-toolbar">
-						<div class="am-btn-group am-btn-group-sm">
-							<button type="button" id="btn-express-add" class="am-btn am-btn-default am-radius">
+
+				<div class="am-u-sm-12 am-u-md-3 am-fr">
+					<div class="am-btn-toolbar am-fr">
+						<div class="am-btn-group am-btn-group-sm ">
+							<button type="button" id="btn-recycle-add" class="am-btn am-btn-warning am-radius">
 								<span class="am-icon-plus"></span> 一键下单
-							</button>							
+							</button>
 						</div>
 					</div>
 				</div>
-
 			</div>
-			<br>
-				<div class="am-g">
+			<hr>
+
+			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
 								<tr>
-								    <th class="table-date am-hide-sm-only">服务大类名称</th>
+									<th class="table-date am-hide-sm-only">服务大类名称</th>
 									<th class="table-date am-hide-sm-only">回收类型</th>
 									<th class="table-title">地址</th>
-									<th >订单状态</th>
-									<th >处理情况</th>
+									<th>订单状态</th>
+									<th>联系人</th>
+									<th>联系方式</th>
 									<th class="table-set">下单时间</th>
 								</tr>
 							</thead>
@@ -69,8 +67,9 @@
 										<td>${item.serviceTypeName}</td>
 										<td>${item.recycleTypeName}</td>
 										<td>${item.addrName}</td>
+										<td>${item.linkMan}</td>
+										<td>${item.linkTel}</td>
 										<td class="am-hide-sm-only">${item.orderStatusName}</td>
-										<td class="am-hide-sm-only">${item.orderExtStatusName}</td>
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
 									</tr>
 								</c:forEach>
@@ -85,8 +84,8 @@
 			</div>
 		</div>
 
-		</div>
-		<!-- content end -->
+	</div>
+	<!-- content end -->
 
 	</div>
 

@@ -39,7 +39,7 @@
 						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
 					<div class="am-panel-bd">可以一键扫码叫水，快来试试吧</div>
-					<div class="am-panel-bd"><img src="<c:url value='/assets/img/erweima.png'/>" width="250" height="250" /></div>
+					<div class="am-panel-bd"><img src="<c:url value='${qrCode }'/>" width="250" height="250" /></div>
 					</section>
 				</div>
 
