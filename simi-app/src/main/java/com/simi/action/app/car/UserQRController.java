@@ -171,7 +171,7 @@ public class UserQRController extends BaseController {
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "expy", serviceType.getName(), remarks, "");
 		
 		//推送信息
-		noticeAppAsyncService.pushMsgToDevice(userId, serviceType.getName(), remarks);		
+		noticeAppAsyncService.pushMsgToDevice(userId, serviceType.getName(), remarks, "app", "order", "", "");		
 		
 		
 		return result;

@@ -229,7 +229,7 @@ public class UserCarController extends BaseController {
 		if (u.getRestMoney().compareTo(orderPay) < 0) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("余额不足");
-			noticeAppAsyncService.pushMsgToDevice(userId, "速通宝扣款", "余额不足");
+			noticeAppAsyncService.pushMsgToDevice(userId, "速通宝扣款", "余额不足", "app", "wallet", "", "");
 			return result;
 		}
 		// 扣除用户余额

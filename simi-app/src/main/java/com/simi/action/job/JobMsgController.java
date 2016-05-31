@@ -114,7 +114,7 @@ public class JobMsgController extends BaseController {
 		    				Users uu = usersService.selectByMobile(adminAccount.getMobile());
 		    				
 		    				//异步推送 给 测试 人员（运营部），消息
-		    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content);
+		    				noticeAsyncService.pushMsgToDevice(uu.getId(),title,content, msg.getCategory(), msg.getAction(), msg.getParams(), msg.getGotoUrl());
 		    			}
 					}
 		    			
@@ -164,7 +164,7 @@ public class JobMsgController extends BaseController {
 		    		
 		    		//异步推送
 					for (Users users : userList) {
-						noticeAsyncService.pushMsgToDevice(users.getId(), title,content);
+						noticeAsyncService.pushMsgToDevice(users.getId(), title,content, msg.getCategory(), msg.getAction(), msg.getParams(), msg.getGotoUrl());
 					}	
 					
 		    	}

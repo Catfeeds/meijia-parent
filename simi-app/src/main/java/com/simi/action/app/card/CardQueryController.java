@@ -432,12 +432,21 @@ public class CardQueryController extends BaseController {
 
 	@RequestMapping(value = "push-msg", method = RequestMethod.GET)
 	public AppResultData<Object> pushMsg(
-			@RequestParam(value = "client_id", required = false, defaultValue = "b10510a6a8d000fb024af47271f8a49f") String clientId,
-
-			@RequestParam(value = "device_type", required = false, defaultValue = "ios") String deviceType) throws Exception {
+			@RequestParam("user_id") Long userId,
+			@RequestParam("category") String category,
+			@RequestParam(value = "action", required = false, defaultValue = "") String action,
+			@RequestParam(value = "params", required = false, defaultValue = "") String gparams,
+			@RequestParam(value = "goto_url", required = false, defaultValue = "") String gotoUrl) throws Exception {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
+		
+		// 发送推送消息（接受者）
+		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
+		
+		if (userPushBind == null) return result;
+		
+		String clientId = userPushBind.getClientId();
+		String deviceType = userPushBind.getDeviceType();
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("cid", clientId);
 
@@ -455,6 +464,12 @@ public class CardQueryController extends BaseController {
 		tranParams.put("re", "0");
 		tranParams.put("rt", "新消息");
 		tranParams.put("rc", "你在" + timeStr1 + "有一条新的消息");
+		
+		//跳转信息
+		tranParams.put("ca", category);
+		tranParams.put("aj", action);
+		tranParams.put("pa", gparams);
+		tranParams.put("go", gotoUrl);
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 

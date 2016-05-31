@@ -212,7 +212,7 @@ public class OrderPartnerController extends BaseController {
 		orderPricesService.insert(orderPrice);
 		
 		//推送消息到app
-		noticeAppAsyncService.pushMsgToDevice(userId, "新的订单", serviceTypeName + "" + servicePriceName);
+		noticeAppAsyncService.pushMsgToDevice(userId, "新的订单", serviceTypeName + "" + servicePriceName, "app", "order_detail", orderId.toString(), "");
 
 		return result;
 	}
@@ -254,7 +254,7 @@ public class OrderPartnerController extends BaseController {
 		if (remarks.length() > 20) {
 			remarks = remarks.substring(0, 20) ;
 		}
-		noticeAppAsyncService.pushMsgToDevice(userId, "订单进度更新", "您的订单有了新的进展:" + remarks + "...");
+		noticeAppAsyncService.pushMsgToDevice(userId, "订单进度更新", "您的订单有了新的进展:" + remarks + "...", "app", "order_detail", orderId.toString(), "");
 		
 		return result;
 	}	
