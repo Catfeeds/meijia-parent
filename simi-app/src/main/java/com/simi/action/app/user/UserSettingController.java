@@ -100,11 +100,11 @@ public class UserSettingController extends BaseController {
 			return v;
 		}
 		
-		if (StringUtil.isEmpty(subscribeTags)) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("标签设置不能为空.");
-			return result;
-		}
+//		if (StringUtil.isEmpty(subscribeTags)) {
+//			result.setStatus(Constants.ERROR_999);
+//			result.setMsg("标签设置不能为空.");
+//			return result;
+//		}
 		
 		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
 		searchVo.setCompanyId(0L);
