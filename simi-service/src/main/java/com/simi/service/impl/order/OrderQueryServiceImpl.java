@@ -631,8 +631,8 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		//查找op_ads
 		if (StringUtil.isEmpty(imgUrl)) {
 			AdSearchVo searchVo = new AdSearchVo();
-			searchVo.setAdType(serviceTypeId.toString() + ",");
-			
+			searchVo.setAdType("99,");
+			searchVo.setServiceTypeIds("1");
 			List<OpAd> list = opAdService.selectBySearchVo(searchVo);
 			if (!list.isEmpty()) {
 				OpAd opAd = list.get(0);
