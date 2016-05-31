@@ -607,7 +607,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 				break;
 				
 			//车辆服务
-			case 259:
+			case 257:
 				extType = "expy";
 				break;
 			//保洁
