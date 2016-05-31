@@ -85,7 +85,7 @@
 							<td>${ item.no}</td>
 							<td>${ item.appType}</td>
 							<td>${ item.title}</td>
-							<td><img src="${ item.imgUrl }" width="300" height="300" /></td>
+							<td><img src="${ item.imgUrl }" style="max-width:300px:max-height:300px;" /></td>
 							<td>${ item.channelNames}</td>
 							<td>${ item.gotoType}</td>
 							<td>${ item.action}</td>
