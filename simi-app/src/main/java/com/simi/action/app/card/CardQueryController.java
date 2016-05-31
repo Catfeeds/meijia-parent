@@ -452,7 +452,7 @@ public class CardQueryController extends BaseController {
 
 		HashMap<String, String> tranParams = new HashMap<String, String>();
 
-		Long time1 = TimeStampUtil.getNowSecond();
+		Long time1 = TimeStampUtil.getNow();
 
 		String timeStr1 = TimeStampUtil.timeStampToDateStr(time1, "MM-dd HH:mm");
 
