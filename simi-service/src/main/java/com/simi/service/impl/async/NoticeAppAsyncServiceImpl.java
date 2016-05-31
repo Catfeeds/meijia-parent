@@ -44,7 +44,8 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 	// 发送推送消息
 	@Async
 	@Override
-	public Future<Boolean> pushMsgToDevice(Long userId, String msgTitle, String msgContent) {
+	public Future<Boolean> pushMsgToDevice(Long userId, String msgTitle, 
+			String msgContent, String category, String action, String params, String gotoUrl) {
 
 		// 发送推送消息（接受者）
 		UserPushBind userPushBind = userPushBindService.selectByUserId(userId);
@@ -64,6 +65,12 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 		tranParams.put("re", "0");
 		tranParams.put("rt", msgTitle);
 		tranParams.put("rc", msgContent);
+		//跳转信息
+		tranParams.put("ca", category);
+		tranParams.put("aj", action);
+		tranParams.put("pa", params);
+		tranParams.put("go", gotoUrl);
+		
 		
 		String clientId = userPushBind.getClientId();
 		String deviceType = userPushBind.getDeviceType();

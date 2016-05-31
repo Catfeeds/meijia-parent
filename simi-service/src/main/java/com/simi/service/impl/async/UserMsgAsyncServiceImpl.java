@@ -354,7 +354,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 			userMsgService.insert(passRecord);
 
 			// 发送推送消息
-			noticeAppAsyncService.pushMsgToDevice(item.getPassUserId(), "请假审批", msgContent);
+			noticeAppAsyncService.pushMsgToDevice(item.getPassUserId(), "请假审批", msgContent, "app", "leave_pass", leaveId.toString(), "");
 		}
 
 		return new AsyncResult<Boolean>(true);
@@ -431,7 +431,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 
 		// 发送推送消息（接受者）
-		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", fromUser.getName() + "请求加你为好友");
+		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", fromUser.getName() + "请求加你为好友", "app", "friend_req", "", "");
 		
 		return new AsyncResult<Boolean>(true);
 	}
@@ -483,7 +483,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		
 		// 发送推送消息（发送者）
-		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", summary);
+		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", summary, "app", "friend_req", "", "");
 				
 		
 		// 2. 往接收者存储消息

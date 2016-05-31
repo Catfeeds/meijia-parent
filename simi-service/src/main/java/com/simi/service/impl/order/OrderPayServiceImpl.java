@@ -228,7 +228,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");
 		
 		//推送消息到app
-		noticeAppAsyncService.pushMsgToDevice(userId, title, summary);
+		noticeAppAsyncService.pushMsgToDevice(userId, title, summary, "app", "order_detail", orderId.toString(), "");
 		
 	}
 	
