@@ -1,5 +1,7 @@
 package com.simi.vo;
 
+import java.util.List;
+
 public class OrderSearchVo {
 	
 	private Long partnerUserId;
@@ -19,6 +21,8 @@ public class OrderSearchVo {
 	private Short orderFrom;
 	
 	private Short orderStatus;
+	
+	private List<Integer> orderStatusIn;
 	
 	private String action;
 	
@@ -111,6 +115,14 @@ public class OrderSearchVo {
 
 	public void setNotServiceTypeId(Long notServiceTypeId) {
 		this.notServiceTypeId = notServiceTypeId;
+	}
+
+	public List<Integer> getOrderStatusIn() {
+		return orderStatusIn;
+	}
+
+	public void setOrderStatusIn(List<Integer> orderStatusIn) {
+		this.orderStatusIn = orderStatusIn;
 	}
 
 }

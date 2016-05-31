@@ -54,8 +54,16 @@
 			and order_no like CONCAT('%','${orderNo}','%' )
 		</if>
 		
-		<if test="orderStatusIN != null">
-			and order_id in (select order_id from orders where user_id = #{userId,jdbcType=NUMERIC} and service_type_id = #{serviceTypeId,jdbcType=NUMERIC})
+		<if test="orderStatusIn != null">
+		    and order_id in (
+		    	select order_id from orders where 
+		    	user_id = #{userId,jdbcType=NUMERIC} and
+		    	service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+		    	and order_status in 
+				<foreach item="item" index="index" collection="orderStatusIn" open="(" separator="," close=")">
+					${item}
+				</foreach>
+		    )
 		</if>
 		
 		order by add_time desc
