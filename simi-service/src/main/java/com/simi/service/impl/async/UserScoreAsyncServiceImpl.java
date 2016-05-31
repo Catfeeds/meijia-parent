@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import com.meijia.utils.TimeStampUtil;
+import com.simi.common.Constants;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
@@ -101,7 +102,7 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo);
 		if (rs.size() > 300) return new AsyncResult<Boolean>(true);
 		
-		Integer score = 300;
+		Integer score = Constants.SCORE_COMPANY_CREATE;
 		
 		return sendScore(userId, score, "company_reg", companyId.toString(), "创建企业/团队");
 		
@@ -134,7 +135,7 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		} else {
 			if (rs.size() > 10) return new AsyncResult<Boolean>(true);
 		}
-		Integer score = 10;
+		Integer score = Constants.SCORE_CARD_CREATE;
 		
 		String cardTypeName = CardUtil.getCardTypeName(cardType);
 		String action = CardUtil.getCardAction(cardType);

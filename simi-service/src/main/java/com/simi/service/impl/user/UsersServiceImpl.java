@@ -189,7 +189,7 @@ public class UsersServiceImpl implements UsersService {
 			userMsgAsyncService.newUserMsg(u.getId());
 			
 			//新用户注册赠送积分
-			userScoreAsyncService.sendScore(u.getId(), 100, "new_user", u.getId().toString(), "新用户注册");
+			userScoreAsyncService.sendScore(u.getId(), Constants.SCORE_USER_REG, "new_user", u.getId().toString(), "新用户注册");
 			
 		}
 		return u;

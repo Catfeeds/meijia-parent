@@ -156,5 +156,13 @@ public class Constants {
 	public static Short OA_PUSH_USER_TYPE_2 = 2;	//服务商
 	public static Short OA_PUSH_USER_TYPE_3 = 3;	//全部用户
 	
+	//积分和经验值返回定义
+	public static int SCORE_USER_REG = 100;			//用户注册
+	public static int SCORE_DAY_SIGN = 30;			//签到
+	public static int SCORE_CARD_CREATE = 10;		//创建卡片
+	public static int SCORE_LEAVE = 1;				//请假申请
+	public static int SCORE_CHECKIN = 1;			//云考勤
+	public static int SCORE_COMPANY_CREATE = 300;	//创建公司/团队
+	
 	
 }
