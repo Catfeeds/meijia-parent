@@ -41,9 +41,6 @@
 							<button type="button" id="btn-water-add" class="am-btn am-btn-warning am-radius">
 								<span class="am-icon-plus"></span> 一键下单
 							</button>
-
-							
-
 						</div>
 					</div>
 				</div>
