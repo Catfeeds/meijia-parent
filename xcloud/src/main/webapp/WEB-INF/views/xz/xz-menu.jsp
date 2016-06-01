@@ -82,11 +82,9 @@
 				<span class="am-icon-university"></span> 会议室管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
 		</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-meeting">
-				<li><a href="/xcloud/xz/meeting/list" class="am-cf"> <span class="am-icon-bell"></span> 会议一览 <!-- <span
-						class="am-icon-star am-fr am-margin-right admin-icon-yellow"
-					></span> -->
+				<li><a href="/xcloud/xz/meeting/list" class="am-cf"> <span class="am-icon-bell"></span> 会议一览
 				</a></li>
-				<li><a href="/xcloud/xz/meeting/setting/"> <span class="am-icon-calendar"></span> 会议设置
+				<li><a href="/xcloud/xz/meeting/room-list/"> <span class="am-icon-calendar"></span> 会议室设置
 				</a></li>
 				<li><a href="/xcloud/xz/meeting/service"> <span class="am-icon-star"></span> 会展服务商
 				</a></li>
