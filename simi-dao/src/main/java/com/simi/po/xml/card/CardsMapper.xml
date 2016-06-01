@@ -131,7 +131,9 @@
 			select
 			<include refid="Base_Column_List" />
 			from cards
-			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			where user_id in (select user_id from user_ref where 
+			ref_id = #{userId,jdbcType=NUMERIC} 
+			<![CDATA[ and ref_type = 'sec') ]]>
 			and set_sec_do = 1
 
 			<if test="cardType != null">
@@ -203,7 +205,9 @@
 			select
 			<include refid="Base_Column_List" />
 			from cards
-			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			where user_id in (select user_id from user_ref where 
+			ref_id = #{userId,jdbcType=NUMERIC} 
+			<![CDATA[ and ref_type = 'sec') ]]>
 			and set_sec_do = 1
 			<if test="cardType != null">
 				and card_type = #{cardType,jdbcType=NUMERIC}
@@ -287,7 +291,10 @@
 			select
 			<include refid="Base_Column_List" />
 			from cards
-			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			where user_id in (select user_id from user_ref where 
+			ref_id = #{userId,jdbcType=NUMERIC} 
+			<![CDATA[ and ref_type = 'sec') ]]>
+			
 			and set_sec_do = 1
 			<if test="startTime != null">
 					<![CDATA[	and service_time >= ${startTime} ]]>
@@ -328,7 +335,9 @@
 			select
 			<include refid="Base_Column_List" />
 			from cards
-			where user_id in (select user_id from user_ref_sec where sec_id = #{userId,jdbcType=NUMERIC})
+			where user_id in (select user_id from user_ref where 
+			ref_id = #{userId,jdbcType=NUMERIC} 
+			<![CDATA[ and ref_type = 'sec') ]]>
 			and set_sec_do = 1
 				<![CDATA[	and service_time > unix_timestamp(now()) ]]>
 			and set_remind > 0
