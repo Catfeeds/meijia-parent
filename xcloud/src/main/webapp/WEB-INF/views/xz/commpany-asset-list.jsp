@@ -10,8 +10,7 @@
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
-<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
-	rel="stylesheet">
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
 
 </head>
 
@@ -30,69 +29,74 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">库存管理列表</strong>
+					<strong class="am-text-primary am-text-lg">资产一览</strong>
 				</div>
-			</div>
-			<hr>
-			
-			
-			<div class="am-g">
-				<div class="am-u-sm-12 am-u-md-6">
-					<div class="am-btn-toolbar">
-						<div class="am-btn-group am-btn-group-sm">
-							<button type="button" id="btn-comm-asset-add" class="am-btn am-btn-default am-radius">
+
+				<div class="am-u-sm-12 am-u-md-3 am-fr">
+					<div class="am-btn-toolbar am-fr">
+						<div class="am-btn-group am-btn-group-sm ">
+							<button type="button" id="btn-comm-asset-add" class="am-btn am-btn-warning am-radius">
 								<span class="am-icon-plus"></span> 入库登记
 							</button>
 						</div>
 					</div>
 				</div>
+			</div>
+			<hr>
 
-				<div class="am-u-sm-12 am-u-md-3">
+
+			<div class="am-g">
+
+				<div class="am-u-sm-12">
 					<!-- <form class="am-form" id="search-form"> -->
-					 <form:form modelAttribute="searchVoModel" action="commpany_asset_list" method="GET">
-						<div class="am-input-group am-input-group-sm">
-							<input type="text" name="name" 
-								   class="am-form-field" placeholder="资产名称" maxLength="18" > 
-								
-								<span class="am-input-group-btn">
+					<form:form modelAttribute="searchVoModel" action="commpany_asset_list" method="GET" class="am-form-inline am-form-horizontal">
+						<div class="am-form-group ">
+							<form:select path="assetTypeId" class="am-form-field">
+								<form:option value="">全部类别</form:option>
+								<form:options items="${assetTypes}" itemValue="id" itemLabel="name" />
+							</form:select>
+						</div>
+						<div class="am-form-group">
+							<div class="am-input-group am-input-group-sm">
+								<input type="text" name="name" class="am-form-field" placeholder="资产名称" maxLength="18"> <span
+									class="am-input-group-btn">
 									<button class="am-btn am-btn-default" type="submit">搜索</button>
 								</span>
+							</div>
 						</div>
 					</form:form>
 				</div>
 			</div>
-			
-			
+
+
 			<br>
-				<div class="am-g">
+			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
 								<tr>
 									<th class="table-title">资产名称</th>
+									<th class="table-title">类别</th>
 									<th class="table-title">编号</th>
 									<th class="table-title">数量</th>
 									<th class="table-title">规格/单位</th>
 									<th class="table-title">单价</th>
 									<th class="table-title">添加时间</th>
-									<th >操作</th>
+									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${contentModel.list}" var="item">
 									<tr>
 										<td>${item.name}</td>
+										<td>${item.assetTypeName}</td>
 										<td>${item.seq }</td>
 										<td>${item.total}</td>
 										<td>${item.unit }</td>
 										<td>${item.price}</td>
 										<td>${item.addTimeStr }</td>
-										<td>
-											<button type="button" class="am-btn am-btn-success" 
-											
-											onclick="getAssetDetail(${item.assetId},'${item.name }')">查看详情</button>
-										</td>
+										<td><a href="/xcloud/xz/assets/commpany_asset_form?id=${item.id }" class="am-icon-edit" title="编辑"></a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -106,7 +110,7 @@
 			</div>
 		</div>
 
-		</div>
+	</div>
 
 	</div>
 

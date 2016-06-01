@@ -42,7 +42,7 @@
 						class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
 					<div class="am-panel-bd">可以用App扫码加入快递，快去试试吧</div>
-					<div class="am-panel-bd"><img src="<c:url value='/assets/img/erweima.png'/>" width="250" height="250" /></div>
+					<div class="am-panel-bd"><img src="<c:url value='${qrCode }'/>" width="250" height="250" /></div>
 					</section>
 				</div>
 
@@ -58,7 +58,7 @@
 							<label class="am-u-sm-3 am-form-label">领用物品:</label>
 							<div class="am-u-sm-9">
 								
-								<select data-am-selected="{btnWidth: '80%', btnSize: 'lg', btnStyle: 'success'}" 
+								<select data-am-selected="{btnWidth: '100%', btnSize: 'lg', btnStyle: 'success'}" 
 										required	id="asset-maxchecked">
 								  <c:forEach items="${contentModel.companList }" var="item">
 								  	<option value="${item.assetId }"
@@ -74,34 +74,34 @@
 					 	
 					 	
 					 	<div class="am-form-group">
-							<label  class="am-u-sm-3 am-form-label">数量:</label>
+							<label  class="am-u-sm-3 am-form-label">数量<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="assetNum"  type="text"
 									class="am-form-field am-radius js-pattern-pinteger"
 									maxLength="32" required="required"/>
-								<small>*必填项</small>	
+								<small></small>	
 							</div>
 						</div>
 					 	
 					 	
 					 	
 						<div class="am-form-group">
-							<label class="am-u-sm-3 am-form-label">姓名:</label>
+							<label class="am-u-sm-3 am-form-label">姓名<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="name"
 									class="form-control"
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								<small></small>
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="mobile" type="text"
 									class="am-form-field am-radius js-pattern-mobile"
 									maxLength="11" required="required" />
-								<small>*必填项</small>
+								<small></small>
 							</div>
 						</div>
 
@@ -110,8 +110,8 @@
 							<div class="am-u-sm-9">
 								<form:input path="purpose"
 									class="form-control"
-									maxLength="200" required="required" />
-								<small>*必填项</small>
+									maxLength="200"  />
+								<small></small>
 							</div>
 						</div>
 

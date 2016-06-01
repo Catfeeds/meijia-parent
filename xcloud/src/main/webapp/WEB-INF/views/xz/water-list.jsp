@@ -77,8 +77,7 @@
 										<td class="am-hide-sm-only">${item.addTimeStr}</td>
 										<c:if test="${item.orderExtStatus == 0 || item.orderExtStatus == 1 }">
 											<td>
-												<button type="button" class="am-btn am-btn-success" id="qianshou_btn"
-												onclick="waterSign(${item.userId},${item.orderId})">签&nbsp;&nbsp;&nbsp;&nbsp;收</button>
+												<a href ="#" onClick="javascript:waterSign(${item.userId},${item.orderId})" class="am-icon-pencil" title="签收"></a>
 											</td>
 										</c:if>
 										

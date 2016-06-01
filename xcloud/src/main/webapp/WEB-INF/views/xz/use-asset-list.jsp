@@ -5,14 +5,13 @@
 
 <html>
 <head>
-<title>资产管理--领用与取用</title>
+<title>资产管理--领用与借用</title>
 
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
-<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>"
-	rel="stylesheet">
+<link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
 
 </head>
 
@@ -33,24 +32,21 @@
 				<div class="am-fl am-cf">
 					<strong class="am-text-primary am-text-lg">资产领用列表</strong>
 				</div>
-			</div>
-			<hr>
-			
-			<div class="am-g">
-				<div class="am-u-sm-12 am-u-md-6">
-					<div class="am-btn-toolbar">
-						<div class="am-btn-group am-btn-group-sm">
-							<button type="button" id="btn-use-asset-add" class="am-btn am-btn-default am-radius">
+				
+				<div class="am-u-sm-12 am-u-md-3 am-fr">
+					<div class="am-btn-toolbar am-fr">
+						<div class="am-btn-group am-btn-group-sm ">
+							<button type="button" id="btn-use-asset-add" class="am-btn am-btn-warning am-radius">
 								<span class="am-icon-plus"></span> 领用登记
 							</button>
 						</div>
 					</div>
 				</div>
-				
 			</div>
-			
+			<hr>
+
 			<br>
-				<div class="am-g">
+			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
@@ -63,8 +59,8 @@
 									<th class="table-title">经手人姓名</th>
 									<th class="table-title">经手人手机号</th>
 									<th class="table-title">领用状态</th>
-									<th class="table-date am-hide-sm-only">时间</th> 
-									<th >操作</th>
+									<th class="table-date am-hide-sm-only">时间</th>
+									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -73,24 +69,16 @@
 										<td>${item.name}</td>
 										<td>${item.mobile}</td>
 										<td>${item.assetNameAndNumStr }</td>
-										<td>${item.purpose }</td>
+										<td class="am-fr">${item.purpose }</td>
 										<td>${item.fromName }</td>
 										<td>${item.fromMobile }</td>
-										<td>
-											<c:if test="${item.status == 0 }">
+										<td><c:if test="${item.status == 0 }">
 												审批中	
-											</c:if>
-											
-											<c:if test="${item.status == 1 }">
+											</c:if> <c:if test="${item.status == 1 }">
 												已领用	
-											</c:if>
-										</td>
+											</c:if></td>
 										<td>${item.addTimeStr }</td>
-										<td>
-											<button type="button" class="am-btn am-btn-success" 
-											
-											onclick="getUseAssetDetail(${item.id})">查看详情</button>
-										</td>
+										<td><a href="/xcloud/xz/assets/use_asset_form?id=${item.id }" class="am-icon-edit" title="编辑"></a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -104,12 +92,9 @@
 			</div>
 		</div>
 
-		</div>
-
 	</div>
 
-	<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
-		data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+	</div>
 
 
 	<!--footer start-->

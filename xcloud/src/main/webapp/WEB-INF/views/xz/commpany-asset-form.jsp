@@ -42,7 +42,7 @@
 						class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
 					<div class="am-panel-bd">可以用App扫码加入快递，快去试试吧</div>
-					<div class="am-panel-bd"><img src="<c:url value='/assets/img/erweima.png'/>" width="250" height="250" /></div>
+					<div class="am-panel-bd"><img src="<c:url value='${qrCode }'/>" width="250" height="250" /></div>
 					</section>
 				</div>
 
@@ -67,33 +67,33 @@
 						
 						
 						<div class="am-form-group">
-							<label  class="am-u-sm-3 am-form-label">资产名称:</label>
+							<label  class="am-u-sm-3 am-form-label">资产名称:<font color="red">*</font></label>
 							<div class="am-u-sm-9">
 								<form:input path="name"
 									class="am-form-field am-radius" autocomplete="off"
 									maxLength="32" required="required"/>
-								<small>*必填项</small>		
+								<small></small>		
 							</div>
 						</div>
 
 						<div class="am-form-group">
-							<label  class="am-u-sm-3 am-form-label">数量:</label>
+							<label  class="am-u-sm-3 am-form-label">数量:<font color="red">*</font></label>
 							<div class="am-u-sm-9">
 								<form:input path="total" 
 									class="am-form-field am-radius js-pattern-pinteger"
 									maxLength="32" required="required"/>
-								<small>*必填项</small>	
+								<small></small>	
 							</div>
 						</div>
 
 					
 						<div class="am-form-group">
-							<label class="am-u-sm-3 am-form-label">单价:</label>
+							<label class="am-u-sm-3 am-form-label">单价:<font color="red">*</font></label>
 							<div class="am-u-sm-9">
 								<form:input path="price" 
 									class="am-form-field am-radiu js-pattern-pinteger"
 									maxLength="32" required="required" />
-								<small>*必填项</small>
+								<small></small>
 							</div>
 						</div>
 
@@ -102,8 +102,8 @@
 							<div class="am-u-sm-9">
 								<form:input path="unit"
 									class="form-control"
-									maxLength="32" required="required" />
-								<small>*必填项</small>
+									maxLength="32" />
+								<small></small>
 							</div>
 						</div>
 
@@ -111,9 +111,9 @@
 							<label for="user-phone" class="am-u-sm-3 am-form-label">编号:</label>
 							<div class="am-u-sm-9">
 								<form:input path="seq" 
-									class="am-form-field am-radius js-pattern-pinteger"
-									maxLength="32" required="required" />
-								<small>*必填项</small>
+									class="am-form-field am-radius"
+									maxLength="32"  />
+								<small></small>
 							</div>
 						</div>
 
@@ -122,8 +122,8 @@
 							<div class="am-u-sm-9">
 								<form:input path="place"
 									class="form-control"
-									maxLength="32" required="required" />
-								<small>*必填项</small>
+									maxLength="32"  />
+								<small></small>
 							</div>
 						</div>
 
