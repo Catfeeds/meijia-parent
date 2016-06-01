@@ -68,10 +68,10 @@ function pad(num, n) {
 }
 
 //顶部菜单点击高亮
-function setTopMenuId(menuId) {
+function setTopMenuId(menuId, subMenuId) {
 	console.log("menuId = " + menuId);
 	$.cookie("xcloud-top-menu-id", menuId, { path: "/"}); 
-
+	$.cookie("xcloud-menu-id", subMenuId, { path: "/"}); 
 }
 
 function setTopMenuHl() {

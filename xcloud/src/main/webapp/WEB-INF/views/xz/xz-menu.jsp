@@ -5,7 +5,7 @@
 
 	<ul class="am-list admin-sidebar-list">
 
-		<li class="admin-parent"><a class="am-collapsed" onclick="setMenuId('collapse-nav-xz-excel')"> <span
+<!-- 		<li class="admin-parent"><a class="am-collapsed" onclick="setMenuId('collapse-nav-xz-excel')"> <span
 				class="am-icon-flag"></span> 行政报表 <span class="am-icon-angle-right am-fr am-margin-right"></span>
 		</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-excel">
@@ -14,7 +14,23 @@
 				<li><a href="#"> <span class="am-icon-search-plus"></span> 报表配置
 				</a></li>
 
-			</ul></li>
+			</ul></li> -->
+			
+		<li class="admin-parent"><a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-assets')"> <span
+				class="am-icon-file"></span> 资产管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
+		</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-assets">
+				<li><a href="/xcloud/xz/assets/commpany_asset_list" class="am-cf"> <span class="am-icon-bell"></span> 资产登记
+				</a></li>
+				<li><a href="/xcloud/xz/assets/use_asset_list"> <span class="am-icon-plane"></span> 领用与借用
+				</a></li>
+				<li><a href="#"> <span class="am-icon-plane"></span> 库存管理
+				</a></li>
+				<li><a href="admin-404.html"> <span class="am-icon-plane"></span> 办公用品采购
+				</a></li>
+				<li><a href="admin-log.html"> <span class="am-icon-calendar"></span> 资产常用设置
+				</a></li>
+			</ul></li>			
 
 		<li class="admin-parent"><a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-express')"> <span
 				class="am-icon-truck"></span> 快递管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
@@ -77,21 +93,7 @@
 				</a></li>
 			</ul></li>
 
-		<li class="admin-parent"><a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-assets')"> <span
-				class="am-icon-file"></span> 资产管理 <span class="am-icon-angle-right am-fr am-margin-right"></span>
-		</a>
-			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-assets">
-				<li><a href="/xcloud/xz/assets/commpany_asset_list" class="am-cf"> <span class="am-icon-bell"></span> 资产登记
-				</a></li>
-				<li><a href="/xcloud/xz/assets/use_asset_list"> <span class="am-icon-plane"></span> 领用与借用
-				</a></li>
-				<li><a href="#"> <span class="am-icon-plane"></span> 库存管理
-				</a></li>
-				<li><a href="admin-404.html"> <span class="am-icon-plane"></span> 办公用品采购
-				</a></li>
-				<li><a href="admin-log.html"> <span class="am-icon-calendar"></span> 资产常用设置
-				</a></li>
-			</ul></li>
+		
 
 	</ul>
 

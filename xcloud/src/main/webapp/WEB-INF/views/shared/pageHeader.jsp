@@ -14,11 +14,11 @@
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 
 		<ul id="top-ul" class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-			<li class="am-nav" id="top-index"><a href="/xcloud/index" onclick="setTopMenuId('top-index')" title="首页">首页</a></li>
-			<li id="top-schedule"><a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule')" title="工作日程">日程</a></li>
-			<li id="top-staff"><a href="/xcloud/staff/list" onclick="setTopMenuId('top-staff')" title="通讯录" target="_top">通讯录</a></li>
-			<li id="top-hr"><a href="/xcloud/hr/index" onclick="setTopMenuId('top-hr')" title="人事" target="_top">人事</a></li>
-			<li id="top-xz"><a href="/xcloud/xz/index" onclick="setTopMenuId('top-xz')" title="工作日程" target="_top">行政</a></li>
+			<li class="am-nav" id="top-index"><a href="/xcloud/index" onclick="setTopMenuId('top-index', '')" title="首页">首页</a></li>
+			<li id="top-schedule"><a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', '')" title="工作日程">日程</a></li>
+			<li id="top-staff"><a href="/xcloud/staff/list" onclick="setTopMenuId('top-staff', '')" title="通讯录" target="_top">通讯录</a></li>
+			<li id="top-hr"><a href="/xcloud/hr/index" onclick="setTopMenuId('top-hr', '')" title="人事" target="_top">人事</a></li>
+			<li id="top-xz"><a href="/xcloud/xz/assets/commpany_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')" title="工作日程" target="_top">行政</a></li>
 			<li id="top-atools"><a href="/xcloud/atools/index" onclick="setTopMenuId('top-atools')" title="应用中心" target="_top">应用中心</a></li>
 			
 			<!--
