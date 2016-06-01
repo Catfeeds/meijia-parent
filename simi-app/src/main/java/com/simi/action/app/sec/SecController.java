@@ -144,7 +144,14 @@ public class SecController extends BaseController {
 		searchVo.setRefId(secId);
 		searchVo.setRefType("sec");
 		List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
-
+		
+		List<UserViewVo> users = new ArrayList<UserViewVo>();
+		if (rs.isEmpty()) {
+			result.setData(users);
+			return result;
+		}
+		
+		
 		List<Long> userIds = new ArrayList<Long>();
 
 		for (UserRef item : rs) {
@@ -152,11 +159,10 @@ public class SecController extends BaseController {
 				userIds.add(item.getUserId());
 			}
 		}
-
+		
 		UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(secId);
-
-		List<UserViewVo> users = userService.getUserInfos(userIds, u,
-				userRef3rd);
+		
+		users = userService.getUserInfos(userIds, u, userRef3rd);
 
 		result.setData(users);
 		return result;
