@@ -21,6 +21,8 @@ public class RecordAssetVo extends RecordAssets {
 	
 	private List<Imgs> imgs;
 	
+	private String assetTypeName;
+	
 	private String addTimeStr;
 	// 资产选择 ，下拉VO
 	private List<XcompanySetting> xCompSettingList;
@@ -48,6 +50,14 @@ public class RecordAssetVo extends RecordAssets {
 
 	public void setImgs(List<Imgs> imgs) {
 		this.imgs = imgs;
+	}
+
+	public String getAssetTypeName() {
+		return assetTypeName;
+	}
+
+	public void setAssetTypeName(String assetTypeName) {
+		this.assetTypeName = assetTypeName;
 	}
 
 	

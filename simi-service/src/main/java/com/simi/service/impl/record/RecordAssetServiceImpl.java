@@ -13,10 +13,13 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.record.RecordAssetsMapper;
 import com.simi.po.model.record.RecordAssets;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.record.RecordAssetService;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.AssetSearchVo;
 import com.simi.vo.record.RecordAssetVo;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 
 @Service
@@ -27,6 +30,9 @@ public class RecordAssetServiceImpl implements RecordAssetService {
 	
 	@Autowired
 	private UsersService userService;
+	
+	@Autowired
+	private XCompanySettingService xCompanySettingService;
 	
 	@Override
 	public RecordAssets initRecordAssets() {
@@ -58,6 +64,13 @@ public class RecordAssetServiceImpl implements RecordAssetService {
 		PageHelper.startPage(pageNo, pageSize);
 		
 		List<RecordAssets> list = recordAssetMapper.selectByListPage(searchVo);
+		
+		//资产类别
+		CompanySettingSearchVo searchVo1 = new CompanySettingSearchVo();
+		searchVo1.setSettingType("asset_type");
+		
+		List<XcompanySetting> assetTypes = xCompanySettingService.selectBySearchVo(searchVo1);
+		
 		RecordAssets assets = null;
 		for (int i = 0; i < list.size(); i++) {
 			assets = list.get(i);
@@ -67,6 +80,13 @@ public class RecordAssetServiceImpl implements RecordAssetService {
 			BeanUtilsExp.copyPropertiesIgnoreNull(assets, assetVo);
 			
 			assetVo.setAddTimeStr(TimeStampUtil.fromTodayStr(assets.getAddTime() * 1000));
+			
+			for (XcompanySetting item : assetTypes) {
+				if (item.getId().equals(assetVo.getAssetTypeId())) {
+					assetVo.setAssetTypeName(item.getName());
+					break;
+				}
+			}
 			
 			list.set(i, assetVo);
 		}

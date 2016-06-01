@@ -46,7 +46,7 @@ public class RecordAssetUseServiceImpl implements RecordAssetUseService {
 		record.setName("");
 		record.setMobile("");
 		record.setPurpose("");
-		record.setStatus((short) 0);
+		record.setStatus((short) 1);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 
@@ -118,7 +118,7 @@ public class RecordAssetUseServiceImpl implements RecordAssetUseService {
 			//mysql 5.7  json格式 中文转码
 			String newName = new String(item.get("name").toString().getBytes("ISO-8859-1"), "utf-8"); 
 			
-			assetNameAndNumStr += newName +" "+total + ";" ;
+			assetNameAndNumStr += newName +"; 数量:"+total + "<br>" ;
 			
 			// 回显字段。。TODO 多选时，不适用！！
 			useVo.setAssetNum(total.longValue());

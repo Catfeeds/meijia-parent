@@ -1,13 +1,12 @@
 package com.simi.vo.xcloud;
 
+import com.simi.po.model.xcloud.XcompanySetting;
 
-public class CompanySettingVo{
+
+public class CompanySettingVo extends XcompanySetting {
 
 	private Long settingId;
 	
-	private String name;
-	
-	private String settingJson;
 	//添加时间戳
 	private String addTimeStr ;
 	public Long getSettingId() {
@@ -16,18 +15,7 @@ public class CompanySettingVo{
 	public void setSettingId(Long settingId) {
 		this.settingId = settingId;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSettingJson() {
-		return settingJson;
-	}
-	public void setSettingJson(String settingJson) {
-		this.settingJson = settingJson;
-	}
+
 	public String getAddTimeStr() {
 		return addTimeStr;
 	}

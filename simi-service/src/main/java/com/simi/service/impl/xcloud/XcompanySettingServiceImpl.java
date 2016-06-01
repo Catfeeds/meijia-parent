@@ -96,6 +96,7 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		vo.setName(item.getName());
 		vo.setSettingJson(item.getSettingJson());
 		vo.setSettingId(item.getId());
+		vo.setId(item.getId());
 		
 		return vo;
 	}
