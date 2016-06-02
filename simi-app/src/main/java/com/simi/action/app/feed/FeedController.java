@@ -317,6 +317,7 @@ public class FeedController extends BaseController {
 		searchVo = new FeedSearchVo();
 		searchVo.setFid(fid);
 		searchVo.setFeedType(feedType);
+		searchVo.setCommentId(commentId);
 		int totalZan = feedZanService.totalByFid(searchVo);
 		result.setData(totalZan);
 
