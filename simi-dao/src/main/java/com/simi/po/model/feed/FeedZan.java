@@ -6,6 +6,10 @@ public class FeedZan {
     private Long fid;
 
     private Long userId;
+    
+    private Short feedType;
+    
+    private Long commentId;
 
     private Long addTime;
 
@@ -40,4 +44,20 @@ public class FeedZan {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Short getFeedType() {
+		return feedType;
+	}
+
+	public void setFeedType(Short feedType) {
+		this.feedType = feedType;
+	}
+
+	public Long getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(Long commentId) {
+		this.commentId = commentId;
+	}
 }

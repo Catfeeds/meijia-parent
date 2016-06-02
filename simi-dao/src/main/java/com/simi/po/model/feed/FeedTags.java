@@ -1,15 +1,17 @@
 package com.simi.po.model.feed;
 
-public class FeedImgs {
+public class FeedTags {
     private Long id;
 
     private Long fid;
 
     private Long userId;
-    
+
     private Short feedType;
 
-    private String imgUrl;
+    private Long tagId;
+
+    private String tags;
 
     private Long addTime;
 
@@ -37,12 +39,28 @@ public class FeedImgs {
         this.userId = userId;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public Short getFeedType() {
+        return feedType;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+    public void setFeedType(Short feedType) {
+        this.feedType = feedType;
+    }
+
+    public Long getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags == null ? null : tags.trim();
     }
 
     public Long getAddTime() {
@@ -52,12 +70,4 @@ public class FeedImgs {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
-
-	public Short getFeedType() {
-		return feedType;
-	}
-
-	public void setFeedType(Short feedType) {
-		this.feedType = feedType;
-	}
 }

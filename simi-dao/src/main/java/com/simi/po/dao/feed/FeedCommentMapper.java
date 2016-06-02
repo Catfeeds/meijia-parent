@@ -9,7 +9,7 @@ import com.simi.vo.feed.FeedSearchVo;
 public interface FeedCommentMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(FeedComment record);
+    Long insert(FeedComment record);
 
     int insertSelective(FeedComment record);
 
@@ -20,10 +20,12 @@ public interface FeedCommentMapper {
     int updateByPrimaryKey(FeedComment record);
 
 	List<FeedComment> selectByListPage(FeedSearchVo searchVo);
+	
+	List<FeedComment> selectBySearchVo(FeedSearchVo searchVo);
 
-	int totalByFid(Long fid);
+	int totalByFid(FeedSearchVo searchVo);
 
-	List<HashMap> totalByFids(List<Long> fids);
+	List<HashMap> totalByFids(FeedSearchVo searchVo);
 
-	int deleteByFid(Long fid);
+	int deleteBySearchVo(FeedSearchVo searchVo);
 }

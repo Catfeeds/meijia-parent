@@ -27,7 +27,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from tags
-		where tag_type = #{tagType,jdbcType=NUMERIC}
+		where tag_type = #{tagType,jdbcType=NUMERIC} and is_enable = 1;
 		<!-- <if test="tagType == 0 or tagType == 1 or tagType == 2 ">
 			and tag_type = #{tagType,jdbcType=NUMERIC}
 		</if> -->

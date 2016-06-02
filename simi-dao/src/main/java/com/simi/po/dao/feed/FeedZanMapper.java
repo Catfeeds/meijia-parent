@@ -19,13 +19,13 @@ public interface FeedZanMapper {
 
     int updateByPrimaryKey(FeedZan record);
 
-	int totalByFid(Long fid);
+	int totalByFid(FeedSearchVo searchVo);
 
-	List<HashMap> totalByFids(List<Long> fids);
+	List<HashMap> totalByFids(FeedSearchVo searchVo);
 
-	List<FeedZan> getByTop10(Long fid);
+	List<FeedZan> getByTop10(FeedSearchVo searchVo);
 
-	FeedZan selectBySearchVo(FeedSearchVo searchVo);
+	List<FeedZan> selectBySearchVo(FeedSearchVo searchVo);
 
-	int deleteByFid(Long fid);
+	int deleteBySearchVo(FeedSearchVo searchVo);
 }

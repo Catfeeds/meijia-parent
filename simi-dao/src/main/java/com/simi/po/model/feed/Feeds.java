@@ -4,6 +4,8 @@ public class Feeds {
     private Long fid;
 
     private Long userId;
+    
+    private Short feedType;
 
     private String title;
 
@@ -16,6 +18,8 @@ public class Feeds {
     private int totalView;
     
     private String feedExtra;
+    
+    private Short status;
 
     private Long addTime;
 
@@ -89,5 +93,21 @@ public class Feeds {
 
 	public void setFeedExtra(String feedExtra) {
 		this.feedExtra = feedExtra;
+	}
+
+	public Short getFeedType() {
+		return feedType;
+	}
+
+	public void setFeedType(Short feedType) {
+		this.feedType = feedType;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 }

@@ -3,6 +3,7 @@ package com.simi.po.dao.feed;
 import java.util.List;
 
 import com.simi.po.model.feed.FeedImgs;
+import com.simi.vo.feed.FeedSearchVo;
 
 public interface FeedImgsMapper {
     int deleteByPrimaryKey(Long id);
@@ -17,7 +18,7 @@ public interface FeedImgsMapper {
 
     int updateByPrimaryKey(FeedImgs record);
 
-	List<FeedImgs> selectByFid(Long fid);
+	List<FeedImgs> selectBySearchVo(FeedSearchVo searchVo);
 
-	int deleteByFid(Long fid);
+	int deleteBySearchVo(FeedSearchVo searchVo);
 }

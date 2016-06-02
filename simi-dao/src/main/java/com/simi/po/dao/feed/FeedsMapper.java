@@ -19,6 +19,8 @@ public interface FeedsMapper {
     int updateByPrimaryKey(Feeds record);
 
 	List<Feeds> selectByListPage(FeedSearchVo vo);
+	
+	List<Feeds> selectBySearchVo(FeedSearchVo vo);
 
 	int updateByTotalView(Long fid);
 }

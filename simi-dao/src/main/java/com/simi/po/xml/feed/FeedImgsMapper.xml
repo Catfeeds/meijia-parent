@@ -5,13 +5,12 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="fid" property="fid" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="feed_type" property="feedType" jdbcType="NUMERIC" />
 		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
-		<result column="img_middle" property="imgMiddle" jdbcType="VARCHAR" />
-		<result column="img_small" property="imgSmall" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, fid, user_id, img_url, img_middle, img_small, add_time
+		id, fid, user_id, feed_type, img_url, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -20,11 +19,26 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectByFid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from feed_imgs
-		where fid = #{fid,jdbcType=NUMERIC}
+		where 1 = 1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="fids != null">
+			and fid in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -32,18 +46,35 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	
-	<delete id="deleteByFid" parameterType="java.lang.Long">
+	<delete id="deleteBySearchVo" parameterType="com.simi.vo.feed.FeedSearchVo">
 		delete from feed_imgs
-		where fid = #{fid,jdbcType=NUMERIC}
+		where 1 = 1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="fids != null">
+			and fid in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
 	</delete>
 	
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedImgs">
-		insert into feed_imgs (id, fid, user_id,
-		img_url, img_middle, img_small,
-		add_time)
+		insert into feed_imgs (id, fid, user_id, feed_type,
+		img_url, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
-		#{imgUrl,jdbcType=VARCHAR}, #{imgMiddle,jdbcType=VARCHAR}, #{imgSmall,jdbcType=VARCHAR},
-		#{addTime,jdbcType=NUMERIC})
+		#{feedType,jdbcType=NUMERIC},
+		#{imgUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedImgs">
 	insert into feed_imgs
@@ -57,15 +88,13 @@
 		<if test="userId != null">
 			user_id,
 		</if>
+		<if test="feedType != null">
+			feed_type,
+		</if>
 		<if test="imgUrl != null">
 			img_url,
 		</if>
-		<if test="imgMiddle != null">
-			img_middle,
-		</if>
-		<if test="imgSmall != null">
-			img_small,
-		</if>
+
 		<if test="addTime != null">
 			add_time,
 		</if>
@@ -80,14 +109,11 @@
 		<if test="userId != null">
 			#{userId,jdbcType=NUMERIC},
 		</if>
+		<if test="feedType != null">
+			#{feedType,jdbcType=NUMERIC},
+		</if>
 		<if test="imgUrl != null">
 			#{imgUrl,jdbcType=VARCHAR},
-		</if>
-		<if test="imgMiddle != null">
-			#{imgMiddle,jdbcType=VARCHAR},
-		</if>
-		<if test="imgSmall != null">
-			#{imgSmall,jdbcType=VARCHAR},
 		</if>
 		<if test="addTime != null">
 			#{addTime,jdbcType=NUMERIC},
@@ -103,14 +129,11 @@
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="feedType != null">
+				feed_type = #{feedType,jdbcType=NUMERIC},
+			</if>
 			<if test="imgUrl != null">
 				img_url = #{imgUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="imgMiddle != null">
-				img_middle = #{imgMiddle,jdbcType=VARCHAR},
-			</if>
-			<if test="imgSmall != null">
-				img_small = #{imgSmall,jdbcType=VARCHAR},
 			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
@@ -122,9 +145,8 @@
 		update feed_imgs
 		set fid = #{fid,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
+		feed_type = #{feedType,jdbcType=NUMERIC},
 		img_url = #{imgUrl,jdbcType=VARCHAR},
-		img_middle = #{imgMiddle,jdbcType=VARCHAR},
-		img_small = #{imgSmall,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

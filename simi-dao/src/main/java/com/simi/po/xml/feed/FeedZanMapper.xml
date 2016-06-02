@@ -5,10 +5,12 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="fid" property="fid" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="feed_type" property="feedType" jdbcType="NUMERIC" />
+		<result column="comment_id" property="commentId" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, fid, user_id, add_time
+		id, fid, user_id, feed_type, comment_id, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -27,30 +29,86 @@
 		</if>
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>			
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>	
+		
+		<if test="commentId != null">
+			and comment_id = #{commentId,jdbcType=NUMERIC}
+		</if>	
 	</select>
 
-	<select id="getByTop10" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="getByTop10" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from feed_zan
-		where fid = #{fid,jdbcType=NUMERIC}
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="commentId != null">
+			and comment_id = #{commentId,jdbcType=NUMERIC}
+		</if>
 		order by add_time desc limit 10
 	</select>
 
-	<select id="totalByFid" resultType="java.lang.Integer" parameterType="java.lang.Long">
+	<select id="totalByFid" resultType="java.lang.Integer" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select count(*)
 		from feed_zan
-		where fid = #{fid,jdbcType=NUMERIC}
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="commentId != null">
+			and comment_id = #{commentId,jdbcType=NUMERIC}
+		</if>
 	</select>
 
-	<select id="totalByFids" resultType="java.util.HashMap" parameterType="java.util.List">
+	<select id="totalByFids" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select fid, count(*) as total
 		from feed_zan
-		where fid in
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="fids != null">
+			and fid in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="commentId != null">
+			and comment_id = #{commentId,jdbcType=NUMERIC}
+		</if>
+		
 		group by fid
 		order by fid desc
 	</select>
@@ -61,16 +119,31 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	
-	<delete id="deleteByFid" parameterType="java.lang.Long">
+	<delete id="deleteBySearchVo" parameterType="com.simi.vo.feed.FeedSearchVo">
 		delete from feed_zan
-		where fid = #{fid,jdbcType=NUMERIC}
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="commentId != null">
+			and comment_id = #{commentId,jdbcType=NUMERIC}
+		</if>
 	</delete>
 	
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedZan">
-		insert into feed_zan (id, fid, user_id,
+		insert into feed_zan (id, fid, user_id, feed_type, comment_id
 		add_time)
 		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC},
-		#{userId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{feedType,jdbcType=NUMERIC},
+		#{commentId,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedZan">
@@ -84,6 +157,12 @@
 			</if>
 			<if test="userId != null">
 				user_id,
+			</if>
+			<if test="feedType != null">
+				feed_type,
+			</if>
+			<if test="commentId != null">
+				comment_id,
 			</if>
 			<if test="addTime != null">
 				add_time,
@@ -99,6 +178,12 @@
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="feedType != null">
+				#{feedType,jdbcType=NUMERIC},
+			</if>
+			<if test="commentId != null">
+				#{commentId,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
@@ -113,6 +198,12 @@
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="feedType != null">
+				feed_type = #{feedType,jdbcType=NUMERIC},
+			</if>
+			<if test="commentId != null">
+				comment_id = #{commentId,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -123,6 +214,8 @@
 		update feed_zan
 		set fid = #{fid,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
+		feed_type = #{feedType,jdbcType=NUMERIC},
+		comment_id = #{commentId,jdbcType=NUMERIC},
 		add_time =
 		#{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}

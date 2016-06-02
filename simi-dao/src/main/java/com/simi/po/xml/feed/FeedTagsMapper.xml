@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.feed.FeedTagsMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.feed.FeedTags">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="fid" property="fid" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="feed_type" property="feedType" jdbcType="NUMERIC" />
+		<result column="tag_id" property="tagId" jdbcType="NUMERIC" />
+		<result column="tags" property="tags" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, fid, user_id, feed_type, tag_id, tags, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from feed_tags
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from feed_tags
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>	
+		
+		<if test="tagId != null">
+			and tag_id = #{tagId,jdbcType=NUMERIC}
+		</if>
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from feed_tags
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.feed.FeedTags">
+		insert into feed_tags (id, fid, user_id,
+		feed_type, tag_id, tags,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{feedType,jdbcType=NUMERIC}, #{tagId,jdbcType=NUMERIC}, #{tags,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedTags">
+		insert into feed_tags
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="fid != null">
+				fid,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="feedType != null">
+				feed_type,
+			</if>
+			<if test="tagId != null">
+				tag_id,
+			</if>
+			<if test="tags != null">
+				tags,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="fid != null">
+				#{fid,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="feedType != null">
+				#{feedType,jdbcType=NUMERIC},
+			</if>
+			<if test="tagId != null">
+				#{tagId,jdbcType=NUMERIC},
+			</if>
+			<if test="tags != null">
+				#{tags,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.feed.FeedTags">
+		update feed_tags
+		<set>
+			<if test="fid != null">
+				fid = #{fid,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="feedType != null">
+				feed_type = #{feedType,jdbcType=NUMERIC},
+			</if>
+			<if test="tagId != null">
+				tag_id = #{tagId,jdbcType=NUMERIC},
+			</if>
+			<if test="tags != null">
+				tags = #{tags,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.feed.FeedTags">
+		update feed_tags
+		set fid = #{fid,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		feed_type = #{feedType,jdbcType=NUMERIC},
+		tag_id = #{tagId,jdbcType=NUMERIC},
+		tags = #{tags,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	
+	<delete id="deleteBySearchVo" parameterType="com.simi.vo.feed.FeedSearchVo">
+		delete from feed_tags
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>		
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>	
+		
+		<if test="tagId != null">
+			and tag_id = #{tagId,jdbcType=NUMERIC}
+		</if>
+	</delete>
+</mapper>

@@ -4,16 +4,18 @@
 	<resultMap id="BaseResultMap" type="com.simi.po.model.feed.Feeds">
 		<id column="fid" property="fid" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="feed_type" property="feedType" jdbcType="NUMERIC" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="lat" property="lat" jdbcType="VARCHAR" />
 		<result column="lng" property="lng" jdbcType="VARCHAR" />
 		<result column="poi_name" property="poiName" jdbcType="VARCHAR" />
 		<result column="total_view" property="totalView" jdbcType="NUMERIC" />
 		<result column="feed_extra" property="feedExtra" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		fid, user_id, title, lat, lng, poi_name, total_view, feed_extra, add_time
+		fid, user_id, feed_type, title, lat, lng, poi_name, total_view, feed_extra, status, add_time
 	</sql>
 	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -34,12 +36,52 @@
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="userIds != null">
 			and user_id in
 			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
+		
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		
+		order by add_time desc
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from feeds
+		where 1=1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userIds != null">
+			and user_id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		
 		order by add_time desc
 	</select>
 
@@ -52,12 +94,12 @@
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fid">
 			SELECT LAST_INSERT_ID() AS fid
 		</selectKey>
-		insert into feeds (fid, user_id, title,
-		lat, lng, poi_name, total_view, feed_extra,
+		insert into feeds (fid, user_id, feed_type, title,
+		lat, lng, poi_name, total_view, feed_extra, status,
 		add_time)
-		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
+		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{feedType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
 		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
-		#{totalView,jdbcType=NUMERIC}, #{feedExtra,jdbcType=VARCHAR}, 
+		#{totalView,jdbcType=NUMERIC}, #{feedExtra,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, 
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.Feeds">
@@ -71,6 +113,9 @@
 			</if>
 			<if test="userId != null">
 				user_id,
+			</if>
+			<if test="feedType != null">
+				feed_type,
 			</if>
 			<if test="title != null">
 				title,
@@ -90,6 +135,9 @@
 			<if test="feedExtra != null">
 				feed_extra,
 			</if>
+			<if test="status != null">
+				status,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -100,6 +148,9 @@
 			</if>
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="feedType != null">
+				#{feedType,jdbcType=NUMERIC},
 			</if>
 			<if test="title != null">
 				#{title,jdbcType=VARCHAR},
@@ -119,6 +170,9 @@
 			<if test="feedExtra != null">
 				#{feedExtra,jdbcType=VARCHAR},
 			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
@@ -129,6 +183,9 @@
 		<set>
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="feedType != null">
+				feed_type = #{feedType,jdbcType=NUMERIC},
 			</if>
 			<if test="title != null">
 				title = #{title,jdbcType=VARCHAR},
@@ -148,6 +205,9 @@
 			<if test="feedExtra != null">
 				feed_extra = #{feedExtra,jdbcType=VARCHAR},
 			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -157,12 +217,14 @@
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.feed.Feeds">
 		update feeds
 		set user_id = #{userId,jdbcType=NUMERIC},
+		feed_type = #{feedType,jdbcType=NUMERIC},
 		title = #{title,jdbcType=VARCHAR},
 		lat = #{lat,jdbcType=VARCHAR},
 		lng = #{lng,jdbcType=VARCHAR},
 		poi_name = #{poiName,jdbcType=VARCHAR},
 		total_view = #{totalView,jdbcType=NUMERIC},
 		feed_extra = #{feedExtra,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where fid = #{fid,jdbcType=NUMERIC}
 	</update>

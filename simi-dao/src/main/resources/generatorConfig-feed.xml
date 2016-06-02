@@ -106,5 +106,23 @@
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>	
 		</table>
+
+		<!-- 动态问答标签表 -->
+		<table schema="simi" tableName="feed_tags"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="fid" property="fid" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>	
+			<columnOverride  column="tag_id" property="tagId" javaType="java.lang.Long" jdbcType="NUMERIC"/>	
+			<columnOverride  column="feed_type" property="feedType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		</table>
 	</context>
 </generatorConfiguration>

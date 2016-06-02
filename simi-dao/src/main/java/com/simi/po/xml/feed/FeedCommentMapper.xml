@@ -5,11 +5,13 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="fid" property="fid" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="feed_type" property="feedType" jdbcType="NUMERIC" />
 		<result column="comment" property="comment" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, fid, user_id, comment, add_time
+		id, fid, user_id, feed_type, comment, status, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -17,9 +19,8 @@
 		from feed_comment
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
-	
-	<select id="selectByListPage" resultMap="BaseResultMap"
-		parameterType="com.simi.vo.feed.FeedSearchVo">
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from feed_comment
@@ -27,45 +28,125 @@
 		<if test="fid != null">
 			and fid = #{fid,jdbcType=NUMERIC}
 		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
 		order by add_time desc
-	</select>	
-	
-	<select id="totalByFid" resultType="java.lang.Integer" parameterType="java.lang.Long">
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from feed_comment
+		where 1 = 1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		order by add_time desc
+	</select>
+
+	<select id="totalByFid" resultType="java.lang.Integer" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select count(*)
 		from feed_comment
-		where  fid = #{fid,jdbcType=NUMERIC}
-	</select>	
-	
-	<select id="totalByFids" resultType="java.util.HashMap" parameterType="java.util.List">
+		where 1 = 1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+	</select>
+
+	<select id="totalByFids" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select fid, count(*) as total
 		from feed_comment
-	    where fid in
-	 	<foreach item="item" index="index" collection="list"
-	             open="(" separator="," close=")">
-	        #{item}
-	    </foreach>
-	    group by fid
-	    order by fid desc
+		where 1 = 1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="fids != null">
+			and fid in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		
+		group by fid
+		order by fid desc
 	</select>
-	
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from feed_comment
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
-	
-	<delete id="deleteByFid" parameterType="java.lang.Long">
+
+	<delete id="deleteBySearchVo" parameterType="com.simi.vo.feed.FeedSearchVo">
 		delete from feed_comment
-		where fid = #{fid,jdbcType=NUMERIC}
+		where 1 = 1
+		<if test="fid != null">
+			and fid = #{fid,jdbcType=NUMERIC}
+		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="fids != null">
+			and fid in
+			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="feedType != null">
+			and feed_type = #{feed_type,jdbcType=NUMERIC}
+		</if>
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
 	</delete>
-	
+
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedComment">
-		insert into feed_comment (id, fid, user_id,
-		comment, add_time)
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into feed_comment (id, fid, user_id, feed_type,
+		comment, status, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC},
-		#{userId,jdbcType=NUMERIC},
-		#{comment,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+		#{userId,jdbcType=NUMERIC}, #{feedType,jdbcType=NUMERIC},
+		#{comment,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedComment">
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
 		insert into feed_comment
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -77,8 +158,14 @@
 			<if test="userId != null">
 				user_id,
 			</if>
+			<if test="feedType != null">
+				feed_type,
+			</if>
 			<if test="comment != null">
 				comment,
+			</if>
+			<if test="status != null">
+				status,
 			</if>
 			<if test="addTime != null">
 				add_time,
@@ -94,8 +181,14 @@
 			<if test="userId != null">
 				#{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="feedType != null">
+				#{feedType,jdbcType=NUMERIC},
+			</if>
 			<if test="comment != null">
 				#{comment,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=NUMERIC},
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
@@ -111,8 +204,14 @@
 			<if test="userId != null">
 				user_id = #{userId,jdbcType=NUMERIC},
 			</if>
+			<if test="feedType != null">
+				feed_type = #{feedType,jdbcType=NUMERIC},
+			</if>
 			<if test="comment != null">
 				comment = #{comment,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=NUMERIC},
 			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
@@ -124,8 +223,10 @@
 		update feed_comment
 		set fid = #{fid,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
+		feed_type = #{feedType,jdbcType=NUMERIC},
 		comment =
 		#{comment,jdbcType=VARCHAR},
+		status = #{status,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

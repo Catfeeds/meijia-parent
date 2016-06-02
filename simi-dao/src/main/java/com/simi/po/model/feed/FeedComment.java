@@ -6,8 +6,12 @@ public class FeedComment {
     private Long fid;
 
     private Long userId;
+    
+    private Short feedType;
 
     private String comment;
+    
+    private Short status;
 
     private Long addTime;
 
@@ -50,4 +54,20 @@ public class FeedComment {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Short getFeedType() {
+		return feedType;
+	}
+
+	public void setFeedType(Short feedType) {
+		this.feedType = feedType;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
 }
