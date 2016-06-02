@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.simi.po.model.common.Imgs;
 import com.simi.po.model.record.RecordAssets;
-import com.simi.po.model.xcloud.XcompanyAssets;
 import com.simi.po.model.xcloud.XcompanySetting;
 
 

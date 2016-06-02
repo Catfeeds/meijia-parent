@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
 

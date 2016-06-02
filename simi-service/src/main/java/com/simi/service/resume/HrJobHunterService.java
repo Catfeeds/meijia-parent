@@ -4,9 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.resume.HrJobHunter;
-import com.simi.po.model.resume.HrResumeChange;
 import com.simi.vo.resume.JobHunterVo;
-import com.simi.vo.resume.ResumeChangeVo;
 import com.simi.vo.resume.ResumeChangeSearchVo;
 
 /**

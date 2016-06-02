@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.meijia.utils.GsonUtil;
-
 /**
  *
  * @author :hulj

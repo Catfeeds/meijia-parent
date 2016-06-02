@@ -13,7 +13,6 @@ import com.simi.common.Constants;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.card.CardService;
@@ -24,7 +23,6 @@ import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.xcloud.CompanyAdminSearchVo;
-import com.simi.vo.xcloud.CompanySearchVo;
 
 @Service
 public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {

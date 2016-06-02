@@ -14,12 +14,9 @@ import com.simi.service.sec.SecService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
-import com.simi.vo.order.OrderViewVo;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.dao.order.OrdersMapper;
-import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.user.Users;
 import com.meijia.utils.TimeStampUtil;
 
 @Service

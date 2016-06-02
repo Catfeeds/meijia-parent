@@ -1,9 +1,5 @@
 package com.simi.vo.card;
 
-import java.util.List;
-
-import com.simi.po.model.card.CardAttend;
-import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.Cards;
 
 public class CardVo extends Cards {

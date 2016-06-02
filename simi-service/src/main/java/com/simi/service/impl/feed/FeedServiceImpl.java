@@ -1,9 +1,7 @@
 package com.simi.service.impl.feed;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +16,10 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.TagVo;
 import com.simi.vo.feed.FeedListVo;
 import com.simi.vo.feed.FeedSearchVo;
-import com.simi.vo.feed.FeedViewVo;
-import com.simi.vo.feed.FeedZanViewVo;
-import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.feed.FeedImgs;
 import com.simi.po.model.feed.FeedTags;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.Users;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
@@ -72,90 +65,6 @@ public class FeedServiceImpl implements FeedService {
 		return record;
 	}
 
-	/**
-	 * 转换card 对象为 cardViewVo对象
-	 * 
-	 * @param card
-	 * @return
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonParseException
-	 */
-	@Override
-	public FeedViewVo changeToFeedViewVo(Feeds feed) {
-		FeedViewVo vo = new FeedViewVo();
-		if (feed == null)
-			return vo;
-		Long fid = feed.getFid();
-
-		// 进行对象复制.
-		BeanUtilsExp.copyPropertiesIgnoreNull(feed, vo);
-
-		// 获取用户名称
-		Users u = usersService.selectByPrimaryKey(vo.getUserId());
-
-		if (u != null) {
-			vo.setName(u.getName());
-			vo.setHeadImg(usersService.getHeadImg(u));
-		}
-
-		FeedSearchVo searchVo = new FeedSearchVo();
-		searchVo.setFid(fid);
-		searchVo.setFeedType(feed.getFeedType());
-		// 统计赞的数量
-		int totalZan = feedZanService.totalByFid(searchVo);
-		vo.setTotalZan(totalZan);
-
-		// 统计评论的数量
-		int totalComment = feedCommentService.totalByFid(searchVo);
-		vo.setTotalComment(totalComment);
-
-		vo.setTotalView(feed.getTotalView());
-
-		// 获得点赞前十个用户及头像.
-		List<FeedZanViewVo> zanTop10 = feedZanService.getByTop10(searchVo);
-		vo.setZanTop10(zanTop10);
-
-		// 动态添加时间字符串
-		Date addTimeDate = TimeStampUtil.timeStampToDateFull(feed.getAddTime() * 1000, null);
-		String addTimeStr = DateUtil.fromToday(addTimeDate);
-		vo.setAddTimeStr(addTimeStr);
-
-		// 动态图片
-		vo.setFeedImgs(new ArrayList<FeedImgs>());
-		List<FeedImgs> list = feedImgsService.selectBySearchVo(searchVo);
-
-		if (list != null) {
-			vo.setFeedImgs(list);
-		}
-
-		vo.setFeedExtra(feed.getFeedExtra());
-
-		// 动态标签/类别
-		List<TagVo> feedTagVos = new ArrayList<TagVo>();
-		List<FeedTags> feedTags = feedTagsService.selectBySearchVo(searchVo);
-		for (FeedTags item1 : feedTags) {
-			TagVo tvo = new TagVo();
-			tvo.setTagId(item1.getTagId());
-			tvo.setTagName(item1.getTags());
-			feedTagVos.add(tvo);
-		}
-
-		vo.setFeedTags(feedTagVos);
-
-		return vo;
-	}
-
-	/**
-	 * 批量转换card 对象为 cardViewVo对象
-	 * 
-	 * @param List
-	 *            <card>
-	 * @return
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonParseException
-	 */
 	@Override
 	public FeedListVo changeToFeedListVo(Feeds item) {
 

@@ -1,7 +1,5 @@
 package com.simi.vo.user;
 
-import java.math.BigDecimal;
-
 public class UserViewVo {
 	
 	private Long id;

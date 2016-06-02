@@ -3,7 +3,6 @@ package com.simi.vo.feed;
 import java.util.List;
 
 import com.simi.po.model.feed.FeedImgs;
-import com.simi.po.model.user.Tags;
 import com.simi.vo.TagVo;
 
 public class FeedListVo {
@@ -25,6 +24,8 @@ public class FeedListVo {
 	private int totalComment;	
 	
 	private int totalView;
+	
+	private String feedExtra;
 	
 	private List<FeedImgs> feedImgs;
 	
@@ -116,6 +117,14 @@ public class FeedListVo {
 
 	public void setFeedTags(List<TagVo> feedTags) {
 		this.feedTags = feedTags;
+	}
+
+	public String getFeedExtra() {
+		return feedExtra;
+	}
+
+	public void setFeedExtra(String feedExtra) {
+		this.feedExtra = feedExtra;
 	}
 	
 }

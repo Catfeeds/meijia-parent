@@ -9,7 +9,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.total.TotalHitMapper;
-import com.simi.po.model.op.OpAd;
 import com.simi.po.model.total.TotalHit;
 import com.simi.service.total.TotalHitService;
 import com.simi.vo.total.TotalHitSearchVo;

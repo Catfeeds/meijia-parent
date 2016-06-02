@@ -9,12 +9,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.op.OpAutoFeedService;
 import com.simi.service.op.OpChannelService;
-import com.simi.vo.po.AdSearchVo;
 import com.simi.po.dao.op.OpAutoFeedMapper;
 import com.simi.po.model.op.OpAutoFeed;
-import com.simi.po.model.op.OpChannel;
-import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
