@@ -9,6 +9,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.feed.FeedImgsMapper;
 import com.simi.po.model.feed.FeedImgs;
 import com.simi.service.feed.FeedImgsService;
+import com.simi.vo.feed.FeedSearchVo;
 
 @Service
 public class FeedImgsServiceImpl implements FeedImgsService {
@@ -21,9 +22,8 @@ public class FeedImgsServiceImpl implements FeedImgsService {
 		record.setId(0L);
 		record.setFid(0L);
 		record.setUserId(0L);
+		record.setFeedType((short) 0);
 		record.setImgUrl("");
-		record.setImgMiddle("");
-		record.setImgSmall("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
@@ -35,13 +35,13 @@ public class FeedImgsServiceImpl implements FeedImgsService {
 	}
 	
 	@Override
-	public int deleteByFid(Long fid) {
-		return feedImgsMapper.deleteByFid(fid);
+	public int deleteBySearchVo(FeedSearchVo searchVo) {
+		return feedImgsMapper.deleteBySearchVo(searchVo);
 	}	
 	
 	@Override
-	public List<FeedImgs> selectByFid(Long fid) {
-		return feedImgsMapper.selectByFid(fid);
+	public List<FeedImgs> selectBySearchVo(FeedSearchVo searchVo) {
+		return feedImgsMapper.selectBySearchVo(searchVo);
 	}
 	
 	

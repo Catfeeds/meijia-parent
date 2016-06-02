@@ -33,6 +33,7 @@ import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.CardUtil;
+import com.simi.utils.FeedUtil;
 import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
@@ -164,6 +165,10 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		Feeds feed = feedService.selectByPrimaryKey(fid);
 		if (feed == null)
 			return new AsyncResult<Boolean>(true);
+		
+		Short feedType = feed.getFeedType();
+		
+		String feedTypeName = FeedUtil.getFeedTypeName(feedType);
 
 		Long userId = feed.getUserId();
 		UserMsg record = userMsgService.initUserMsg();
@@ -175,7 +180,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		record.setAction("feed");
 		record.setParams(fid.toString());
 		record.setGotoUrl("");
-		record.setTitle("发布动态");
+		record.setTitle("发布" + feedTypeName);
 
 		String title = feed.getTitle();
 
@@ -184,7 +189,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 
 		if (title.length() == 0) {
-			title = "你发布了新的动态";
+			title = "你发布了新的" + feedTypeName;
 		}
 		
 		record.setSummary(title);

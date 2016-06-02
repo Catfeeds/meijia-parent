@@ -35,7 +35,9 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		record.setId(0L);
 		record.setFid(0L);
 		record.setUserId(0L);
+		record.setFeedType((short) 0);
 		record.setComment("");
+		record.setStatus((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
@@ -100,14 +102,14 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}		
 	
 	@Override
-	public int totalByFid(Long fid) {
-		return feedCommentMapper.totalByFid(fid);
+	public int totalByFid(FeedSearchVo searchVo) {
+		return feedCommentMapper.totalByFid(searchVo);
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@Override
-	public List<HashMap> totalByFids(List<Long> fids) {
-		return feedCommentMapper.totalByFids(fids);
+	public List<HashMap> totalByFids(FeedSearchVo searchVo) {
+		return feedCommentMapper.totalByFids(searchVo);
 	}	
 
 	@Override
@@ -116,7 +118,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}	
 	
 	@Override
-	public int insert(FeedComment record) {
+	public Long insert(FeedComment record) {
 		return feedCommentMapper.insert(record);
 	}	
 	
@@ -136,8 +138,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}	
 	
 	@Override
-	public int deleteByFid(Long fid) {
-		return feedCommentMapper.deleteByFid(fid);
+	public int deleteBySearchVo(FeedSearchVo searchVo) {
+		return feedCommentMapper.deleteBySearchVo(searchVo);
 	}	
 
 }

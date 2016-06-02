@@ -32,6 +32,8 @@ public class FeedZanServiceImpl implements FeedZanService {
 		record.setId(0L);
 		record.setFid(0L);
 		record.setUserId(0L);
+		record.setFeedType((short) 0);
+		record.setCommentId(0L);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
@@ -42,27 +44,27 @@ public class FeedZanServiceImpl implements FeedZanService {
 	}
 	
 	@Override
-	public FeedZan selectBySearchVo(FeedSearchVo searchVo) {
+	public List<FeedZan> selectBySearchVo(FeedSearchVo searchVo) {
 		return feedZanMapper.selectBySearchVo(searchVo);
-	}	
+	}
 
 	@Override
-	public int totalByFid(Long fid) {
-		return feedZanMapper.totalByFid(fid);
+	public int totalByFid(FeedSearchVo searchVo) {
+		return feedZanMapper.totalByFid(searchVo);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public List<HashMap> totalByFids(List<Long> fids) {
-		return feedZanMapper.totalByFids(fids);
+	public List<HashMap> totalByFids(FeedSearchVo searchVo) {
+		return feedZanMapper.totalByFids(searchVo);
 	}
 
 	@Override
-	public List<FeedZanViewVo> getByTop10(Long fid) {
+	public List<FeedZanViewVo> getByTop10(FeedSearchVo searchVo) {
 
 		List<FeedZanViewVo> result = new ArrayList<FeedZanViewVo>();
 
-		List<FeedZan> feedzans = feedZanMapper.getByTop10(fid);
+		List<FeedZan> feedzans = feedZanMapper.getByTop10(searchVo);
 
 		if (feedzans.isEmpty()) return result;
 
@@ -76,9 +78,9 @@ public class FeedZanServiceImpl implements FeedZanService {
 
 		List<Users> userList = new ArrayList<Users>();
 		if (userIds.size() > 0) {
-			UserSearchVo searchVo = new UserSearchVo();
-			searchVo.setUserIds(userIds);
-			userList = usersService.selectBySearchVo(searchVo);
+			UserSearchVo searchVo1 = new UserSearchVo();
+			searchVo1.setUserIds(userIds);
+			userList = usersService.selectBySearchVo(searchVo1);
 		}
 
 		for (int i = 0; i < feedzans.size(); i++) {
@@ -125,8 +127,8 @@ public class FeedZanServiceImpl implements FeedZanService {
 	}
 	
 	@Override
-	public int deleteByFid(Long fid) {
-		return feedZanMapper.deleteByFid(fid);
+	public int deleteBySearchVo(FeedSearchVo searchVo) {
+		return feedZanMapper.deleteBySearchVo(searchVo);
 	}
 
 }

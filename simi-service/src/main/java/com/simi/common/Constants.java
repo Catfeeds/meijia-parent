@@ -163,6 +163,7 @@ public class Constants {
 	public static int SCORE_LEAVE = 1;				//请假申请
 	public static int SCORE_CHECKIN = 1;			//云考勤
 	public static int SCORE_COMPANY_CREATE = 300;	//创建公司/团队
+	public static int SCORE_QA_COMMENT = 5;			//问题回答
 	
 	
 }

@@ -16,8 +16,8 @@ public interface FeedService {
 
 	FeedViewVo changeToFeedViewVo(Feeds feed);
 
-	List<FeedListVo> changeToFeedListVo(List<Feeds> feeds);
-
+	FeedListVo changeToFeedListVo(Feeds item);
+	
 	int updateByPrimaryKey(Feeds record);
 
 	int updateByPrimaryKeySelective(Feeds record);
@@ -33,6 +33,8 @@ public interface FeedService {
 	PageInfo selectByListPage(FeedSearchVo vo, int pageNo, int pageSize);
 
 	int updateByTotalView(Long fid);
+
+	
 
 	
 }

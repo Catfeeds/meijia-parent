@@ -15,13 +15,9 @@ public interface FeedCommentService {
 
 	List<FeedCommentViewVo> changeToFeedComments(List<FeedComment> cardComments);
 
-	int totalByFid(Long fid);
-
-	List<HashMap> totalByFids(List<Long> fids);
-
 	int insertSelective(FeedComment record);
 
-	int insert(FeedComment record);
+	Long insert(FeedComment record);
 
 	int updateByPrimaryKey(FeedComment record);
 
@@ -29,8 +25,12 @@ public interface FeedCommentService {
 
 	int deleteByPrimaryKey(Long id);
 
-	int deleteByFid(Long fid);
-
 	List<FeedComment> selectByListPage(FeedSearchVo searchVo, int pageNo, int pageSize);
+
+	int totalByFid(FeedSearchVo searchVo);
+
+	List<HashMap> totalByFids(FeedSearchVo searchVo);
+
+	int deleteBySearchVo(FeedSearchVo searchVo);
 
 }

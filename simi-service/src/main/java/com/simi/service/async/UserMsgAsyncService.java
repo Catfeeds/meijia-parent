@@ -22,6 +22,5 @@ public interface UserMsgAsyncService {
 
 	Future<Boolean> newActionAppMsg(Long userId, Long id, String extType, String title, String summary, String iconUrl);
 
-
 	
 }

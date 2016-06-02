@@ -13,11 +13,11 @@ public interface FeedZanService {
 
 	FeedZan selectByPrimaryKey(Long id);
 
-	int totalByFid(Long fid);
+	int totalByFid(FeedSearchVo searchVo);
 
-	List<HashMap> totalByFids(List<Long> fids);
+	List<HashMap> totalByFids(FeedSearchVo searchVo);
 
-	List<FeedZanViewVo> getByTop10(Long fid);
+	List<FeedZanViewVo> getByTop10(FeedSearchVo searchVo);
 
 	int insertSelective(FeedZan record);
 
@@ -29,8 +29,8 @@ public interface FeedZanService {
 
 	int insert(FeedZan record);
 
-	FeedZan selectBySearchVo(FeedSearchVo searchVo);
+	List<FeedZan> selectBySearchVo(FeedSearchVo searchVo);
 
-	int deleteByFid(Long fid);
+	int deleteBySearchVo(FeedSearchVo searchVo);
 
 }
