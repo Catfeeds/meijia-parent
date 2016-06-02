@@ -14,12 +14,10 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.op.AppTools;
-import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.ApptoolsSearchVo;
-import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.po.AppToolsVo;
 
 @Controller

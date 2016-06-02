@@ -2,8 +2,6 @@ package com.simi.action.job;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.admin.AdminAccount;
-import com.simi.po.model.card.Cards;
 import com.simi.po.model.msg.Msg;
 import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
@@ -28,10 +24,8 @@ import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.msg.MsgService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UsersService;
-import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.MsgSearchVo;
-import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserSearchVo;
 
 /**

@@ -36,7 +36,6 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.CompanyAdminSearchVo;
-import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller

@@ -26,7 +26,6 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.feed.FeedCommentViewVo;
 import com.simi.vo.feed.FeedListVo;
 import com.simi.vo.feed.FeedSearchVo;
-import com.simi.vo.feed.FeedViewVo;
 
 @Controller
 @RequestMapping(value = "/app/feed")
@@ -61,6 +60,7 @@ public class FeedQueryController extends BaseController {
 	@RequestMapping(value = "get_detail", method = RequestMethod.GET)
 	public AppResultData<Object> getDetail(
 			@RequestParam("fid") Long fid, 
+			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType,
 			@RequestParam(value = "user_id", required = false, defaultValue = "") Long userId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -77,7 +77,7 @@ public class FeedQueryController extends BaseController {
 		}
 		Feeds record = feedService.selectByPrimaryKey(fid);
 		if (record == null) return result;
-		FeedViewVo vo = feedService.changeToFeedViewVo(record);
+		FeedListVo vo = feedService.changeToFeedListVo(record);
 		result.setData(vo);
 		return result;
 	}

@@ -1,7 +1,6 @@
 package com.simi.action.app.car;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.po.model.user.UserCar;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.NoticeSmsAsyncService;
@@ -31,13 +29,10 @@ import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServiceTypeService;
-import com.simi.service.user.UserCarService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
-import com.simi.vo.order.OrderDetailVo;
-import com.simi.vo.order.OrderListVo;
 
 @Controller
 @RequestMapping(value = "/app/car")

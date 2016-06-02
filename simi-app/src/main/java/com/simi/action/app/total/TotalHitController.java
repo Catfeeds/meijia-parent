@@ -13,7 +13,6 @@ import com.meijia.utils.vo.AppResultData;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.op.OpAd;
 import com.simi.po.model.total.TotalHit;
 import com.simi.service.total.TotalHitService;
 import com.simi.vo.total.TotalHitSearchVo;
