@@ -28,7 +28,6 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.resume.JobHunterVo;
 import com.simi.vo.resume.ResumeChangeSearchVo;
-import com.simi.vo.resume.ResumeSearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;

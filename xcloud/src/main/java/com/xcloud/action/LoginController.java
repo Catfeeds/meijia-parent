@@ -29,7 +29,6 @@ import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyAdminService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.xcloud.CompanyAdminSearchVo;
-import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 
