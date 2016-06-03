@@ -10,7 +10,8 @@ $('#admin-form').validate({
 					required: true
 				},
 				mobile: {
-					required: true
+					required: true,
+					isMobile : true
 				},
 				email: {
 					required: true,
@@ -39,7 +40,8 @@ $('#admin-form').validate({
 					required: "请输入昵称"
 				},
 				mobile: {
-					required: "请输入手机号"
+					required: "请输入手机号",
+					isMobile : "请输入正确的手机号"
 				},
 				email: {
 					required: "请输入邮箱"

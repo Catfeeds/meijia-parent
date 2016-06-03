@@ -53,6 +53,17 @@
 							<form:errors path="nickname" class="field-has-error"></form:errors>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 col-sm-2 control-label">手机号</label>
+						<div class="col-sm-5">
+							<form:input path="mobile"
+								class="form-control placeholder-no-fix" autocomplete="off"
+								placeholder="手机号" />
+							<br />
+							<form:errors path="nickname" class="field-has-error"></form:errors>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<label class="col-sm-2 col-sm-2 control-label">邮箱</label>
@@ -135,6 +146,8 @@
 	<!--script for this page-->
 	<script
 		src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"
+		type="text/javascript"></script>
+	<script src="<c:url value='/js/simi/common/validate-methods.js'/>"
 		type="text/javascript"></script>
 	<script src="<c:url value='/js/simi/admin/adminForm.js'/>"
 		type="text/javascript"></script>
