@@ -139,7 +139,7 @@
 	</delete>
 	
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedZan">
-		insert into feed_zan (id, fid, user_id, feed_type, comment_id
+		insert into feed_zan (id, fid, user_id, feed_type, comment_id,
 		add_time)
 		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{feedType,jdbcType=NUMERIC},
