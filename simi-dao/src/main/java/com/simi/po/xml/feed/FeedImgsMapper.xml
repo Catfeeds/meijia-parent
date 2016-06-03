@@ -37,7 +37,7 @@
 			</foreach>
 		</if>
 		<if test="feedType != null">
-			and feed_type = #{feed_type,jdbcType=NUMERIC}
+			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
 	</select>
 	
@@ -62,7 +62,7 @@
 			</foreach>
 		</if>
 		<if test="feedType != null">
-			and feed_type = #{feed_type,jdbcType=NUMERIC}
+			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
