@@ -390,6 +390,15 @@ public class FeedController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
+		
+		Feeds feed = feedService.selectByPrimaryKey(fid);
+		if (feed != null) {
+			if (feed.getStatus().equals((short)2)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("这是已关闭的信息.");
+				return result;
+			}
+		}
 
 		FeedComment feedComment = feedCommentService.initFeedComment();
 		feedComment.setFid(fid);
@@ -440,11 +449,15 @@ public class FeedController extends BaseController {
 				return result;
 			}
 		}
-		
-		
-		
+
 		FeedComment comment = feedCommentService.selectByPrimaryKey(commentId);
 		if (comment == null) return result;
+		Long commentUserId = comment.getUserId();
+		if (userId.equals(commentUserId)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您不能采纳自己的答案哦！");
+			return result;
+		}
 		
 		feed.setStatus((short) 1);
 		feedService.updateByPrimaryKeySelective(feed);
@@ -455,7 +468,7 @@ public class FeedController extends BaseController {
 		if (score > 0) {
 			//问答用户增加金币，发起用户扣除金币
 			//1.
-			Long commentUserId = comment.getUserId();
+			
 			//答题奖励  //问题悬赏
 			userScoreAsyncService.sendScore(commentUserId, score, "qa", commentId.toString(), "采纳问答");
 		}

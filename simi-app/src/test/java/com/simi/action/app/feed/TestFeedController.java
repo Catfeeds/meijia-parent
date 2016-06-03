@@ -31,7 +31,7 @@ public class TestFeedController extends JUnitActionBase  {
 	@Test
     public void testPostFeed() throws Exception {
 
-		String url = "/app/feed/post_feed.json?user_id=1&title=动态测试1&lat=31.156731&lng=121.810487&poi_name=上海浦东国际机场";
+		String url = "/app/feed/post_feed.json?user_id=18&title=问答测试2&feed_type=2&feed_extra=100&lat=31.156731&lng=121.810487&poi_name=上海浦东国际机场";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
@@ -64,8 +64,9 @@ public class TestFeedController extends JUnitActionBase  {
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//新增
-     	postRequest = postRequest.param("fid", "2");
+     	postRequest = postRequest.param("fid", "1109");
 	    postRequest = postRequest.param("user_id", "18");
+	    postRequest = postRequest.param("action", "add");
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
@@ -85,7 +86,8 @@ public class TestFeedController extends JUnitActionBase  {
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//新增
-     	postRequest = postRequest.param("fid", "2");
+     	postRequest = postRequest.param("fid", "325");
+     	postRequest = postRequest.param("feed_type", "2");
 	    postRequest = postRequest.param("user_id", "278");
 	    postRequest = postRequest.param("comment", "还不错278");
 	    
@@ -99,6 +101,53 @@ public class TestFeedController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }	
+	
+	@Test
+    public void testPostDone() throws Exception {
+
+		String url = "/app/feed/post_done.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("fid", "325");
+     	postRequest = postRequest.param("feed_type", "2");
+	    postRequest = postRequest.param("user_id", "18");
+	    postRequest = postRequest.param("comment_id", "116");
+	    
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
+	
+	@Test
+    public void testPostClose() throws Exception {
+
+		String url = "/app/feed/post_close.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("fid", "325");
+     	postRequest = postRequest.param("feed_type", "2");
+	    postRequest = postRequest.param("user_id", "18");
+	    
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
 	
 	@Test
     public void testPostFeedDel() throws Exception {

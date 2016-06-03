@@ -21,7 +21,7 @@ public class TestFeedQueryController extends JUnitActionBase  {
     public void testGetDetail() throws Exception {
 
 		String url = "/app/feed/get_detail.json";
-		String params = "?fid=2&user_id=1";
+		String params = "?fid=324&user_id=18&feed_type=2";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -37,7 +37,7 @@ public class TestFeedQueryController extends JUnitActionBase  {
     public void testGetList() throws Exception {
 
 		String url = "/app/feed/get_list.json";
-		String params = "?user_id=1&feed_from=0&page=1";
+		String params = "?user_id=18&feed_type=2&feed_from=0&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -52,22 +52,7 @@ public class TestFeedQueryController extends JUnitActionBase  {
     public void testGetComment() throws Exception {
 
 		String url = "/app/feed/get_comment_list.json";
-		String params = "?fid=2&user_id=1";
-		MockHttpServletRequestBuilder getRequest = get(url + params);
-
-	    ResultActions resultActions = this.mockMvc.perform(getRequest);
-	    resultActions.andExpect(content().contentType(this.mediaType));
-	    resultActions.andExpect(status().isOk());
-
-	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-
-    }		
-	
-	@Test
-    public void testTotalByMonth() throws Exception {
-
-		String url = "/app/card/total_by_month.json";
-		String params = "?user_id=1&year=2015&month=10";
+		String params = "?fid=324&feed_type=2&user_id=18";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -77,20 +62,4 @@ public class TestFeedQueryController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }	
-	
-	@Test
-    public void testGetReminds() throws Exception {
-
-		String url = "/app/card/get_reminds.json";
-		String params = "?user_id=1";
-		MockHttpServletRequestBuilder getRequest = get(url + params);
-
-	    ResultActions resultActions = this.mockMvc.perform(getRequest);
-	    resultActions.andExpect(content().contentType(this.mediaType));
-	    resultActions.andExpect(status().isOk());
-
-	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-
-    }	
-	
 }
