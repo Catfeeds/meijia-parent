@@ -1,5 +1,6 @@
 package com.xcloud.action.atools;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,56 @@ public class AtoolsController extends BaseController {
 	  * @return
 	  */
 	@AuthPassport
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/my", method = RequestMethod.GET)
+	public String myList(Model model, HttpServletRequest request) {
+		
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		Long companyId = accountAuth.getCompanyId();
+		Long userId = accountAuth.getUserId();
+		model.addAttribute("companyId", companyId);
+		model.addAttribute("userId", userId);
+		
+		String appType = "xcloud";
+		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
+		searchVo.setAppType(appType);
+		searchVo.setMenuType("t");
+		searchVo.setIsOnline((short) 0);
+		List<AppTools> list = appToolsService.selectBySearchVo(searchVo);
+		
+		List<UserAppTools> myList = userAppToolsService.selectByUserIdAndStatus(userId);
+		
+		List<AppTools> result = new ArrayList<AppTools>();
+		for (int i = 0; i < list.size(); i++) {
+			AppTools item = null;
+			
+			if (list.get(i).getIsDefault().equals((short)1)) {
+				item = list.get(i);
+			} else {
+				for (UserAppTools item1: myList) {
+					if (list.get(i).gettId().equals(item1.gettId())) {
+						item = list.get(i);
+						break;
+					}
+				}
+			}
+			
+			if (item != null) {
+				AppToolsVo vo = appToolsService.getAppToolsVo(item, userId);
+				result.add(vo);
+			}
+		}
+		
+		model.addAttribute("contentModel", result);
+		return "atools/atools-index";
+	}	
+	
+	
+	@AuthPassport
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model, HttpServletRequest request) {
 		
 		model.addAttribute("requestUrl", request.getServletPath());
@@ -60,25 +110,22 @@ public class AtoolsController extends BaseController {
 		String appType = "xcloud";
 		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
 		searchVo.setAppType(appType);
-		PageInfo result = appToolsService.selectByListPage(searchVo, pageNo, pageSize);
+		searchVo.setMenuType("t");
+		searchVo.setIsOnline((short) 0);
 		
-		List<AppTools> list = result.getList();
-
+		
+		List<AppTools> list = appToolsService.selectBySearchVo(searchVo);
+		List<AppToolsVo> result = new ArrayList<AppToolsVo>();
 		for (int i = 0; i < list.size(); i++) {
 			AppTools appTools = list.get(i);
 			AppToolsVo vo = appToolsService.getAppToolsVo(appTools, userId);
-			/*if (vo.getStatus() == null){
-				vo.setStatus((short)0);
-			}*/
-			list.set(i, vo);
+			result.add(vo);
 		}
-		result = new PageInfo(list);
-		
-		
 		
 		model.addAttribute("contentModel", result);
 		return "atools/atools-index";
-	}	
+	}		
+	
 	/**
 	 * 应用状态改变更新
 	 * @param tId

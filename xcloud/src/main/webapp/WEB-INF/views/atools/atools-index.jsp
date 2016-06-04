@@ -27,7 +27,10 @@
 	<!--header end-->
 
 	<div class="am-cf admin-main">
-
+		<!-- sidebar start -->
+		<%@ include file="../atools/atools-menu.jsp"%>
+		<!-- sidebar end -->
+		
 		<!-- content start -->
 		<div class="admin-content">
 
@@ -46,34 +49,17 @@
 									</th>
 									<th class="table-name">应用</th>
 									<th class="table-title">名称</th>
-									<th class="table-title">状态</th>
 									<th class="table-title">介绍</th>
 									<th class="table-set">操作</th>
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach items="${contentModel.list}" var="item">
+							<c:forEach items="${contentModel}" var="item">
 								<tr>
 									
 									<td><img width="60" height="60" src="${ item.logo }"/></td>
 									<td>${item.name}</td>
-									<td><c:choose>
-									<c:when test="${item.status  == null && item.isDefault == 0}">
-														添加
-									</c:when>
-									<c:when test="${item.status == null && item.isDefault == 1 && item.isDel == 0}">
-														取消
-									</c:when>
-									<c:when test="${item.status == null && item.isDefault == 1 && item.isDel == 1}">
-														已添加
-									</c:when>
-									<c:when test="${item.status ==0}">
-														添加
-									</c:when>
-									<c:when test="${item.status ==1}">
-														取消
-									</c:when>
-							        </c:choose></td> 
+									
 									<td>${item.appDescribe}</td>
 									<td>
 									<c:if test="${item.status == null && item.isDefault == 0 }">
@@ -182,11 +168,6 @@
 								</tr> -->
 							</tbody>
 						</table>
-                       <c:import url="../shared/paging.jsp">
-							<c:param name="pageModelName" value="contentModel" />
-							<c:param name="urlAddress" value="/atools/index" />
-						</c:import>
-
 					</form>
 				</div>
 
@@ -194,12 +175,6 @@
 			<!-- content end -->
 
 		</div>
-
-		<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
-			data-am-offcanvas="{target: '#admin-offcanvas'}"
-		></a>
-
-
 		<!--footer start-->
 		<%@ include file="../shared/pageFooter.jsp"%>
 		<!--footer end-->
