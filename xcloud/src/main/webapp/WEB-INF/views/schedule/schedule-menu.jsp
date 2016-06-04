@@ -4,7 +4,7 @@
 <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 
 	<ul class="am-list admin-sidebar-list">
-		<li><a href="/xcloud/schedule/list"><span class="am-icon-tags"></span> </span> 我的日程</a></li>
+		<li><a href="/xcloud/schedule/list" onclick="setMenuId('collapse-nav-shcedule-list')"><span class="am-icon-tags"></span> </span> 我的日程</a></li>
 		<li class="admin-parent"><a class="am-cf" onclick="setMenuId('collapse-nav-shcedule-card')"><span
 				class="am-icon-bell-o"></span> 通知与提醒 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
 			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-shcedule-card">
@@ -15,7 +15,7 @@
 				<li><a href="/xcloud/schedule/card-form?card_type=4"><span class="am-icon-calendar"></span> 面试邀约</a></li>
 				
 			</ul></li>
-		<li><a href="#"><span class="am-icon-tags"></span> 常用提醒设置</a></li>
+		<li><a href="#" onclick="setMenuId('collapse-nav-shcedule-set')"><span class="am-icon-tags" ></span> 常用提醒设置</a></li>
 
 	</ul>
 

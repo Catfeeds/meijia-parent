@@ -100,6 +100,7 @@ setTopMenuHl();
 
 //菜单点击展开
 function setMenuId(menuId) {
+	console.log("setMenuId = " + menuId);
 	$.cookie("xcloud-menu-id", menuId, { path: "/"}); 
 	menuCollapse();
 }
@@ -110,11 +111,25 @@ function menuCollapse() {
 	if (menuId == undefined) return false;
 	if (menuId == "") return false;
 	
-	if ($("#"+ menuId).hasClass("am-in")) {
-		$("#"+ menuId).collapse('close');
-	} else {
-		$("#"+ menuId).collapse('open');
-	}
+	$(".admin-sidebar-list").each(function () {
+		$(this).find('ul').each(function() {
+			var tmenuId = $(this).attr("id");
+			console.log("tmenuId = " + tmenuId+ "---- menuId=" + menuId);
+			if (tmenuId == menuId) {
+				$("#"+ tmenuId).collapse('open');
+			} else {
+				console.log("close");
+				$("#"+ tmenuId).collapse('close');
+			}
+			
+	    });
+	});
+//	
+//	if ($("#"+ menuId).hasClass("am-in")) {
+//		$("#"+ menuId).collapse('close');
+//	} else {
+//		$("#"+ menuId).collapse('open');
+//	}
 	//console.log($("#"+ menuId).collapse());
 }
 menuCollapse();

@@ -35,62 +35,7 @@ public class AtoolsController extends BaseController {
 	
 	@Autowired
 	private UserAppToolsService userAppToolsService;
-	
-	 /**
-	  * 应用中心列表
-	  * @param model
-	  * @param request
-	  * @return
-	  */
-	@AuthPassport
-	@RequestMapping(value = "/my", method = RequestMethod.GET)
-	public String myList(Model model, HttpServletRequest request) {
 		
-		model.addAttribute("requestUrl", request.getServletPath());
-		model.addAttribute("requestQuery", request.getQueryString());
-		
-		// 获取登录的用户
-		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
-		Long companyId = accountAuth.getCompanyId();
-		Long userId = accountAuth.getUserId();
-		model.addAttribute("companyId", companyId);
-		model.addAttribute("userId", userId);
-		
-		String appType = "xcloud";
-		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
-		searchVo.setAppType(appType);
-		searchVo.setMenuType("t");
-		searchVo.setIsOnline((short) 0);
-		List<AppTools> list = appToolsService.selectBySearchVo(searchVo);
-		
-		List<UserAppTools> myList = userAppToolsService.selectByUserIdAndStatus(userId);
-		
-		List<AppTools> result = new ArrayList<AppTools>();
-		for (int i = 0; i < list.size(); i++) {
-			AppTools item = null;
-			
-			if (list.get(i).getIsDefault().equals((short)1)) {
-				item = list.get(i);
-			} else {
-				for (UserAppTools item1: myList) {
-					if (list.get(i).gettId().equals(item1.gettId())) {
-						item = list.get(i);
-						break;
-					}
-				}
-			}
-			
-			if (item != null) {
-				AppToolsVo vo = appToolsService.getAppToolsVo(item, userId);
-				result.add(vo);
-			}
-		}
-		
-		model.addAttribute("contentModel", result);
-		return "atools/atools-index";
-	}	
-	
-	
 	@AuthPassport
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model, HttpServletRequest request) {
