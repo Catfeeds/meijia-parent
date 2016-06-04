@@ -42,7 +42,7 @@
 			and service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR}
 		</if>
 
-		order by id asc
+		order by id desc
 	</select>
 
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.po.AdSearchVo">
@@ -70,7 +70,7 @@
 			<![CDATA[ and update_time >  #{updateTime,jdbcType=NUMERIC} ]]>
 		</if>
 
-		order by id asc
+		order by id desc
 	</select>
 
 	<select id="selectByAdType" resultMap="BaseResultMap" parameterType="java.lang.String">
