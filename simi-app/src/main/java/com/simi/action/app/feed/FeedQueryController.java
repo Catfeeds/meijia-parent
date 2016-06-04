@@ -94,20 +94,23 @@ public class FeedQueryController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get_list", method = RequestMethod.GET)
 	public AppResultData<Object> getFeedList(
-			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId,
 			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType,
 			@RequestParam(value = "feed_from", required = false, defaultValue = "0") Short feedFrom,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
-		Users u = userService.selectByPrimaryKey(userId);
-
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
+		
+		Users u = null;
+		if (userId > 0L) {
+			u = userService.selectByPrimaryKey(userId);
+	
+			// 判断是否为注册用户，非注册用户返回 999
+			if (u == null) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+				return result;
+			}
 		}
 
 		FeedSearchVo searchVo = new FeedSearchVo();
@@ -143,19 +146,22 @@ public class FeedQueryController extends BaseController {
 	 */
 	@RequestMapping(value = "get_comment_list", method = RequestMethod.GET)
 	public AppResultData<Object> getCommentList(
-			@RequestParam("fid") Long fid, @RequestParam("user_id") Long userId,
+			@RequestParam("fid") Long fid, 
+			@RequestParam(value = "user_id", required = false, defaultValue = "") Long userId,
 			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		Users u = userService.selectByPrimaryKey(userId);
+		if (userId != null) {
+			Users u = userService.selectByPrimaryKey(userId);
 
-		// 判断是否为注册用户，非注册用户返回 999
-		if (u == null) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
-			return result;
+			// 判断是否为注册用户，非注册用户返回 999
+			if (u == null) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
+				return result;
+			}
 		}
 
 		FeedSearchVo searchVo = new FeedSearchVo();
@@ -164,7 +170,7 @@ public class FeedQueryController extends BaseController {
 
 		List<FeedComment> feedComments = feedCommentService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		if (!feedComments.isEmpty()) {
-			List<FeedCommentViewVo> list = feedCommentService.changeToFeedComments(feedComments);
+			List<FeedCommentViewVo> list = feedCommentService.changeToFeedComments(feedComments, userId);
 			result.setData(list);
 		}
 
