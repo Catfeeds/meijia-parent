@@ -9,6 +9,10 @@ public class FeedCommentViewVo extends FeedComment {
 	private String headImg;
 	
 	private String addTimeStr;
+	
+	private Integer totalZan;
+	
+	private Short isZan;
 
 	public String getName() {
 		return name;
@@ -32,5 +36,21 @@ public class FeedCommentViewVo extends FeedComment {
 
 	public void setAddTimeStr(String addTimeStr) {
 		this.addTimeStr = addTimeStr;
+	}
+
+	public Integer getTotalZan() {
+		return totalZan;
+	}
+
+	public void setTotalZan(Integer totalZan) {
+		this.totalZan = totalZan;
+	}
+
+	public Short getIsZan() {
+		return isZan;
+	}
+
+	public void setIsZan(Short isZan) {
+		this.isZan = isZan;
 	}
 }

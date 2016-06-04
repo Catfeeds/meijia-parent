@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.feed.FeedCommentService;
+import com.simi.service.feed.FeedZanService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.feed.FeedCommentViewVo;
 import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.po.model.feed.FeedComment;
+import com.simi.po.model.feed.FeedZan;
 import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.meijia.utils.BeanUtilsExp;
@@ -28,6 +30,9 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	
 	@Autowired
 	UsersService usersService;	
+	
+	@Autowired
+	FeedZanService feedZanService;
 	
 	@Override
 	public FeedComment initFeedComment() {
@@ -57,7 +62,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}	
 	
 	@Override
-	public List<FeedCommentViewVo> changeToFeedComments(List<FeedComment> feedComments) {
+	public List<FeedCommentViewVo> changeToFeedComments(List<FeedComment> feedComments, Long userId) {
 		
 		List<FeedCommentViewVo> result = new ArrayList<FeedCommentViewVo>();
 		
@@ -77,6 +82,11 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		}
 		
 		FeedComment item = null;
+		
+		
+		FeedSearchVo searchVo = new FeedSearchVo();
+
+		
 		for (int i =0; i < feedComments.size(); i++) {
 			item = feedComments.get(i);
 			FeedCommentViewVo vo = new FeedCommentViewVo();
@@ -94,7 +104,28 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			Date addTimeDate = TimeStampUtil.timeStampToDateFull(vo.getAddTime() * 1000, null);
 			String addTimeStr = DateUtil.fromToday(addTimeDate);
 			vo.setAddTimeStr(addTimeStr);
+
+			// 统计赞的数量
+			searchVo = new FeedSearchVo();
+			searchVo.setFid(vo.getFid());
+			searchVo.setFeedType(vo.getFeedType());		
+			searchVo.setCommentId(vo.getId());
+			int totalZan = feedZanService.totalByFid(searchVo);
+			vo.setTotalZan(totalZan);
 			
+			//用户是否已经点过赞
+			vo.setIsZan((short) 0);
+			
+			if (userId > 0L) {
+				searchVo = new FeedSearchVo();
+				searchVo.setFid(vo.getFid());
+				searchVo.setFeedType(vo.getFeedType());		
+				searchVo.setCommentId(vo.getId());
+				searchVo.setUserId(userId);
+				List<FeedZan> zans = feedZanService.selectBySearchVo(searchVo);
+				
+				if (!zans.isEmpty()) vo.setIsZan((short) 1);
+			}
 			result.add(vo);
 		}
 		
