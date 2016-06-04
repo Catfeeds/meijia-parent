@@ -14,20 +14,20 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Enumeration;
 
-import javax.activation.DataHandler;
+//import javax.activation.DataHandler;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.internet.MimePartDataSource;
+//import javax.mail.internet.MimePartDataSource;
 
 public class Mht2HtmlUtil {
 	public static void main(String[] args) {
 		String mhtPath = "E:/2016/06/03/51_mht/51job_陈迪(302834351).mht";
 		String htmlPath = "E:/2016/06/03/51_mht/51job_陈迪(302834351).html";
-//		Mht2HtmlUtil.mht2html(mhtPath, htmlPath);
+		Mht2HtmlUtil.mht2html(mhtPath, htmlPath, "UTF8");
 		String html = Mht2HtmlUtil.mht2html(mhtPath);
 		System.out.println(html);
 	}
@@ -113,8 +113,8 @@ public class Mht2HtmlUtil {
 						continue;
 					}
 
-					DataHandler dataHandler = bp.getDataHandler();
-					MimePartDataSource source = (MimePartDataSource) dataHandler.getDataSource();
+//					DataHandler dataHandler = bp.getDataHandler();
+//					MimePartDataSource source = (MimePartDataSource) dataHandler.getDataSource();
 
 					// 获取资源文件的绝对路径
 					String FilePath = parent.getAbsolutePath() + File.separator + getName(strUrl, i);

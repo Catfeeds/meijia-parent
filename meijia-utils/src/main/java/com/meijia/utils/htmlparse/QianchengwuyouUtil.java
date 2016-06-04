@@ -37,16 +37,18 @@ public class QianchengwuyouUtil {
 		File input = new File(htmlPath);
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 		
-		String ID = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1)", "", "\\(ID:([0-9])+\\)", 1);
+		String ID = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1)", "text" , "", "\\(ID:([0-9])+\\)", 1);
 		String name = JSoupUtil.parseByPatten(doc, "table > tbody > tr > td > table:eq(1) span", "text", "", "");
-		String mobile = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "", "电　话： ([0-9]+)（手机）", 1);
-		String gender = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "", "\\| (男|女) \\|", 1);
-		String birthDate = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "", "（(1982年8月3日)）", 1);
-		String workAge = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "", "(.+)工作经验\\s+?\\|", 1);
+		String mobile = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "text" , "", "电　话： ([0-9]+)（手机）", 1);
+		String gender = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "text" , "", "\\| (男|女) \\|", 1);
+		String birthDate = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "text" , "", "（(1982年8月3日)）", 1);
+		String workAge = JSoupUtil.parseByPattenAndSinglRegex(doc, "table > tbody > tr > td > table:eq(1) table", "text" , "", "(.+)工作经验\\s+?\\|", 1);
 		String abodeAddress = JSoupUtil.parseByPatten(doc, "table > tbody > tr > td > table:eq(1) table tr:contains(居住地：) > td:eq(1)", "text", "", "");
 		String permanentAddress = JSoupUtil.parseByPatten(doc, "table > tbody > tr > td > table:eq(1) table tr:contains(户　口：) > td:eq(3)", "text", "", "");
 		String email = JSoupUtil.parseByPatten(doc, "table > tbody > tr > td > table:eq(1) table tr:contains(E-mail：) > td:eq(1)", "text", "", "");
-//		String degree = JSoupUtil.parseByPatten(doc, "table[style=margin:0px auto;line-height:20px;padding:0 0 0 10px;]", "html", "", "<td.+?>学　历：</td>\\s+?<td.+?>本科</td>");
+		String degree = JSoupUtil.parseByPattenAndSinglRegex(doc, "table[style=margin:0px auto;line-height:20px;padding:0 0 0 10px;]", "html", "", "<td.+?>学　历：</td>\\s+?<td.+?>(.+)</td>", 1);
+//		String degree = JSoupUtil.parseByPattenAndSinglRegex(doc, "table[style=margin:0px auto;line-height:20px;padding:0 0 0 10px;]", "", ".+", 0);
+//		degree = JSoupUtil.parseByPattenAndBetweenRegex(doc, "table[style=margin:0px auto;line-height:20px;padding:0 0 0 10px;]", "", "", "", "");
 		//> tbody > tr > td:eq(0)
 		
 		System.out.println("ID: " + ID);
@@ -58,7 +60,7 @@ public class QianchengwuyouUtil {
 		System.out.println("居住地：" + abodeAddress);
 		System.out.println("户口：" + permanentAddress);
 		System.out.println("E-mail：" + email);
-//		System.out.println(degree);
+		System.out.println("最高学历：" + degree);
 		
 		Map resume = new HashMap();
 		return resume;

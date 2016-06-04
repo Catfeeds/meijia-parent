@@ -80,17 +80,22 @@ public class JSoupUtil {
 		女    24岁(1991年4月)    1年工作经验    本科    未婚
 	 * @param doc        jsoup Docuemnt
 	 * @param patten     查找表达式
+	 * @param textOrHtml 获取文本还是带html标签的内容 text or html
 	 * @param attrName   属性
 	 * @param regex 	 查找的正则表达式
 	 * @param index		分组索引
 	 * @return
 	 */
-	public static String parseByPattenAndSinglRegex(Document doc, String patten, String attrName, String regex, int index) {
+	public static String parseByPattenAndSinglRegex(Document doc, String patten, String textOrHtml, String attrName, String regex, int index) {
 
 		String result = "";
 		String content = "";
 		Element item = doc.select(patten).first();
-		content = item.text();
+		if (textOrHtml.equals("html")) {
+			content = item.html();
+		} else {
+			content = item.text();
+		}
 		if (!StringUtil.isEmpty(attrName))
 			content = item.attr(attrName);
 		
@@ -222,15 +227,15 @@ public class JSoupUtil {
 		System.out.println("match ID = " + JSoupUtil.parseByPatten(doc, "span.resume-left-tips-id", "text", "", "ID:"));
 		System.out.println("match 姓名 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fl", "text", "", ""));
 		System.out.println("match 手机号 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fr", "text", "", "手机 ："));
-		System.out.println("match 性别 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "/男|女", 0));
-		System.out.println("match 生日 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "(([0-9]+年[0-9]+月))", 0));
-		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "(([0-9]+年工作经验), 0)", 0));
-		System.out.println("match 学历 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "/小学|初中|高中|大专|专科|本科|硕士|博士|博士后", 0));
-		System.out.println("match 婚姻状态 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "", "/已婚|未婚|保密|离异", 0));
+		System.out.println("match 性别 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text", "", "/男|女", 0));
+		System.out.println("match 生日 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text" , "", "(([0-9]+年[0-9]+月))", 0));
+		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "(([0-9]+年工作经验), 0)", 0));
+		System.out.println("match 学历 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/小学|初中|高中|大专|专科|本科|硕士|博士|博士后", 0));
+		System.out.println("match 婚姻状态 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/已婚|未婚|保密|离异", 0));
 		System.out.println("match 现居住地 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "现居住地", "|", "："));
 		System.out.println("match 户口 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "户口", "|", "："));
-		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
-		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "", "有海外工作\\/学习经验", 0));
+		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
+		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "有海外工作\\/学习经验", 0));
 		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "身份证：", " ", ""));
 		System.out.println("match 手机 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "手机：", " ", ""));
 		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "text", "", ""));
