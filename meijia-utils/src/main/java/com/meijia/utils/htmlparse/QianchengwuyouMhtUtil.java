@@ -13,7 +13,7 @@ import org.jsoup.nodes.Document;
  * @author bright87
  *
  */
-public class QianchengwuyouUtil {
+public class QianchengwuyouMhtUtil {
 	
 	
 	public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class QianchengwuyouUtil {
 		htmlPath = "E:/2016/06/03/51_mht/51job_顾维营(93782328).html";
 		
 		try {
-			QianchengwuyouUtil.parse(mhtPath, htmlPath);
+			QianchengwuyouMhtUtil.parse(mhtPath, htmlPath);
 			
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -121,7 +121,7 @@ public class QianchengwuyouUtil {
 	 * @return
 	 */
 	public static Map<String, String> parse(String path) {
-		String content = QianchengwuyouUtil.getContent(path);
+		String content = QianchengwuyouMhtUtil.getContent(path);
 		if ( "" == content || null == content ) {
 			return null;
 		}
