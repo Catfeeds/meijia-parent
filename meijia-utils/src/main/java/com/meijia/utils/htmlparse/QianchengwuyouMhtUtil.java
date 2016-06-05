@@ -23,6 +23,12 @@ public class QianchengwuyouMhtUtil {
 		mhtPath = "E:/2016/06/03/51_mht/51job_顾维营(93782328).mht";
 		htmlPath = "E:/2016/06/03/51_mht/51job_顾维营(93782328).html";
 		
+		String path = JSoupUtil.getClassResource(JSoupUtil.class) + "/src/";
+		String filename = "resume-template-51job.mht";
+		String targetName = "resume-template-51job-mht.html";
+		mhtPath = path + filename;
+		htmlPath = path + targetName;
+		System.out.println(htmlPath);
 		try {
 			QianchengwuyouMhtUtil.parse(mhtPath, htmlPath);
 			
