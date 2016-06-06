@@ -71,12 +71,40 @@ $("#btn-staff-add").click(function() {
 	location.href = "/xcloud/staff/staff-form?staff_id=0";
 });
 
+//删除员工
+function staffDel(staffId) {
+	 if(confirm("确定要办理员工离职吗")){
+		 $.ajax({
+		       type : "post",
+		       url : "/xcloud/staff/del.json?staff_id="+staffId,
+//		       data : params,
+		       dataType : "json",
+		       async : false,
+		       success : function(rdata, textStatus) {
+		          if (rdata.status == "999") {
+		       	   		alert(rdata.msg);
+		       	   		return true;
+		          }
+		          
+		          if (rdata.status == "0") {
+		        	  location.reload();
+		          }
+		       },
+		       error : function(XMLHttpRequest, textStatus, errorThrown) {
+		           
+		       },
+		       
+		   });   
+	 }
+}
+
 //批量导入员工
 $("#btn-staff-import").click(function() {
-	location.href = "/xcloud/hr/staff-import";
+	location.href = "/xcloud/staff/staff-import";
 });
 //导出通讯录
 $("#btn-dept").click(function() {
-	location.href = "/xcloud/hr/staff-export";
+	location.href = "/xcloud/staff/dept";
 });
 
+//组织架构

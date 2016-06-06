@@ -9,15 +9,12 @@
 			<span class="am-badge am-badge-danger am-radius"></span>
 		</a>
 	</div>
-
 	<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
 		data-am-collapse="{target: '#topbar-collapse'}">
 		<span class="am-sr-only">导航切换</span>
 		<span class="am-icon-bars"></span>
 	</button>
-
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
-
 		<ul id="top-ul" class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
 			<li class="am-nav" id="top-index">
 				<a href="/xcloud/index" onclick="setTopMenuId('top-index', '')" title="首页">首页</a>
@@ -29,7 +26,7 @@
 				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-staff', '')" title="通讯录" target="_top">通讯录</a>
 			</li>
 			<li id="top-hr">
-				<a href="/xcloud/hr/index" onclick="setTopMenuId('top-hr', '')" title="人事" target="_top">人事</a>
+				<a href="/xcloud/hr/staff-list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">人事</a>
 			</li>
 			<li id="top-xz">
 				<a href="/xcloud/xz/assets/commpany_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')"
@@ -38,7 +35,6 @@
 			<li id="top-atools">
 				<a href="/xcloud/atools/list" onclick="setTopMenuId('top-atools')" title="应用中心" target="_top">应用中心</a>
 			</li>
-
 			<!--
       	<li><a href="javascript:;"><span class="am-icon-bell"></span> 消息 <span class="am-badge am-badge-warning">5</span></a></li>
       	-->

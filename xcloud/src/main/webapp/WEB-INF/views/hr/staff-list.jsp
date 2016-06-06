@@ -15,13 +15,13 @@
 	<!--header end-->
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
-		<%@ include file="../staffs/staff-menu.jsp"%>
+		<%@ include file="../hr/hr-menu.jsp"%>
 		<!-- sidebar end -->
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>Contacts</small>
+					<strong class="am-text-primary am-text-lg">人事档案</strong>
 				</div>
 				<div class="am-u-sm-12 am-u-md-6 am-fr">
 					<div class="am-btn-toolbar am-fr">
@@ -36,13 +36,12 @@
 							</button>
 							<button type="button" id="btn-staff-export" class="am-btn am-btn-secondary">
 								<span class="am-icon-table"></span>
-								导出通讯录
+								导出Excel
 							</button>
 							<button type="button" id="btn-change-dept" class="am-btn am-btn-default am-radius">
 								<span class="am-icon-sitemap"></span>
 								分配部门
 							</button>
-							
 						</div>
 					</div>
 				</div>
@@ -89,13 +88,12 @@
 										<td class="am-hide-sm-only">${item.mobile}</td>
 										<td>${item.deptName}</td>
 										<td class="am-hide-sm-only">${item.jobName}</td>
-										
 										<td>${item.companyEmail}</td>
-										
 										<td>
 											<div class="am-btn-toolbar">
 												<div class="am-btn-group am-btn-group-xs">
-													<a href="/xcloud/staff/staff-form?staff_id=${item.id }" class="am-icon-edit" title="编辑"></a>
+													<a href="/xcloud/hr/staff-form?staff_id=${item.id }" class="am-icon-edit" title="编辑"></a>
+													<a href="#" onClick="javascript:staffDel(${item.id})" class="am-icon-user-times" title="删除"></a>
 												</div>
 											</div>
 										</td>
@@ -105,7 +103,7 @@
 						</table>
 						<c:import url="../shared/paging.jsp">
 							<c:param name="pageModelName" value="contentModel" />
-							<c:param name="urlAddress" value="/staff/list" />
+							<c:param name="urlAddress" value="/hr/staff-list" />
 						</c:import>
 					</form>
 				</div>
@@ -155,6 +153,6 @@
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/staffs/staff-list.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/hr/staff-list.js'/>"></script>
 </body>
 </html>

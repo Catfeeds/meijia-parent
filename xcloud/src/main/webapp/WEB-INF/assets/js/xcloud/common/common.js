@@ -116,7 +116,11 @@ function menuCollapse() {
 			var tmenuId = $(this).attr("id");
 			console.log("tmenuId = " + tmenuId+ "---- menuId=" + menuId);
 			if (tmenuId == menuId) {
-				$("#"+ tmenuId).collapse('open');
+				if ($("#"+ tmenuId).hasClass("am-in")) {
+					$("#"+ menuId).collapse('close');
+				} else {
+					$("#"+ tmenuId).collapse('open');
+				}
 			} else {
 				console.log("close");
 				$("#"+ tmenuId).collapse('close');
