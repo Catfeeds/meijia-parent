@@ -147,7 +147,7 @@ public class FeedQueryController extends BaseController {
 	@RequestMapping(value = "get_comment_list", method = RequestMethod.GET)
 	public AppResultData<Object> getCommentList(
 			@RequestParam("fid") Long fid, 
-			@RequestParam(value = "user_id", required = false, defaultValue = "") Long userId,
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId,
 			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
