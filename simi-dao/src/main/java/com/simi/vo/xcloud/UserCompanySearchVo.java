@@ -2,6 +2,8 @@ package com.simi.vo.xcloud;
 
 public class UserCompanySearchVo{
 	
+	private String keyword;
+	
 	private Long companyId;
 	
 	private Long deptId;
@@ -100,5 +102,13 @@ public class UserCompanySearchVo{
 
 	public void setIsDefault(Short isDefault) {
 		this.isDefault = isDefault;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 }
