@@ -377,8 +377,11 @@ public class FeedController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "post_comment", method = RequestMethod.POST)
-	public AppResultData<Object> postComment(@RequestParam("fid") Long fid, @RequestParam("user_id") Long userId,
-			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType, @RequestParam("comment") String comment) {
+	public AppResultData<Object> postComment(
+			@RequestParam("fid") Long fid, 
+			@RequestParam("user_id") Long userId,
+			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType, 
+			@RequestParam("comment") String comment) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -398,6 +401,12 @@ public class FeedController extends BaseController {
 				result.setMsg("这是已关闭的信息.");
 				return result;
 			}
+		}
+		
+		if (!StringUtil.isEmpty(comment) && comment.length() > 1024) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("评论内容太长!");
+			return result;
 		}
 
 		FeedComment feedComment = feedCommentService.initFeedComment();

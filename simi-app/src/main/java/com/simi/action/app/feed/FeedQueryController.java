@@ -61,11 +61,11 @@ public class FeedQueryController extends BaseController {
 	public AppResultData<Object> getDetail(
 			@RequestParam("fid") Long fid, 
 			@RequestParam(value = "feed_type", required = false, defaultValue = "1") Short feedType,
-			@RequestParam(value = "user_id", required = false, defaultValue = "") Long userId) {
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		if (userId != null) {
+		if (userId > 0L) {
 			Users u = userService.selectByPrimaryKey(userId);
 
 			// 判断是否为注册用户，非注册用户返回 999
@@ -153,7 +153,7 @@ public class FeedQueryController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-		if (userId != null) {
+		if (userId > 0L) {
 			Users u = userService.selectByPrimaryKey(userId);
 
 			// 判断是否为注册用户，非注册用户返回 999
