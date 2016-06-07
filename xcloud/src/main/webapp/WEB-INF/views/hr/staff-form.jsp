@@ -35,13 +35,26 @@
 						<li>
 							<a href="#staff-job">职位信息</a>
 						</li>
-						<li>
-							<a href="#staff-detail">个人详情</a>
-						</li>
 					</ul>
 					<div class="am-tabs-bd">
 						<!----------------- 基本信息 ------------------------------------>
 						<div class="am-tab-panel am-fade am-in am-active" id="staff-info">
+							<div class="am-form-group">
+								<label class="am-u-sm-2 am-form-label">头像:</label>
+								<div class="am-u-sm-5">
+									<div class="am-form-group am-form-file">
+										<div class="am-u-sm-5">
+											<button type="button" id="btnUpload" name="btnUpload" class="am-btn am-btn-danger am-btn-sm">
+												<i class="am-icon-cloud-upload"></i>
+												选择要上传的图片
+											</button>
+											<input id="file" type="file" name="file" accept="image/*">
+										</div>
+										<label id="file-list" class="am-u-sm-3 am-form-label"></label>
+									</div>
+								</div>
+								<div class="am-u-sm-3"></div>
+							</div>
 							<div class="am-form-group ">
 								<label class="am-u-sm-2 am-form-label">
 									<font color="red">*</font>员工编号:
@@ -90,35 +103,26 @@
 								<label class="am-u-sm-2 am-form-label">邮箱:</label>
 								<div class="am-u-sm-5">
 									<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email" maxLength="64" />
-									
 								</div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">身份证号:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">身份证照:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">银行卡号:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">开户行:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 								<div class="am-u-sm-3"></div>
 							</div>
 						</div>
@@ -137,10 +141,8 @@
 											</button>
 										</span>
 									</div>
-									
 								</div>
 								<div class="am-u-sm-3"></div>
-								
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">员工类型:</label>
@@ -150,7 +152,6 @@
 										<form:option value="1">兼职</form:option>
 										<form:option value="2">实习</form:option>
 									</form:select>
-									
 								</div>
 								<div class="am-u-sm-3"></div>
 							</div>
@@ -160,7 +161,6 @@
 									<form:select path="deptId" class="am-form-field am-radius">
 										<form:options items="${deptList}" itemValue="deptId" itemLabel="name" />
 									</form:select>
-									
 								</div>
 								<div class="am-u-sm-3"></div>
 							</div>
@@ -168,108 +168,27 @@
 								<label class="am-u-sm-2 am-form-label">职位:</label>
 								<div class="am-u-sm-5">
 									<form:input path="jobName" class="am-form-field am-radius" placeholder="" maxLength="64" />
-									
 								</div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">是否转正:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">转正日期:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">合同开始日期:</label>
-								<div class="am-u-sm-5">
-									
-								</div>
+								<div class="am-u-sm-5"></div>
 								<div class="am-u-sm-3"></div>
 							</div>
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">合同年限:</label>
-								<div class="am-u-sm-5">
-									下拉框 6个月 1 - 10年 
-								</div>
-								<div class="am-u-sm-3"></div>
-							</div>
-						</div>
-						<!----------------- 个人详情 ------------------------------------>
-						<div class="am-tab-panel am-fade am-in am-active" id="staff-detail">
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label"></label>
-								<div class="am-u-sm-6">
-									<c:if test="${contentModel.headImg != null }">
-										<img class="am-circle" src="${contentModel.headImg }" width="140" height="140" />
-									</c:if>
-								</div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label  class="am-u-sm-2 am-form-label">头像:</label>
-								<div class="am-u-sm-5">
-									<div class="am-form-group am-form-file">
-										<div class="am-u-sm-5">
-											<button type="button" id="btnUpload" name="btnUpload" class="am-btn am-btn-danger am-btn-sm">
-												<i class="am-icon-cloud-upload"></i>
-												选择要上传的图片
-											</button>
-											<input id="file" type="file" name="file" accept="image/*">
-										</div>
-										<label id="file-list" class="am-u-sm-3 am-form-label"></label>
-									</div>
-								</div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">英文名:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">学历:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">毕业院校:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">婚姻状况:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">民族:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">户口:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">星座:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">血型:</label>
-								<div class="am-u-sm-5"></div>
-							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">现居住地:</label>
-								<div class="am-u-sm-5"></div>
+								<div class="am-u-sm-5">下拉框 6个月 1 - 10年</div>
 								<div class="am-u-sm-3"></div>
 							</div>
 						</div>
