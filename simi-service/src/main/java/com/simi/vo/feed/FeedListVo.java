@@ -30,6 +30,8 @@ public class FeedListVo {
 	private List<FeedImgs> feedImgs;
 	
 	private List<TagVo> feedTags;
+	
+	private Short status;
 
 	public Long getFid() {
 		return fid;
@@ -125,6 +127,14 @@ public class FeedListVo {
 
 	public void setFeedExtra(String feedExtra) {
 		this.feedExtra = feedExtra;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 	
 }
