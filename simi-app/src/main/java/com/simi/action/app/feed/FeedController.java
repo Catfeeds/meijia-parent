@@ -405,7 +405,7 @@ public class FeedController extends BaseController {
 		
 		if (!StringUtil.isEmpty(comment) && comment.length() > 1024) {
 			result.setStatus(Constants.ERROR_999);
-			result.setMsg("评论内容太长!");
+			result.setMsg("答案有点长，控制在1000字内好吗亲？");
 			return result;
 		}
 
