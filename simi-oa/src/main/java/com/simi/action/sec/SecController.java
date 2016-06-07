@@ -189,12 +189,12 @@ public class SecController extends AdminController {
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 		
 		//是否审批名称
-		short isApproval = u.getIsApproval();
-		if (isApproval == 0) {
-			vo.setIsApprovalName("未审批");
-		}else {
-			vo.setIsApprovalName("已审批");
-		}
+//		short isApproval = u.getIsApproval();
+//		if (isApproval == 0) {
+//			vo.setIsApprovalName("未审批");
+//		}else {
+//			vo.setIsApprovalName("已审批");
+//		}
 		
 		//学历名称
 		/*short degreeId = u.getDegreeId();
@@ -329,9 +329,9 @@ public class SecController extends AdminController {
 			}
 		}
     	//秘书审核通过(IsApproval==2)后通知助理
-    	if (users.getIsApproval()==2) {
-    		noticeSmsAsyncService.userSecToUserPushSms(users);
-		}
+//    	if (users.getIsApproval()==2) {
+//    		noticeSmsAsyncService.userSecToUserPushSms(users);
+//		}
     	
     	return "redirect:/sec/applyList";
     }
