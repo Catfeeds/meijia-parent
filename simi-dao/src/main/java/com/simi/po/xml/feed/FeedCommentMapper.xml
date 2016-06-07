@@ -37,7 +37,7 @@
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
 		</if>
-		order by add_time desc
+		order by status desc, add_time desc
 	</select>
 
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
@@ -100,7 +100,7 @@
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
 		</if>
-		
+
 		group by fid
 		order by fid desc
 	</select>
@@ -134,7 +134,7 @@
 	</delete>
 
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedComment">
-	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
 		insert into feed_comment (id, fid, user_id, feed_type,
@@ -144,7 +144,7 @@
 		#{comment,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedComment">
-	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
 		</selectKey>
 		insert into feed_comment
@@ -223,11 +223,13 @@
 		update feed_comment
 		set fid = #{fid,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
-		feed_type = #{feedType,jdbcType=NUMERIC},
+		feed_type =
+		#{feedType,jdbcType=NUMERIC},
 		comment =
 		#{comment,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
-		where id = #{id,jdbcType=NUMERIC}
+		where id =
+		#{id,jdbcType=NUMERIC}
 	</update>
 </mapper>
