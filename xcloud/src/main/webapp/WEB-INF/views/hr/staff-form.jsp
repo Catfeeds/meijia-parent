@@ -171,11 +171,7 @@
 								</div>
 								<div class="am-u-sm-3"></div>
 							</div>
-							<div class="am-form-group">
-								<label class="am-u-sm-2 am-form-label">是否转正:</label>
-								<div class="am-u-sm-5"></div>
-								<div class="am-u-sm-3"></div>
-							</div>
+
 							<div class="am-form-group">
 								<label class="am-u-sm-2 am-form-label">转正日期:</label>
 								<div class="am-u-sm-5"></div>
