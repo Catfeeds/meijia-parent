@@ -11,23 +11,14 @@
 		<result column="real_name" jdbcType="VARCHAR" property="realName" />
 		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
 		<result column="sex" jdbcType="VARCHAR" property="sex" />
-
 		<result column="introduction" jdbcType="VARCHAR" property="introduction" />
 		<result column="level" jdbcType="NUMERIC" property="addTime" />
-		<result column="work_start" jdbcType="VARCHAR" property="workStart" />
-		<result column="work_end" jdbcType="VARCHAR" property="workEnd" />
-		<result column="is_door" jdbcType="NUMERIC" property="isDoor" />
-
-		<result column="birth_day" jdbcType="DATE" property="birthDay" />
-		<result column="degree_id" jdbcType="NUMERIC" property="degreeId" />
-		<result column="major" jdbcType="VARCHAR" property="major" />
 		<result column="head_img" jdbcType="VARCHAR" property="headImg" />
 		<result column="qr_code" jdbcType="VARCHAR" property="qrCode" />
 		<result column="rest_money" jdbcType="DECIMAL" property="restMoney" />
 		<result column="score" jdbcType="INTEGER" property="score" />
 		<result column="exp" jdbcType="INTEGER" property="exp" />
 		<result column="user_type" jdbcType="NUMERIC" property="userType" />
-		<result column="is_approval" jdbcType="NUMERIC" property="isApproval" />
 		<result column="add_from" jdbcType="NUMERIC" property="addFrom" />
 		<result column="add_time" jdbcType="NUMERIC" property="addTime" />
 		<result column="update_time" jdbcType="NUMERIC" property="updateTime" />
@@ -40,9 +31,8 @@
 
 	<sql id="Base_Column_List">
 		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex,
-		introduction, level,work_start, work_end,is_door,
-		birth_day,degree_id, major, head_img, qr_code, rest_money, score, exp,
-		user_type, is_approval,add_from,add_time, update_time
+		introduction, level, head_img, qr_code, rest_money, score, exp,
+		user_type, add_from,add_time, update_time
 	</sql>
 
 	<select id="selectByAll" resultMap="BaseResultMap">
@@ -84,10 +74,6 @@
 		
 		<if test="userType != null">
 			and user_type = #{userType,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="isApproval != null">
-			and is_approval = #{isApproval,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="thirdType != null">
@@ -140,11 +126,7 @@
 		<if test="userType != null">
 			and user_type = #{userType,jdbcType=NUMERIC}
 		</if>
-		
-		<if test="isApproval != null">
-			and is_approval = #{isApproval,jdbcType=NUMERIC}
-		</if>
-		
+				
 		<if test="thirdType != null">
 			and lower(3rd_type) = lower(#{thirdType,jdbcType=NUMERIC})
 		</if>
@@ -218,24 +200,19 @@
 		insert into users (id, province_name, mobile,
 		3rd_type, openid, name,
 		real_name, id_card, sex,
-		introduction, level,work_start, work_end,is_door,
-		birth_day,
-		degree_id, major,
+		introduction, level, 
 		head_img, qr_code, rest_money, score, exp,
-		user_type, is_approval, add_from,
+		user_type, add_from,
 		add_time, update_time)
 		values (#{id,jdbcType=NUMERIC},
 		#{provinceName,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR},
 		#{thirdType,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
 		#{realName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
 		#{introduction,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC},
-		#{workStart,jdbcType=VARCHAR},
-		#{workEnd,jdbcType=VARCHAR}, #{isDoor,jdbcType=NUMERIC},
-		#{birthDay,jdbcType=DATE}, #{degreeId,jdbcType=NUMERIC}, #{major,jdbcType=VARCHAR},
 		#{headImg,jdbcType=VARCHAR},
 		#{qrCode,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
 		#{exp,jdbcType=INTEGER},
-		#{userType,jdbcType=NUMERIC}, #{isApproval,jdbcType=NUMERIC},
+		#{userType,jdbcType=NUMERIC}, 
 		#{addFrom,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
@@ -279,26 +256,6 @@
 			<if test="level != null">
 				level,
 			</if>
-			<if test="workStart != null">
-				work_start,
-			</if>
-			<if test="workEnd != null">
-				work_end,
-			</if>
-			<if test="isDoor != null">
-				is_door,
-			</if>
-
-
-			<if test="birthDay != null">
-				birth_day,
-			</if>
-			<if test="degreeId != null">
-				degree_id,
-			</if>
-			<if test="major != null">
-				major,
-			</if>
 			<if test="headImg != null">
 				head_img,
 			</if>
@@ -316,9 +273,6 @@
 			</if>
 			<if test="userType != null">
 				user_type,
-			</if>
-			<if test="isApproval != null">
-				is_approval,
 			</if>
 			<if test="addFrom != null">
 				add_from,
@@ -364,24 +318,6 @@
 			<if test="level != null">
 				#{level,jdbcType=NUMERIC},
 			</if>
-			<if test="workStart != null">
-				#{workStart,jdbcType=VARCHAR},
-			</if>
-			<if test="workEnd != null">
-				#{workEnd,jdbcType=VARCHAR},
-			</if>
-			<if test="isDoor != null">
-				#{isDoor,jdbcType=NUMERIC},
-			</if>
-			<if test="birthDay != null">
-				#{birthDay,jdbcType=DATE},
-			</if>
-			<if test="degreeId != null">
-				#{degreeId,jdbcType=NUMERIC},
-			</if>
-			<if test="major != null">
-				#{major,jdbcType=VARCHAR},
-			</if>
 			<if test="headImg != null">
 				#{headImg,jdbcType=VARCHAR},
 			</if>
@@ -399,9 +335,6 @@
 			</if>
 			<if test="userType != null">
 				#{userType,jdbcType=NUMERIC},
-			</if>
-			<if test="isApproval != null">
-				#{isApproval,jdbcType=NUMERIC},
 			</if>
 			<if test="addFrom != null">
 				#{addFrom,jdbcType=NUMERIC},
@@ -447,24 +380,6 @@
 			<if test="level != null">
 				level = #{level,jdbcType=NUMERIC},
 			</if>
-			<if test="workStart != null">
-				work_start = #{workStart,jdbcType=VARCHAR},
-			</if>
-			<if test="workEnd != null">
-				work_end = #{workEnd,jdbcType=VARCHAR},
-			</if>
-			<if test="isDoor != null">
-				is_door = #{isDoor,jdbcType=NUMERIC},
-			</if>
-			<if test="birthDay != null">
-				birth_day = #{birthDay,jdbcType=DATE},
-			</if>
-			<if test="degreeId != null">
-				degree_id = #{degreeId,jdbcType=NUMERIC},
-			</if>
-			<if test="major != null">
-				major = #{major,jdbcType=VARCHAR},
-			</if>
 			<if test="headImg != null">
 				head_img = #{headImg,jdbcType=VARCHAR},
 			</if>
@@ -482,9 +397,6 @@
 			</if>
 			<if test="userType != null">
 				user_type = #{userType,jdbcType=NUMERIC},
-			</if>
-			<if test="isApproval != null">
-				is_approval = #{isApproval,jdbcType=NUMERIC},
 			</if>
 			<if test="addFrom != null">
 				add_from = #{addFrom,jdbcType=NUMERIC},
@@ -511,14 +423,6 @@
 		sex = #{sex,jdbcType=VARCHAR},
 		introduction =#{introduction,jdbcType=VARCHAR},
 		level = #{level,jdbcType=NUMERIC},
-		work_start =
-		#{workStart,jdbcType=VARCHAR},
-		work_end = #{workEnd,jdbcType=VARCHAR},
-		is_door = #{isDoor,jdbcType=NUMERIC},
-		birth_day = #{birthDay,jdbcType=DATE},
-		degree_id =
-		#{degreeId,jdbcType=NUMERIC},
-		major = #{major,jdbcType=VARCHAR},
 		head_img = #{headImg,jdbcType=VARCHAR},
 		qr_code = #{qrCode,jdbcType=VARCHAR},
 		rest_money =
@@ -526,7 +430,6 @@
 		score = #{score,jdbcType=INTEGER},
 		exp = #{exp,jdbcType=INTEGER},
 		user_type = #{userType,jdbcType=NUMERIC},
-		is_approval = #{isApproval,jdbcType=NUMERIC},
 		add_from = #{addFrom,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}

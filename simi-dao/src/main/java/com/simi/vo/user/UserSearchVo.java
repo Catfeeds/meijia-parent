@@ -12,7 +12,7 @@ public class UserSearchVo {
 	
 	private Short userType;
 
-	private Short isApproval;
+//	private Short isApproval;
 
 	private String thirdType;
 
@@ -48,13 +48,13 @@ public class UserSearchVo {
 		this.userType = userType;
 	}
 
-	public Short getIsApproval() {
-		return isApproval;
-	}
-
-	public void setIsApproval(Short isApproval) {
-		this.isApproval = isApproval;
-	}
+//	public Short getIsApproval() {
+//		return isApproval;
+//	}
+//
+//	public void setIsApproval(Short isApproval) {
+//		this.isApproval = isApproval;
+//	}
 
 	public Long getUserId() {
 		return userId;

@@ -22,13 +22,7 @@ public class Users {
     private String introduction;
     
     private short level;
-    
-    private String workStart;
-    
-    private String workEnd;
-    
-    private short isDoor;
-    
+        
     private	String headImg;
 
     private BigDecimal restMoney;
@@ -39,8 +33,6 @@ public class Users {
 
     private Short userType;
     
-    private Short isApproval;
-
     private Short addFrom;
 
     private Long addTime;
@@ -51,12 +43,6 @@ public class Users {
 
 	private String idCard;
 
-	private Date birthDay;
-
-	private Long degreeId;
-
-	private String major;   
-	
 	private String qrCode;
 
 
@@ -142,36 +128,6 @@ public class Users {
 		this.level = level;
 	}
 
-	public String getWorkStart() {
-		return workStart;
-	}
-
-
-	public void setWorkStart(String workStart) {
-		this.workStart = workStart;
-	}
-
-
-	public String getWorkEnd() {
-		return workEnd;
-	}
-
-
-	public void setWorkEnd(String workEnd) {
-		this.workEnd = workEnd;
-	}
-
-
-	public short getIsDoor() {
-		return isDoor;
-	}
-
-
-	public void setIsDoor(short isDoor) {
-		this.isDoor = isDoor;
-	}
-
-
 	public String getHeadImg() {
 		return headImg;
 	}
@@ -210,17 +166,6 @@ public class Users {
 	public void setUserType(Short userType) {
 		this.userType = userType;
 	}
-
-
-	public Short getIsApproval() {
-		return isApproval;
-	}
-
-
-	public void setIsApproval(Short isApproval) {
-		this.isApproval = isApproval;
-	}
-
 
 	public Short getAddFrom() {
 		return addFrom;
@@ -269,35 +214,6 @@ public class Users {
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
 	}
-
-
-	public Date getBirthDay() {
-		return birthDay;
-	}
-
-
-	public void setBirthDay(Date birthDay) {
-		this.birthDay = birthDay;
-	}
-
-	public Long getDegreeId() {
-		return degreeId;
-	}
-
-	public void setDegreeId(Long degreeId) {
-		this.degreeId = degreeId;
-	}
-
-
-	public String getMajor() {
-		return major;
-	}
-
-
-	public void setMajor(String major) {
-		this.major = major;
-	}
-
 
 	public String getOpenid() {
 		return openid;
