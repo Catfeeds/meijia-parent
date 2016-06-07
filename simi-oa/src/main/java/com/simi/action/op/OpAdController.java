@@ -73,6 +73,8 @@ public class OpAdController extends BaseController {
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		
 		String adType = searchVo.getAdType();
+		
+		if (StringUtil.isEmpty(searchVo.getAppType())) searchVo.setAppType("xcloud");
 		if (!StringUtil.isEmpty(adType)) {
 			adType = adType + ",";
 			searchVo.setAdType(adType);

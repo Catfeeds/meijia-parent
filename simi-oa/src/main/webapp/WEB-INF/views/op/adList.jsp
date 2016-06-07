@@ -37,8 +37,7 @@
 					</form:select>
 					应用类型
 					<form:select path="appType">
-						<option value="">全部</option>
-						<form:option value="xcloud" >云行政</form:option>
+						<form:option value="xcloud" selected="true">云行政</form:option>
 						<form:option value="timechick">时光机</form:option>
 						<form:option value="simi">私秘</form:option>
 						<form:option value="sutongbao">速通宝</form:option>
@@ -85,7 +84,7 @@
 							<td>${ item.no}</td>
 							<td>${ item.appType}</td>
 							<td>${ item.title}</td>
-							<td><img src="${ item.imgUrl }" style="max-width:300px:max-height:300px;" /></td>
+							<td><img src="${ item.imgUrl }" width="300px" height="300px" /></td>
 							<td>${ item.channelNames}</td>
 							<td>${ item.gotoType}</td>
 							<td>${ item.action}</td>
