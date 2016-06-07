@@ -142,7 +142,7 @@ public class PartnerUserController extends BaseController {
 			u.setUserType((short) 1);
 		}
 
-		u.setIsApproval((short) 2);
+//		u.setIsApproval((short) 2);
 		// 更新头像
 		if (file != null && !file.isEmpty()) {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
