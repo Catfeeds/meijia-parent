@@ -16,6 +16,7 @@
 	<properties>
 		<jackson.version>2.4.2</jackson.version>
 		<spring.version>4.1.1.RELEASE</spring.version>
+		<poi.version>3.13</poi.version>
 	</properties>
 	<dependencies>
 
@@ -245,7 +246,36 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.9.1</version>
 		</dependency>
-
+		
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>${poi.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-scratchpad</artifactId>
+		    <version>${poi.version}</version>
+		  </dependency>
+		  
+		  <dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>${poi.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>fr.opensagres.xdocreport</groupId>
+		    <artifactId>org.apache.poi.xwpf.converter.core</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>fr.opensagres.xdocreport</groupId>
+		    <artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
+		    <version>1.0.5</version>
+		</dependency>
 
 	</dependencies>
 	<build>
