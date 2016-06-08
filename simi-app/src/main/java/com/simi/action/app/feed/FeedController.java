@@ -91,6 +91,12 @@ public class FeedController extends BaseController {
 			return result;
 		}
 		
+		if (title.length() > 512) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("问题有点长，控制在512字内好吗亲？");
+			return result;
+		}
+		
 		Integer score = 0;
 		// 如果为问答类，则需要判断用户的积分是否足够
 		if (feedType.equals((short) 2)) {
