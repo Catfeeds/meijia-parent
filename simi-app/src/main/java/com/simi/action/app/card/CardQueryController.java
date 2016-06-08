@@ -466,10 +466,10 @@ public class CardQueryController extends BaseController {
 		tranParams.put("rc", "你在" + timeStr1 + "有一条新的消息");
 		
 		//跳转信息
-		tranParams.put("ca", category);
-		tranParams.put("aj", action);
-		tranParams.put("pa", gparams);
-		tranParams.put("go", gotoUrl);
+//		tranParams.put("ca", category);
+//		tranParams.put("aj", action);
+//		tranParams.put("pa", gparams);
+//		tranParams.put("go", gotoUrl);
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
