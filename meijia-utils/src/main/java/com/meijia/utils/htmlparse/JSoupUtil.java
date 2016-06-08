@@ -47,7 +47,11 @@ public class JSoupUtil {
 	 * @param replaceStr 最终结果替换的字符串
 	 * @return
 	 */
-	public static String parseByPatten(Document doc, String patten, String textOrHtml,String attrName, String removeRegex) {
+	public static String parseByPatten(Document doc, 
+			String patten, 
+			String textOrHtml,
+			String attrName, 
+			String removeRegex) {
 		String content = "";
 		Element item = doc.select(patten).first();
 		
@@ -86,7 +90,12 @@ public class JSoupUtil {
 	 * @param index		分组索引
 	 * @return
 	 */
-	public static String parseByPattenAndSinglRegex(Document doc, String patten, String textOrHtml, String attrName, String regex, int index) {
+	public static String parseByPattenAndSinglRegex(
+			Document doc, 
+			String patten, 
+			String textOrHtml, 
+			String attrName, 
+			String regex, int index) {
 
 		String result = "";
 		String content = "";
@@ -134,7 +143,13 @@ public class JSoupUtil {
 	 * @param replaceStr
 	 * @return
 	 */
-	public static String parseByPattenAndBetweenRegex(Document doc, String patten, String attrName, String leftRegex, String rightRegex, String replaceStr) {
+	public static String parseByPattenAndBetweenRegex(
+			Document doc, 
+			String patten, 
+			String attrName, 
+			String leftRegex, 
+			String rightRegex, 
+			String replaceStr) {
 
 		String result = "";
 		String content = "";
@@ -163,7 +178,11 @@ public class JSoupUtil {
 		return result;
 	}
 	
-	public static String parseTableByPatten(Document doc, String patten, String tdFlag, int tdValueIndex) {
+	public static String parseTableByPatten(
+			Document doc, 
+			String patten, 
+			String tdFlag, 
+			int tdValueIndex) {
 
 		String result = "";
 		Element table = doc.select(patten).get(0); //select the first table.
