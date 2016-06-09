@@ -87,7 +87,7 @@ public class ApptoolsController extends BaseController {
 		
 		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
 //		searchVo.setAppType(appType);
-//		searchVo.setIsOnline((short) 0);
+		searchVo.setIsOnline((short) 0);
 		List<AppTools> appTools = appToolsService.selectBySearchVo(searchVo);
 		
 		
