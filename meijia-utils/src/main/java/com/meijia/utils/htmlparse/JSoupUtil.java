@@ -1,8 +1,12 @@
 package com.meijia.utils.htmlparse;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -228,6 +232,90 @@ public class JSoupUtil {
 		  String path = c.getResource(c.getSimpleName() + ".class").getPath().replace(c.getSimpleName() + ".class", "");
 		  return path;
 	}
+	
+	/**
+	 * 用正则表达式解析内容
+	 * 1.根据blockRegex提供的正则表达式匹配某一块内容，如果匹配失败返回空字符串。
+	 * 2.从blockRegex匹配结果中取出索引为blockMatchIndex的内容，如果数组中不存在blockMatchIndex
+	 * 返回空字符串
+	 * 3.用fieldRegex匹配最中内容，如果fieldRegex为空字符串直接返回blockRegex匹配到的内容
+	 * @param str 原始内容
+	 * @param blockRegex 匹配某一块内容的正则表达式，例如匹配整个求职意向的。
+	 * @param fieldRegex 匹配某个具体字段的正则表达式，例如求职意向中的期望工作地点。
+	 * @return
+	 */
+	public static String parseByRegex(
+			String str, 
+			String blockRegex, 
+			int blockMatchIndex, 
+			String fieldRegex, 
+			int fieldMatchIndex) {
+		boolean validateIndex = 0 <= blockMatchIndex && 0 <= fieldMatchIndex;
+		if ( StringUtil.isEmpty(str) || StringUtil.isEmpty(blockRegex) || !validateIndex ) {
+			return "";
+		}
+		
+		//匹配某一区块的内容
+		String block = "";
+		String[] matchResult = RegExpUtil.match(blockRegex, str);
+		if ( blockMatchIndex <= (matchResult.length - 1) ) {
+			block = matchResult[blockMatchIndex];
+		} else {
+			return "";
+		}
+		
+		//匹配字段的正则表达式为空，直接返回区块的匹配结果。
+		if (StringUtil.isEmpty(fieldRegex)) {
+			return block;
+		}
+		
+		//匹配具体字段内容
+		matchResult = RegExpUtil.match(fieldRegex, block);
+		if (fieldMatchIndex <= (matchResult.length - 1)) {
+			return matchResult[fieldMatchIndex];
+		} else {
+			return "";
+		}
+		
+	}
+	
+	/**
+	 * 获取文件内容
+	 * @param file 文件对象
+	 * @param encoding 编码格式，UTF-8
+	 * @return
+	 */
+	@SuppressWarnings("finally")
+	public static String getFileContent(File file, String encoding) {
+		String content = "";
+		BufferedReader reader = null;
+		
+		try {
+			InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8"); 
+			reader = new BufferedReader( read );
+			String tempString = null;
+			
+			//读取简历内容
+			while ( (tempString = reader.readLine()) != null ) {
+				content += tempString;
+			}
+			
+			return content;
+		} catch (IOException e) {
+//			e.printStackTrace();
+			return content;
+		} finally {
+			if (null != reader) {
+				try{
+					reader.close();
+				} catch (IOException e) {
+//					System.out.println(e.getMessage());
+					return content;
+				}
+			}
+			return content;
+		}// end finally
+	}
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -242,39 +330,46 @@ public class JSoupUtil {
 		// String item1 = item.attr("charset");
 		// System.out.print(item1);
 		
-		System.out.println("match chartset = " + JSoupUtil.parseByPatten(doc, "meta[charset]", "text", "charset", ""));
-		System.out.println("match ID = " + JSoupUtil.parseByPatten(doc, "span.resume-left-tips-id", "text", "", "ID:"));
-		System.out.println("match 姓名 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fl", "text", "", ""));
-		System.out.println("match 手机号 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fr", "text", "", "手机 ："));
-		System.out.println("match 性别 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text", "", "/男|女", 0));
-		System.out.println("match 生日 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text" , "", "(([0-9]+年[0-9]+月))", 0));
-		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "(([0-9]+年工作经验), 0)", 0));
-		System.out.println("match 学历 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/小学|初中|高中|大专|专科|本科|硕士|博士|博士后", 0));
-		System.out.println("match 婚姻状态 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/已婚|未婚|保密|离异", 0));
-		System.out.println("match 现居住地 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "现居住地", "|", "："));
-		System.out.println("match 户口 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "户口", "|", "："));
-		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
-		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "有海外工作\\/学习经验", 0));
-		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "身份证：", " ", ""));
-		System.out.println("match 手机 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "手机：", " ", ""));
-		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "text", "", ""));
-		System.out.println("match 头像 = " + JSoupUtil.parseByPatten(doc, "img.headerImg", "text", "src", ""));
-		System.out.println("match 期望工作地区 = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作地区：", 1));
-		System.out.println("match 期望月薪： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望月薪：", 1));
-		System.out.println("match 目前状况： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","目前状况：", 1));
-		System.out.println("match 期望工作性质： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作性质：", 1));
-		System.out.println("match 期望从事职业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事职业：", 1));
-		System.out.println("match 期望从事行业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事行业：", 1));
-		System.out.println("match 自我评价 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-dl", "html", "", ""));
-		System.out.println("match 工作经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(工作经历)", "html", "", "<h3.*>工作经历</h3>"));
-		System.out.println("match 项目经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(项目经历)", "html","", "<h3.*>项目经历</h3>"));
-		System.out.println("match 教育经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(教育经历)", "html","", "<h3.*>教育经历</h3>"));
-		System.out.println("match 培训经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(培训经历)", "html","", "<h3.*>培训经历</h3>"));
-		System.out.println("match 证书 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(证书)","", "html", "<h3.*>证书</h3>"));
-		System.out.println("match 语言能力 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(语言能力)", "html", "", "<h3.*>语言能力</h3>"));
-		System.out.println("match 专业技能 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(专业技能)", "html", "", "<h3.*>专业技能</h3>"));
-		System.out.println("match 兴趣爱好 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(兴趣爱好)", "text", "", "兴趣爱好"));	
-		System.out.println("match 附件 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(附件)", "html", "", "<h3.*>附件</h3>"));		
+		//基本信息 --> 户口
+		String resume = JSoupUtil.getFileContent(input, "UTF-8");
+		String baseInfoRegex = "<div\\s*?class=\"resume-preview-main-title\\s+?posR\">([\\s\\S]+?)<div\\s+?class=\"resume-preview-all\">";
+		String permanentAddressRegex = "户口：(.+?)\\s*?\\|";
+		String permanentAddress = JSoupUtil.parseByRegex(resume, baseInfoRegex, 1, permanentAddressRegex, 1);
+		System.out.println("户口：" + permanentAddress);
+		
+//		System.out.println("match chartset = " + JSoupUtil.parseByPatten(doc, "meta[charset]", "text", "charset", ""));
+//		System.out.println("match ID = " + JSoupUtil.parseByPatten(doc, "span.resume-left-tips-id", "text", "", "ID:"));
+//		System.out.println("match 姓名 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fl", "text", "", ""));
+//		System.out.println("match 手机号 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fr", "text", "", "手机 ："));
+//		System.out.println("match 性别 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text", "", "/男|女", 0));
+//		System.out.println("match 生日 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text" , "", "(([0-9]+年[0-9]+月))", 0));
+//		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "(([0-9]+年工作经验), 0)", 0));
+//		System.out.println("match 学历 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/小学|初中|高中|大专|专科|本科|硕士|博士|博士后", 0));
+//		System.out.println("match 婚姻状态 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/已婚|未婚|保密|离异", 0));
+//		System.out.println("match 现居住地 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "现居住地", "|", "："));
+//		System.out.println("match 户口 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "户口", "|", "："));
+//		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
+//		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "有海外工作\\/学习经验", 0));
+//		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "身份证：", " ", ""));
+//		System.out.println("match 手机 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "手机：", " ", ""));
+//		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "text", "", ""));
+//		System.out.println("match 头像 = " + JSoupUtil.parseByPatten(doc, "img.headerImg", "text", "src", ""));
+//		System.out.println("match 期望工作地区 = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作地区：", 1));
+//		System.out.println("match 期望月薪： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望月薪：", 1));
+//		System.out.println("match 目前状况： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","目前状况：", 1));
+//		System.out.println("match 期望工作性质： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作性质：", 1));
+//		System.out.println("match 期望从事职业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事职业：", 1));
+//		System.out.println("match 期望从事行业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事行业：", 1));
+//		System.out.println("match 自我评价 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-dl", "html", "", ""));
+//		System.out.println("match 工作经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(工作经历)", "html", "", "<h3.*>工作经历</h3>"));
+//		System.out.println("match 项目经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(项目经历)", "html","", "<h3.*>项目经历</h3>"));
+//		System.out.println("match 教育经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(教育经历)", "html","", "<h3.*>教育经历</h3>"));
+//		System.out.println("match 培训经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(培训经历)", "html","", "<h3.*>培训经历</h3>"));
+//		System.out.println("match 证书 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(证书)","", "html", "<h3.*>证书</h3>"));
+//		System.out.println("match 语言能力 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(语言能力)", "html", "", "<h3.*>语言能力</h3>"));
+//		System.out.println("match 专业技能 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(专业技能)", "html", "", "<h3.*>专业技能</h3>"));
+//		System.out.println("match 兴趣爱好 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(兴趣爱好)", "text", "", "兴趣爱好"));	
+//		System.out.println("match 附件 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(附件)", "html", "", "<h3.*>附件</h3>"));		
 	}
 
 }

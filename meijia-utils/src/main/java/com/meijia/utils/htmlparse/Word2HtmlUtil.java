@@ -26,17 +26,33 @@ import org.apache.poi.xwpf.converter.xhtml.XHTMLOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.w3c.dom.Document;
 
-
+/**
+ * word文件转为html
+ * 如果是那种其他格式文件只修改后缀生成的word文档是会报错的。
+ * Invalid header signature; read 0x6D78206C6D74683C, expected 0xE11AB1A1E011CFD0 - Your file appears not to be a valid OLE2 document
+ * [Ljava.lang.StackTraceElement;@3d4cff90
+ * @author bright87
+ *
+ */
 public class Word2HtmlUtil {
 	public static void main(String[] args) {
 		String wordPath = "E:/2016/06/05/gaoxiaojie.docx";
 		String htmlPath = "E:/2016/06/05/gaoxiaojie_docx.html";
 		
-		wordPath = "E:/2016/06/05/dongjiawang.doc";
-		htmlPath = "E:/2016/06/05/dongjiawang_doc/dongjiawang_doc.html";
+		wordPath = "E:/2016/06/05/lujinguang.doc";
+		htmlPath = "E:/2016/06/05/lujinguang_doc/lujinguang_doc.html";
+		
+		//智联企业账号导出的word简历
+//		wordPath = "E:/2016/06/05/renjing.doc";
+//		htmlPath = "E:/2016/06/05/renjing_doc/renjing_doc.html";
 		
 		boolean result = Word2HtmlUtil.word2html(wordPath, htmlPath);
-		System.out.println(result);
+		if (result) {
+			System.out.println(result);
+		} else {
+			System.out.println("转换错误！");
+		}
+		
 	}
 	
 	/**
@@ -134,8 +150,8 @@ public class Word2HtmlUtil {
 			
 			return true;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			System.out.println(e.getStackTrace());
+//			System.out.println(e.getMessage());
+//			System.out.println(e.getStackTrace());
 			return false;
 		}
 		
