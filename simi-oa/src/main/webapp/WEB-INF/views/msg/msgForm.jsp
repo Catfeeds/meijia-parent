@@ -88,7 +88,7 @@
 						<label class="col-md-2 control-label">跳转url</label>
 						<div class="col-md-5">
 							<form:input path="gotoUrl" class="form-control"
-								placeholder="跳转url"  maxLength="32" />
+								placeholder="跳转url"  maxLength="512" />
 							<form:errors path="gotoUrl" class="field-has-error"></form:errors>
 						</div>
 					</div>
