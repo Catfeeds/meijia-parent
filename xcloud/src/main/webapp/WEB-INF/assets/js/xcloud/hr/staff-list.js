@@ -68,7 +68,7 @@ $('#change-dept-modal').on('close.modal.amui', function(e) {
 
 //添加员工
 $("#btn-staff-add").click(function() {
-	location.href = "/xcloud/staff/staff-form?staff_id=0";
+	location.href = "/xcloud/hr/staff-form?staff_id=0";
 });
 
 //删除员工

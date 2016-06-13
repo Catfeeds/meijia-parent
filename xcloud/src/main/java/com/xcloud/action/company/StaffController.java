@@ -83,7 +83,7 @@ public class StaffController extends BaseController {
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
 		Long companyId = accountAuth.getCompanyId();
-
+		
 		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
 
 		if (!model.containsAttribute("contentModel")) {
@@ -138,7 +138,9 @@ public class StaffController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = RequestMethod.POST)
-	public String saveUserForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") StaffListVo vo, BindingResult result) throws JsonParseException, JsonMappingException, IOException {
+	public String saveUserForm(HttpServletRequest request, Model model, 
+			@ModelAttribute("contentModel") StaffListVo vo, 
+			BindingResult result) throws JsonParseException, JsonMappingException, IOException {
 
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);

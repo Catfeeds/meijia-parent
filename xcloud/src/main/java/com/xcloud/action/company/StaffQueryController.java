@@ -18,6 +18,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.UserSearchVo;
 import com.github.pagehelper.PageInfo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -149,6 +150,66 @@ public class StaffQueryController extends BaseController {
 		
 		return result;
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/get-by-idCard", method = { RequestMethod.GET })
+	public AppResultData<Object> getByIdCard(HttpServletRequest request,
+			@RequestParam(value = "idCard", required = false, defaultValue = "") String idCard
+			) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (StringUtil.isEmpty(idCard)) return result;
+		
+		UserSearchVo userSearchVo = new UserSearchVo();
+		userSearchVo.setIdCard(idCard);
+		
+		List<Users> userList = usersService.selectBySearchVo(userSearchVo);
+		
+		Users u;
+		
+		if(userList.isEmpty()){
+			
+		    return result;
+		}else{
+			
+			u =  userList.get(0);
+		}
+		
+		Long userId = u.getId();
+		
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long companyId = accountAuth.getCompanyId();
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setUserId(userId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> rsList = xcompanyStaffService.selectBySearchVo(searchVo);
+		XcompanyStaff xcompanyStaff = null;
+		if (!rsList.isEmpty()) {
+			xcompanyStaff = rsList.get(0);
+		}
+		
+		if (xcompanyStaff == null) {
+			xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
+		}
+		
+		StaffListVo vo = new StaffListVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+		//注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
+		vo.setId(xcompanyStaff.getId());
+		result.setData(vo);
+		
+		return result;
+	}
+	
+	
 	
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })

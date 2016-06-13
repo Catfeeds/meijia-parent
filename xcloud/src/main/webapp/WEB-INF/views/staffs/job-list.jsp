@@ -6,7 +6,6 @@
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
-<%-- <link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>" type="text/css" /> --%>
 <link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
 </head>
 <body>
@@ -34,26 +33,48 @@
 					</div>
 				</div>
 			</div>
+			
 			<hr>
 			<div class="am-g">
 				<div class="am-u-sm-12">
-					<table class="am-table">
-						<thead>
-							<tr>
-								</th>
-								<th class="table-title">职位名称</th>
-								<th class="table-title">所属部门</th>
-								<th class="table-title">规划人数</th>
-								<th class="table-set">操作</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<form class="am-form">
+						<table class="am-table am-table-bordered am-table-striped">
+							<thead>
+								<tr>
+									<th class="table-title">职位名称</th>
+									<th class="table-title">所属部门</th>
+									<th class="table-title">规划人数</th>
+									<th class="table-set">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${jobListModel.list}" var="item">
+										<tr>
+											<td>${item.jobName}</td>
+											<td>${item.deptName}</td>
+											<td>${item.totalNum}</td> 
+											<td>
+												<button type="button" class="am-btn am-btn-success" 
+												
+												onclick="getJobDetail(${item.jobId})">查看详情</button>
+											</td>
+										</tr>
+									</c:forEach>
+							</tbody>
+						</table>
+						<c:import url="../shared/paging.jsp">
+								<c:param name="pageModelName" value="jobListModel" />
+								<c:param name="urlAddress" value="/job/job_list" />
+						</c:import>
+					</form>
 				</div>
 			</div>
 			<!-- content end -->
 		</div>
+		
+		<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
+		data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+		
 		<!--footer start-->
 		<%@ include file="../shared/pageFooter.jsp"%>
 		<!--footer end-->
@@ -63,5 +84,6 @@
 		<!--script for this page-->
 		<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 		<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
+		<script src="<c:url value='/assets/js/xcloud/staffs/job-list.js'/>"></script>
 </body>
 </html>
