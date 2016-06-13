@@ -37,12 +37,13 @@ public class PartnerServiceTypeController extends AdminController {
 
 	@Autowired
 	private AdminAuthorityService adminAuthorityService;
-	
+
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
 
 	/**
 	 * 树形展示权限列表
+	 * 
 	 * @param request
 	 * @param model
 	 * @return
@@ -51,12 +52,11 @@ public class PartnerServiceTypeController extends AdminController {
 	@RequestMapping(value = "/chain", method = { RequestMethod.GET })
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
-			String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
+			String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
 			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
-			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false,
-							false, children)));
-			String jsonString = JSONArray.fromObject(treeModels,new JsonConfig()).toString();
+			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
+			String jsonString = JSONArray.fromObject(treeModels, new JsonConfig()).toString();
 			model.addAttribute("contentModel", jsonString);
 		}
 		model.addAttribute("requestUrl", request.getServletPath());
@@ -64,8 +64,10 @@ public class PartnerServiceTypeController extends AdminController {
 
 		return "partners/partnerServiceTypeList";
 	}
+
 	/**
 	 * 根据id添加同级或者子级节点
+	 * 
 	 * @param request
 	 * @param model
 	 * @param id
@@ -73,31 +75,30 @@ public class PartnerServiceTypeController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.GET })
-	public String add(HttpServletRequest request, Model model,
-			@PathVariable(value = "id") Integer id) {
+	public String add(HttpServletRequest request, Model model, @PathVariable(value = "id") Integer id) {
 		if (!model.containsAttribute("contentModel")) {
 			AuthorityEditModel authorityEditModel = new AuthorityEditModel();
 			authorityEditModel.setParentId(id);
 			model.addAttribute("contentModel", authorityEditModel);
 		}
 		List<TreeModel> treeModels;
-		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
+		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
 		if (id != null && id > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(	partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), id, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), id, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
-					"0", "0", "根节点", false, true, false, children)));
+			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, true, false, children)));
 		}
-		model.addAttribute(treeDataSourceName,JSONArray.fromObject(treeModels, new JsonConfig()).toString());
+		model.addAttribute(treeDataSourceName, JSONArray.fromObject(treeModels, new JsonConfig()).toString());
 		return "partners/partnerServiceTypeForm";
 	}
+
 	/**
 	 * 根据页面选择的id,增加新节点
+	 * 
 	 * @param request
 	 * @param model
 	 * @param adminAuthorityVo
@@ -107,33 +108,38 @@ public class PartnerServiceTypeController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.POST })
-	public String add(HttpServletRequest request,Model model,
-			@Valid @ModelAttribute("contentModel") PartnerServiceTypeVo partnerServiceTypeVo,
+	public String add(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PartnerServiceTypeVo partnerServiceTypeVo,
 			@PathVariable(value = "id") String id, BindingResult result) {
-		if (result.hasErrors()) return add(request, model, Integer.valueOf(id));
-		String returnUrl = ServletRequestUtils.getStringParameter(request,
-				"returnUrl", null);
+		if (result.hasErrors())
+			return add(request, model, Integer.valueOf(id));
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 
 		PartnerServiceType partnerServiceType = partnerServiceTypeService.initPartnerServiceType();
 		partnerServiceType.setName(partnerServiceTypeVo.getName());
 		partnerServiceType.setViewType((short) 0);
 		partnerServiceType.setParentId(partnerServiceTypeVo.getParentId());
-		/*String levelCode = "";
-		int count = adminAuthorityService.selectMaxId()+1;
-		if (partnerServiceTypeVo.getParentId() != null 	&& partnerServiceTypeVo.getParentId() > 0) {
-			partnerServiceType.setParentId(partnerServiceType.getParentId());
-			String parentLevelCode = adminAuthorityService.selectByPrimaryKey(partnerServiceTypeVo.getParentId()).getLevelCode();
-			levelCode = count+ "," + parentLevelCode;
-
-		}else{
-			levelCode = count + levelCode  ;
-		}*/
+		/*
+		 * String levelCode = ""; int count =
+		 * adminAuthorityService.selectMaxId()+1; if
+		 * (partnerServiceTypeVo.getParentId() != null &&
+		 * partnerServiceTypeVo.getParentId() > 0) {
+		 * partnerServiceType.setParentId(partnerServiceType.getParentId());
+		 * String parentLevelCode =
+		 * adminAuthorityService.selectByPrimaryKey(partnerServiceTypeVo
+		 * .getParentId()).getLevelCode(); levelCode = count+ "," +
+		 * parentLevelCode;
+		 * 
+		 * }else{ levelCode = count + levelCode ; }
+		 */
 		partnerServiceTypeService.insertSelective(partnerServiceType);
-		if (returnUrl == null)	returnUrl = "partners/partnerServiceTypeList";
+		if (returnUrl == null)
+			returnUrl = "partners/partnerServiceTypeList";
 		return "redirect:" + returnUrl;
 	}
+
 	/**
 	 * 根据id编辑对应的权限
+	 * 
 	 * @param request
 	 * @param model
 	 * @param id
@@ -141,37 +147,31 @@ public class PartnerServiceTypeController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.GET })
-	public String edit(HttpServletRequest request, Model model,
-			@PathVariable(value = "id") Long id) {
+	public String edit(HttpServletRequest request, Model model, @PathVariable(value = "id") Long id) {
 		if (!model.containsAttribute("contentModel")) {
 			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(id);
 			model.addAttribute("contentModel", partnerServiceType);
 		}
 		List<TreeModel> treeModels;
 		PartnerServiceType editModel = (PartnerServiceType) model.asMap().get("contentModel");
-		String expanded = ServletRequestUtils.getStringParameter(request,"expanded", null);
+		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-					partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), editModel.getParentId()
-							.intValue(), null, StringHelper.toIntegerList(
-							expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
-					"0", "0", "根节点", false, false, false, children)));
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), editModel
+					.getParentId().intValue(), null, StringHelper.toIntegerList(expanded, ","));
+			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(
-				partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
-			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(
-					"0", "0", "根节点", false, true, false, children)));
+			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, true, false, children)));
 		}
-		model.addAttribute("treeDataSource",
-				JSONArray.fromObject(treeModels, new JsonConfig()).toString());
+		model.addAttribute("treeDataSource", JSONArray.fromObject(treeModels, new JsonConfig()).toString());
 
-		return "partners/partnerServiceTypeList";
+		return "partners/partnerServiceTypeForm";
 	}
 
 	/**
-	 *根据id更新权限
+	 * 根据id更新权限
+	 * 
 	 * @param request
 	 * @param model
 	 * @param adminAuthority
@@ -181,20 +181,23 @@ public class PartnerServiceTypeController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.POST })
-	public String edit(	HttpServletRequest request,	Model model,
-			@Valid @ModelAttribute("contentModel") PartnerServiceType partnerServiceType,
+	public String edit(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PartnerServiceType partnerServiceType,
 			@PathVariable(value = "id") Long id, BindingResult result) {
-		if (result.hasErrors()) return edit(request, model, id);
-		String returnUrl = ServletRequestUtils.getStringParameter(request,"returnUrl", null);
-		if(partnerServiceType!=null){
+		if (result.hasErrors())
+			return edit(request, model, id);
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		if (partnerServiceType != null) {
 			partnerServiceType.setId(Long.valueOf(id));
 			partnerServiceTypeService.updateByPrimaryKeySelective(partnerServiceType);
 		}
-		if (returnUrl == null) returnUrl = "partnerServiceType/chain";
+		if (returnUrl == null)
+			returnUrl = "partnerServiceType/chain";
 		return "redirect:" + returnUrl;
 	}
+
 	/**
 	 * 根据id删除权限
+	 * 
 	 * @param request
 	 * @param model
 	 * @param id
@@ -202,13 +205,13 @@ public class PartnerServiceTypeController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/delete/{id}", method = { RequestMethod.GET })
-	public String delete(HttpServletRequest request, Model model,@PathVariable(value = "id") String id) {
+	public String delete(HttpServletRequest request, Model model, @PathVariable(value = "id") String id) {
 		Long ids = Long.valueOf(id.trim());
-		//根据id查找出对应的该权限对象
-		//int result = adminAuthorityService.deleteAuthorityByRecurision(adminAuthority);
+		// 根据id查找出对应的该权限对象
+		// int result =
+		// adminAuthorityService.deleteAuthorityByRecurision(adminAuthority);
 		partnerServiceTypeService.deleteByPrimaryKey(ids);
-		String returnUrl = ServletRequestUtils.getStringParameter(request,
-				"returnUrl", null);
+		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
 		if (returnUrl == null)
 			returnUrl = "partnerServiceType/chain";
 		return "redirect:" + returnUrl;

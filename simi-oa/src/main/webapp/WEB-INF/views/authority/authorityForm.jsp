@@ -87,6 +87,7 @@
 												<c:param name="propertyValue" value="${contentModel.parentId}"/>
 												<c:param name="treeDataSourceName" value="treeDataSource"/>
 										   </c:import>
+										  <input type="hidden" id="selectParentId" name="selectParentId" value="${ contentModel.parentId }"/>
 					                  </div>
 					             </div>
                               </div>

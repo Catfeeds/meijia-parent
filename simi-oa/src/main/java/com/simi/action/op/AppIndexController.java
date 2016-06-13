@@ -54,7 +54,7 @@ public class AppIndexController extends BaseController {
 			return "op/appIndexList";
 		}
 
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/appIndexForm", method = { RequestMethod.GET })
 	public String appIndexForm(HttpServletRequest request, Model model, @RequestParam(value = "id") Long id) {
 

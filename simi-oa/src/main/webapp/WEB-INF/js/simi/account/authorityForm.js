@@ -68,6 +68,10 @@ $('#authority-form').validate({
 		$("#btn_submit").click(function(){
 			if (confirm("确认要保存吗?")){
 				if ($('#authority-form').validate().form()) {
+					var selectedId = $('#parentId_tree').treeLite('selectedId');
+					console.log("selectedId = " + selectedId);
+					$("#selectParentId").val(selectedId);
+					console.log($("#selectParentId").val());
 					$('#authority-form').submit();
 				}
 		    }

@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.simi.oa.auth.AuthPassport;
 import com.simi.po.model.admin.AdminAuthority;
 import com.simi.service.admin.AdminAuthorityService;
 import com.simi.models.AuthorityEditModel;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.vo.admin.AdminAuthorityVo;
 
@@ -41,7 +43,7 @@ public class AdminAuthorityController extends AdminController {
 	 * @param model
 	 * @return
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/chain", method = { RequestMethod.GET })
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
@@ -65,7 +67,7 @@ public class AdminAuthorityController extends AdminController {
 	 * @param id
 	 * @return 编辑页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.GET })
 	public String add(HttpServletRequest request, Model model,
 			@PathVariable(value = "id") Integer id) {
@@ -99,7 +101,7 @@ public class AdminAuthorityController extends AdminController {
 	 * @param result
 	 * @return 权限的树形展示页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.POST })
 	public String add(HttpServletRequest request,Model model,
 			@Valid @ModelAttribute("contentModel") AdminAuthorityVo adminAuthorityVo,
@@ -132,7 +134,7 @@ public class AdminAuthorityController extends AdminController {
 	 * @param id
 	 * @return 跳转到编辑页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.GET })
 	public String edit(HttpServletRequest request, Model model,
 			@PathVariable(value = "id") Long id) {
@@ -173,15 +175,28 @@ public class AdminAuthorityController extends AdminController {
 	 * @param result
 	 * @return 跳转到权限的树形列表
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.POST })
 	public String edit(	HttpServletRequest request,	Model model,
 			@Valid @ModelAttribute("contentModel") AdminAuthority adminAuthority,
 			@PathVariable(value = "id") Long id, BindingResult result) {
 		if (result.hasErrors()) return edit(request, model, id);
 		String returnUrl = ServletRequestUtils.getStringParameter(request,"returnUrl", null);
+		
+		String selectedParentIdStr = request.getParameter("selectParentId");
+		Long selectedParentId = 0L;
+		if (!StringUtil.isEmpty(selectedParentIdStr)) {
+			selectedParentId = Long.valueOf(selectedParentIdStr);
+		}
+		
+		
 		if(adminAuthority!=null){
 			adminAuthority.setId(Long.valueOf(id));
+			
+			if (!adminAuthority.getParentId().equals(selectedParentId)) {
+				adminAuthority.setParentId(selectedParentId);
+			}
+			
 			adminAuthorityService.updateByPrimaryKeySelective(adminAuthority);
 		}
 		if (returnUrl == null) returnUrl = "authority/chain";
@@ -194,7 +209,7 @@ public class AdminAuthorityController extends AdminController {
 	 * @param id
 	 * @return 跳转到权限树形展示
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/delete/{id}", method = { RequestMethod.GET })
 	public String delete(HttpServletRequest request, Model model,@PathVariable(value = "id") String id) {
 		Long ids = Long.valueOf(id.trim());

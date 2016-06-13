@@ -272,7 +272,7 @@ public class SpiderPartnerController extends BaseController{
 	 * @param result
 	 * @return
 	 */
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/spiderPartnerForm", method = { RequestMethod.POST })
 	public String doPartnerForm(HttpServletRequest request, Model model,
 			@ModelAttribute("partners") PartnerFormVo partners, 

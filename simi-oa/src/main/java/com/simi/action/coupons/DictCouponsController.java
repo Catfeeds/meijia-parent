@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.action.BaseController;
+import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictCoupons;
 import com.simi.po.model.partners.PartnerServiceType;
@@ -51,7 +52,7 @@ public class DictCouponsController extends BaseController {
 	 * @param searchVo
 	 * @return
 	 */
-    //@AuthPassport
+    @AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String list(HttpServletRequest request, Model model,
 			CouponSearchVo searchVo) {

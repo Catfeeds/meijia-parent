@@ -157,6 +157,8 @@ public class PartnerServicePriceController extends AdminController {
 
 		}
 		
+		if (record.getUserId() == null) record.setUserId(0L);
+		
 		if (id > 0L) {
 			partnerServiceTypeDetailService.updateByPrimaryKeySelective(record);
 		} else {
@@ -192,7 +194,7 @@ public class PartnerServicePriceController extends AdminController {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(partnerServiceTypeDetail, vo);
 		vo.setName(partnerServiceType.getName());
-		
+		vo.setServicePriceId(id);
 		if (partnerServiceType.getParentId().equals(0L)) {
 			vo.setParentId(id);
 		} else {

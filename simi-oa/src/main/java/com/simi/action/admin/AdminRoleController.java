@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.pagehelper.PageInfo;
 import com.simi.models.TreeModel;
 import com.simi.models.extention.TreeModelExtension;
+import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ArrayHelper;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.admin.AdminAuthority;
@@ -51,7 +52,7 @@ public class AdminRoleController extends AdminController {
 	@Autowired
 	private AdminRoleAuthorityService adminRoleAuthorityService;
 	
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value="/list", method = {RequestMethod.GET})
     public String list1(HttpServletRequest request, Model model, AdminRoleSearchVo searchModel){
     	model.addAttribute("requestUrl", request.getServletPath());
@@ -66,7 +67,7 @@ public class AdminRoleController extends AdminController {
     }
 
 
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value = "/toRoleForm", method = {RequestMethod.GET})
 	public String toAddAdminRole(HttpServletRequest request,Model model){
 		Long ids = Long.valueOf(request.getParameter("id"));
@@ -111,7 +112,7 @@ public class AdminRoleController extends AdminController {
 				adminAuthorityService.getSelectSource());
         return "role/roleForm";
 	}
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value ="/roleForm", method = {RequestMethod.POST})
     public String addAdminRole(HttpServletRequest request, Model model,
     		@ModelAttribute("adminRole") AdminRoleVo adminRoleVo, BindingResult result)  {
@@ -140,7 +141,7 @@ public class AdminRoleController extends AdminController {
     	return "redirect:list";
     }
 
-	//@AuthPassport
+	@AuthPassport
 	@RequestMapping(value ="/delete/{id}", method = {RequestMethod.GET})
 	public String deleterAdminRole(Model model,@PathVariable(value="id") String id,HttpServletRequest response)  {
 		Long ids = 0L;
@@ -165,7 +166,7 @@ public class AdminRoleController extends AdminController {
 	 * @param id
 	 * @return 跳转到绑定权限的页面
 	 */
-	//@AuthPassport
+	@AuthPassport
 	/*@RequestMapping(value="/bind/{id}", method = {RequestMethod.GET})*/
 	public String bind(HttpServletRequest request, Model model,  String id) {
 		
