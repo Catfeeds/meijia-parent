@@ -617,6 +617,8 @@ public class DateUtil {
 	}
 	
 	
+	
+	
 	public static void main(String[] args) throws ParseException {
 //		List<String> result = DateUtil.getLastMonth(6, 12);
 //		
@@ -631,7 +633,7 @@ public class DateUtil {
 //		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
 //		timeStampToDate(0L);
 		
-		
+		System.out.println(java.sql.Date.valueOf("2016-6-8"));
 		
 	}
 }

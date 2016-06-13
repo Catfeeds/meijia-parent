@@ -3,6 +3,7 @@ package com.meijia.utils;
 import java.io.IOException;
 import java.util.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -40,7 +41,7 @@ public class JacksonUtil {
 
     public static <T> T toObject(String json, Class<T> clazz) {
         try {
-            return objectMapper.readValue(json, clazz);
+        	return objectMapper.readValue(json, clazz);
         } catch (JsonParseException e) {
             logger.error(e.getMessage(), e);
         } catch (JsonMappingException e) {
@@ -121,4 +122,5 @@ public class JacksonUtil {
     public static <T> T map2pojo(Map map, Class<T> clazz) {
         return objectMapper.convertValue(map, clazz);
     }
+    
 }
