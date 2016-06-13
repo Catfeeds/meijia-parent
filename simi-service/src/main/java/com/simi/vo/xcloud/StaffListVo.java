@@ -1,36 +1,83 @@
 package com.simi.vo.xcloud;
 
+import java.util.Date;
+
 import com.simi.po.model.xcloud.XcompanyStaff;
 
 
 public class StaffListVo extends XcompanyStaff{
 
-	private Long id;
 	
-	private Long userId;
-
-    private String mobile;
-    
-    private String name;
-    
-    private String sex;
-    
-    private	String headImg;
-    
-    //员工类型名称
+	//员工类型名称
     private String staffTypeName;
-    
     //部门名称
     private String deptName;
+	
+	/* 
+	 * user 表对应属性 
+	 */
+	private Long id;
+	private Long userId;
+    private String mobile;
+    // name 无法直接传参
+    private String name;	
+    
+    private String userName;
+    
+    private String sex;
+    private String idCard;	
+    private	String headImg;
+    
+    /*
+     * imgs 表对应属性
+     */
+    
+    //身份证照正面
+    private String idCardFront;
+    //身份证照背面
+    private String idCardBack;	
+    
+    /*
+     * 封装成 json 格式的字段 ,加入vo
+     */
+	private String bankCardNo;	//银行卡号
+	
+	private String bankName;	//开户行
+	
+	private Date contractBeginDate; //合同开始日期
+	
+	private String contractLimit;  //合同期限
 
-	@Override
+	public String getStaffTypeName() {
+		return staffTypeName;
+	}
+
+	public void setStaffTypeName(String staffTypeName) {
+		this.staffTypeName = staffTypeName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
-	@Override
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getMobile() {
@@ -49,12 +96,28 @@ public class StaffListVo extends XcompanyStaff{
 		this.name = name;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getSex() {
 		return sex;
 	}
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
 	}
 
 	public String getHeadImg() {
@@ -65,30 +128,55 @@ public class StaffListVo extends XcompanyStaff{
 		this.headImg = headImg;
 	}
 
-	public String getDeptName() {
-		return deptName;
+	public String getIdCardFront() {
+		return idCardFront;
 	}
 
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
+	public void setIdCardFront(String idCardFront) {
+		this.idCardFront = idCardFront;
 	}
 
-	public String getStaffTypeName() {
-		return staffTypeName;
+	public String getIdCardBack() {
+		return idCardBack;
 	}
 
-	public void setStaffTypeName(String staffTypeName) {
-		this.staffTypeName = staffTypeName;
+	public void setIdCardBack(String idCardBack) {
+		this.idCardBack = idCardBack;
 	}
 
-	@Override
-	public Long getUserId() {
-		return userId;
+	public String getBankCardNo() {
+		return bankCardNo;
 	}
 
-	@Override
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setBankCardNo(String bankCardNo) {
+		this.bankCardNo = bankCardNo;
 	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public Date getContractBeginDate() {
+		return contractBeginDate;
+	}
+
+	public void setContractBeginDate(Date contractBeginDate) {
+		this.contractBeginDate = contractBeginDate;
+	}
+
+	public String getContractLimit() {
+		return contractLimit;
+	}
+
+	public void setContractLimit(String contractLimit) {
+		this.contractLimit = contractLimit;
+	}
+	
+
+	
 	
 }

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.AppResultData;
+import com.simi.vo.xcloud.StaffJsonInfo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
@@ -41,5 +42,13 @@ public interface XcompanyStaffService {
 	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
 
 	Xcompany getDefaultCompanyByUserId(Long userId);
-
+	
+	
+	// 对 xcompanyStaff中的 json 格式字段  jsonInfo 的处理
+	StaffJsonInfo initJsonInfo();
+	
+	
+	//云平台  xcompanyStaff 对应的Vo    staffListVo 初始化
+	StaffListVo initStaffListVO();
+	
 }

@@ -25,5 +25,5 @@ public interface ImgService {
 	Imgs initImg();
 
 	void insertImgs(MultipartFile[] imgs, Long userId, Long linkId, String linkType);
-
+	
 }

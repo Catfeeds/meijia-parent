@@ -140,7 +140,7 @@ public class UsersServiceImpl implements UsersService {
 		u.setName("");
 		u.setRealName("");
 		u.setIdCard("");
-		u.setSex(" ");
+		u.setSex("男");
 		u.setHeadImg(" ");
 		u.setQrCode("");
 		u.setIntroduction("");

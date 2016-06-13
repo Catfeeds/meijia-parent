@@ -27,6 +27,7 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.xcloud.StaffJsonInfo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
@@ -51,7 +52,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		XcompanyStaff record = new XcompanyStaff();
 
 		record.setId(0L);
-		record.setUserId(0L);
+		record.setUserId(0L); 
 		record.setIsDefault((short) 0);
 		record.setStatus((short) 1);
 		record.setCompanyId(0L);
@@ -66,7 +67,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		record.setJobNumber("0001");
 		record.setJoinDate(new Date());
 		record.setRegularDate(new Date());
-
+		
+//		record.setJsonInfo();
+		
 		return record;
 	}
 
@@ -619,8 +622,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 				
 			}
 			
-		
-			
 			if (defaultCompanyId > 0L) {
 				xcompany = xCompanyService.selectByPrimaryKey(defaultCompanyId);
 			}
@@ -629,9 +630,60 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		return xcompany;
 	}
 
+	@Override
+	public StaffJsonInfo initJsonInfo() {
 		
-	
-	
-	
+		StaffJsonInfo jsonInfo = new StaffJsonInfo();
+		
+		jsonInfo.setBankCardNo("");
+		jsonInfo.setBankName("");
+		
+		//默认一个合同开始时间， 今天 
+		jsonInfo.setContractBeginDate(DateUtil.getNow());
+		jsonInfo.setContractLimit("");
+		
+		return jsonInfo;
+	}
+
+	@Override
+	public StaffListVo initStaffListVO() {
+		
+		XcompanyStaff xcompanyStaff = initXcompanyStaff();
+		
+		StaffListVo listVo = new StaffListVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, listVo);
+		
+		listVo.setStaffTypeName("");
+		listVo.setDeptName("");
+		
+		//user 表字段
+//		private Long id;
+		listVo.setUserId(0L);
+		listVo.setMobile("");
+		listVo.setName("");
+		listVo.setUserName("");
+		listVo.setSex("男");
+		listVo.setIdCard("");
+		listVo.setHeadImg(Constants.DEFAULT_HEAD_IMG);	//默认头像
+	    
+	    /*
+	     * imgs 表对应属性
+	     */
+		//身份证照背面
+	    listVo.setIdCardBack(Constants.DEFAULT_HEAD_IMG);
+	    //身份证照正面
+	    listVo.setIdCardFront(Constants.DEFAULT_HEAD_IMG);
+	    
+	    /*
+	     * 封装成 json 格式的字段 ,加入vo
+	     */
+	    listVo.setBankCardNo("");
+	    listVo.setBankName("");
+		listVo.setContractBeginDate(DateUtil.getNowOfDate());
+		listVo.setContractLimit("");
+		
+		return listVo;
+	}
 
 }

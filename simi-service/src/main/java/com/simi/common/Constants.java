@@ -166,4 +166,20 @@ public class Constants {
 	public static int SCORE_QA_COMMENT = 5;			//问题回答
 	
 	
+	/*
+	 *  imgs 表  link_type（图片类型） 字段 整理
+	 */
+	
+	//身份证图片 正面
+	public static String IMGS_LINK_TYPE_IDCARD_FRONT = "idCardFront";
+	
+	//身份证图片 背面
+	public static String IMGS_LINK_TYPE_IDCARD_BACK = "idCardBack";
+	
+	//建表时,规定的几种 图片类型
+	public static String IMGS_LINK_TYPE_EXPRESS = "express";	//快递
+	public static String IMGS_LINK_TYPE_FEED = "feed";			//动态
+	public static String IMGS_LINK_TYPE_USER = "user";			//用户
+	public static String IMGS_LINK_TYPE_CARD = "card";			//卡片
+	
 }

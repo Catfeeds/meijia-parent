@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.service.ImgService;
 import com.simi.vo.ImgSearchVo;
 import com.simi.common.Constants;
@@ -60,7 +61,7 @@ public class ImgServiceImpl implements ImgService {
 		record.setLinkId(0L);
 		record.setLinkType("");
 		record.setImgUrl("");
-		record.setAddTime(0L);
+		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;
 	}
@@ -117,5 +118,6 @@ public class ImgServiceImpl implements ImgService {
 			}
 		}
 	}
+
 
 }
