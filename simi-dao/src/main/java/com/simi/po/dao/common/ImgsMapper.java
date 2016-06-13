@@ -2,6 +2,7 @@ package com.simi.po.dao.common;
 
 import java.util.List;
 
+
 import com.simi.po.model.common.Imgs;
 import com.simi.vo.ImgSearchVo;
 
@@ -19,4 +20,5 @@ public interface ImgsMapper {
     Long updateByPrimaryKey(Imgs record);
 
 	List<Imgs> selectBySearchVo(ImgSearchVo searchVo);
+
 }

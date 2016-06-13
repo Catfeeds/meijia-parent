@@ -7,6 +7,8 @@ public class XcompanyDept {
 
     private String name;
 
+    private Long leaderUserId;
+
     private Long parentId;
 
     public Long getDeptId() {
@@ -31,6 +33,14 @@ public class XcompanyDept {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Long getLeaderUserId() {
+        return leaderUserId;
+    }
+
+    public void setLeaderUserId(Long leaderUserId) {
+        this.leaderUserId = leaderUserId;
     }
 
     public Long getParentId() {

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-	<!--  
-	  <classPathEntry location="C:\workspace\java\libs\mysql-connector-java-5.1.5-bin.jar" />
-    -->
-    <classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" />
+	<!-- hulj 路径 -->
+    <classPathEntry location="D:/workspace/tools/path/mysql-connector-java-5.1.33.jar" />
     
-<!-- 	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
- --><!--  <classPathEntry location="D:/workspase/tools/path/mysql-connector-java-5.1.33.jar" /> -->
-
 
 	<!-- 数据库链接URL、用户名、密码 -->
 	<context id="jdbc-test">
@@ -48,7 +43,7 @@
 			targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-<!--公司表 -->
+		<!--公司表 
 		<table schema="simi" tableName="xcompany"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -70,7 +65,7 @@
 			<columnOverride  column="poi_type" property="poiType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 		</table>
 		
-        <!--公司部门表 -->
+       	公司部门表 
 		<table schema="simi" tableName="xcompany_dept"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -83,9 +78,9 @@
 			<columnOverride  column="dept_id" property="deptId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="parent_id" property="parentId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
+			<columnOverride  column="leader_user_id" property="leaderUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
-		<!--公司员工表 -->
+		公司员工表 -->
 		<table schema="simi" tableName="xcompany_staff"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -99,11 +94,13 @@
 			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_default" property="isDefault" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 			<columnOverride  column="dept_id" property="deptId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="city_id" property="cityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="staff_type" property="staffType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
 	</table>
-
+		<!-- 
 		<table schema="simi" tableName="xcompany_benz"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -243,7 +240,7 @@
 			
 		</table>
 
-		<!--公司管理员表 -->
+		公司管理员表
 		<table schema="simi" tableName="xcompany_admin"
 			enableInsert="true"
 			enableSelectByPrimaryKey="true"
@@ -258,5 +255,22 @@
 			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
+		
+		<table schema="simi" tableName="xcompany_job"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			<columnOverride  column="job_id" property="jobId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="dept_id" property="deptId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		</table>-->
 	</context>
 </generatorConfiguration>

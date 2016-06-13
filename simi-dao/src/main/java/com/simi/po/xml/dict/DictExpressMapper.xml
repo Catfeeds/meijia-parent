@@ -21,7 +21,7 @@
 		from dict_express
 		where express_id = #{expressId,jdbcType=NUMERIC}
 	</select>
-	
+	 
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.ExpressSearchVo">
 		select
 		<include refid="Base_Column_List" />

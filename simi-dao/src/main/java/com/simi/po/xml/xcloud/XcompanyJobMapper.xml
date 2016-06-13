@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyJobMapper" >
+  <resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyJob" >
+    <id column="job_id" property="jobId" jdbcType="NUMERIC" />
+    <result column="company_id" property="companyId" jdbcType="NUMERIC" />
+    <result column="dept_id" property="deptId" jdbcType="NUMERIC" />
+    <result column="user_id" property="userId" jdbcType="NUMERIC" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="total_num" property="totalNum" jdbcType="SMALLINT" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
+    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    job_id, company_id, dept_id, user_id, job_name, total_num, remarks, add_time, update_time
+  </sql>
+   
+    <select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanyJobSearchVo">
+  	 select 
+    <include refid="Base_Column_List" />
+    from xcompany_job
+  	where 1=1
+  	<if test="companyId !=null">
+  		and company_id = #{companyId,jdbcType=NUMERIC}
+  	</if>
+  	<if test="userId != null">
+  		and user_id = #{userId,jdbcType=NUMERIC}
+  	</if>
+  	<if test="deptId != null">
+  		and deptId = #{deptId,jdbcType=NUMERIC}
+  	</if>
+  	<if test="jobName != null and jobName!='' ">
+  		and job_name like CONCAT('%','${jobName}','%' )  
+  	</if>
+  	order by job_id desc
+  </select>
+  
+  
+  <select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanyJobSearchVo">
+  	 select 
+    <include refid="Base_Column_List" />
+    from xcompany_job
+  	where 1=1
+  	<if test="companyId !=null">
+  		and company_id = #{companyId,jdbcType=NUMERIC}
+  	</if>
+  	<if test="userId != null">
+  		and user_id = #{userId,jdbcType=NUMERIC}
+  	</if>
+    <if test="deptId != null">
+  		and deptId = #{deptId,jdbcType=NUMERIC}
+  	</if>
+  	<if test="jobName != null and jobName!='' ">
+  		and job_name like CONCAT('%','${jobName}','%' )  
+  	</if>
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xcompany_job
+    where job_id = #{jobId,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xcompany_job
+    where job_id = #{jobId,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyJob" >
+    insert into xcompany_job (job_id, company_id, dept_id, 
+      user_id, job_name, total_num, 
+      remarks, add_time, update_time
+      )
+    values (#{jobId,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{deptId,jdbcType=NUMERIC}, 
+      #{userId,jdbcType=NUMERIC}, #{jobName,jdbcType=VARCHAR}, #{totalNum,jdbcType=SMALLINT}, 
+      #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyJob" >
+    insert into xcompany_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="totalNum != null" >
+        total_num,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=NUMERIC},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=NUMERIC},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        #{totalNum,jdbcType=SMALLINT},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyJob" >
+    update xcompany_job
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=NUMERIC},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalNum != null" >
+        total_num = #{totalNum,jdbcType=SMALLINT},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyJob" >
+    update xcompany_job
+    set company_id = #{companyId,jdbcType=NUMERIC},
+      dept_id = #{deptId,jdbcType=NUMERIC},
+      user_id = #{userId,jdbcType=NUMERIC},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      total_num = #{totalNum,jdbcType=SMALLINT},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=NUMERIC},
+      update_time = #{updateTime,jdbcType=NUMERIC}
+    where job_id = #{jobId,jdbcType=NUMERIC}
+  </update>
+</mapper>

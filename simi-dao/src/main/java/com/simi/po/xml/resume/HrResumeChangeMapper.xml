@@ -33,7 +33,7 @@
 		
 		order by update_time desc
 	</select>
-	
+	 
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
 		select
 		<include refid="Base_Column_List" />

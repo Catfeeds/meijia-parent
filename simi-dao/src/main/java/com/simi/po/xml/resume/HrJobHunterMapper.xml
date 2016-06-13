@@ -19,7 +19,7 @@
     id, user_id, name, reward, city_name, limit_day, title, job_res, job_req, remarks, 
     add_time, update_time
   </sql>
-  
+   
   
   <select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
 		select

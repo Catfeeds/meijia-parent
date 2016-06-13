@@ -17,13 +17,12 @@ public interface XcompanyStaffMapper {
     int updateByPrimaryKeySelective(XcompanyStaff record);
 
     int updateByPrimaryKey(XcompanyStaff record);
+    
+    List<XcompanyStaff> selectBySearchVo(UserCompanySearchVo searchVo);
 
-	List<XcompanyStaff> selectBySearchVo(UserCompanySearchVo searchVo);
+  	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
 
-	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);
+  	String getMaxJobNumber(Long companyId);
 
-	String getMaxJobNumber(Long companyId);
-
-	String getNextJobNumber(Long companyId);
-
+  	String getNextJobNumber(Long companyId);
 }

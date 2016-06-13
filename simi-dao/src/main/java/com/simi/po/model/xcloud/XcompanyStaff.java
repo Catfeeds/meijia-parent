@@ -8,9 +8,9 @@ public class XcompanyStaff {
     private Long companyId;
 
     private Long userId;
-    
+
     private Short isDefault;
-    
+
     private Short status;
 
     private Long deptId;
@@ -35,6 +35,8 @@ public class XcompanyStaff {
 
     private Date regularDate;
 
+    private Object jsonInfo;
+
     public Long getId() {
         return id;
     }
@@ -57,6 +59,22 @@ public class XcompanyStaff {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Short getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(Short isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
 
     public Long getDeptId() {
@@ -147,19 +165,11 @@ public class XcompanyStaff {
         this.regularDate = regularDate;
     }
 
-	public Short getIsDefault() {
-		return isDefault;
-	}
+    public Object getJsonInfo() {
+        return jsonInfo;
+    }
 
-	public void setIsDefault(Short isDefault) {
-		this.isDefault = isDefault;
-	}
-
-	public Short getStatus() {
-		return status;
-	}
-
-	public void setStatus(Short status) {
-		this.status = status;
-	}
+    public void setJsonInfo(Object jsonInfo) {
+        this.jsonInfo = jsonInfo;
+    }
 }
