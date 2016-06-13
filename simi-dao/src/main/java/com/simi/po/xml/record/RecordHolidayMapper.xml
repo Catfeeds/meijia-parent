@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.record.RecordHolidayMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.record.RecordHoliday">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="year" property="year" jdbcType="NUMERIC" />
+		<result column="hdate" property="hdate" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="hdesc" property="hdesc" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, year, hdate, name, hdesc, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from record_holiday
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordHolidaySearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_holiday
+		where 1=1
+		<if test="year != null">
+			and year = #{year,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="hdate != null">
+			and hdate = #{hdate,jdbcType=NUMERIC}
+		</if>
+		ordre by hdate asc
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordHolidaySearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_holiday
+		where 1=1
+		<if test="year != null">
+			and year = #{year,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="hdate != null">
+			and hdate = #{hdate,jdbcType=NUMERIC}
+		</if>
+		order by hdate asc
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from record_holiday
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.record.RecordHoliday">
+		insert into record_holiday (id, year, hdate,
+		name, hdesc, add_time
+		)
+		values (#{id,jdbcType=NUMERIC}, #{year,jdbcType=NUMERIC}, #{hdate,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR}, #{hdesc,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordHoliday">
+		insert into record_holiday
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="year != null">
+				year,
+			</if>
+			<if test="hdate != null">
+				hdate,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="hdesc != null">
+				hdesc,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="year != null">
+				#{year,jdbcType=NUMERIC},
+			</if>
+			<if test="hdate != null">
+				#{hdate,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="hdesc != null">
+				#{hdesc,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.record.RecordHoliday">
+		update record_holiday
+		<set>
+			<if test="year != null">
+				year = #{year,jdbcType=NUMERIC},
+			</if>
+			<if test="hdate != null">
+				hdate = #{hdate,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="hdesc != null">
+				hdesc = #{hdesc,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.record.RecordHoliday">
+		update record_holiday
+		set year = #{year,jdbcType=NUMERIC},
+		hdate = #{hdate,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		hdesc = #{hdesc,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>
