@@ -165,7 +165,9 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		List<Long> userIds = new ArrayList<Long>();
 		for (CardAttend item : attends) {
-			if (!userIds.equals(item.getUserId())) userIds.add(item.getUserId());
+			if (!userIds.equals(item.getUserId()) && item.getLocalAlarm().equals((short)0)) {
+				userIds.add(item.getUserId());
+			}
 		}
 				
 		//2.找出可以发推送消息的用户集合 userPushBinds
