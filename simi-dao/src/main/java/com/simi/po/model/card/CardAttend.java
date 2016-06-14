@@ -10,6 +10,8 @@ public class CardAttend {
     private String mobile;
 
     private String name;
+    
+    private Short localAlarm;
 
     private Long addTime;
 
@@ -60,4 +62,12 @@ public class CardAttend {
     public void setAddTime(Long addTime) {
         this.addTime = addTime;
     }
+
+	public Short getLocalAlarm() {
+		return localAlarm;
+	}
+
+	public void setLocalAlarm(Short localAlarm) {
+		this.localAlarm = localAlarm;
+	}
 }

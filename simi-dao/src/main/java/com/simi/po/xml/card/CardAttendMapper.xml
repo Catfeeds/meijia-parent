@@ -7,11 +7,28 @@
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="local_alarm" property="localAlarm" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, card_id, user_id, mobile, name, add_time
+		id, card_id, user_id, mobile, name, local_alarm, add_time
 	</sql>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from card_attend
+		where 1=1
+		<if test="cardId != null">
+			and card_id = #{cardId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		order by id desc
+	</select>
+	
 	<select id="selectByCardId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
@@ -44,11 +61,12 @@
 
 	<insert id="insert" parameterType="com.simi.po.model.card.CardAttend">
 		insert into card_attend (id, card_id, user_id,
-		mobile, name, add_time
+		mobile, name, local_alarm, add_time
 		)
 		values (#{id,jdbcType=NUMERIC},
 		#{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
-		#{mobile,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
+		#{mobile,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+		#{localAlarm,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.card.CardAttend">
@@ -68,6 +86,9 @@
 			</if>
 			<if test="name != null">
 				name,
+			</if>
+			<if test="localAlarm != null">
+				localAlarm,
 			</if>
 			<if test="addTime != null">
 				add_time,
@@ -89,9 +110,47 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
+			<if test="localAlarm != null">
+			    #{localAlarm,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
 		</trim>
 	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardAttend">
+		update card_comment
+		<set>
+			<if test="cardId != null">
+				card_id = #{cardId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="localAlarm != null">
+			    localAlarm = #{localAlarm,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardAttend">
+	update card_comment
+	card_id = #{cardId,jdbcType=NUMERIC},
+	user_id = #{userId,jdbcType=NUMERIC},
+	mobile = #{mobile,jdbcType=VARCHAR},
+	name = #{name,jdbcType=VARCHAR},
+	localAlarm = #{localAlarm,jdbcType=NUMERIC},
+	add_time = #{addTime,jdbcType=NUMERIC}
+	where id = #{id,jdbcType=NUMERIC}
+</update>
 </mapper>
