@@ -433,8 +433,8 @@ public class CardQueryController extends BaseController {
 	@RequestMapping(value = "push-msg", method = RequestMethod.GET)
 	public AppResultData<Object> pushMsg(
 			@RequestParam("user_id") Long userId,
-			@RequestParam("category") String category,
-			@RequestParam(value = "action", required = false, defaultValue = "") String action,
+			@RequestParam(value = "category", required = false, defaultValue = "app") String category,
+			@RequestParam(value = "action", required = false, defaultValue = "qa") String action,
 			@RequestParam(value = "params", required = false, defaultValue = "") String gparams,
 			@RequestParam(value = "goto_url", required = false, defaultValue = "") String gotoUrl) throws Exception {
 
@@ -466,10 +466,10 @@ public class CardQueryController extends BaseController {
 		tranParams.put("rc", "你在" + timeStr1 + "有一条新的消息");
 		
 		//跳转信息
-//		tranParams.put("ca", category);
-//		tranParams.put("aj", action);
-//		tranParams.put("pa", gparams);
-//		tranParams.put("go", gotoUrl);
+		tranParams.put("ca", category);
+		tranParams.put("aj", action);
+		tranParams.put("pa", gparams);
+		tranParams.put("go", gotoUrl);
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
