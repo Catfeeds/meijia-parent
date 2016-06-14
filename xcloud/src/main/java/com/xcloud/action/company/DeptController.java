@@ -84,6 +84,13 @@ public class DeptController extends BaseController {
 			searchVo = new DeptSearchVo();
 		}
 		
+		
+		// 获取登录的用户
+	    AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		searchVo.setCompanyId(accountAuth.getCompanyId()); 
+		
+		//只显示当前登录公司的 部门
 		List<XcompanyDept> list = deptService.selectByListPage(searchVo, pageNo, pageSize);
 		
 		XcompanyDept dept;

@@ -91,7 +91,7 @@ public class JobController extends BaseController {
 	}		
 
 	/*
-	 * 跳转到部门 管理 form
+	 * 跳转到职位 管理 form
 	 */
 	@AuthPassport
 	@RequestMapping(value = "job_form", method = { RequestMethod.GET })
@@ -116,28 +116,28 @@ public class JobController extends BaseController {
 		Long companyId = accountAuth.getCompanyId();
 		
 		//1. 得到所在公司的 所有 在职的 员工
-		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+//		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+//		
+//		searchVo.setCompanyId(companyId);
+//		searchVo.setStatus((short) 1);
+//		
+//		List<XcompanyStaff> list = xcompanyStaffService.selectBySearchVo(searchVo);
+//		
+//		List<Long> userIdList = new ArrayList<Long>();
+//		userIdList.add(0L);
+//		
+//		for (XcompanyStaff xcompanyStaff : list) {
+//			userIdList.add(xcompanyStaff.getUserId());
+//		}
+//		
+//		//从用户表得到 员工 的具体信息
+//		UserSearchVo userSearchVo = new UserSearchVo();
+//				
+//		userSearchVo.setUserIds(userIdList);
+//		
+//		List<Users> userList = usersService.selectBySearchVo(userSearchVo);
 		
-		searchVo.setCompanyId(companyId);
-		searchVo.setStatus((short) 1);
-		
-		List<XcompanyStaff> list = xcompanyStaffService.selectBySearchVo(searchVo);
-		
-		List<Long> userIdList = new ArrayList<Long>();
-		userIdList.add(0L);
-		
-		for (XcompanyStaff xcompanyStaff : list) {
-			userIdList.add(xcompanyStaff.getUserId());
-		}
-		
-		//从用户表得到 员工 的具体信息
-		UserSearchVo userSearchVo = new UserSearchVo();
-				
-		userSearchVo.setUserIds(userIdList);
-		
-		List<Users> userList = usersService.selectBySearchVo(userSearchVo);
-		
-		jobVo.setUserList(userList);
+//		jobVo.setUserList(userList);
 		
 		//2.该公司下 可选部门列表
 		DeptSearchVo  deptSearchVo = new DeptSearchVo();
@@ -157,11 +157,11 @@ public class JobController extends BaseController {
 	}
 	
 	/*
-	 *   提交 新增/修改 部门
+	 *   提交 新增/修改 职位
 	 */
 	@AuthPassport
 	@RequestMapping(value = "job_form.json", method = { RequestMethod.POST })
-	public AppResultData<Object> submitJobForm(
+	public AppResultData<Object> submitJobForm(HttpServletRequest request,
 			@ModelAttribute("jobVoModel")XcompanyJobVo jobVo, BindingResult bindingResult){
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -170,15 +170,31 @@ public class JobController extends BaseController {
 		
 		XcompanyJob xcompanyJob = jobService.initJob();
 		
+		/*
+		 *  2016年6月14日10:56:08   
+		 *  
+		 *  	对于 xcompany_job表  的 userId 字段， 表示为当前操作人。而不是职位对应的人
+		 * 
+		 */
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+		
+		Long userId = accountAuth.getUserId();
+		
+		
 		if(jobId == 0L){
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(jobVo,xcompanyJob);
+			
+			xcompanyJob.setUserId(userId);
 			
 			jobService.insert(xcompanyJob);
 		}else{
 			xcompanyJob = jobService.selectByPrimaryKey(jobId);
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(jobVo,xcompanyJob);
+			
+			xcompanyJob.setUserId(userId);
 			xcompanyJob.setUpdateTime(TimeStampUtil.getNowSecond());
 			
 			jobService.updateByPrimaryKey(xcompanyJob);

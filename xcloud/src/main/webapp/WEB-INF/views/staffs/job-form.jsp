@@ -79,7 +79,7 @@
 							</div>
 						</div>	
 						
-						<div class="am-form-group">
+						<%-- <div class="am-form-group">
 							<label  class="am-u-sm-3 am-form-label">选择员工:</label>
 							<div class="am-u-sm-9">
 								<form:select path="userId"  
@@ -95,7 +95,7 @@
 									</c:forEach> 
 								</form:select>
 							</div>
-						</div>	
+						</div> --%>	
 						
 						<div class="am-form-group">
 							<label  class="am-u-sm-3 am-form-label">规划人数:</label>
