@@ -1,0 +1,178 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>五险一金计算器</title>
+  <meta name="description" content="这是一个form页面">
+  <meta name="keywords" content="form">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<!-- content start -->
+<div class="admin-content">
+			<div class="am-cf am-padding">
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-lg">五险一金计算器</strong> / <small>2016版</small>
+				</div>
+			</div>
+			<hr>
+
+			<div class="am-g">
+
+				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+					<section class="am-panel am-panel-default"> 
+					<header class="am-panel-hd"> 云小秘提示您 </header>
+					<div class="am-panel-bd">由于各地工伤保险略有差异, 计算结果仅供参考</div>
+				</div>
+
+				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+					<form id="commpany-asset-form" class="am-form am-form-horizontal" action="/xcloud/xz/assets/commpany_asset_form?id=0" method="POST" enctype="multipart/form-data">
+					 
+					 <input type="hidden" id="userId" name="userId" value="18" /> 
+					 <input type="hidden" id="companyId" name="companyId" value="6">
+						
+						<div class="am-form-group" required>
+							<label class="am-u-sm-4 am-form-label">所在地区<font color="red">*</font></label>
+							<div class="am-u-sm-8">
+								<select id="assetTypeId" name="assetTypeId" class="am-form-field am-radius">
+									<option value="">北京</option>
+									<option value="">上海</option>
+									<option value="">广州</option>
+									<option value="">深圳</option>
+								</select>
+							</div>
+						</div>
+						
+						
+						<div class="am-form-group">
+							<label  class="am-u-sm-4 am-form-label">税前工资<font color="red">*</font></label>
+							<div class="am-u-sm-8">
+								<input id="name" name="name" maxLength="32" class="am-form-field am-radius" required="required" type="text" value="" autocomplete="off"/>
+								<small></small>		
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label  class="am-u-sm-4 am-form-label">社保缴纳基数<font color="red">*</font></label>
+							<div class="am-u-sm-8">
+								<input id="total" name="total" maxLength="32" class="am-form-field am-radius js-pattern-pinteger" required="required" type="text" value=""/>
+								<small><font color="red">最低1890/最高19000</font></small>	
+							</div>
+						</div>
+
+					
+						<div class="am-form-group">
+							<label class="am-u-sm-4 am-form-label">公积金缴纳基数<font color="red">*</font></label>
+							<div class="am-u-sm-8">
+								<input id="price" name="price" maxLength="32" class="am-form-field am-radiu js-pattern-pinteger" required="required" type="text" value=""/>
+								<small><font color="red">最低1290/最高14000</font></small>
+							</div>
+						</div>
+
+						<hr>
+						<div class="am-form-group">
+							<div class="am-u-sm-9 am-u-sm-push-3">
+								<button type="button" class="am-btn am-btn-danger"
+									id="btn-commpany-asset-form-submit">计算</button>
+								<button type="button" class="am-btn am-btn-success"
+									id="btn-return">重置</button>
+							</div>
+						</div>
+						<hr>
+
+						<div class="am-g">
+				<div class="am-u-sm-12">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+							<thead>
+								<tr>
+									<th class="table-id">保险项</th>
+									<th class="table-name">个人部分</th>
+									<th class="table-name">单位部分</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+									<tr>
+										<td>养老</td>
+										<td>800.00	(<font color="red">8%</font>)</td>
+										<td>2000.00	(<font color="red">20%</font>)</td>
+									</tr>
+								
+									<tr>
+										<td>医疗</td>
+										<td>800.00	(<font color="red">8%</font>)</td>
+										<td>2000.00	(<font color="red">20%</font>)</td>
+									</tr>
+								
+									<tr>
+										<td>失业</td>
+										<td>800.00	(<font color="red">8%</font>)</td>
+										<td>2000.00	(<font color="red">20%</font>)</td>
+									</tr>
+								
+									<tr>
+										<td>工伤</td>
+										<td>800.00	(<font color="red">8%</font>)</td>
+										<td>2000.00	(<font color="red">20%</font>)</td>
+									</tr>
+								
+									<tr>
+										<td>生育</td>
+										<td>800.00	(<font color="red">8%</font>)</td>
+										<td>2000.00	(<font color="red">20%</font>)</td>
+									</tr>
+								
+									<tr>
+										<td>公积金</td>
+										<td>800.00	(<font color="red">8%</font>)</td>
+										<td>2000.00	(<font color="red">20%</font>)</td>
+									</tr>
+
+									<tr class="am-active">
+										<td>合计</td>
+										<td>1020.00</td>
+										<td>3230.00</td>
+									</tr>
+								
+							</tbody>
+						  </table>
+						</div>
+				</div>
+			</div>
+						
+					</form>
+					
+					
+				</div>
+			</div>
+		</div>
+
+<!-- content end -->
+
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="assets/js/jquery.min.js"></script>
+<!--<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
