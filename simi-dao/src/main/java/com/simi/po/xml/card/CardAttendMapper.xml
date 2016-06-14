@@ -135,7 +135,7 @@
 				name = #{name,jdbcType=VARCHAR},
 			</if>
 			<if test="localAlarm != null">
-			    localAlarm = #{localAlarm,jdbcType=NUMERIC},
+			    local_alarm = #{localAlarm,jdbcType=NUMERIC},
 			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
@@ -149,7 +149,7 @@
 	user_id = #{userId,jdbcType=NUMERIC},
 	mobile = #{mobile,jdbcType=VARCHAR},
 	name = #{name,jdbcType=VARCHAR},
-	localAlarm = #{localAlarm,jdbcType=NUMERIC},
+	local_alarm = #{localAlarm,jdbcType=NUMERIC},
 	add_time = #{addTime,jdbcType=NUMERIC}
 	where id = #{id,jdbcType=NUMERIC}
 </update>
