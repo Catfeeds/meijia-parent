@@ -120,7 +120,7 @@
 	</insert>
 	
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.card.CardAttend">
-		update card_comment
+		update card_attend
 		<set>
 			<if test="cardId != null">
 				card_id = #{cardId,jdbcType=NUMERIC},
@@ -144,7 +144,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.card.CardAttend">
-	update card_comment
+	update card_attend
 	card_id = #{cardId,jdbcType=NUMERIC},
 	user_id = #{userId,jdbcType=NUMERIC},
 	mobile = #{mobile,jdbcType=VARCHAR},
