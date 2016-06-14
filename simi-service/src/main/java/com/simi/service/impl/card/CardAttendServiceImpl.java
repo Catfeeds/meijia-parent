@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.meijia.utils.TimeStampUtil;
 import com.simi.service.card.CardAttendService;
+import com.simi.vo.card.CardSearchVo;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.dao.card.CardAttendMapper;
 
@@ -23,6 +24,7 @@ public class CardAttendServiceImpl implements CardAttendService {
 		record.setCardId(0L);
 		record.setMobile("");
 		record.setName("");
+		record.setLocalAlarm((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;
@@ -52,11 +54,25 @@ public class CardAttendServiceImpl implements CardAttendService {
 	public List<CardAttend> selectByCardIds(List<Long> cardIds) {
 		return  cardAttendMapper.selectByCardIds(cardIds);
 	}	
+	
+	@Override
+	public List<CardAttend> selectBySearchVo(CardSearchVo searchVo) {
+		return  cardAttendMapper.selectBySearchVo(searchVo);
+	}	
 
 	@Override
 	public int deleteByCardId(Long cardId) {
 		return cardAttendMapper.deleteByCardId(cardId);
 	}	
+	
+	@Override
+	public int updateByPrimaryKey(CardAttend record) {
+		return cardAttendMapper.updateByPrimaryKey(record);
+	}
 
+	@Override
+	public int updateByPrimaryKeySelective(CardAttend record) {
+		return cardAttendMapper.updateByPrimaryKeySelective(record);
+	}
 
 }
