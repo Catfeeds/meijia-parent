@@ -1,12 +1,13 @@
 package com.simi.vo.xcloud.company;
 
+
 /**
  * 
 * @author hulj 
-* @date 2016Äê6ÔÂ7ÈÕ ÏÂÎç2:45:09 
+* @date 2016å¹´6æœˆ7æ—¥ ä¸‹åˆ2:45:09 
 * @Description: 
 *	
-*	Í¨Ñ¶Â¼--²¿ÃÅ¹ÜÀí £¬searchVo
+*	é€šè®¯å½•--éƒ¨é—¨ç®¡ç† ï¼ŒsearchVo
 *
  */
 public class DeptSearchVo {

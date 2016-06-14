@@ -15,34 +15,34 @@ import org.apache.ibatis.type.JdbcType;
 import com.alibaba.fastjson.JSON;
 
 /**
- * mapperÀïjsonĞÍ×Ö¶Îµ½ÀàµÄÓ³Éä¡£
+ * mapperé‡Œjsonå‹å­—æ®µåˆ°ç±»çš„æ˜ å°„ã€‚
  * 
  * 
- * ÓÃ·¨:
+ * ç”¨æ³•:
  * 
- * Èë¿â£º
- * 	  //´íÎóÓÃ·¨£¨°Ù¶Èµ½µÄ£©£º  ÕâÖÖÓÃ·¨»áÔÚ Èë¿âÊ±, ´íÎóµÄ½«  json×Ö¶Î ×ªÒå£¬²¢ÔÚ Ê×Î² Ìí¼Ó ÒıºÅ£¬µ¼ÖÂÈ¡Êı¾İÊ±²»ÄÜÕıÈ·½âÎöjson
+ * å…¥åº“ï¼š
+ * 	  //é”™è¯¯ç”¨æ³•ï¼ˆç™¾åº¦åˆ°çš„ï¼‰ï¼š  è¿™ç§ç”¨æ³•ä¼šåœ¨ å…¥åº“æ—¶, é”™è¯¯çš„å°†  jsonå­—æ®µ è½¬ä¹‰ï¼Œå¹¶åœ¨ é¦–å°¾ æ·»åŠ  å¼•å·ï¼Œå¯¼è‡´å–æ•°æ®æ—¶ä¸èƒ½æ­£ç¡®è§£æjson
  * 	   #{item.myObject, typeHandler=com.xxx.typehandler.JsonTypeHandler}
  * 
- *    // ÕıÈ·ÓÃ·¨: ÓÉ  generator ²å¼şÉú³ÉµÄ  Óï¾ä£¬ ¿ÉÒÔÕıÈ·²åÈë¡£ĞŞ¸Ä£¨mybatis²»»áÓĞ¶àÓà´¦Àí£©
+ *    // æ­£ç¡®ç”¨æ³•: ç”±  generator æ’ä»¶ç”Ÿæˆçš„  è¯­å¥ï¼Œ å¯ä»¥æ­£ç¡®æ’å…¥ã€‚ä¿®æ”¹ï¼ˆmybatisä¸ä¼šæœ‰å¤šä½™å¤„ç†ï¼‰
  * 	  #{jsonInfo,jdbcType=OTHER})
  * 
- * 	  ps: µ±Ç°Ê¹ÓÃµÄÎª 
- * 			 	mysql-connector-java-5.1.33 £¬
+ * 	  ps: å½“å‰ä½¿ç”¨çš„ä¸º 
+ * 			 	mysql-connector-java-5.1.33 ï¼Œ
  * 				MyBatis_Generator_1.3.1
  * 	
- * 		 »á½«  mysql5.7 Êı¾İ¿â±íÖĞµÄ  json ÀàĞÍµÄ×Ö¶Î  Ó³ÉäÎª object ÀàĞÍµÄÊôĞÔ
+ * 		 ä¼šå°†  mysql5.7 æ•°æ®åº“è¡¨ä¸­çš„  json ç±»å‹çš„å­—æ®µ  æ˜ å°„ä¸º object ç±»å‹çš„å±æ€§
  * 			
- * 		²Î¿¼   xcompanyStaff 
+ * 		å‚è€ƒ   xcompanyStaff 
  * 	
- * ³ö¿â£º
+ * å‡ºåº“ï¼š
  * <resultMap>
  *      <result property="jsonDataField" column="json_data_field" javaType="com.xxx.MyClass" typeHandler="com.xxx.typehandler.JsonTypeHandler"/>
  * </resultMap>
  *
  *
 * @author hulj 
-* @date 2016Äê6ÔÂ8ÈÕ ÏÂÎç3:26:37 
+* @date 2016å¹´6æœˆ8æ—¥ ä¸‹åˆ3:26:37 
 *
 *
  */
@@ -57,7 +57,7 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
         this.clazz = clazz;
     }
     
-    //³£ÓÃ±àÂë¸ñÊ½	
+    //å¸¸ç”¨ç¼–ç æ ¼å¼	
     private static String ISO88591_ENCODE = "ISO8859_1";
     private static String UTF8_ENCODE = "UTF-8";
     private static String GBK_ENCODE = "GBK";
@@ -74,7 +74,7 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
     	String columnValue = rs.getString(columnName);
     	
     	
-    	//ÓÉÓÚ mybatis ¶ÔÓÚ  mysql5.7µÄ json¸ñÊ½µÄÊı¾İ £¬ÖĞÎÄÂÒÂë(×ªÎªÁË iso-8859-1±àÂë)£¬    ÔÚ µÃµ½ ½á¹û¼¯ºó½øĞĞ ×ªÂë
+    	//ç”±äº mybatis å¯¹äº  mysql5.7çš„ jsonæ ¼å¼çš„æ•°æ® ï¼Œä¸­æ–‡ä¹±ç (è½¬ä¸ºäº† iso-8859-1ç¼–ç )ï¼Œ    åœ¨ å¾—åˆ° ç»“æœé›†åè¿›è¡Œ è½¬ç 
     	try {
 	    	if (columnValue != null) {
 	            if (ISO88591_ENCODE.equals(getEncode(columnValue))) {
@@ -82,12 +82,12 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
 	            }
 	        }
     	} catch (UnsupportedEncodingException e) {
-    		  log.debug("¶Ômybatis·µ»Ø½á¹ûµÄ json¸ñÊ½×Ö¶Î×ªÂëÊ§°Ü");
+    		  log.debug("å¯¹mybatisè¿”å›ç»“æœçš„ jsonæ ¼å¼å­—æ®µè½¬ç å¤±è´¥");
     	}
     	
     	if(columnValue != null){
     		
-    		// È¥µô×ªÒå×Ö·û  "\", Ê¹µÃjson¿ÉÒÔÕıÈ·½âÎö
+    		// å»æ‰è½¬ä¹‰å­—ç¬¦  "\", ä½¿å¾—jsonå¯ä»¥æ­£ç¡®è§£æ
     		columnValue = StringEscapeUtils.unescapeJava(columnValue);
     		
     		return  JSON.parseObject(columnValue, clazz);
@@ -109,7 +109,7 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
 	            }
 	        }
     	} catch (UnsupportedEncodingException e) {
-    		  log.debug("¶Ômybatis·µ»Ø½á¹ûµÄ json¸ñÊ½×Ö¶Î×ªÂëÊ§°Ü");
+    		  log.debug("å¯¹mybatisè¿”å›ç»“æœçš„ jsonæ ¼å¼å­—æ®µè½¬ç å¤±è´¥");
     	}
     	
     	if(columnValue != null){
@@ -134,12 +134,12 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
 	            }
 	        }
     	} catch (UnsupportedEncodingException e) {
-    		  log.debug("¶Ômybatis·µ»Ø½á¹ûµÄ json¸ñÊ½×Ö¶Î×ªÂëÊ§°Ü");
+    		  log.debug("å¯¹mybatisè¿”å›ç»“æœçš„ jsonæ ¼å¼å­—æ®µè½¬ç å¤±è´¥");
     	}
     	
     	if(columnValue != null){
     		
-    		// Èë¿âÊ±£¬»áÓĞ \ ×ªÒå×Ö·û¡£¡£ÓÃ apach ¹¤¾ßÀà´¦Àí,½â¾ö json×ª»»µÄÎÊÌâ
+    		// å…¥åº“æ—¶ï¼Œä¼šæœ‰ \ è½¬ä¹‰å­—ç¬¦ã€‚ã€‚ç”¨ apach å·¥å…·ç±»å¤„ç†,è§£å†³ jsonè½¬æ¢çš„é—®é¢˜
     		
     		columnValue = StringEscapeUtils.unescapeJava(columnValue);
     		
@@ -149,7 +149,7 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
     	return (T) clazz;
     }
 	
-  //·µ»Ø±àÂë¸ñÊ½
+  //è¿”å›ç¼–ç æ ¼å¼
     private String getEncode(String str) {
         String encode = null;
         if (verifyEncode(str, GBK_ENCODE)) {
@@ -163,25 +163,22 @@ public class JsonTypeHandler<T extends Object> extends BaseTypeHandler<T> {
         return encode;
     }
 
-    //ÅĞ¶Ï±àÂë¸ñÊ½ÊÇ·ñÏà·û
+    //åˆ¤æ–­ç¼–ç æ ¼å¼æ˜¯å¦ç›¸ç¬¦
     private boolean verifyEncode(String str, String encode) {
         try {
             if (str.equals(new String(str.getBytes(encode), encode))) {
                 return true;
             }
         } catch (UnsupportedEncodingException e) {
-        	 log.debug("¶Ômybatis·µ»Ø½á¹ûµÄ json¸ñÊ½×Ö¶Î×ªÂëÊ§°Ü");
+        	 log.debug("å¯¹mybatisè¿”å›ç»“æœçš„ jsonæ ¼å¼å­—æ®µè½¬ç å¤±è´¥");
         }
         return false;
     }
     
     public static void main(String[] args) {
-		String  url = "{\"bankCardNo\":\"411081199209244059\",\"bankName\":\"´óÓÊ¾Ö\",\"contractBeginDate\":\"2019-08-08\",\"contractLimit\":\"1Äê\"}";
+		String  url = "{\"bankCardNo\":\"411081199209244059\",\"bankName\":\"å¤§é‚®å±€\",\"contractBeginDate\":\"2019-08-08\",\"contractLimit\":\"1å¹´\"}";
 		
 		System.out.println(StringEscapeUtils.unescapeJava(url));
 	}
-    
-    
-    
     
 }
