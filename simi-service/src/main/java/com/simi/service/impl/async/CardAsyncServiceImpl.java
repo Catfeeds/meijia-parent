@@ -241,6 +241,15 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		tranParams.put("rt", cardTypeName);
 		tranParams.put("rc", pushContent);
 		
+		//跳转信息
+		if (isShow.equals("true")) {
+			//跳转信息
+			tranParams.put("ca", "app");
+			tranParams.put("aj", "card_detail");
+			tranParams.put("pa", card.getCardId().toString());
+			tranParams.put("go", "");
+		}
+		
 		System.out.println(tranParams.toString());
 
 		ObjectMapper objectMapper = new ObjectMapper();
