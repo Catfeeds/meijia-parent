@@ -165,7 +165,11 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 		
 		List<Long> userIds = new ArrayList<Long>();
 		for (CardAttend item : attends) {
-			if (!userIds.equals(item.getUserId()) && item.getLocalAlarm().equals((short)0)) {
+			
+			//如果已经设置过本地闹钟，则不需要服务器推送提醒
+			if (item.getLocalAlarm().equals((short)1)) continue;
+			
+			if (!userIds.equals(item.getUserId()) ) {
 				userIds.add(item.getUserId());
 			}
 		}
