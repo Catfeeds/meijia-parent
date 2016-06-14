@@ -606,5 +606,31 @@ public class CardController extends BaseController {
 		result.setData(imgs);
 		return result;
 	}
+	
+	@RequestMapping(value = "set_local_alarm", method = RequestMethod.POST)
+	public AppResultData<Object> setLocalAlarm(HttpServletRequest request,
+			@RequestParam("user_id") Long userId,
+			@RequestParam("card_id")Long cardId) throws IOException {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+		
+		CardSearchVo searchVo = new CardSearchVo();
+		searchVo.setCardId(cardId);
+		searchVo.setUserId(userId);
+		
+		List<CardAttend> list = cardAttendService.selectBySearchVo(searchVo);
+		
+		if (list.isEmpty()) return result;
+		
+		CardAttend record = list.get(0);
+		if (record ==  null) return result;
+		
+		record.setLocalAlarm((short) 1);
+		cardAttendService.updateByPrimaryKeySelective(record);
+	
+		
+		return result;
+	}
 
 }
