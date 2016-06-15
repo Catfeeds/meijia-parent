@@ -291,7 +291,7 @@ public class CardsServiceImpl implements CardService {
 			Date addTimeDate = TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, null);
 			String addTimeStr = DateUtil.fromToday(addTimeDate);
 			vo.setAddTimeStr(addTimeStr);
-			if (!vo.getPeriod().equals((short)0)) {
+			if (!item.getPeriod().equals((short)0)) {
 				vo.setAddTimeStr(item.getPeriodName());
 			}
 			
