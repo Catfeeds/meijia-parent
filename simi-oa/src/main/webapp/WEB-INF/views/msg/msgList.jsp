@@ -53,9 +53,9 @@ import="com.simi.oa.common.UrlHelper"%>
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
+						<header class="panel-heading">
+						<h4>数据搜索</h4>
                          <form:form modelAttribute="searchVoModel" action="list" method="GET">
-				<header class="panel-heading">
-				<h4>数据搜索</h4>
 				<div>
 					标题：
 					<form:input path="title" />

@@ -188,7 +188,7 @@ public class UserController extends AdminController {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             ExcelUtil.createWorkBook(list,keys,columnNames).write(os);
-        } catch (IOException e) {
+        } catch (IOException e) { 
             e.printStackTrace();
         }
         byte[] content = os.toByteArray();
