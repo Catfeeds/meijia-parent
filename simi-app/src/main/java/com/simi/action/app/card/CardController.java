@@ -208,17 +208,6 @@ public class CardController extends BaseController {
 			cardExtra = GsonUtil.GsonString(cardExtraMap);
 		}
 		
-		//卡片额外信息 - 通用卡片
-//		if (cardType.equals((short) 0) && !StringUtil.isEmpty(cardExtra)) {
-//			Map<String, Object> cardExtraMap = GsonUtil.GsonToMaps(cardExtra);
-//			
-//			String poiLng = cardExtraMap.get("poi_lng").toString();
-//			String poiLat = cardExtraMap.get("poi_lat").toString();
-//			String poiName = cardExtraMap.get("poi_Name").toString();
-//			
-//			cardExtra = GsonUtil.GsonString(cardExtraMap);
-//		}
-		
 		record.setCardExtra(cardExtra);
 		if (!createUserId.equals(userId)) {
 			Users createUser = userService.selectByPrimaryKey(createUserId);
@@ -298,11 +287,7 @@ public class CardController extends BaseController {
 					cardAttend.setMobile(mobile);
 					cardAttend.setName(item.getName());
 					cardAttendService.insert(cardAttend);
-					
-					
-					//相互加为好友. 异步操作
-					//usersAsyncService.addFriends(u, newUser);
-					
+
 					// 如果不是好友，则自动发出好友请求.
 					
 					if (userId.equals(newUserId)) continue;
@@ -324,8 +309,6 @@ public class CardController extends BaseController {
 				}
 			}
 		}
-		
-//		CardViewVo vo = cardService.changeToCardViewVo(record);
 		
 		//todo 1. 如果是立即给相关人员发送消息，则需要短信模板的通知.
 		cardAsyncService.cardNotification(record);
