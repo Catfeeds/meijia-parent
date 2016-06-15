@@ -1,16 +1,14 @@
 package com.simi.vo.xcloud;
 
-import java.util.Date;
-
 public class StaffJsonInfo {
 	
-	private String bankCardNo;	//ÒøĞĞ¿¨ºÅ
+	private String bankCardNo;	//é“¶è¡Œå¡å·
 	
-	private String bankName;	//¿ª»§ĞĞ
+	private String bankName;	//å¼€æˆ·è¡Œ
 	
-	private String contractBeginDate; //ºÏÍ¬¿ªÊ¼ÈÕÆÚ
+	private String contractBeginDate; //åˆåŒå¼€å§‹æ—¥æœŸ
 	
-	private String contractLimit;  //ºÏÍ¬ÆÚÏŞ
+	private String contractLimit;  //åˆåŒå¹´é™
 
 	public String getBankCardNo() {
 		return bankCardNo;
