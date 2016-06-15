@@ -423,6 +423,7 @@ public class CardsServiceImpl implements CardService {
 		return cardsMapper.selectBySearchVo(vo);
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public PageInfo selectByListPage(CardSearchVo searchVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
