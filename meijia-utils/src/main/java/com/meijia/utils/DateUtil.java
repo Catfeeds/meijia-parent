@@ -597,6 +597,45 @@ public class DateUtil {
 	      return date;
 	}
 	
+	public static List<String> getAllDaysOfMonth(int year, int month) {
+		List<String> days = new ArrayList<String>();
+		
+		Calendar cal = Calendar.getInstance();
+	    cal.set(Calendar.MONTH, 1);
+	    cal.set(Calendar.DAY_OF_MONTH, 1);
+	    int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//	    System.out.print(df.format(cal.getTime()));
+	    for (int i = 1; i < maxDay; i++) {
+	        cal.set(Calendar.DAY_OF_MONTH, i + 1);
+//	        System.out.print(", " + df.format(cal.getTime()));
+	        days.add(df.format(cal.getTime()));
+	    }
+	    
+	    return days;
+	}
+	
+	public static List<String> getAllWorkDaysOfMonth(int year, int month) {
+		List<String> days = new ArrayList<String>();
+		
+		Calendar cal = Calendar.getInstance();
+	    cal.set(Calendar.MONTH, 1);
+	    cal.set(Calendar.DAY_OF_MONTH, 1);
+	    int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//	    System.out.print(df.format(cal.getTime()));
+	    for (int i = 1; i < maxDay; i++) {
+	        cal.set(Calendar.DAY_OF_MONTH, i + 1);
+//	        System.out.print(", " + df.format(cal.getTime()));
+	        int day = cal.get(Calendar.DAY_OF_WEEK);    
+	        if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){    
+	        	days.add(df.format(cal.getTime()));
+	        }
+	    }
+	    
+	    return days;
+	}
+	
 	/*
 	 * 根据 时间戳 得到  字符串类型的 日期 格式 时间--> "2016-5-19 14:44:21"
 	 */
@@ -634,6 +673,7 @@ public class DateUtil {
 //		timeStampToDate(0L);
 		
 		System.out.println(java.sql.Date.valueOf("2016-6-8"));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 6));
 		
 	}
 }
