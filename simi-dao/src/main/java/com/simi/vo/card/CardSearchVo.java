@@ -6,6 +6,8 @@ public class CardSearchVo {
 	
 	private Long userId;
 	
+	private Short period;
+	
 	private Long startTime;
 	
 	private Long endTime;
@@ -70,6 +72,14 @@ public class CardSearchVo {
 
 	public void setCardType(Short cardType) {
 		this.cardType = cardType;
+	}
+
+	public Short getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Short period) {
+		this.period = period;
 	}
 
 

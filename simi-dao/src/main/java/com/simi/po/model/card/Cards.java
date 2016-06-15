@@ -12,6 +12,10 @@ public class Cards {
     private String title;
 
     private Long serviceTime;
+    
+    private Short period;
+    
+    private String periodName;
 
     private String serviceAddr;
 
@@ -179,5 +183,21 @@ public class Cards {
 
 	public void setCardExtra(String cardExtra) {
 		this.cardExtra = cardExtra;
+	}
+
+	public Short getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Short period) {
+		this.period = period;
+	}
+
+	public String getPeriodName() {
+		return periodName;
+	}
+
+	public void setPeriodName(String periodName) {
+		this.periodName = periodName;
 	}
 }
