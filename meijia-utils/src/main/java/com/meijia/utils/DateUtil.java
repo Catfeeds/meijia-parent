@@ -601,12 +601,13 @@ public class DateUtil {
 		List<String> days = new ArrayList<String>();
 		
 		Calendar cal = Calendar.getInstance();
-	    cal.set(Calendar.MONTH, 1);
+		cal.set(Calendar.YEAR, year);
+	    cal.set(Calendar.MONTH, month - 1);
 	    cal.set(Calendar.DAY_OF_MONTH, 1);
 	    int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //	    System.out.print(df.format(cal.getTime()));
-	    for (int i = 1; i < maxDay; i++) {
+	    for (int i = 0; i < maxDay; i++) {
 	        cal.set(Calendar.DAY_OF_MONTH, i + 1);
 //	        System.out.print(", " + df.format(cal.getTime()));
 	        days.add(df.format(cal.getTime()));
@@ -673,7 +674,18 @@ public class DateUtil {
 //		timeStampToDate(0L);
 		
 		System.out.println(java.sql.Date.valueOf("2016-6-8"));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 1));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 2));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 3));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 4));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 5));
 		System.out.println(DateUtil.getAllDaysOfMonth(2016, 6));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 7));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 8));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 9));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 10));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 11));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 12));
 		
 	}
 }
