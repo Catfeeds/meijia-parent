@@ -11,5 +11,7 @@ public interface CardAsyncService {
 	Future<Boolean> cardNotification(Cards card);
 
 	Future<Boolean> cardAlertClock(Cards card);
+
+	Future<Boolean> cardSecDo(Long userId, Cards card);
 	
 }

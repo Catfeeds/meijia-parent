@@ -27,4 +27,6 @@ public interface CardAttendService {
 
 	int updateByPrimaryKeySelective(CardAttend record);
 
+	boolean doCardAttend(Long cardId, Long userId, String attends);
+
 }
