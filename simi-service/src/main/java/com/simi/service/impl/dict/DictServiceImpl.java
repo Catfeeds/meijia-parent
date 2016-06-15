@@ -85,6 +85,27 @@ public class DictServiceImpl implements DictService {
 		return cityName;
 	}
 	
+	@Override
+	public String getRegionName(Long regionId) {
+		String regionName = "";
+		if (regionId <= 0)
+			return regionName;
+
+		List<DictRegion> listRegion = this.LoadRegionData();
+
+		DictRegion item = null;
+		for (int i = 0; i < listRegion.size(); i++) {
+			item = listRegion.get(i);
+			if (item.getRegionId().equals(regionId)) {
+				regionName = item.getName();
+				break;
+			}
+		}
+		return regionName;
+	}
+	
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DictProvince> LoadProvinceData() {
@@ -121,7 +142,7 @@ public class DictServiceImpl implements DictService {
 		}else{
 			for (Iterator iterator = listCity.iterator(); iterator.hasNext();) {
 				DictCity dictCity = (DictCity) iterator.next();
-				if (dictCity.getProvinceId() == provinceId) {
+				if (dictCity.getProvinceId().equals(provinceId)) {
 					listCityName.add(dictCity);
 				}
 			}
@@ -137,12 +158,30 @@ public class DictServiceImpl implements DictService {
 		if(0L==cityId){
 			return listRegion;
 		}else{
-			for (Iterator iterator = listRegion.iterator(); iterator.hasNext();) {
-				DictRegion dictRegion = (DictRegion) iterator.next();
-				if (dictRegion.getCityId()==cityId) {
+			for (DictRegion dictRegion : listRegion) {
+				/*
+				 *  对于基本数据类型的 包装类的 相等性 比较
+				 * 
+				 *  由于是  '对象实例'的比较
+				 * 
+				 * 	Long中有个小小的陷阱，就是在-128至127范围内，
+				 * 	Long.valueOf(long l)返回的Long的实例是相同的，
+				 * 	而在此范围之外每次使用valueOf(long l)时，返回的实例都是不同的
+				 * 
+				 *  ==> 从而 解释了  
+				 *  
+				 *  	在 写成  dictRegion.getCityId() == cityId
+				 *  
+				 *  	北京 cityId = 2, 可以获得正确数据
+				 * 		广州 cityId = 198, 不能进入 if		
+				 */
+				
+				//这里 cityId, 根据业务场景,只涉及 实例 值的 比较。。用equals即可 
+				if(dictRegion.getCityId().equals(cityId)){
 					listRegionName.add(dictRegion);
 				}
 			}
+			
 			return listRegionName;
 		}
 	}

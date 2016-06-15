@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.vo.xcloud.CompanySettingVo;
+import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 
@@ -30,5 +31,13 @@ public interface XCompanySettingService {
 	CompanySettingVo getCompantSettingVo(XcompanySetting item);
 
 	PageInfo selectByListPage(CompanySettingSearchVo searchVo, int pageNo, int pageSize);
-
+	
+	
+	// json格式 属性的初始化
+	SettingJsonSettingValue initJsonSettingValue();
+	
+	//初始化vo
+	CompanySettingVo initSettingVo();
+	
+	CompanySettingVo transToVo(XcompanySetting setting);
 }

@@ -23,6 +23,8 @@ public interface DictService {
 
 	List<DictExpress> loadExpressData();
 
+	String getRegionName(Long regionId);
+
 
 
 	

@@ -27,9 +27,9 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserSearchVo;
-import com.simi.vo.xcloud.StaffJsonInfo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.json.StaffJsonInfo;
 
 @Service
 public class XcompanyStaffServiceImpl implements XcompanyStaffService {
@@ -68,7 +68,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		record.setJoinDate(new Date());
 		record.setRegularDate(new Date());
 		
-//		record.setJsonInfo();
+		record.setJsonInfo(initJsonInfo());
 		
 		return record;
 	}

@@ -5,13 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.simi.service.dict.DictService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.xcloud.CompanySettingVo;
+import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
 
 @Service
@@ -20,7 +25,10 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	@Autowired
 	XcompanySettingMapper xcompanySettingMapper;
 	
-
+	@Autowired
+	private DictService dictService;
+	
+	
 	@Override
 	public XcompanySetting initXcompanySetting() {
 		XcompanySetting record = new XcompanySetting();
@@ -28,12 +36,17 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		record.setId(0L);
 		record.setCompanyId(0L);
 		record.setUserId(0L);
-		record.setName("");
+		record.setName("社保公积金基数");
 		record.setSettingJson("");
-		record.setSettingType("");
+		//社保公积金 setting_type   =   insurance
+		record.setSettingType(Constants.SETTING_TYPE_INSURANCE);
 		record.setIsEnable((short)1);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
+		
+		//初始化一个json 字段
+		record.setSettingValue(initJsonSettingValue());
+		
 		return record;
 	}
 
@@ -98,6 +111,73 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		
 		return vo;
 	}
-	
+
+	@Override
+	public SettingJsonSettingValue initJsonSettingValue() {
+		
+		SettingJsonSettingValue settingValue = new SettingJsonSettingValue();
+		
+		settingValue.setCityId("");
+		settingValue.setRegionId("");
+		settingValue.setPension("");
+		settingValue.setMedical("");
+		settingValue.setUnemployment("");
+		settingValue.setInjury("");
+		settingValue.setBirth("");
+		settingValue.setFund("");
+		
+		return settingValue;
+	}
+
+	@Override
+	public CompanySettingVo initSettingVo() {
+		
+		CompanySettingVo settingVo = new CompanySettingVo();
+		
+		XcompanySetting setting = initXcompanySetting();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(setting, settingVo);
+		
+		
+		settingVo.setSettingId(0L);
+		settingVo.setAddTimeStr(DateUtil.getNow());
+		
+		return settingVo;
+	}
+
+	@Override
+	public CompanySettingVo transToVo(XcompanySetting setting) {
+		
+		CompanySettingVo settingVo = initSettingVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(setting, settingVo);
+		//默认一个 json对象
+		SettingJsonSettingValue value = initJsonSettingValue();
+		
+		Object setValue = setting.getSettingValue();
+		
+		if(setValue != null){
+			value = (SettingJsonSettingValue) setValue;
+			
+			settingVo.setPension(value.getPension());
+			settingVo.setFund(value.getFund());
+			settingVo.setMedical(value.getMedical());
+			settingVo.setUnemployment(value.getUnemployment());
+			settingVo.setInjury(value.getInjury());
+			settingVo.setBirth(value.getBirth());
+			
+			String cityId = value.getCityId();
+			
+			String regionId = value.getRegionId();
+			
+			settingVo.setCityId(cityId);
+			settingVo.setRegionId(regionId);
+			
+			settingVo.setCityName(dictService.getCityName(Long.valueOf(cityId)));
+			settingVo.setRegionName(dictService.getRegionName(Long.valueOf(regionId)));
+		}
+		
+		return settingVo;
+	}
 	
 }

@@ -6,9 +6,9 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.vo.AppResultData;
-import com.simi.vo.xcloud.StaffJsonInfo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.json.StaffJsonInfo;
 
 public interface XcompanyStaffService {
 

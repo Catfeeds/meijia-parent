@@ -182,4 +182,14 @@ public class Constants {
 	public static String IMGS_LINK_TYPE_USER = "user";			//用户
 	public static String IMGS_LINK_TYPE_CARD = "card";			//卡片
 	
+	
+	/*
+	 *  xcompany_setting 表  setting_type 字段
+	 */
+	public  static String SETTING_TYPE_INSURANCE = "insurance";	//社保公积金基数
+	
+	
+	
+	
+	
 }
