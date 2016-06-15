@@ -36,7 +36,7 @@ public interface CardService {
 
 	List<Cards> selectByReminds(CardSearchVo vo);
 
-	boolean updateFinishByOvertime();
+	int updateFinishByOvertime(CardSearchVo searchVo);
 
 	List<Cards> selectListByAddtimeTwo();
 

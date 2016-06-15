@@ -26,6 +26,8 @@ public class CardListVo {
 	
 	private Long serviceTime;
 	
+	private Short period;
+		
 	private String serviceContent;
 	
 	private String serviceAddr;
@@ -175,5 +177,12 @@ public class CardListVo {
 	public void setCreateMobile(String createMobile) {
 		this.createMobile = createMobile;
 	}
-		
+
+	public Short getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Short period) {
+		this.period = period;
+	}		
 }

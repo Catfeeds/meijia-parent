@@ -1,6 +1,10 @@
 package com.simi.utils;
 
+import java.util.Date;
+
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.Week;
 import com.simi.common.Constants;
 
 /**
@@ -368,5 +372,47 @@ public class CardUtil {
 		}
 		return action;
 	}		
+	
+	/**
+	 * 
+	 * @param serviceTime  时间
+	 * @param period       0 = 一次性提醒 1 = 每天提醒 2 = 每个工作日 3 = 每周 4 = 每月 5 = 每年
+	 * @return
+	 */
+	public static String getPeriodName(Long serviceTime, Short period) {
+		String periodName = "";
+		
+		if (period.equals((short)0)) {
+			periodName = "一次性提醒";
+		}
+		
+		String tt = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "HH:mm");
+		if (period.equals((short)1)) {
+			periodName = "每天 " + tt;
+//			periodName = "每天";
+		}
+		
+		if (period.equals((short)2)) {
+			periodName = "每个工作日（周一至周五）" + tt;
+		}
+		
+		if (period.equals((short)3)) {
+			String strDate = TimeStampUtil.timeStampToDateStr(serviceTime * 1000);
+			Date d = DateUtil.parse(strDate);
+			Week w = DateUtil.getWeek(d);
+			periodName = "每周(" + w.getChineseName() + ") " + tt;
+		}
+		
+		if (period.equals((short)4)) {
+			String dd = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "dd");
+			periodName = "每月(" + dd + ") 日 " + tt;
+		}
+		
+		if (period.equals((short)5)) {
+			String md = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "MM-dd");
+			periodName = "每月(" + md + ") 日 " + tt;
+		}
+		return periodName;
+	}
 	
 }

@@ -74,6 +74,8 @@ public class CardsServiceImpl implements CardService {
 		record.setCardType((short) 0);
 		record.setTitle("");
 		record.setServiceTime(0L);
+		record.setPeriod((short) 0);
+		record.setPeriodName("");
 		record.setServiceContent("");
 		record.setCardExtra("");
 		record.setSetRemind((short) 0);
@@ -197,6 +199,10 @@ public class CardsServiceImpl implements CardService {
 		String addTimeStr = DateUtil.fromToday(addTimeDate);
 		vo.setAddTimeStr(addTimeStr);
 		
+		if (!vo.getPeriod().equals((short)0)) {
+			vo.setAddTimeStr(vo.getPeriodName());
+		}
+		
 		//卡片图片
 		List<CardImgs> list = cardImgsMapper.selectByCardId(vo.getCardId());
 
@@ -284,7 +290,10 @@ public class CardsServiceImpl implements CardService {
 			//服务时间字符串
 			Date addTimeDate = TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, null);
 			String addTimeStr = DateUtil.fromToday(addTimeDate);
-			vo.setAddTimeStr(addTimeStr);			
+			vo.setAddTimeStr(addTimeStr);
+			if (!vo.getPeriod().equals((short)0)) {
+				vo.setAddTimeStr(item.getPeriodName());
+			}
 			
 			//统计赞的数量
 			vo.setTotalZan(0);
@@ -510,9 +519,8 @@ public class CardsServiceImpl implements CardService {
 	 * @return
 	 */
 	@Override
-	public boolean updateFinishByOvertime() {
-		cardsMapper.updateFinishByOvertime();
-		return true;
+	public int updateFinishByOvertime(CardSearchVo searchVo) {
+		return cardsMapper.updateFinishByOvertime(searchVo);
 	}
 	
 	@Override
