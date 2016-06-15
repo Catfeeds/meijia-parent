@@ -67,7 +67,7 @@ public class TestCardQueryController extends JUnitActionBase  {
     public void testTotalByMonth() throws Exception {
 
 		String url = "/app/card/total_by_month.json";
-		String params = "?user_id=1&year=2015&month=10";
+		String params = "?user_id=18&year=2016&month=7";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
