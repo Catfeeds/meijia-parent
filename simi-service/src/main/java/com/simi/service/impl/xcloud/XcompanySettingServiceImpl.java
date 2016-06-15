@@ -1,6 +1,7 @@
 package com.simi.service.impl.xcloud;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -119,12 +120,24 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		
 		settingValue.setCityId("");
 		settingValue.setRegionId("");
-		settingValue.setPension("");
-		settingValue.setMedical("");
-		settingValue.setUnemployment("");
-		settingValue.setInjury("");
-		settingValue.setBirth("");
-		settingValue.setFund("");
+		
+		settingValue.setPensionP("");
+		settingValue.setPensionC("");
+		
+		settingValue.setMedicalP("");
+		settingValue.setMedicalC("");
+		
+		settingValue.setUnemploymentP("");
+		settingValue.setUnemploymentC("");
+		
+		settingValue.setInjuryP("");
+		settingValue.setInjuryC("");
+		
+		settingValue.setBirthP("");
+		settingValue.setBirthC("");
+		
+		settingValue.setFundP("");
+		settingValue.setFundC("");
 		
 		return settingValue;
 	}
@@ -159,15 +172,9 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		if(setValue != null){
 			value = (SettingJsonSettingValue) setValue;
 			
-			settingVo.setPension(value.getPension());
-			settingVo.setFund(value.getFund());
-			settingVo.setMedical(value.getMedical());
-			settingVo.setUnemployment(value.getUnemployment());
-			settingVo.setInjury(value.getInjury());
-			settingVo.setBirth(value.getBirth());
+			BeanUtilsExp.copyPropertiesIgnoreNull(value, settingVo);
 			
 			String cityId = value.getCityId();
-			
 			String regionId = value.getRegionId();
 			
 			settingVo.setCityId(cityId);
