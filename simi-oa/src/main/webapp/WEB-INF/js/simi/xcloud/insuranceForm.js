@@ -10,54 +10,103 @@ $('#insuranceForm').validate({
 		regionId:{
 			regionId : "regionId"
 		},
-		pension : {
+		pensionP : {
 			required : true,
 			number : true
 		},
-		medical : {
+		pensionC : {
 			required : true,
 			number : true
 		},
-		unemployment: {
+		medicalP : {
 			required : true,
 			number : true
 		},
-		injury: {
+		medicalC : {
 			required : true,
 			number : true
 		},
-		birth: {
+		unemploymentP: {
 			required : true,
 			number : true
 		},
-		fund: {
+		unemploymentC: {
 			required : true,
 			number : true
-		}
+		},
+		injuryP: {
+			required : true,
+			number : true
+		},
+		injuryC: {
+			required : true,
+			number : true
+		},
+		birthP: {
+			required : true,
+			number : true
+		},
+		birthC: {
+			required : true,
+			number : true
+		},
+		fundP: {
+			required : true,
+			number : true
+		},
+		fundC: {
+			required : true,
+			number : true
+		},
 	},
 
 	messages : {
-		pension : {
+		pensionP : {
 			required : "请输入养老保险基数",
 			number : "请输入合法的数字"	
 		},
-		medical : {
+		pensionC : {
+			required : "请输入养老保险基数",
+			number : "请输入合法的数字"	
+		},
+		medicalP : {
 			required : "请输入医疗保险基数",
 			number:"请输入合法的数字"
 		},
-		unemployment: {
+		medicalC : {
+			required : "请输入医疗保险基数",
+			number:"请输入合法的数字"
+		},
+		unemploymentP: {
 			required : "请输入失业险基数",
 			number : "请输入合法的数字"
 		},
-		injury : {
+		unemploymentC: {
+			required : "请输入失业险基数",
+			number : "请输入合法的数字"
+		},
+		
+		injuryP : {
 			required : "请输入工伤险基数",
 			number : "请输入合法的数字"
 		},
-		birth : {
+		injuryC : {
+			required : "请输入工伤险基数",
+			number : "请输入合法的数字"
+		},
+		birthP : {
 			required : "请输入生育险基数",
 			number : "请输入合法的数字"
 		},
-		fund : {
+		birthC : {
+			required : "请输入生育险基数",
+			number : "请输入合法的数字"
+		},
+		fundP : {
+			required : "请输入公积金基数",
+			number : "请输入合法的数字"
+		},
+		fundC : {
 			required : "请输入公积金基数",
 			number : "请输入合法的数字"
 		}

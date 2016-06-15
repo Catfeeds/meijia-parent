@@ -155,14 +155,7 @@ public class XcompanySettingController extends BaseController {
 		SettingJsonSettingValue jsonSettingValue = settingService.initJsonSettingValue();
 		
 		//json 字段的 8项数据
-		jsonSettingValue.setCityId(settingVo.getCityId());
-		jsonSettingValue.setRegionId(settingVo.getRegionId());
-		jsonSettingValue.setFund(settingVo.getFund());
-		jsonSettingValue.setInjury(settingVo.getInjury());
-		jsonSettingValue.setMedical(settingVo.getMedical());
-		jsonSettingValue.setPension(settingVo.getPension());
-		jsonSettingValue.setUnemployment(settingVo.getUnemployment());
-		jsonSettingValue.setBirth(settingVo.getBirth());
+		BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, jsonSettingValue);
 		
 		String json = JsonUtil.objecttojson(jsonSettingValue);
 		

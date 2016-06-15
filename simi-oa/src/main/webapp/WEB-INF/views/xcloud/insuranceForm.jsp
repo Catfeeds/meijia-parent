@@ -56,45 +56,88 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">养老(%)*</label>
+							<label class="col-md-2 control-label">养老(个人)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="pension" class="form-control" placeholder="养老保险基数,单位%" maxlength="10"/>
+								<form:input path="pensionP" class="form-control" placeholder="养老保险基数(个人),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">医疗(%)*</label>
+							<label class="col-md-2 control-label">养老(公司)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="medical" class="form-control" placeholder="医疗保险基数,单位%" maxlength="10"/>
+								<form:input path="pensionC" class="form-control" placeholder="养老保险基数(公司),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">失业(%)*</label>
+							<label class="col-md-2 control-label">医疗(个人)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="unemployment" class="form-control" placeholder="失业保险基数,单位%" maxlength="10"/>
+								<form:input path="medicalP" class="form-control" placeholder="医疗保险基数(个人),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">工伤(%)*</label>
+							<label class="col-md-2 control-label">医疗(公司)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="injury" class="form-control" placeholder="工伤保险基数,单位%" maxlength="10"/>
+								<form:input path="medicalC" class="form-control" placeholder="医疗保险基数(公司),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">生育(%)*</label>
+							<label class="col-md-2 control-label">失业(个人)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="birth" class="form-control" placeholder="生育保险基数,单位%" maxlength="10"/>
+								<form:input path="unemploymentP" class="form-control" placeholder="失业保险基数(个人),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">公积金(%)*</label>
+							<label class="col-md-2 control-label">失业(公司)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="fund" class="form-control" placeholder="公积金基数,单位%" maxlength="10"/>
+								<form:input path="unemploymentC" class="form-control" placeholder="失业保险基数(公司),单位%" maxlength="10"/>
+							</div>
+						</div>
+						
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">工伤(个人)(%)*</label>
+							<div class="col-md-5">
+								<form:input path="injuryP" class="form-control" placeholder="工伤保险基数(个人),单位%" maxlength="10"/>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">工伤(公司)(%)*</label>
+							<div class="col-md-5">
+								<form:input path="injuryC" class="form-control" placeholder="工伤保险基数(公司),单位%" maxlength="10"/>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">生育(个人)(%)*</label>
+							<div class="col-md-5">
+								<form:input path="birthP" class="form-control" placeholder="生育保险基数(个人),单位%" maxlength="10"/>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">生育(公司)(%)*</label>
+							<div class="col-md-5">
+								<form:input path="birthC" class="form-control" placeholder="生育保险基数(公司),单位%" maxlength="10"/>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">公积金(个人)(%)*</label>
+							<div class="col-md-5">
+								<form:input path="fundP" class="form-control" placeholder="公积金基数(个人),单位%" maxlength="10"/>
+							</div>
+						</div>
+						
+						<div class="form-group required">
+							<label class="col-md-2 control-label">公积金(公司)(%)*</label>
+							<div class="col-md-5">
+								<form:input path="fundC" class="form-control" placeholder="公积金基数(公司),单位%" maxlength="10"/>
 							</div>
 						</div>
 						<div class="form-actions fluid">
