@@ -15,13 +15,21 @@ public class SettingJsonSettingValue {
 	private String  cityId;		// 城市id
 	private String  regionId;	//区县id
 	
-	private String	pension;	//养老 
-	private String	medical;	//医疗 
-	private String	unemployment;	//失业 
-	private String	injury;		//工伤 
-	private String	birth;		//生育 
-	private String	fund;		//公积金 
+	//个人基数
+	private String	pensionP;	//养老 
+	private String	medicalP;	//医疗 
+	private String	unemploymentP;	//失业 
+	private String	injuryP;		//工伤 
+	private String	birthP;		//生育 
+	private String	fundP;		//公积金 
 	
+	//公司基数
+	private String	pensionC;	//养老 
+	private String	medicalC;	//医疗 
+	private String	unemploymentC;	//失业 
+	private String	injuryC;		//工伤 
+	private String	birthC;		//生育 
+	private String	fundC;		//公积金 
 	
 	public String getCityId() {
 		return cityId;
@@ -35,42 +43,79 @@ public class SettingJsonSettingValue {
 	public void setRegionId(String regionId) {
 		this.regionId = regionId;
 	}
-	public String getPension() {
-		return pension;
+	public String getPensionP() {
+		return pensionP;
 	}
-	public void setPension(String pension) {
-		this.pension = pension;
+	public void setPensionP(String pensionP) {
+		this.pensionP = pensionP;
 	}
-	public String getMedical() {
-		return medical;
+	public String getMedicalP() {
+		return medicalP;
 	}
-	public void setMedical(String medical) {
-		this.medical = medical;
+	public void setMedicalP(String medicalP) {
+		this.medicalP = medicalP;
 	}
-	public String getUnemployment() {
-		return unemployment;
+	public String getUnemploymentP() {
+		return unemploymentP;
 	}
-	public void setUnemployment(String unemployment) {
-		this.unemployment = unemployment;
+	public void setUnemploymentP(String unemploymentP) {
+		this.unemploymentP = unemploymentP;
 	}
-	public String getInjury() {
-		return injury;
+	public String getInjuryP() {
+		return injuryP;
 	}
-	public void setInjury(String injury) {
-		this.injury = injury;
+	public void setInjuryP(String injuryP) {
+		this.injuryP = injuryP;
 	}
-	public String getBirth() {
-		return birth;
+	public String getBirthP() {
+		return birthP;
 	}
-	public void setBirth(String birth) {
-		this.birth = birth;
+	public void setBirthP(String birthP) {
+		this.birthP = birthP;
 	}
-	public String getFund() {
-		return fund;
+	public String getFundP() {
+		return fundP;
 	}
-	public void setFund(String fund) {
-		this.fund = fund;
+	public void setFundP(String fundP) {
+		this.fundP = fundP;
 	}
-	  
+	public String getPensionC() {
+		return pensionC;
+	}
+	public void setPensionC(String pensionC) {
+		this.pensionC = pensionC;
+	}
+	public String getMedicalC() {
+		return medicalC;
+	}
+	public void setMedicalC(String medicalC) {
+		this.medicalC = medicalC;
+	}
+	public String getUnemploymentC() {
+		return unemploymentC;
+	}
+	public void setUnemploymentC(String unemploymentC) {
+		this.unemploymentC = unemploymentC;
+	}
+	public String getInjuryC() {
+		return injuryC;
+	}
+	public void setInjuryC(String injuryC) {
+		this.injuryC = injuryC;
+	}
+	public String getBirthC() {
+		return birthC;
+	}
+	public void setBirthC(String birthC) {
+		this.birthC = birthC;
+	}
+	public String getFundC() {
+		return fundC;
+	}
+	public void setFundC(String fundC) {
+		this.fundC = fundC;
+	}
+	
+	
 	
 }

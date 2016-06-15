@@ -7,7 +7,7 @@
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="card_type" property="cardType" jdbcType="NUMERIC" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
-		<result column="service_time" property="serviceTime" jdbcType="NUMERIC" />
+		<result column="service_time" property="serviceTime" jdbcType="NUMERIC" /> 
 		<result column="period" property="period" jdbcType="NUMERIC" />
 		<result column="period_name" property="periodName" jdbcType="VARCHAR" />
 		<result column="service_addr" property="serviceAddr" jdbcType="VARCHAR" />
