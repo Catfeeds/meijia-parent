@@ -255,7 +255,7 @@ public class JSoupUtil {
 			return "";
 		}
 		
-		//匹配某一区块的内容
+		//匹配某一区块的内容 
 		String block = "";
 		String[] matchResult = RegExpUtil.match(blockRegex, str);
 		if ( blockMatchIndex <= (matchResult.length - 1) ) {

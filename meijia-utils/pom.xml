@@ -12,7 +12,7 @@
 
 	<name>meijia-utils</name>
 	<url>http://maven.apache.org</url>
-
+ 
 	<properties>
 		<jackson.version>2.4.2</jackson.version>
 		<spring.version>4.1.1.RELEASE</spring.version>
