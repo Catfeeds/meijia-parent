@@ -19,6 +19,7 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 
 @Controller
 @RequestMapping(value = "/app/company")
@@ -73,5 +74,75 @@ public class CompanySeetingController extends BaseController {
 		
 		return result;
 	}
+	
+	
+	/**
+	 * 
+	 *  获得 城市、区县社保公积金基数 接口
+	 * 
+	 * @param cityId	 城市id
+	 * @param regionId	区县id
+	 * @return
+	 * 
+	 * 		{
+	 * 			status:xx
+	 * 			msg: xx
+	 * 			data:{
+	 * 				cityId  : xx,
+	 * 			  regionId  : xx,
+	 * 
+	 * 			    pension : （录入时的数字,单位%, 转换为数字时需要 除以100） 	//养老 
+					medical :		//医疗
+			   unemployment :	    //失业
+					 injury : 		//工伤
+					 birth  : 		//生育
+					 fund   :	 	//公积金
+	 * 
+	 * 			}	
+	 * 		}
+	 * 
+	 */
+	@RequestMapping(value = "get_insurance_setting.json",method = RequestMethod.GET)
+	public AppResultData<Object> getInsurRanceForCityOrRegion(
+			@RequestParam("city_id")Long cityId,
+			@RequestParam(value="region_id",required=false,defaultValue="")Long regionId){
+		
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if(cityId <= 0L || cityId == null){
+			
+			result.setData("cityId不存在");
+			return result;
+		}
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		
+		//社保公积金基数，setting_type = "insurance"
+		searchVo.setSettingType(Constants.SETTING_TYPE_INSURANCE);
+		
+		searchVo.setCityId(cityId.toString());
+		
+		if(regionId !=null && regionId > 0L ){
+			searchVo.setRegionId(regionId.toString());
+		}
+		
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		//返回 json字段。集合
+		List<SettingJsonSettingValue> jsonList = new ArrayList<SettingJsonSettingValue>();
+		
+		for (XcompanySetting xcompanySetting : list) {
+			
+			Object settingValue = xcompanySetting.getSettingValue();
+			
+			jsonList.add((SettingJsonSettingValue) settingValue);
+		}
+		
+		result.setData(jsonList);
+		
+		return result;
+	}
+	
 	
 }
