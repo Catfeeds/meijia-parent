@@ -68,6 +68,7 @@ public class UserMsgController extends BaseController {
 		}
 
 		// 先检测是否有重复类卡片，如果有则加入日程.
+		userMsgService.checkPeriod(u, serviceDate);
 
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();
 		searchVo.setUserId(userId);
