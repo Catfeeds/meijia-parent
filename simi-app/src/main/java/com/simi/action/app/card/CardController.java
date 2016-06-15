@@ -16,12 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.RegexUtil;
-import com.meijia.utils.SmsUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
@@ -32,41 +28,27 @@ import com.simi.po.model.card.CardComment;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
-import com.simi.po.model.user.UserFriendReq;
-import com.simi.po.model.user.UserFriends;
-import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.CardAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
-import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardImgsService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.dict.DictUtil;
-import com.simi.service.user.UserFriendReqService;
-import com.simi.service.user.UserFriendService;
-import com.simi.service.user.UserRef3rdService;
-import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
-import com.simi.vo.card.LinkManVo;
-import com.simi.vo.user.UserFriendSearchVo;
-import com.simi.vo.user.UserRefSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/card")
 public class CardController extends BaseController {
 	@Autowired
 	private UsersService userService;
-	
-	@Autowired
-	private UsersAsyncService usersAsyncService;	
-	
+		
 	@Autowired
 	private CardImgsService cardImgsService;
 	
@@ -88,18 +70,6 @@ public class CardController extends BaseController {
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;		
 		
-	@Autowired
-	private UserRef3rdService userRef3rdService;
-	
-	@Autowired
-	private UserRefService userRefService;
-	
-	@Autowired
-	private UserFriendService userFriendService;
-	
-	@Autowired
-	private UserFriendReqService userFriendReqService;
-	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
 
@@ -209,6 +179,8 @@ public class CardController extends BaseController {
 		}
 		
 		record.setCardExtra(cardExtra);
+		
+		//存在秘书给用户创建卡片的情况.
 		if (!createUserId.equals(userId)) {
 			Users createUser = userService.selectByPrimaryKey(createUserId);
 			if (createUser.getUserType().equals((short)1)) {
@@ -224,13 +196,11 @@ public class CardController extends BaseController {
 		if (cardId > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.updateByPrimaryKeySelective(record);
-			
 			remarks = userName + "修改了卡片信息.";
 		} else {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			cardService.insert(record);
 			cardId = record.getCardId();		
-			
 			remarks = userName + "创建了卡片信息.";
 		}
 		
@@ -240,96 +210,15 @@ public class CardController extends BaseController {
 //		System.out.println(attends);
 		//处理attends 转换为List<LinkManVo>的概念.
 		if (!StringUtil.isEmpty(attends)) {
-			Gson gson = new Gson();
-			List<LinkManVo> linkManList = gson.fromJson(attends, new TypeToken<List<LinkManVo>>(){}.getType() ); 
-			System.out.println(linkManList.toString());
-			if (linkManList != null) {
-				
-				//先删除掉后再新增
-				cardAttendService.deleteByCardId(cardId);
-				LinkManVo item = null;
-				for (int i = 0; i < linkManList.size(); i++) {
-//					System.out.println(linkManList.get(i).toString());
-					item = linkManList.get(i);
-					String mobile = item.getMobile();
-					mobile = mobile.replaceAll(" ", "");  
-					
-					Long newUserId = 0L;
-					newUserId = item.getUser_id();
-					
-					if (newUserId == null || newUserId.equals(0L)) {
-						if (StringUtil.isEmpty(mobile)) continue;
-						if (!RegexUtil.isMobile(mobile)) continue;
-					}
-//					mobile = RegexUtil.checkMobile(mobile);
-					
-					//根据手机号找出对应的userID, 如果没有则直接新增用户.
-					
-					Users newUser = null;
-					
-					if (newUserId != null && newUserId > 0L) {
-						newUser = userService.selectByPrimaryKey(newUserId);
-					} else {
-						newUser = userService.selectByMobile(mobile);
-					}
-					
-					if (newUser == null) {
-						newUser = userService.genUser(mobile, item.getName(), (short) 3, "");					
-						usersAsyncService.genImUser(newUser.getId());
-					}
-					
-					newUserId = newUser.getId();
-					
-					newUserId = newUser.getId();
-					CardAttend cardAttend = cardAttendService.initCardAttend();
-					cardAttend.setCardId(cardId);
-					cardAttend.setUserId(newUserId);
-					cardAttend.setMobile(mobile);
-					cardAttend.setName(item.getName());
-					cardAttendService.insert(cardAttend);
-
-					// 如果不是好友，则自动发出好友请求.
-					
-					if (userId.equals(newUserId)) continue;
-					
-					UserFriendSearchVo searchVo = new UserFriendSearchVo();
-					searchVo.setUserId(userId);
-					searchVo.setFriendId(newUserId);
-					UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);	
-					UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
-					
-					if (userFriend == null && userFriendReq == null) {
-						userFriendReq = userFriendReqService.initUserFriendReq();
-						userFriendReq.setUserId(newUserId);
-						userFriendReq.setFriendId(userId);
-						userFriendReq.setAddTime(TimeStampUtil.getNowSecond());
-						userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
-						userFriendReqService.insert(userFriendReq);
-					}
-				}
-			}
+			cardAttendService.doCardAttend(cardId, userId, attends);
 		}
 		
-		//todo 1. 如果是立即给相关人员发送消息，则需要短信模板的通知.
+		//如果是立即给相关人员发送消息，则需要短信模板的通知.
 		cardAsyncService.cardNotification(record);
 
-		//todo 2. 如果是秘书处理，则需要给相应的秘书发送消息.
+		//如果是秘书处理，则需要给相应的秘书发送消息.
 		if (record.getSetSecDo().equals((short)1)) {
-			//找出对应的秘书信息
-			UserRefSearchVo searchVo = new UserRefSearchVo();
-			searchVo.setUserId(userId);
-			searchVo.setRefType("sec");
-			List<UserRef> rs  = userRefService.selectBySearchVo(searchVo);
-			UserRef userRef = null;
-			if (!rs.isEmpty()) userRef = rs.get(0);
-			if (userRef != null) {
-				Users secUser = userService.selectByPrimaryKey(userRef.getRefId());
-				String secMobile = secUser.getMobile();
-				if (RegexUtil.isMobile(secMobile)) {
-					String[] content = new String[] { userName, CardUtil.getCardTypeName(record.getCardType()),  ""};
-					HashMap<String, String> sendSmsResult = SmsUtil.SendSms(secMobile, "44658", content);
-				}
-			}
+			cardAsyncService.cardSecDo(userId, record);
 		}
 		
 		//生成卡片消息
