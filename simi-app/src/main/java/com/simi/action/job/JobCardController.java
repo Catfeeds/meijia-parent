@@ -57,7 +57,10 @@ public class JobCardController extends BaseController {
 
 		String reqHost = request.getRemoteHost();
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
-			cardService.updateFinishByOvertime();
+			CardSearchVo searchVo = new CardSearchVo();
+			searchVo.setPeriod((short) 0);
+			searchVo.setStartTime(TimeStampUtil.getNowSecond());
+			cardService.updateFinishByOvertime(searchVo);
 		}
 		return result;
 	}
@@ -165,7 +168,7 @@ public class JobCardController extends BaseController {
 	}
 	
 	/**
-	 *  卡片定时提醒，发送短信
+	 *  卡片定时提醒，发送短信, 仅针对一次性提醒
 	 */
 	@RequestMapping(value = "card_notify", method = RequestMethod.GET)
 	public AppResultData<Object> cardNotify() {
@@ -175,7 +178,7 @@ public class JobCardController extends BaseController {
 		
 		//找出今天，明天，后天的卡片数据
 		CardSearchVo searchVo = new CardSearchVo();
-		
+		searchVo.setPeriod((short) 0);
 		Long startTime = TimeStampUtil.getBeginOfToday();
 		Date today = DateUtil.getNowOfDate();
 		
@@ -208,14 +211,11 @@ public class JobCardController extends BaseController {
 			}
 			
 //			System.out.println("serviceTime = " + serviceTime + " ===========now = " + TimeStampUtil.getNowSecond());
-			if (serviceTime < TimeStampUtil.getNowSecond()) {
+			if (vo.getPeriod().equals((short)0) && serviceTime < TimeStampUtil.getNowSecond()) {
 				vo.setStatus((short) 3);
 				cardService.updateByPrimaryKey(vo);
 			}
-		}
-		
-//		cardService.updateFinishByOvertime();
-		
+		}		
 		return result;
 	}
 }

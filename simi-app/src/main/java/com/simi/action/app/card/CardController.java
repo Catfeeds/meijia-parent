@@ -142,6 +142,7 @@ public class CardController extends BaseController {
 			@RequestParam("user_id") Long userId,
 			@RequestParam(value = "attends", required = false, defaultValue = "") String attends,
 			@RequestParam("service_time") Long serviceTime,
+			@RequestParam(value = "period", required = false, defaultValue = "0") Short period,
 			@RequestParam(value = "service_addr", required = false, defaultValue = "") String serviceAddr,
 			@RequestParam("service_content") String serviceContent,
 			@RequestParam("set_remind") Short setRemind,
@@ -174,6 +175,11 @@ public class CardController extends BaseController {
 		record.setCardType(cardType);
 		record.setTitle(title);
 		record.setServiceTime(serviceTime);
+		record.setPeriod(period);
+		
+		String periodName = CardUtil.getPeriodName(serviceTime, period);
+		record.setPeriodName(periodName);
+		
 		record.setServiceAddr(serviceAddr);
 		record.setServiceContent(serviceContent);
 		record.setSetRemind(setRemind);
@@ -349,7 +355,7 @@ public class CardController extends BaseController {
 		//创建卡片积分
 		userScoreAsyncService.sendScoreCard(userId, cardId, cardType);
 
-//		result.setData(vo);
+		result.setData(record);
 		return result;
 	}		
 	
