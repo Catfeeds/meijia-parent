@@ -4,7 +4,7 @@ public class XcompanySetting {
     private Long id;
 
     private Long companyId;
-    
+
     private Long userId;
 
     private String name;
@@ -13,10 +13,12 @@ public class XcompanySetting {
 
     private String settingJson;
 
+    private Object settingValue;
+
     private Short isEnable;
 
     private Long addTime;
-    
+
     private Long updateTime;
 
     public Long getId() {
@@ -33,6 +35,14 @@ public class XcompanySetting {
 
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -59,6 +69,14 @@ public class XcompanySetting {
         this.settingJson = settingJson == null ? null : settingJson.trim();
     }
 
+    public Object getSettingValue() {
+        return settingValue;
+    }
+
+    public void setSettingValue(Object settingValue) {
+        this.settingValue = settingValue;
+    }
+
     public Short getIsEnable() {
         return isEnable;
     }
@@ -75,19 +93,11 @@ public class XcompanySetting {
         this.addTime = addTime;
     }
 
-	public Long getUpdateTime() {
-		return updateTime;
-	}
+    public Long getUpdateTime() {
+        return updateTime;
+    }
 
-	public void setUpdateTime(Long updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
 }

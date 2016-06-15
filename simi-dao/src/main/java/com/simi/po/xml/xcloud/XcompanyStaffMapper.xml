@@ -21,7 +21,7 @@
     
     <!-- <result column="json_info" property="jsonInfo" jdbcType="OTHER" /> -->
     
-	<result column="json_info" property="jsonInfo" javaType="com.simi.vo.xcloud.StaffJsonInfo" 
+	<result column="json_info" property="jsonInfo" javaType="com.simi.vo.xcloud.json.StaffJsonInfo" 
 		typeHandler="com.simi.base.handler.JsonTypeHandler" /> 
 	
   </resultMap>

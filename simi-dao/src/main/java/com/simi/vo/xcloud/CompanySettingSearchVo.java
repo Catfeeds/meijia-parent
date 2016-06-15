@@ -15,7 +15,30 @@ public class CompanySettingSearchVo{
 	private String name;
 	
 	private Long updateTime;
-			
+	
+	
+	
+	private String cityId;
+	
+	private String regionId;
+	
+	
+	public String getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	public String getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(String regionId) {
+		this.regionId = regionId;
+	}
+
 	public Long getCompanyId() {
 		return companyId;
 	}
