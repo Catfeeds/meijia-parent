@@ -1,5 +1,7 @@
 package com.simi.vo.card;
 
+import java.util.List;
+
 public class CardSearchVo {
 
 	private Long cardId;
@@ -7,6 +9,8 @@ public class CardSearchVo {
 	private Long userId;
 	
 	private Short period;
+	
+	private List<Short> periods;
 	
 	private Long startTime;
 	
@@ -80,6 +84,14 @@ public class CardSearchVo {
 
 	public void setPeriod(Short period) {
 		this.period = period;
+	}
+
+	public List<Short> getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(List<Short> periods) {
+		this.periods = periods;
 	}
 
 

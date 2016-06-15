@@ -86,9 +86,16 @@
 		<if test="period != null">
 			and period = #{period,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="periods != null">
+			and period in
+			<foreach item="item" index="index" collection="periods" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
 
 		<if test="startTime != null">
-				<![CDATA[	and service_time >= ${startTime} ]]>
+			<![CDATA[	and service_time >= ${startTime} ]]>
 		</if>
 
 		<if test="endTime != null">
