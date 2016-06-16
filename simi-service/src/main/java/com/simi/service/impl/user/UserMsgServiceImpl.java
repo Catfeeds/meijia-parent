@@ -201,6 +201,7 @@ public class UserMsgServiceImpl implements UserMsgService {
 		CardSearchVo searchVo = new CardSearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setUserType(u.getUserType());
+		
 
 		List<Short> periods = new ArrayList<Short>();
 		periods.add((short) 1);
@@ -209,8 +210,17 @@ public class UserMsgServiceImpl implements UserMsgService {
 		periods.add((short) 4);
 		periods.add((short) 5);
 		searchVo.setPeriods(periods);
+		
+		List<Short> statusIn = new ArrayList<Short>();
+		statusIn.add((short) 1);
+		statusIn.add((short) 2);
+		
+		searchVo.setStatusIn(statusIn);
 
 		List<Cards> periodCards = cardService.selectBySearchVo(searchVo);
+		
+
+		
 
 		if (periodCards.isEmpty())
 			return true;
