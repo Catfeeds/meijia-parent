@@ -2,6 +2,7 @@ var host = window.location.host;
 var appName = "simi";
 var appRootUrl = "http://" + host + "/" + appName + "/app/";
 
+var simiOaRootUrl = "http://" + host + "/simi-oa";
 
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象

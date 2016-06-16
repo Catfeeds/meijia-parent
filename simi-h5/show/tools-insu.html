@@ -39,36 +39,58 @@
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-					<form id="commpany-asset-form" class="am-form am-form-horizontal" action="/xcloud/xz/assets/commpany_asset_form?id=0" method="POST" enctype="multipart/form-data">
+					<form id="toolsInsuForm" 
+						class="am-form am-form-horizontal" action="" method="POST" enctype="multipart/form-data">
 					 
-					 <input type="hidden" id="userId" name="userId" value="18" /> 
-					 <input type="hidden" id="companyId" name="companyId" value="6">
 						
 						<div class="am-form-group" required>
-							<label class="am-u-sm-4 am-form-label">所在地区<font color="red">*</font></label>
+							<label class="am-u-sm-4 am-form-label">所在城市<font color="red">*</font></label>
 							<div class="am-u-sm-8">
-								<select id="assetTypeId" name="assetTypeId" class="am-form-field am-radius">
-									<option value="">北京</option>
-									<option value="">上海</option>
-									<option value="">广州</option>
-									<option value="">深圳</option>
+								<select id="cityId" name="cityId" class="am-form-field am-radius" required="required">
+									<option value="2">北京</option>
+									<option value="74">上海</option>
+									<option value="198">广州</option>
+									<option value="200">深圳</option>
 								</select>
 							</div>
 						</div>
 						
-						
+						<div class="am-form-group" required>
+							<label class="am-u-sm-4 am-form-label">所在地区<font color="red">*</font></label>
+							<div class="am-u-sm-8">
+								<select id="regionId" name="regionId" class="am-form-field am-radius" required="required">
+										<option value="">请选择地区</option>
+								</select>
+							</div>
+						</div>
+						<!-- 
 						<div class="am-form-group">
 							<label  class="am-u-sm-4 am-form-label">税前工资<font color="red">*</font></label>
 							<div class="am-u-sm-8">
-								<input id="name" name="name" maxLength="32" class="am-form-field am-radius" required="required" type="text" value="" autocomplete="off"/>
+								<input id="grossPay" name="grossPay" maxLength="32" 
+									class="am-form-field am-radius js-pattern-pinteger" 
+									required="required" type="text" value="" autocomplete="off"/>
 								<small></small>		
 							</div>
 						</div>
-
+						
+						<div class="am-form-group">
+							<label  class="am-u-sm-4 am-form-label">税后工资<font color="red">*</font></label>
+							<div class="am-u-sm-8">
+								<input id="netPay" name="netPay" maxLength="32" 
+									class="am-form-field am-radius js-pattern-pinteger" 
+									required="required" type="text" value="" autocomplete="off"/>
+								<small></small>		
+							</div>
+						</div>
+						 -->
+						 
 						<div class="am-form-group">
 							<label  class="am-u-sm-4 am-form-label">社保缴纳基数<font color="red">*</font></label>
 							<div class="am-u-sm-8">
-								<input id="total" name="total" maxLength="32" class="am-form-field am-radius js-pattern-pinteger" required="required" type="text" value=""/>
+								<input id="socialInsurance"  maxLength="5"  minlength="4"
+									class="am-form-field am-radius js-pattern-pinteger" 
+									required="required" type="text" value="" autocomplete="off"/>
 								<small><font color="red">最低1890/最高19000</font></small>	
 							</div>
 						</div>
@@ -77,7 +99,9 @@
 						<div class="am-form-group">
 							<label class="am-u-sm-4 am-form-label">公积金缴纳基数<font color="red">*</font></label>
 							<div class="am-u-sm-8">
-								<input id="price" name="price" maxLength="32" class="am-form-field am-radiu js-pattern-pinteger" required="required" type="text" value=""/>
+								<input id="fundPrice"  maxLength="5"  minlength="4" 
+									class="am-form-field am-radiu js-pattern-pinteger" 
+									required="required" type="text" value=""/>
 								<small><font color="red">最低1290/最高14000</font></small>
 							</div>
 						</div>
@@ -85,75 +109,35 @@
 						<hr>
 						<div class="am-form-group">
 							<div class="am-u-sm-9 am-u-sm-push-3">
+							
 								<button type="button" class="am-btn am-btn-danger"
-									id="btn-commpany-asset-form-submit">计算</button>
-								<button type="button" class="am-btn am-btn-success"
-									id="btn-return">重置</button>
+									id="calculate">计算</button>
+									
+								<button type="reset" class="am-btn am-btn-success"
+									id="resetForm">重置</button>
 							</div>
 						</div>
 						<hr>
 
 						<div class="am-g">
-				<div class="am-u-sm-12">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
-							<thead>
-								<tr>
-									<th class="table-id">保险项</th>
-									<th class="table-name">个人部分</th>
-									<th class="table-name">单位部分</th>
-								</tr>
-							</thead>
-							<tbody>
-								
-									<tr>
-										<td>养老</td>
-										<td>800.00	(<font color="red">8%</font>)</td>
-										<td>2000.00	(<font color="red">20%</font>)</td>
-									</tr>
-								
-									<tr>
-										<td>医疗</td>
-										<td>800.00	(<font color="red">8%</font>)</td>
-										<td>2000.00	(<font color="red">20%</font>)</td>
-									</tr>
-								
-									<tr>
-										<td>失业</td>
-										<td>800.00	(<font color="red">8%</font>)</td>
-										<td>2000.00	(<font color="red">20%</font>)</td>
-									</tr>
-								
-									<tr>
-										<td>工伤</td>
-										<td>800.00	(<font color="red">8%</font>)</td>
-										<td>2000.00	(<font color="red">20%</font>)</td>
-									</tr>
-								
-									<tr>
-										<td>生育</td>
-										<td>800.00	(<font color="red">8%</font>)</td>
-										<td>2000.00	(<font color="red">20%</font>)</td>
-									</tr>
-								
-									<tr>
-										<td>公积金</td>
-										<td>800.00	(<font color="red">8%</font>)</td>
-										<td>2000.00	(<font color="red">20%</font>)</td>
-									</tr>
-
-									<tr class="am-active">
-										<td>合计</td>
-										<td>1020.00</td>
-										<td>3230.00</td>
-									</tr>
-								
-							</tbody>
-						  </table>
+							<div class="am-u-sm-12">
+								<table id="list-table" class="am-table am-table-bordered am-table-striped">
+									<thead>
+										<tr>
+											<th class="table-id">保险项</th>
+											<th class="table-name">个人部分</th>
+											<th class="table-name">单位部分</th>
+										</tr>
+									</thead>
+									<tbody id="displayTBody">
+										
+										
+									</tbody>
+								  </table>
+							</div>
 						</div>
-				</div>
 			</div>
-						
-					</form>
+		</form>
 					
 					
 				</div>
@@ -163,16 +147,16 @@
 <!-- content end -->
 
 
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
+
 
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="assets/js/jquery.min.js"></script>
 <!--<![endif]-->
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/app.js"></script>
+
+<script src="assets/js/common/common.js"></script>
+<script src="assets/js/common/get-region-by-city.js"></script>
+<script src="assets/js/company/tools-insu.js"></script>
 </body>
 </html>
