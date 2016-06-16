@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
@@ -28,6 +29,7 @@ import com.simi.po.model.card.CardComment;
 import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.card.CardZan;
 import com.simi.po.model.card.Cards;
+import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.CardAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
@@ -38,10 +40,12 @@ import com.simi.service.card.CardImgsService;
 import com.simi.service.card.CardService;
 import com.simi.service.card.CardZanService;
 import com.simi.service.dict.DictUtil;
+import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.user.UserMsgSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/card")
@@ -72,6 +76,9 @@ public class CardController extends BaseController {
 		
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private UserMsgService userMsgService;
 
 	// 卡片提交接口
 	/**
@@ -359,6 +366,19 @@ public class CardController extends BaseController {
 		record.setStatus(status);
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		cardService.updateByPrimaryKeySelective(record);
+		
+		//如果为重复周期，则删除掉从明天开始的日程信息userMsg
+		if (!record.getPeriod().equals((short)0)) {
+			UserMsgSearchVo searchVo = new UserMsgSearchVo();
+			searchVo.setAction("card");
+			searchVo.setParams(cardId.toString());
+			searchVo.setStartTime(TimeStampUtil.getNowSecond());
+			
+			List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
+			for (UserMsg item: list) {
+				userMsgService.deleteByPrimaryKey(item.getMsgId());
+			}
+		}
 		
 		//添加卡片log
 		//添加卡片日志
