@@ -68,7 +68,7 @@
 								<form:input path="pensionC" class="form-control" placeholder="养老保险基数(公司),单位%" maxlength="10"/>
 							</div>
 						</div>
-						
+						<hr>
 						<div class="form-group required">
 							<label class="col-md-2 control-label">医疗(个人)(%)*</label>
 							<div class="col-md-5">
@@ -83,6 +83,7 @@
 							</div>
 						</div>
 						
+						<hr>
 						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">失业(个人)(%)*</label>
@@ -98,6 +99,7 @@
 							</div>
 						</div>
 						
+						<hr>
 						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">工伤(个人)(%)*</label>
@@ -113,6 +115,8 @@
 							</div>
 						</div>
 						
+						<hr>
+						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">生育(个人)(%)*</label>
 							<div class="col-md-5">
@@ -126,6 +130,8 @@
 								<form:input path="birthC" class="form-control" placeholder="生育保险基数(公司),单位%" maxlength="10"/>
 							</div>
 						</div>
+						
+						<hr>
 						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">公积金(个人)(%)*</label>
