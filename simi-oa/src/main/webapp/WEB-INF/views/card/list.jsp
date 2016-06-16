@@ -60,6 +60,7 @@
 					<th>卡片时间</th>
 					<th>卡片类型</th>
 					<th>卡片内容</th>
+					<th>卡片说明</th>
 					<th>卡片状态</th>
 					<th>创建时间</th>
 				</tr>
@@ -70,9 +71,10 @@
 						<td>${ item.mobile }</td>
 						<td>${ item.name }</td>
 						<td>${ item.attendUserName }</td>
-						<td><timestampTag:timestamp patten="MM-dd HH:mm" t="${item.serviceTime * 1000}" /></td>
+						<td>${ item.addTimeStr }</td>
 						<td>${ item.cardTypeName }</td>
 						<td>${ item.serviceContent }</td>
+						<td>${ item.periodName }</td>
 						<td><c:if test="${ item.status < 1 }">取消</c:if> 
 							<c:if test="${ item.status == 1 }">处理中</c:if> 
 							<c:if test="${ item.status == 2 }">秘书处理中</c:if> 
