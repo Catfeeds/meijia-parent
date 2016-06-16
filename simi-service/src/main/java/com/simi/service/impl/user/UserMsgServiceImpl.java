@@ -263,7 +263,7 @@ public class UserMsgServiceImpl implements UserMsgService {
 				String t = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "HH:mm:ss");
 				String at = startDate + " " + t;
 				realServiceTime = TimeStampUtil.getMillisOfDayFull(at) / 1000;
-				insertByCard(card, realServiceTime);
+				insertByCard(card, startDate, realServiceTime);
 			}
 				
 
@@ -273,7 +273,7 @@ public class UserMsgServiceImpl implements UserMsgService {
 	}
 	
 	
-	private Boolean insertByCard(Cards card, Long serviceTime) {
+	private Boolean insertByCard(Cards card, String startDate, Long serviceTime) {
 		Long cardId = card.getCardId();
 		Long userId = card.getUserId();
 		Long createUserId = card.getCreateUserId();
@@ -283,6 +283,22 @@ public class UserMsgServiceImpl implements UserMsgService {
 		searchVo.setUserId(userId);
 		searchVo.setAction("card");
 		searchVo.setParams(cardId.toString());
+		
+		Long startTime = TimeStampUtil.getBeginOfToday();
+		Long endTime = TimeStampUtil.getEndOfToday();
+		if (!StringUtil.isEmpty(startDate)) {
+			Date serviceDateObj = DateUtil.parse(startDate);
+
+			String startTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 00:00:00");
+			String endTimeStr = DateUtil.format(serviceDateObj, "yyyy-MM-dd 23:59:59");
+			startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
+			endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+		}
+
+		searchVo.setStartTime(startTime);
+		searchVo.setEndTime(endTime);
+		
+		
 		List<UserMsg> usermsgs = this.selectBySearchVo(searchVo);
 		
 		if (!usermsgs.isEmpty()) return true;
