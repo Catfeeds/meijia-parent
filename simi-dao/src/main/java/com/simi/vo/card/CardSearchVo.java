@@ -22,6 +22,10 @@ public class CardSearchVo {
 	
 	private Short cardType;
 	
+	private Short status;
+	
+	private List<Short> statusIn;
+	
 	public Long getCardId() {
 		return cardId;
 	}
@@ -92,6 +96,22 @@ public class CardSearchVo {
 
 	public void setPeriods(List<Short> periods) {
 		this.periods = periods;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
+
+	public List<Short> getStatusIn() {
+		return statusIn;
+	}
+
+	public void setStatusIn(List<Short> statusIn) {
+		this.statusIn = statusIn;
 	}
 
 
