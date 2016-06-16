@@ -5,6 +5,9 @@ var appRootUrl = "http://" + host + "/" + appName + "/app/";
 // 云平台 根路径
 var xCloudRootUrl = "http://" + host +"/xcloud"; 
 
+//oa 根路径
+var simiOaRootUrl = "http://" + host + "/simi-oa";
+
 (function($) {
 	'use strict';
 

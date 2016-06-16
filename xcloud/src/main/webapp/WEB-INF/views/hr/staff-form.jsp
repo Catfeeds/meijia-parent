@@ -7,7 +7,6 @@
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
-<link rel="<c:url value="/assets/js/dropzone/dist/dropzone.css" /> ">  
 
 </head>
 
@@ -314,7 +313,6 @@
 			src="<c:url value='/assets/js/xcloud/common/validate-methods.js'/>"
 			type="text/javascript"></script>
 		
-		<script src="<c:url value='/assets/js/dropzone/dist/dropzone.js'/>"></script>	
 		<script src="<c:url value='/assets/js/xcloud/hr/staff-form.js'/>"></script>
 </body>
 </html>

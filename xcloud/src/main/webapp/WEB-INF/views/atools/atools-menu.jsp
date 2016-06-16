@@ -17,7 +17,7 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-atools">
 				<li>
-					<a href="#" class="am-cf">
+					<a href="/xcloud/atools/insurance_calculate_form" class="am-cf">
 						<span class="am-icon-certificate"></span>
 						社保公积金计算
 					</a>
