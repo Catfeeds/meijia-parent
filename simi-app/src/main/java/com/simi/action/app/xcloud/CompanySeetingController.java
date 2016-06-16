@@ -2,8 +2,11 @@ package com.simi.action.app.xcloud;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,12 +94,9 @@ public class CompanySeetingController extends BaseController {
 	 * 				cityId  : xx,
 	 * 			  regionId  : xx,
 	 * 
-	 * 			    pension : （录入时的数字,单位%, 转换为数字时需要 除以100） 	//养老 
-					medical :		//医疗
-			   unemployment :	    //失业
-					 injury : 		//工伤
-					 birth  : 		//生育
-					 fund   :	 	//公积金
+	 * 			    pensionP(个人) : （录入时的数字,单位%, 转换为数字时需要 除以100） 	//养老 
+	 * 				pensionC（公司） 
+	 * 				...
 	 * 
 	 * 			}	
 	 * 		}
@@ -105,16 +105,26 @@ public class CompanySeetingController extends BaseController {
 	@RequestMapping(value = "get_insurance_setting.json",method = RequestMethod.GET)
 	public AppResultData<Object> getInsurRanceForCityOrRegion(
 			@RequestParam("city_id")Long cityId,
-			@RequestParam(value="region_id",required=false,defaultValue="")Long regionId){
+			@RequestParam("region_id")Long regionId){
 		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		
 		if(cityId <= 0L || cityId == null){
 			
-			result.setData("cityId不存在");
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("城市不存在");
 			return result;
 		}
+		
+		if(regionId <= 0L || regionId == null){
+			
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("区县不存在");
+			return result;
+		}
+		
 		
 		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
 		
@@ -123,23 +133,21 @@ public class CompanySeetingController extends BaseController {
 		
 		searchVo.setCityId(cityId.toString());
 		
-		if(regionId !=null && regionId > 0L ){
-			searchVo.setRegionId(regionId.toString());
-		}
+		
+		searchVo.setRegionId(regionId.toString());
+		
 		
 		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
 		
 		//返回 json字段。集合
-		List<SettingJsonSettingValue> jsonList = new ArrayList<SettingJsonSettingValue>();
-		
-		for (XcompanySetting xcompanySetting : list) {
+		if(!CollectionUtils.isEmpty(list)){
 			
-			Object settingValue = xcompanySetting.getSettingValue();
+			XcompanySetting xcompanySetting = list.get(0);
 			
-			jsonList.add((SettingJsonSettingValue) settingValue);
+			SettingJsonSettingValue settingValue = (SettingJsonSettingValue) xcompanySetting.getSettingValue();
+			
+			result.setData(settingValue);
 		}
-		
-		result.setData(jsonList);
 		
 		return result;
 	}

@@ -153,7 +153,7 @@ public class CardController extends BaseController {
 		record.setTitle(title);
 		record.setServiceTime(serviceTime);
 		record.setPeriod(period);
-		
+		 
 		String periodName = CardUtil.getPeriodName(serviceTime, period);
 		record.setPeriodName(periodName);
 		
