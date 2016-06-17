@@ -103,6 +103,7 @@
 								<table id="list-table" class="am-table am-table-bordered am-table-striped">
 									<thead>
 										<tr>
+
 											<th class="table-id">保险项</th>
 											<th class="table-name">个人部分</th>
 											<th class="table-name">单位部分</th>

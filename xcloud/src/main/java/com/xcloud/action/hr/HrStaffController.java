@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
@@ -186,10 +188,11 @@ public class HrStaffController extends BaseController {
 				 *  	
 				 */
 				
-				Object jsonInfo = xcompanyStaff.getJsonInfo();
+				JSONObject jsonInfo = (JSONObject) xcompanyStaff.getJsonInfo();
 				
 				if(jsonInfo != null){
-					staffJsonInfo = (StaffJsonInfo) jsonInfo;
+					
+					staffJsonInfo = JSON.toJavaObject(jsonInfo, StaffJsonInfo.class);
 				}
 			}
 			
@@ -207,7 +210,9 @@ public class HrStaffController extends BaseController {
 			BeanUtilsExp.copyPropertiesIgnoreNull(staffJsonInfo, vo);
 			
 			// string 类型的日期 转为 date 类型   
-			vo.setContractBeginDate(DateUtil.parse(staffJsonInfo.getContractBeginDate()));
+			if(!StringUtil.isEmpty(staffJsonInfo.getContractBeginDate())){
+				vo.setContractBeginDate(DateUtil.parse(staffJsonInfo.getContractBeginDate()));
+			}
 			
 			// 注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
 			vo.setId(xcompanyStaff.getId());
@@ -457,7 +462,10 @@ public class HrStaffController extends BaseController {
 		
 		info.setContractLimit(vo.getContractLimit());
 		
-		String json = JsonUtil.objecttojson(info);
+//		String json = JsonUtil.objecttojson(info);
+		
+		//统一使用阿里 fastjson 处理
+		String json = JSON.toJSONString(info);
 		
 		xcompanyStaff.setJsonInfo(json);
 		
