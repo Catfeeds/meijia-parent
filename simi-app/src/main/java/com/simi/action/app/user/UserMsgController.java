@@ -193,11 +193,13 @@ public class UserMsgController extends BaseController {
 		}
 
 		List<String> months = DateUtil.getAllDaysOfMonth(year, month);
-
+		String today = DateUtil.getToday();
 		for (int i = 0; i < months.size(); i++) {
 			int total = 0;
 			String strDate = months.get(i);
 			Date date = DateUtil.parse(strDate);
+			
+			if (DateUtil.compare(today, strDate)) continue;
 
 			for (Cards item : periodCards) {
 				Date serviceDate = null;
