@@ -195,7 +195,10 @@ public class UserMsgServiceImpl implements UserMsgService {
 
 	@Override
 	public boolean checkPeriod(Users u, String startDate) {
-
+		
+		String today = DateUtil.getToday();
+		if (DateUtil.compare(today, startDate)) return true;
+		
 		Long userId = u.getId();
 		// 查找所有重复性的卡片
 		CardSearchVo searchVo = new CardSearchVo();
