@@ -8,7 +8,7 @@
 
 <html>
   <head>
-	
+	<title>社保公积金</title>
 	<!--common css for all pages-->
 	<%@ include file="../shared/importCss.jsp"%>
 	
@@ -92,22 +92,22 @@
                                    <td>${ item.regionName }</td>
 						           <td>
 										养老(个人):${item.pensionP }%&nbsp;&nbsp;																						
-										养老(公司):${item.pensionC }%<br>																						
+										养老(单位):${item.pensionC }%<br>																						
 										
 						           		医疗(个人):${item.medicalP }%&nbsp;&nbsp;	
-						           		医疗(公司):${item.medicalC }%<br>
+						           		医疗(单位):${item.medicalC }%<br>
 						           		
 						           		失业(个人):${item.unemploymentP }%&nbsp;&nbsp;	
-						           		失业(公司):${item.unemploymentC }%<br>
+						           		失业(单位):${item.unemploymentC }%<br>
 						           		
 						           		工伤(个人):${item.injuryP }%&nbsp;&nbsp;	
-						           		工伤(公司):${item.injuryC }%<br>
+						           		工伤(单位):${item.injuryC }%<br>
 						           		
 						           		生育(个人):${item.birthP }%&nbsp;&nbsp;	
-						           		生育(公司):${item.birthC }%<br>
+						           		生育(单位):${item.birthC }%<br>
 						           		
 						           		公积金(个人):${item.fundP }%&nbsp;&nbsp;	
-						           		公积金(公司):${item.fundC }%
+						           		公积金(单位):${item.fundC }%
 						           </td>
 						           <td>
 							           	<button id="btn_update" onclick="btn_update('insurance/form?id=${item.id}')" 

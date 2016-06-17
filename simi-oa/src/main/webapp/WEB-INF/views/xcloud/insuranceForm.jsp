@@ -63,9 +63,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">养老(公司)(%)*</label>
+							<label class="col-md-2 control-label">养老(单位)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="pensionC" class="form-control" placeholder="养老保险基数(公司),单位%" maxlength="10"/>
+								<form:input path="pensionC" class="form-control" placeholder="养老保险基数(单位),单位%" maxlength="10"/>
 							</div>
 						</div>
 						<hr>
@@ -77,9 +77,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">医疗(公司)(%)*</label>
+							<label class="col-md-2 control-label">医疗(单位)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="medicalC" class="form-control" placeholder="医疗保险基数(公司),单位%" maxlength="10"/>
+								<form:input path="medicalC" class="form-control" placeholder="医疗保险基数(单位),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
@@ -93,9 +93,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">失业(公司)(%)*</label>
+							<label class="col-md-2 control-label">失业(单位)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="unemploymentC" class="form-control" placeholder="失业保险基数(公司),单位%" maxlength="10"/>
+								<form:input path="unemploymentC" class="form-control" placeholder="失业保险基数(单位),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
@@ -109,9 +109,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">工伤(公司)(%)*</label>
+							<label class="col-md-2 control-label">工伤(单位)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="injuryC" class="form-control" placeholder="工伤保险基数(公司),单位%" maxlength="10"/>
+								<form:input path="injuryC" class="form-control" placeholder="工伤保险基数(单位),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
@@ -125,9 +125,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">生育(公司)(%)*</label>
+							<label class="col-md-2 control-label">生育(单位)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="birthC" class="form-control" placeholder="生育保险基数(公司),单位%" maxlength="10"/>
+								<form:input path="birthC" class="form-control" placeholder="生育保险基数(单位),单位%" maxlength="10"/>
 							</div>
 						</div>
 						
@@ -141,9 +141,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">公积金(公司)(%)*</label>
+							<label class="col-md-2 control-label">公积金(单位)(%)*</label>
 							<div class="col-md-5">
-								<form:input path="fundC" class="form-control" placeholder="公积金基数(公司),单位%" maxlength="10"/>
+								<form:input path="fundC" class="form-control" placeholder="公积金基数(单位),单位%" maxlength="10"/>
 							</div>
 						</div>
 						<div class="form-actions fluid">
