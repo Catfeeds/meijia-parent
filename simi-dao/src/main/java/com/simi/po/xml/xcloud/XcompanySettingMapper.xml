@@ -15,7 +15,7 @@
     <!-- <result column="setting_value" property="settingValue" jdbcType="OTHER" /> -->
     
     <!-- 对于json属性字段的处理。只需要在 result这里定义好 映射的对象，其余无需改动。 -->
-    <result column="setting_value" property="settingValue" javaType="com.simi.vo.xcloud.json.SettingJsonSettingValue" 
+    <result column="setting_value" property="settingValue"  
 		typeHandler="com.simi.base.handler.JsonTypeHandler" /> 
      
   </resultMap>
@@ -51,7 +51,16 @@
 		<if test="settingTypes != null">
 			and setting_type in
 			<foreach item="item" index="index" collection="settingTypes" open="(" separator="," close=")">
-				#{item}
+				
+				<!-- 这里是 传递的 list<String> 参数
+					
+					# 换成 $  : 解决 no getter '_for_item_0' 的错误
+					
+					
+					' ${item} ' : 加上引号, 使参数变成String，使得mysql正常解析
+				 -->	
+			
+				<![CDATA[ '${item}' ]]>
 			</foreach>
 		</if>
 

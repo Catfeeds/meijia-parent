@@ -8,6 +8,9 @@ package com.simi.vo.xcloud.json;
 * @Description: 
 * 
 * 	针对 xcompany_setting 表 中  json 字段  settting_value 对应的类
+*	
+*	
+*	该对象，表示      setting_type = insurance 的  五险一金基数
 *
  */
 public class SettingJsonSettingValue {

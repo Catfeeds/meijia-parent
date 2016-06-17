@@ -20,9 +20,8 @@
     <result column="regular_date" property="regularDate" jdbcType="DATE" />
     
     <!-- <result column="json_info" property="jsonInfo" jdbcType="OTHER" /> -->
-    
-	<result column="json_info" property="jsonInfo" javaType="com.simi.vo.xcloud.json.StaffJsonInfo" 
-		typeHandler="com.simi.base.handler.JsonTypeHandler" /> 
+	    
+	<result column="json_info" property="jsonInfo"  typeHandler="com.simi.base.handler.JsonTypeHandler" /> 
 	
   </resultMap>
   <sql id="Base_Column_List" >

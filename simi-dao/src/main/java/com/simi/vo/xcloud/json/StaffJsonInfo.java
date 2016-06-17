@@ -2,7 +2,8 @@ package com.simi.vo.xcloud.json;
 
 
 /*
- *  xcompany_staff 表的 json 字段 对应得 对象
+ *  xcompany_staff 表的 json_info 字段 对应得 对象
+ *  
  */
 public class StaffJsonInfo {
 	
