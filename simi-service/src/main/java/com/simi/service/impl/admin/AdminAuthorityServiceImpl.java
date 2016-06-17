@@ -66,7 +66,7 @@ public class AdminAuthorityServiceImpl implements AdminAuthorityService {
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
 			AdminAuthority adminAuthority = (AdminAuthority) iterator.next();
 			//获得每个对象的Id,调用递归返回树形结构的对象
-			System.out.println(adminAuthority.getId());
+//			System.out.println(adminAuthority.getId());
 			AdminAuthorityVo vo = ToTree(adminAuthority.getId());
 			listVo.add(vo);
 

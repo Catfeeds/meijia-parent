@@ -12,10 +12,13 @@ import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.po.model.xcloud.XcompanySetting;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
@@ -145,6 +148,10 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	@Override
 	public CompanySettingVo initSettingVo() {
 		
+		/*
+		 *  这个 初始化方法，仅仅包含了   五险一金 json 的字段，不够通用
+		 * 
+		 */
 		CompanySettingVo settingVo = new CompanySettingVo();
 		
 		XcompanySetting setting = initXcompanySetting();
@@ -159,7 +166,7 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	}
 
 	@Override
-	public CompanySettingVo transToVo(XcompanySetting setting) {
+	public CompanySettingVo transToInstanceVo(XcompanySetting setting) {
 		
 		CompanySettingVo settingVo = initSettingVo();
 		
@@ -167,21 +174,33 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		//默认一个 json对象
 		SettingJsonSettingValue value = initJsonSettingValue();
 		
-		Object setValue = setting.getSettingValue();
+		JSONObject setValue = (JSONObject) setting.getSettingValue();
+		
 		
 		if(setValue != null){
-			value = (SettingJsonSettingValue) setValue;
+			
+			//统一使用 阿里  fastJson 处理
+			value = JSON.toJavaObject(setValue, SettingJsonSettingValue.class);
 			
 			BeanUtilsExp.copyPropertiesIgnoreNull(value, settingVo);
 			
 			String cityId = value.getCityId();
 			String regionId = value.getRegionId();
 			
-			settingVo.setCityId(cityId);
-			settingVo.setRegionId(regionId);
+			/*
+			 *  由于 json 字段 结构的不同，需要进行 判空处理
+			 * 
+			 */
+			if(!StringUtil.isEmpty(cityId)){
+				settingVo.setCityId(cityId);
+				settingVo.setCityName(dictService.getCityName(Long.valueOf(cityId)));
+			}
 			
-			settingVo.setCityName(dictService.getCityName(Long.valueOf(cityId)));
-			settingVo.setRegionName(dictService.getRegionName(Long.valueOf(regionId)));
+			if(!StringUtil.isEmpty(regionId)){
+				settingVo.setRegionId(regionId);
+				settingVo.setRegionName(dictService.getRegionName(Long.valueOf(regionId)));
+			}
+			
 		}
 		
 		return settingVo;

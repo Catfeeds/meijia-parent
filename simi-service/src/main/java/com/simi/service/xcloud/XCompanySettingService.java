@@ -39,5 +39,5 @@ public interface XCompanySettingService {
 	//初始化vo
 	CompanySettingVo initSettingVo();
 	
-	CompanySettingVo transToVo(XcompanySetting setting);
+	CompanySettingVo transToInstanceVo(XcompanySetting setting);
 }
