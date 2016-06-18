@@ -357,10 +357,12 @@ public class CardController extends BaseController {
 		}
 		
 		Long serviceTime = record.getServiceTime();
-		if (serviceTime < TimeStampUtil.getNowSecond()) {
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("卡片服务时间已到,不能取消.");
-			return result;		
+		if (record.getPeriod().equals((short)0)) {
+			if (serviceTime < TimeStampUtil.getNowSecond()) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("卡片服务时间已到,不能取消.");
+				return result;		
+			}
 		}
 		
 		
