@@ -188,6 +188,8 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 				userIds.add(item.getUserId());
 			}
 		}
+		
+		if (userIds.isEmpty()) return new AsyncResult<Boolean>(true);
 
 		// 2.找出可以发推送消息的用户集合 userPushBinds
 		List<UserPushBind> userPushBinds = userPushBindService.selectByUserIds(userIds);
@@ -217,6 +219,111 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 
 		return new AsyncResult<Boolean>(true);
 	}
+	
+	
+	/**
+	 * 卡片发送推送消息和短信消息.
+	 * 
+	 * @param card
+	 *            卡片对象 给ios app发送离线消息，此场景应用为当ios app被杀死的情况下，ios无法设定闹钟，则进行后台推送提醒。
+	 */
+	@Async
+	@Override
+	public Future<Boolean> cardCancelClock(Cards card) {
+		
+		Long createUserId = card.getCreateUserId();
+		// 1找出所有需要通知的用户集合 users
+		Long cardId = card.getCardId();
+		List<CardAttend> attends = cardAttendService.selectByCardId(cardId);
+
+		if (attends.isEmpty())
+			return new AsyncResult<Boolean>(true);
+
+		List<Long> userIds = new ArrayList<Long>();
+		for (CardAttend item : attends) {
+			
+			if (item.getUserId().equals(createUserId)) continue;
+			
+			if (item.getLocalAlarm().equals((short) 1)) {
+				if (!userIds.equals(item.getUserId())) {
+					userIds.add(item.getUserId());
+				}
+			}
+		}
+		
+		if (userIds.isEmpty()) return new AsyncResult<Boolean>(true);
+		
+		// 2.找出可以发推送消息的用户集合 userPushBinds
+		List<UserPushBind> userPushBinds = userPushBindService.selectByUserIds(userIds);
+		
+		if (userPushBinds.isEmpty()) return new AsyncResult<Boolean>(true);
+		
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		HashMap<String, String> tranParams = new HashMap<String, String>();
+
+		Short cardType = card.getCardType();
+		String cardTypeName = CardUtil.getCardTypeName(cardType);
+		Long serviceTime = card.getServiceTime();
+
+
+		String isShow = "false";
+		tranParams.put("is", isShow);
+		tranParams.put("ac", "d");
+		tranParams.put("ci", card.getCardId().toString());
+		tranParams.put("ct", card.getCardType().toString());
+		tranParams.put("st", serviceTime.toString());
+		tranParams.put("re", "");
+		tranParams.put("rt", cardTypeName);
+		tranParams.put("rc", "");
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		String jsonParams = "";
+		try {
+			jsonParams = objectMapper.writeValueAsString(tranParams);
+		} catch (JsonProcessingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		for (UserPushBind p : userPushBinds) {
+			// if (p.getUserId().equals(card.getCreateUserId())) continue;
+
+			String clientId = p.getClientId();
+			
+			System.out.println("====================push card alarm=======================================");
+			System.out.println("userId= " + p.getUserId() + "---cid = " + p.getClientId());
+
+			params.put("transmissionContent", jsonParams);
+			params.put("cid", clientId);
+			System.out.println(params);
+//				String userStatus = PushUtil.getUserStatus(p.getClientId());
+			if (p.getDeviceType().equals("ios")) {
+				try {
+					// if (userStatus.equals("Offline")) {
+					PushUtil.IOSPushToSingle(params, "alertClock");
+					// }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (p.getDeviceType().equals("android")) {
+				try {
+					// if (userStatus.equals("Offline")) {
+					PushUtil.AndroidPushToSingle(params);
+					// }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return new AsyncResult<Boolean>(true);
+	}	
 
 	private boolean pushToApp(Cards card, List<UserPushBind> userPushBinds) {
 
