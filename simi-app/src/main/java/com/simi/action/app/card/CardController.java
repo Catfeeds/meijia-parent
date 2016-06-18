@@ -221,8 +221,9 @@ public class CardController extends BaseController {
 		}
 		
 		//如果是立即给相关人员发送消息，则需要短信模板的通知.
-		cardAsyncService.cardNotification(record);
-
+		if (!setRemind.equals((short)0)) {
+			cardAsyncService.cardNotification(record);
+		}
 		//如果是秘书处理，则需要给相应的秘书发送消息.
 		if (record.getSetSecDo().equals((short)1)) {
 			cardAsyncService.cardSecDo(userId, record);
@@ -367,6 +368,12 @@ public class CardController extends BaseController {
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		cardService.updateByPrimaryKeySelective(record);
 		
+		//添加卡片log
+		//添加卡片日志
+		cardAsyncService.cardLog(userId, cardId, CardUtil.getStatusName(status));
+		
+		if (record.getSetRemind().equals((short)0)) return result;
+		
 		//需要删除多人的日程信息.
 		if (record.getPeriod().equals((short)0)) {
 			UserMsgSearchVo searchVo = new UserMsgSearchVo();
@@ -394,9 +401,7 @@ public class CardController extends BaseController {
 			}
 		}
 		
-		//添加卡片log
-		//添加卡片日志
-		cardAsyncService.cardLog(userId, cardId, CardUtil.getStatusName(status));
+		
 
 		return result;
 	}	
