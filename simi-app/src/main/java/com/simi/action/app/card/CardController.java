@@ -424,7 +424,7 @@ public class CardController extends BaseController {
 			}
 		}
 		
-		
+		result.setData(cardId);
 
 		return result;
 	}	
