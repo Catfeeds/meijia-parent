@@ -193,6 +193,9 @@ public class JobCardController extends BaseController {
 		Long nowMin = TimeStampUtil.timeStampToDateHour(nowSecond * 1000);
 		for (Cards vo : cardList) {
 			Short setRemind = vo.getSetRemind();
+			
+			if (setRemind.equals((short)0)) continue;
+
 			int remindMin = CardUtil.getRemindMin(setRemind);
 			Long serviceTime = vo.getServiceTime();
 //			serviceTime = TimeStampUtil.timeStampToDateHour(serviceTime * 1000);
