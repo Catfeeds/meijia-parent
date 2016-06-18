@@ -155,7 +155,15 @@ public class CardController extends BaseController {
 			}
 			
 			LinkManVo linkMan = linkManList.get(0);
-			if (!linkMan.getUser_id().equals(createUserId)) {
+			Long linkManUserId = 0L;
+			if (linkMan.getUser_id() == null) {
+				Users linkManUser = userService.selectByMobile(linkMan.getMobile());
+				linkManUserId = linkManUser.getId();
+			} else {
+				linkManUserId = linkMan.getUser_id();
+			}
+			
+			if (!linkManUserId.equals(createUserId)) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("重复提醒只能给自己设置.");
 				return result;
