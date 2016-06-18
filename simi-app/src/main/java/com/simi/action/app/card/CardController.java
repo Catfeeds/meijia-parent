@@ -242,7 +242,8 @@ public class CardController extends BaseController {
 		}
 		
 		//如果是立即给相关人员发送消息，则需要短信模板的通知.
-		if (!setRemind.equals((short)0)) {
+		if (!setRemind.equals((short)0) ||
+			!record.getPeriod().equals((short)0)) {
 			cardAsyncService.cardNotification(record);
 		}
 		//如果是秘书处理，则需要给相应的秘书发送消息.
