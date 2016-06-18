@@ -367,6 +367,20 @@ public class CardController extends BaseController {
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		cardService.updateByPrimaryKeySelective(record);
 		
+		//需要删除多人的日程信息.
+		if (record.getPeriod().equals((short)0)) {
+			UserMsgSearchVo searchVo = new UserMsgSearchVo();
+			searchVo.setAction("card");
+			searchVo.setParams(cardId.toString());
+			List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
+			for (UserMsg item: list) {
+				userMsgService.deleteByPrimaryKey(item.getMsgId());
+			}
+			
+			//找出所有的参与人员，发送推送消息，删除本地闹钟
+			cardAsyncService.cardCancelClock(record);
+		}
+		
 		//如果为重复周期，则删除掉从明天开始的日程信息userMsg
 		if (!record.getPeriod().equals((short)0)) {
 			UserMsgSearchVo searchVo = new UserMsgSearchVo();
