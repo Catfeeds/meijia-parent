@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
@@ -45,6 +47,7 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.card.LinkManVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
 @Controller
@@ -139,6 +142,24 @@ public class CardController extends BaseController {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
+		}
+		
+		//对于重复性进行校验
+		if (!period.equals((short)0)) {
+			Gson gson = new Gson();
+			List<LinkManVo> linkManList = gson.fromJson(attends, new TypeToken<List<LinkManVo>>(){}.getType() ); 
+			if (linkManList.size() > 1) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("重复提醒只能给自己设置.");
+				return result;
+			}
+			
+			LinkManVo linkMan = linkManList.get(0);
+			if (!linkMan.getUser_id().equals(createUserId)) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("重复提醒只能给自己设置.");
+				return result;
+			}
 		}
 		
 		Cards record = cardService.initCards();
