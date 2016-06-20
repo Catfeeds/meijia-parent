@@ -259,6 +259,7 @@ public class CardsServiceImpl implements CardService {
 			
 			vo.setCardId(item.getCardId());
 			vo.setCardType(item.getCardType());
+			vo.setPeriod(item.getPeriod());
 			
 			for (Users us : createUsers) {
 				if (us.getId().equals(item.getCreateUserId())) {

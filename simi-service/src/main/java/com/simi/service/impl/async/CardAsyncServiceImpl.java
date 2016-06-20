@@ -392,8 +392,8 @@ public class CardAsyncServiceImpl implements CardAsyncService {
 			if (StringUtil.isEmpty(clientId))
 				continue;
 
-			// 本人就不发了
-			// if (createUserId.equals(toUserId)) continue;
+//			 本人就不发了
+			 if (createUserId.equals(toUserId)) continue;
 
 			// 若果不是好友以及不是同一家团队不能发推送消息
 
