@@ -199,7 +199,7 @@ public class UserMsgController extends BaseController {
 			String strDate = months.get(i);
 			Date date = DateUtil.parse(strDate);
 			
-			if (DateUtil.compare(today, strDate)) continue;
+			if (!DateUtil.compare(today, strDate)) continue;
 
 			for (Cards item : periodCards) {
 				Date serviceDate = null;
@@ -262,6 +262,7 @@ public class UserMsgController extends BaseController {
 					monthData.put("total", String.valueOf(htotal + total));
 					monthDatas.set(j, monthData);
 					isExist = true;
+					break;
 				}
 			}
 

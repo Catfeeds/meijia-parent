@@ -129,6 +129,29 @@ public class TestCardController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }	
+	
+	@Test
+    public void testCancelCard() throws Exception {
+
+		String url = "/app/card/card_cancel.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("card_id", "1469");
+	    postRequest = postRequest.param("user_id", "18");
+	    postRequest = postRequest.param("status", "0");
+	    
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
+	
 	/**
 	 * 卡片图片接口测试
 	 * @throws Exception
