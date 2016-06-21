@@ -20,6 +20,8 @@ import com.simi.po.model.user.Users;
 import com.github.pagehelper.PageHelper;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.feed.FeedCommentMapper;
 
@@ -96,6 +98,11 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 				if (u.getId().equals(vo.getUserId())) {
 					vo.setName(u.getName());
 					vo.setHeadImg(usersService.getHeadImg(u));
+					
+					if (StringUtil.isEmpty(vo.getName())) {
+						vo.setName(MobileUtil.getMobileStar(u.getMobile()));
+					}
+					
 					break;
 				}
 			}

@@ -24,6 +24,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.feed.FeedsMapper;
 
@@ -80,6 +82,11 @@ public class FeedServiceImpl implements FeedService {
 		if (u != null) {
 			vo.setName(u.getName());
 			vo.setHeadImg(usersService.getHeadImg(u));
+			
+			if (StringUtil.isEmpty(vo.getName())) {
+				vo.setName(MobileUtil.getMobileStar(u.getMobile()));
+			}
+			
 		}
 
 		// 服务时间字符串
