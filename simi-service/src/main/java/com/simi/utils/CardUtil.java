@@ -405,12 +405,12 @@ public class CardUtil {
 		
 		if (period.equals((short)4)) {
 			String dd = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "dd");
-			periodName = "每月(" + dd + ") 日 " + tt;
+			periodName = "每月(" + dd + "日)" + tt;
 		}
 		
 		if (period.equals((short)5)) {
-			String md = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "MM-dd");
-			periodName = "每年(" + md + ") 日 " + tt;
+			String md = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "MM月dd日");
+			periodName = "每年(" + md + ")" + tt;
 		}
 		return periodName;
 	}

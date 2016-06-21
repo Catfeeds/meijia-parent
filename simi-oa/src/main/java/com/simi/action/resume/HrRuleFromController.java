@@ -2,6 +2,7 @@ package com.simi.action.resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -116,10 +117,19 @@ public class HrRuleFromController extends BaseController {
 		
 		//处理json的情况:
 		if (!StringUtil.isEmpty(vo.getMatchPatten())) {
+			
+			String utf8 = "";
+			try {
+				utf8 = new String(vo.getMatchPatten().getBytes("iso-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
 			if (vo.getMatchType().equals("reg")) {
 				HrRuleReglVo ruleVo = new HrRuleReglVo();
-				
-				ruleVo = GsonUtil.GsonToObject(vo.getMatchPatten(), HrRuleReglVo.class);
+
+				ruleVo = GsonUtil.GsonToObject(utf8, HrRuleReglVo.class);
 				
 				BeanUtilsExp.copyPropertiesIgnoreNull(ruleVo, vo);
 			}
@@ -127,7 +137,7 @@ public class HrRuleFromController extends BaseController {
 			if (vo.getMatchType().equals("jsoup")) {
 				HrRuleJsouplVo ruleVo = new HrRuleJsouplVo();
 				
-				ruleVo = GsonUtil.GsonToObject(vo.getMatchPatten(), HrRuleJsouplVo.class);
+				ruleVo = GsonUtil.GsonToObject(utf8, HrRuleJsouplVo.class);
 				
 				BeanUtilsExp.copyPropertiesIgnoreNull(ruleVo, vo);
 			} 
