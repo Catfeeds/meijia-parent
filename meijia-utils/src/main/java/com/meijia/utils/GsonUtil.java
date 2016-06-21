@@ -79,16 +79,7 @@ public class GsonUtil {
 //		return list;
 
 		List<T> list = new ArrayList<T>();
-		
-		String utf8 = "";
-		try {
-			utf8 = new String(gsonString.getBytes("iso-8859-1"), "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		JsonArray array = new JsonParser().parse(utf8).getAsJsonArray();
+		JsonArray array = new JsonParser().parse(gsonString).getAsJsonArray();
 		for (final JsonElement elem : array) {
 			list.add(new Gson().fromJson(elem, cls));
 		}
