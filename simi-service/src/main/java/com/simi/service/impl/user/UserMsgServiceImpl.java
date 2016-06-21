@@ -243,8 +243,15 @@ public class UserMsgServiceImpl implements UserMsgService {
 			}
 			if (card.getPeriod().equals((short) 1)) isNeedInsert = true;
 			
-			if (card.getPeriod().equals((short) 2) ||
-				card.getPeriod().equals((short) 3)) {
+			if (card.getPeriod().equals((short) 2)) {
+				Week w = DateUtil.getWeek(date);
+				int weekday = w.getNumber();
+
+				if (weekday > 0 && weekday < 6) isNeedInsert = true;
+
+			}
+			
+			if (card.getPeriod().equals((short) 3)) {
 				Week sw = DateUtil.getWeek(serviceDate);
 				int sweekday = sw.getNumber();
 
