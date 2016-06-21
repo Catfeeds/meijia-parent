@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.resume.po.dao.rule.HrRuleFromMapper">
+	<resultMap id="BaseResultMap" type="com.resume.po.model.rule.HrRuleFrom">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="from_id" property="fromId" jdbcType="NUMERIC" />
+		<result column="file_type" property="fileType" jdbcType="VARCHAR" />
+		<result column="match_type" property="matchType" jdbcType="VARCHAR" />
+		<result column="match_patten" property="matchPatten" jdbcType="VARCHAR" />
+		<result column="sample_path" property="samplePath" jdbcType="VARCHAR" />
+		<result column="admin_id" property="adminId" jdbcType="NUMERIC" />
+		<result column="total_match" property="totalMatch" jdbcType="INTEGER" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.resume.po.model.rule.HrRuleFrom" extends="BaseResultMap">
+		<result column="sample_src" property="sampleSrc" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, from_id, file_type, match_type, match_patten, sample_path, admin_id, total_match,
+		add_time
+	</sql>
+	<sql id="Blob_Column_List">
+		sample_src
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from hr_rule_from
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeRuleSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from hr_rule_from
+		where 1=1
+		<if test="fromId != null">
+			and from_id = #{fromId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="fileType != null">
+			and file_type = #{fileType,jdbcType=VARCHAR}
+		</if>
+		
+		order by add_time desc
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeRuleSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from hr_rule_from
+		where 1=1
+		<if test="fromId != null">
+			and from_id = #{fromId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="fileType != null">
+			and file_type = #{fileType,jdbcType=VARCHAR}
+		</if>
+		
+		order by add_time desc
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from hr_rule_from
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.resume.po.model.rule.HrRuleFrom">
+		insert into hr_rule_from (id, from_id, file_type,
+		match_type, match_patten, sample_path,
+		admin_id, total_match, add_time,
+		sample_src)
+		values (#{id,jdbcType=NUMERIC}, #{fromId,jdbcType=NUMERIC}, #{fileType,jdbcType=VARCHAR},
+		#{matchType,jdbcType=VARCHAR}, #{matchPatten,jdbcType=VARCHAR}, #{samplePath,jdbcType=VARCHAR},
+		#{adminId,jdbcType=NUMERIC}, #{totalMatch,jdbcType=INTEGER}, #{addTime,jdbcType=NUMERIC},
+		#{sampleSrc,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.resume.po.model.rule.HrRuleFrom">
+		insert into hr_rule_from
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="fromId != null">
+				from_id,
+			</if>
+			<if test="fileType != null">
+				file_type,
+			</if>
+			<if test="matchType != null">
+				match_type,
+			</if>
+			<if test="matchPatten != null">
+				match_patten,
+			</if>
+			<if test="samplePath != null">
+				sample_path,
+			</if>
+			<if test="adminId != null">
+				admin_id,
+			</if>
+			<if test="totalMatch != null">
+				total_match,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="sampleSrc != null">
+				sample_src,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="fromId != null">
+				#{fromId,jdbcType=NUMERIC},
+			</if>
+			<if test="fileType != null">
+				#{fileType,jdbcType=VARCHAR},
+			</if>
+			<if test="matchType != null">
+				#{matchType,jdbcType=VARCHAR},
+			</if>
+			<if test="matchPatten != null">
+				#{matchPatten,jdbcType=VARCHAR},
+			</if>
+			<if test="samplePath != null">
+				#{samplePath,jdbcType=VARCHAR},
+			</if>
+			<if test="adminId != null">
+				#{adminId,jdbcType=NUMERIC},
+			</if>
+			<if test="totalMatch != null">
+				#{totalMatch,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="sampleSrc != null">
+				#{sampleSrc,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.resume.po.model.rule.HrRuleFrom">
+		update hr_rule_from
+		<set>
+			<if test="fromId != null">
+				from_id = #{fromId,jdbcType=NUMERIC},
+			</if>
+			<if test="fileType != null">
+				file_type = #{fileType,jdbcType=VARCHAR},
+			</if>
+			<if test="matchType != null">
+				match_type = #{matchType,jdbcType=VARCHAR},
+			</if>
+			<if test="matchPatten != null">
+				match_patten = #{matchPatten,jdbcType=VARCHAR},
+			</if>
+			<if test="samplePath != null">
+				sample_path = #{samplePath,jdbcType=VARCHAR},
+			</if>
+			<if test="adminId != null">
+				admin_id = #{adminId,jdbcType=NUMERIC},
+			</if>
+			<if test="totalMatch != null">
+				total_match = #{totalMatch,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="sampleSrc != null">
+				sample_src = #{sampleSrc,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.resume.po.model.rule.HrRuleFrom">
+		update hr_rule_from
+		set from_id = #{fromId,jdbcType=NUMERIC},
+		file_type = #{fileType,jdbcType=VARCHAR},
+		match_type = #{matchType,jdbcType=VARCHAR},
+		match_patten = #{matchPatten,jdbcType=VARCHAR},
+		sample_path = #{samplePath,jdbcType=VARCHAR},
+		admin_id = #{adminId,jdbcType=NUMERIC},
+		total_match = #{totalMatch,jdbcType=INTEGER},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		sample_src = #{sampleSrc,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.resume.po.model.rule.HrRuleFrom">
+		update hr_rule_from
+		set from_id = #{fromId,jdbcType=NUMERIC},
+		file_type = #{fileType,jdbcType=VARCHAR},
+		match_type = #{matchType,jdbcType=VARCHAR},
+		match_patten = #{matchPatten,jdbcType=VARCHAR},
+		sample_path = #{samplePath,jdbcType=VARCHAR},
+		admin_id = #{adminId,jdbcType=NUMERIC},
+		total_match = #{totalMatch,jdbcType=INTEGER},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

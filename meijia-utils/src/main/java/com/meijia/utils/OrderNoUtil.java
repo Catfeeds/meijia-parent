@@ -33,6 +33,15 @@ public class OrderNoUtil {
 		final IdWorker idWorker3 = new IdWorker(2, 0);
 		return idWorker3.nextId();
 	}
+	
+	/**
+	 * 生成唯一文件名，参考的就是订单号
+	 * @return
+	 */
+	public static Long  getUploadFileName() {
+		final IdWorker idWorker3 = new IdWorker(3, 0);
+		return idWorker3.nextId();
+	}	
 
 	/**
 	 * @param args

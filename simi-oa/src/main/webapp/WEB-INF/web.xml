@@ -50,6 +50,7 @@
         <param-value>
             classpath:spring.xml;
 			classpath:spring-mybatis.xml;
+			classpath:spring-mybatis-resume.xml;
         </param-value>
     </context-param>
     <listener>

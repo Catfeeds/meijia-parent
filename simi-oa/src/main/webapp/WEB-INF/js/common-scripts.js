@@ -8,6 +8,8 @@ var simiAppName = "simi";
 
 var simiAppRootUrl = "http://" + host + "/" + simiAppName + "/";
 
+var resumeAppRootUrl = "http://" + host + "/resume/app/";
+
 /*---LEFT BAR ACCORDION----*/
 $(function() {
     $('#nav-accordion').dcAccordion({

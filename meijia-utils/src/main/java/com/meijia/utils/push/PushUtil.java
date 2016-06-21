@@ -77,9 +77,7 @@ public class PushUtil {
 		System.out.println(params.toString());
 		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
 		
-		String userStatus = getUserStatus(cid);
-		
-		TransmissionTemplate template = TransmissionTemplateIos(userStatus, transmissionContent, pushType);
+		TransmissionTemplate template = TransmissionTemplateIos(transmissionContent, pushType);
 		
 		System.out.println(template.toString());
 		SingleMessage message = new SingleMessage();
@@ -108,46 +106,52 @@ public class PushUtil {
 		return true;
 	}	
 	
-//	/**
-//	 * 推送android 多个设备透传消息推送
-//	 * @Param map<String, String> Params
-//	 *     key = transmissionContent
-//	 * 
-//	 */
-//	public static boolean IosPushToMulti(List<String> clientIds, HashMap<String, String> params) throws Exception {
-//		
-//		String transmissionContent = "";
-//
-//		if (params.containsKey("transmissionContent")) 
-//			transmissionContent = params.get("transmissionContent").toString();
-//		
-//		
-//		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
-//		
-//		TransmissionTemplate template = TransmissionTemplateIos();
-//
-//		template.setTransmissionContent(transmissionContent);
-//		
-//		ListMessage message = new ListMessage();
-//		message.setOffline(true);
-//		message.setOfflineExpireTime(2 * 1000 * 3600);
-//		message.setData(template);
-//		
-//		List<Target> targets = new ArrayList<Target>();
-//		
-//		for (String cid : clientIds) {
-//			Target target1 = new Target();
-//			target1.setAppId(appId);
-//			target1.setClientId(cid);
-//			targets.add(target1);
-//		}
-//		
-//		String taskId = push.getContentId(message);
-//		IPushResult ret = push.pushMessageToList(taskId, targets);
-//		System.out.println("正常：" + ret.getResponse().toString());
-//				
-//		return true;
-//	}				
+	/**
+	 * 推送android 多个设备透传消息推送
+	 * @Param map<String, String> Params
+	 *     key = transmissionContent
+	 * 
+	 */
+	public static boolean IosPushToMulti(List<String> clientIds, HashMap<String, String> params, String pushType) throws Exception {
+		
+		String transmissionContent = "";
+
+		if (params.containsKey("transmissionContent")) 
+			transmissionContent = params.get("transmissionContent").toString();
+		
+		
+		IGtPush push = new IGtPush(pushHost, appKey, masterSecret);
+		
+		TransmissionTemplate template = TransmissionTemplateIos(transmissionContent, pushType);
+
+		
+		ListMessage message = new ListMessage();
+		message.setOffline(true);
+		message.setOfflineExpireTime(72 * 1000 * 3600);
+		message.setData(template);
+		
+		List<Target> targets = new ArrayList<Target>();
+		
+		for (String cid : clientIds) {
+			Target target1 = new Target();
+			target1.setAppId(appId);
+			target1.setClientId(cid);
+			targets.add(target1);
+		}
+		
+		try {
+			String taskId = push.getContentId(message);
+			IPushResult ret = push.pushMessageToList(taskId, targets);
+			System.out.println("正常：" + ret.getResponse().toString());
+		} catch (RequestException e) {
+			String requstId = e.getRequestId();
+			IPushResult ret = push.pushMessageToList(requstId, targets);
+
+			System.out.println("异常：" + ret.getResponse().toString());
+		}
+				
+		return true;
+	}				
 	
 	/**
 	 * 推送android 单个设备透传消息推送
@@ -231,7 +235,7 @@ public class PushUtil {
 		
 		ListMessage message = new ListMessage();
 		message.setOffline(true);
-		message.setOfflineExpireTime(2 * 1000 * 3600);
+		message.setOfflineExpireTime(72 * 1000 * 3600);
 		message.setData(template);
 		
 		List<Target> targets = new ArrayList<Target>();
@@ -243,9 +247,16 @@ public class PushUtil {
 			targets.add(target1);
 		}
 		
-		String taskId = push.getContentId(message);
-		IPushResult ret = push.pushMessageToList(taskId, targets);
-		System.out.println("正常：" + ret.getResponse().toString());
+		try {
+			String taskId = push.getContentId(message);
+			IPushResult ret = push.pushMessageToList(taskId, targets);
+			System.out.println("正常：" + ret.getResponse().toString());
+		} catch (RequestException e) {
+			String requstId = e.getRequestId();
+			IPushResult ret = push.pushMessageToList(requstId, targets);
+
+			System.out.println("异常：" + ret.getResponse().toString());
+		}
 				
 		return true;
 	}			
@@ -271,7 +282,7 @@ public class PushUtil {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static TransmissionTemplate TransmissionTemplateIos(String userStatus, String transmissionContent, String pushType)
+	public static TransmissionTemplate TransmissionTemplateIos(String transmissionContent, String pushType)
 			throws Exception {
 		TransmissionTemplate template = new TransmissionTemplate();
 		template.setAppId(appId);

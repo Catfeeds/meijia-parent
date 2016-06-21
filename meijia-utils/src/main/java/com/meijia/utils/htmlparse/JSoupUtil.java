@@ -52,12 +52,12 @@ public class JSoupUtil {
 	 * @return
 	 */
 	public static String parseByPatten(Document doc, 
-			String patten, 
+			String findPatten, 
 			String textOrHtml,
 			String attrName, 
 			String removeRegex) {
 		String content = "";
-		Element item = doc.select(patten).first();
+		Element item = doc.select(findPatten).first();
 		
 		if (textOrHtml.equals("html")) {
 			content = item.html();
@@ -96,14 +96,14 @@ public class JSoupUtil {
 	 */
 	public static String parseByPattenAndSinglRegex(
 			Document doc, 
-			String patten, 
+			String findPatten, 
 			String textOrHtml, 
 			String attrName, 
-			String regex, int index) {
+			String resultRegex, int resultIndex) {
 
 		String result = "";
 		String content = "";
-		Element item = doc.select(patten).first();
+		Element item = doc.select(findPatten).first();
 		if (textOrHtml.equals("html")) {
 			content = item.html();
 		} else {
@@ -114,7 +114,7 @@ public class JSoupUtil {
 		
 //		System.out.println(content);
 		try {
-			Pattern pat = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+			Pattern pat = Pattern.compile(resultRegex, Pattern.CASE_INSENSITIVE);
 			Matcher mat = pat.matcher(content);
 
 			boolean rs = mat.find();
@@ -122,7 +122,7 @@ public class JSoupUtil {
 			if (!rs)
 				return result;
 
-			result = mat.group(index);
+			result = mat.group(resultIndex);
 		} catch (Exception e) {
 			return "";
 		}
@@ -130,86 +130,6 @@ public class JSoupUtil {
 		return result;
 	}
 	
-	/**
-	 * jsoup 解析标签后，用正则表达式进行分离，获得相应的值，才有左右标签的形式
-	 * <div class="summary-top">
-			<span>女&nbsp;&nbsp;&nbsp;&nbsp;24岁(1991年4月)&nbsp;&nbsp;&nbsp;&nbsp;1年工作经验&nbsp;&nbsp;&nbsp;&nbsp;本科&nbsp;&nbsp;&nbsp;&nbsp;未婚</span>
-			<br>
-			现居住地：北京 | 户口：忻州 | 中共党员(含预备党员) | 有海外工作/学习经验
-		</div>
-		
-		JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "现居住地", "|", "：")
-	 * @param doc
-	 * @param patten
-	 * @param attrName
-	 * @param leftRegex
-	 * @param rightRegex
-	 * @param replaceStr
-	 * @return
-	 */
-	public static String parseByPattenAndBetweenRegex(
-			Document doc, 
-			String patten, 
-			String attrName, 
-			String leftRegex, 
-			String rightRegex, 
-			String replaceStr) {
-
-		String result = "";
-		String content = "";
-		Element item = doc.select(patten).first();
-		content = item.text();
-		if (!StringUtil.isEmpty(attrName))
-			content = item.attr(attrName);
-//		System.out.println(content);
-		try {
-			Matcher mat = Pattern.compile(Pattern.quote(leftRegex) + "(.*?)" + Pattern.quote(rightRegex)).matcher(content);
-
-			boolean rs = mat.find();
-
-			if (!rs)
-				return result;
-
-			result = mat.group(1);
-
-			if (!StringUtil.isEmpty(replaceStr))
-				result = result.replace(replaceStr, "");
-
-		} catch (Exception e) {
-			return "";
-		}
-
-		return result;
-	}
-	
-	public static String parseTableByPatten(
-			Document doc, 
-			String patten, 
-			String tdFlag, 
-			int tdValueIndex) {
-
-		String result = "";
-		Element table = doc.select(patten).get(0); //select the first table.
-		
-		Elements rows = table.select("tr");
-		
-		for (int i = 0; i < rows.size(); i++) { 
-			Element row = rows.get(i);
-	        Elements cols = row.select("td");
-//	        System.out.println("tr ====================");
-	        for (int j = 0; j < cols.size(); j++) {
-//	        	System.out.println("td ====" + cols.get(j).text());
-	        	if (cols.get(j).text().trim().equals(tdFlag.trim())) {
-	        		result = cols.get(tdValueIndex).text();
-	        		break;
-	        	}
-	        }
-	        
-		}
-
-		return result;
-	}	
-
 	/**
 	 * 转义正则特殊字符 （$()*+.[]?\^{},|）
 	 * 
@@ -346,15 +266,15 @@ public class JSoupUtil {
 //		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "(([0-9]+年工作经验), 0)", 0));
 //		System.out.println("match 学历 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/小学|初中|高中|大专|专科|本科|硕士|博士|博士后", 0));
 //		System.out.println("match 婚姻状态 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/已婚|未婚|保密|离异", 0));
-//		System.out.println("match 现居住地 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "现居住地", "|", "："));
-//		System.out.println("match 户口 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-top", "", "户口", "|", "："));
+//		System.out.println("match 现居住地 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text", "",  "现居住地：(.+?)\\s*?\\|", 1));
+//		System.out.println("match 户口 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text", "", "户口：(.+?)\\s*?\\|", 1));
 //		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
-//		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "有海外工作\\/学习经验", 0));
-//		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "身份证：", " ", ""));
+//		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "有海外工作\\/学习经验", 1));
+		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-bottom", "text", "",  "身份证：(.+?)\\s*?\\ ", 1));
 //		System.out.println("match 手机 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "手机：", " ", ""));
 //		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "text", "", ""));
 //		System.out.println("match 头像 = " + JSoupUtil.parseByPatten(doc, "img.headerImg", "text", "src", ""));
-//		System.out.println("match 期望工作地区 = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作地区：", 1));
+		System.out.println("match 期望工作地区 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-top  table tr:eq(0) td:eq(1)", "text", "", ""));
 //		System.out.println("match 期望月薪： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望月薪：", 1));
 //		System.out.println("match 目前状况： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","目前状况：", 1));
 //		System.out.println("match 期望工作性质： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作性质：", 1));

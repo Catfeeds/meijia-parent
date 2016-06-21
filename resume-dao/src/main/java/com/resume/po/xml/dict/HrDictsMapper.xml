@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.resume.po.dao.dict.HrDictsMapper">
+	<resultMap id="BaseResultMap" type="com.resume.po.model.dict.HrDicts">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="from_id" property="fromId" jdbcType="NUMERIC" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="en_name" property="enName" jdbcType="VARCHAR" />
+		<result column="from_min" property="fromMin" jdbcType="NUMERIC" />
+		<result column="to_max" property="toMax" jdbcType="NUMERIC" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, from_id, type, code, name, en_name, from_min, to_max, pid, level, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from hr_dicts
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.HrDictSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from hr_dicts
+		where 1 = 1
+		<if test="fromId != null">
+			and from_id = #{fromId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="type != null">
+			and type = #{type,jdbcType=VARCHAR}
+		</if>
+
+		order by id asc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.HrDictSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from hr_dicts
+		where 1 = 1
+		<if test="fromId != null">
+			and from_id = #{fromId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="type != null">
+			and type = #{type,jdbcType=VARCHAR}
+		</if>
+
+		order by id asc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from hr_dicts
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.resume.po.model.dict.HrDicts">
+	    
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		
+		insert into hr_dicts (id, from_id, type,
+		code, name, en_name,
+		from_min, to_max, pid, level,
+		add_time, update_time)
+		values
+		(#{id,jdbcType=NUMERIC}, #{fromId,jdbcType=NUMERIC}, #{type,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enName,jdbcType=VARCHAR},
+		#{fromMin,jdbcType=NUMERIC}, #{toMax,jdbcType=NUMERIC}, #{pid,jdbcType=VARCHAR}, #{level,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.resume.po.model.dict.HrDicts">
+	    
+	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	    
+		insert into hr_dicts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="fromId != null">
+				from_id,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="enName != null">
+				en_name,
+			</if>
+			<if test="fromMin != null">
+				from_min,
+			</if>
+			<if test="toMax != null">
+				to_max,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="fromId != null">
+				#{fromId,jdbcType=NUMERIC},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="enName != null">
+				#{enName,jdbcType=VARCHAR},
+			</if>
+			<if test="fromMin != null">
+				#{fromMin,jdbcType=NUMERIC},
+			</if>
+			<if test="toMax != null">
+				#{toMax,jdbcType=NUMERIC},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.resume.po.model.dict.HrDicts">
+		update hr_dicts
+		<set>
+			<if test="fromId != null">
+				from_id = #{fromId,jdbcType=NUMERIC},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="enName != null">
+				en_name = #{enName,jdbcType=VARCHAR},
+			</if>
+			<if test="fromMin != null">
+				from_min = #{fromMin,jdbcType=NUMERIC},
+			</if>
+			<if test="toMax != null">
+				to_max = #{toMax,jdbcType=NUMERIC},
+			</if>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.resume.po.model.dict.HrDicts">
+		update hr_dicts
+		set from_id = #{fromId,jdbcType=NUMERIC},
+		type = #{type,jdbcType=VARCHAR},
+		code =
+		#{code,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		en_name = #{enName,jdbcType=VARCHAR},
+		from_min = #{fromMin,jdbcType=NUMERIC},
+		to_max = #{toMax,jdbcType=NUMERIC},
+		pid
+		= #{pid,jdbcType=VARCHAR},
+		level = #{level,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id =
+		#{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

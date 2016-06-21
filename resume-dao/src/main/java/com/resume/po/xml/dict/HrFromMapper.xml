@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.resume.po.dao.dict.HrFromMapper">
+	<resultMap id="BaseResultMap" type="com.resume.po.model.dict.HrFrom">
+		<id column="from_id" property="fromId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="web_url" property="webUrl" jdbcType="VARCHAR" />
+		<result column="search_url" property="searchUrl" jdbcType="VARCHAR" />
+		<result column="match_page" property="matchPage" jdbcType="VARCHAR" />
+		<result column="match_link" property="matchLink" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		from_id, name, web_url, search_url, match_page, match_link, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from hr_from
+		where from_id = #{fromId,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeRuleSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from hr_from
+		where 1=1
+		<if test="fromId != null">
+			and from_id = #{fromId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="ids != null">
+			and from_id in
+			<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+
+		order by from_id desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeRuleSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from hr_from
+		where 1=1
+		<if test="fromId != null">
+			and from_id = #{fromId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="ids != null">
+			and from_id in
+			<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+
+		order by from_id desc
+	</select>
+	
+	<select id="selectByAll" resultMap="BaseResultMap" >
+		select
+		<include refid="Base_Column_List" />
+		from hr_from
+		order by from_id asc
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from hr_from
+		where from_id = #{fromId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.resume.po.model.dict.HrFrom">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fromId">
+			SELECT LAST_INSERT_ID() AS from_id
+		</selectKey>
+
+		insert into hr_from (from_id, name, web_url,
+		search_url, match_page, match_link,
+		add_time)
+		values (#{fromId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{webUrl,jdbcType=VARCHAR},
+		#{searchUrl,jdbcType=VARCHAR}, #{matchPage,jdbcType=VARCHAR}, #{matchLink,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.resume.po.model.dict.HrFrom">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fromId">
+			SELECT LAST_INSERT_ID() AS from_id
+		</selectKey>
+
+		insert into hr_from
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fromId != null">
+				from_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="webUrl != null">
+				web_url,
+			</if>
+			<if test="searchUrl != null">
+				search_url,
+			</if>
+			<if test="matchPage != null">
+				match_page,
+			</if>
+			<if test="matchLink != null">
+				match_link,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="fromId != null">
+				#{fromId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="webUrl != null">
+				#{webUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="searchUrl != null">
+				#{searchUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="matchPage != null">
+				#{matchPage,jdbcType=VARCHAR},
+			</if>
+			<if test="matchLink != null">
+				#{matchLink,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.resume.po.model.dict.HrFrom">
+		update hr_from
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="webUrl != null">
+				web_url = #{webUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="searchUrl != null">
+				search_url = #{searchUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="matchPage != null">
+				match_page = #{matchPage,jdbcType=VARCHAR},
+			</if>
+			<if test="matchLink != null">
+				match_link = #{matchLink,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where from_id = #{fromId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.resume.po.model.dict.HrFrom">
+		update hr_from
+		set name = #{name,jdbcType=VARCHAR},
+		web_url = #{webUrl,jdbcType=VARCHAR},
+		search_url =
+		#{searchUrl,jdbcType=VARCHAR},
+		match_page = #{matchPage,jdbcType=VARCHAR},
+		match_link = #{matchLink,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where from_id = #{fromId,jdbcType=NUMERIC}
+	</update>
+</mapper>

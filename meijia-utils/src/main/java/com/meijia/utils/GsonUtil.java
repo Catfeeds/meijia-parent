@@ -1,5 +1,6 @@
 package com.meijia.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,6 +14,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+
 
 public class GsonUtil {
 	private static Gson gson = null;
@@ -49,7 +51,14 @@ public class GsonUtil {
 	public static <T> T GsonToObject(String gsonString, Class<T> cls) {
 		T t = null;
 		if (gson != null) {
-			t = gson.fromJson(gsonString, cls);
+			String utf8 = "";
+			try {
+				utf8 = new String(gsonString.getBytes("iso-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			t = gson.fromJson(utf8, cls);
 		}
 		return t;
 	}
@@ -143,4 +152,11 @@ public class GsonUtil {
 	    return i;  
 	}  
 
+	public static void main(String[] args) {
+		String jsonStr = "{\"attrName\": \"\", \"findPatten\": \"title\", \"removeRegex\": \"\", \"resultIndex\": 0, \"resultRegex\": \"\", \"matchCorrect\": \"智联简历\"}";
+		
+		Map<String, String> result = GsonUtil.GsonToMaps(jsonStr);
+		
+		System.out.println(result.toString());
+	}
 }

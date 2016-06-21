@@ -38,6 +38,7 @@
 			<artifactId>servlet-api</artifactId>
 			<version>3.0-alpha-1</version>
 		</dependency>
+
 	</dependencies>
 	<modules>
 		<module>meijia-utils</module>
@@ -45,9 +46,11 @@
 		<module>simi-service</module>
 		<module>simi-app</module>
 		<module>simi-oa</module>
-    <module>xcloud</module>
-  </modules>
-  <build>
+		<module>xcloud</module>
+		<module>resume-dao</module>
+		<module>resume-app</module>
+	</modules>
+	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
