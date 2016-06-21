@@ -408,8 +408,6 @@ public class CardController extends BaseController {
 		//添加卡片日志
 		cardAsyncService.cardLog(userId, cardId, CardUtil.getStatusName(status));
 		
-		if (record.getSetRemind().equals((short)0)) return result;
-		
 		//需要删除多人的日程信息.
 		if (record.getPeriod().equals((short)0)) {
 			UserMsgSearchVo searchVo = new UserMsgSearchVo();
@@ -430,10 +428,10 @@ public class CardController extends BaseController {
 			searchVo.setAction("card");
 			searchVo.setParams(cardId.toString());
 //			searchVo.setStartTime(TimeStampUtil.getNowSecond());
-			
+			Long n = TimeStampUtil.getNowSecond();
 			List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
 			for (UserMsg item: list) {
-				if (item.getServiceTime() > TimeStampUtil.getNowSecond()) {
+				if (item.getServiceTime() > n) {
 					userMsgService.deleteByPrimaryKey(item.getMsgId());
 				}
 			}
