@@ -410,7 +410,7 @@ public class CardUtil {
 		
 		if (period.equals((short)5)) {
 			String md = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "MM-dd");
-			periodName = "每月(" + md + ") 日 " + tt;
+			periodName = "每年(" + md + ") 日 " + tt;
 		}
 		return periodName;
 	}
