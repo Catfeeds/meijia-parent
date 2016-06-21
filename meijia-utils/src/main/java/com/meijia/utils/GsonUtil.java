@@ -51,14 +51,14 @@ public class GsonUtil {
 	public static <T> T GsonToObject(String gsonString, Class<T> cls) {
 		T t = null;
 		if (gson != null) {
-			String utf8 = "";
-			try {
-				utf8 = new String(gsonString.getBytes("iso-8859-1"), "utf-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			t = gson.fromJson(utf8, cls);
+//			String utf8 = "";
+//			try {
+//				utf8 = new String(gsonString.getBytes("iso-8859-1"), "utf-8");
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} 
+			t = gson.fromJson(gsonString, cls);
 		}
 		return t;
 	}
