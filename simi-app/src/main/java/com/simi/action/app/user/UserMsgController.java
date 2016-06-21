@@ -170,8 +170,23 @@ public class UserMsgController extends BaseController {
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
 
-		List<HashMap> monthDatas = userMsgService.totalByMonth(searchVo);
-
+		List<HashMap> smonthDatas = userMsgService.totalByMonth(searchVo);
+		List<String> months = DateUtil.getAllDaysOfMonth(year, month);
+		
+		List<HashMap> monthDatas = new ArrayList<HashMap>();
+		
+		for (int i = 0; i < months.size(); i++) {
+			String strDate = months.get(i);
+			for (int j = 0; j < smonthDatas.size(); j++) {
+				HashMap monthData = smonthDatas.get(j);
+				if (monthData.get("service_date").toString().equals(months.get(i))) {
+					monthDatas.add(monthData);
+					break;
+				}
+			}
+		}
+		
+		
 		// 查找所有重复性的卡片
 		CardSearchVo searchVo1 = new CardSearchVo();
 		searchVo1.setUserId(userId);
@@ -192,7 +207,7 @@ public class UserMsgController extends BaseController {
 			return result;
 		}
 
-		List<String> months = DateUtil.getAllDaysOfMonth(year, month);
+		
 		String today = DateUtil.getToday();
 		for (int i = 0; i < months.size(); i++) {
 			int total = 0;
