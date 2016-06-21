@@ -150,7 +150,7 @@ public class CardController extends BaseController {
 			List<LinkManVo> linkManList = gson.fromJson(attends, new TypeToken<List<LinkManVo>>(){}.getType() ); 
 			if (linkManList.size() > 1) {
 				result.setStatus(Constants.ERROR_999);
-				result.setMsg("重复提醒只能给自己设置.");
+				result.setMsg("为了减少对他人的干扰，目前只能给自己设置重复类提醒哦！");
 				return result;
 			}
 			
