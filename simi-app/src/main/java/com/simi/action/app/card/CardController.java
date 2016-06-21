@@ -47,6 +47,7 @@ import com.simi.service.user.UsersService;
 import com.simi.utils.CardUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.card.CardVo;
 import com.simi.vo.card.LinkManVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
@@ -264,8 +265,11 @@ public class CardController extends BaseController {
 		
 		//创建卡片积分
 		userScoreAsyncService.sendScoreCard(userId, cardId, cardType);
-
-		result.setData(record);
+		
+		CardVo vo = new CardVo();
+		vo = cardService.changeToCardVo(record);
+		
+		result.setData(vo);
 		return result;
 	}		
 	
