@@ -42,7 +42,7 @@
 		</if>
 		
 		<if test="startTime != null">
-			<![CDATA[ and ( (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC}) OR (service_time >= #{startTime,jdbcType=NUMERIC} and service_time <= #{endTime,jdbcType=NUMERIC}) ) ]]>
+			<![CDATA[ and (service_time >= #{startTime,jdbcType=NUMERIC} and service_time <= #{endTime,jdbcType=NUMERIC})  ]]>
 		</if>
 		
 		order by update_time desc
