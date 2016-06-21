@@ -425,11 +425,13 @@ public class CardController extends BaseController {
 			UserMsgSearchVo searchVo = new UserMsgSearchVo();
 			searchVo.setAction("card");
 			searchVo.setParams(cardId.toString());
-			searchVo.setStartTime(TimeStampUtil.getNowSecond());
+//			searchVo.setStartTime(TimeStampUtil.getNowSecond());
 			
 			List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
 			for (UserMsg item: list) {
-				userMsgService.deleteByPrimaryKey(item.getMsgId());
+				if (item.getServiceTime() > TimeStampUtil.getNowSecond()) {
+					userMsgService.deleteByPrimaryKey(item.getMsgId());
+				}
 			}
 		}
 		
