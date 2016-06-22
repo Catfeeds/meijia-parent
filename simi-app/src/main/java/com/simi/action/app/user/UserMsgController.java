@@ -199,6 +199,12 @@ public class UserMsgController extends BaseController {
 		periods.add((short) 4);
 		periods.add((short) 5);
 		searchVo1.setPeriods(periods);
+		
+		List<Short> statusIn = new ArrayList<Short>();
+		statusIn.add((short) 1);
+		statusIn.add((short) 2);
+		searchVo1.setStatusIn(statusIn);
+		
 
 		List<Cards> periodCards = cardService.selectBySearchVo(searchVo1);
 
