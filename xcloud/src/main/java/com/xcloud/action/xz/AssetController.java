@@ -210,7 +210,15 @@ public class AssetController extends BaseController {
 
 		// PageInfo info = recordAssetUseService.selectByListPage(searchVo,
 		// pageNo, pageSize);
+		
+		// 1. 获取登录的用户/公司 id
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
+		Long userId = accountAuth.getUserId();
+		Long companyId = accountAuth.getCompanyId();
+		
+		searchVo.setCompanyId(companyId);
+		
 		PageInfo info = recordAssetService.selectByListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", info);
