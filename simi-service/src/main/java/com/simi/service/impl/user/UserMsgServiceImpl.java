@@ -221,9 +221,6 @@ public class UserMsgServiceImpl implements UserMsgService {
 
 		List<Cards> periodCards = cardService.selectBySearchVo(searchVo);
 		
-
-		
-
 		if (periodCards.isEmpty())
 			return true;
 
@@ -240,6 +237,17 @@ public class UserMsgServiceImpl implements UserMsgService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			//1.如果是今天，并且时间已经过了，则不显示红点.
+			if (startDate.equals(today) && serviceTime < TimeStampUtil.getNowSecond()) {
+				continue;
+			} else {
+				//其他的是未到第一次时间点则不显示.
+				Long nextTime = TimeStampUtil.getMillisOfDay(startDate) / 1000;
+				if (nextTime < serviceTime) continue;
+			}
+			
+			
 			if (card.getPeriod().equals((short) 1)) isNeedInsert = true;
 			
 			if (card.getPeriod().equals((short) 2)) {

@@ -239,6 +239,7 @@ public class UserMsgController extends BaseController {
 				if (strDate.equals(today) && item.getServiceTime() < TimeStampUtil.getNowSecond()) {
 					continue;
 				} else {
+					//其他的是未到第一次时间点则不显示.
 					Long nextTime = TimeStampUtil.getMillisOfDay(strDate) / 1000;
 					if (nextTime < item.getServiceTime()) continue;
 				}

@@ -58,7 +58,7 @@ public class TestUserMsgController extends JUnitActionBase{
 
 		String url="/app/user/get_msg.json";
 
-		String params = "?user_id=1&service_date=2016-06-28&page=1";
+		String params = "?user_id=1&service_date=2016-07-06&page=1";
 		MockHttpServletRequestBuilder postRequest = get(url+params);
 
 
