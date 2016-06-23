@@ -9,20 +9,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.resume.po.model.dict.HrDictType;
-import com.resume.po.model.dict.HrDicts;
-import com.resume.po.model.dict.HrFrom;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.DictService;
 import com.simi.service.dict.ExpressService;
 import com.simi.service.dict.ProvinceService;
 import com.simi.service.dict.RegionService;
-import com.simi.service.resume.HrDictTypeService;
-import com.simi.service.resume.HrDictsService;
-import com.simi.service.resume.HrFromService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.vo.ExpressSearchVo;
-import com.simi.vo.resume.HrDictSearchVo;
 import com.simi.po.dao.dict.DictCityMapper;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictExpress;
@@ -53,15 +46,6 @@ public class DictServiceImpl implements DictService {
 	@Autowired
 	private ExpressService expressService;
 	
-	@Autowired
-	private HrDictTypeService hrDictTypeService;
-	
-	@Autowired
-	private HrFromService hrFromService;
-	
-	@Autowired
-	private HrDictsService hrDictService;
-
 	/**
 	 * Spring 容器初始化时加载
 	 */
@@ -80,15 +64,6 @@ public class DictServiceImpl implements DictService {
 		// 快递服务商信息
 		this.loadExpressData();
 		
-		//简历字段类型
-		this.loadHrDictType(false);
-		
-		//简历来源库
-		this.loadHrFrom(false);
-		
-		// 简历解析库的字典
-		this.loadHrDictRules(false);
-
 	}
 
 	@Override
@@ -237,44 +212,4 @@ public class DictServiceImpl implements DictService {
 		return listExpress;
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<HrDictType> loadHrDictType(Boolean rebuild) {
-		// 城市信息
-		List<HrDictType> list = memDictMap.get("hrDictType");
-		if (rebuild.equals(true) || list == null || list.isEmpty()) {
-			list = hrDictTypeService.selectByAll();
-			memDictMap.put("hrDictType", list);
-		}
-
-		return list;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<HrFrom> loadHrFrom(Boolean rebuild) {
-		// 城市信息
-		List<HrFrom> list = memDictMap.get("hrFrom");
-		if (rebuild.equals(true) || list == null || list.isEmpty()) {
-			list = hrFromService.selectByAll();
-			memDictMap.put("hrFrom", list);
-		}
-
-		return list;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<HrDicts> loadHrDictRules(Boolean rebuild) {
-		// 城市信息
-		List<HrDicts> list = memDictMap.get("hrDictRules");
-		if (rebuild.equals(true) || list == null || list.isEmpty()) {
-			HrDictSearchVo searchVo = new HrDictSearchVo();
-			searchVo.setType("parse_rule");
-			list = hrDictService.selectBySearchVo(searchVo);
-			memDictMap.put("hrDictRules", list);
-		}
-
-		return list;
-	}
 }

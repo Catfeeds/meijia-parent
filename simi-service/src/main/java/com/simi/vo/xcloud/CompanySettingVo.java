@@ -1,7 +1,6 @@
 package com.simi.vo.xcloud;
 
 import com.simi.po.model.xcloud.XcompanySetting;
-import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 
 
 public class CompanySettingVo extends XcompanySetting {

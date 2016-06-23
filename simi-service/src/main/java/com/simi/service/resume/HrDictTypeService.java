@@ -2,9 +2,7 @@ package com.simi.service.resume;
 
 import java.util.List;
 
-import com.github.pagehelper.PageInfo;
 import com.resume.po.model.dict.HrDictType;
-import com.simi.vo.resume.ResumeRuleSearchVo;
 
 
 

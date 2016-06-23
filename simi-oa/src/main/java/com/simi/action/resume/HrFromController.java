@@ -21,6 +21,7 @@ import com.resume.po.model.dict.HrFrom;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.service.CacheDictService;
 import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrFromService;
 import com.simi.vo.resume.ResumeRuleSearchVo;
@@ -33,7 +34,7 @@ public class HrFromController extends BaseController {
 	private HrFromService hrFromService;
 	
 	@Autowired
-	private DictService dictService;
+	private CacheDictService dictCacheService;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
@@ -94,7 +95,7 @@ public class HrFromController extends BaseController {
 			hrFromService.insert(record);
 		}
 		
-		dictService.loadHrFrom(true);
+		dictCacheService.loadHrFrom(true);
 
 		return "redirect:hrFromList";
 	}

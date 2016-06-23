@@ -14,8 +14,7 @@ import com.resume.po.dao.rule.HrRulesMapper;
 import com.resume.po.model.dict.HrDicts;
 import com.resume.po.model.dict.HrFrom;
 import com.resume.po.model.rule.HrRules;
-import com.simi.service.dict.DictService;
-import com.simi.service.resume.HrDictsService;
+import com.simi.service.CacheDictService;
 import com.simi.service.resume.HrRuleService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.resume.HrRuleVo;
@@ -32,7 +31,7 @@ public class HrRuleServiceImpl implements HrRuleService {
 	private UsersService userService;
 		
 	@Autowired
-	private DictService dictService;
+	private CacheDictService dictCacheService;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -83,8 +82,8 @@ public class HrRuleServiceImpl implements HrRuleService {
 		
 		if (list.isEmpty()) return result;
 		
-		List<HrDicts> hrDicts = dictService.loadHrDictRules(false);
-		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
+		List<HrDicts> hrDicts = dictCacheService.loadHrDictRules(false);
+		List<HrFrom> hrFroms = dictCacheService.loadHrFrom(false);
 		
 		for (int i =0; i < list.size(); i++) {
 			HrRules item = list.get(i);

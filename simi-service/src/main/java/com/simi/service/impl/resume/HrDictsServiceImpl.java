@@ -15,7 +15,6 @@ import com.resume.po.model.dict.HrDicts;
 import com.simi.service.resume.HrDictsService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.resume.HrDictSearchVo;
-import com.simi.vo.resume.ResumeRuleSearchVo;
 
 
 @Service

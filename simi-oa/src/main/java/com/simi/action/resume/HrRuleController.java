@@ -33,6 +33,7 @@ import com.resume.po.model.rule.HrRules;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.service.CacheDictService;
 import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrFromService;
 import com.simi.service.resume.HrRuleService;
@@ -53,7 +54,7 @@ public class HrRuleController extends BaseController {
 	private HrFromService hrFromService;
 	
 	@Autowired
-	private DictService dictService;
+	private CacheDictService dictCacheService;
 	
 	
 	
@@ -108,11 +109,11 @@ public class HrRuleController extends BaseController {
 		
 		//来源定义
 		
-		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
+		List<HrFrom> hrFroms = dictCacheService.loadHrFrom(false);
 		model.addAttribute("hrFroms", hrFroms);
 		
 		//匹配字段集合
-		List<HrDicts> hrDicts = dictService.loadHrDictRules(false);
+		List<HrDicts> hrDicts = dictCacheService.loadHrDictRules(false);
 		model.addAttribute("hrRuleDicts", hrDicts);
 		
 	
@@ -180,16 +181,16 @@ public class HrRuleController extends BaseController {
 		model.addAttribute("contentModel", vo);
 		
 		//简历来源集合
-		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
+		List<HrFrom> hrFroms = dictCacheService.loadHrFrom(false);
 		
 		model.addAttribute("hrFroms", hrFroms);
 		
 		//匹配字段集合
-		List<HrDicts> hrDicts = dictService.loadHrDictRules(false);
+		List<HrDicts> hrDicts = dictCacheService.loadHrDictRules(false);
 		model.addAttribute("hrDicts", hrDicts);
 		
 		//简历字典类型
-		List<HrDictType> hrDictTypes = dictService.loadHrDictType(false);
+		List<HrDictType> hrDictTypes = dictCacheService.loadHrDictType(false);
 		model.addAttribute("hrDictType", hrDictTypes);
 		
 		return "resume/hrRuleForm";

@@ -31,6 +31,7 @@ import com.resume.po.model.rule.HrRuleFrom;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.service.CacheDictService;
 import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrFromService;
 import com.simi.service.resume.HrRuleFromService;
@@ -51,7 +52,7 @@ public class HrRuleFromController extends BaseController {
 	private HrFromService hrFromService;
 	
 	@Autowired
-	private DictService dictService;
+	private CacheDictService dictCacheService;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
@@ -91,7 +92,7 @@ public class HrRuleFromController extends BaseController {
 		
 		//来源定义
 		
-		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
+		List<HrFrom> hrFroms = dictCacheService.loadHrFrom(false);
 		
 		model.addAttribute("hrFroms", hrFroms);
 	
@@ -156,7 +157,7 @@ public class HrRuleFromController extends BaseController {
 		model.addAttribute("contentModel", vo);
 		
 		//简历来源集合
-		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
+		List<HrFrom> hrFroms = dictCacheService.loadHrFrom(false);
 		
 		model.addAttribute("hrFroms", hrFroms);
 		

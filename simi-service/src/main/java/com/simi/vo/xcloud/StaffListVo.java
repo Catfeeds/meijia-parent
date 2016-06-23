@@ -64,18 +64,22 @@ public class StaffListVo extends XcompanyStaff{
 		this.deptName = deptName;
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	@Override
 	public Long getUserId() {
 		return userId;
 	}
 
+	@Override
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}

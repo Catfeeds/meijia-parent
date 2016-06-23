@@ -21,7 +21,6 @@ import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.vo.user.UserMsgVo;
 import com.simi.po.dao.user.UserMsgMapper;
-import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.common.Weathers;
 import com.simi.po.model.user.UserMsg;

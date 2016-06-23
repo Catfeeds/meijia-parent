@@ -46,6 +46,10 @@ public class Word2HtmlUtil {
 //		wordPath = "E:/2016/06/05/renjing.doc";
 //		htmlPath = "E:/2016/06/05/renjing_doc/renjing_doc.html";
 		
+		wordPath = "/data/resume/file/rule/tmp/745832705425420288.doc";
+		htmlPath = "/data/resume/file/rule/tmp/745832705425420288.html";
+		
+		
 		boolean result = Word2HtmlUtil.word2html(wordPath, htmlPath);
 		if (result) {
 			System.out.println(result);
@@ -53,6 +57,17 @@ public class Word2HtmlUtil {
 			System.out.println("转换错误！");
 		}
 		
+	}
+	
+	/**
+	 * 检测word是否为html格式，内容如果包含 html xmlns 则为html形式
+	 */
+	public static boolean checkWordIsHtml(String wordPath) {
+		
+		File file = new File(wordPath);
+//		String content = 
+		
+		return false;
 	}
 	
 	/**
@@ -152,6 +167,7 @@ public class Word2HtmlUtil {
 		} catch (Exception e) {
 //			System.out.println(e.getMessage());
 //			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 			return false;
 		}
 		

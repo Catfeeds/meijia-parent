@@ -27,6 +27,8 @@ import com.meijia.utils.FileUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.htmlparse.JSoupUtil;
+import com.meijia.utils.htmlparse.Mht2HtmlUtil;
+import com.meijia.utils.htmlparse.Word2HtmlUtil;
 import com.resume.po.model.rule.HrRuleFrom;
 import com.resume.po.model.rule.HrRules;
 import com.simi.action.app.BaseController;
@@ -68,7 +70,22 @@ public class UploadController extends BaseController {
 
 			fileFName = fileReName + "." + fileType;
 			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filePath, fileFName));
-
+			
+			//如果是mht 或者为word，则需要转换为html格式的
+			if (fileType.equals("mht")) {
+				String fileContent = Mht2HtmlUtil.mht2html(filePath + File.pathSeparator + fileFName);
+				File f = new File(filePath + File.separatorChar + fileReName + ".html");
+				FileUtils.writeStringToFile(f, fileContent, "utf-8");
+				fileFName = fileReName + ".html";
+			}
+			
+			if (fileType.equals("doc") || fileType.equals("DOC")) {
+				String wordPath = filePath + File.separatorChar + fileFName;
+				String htmlPath = filePath + File.separatorChar + fileReName + ".html";
+				Word2HtmlUtil.doc2html(wordPath, htmlPath);
+				fileFName = fileReName + ".html";
+			}
+			
 			result.setData(filePath + "/" + fileFName);
 		}
 

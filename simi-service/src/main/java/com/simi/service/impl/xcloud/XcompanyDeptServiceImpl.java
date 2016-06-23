@@ -1,10 +1,7 @@
 package com.simi.service.impl.xcloud;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +16,6 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.XcompanyDeptVo;
 import com.simi.vo.xcloud.company.DeptSearchVo;
 
