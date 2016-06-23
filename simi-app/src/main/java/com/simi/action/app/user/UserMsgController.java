@@ -222,15 +222,28 @@ public class UserMsgController extends BaseController {
 			Date date = DateUtil.parse(strDate);
 			
 			if (!DateUtil.compare(today, strDate)) continue;
-
+			
 			for (Cards item : periodCards) {
 				Date serviceDate = null;
 				try {
 					serviceDate = DateUtil.timeStampToDate(item.getServiceTime() * 1000);
+					
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				//判断重复提醒的开始时间的天数.
+				
+				//1.如果是今天，并且时间已经过了，则不显示红点.
+				if (strDate.equals(today) && item.getServiceTime() < TimeStampUtil.getNowSecond()) {
+					continue;
+				} else {
+					Long nextTime = TimeStampUtil.getMillisOfDay(strDate) / 1000;
+					if (nextTime < item.getServiceTime()) continue;
+				}
+				
+
 				if (item.getPeriod().equals((short) 1))
 					total = total + 1;
 
