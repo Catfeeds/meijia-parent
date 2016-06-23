@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 import com.resume.po.model.dict.HrFrom;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrFromService;
 import com.simi.vo.resume.ResumeRuleSearchVo;
 
@@ -29,6 +31,9 @@ public class HrFromController extends BaseController {
 
 	@Autowired
 	private HrFromService hrFromService;
+	
+	@Autowired
+	private DictService dictService;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
@@ -88,6 +93,8 @@ public class HrFromController extends BaseController {
 			record.setAddTime(TimeStampUtil.getNowSecond());
 			hrFromService.insert(record);
 		}
+		
+		dictService.loadHrFrom(true);
 
 		return "redirect:hrFromList";
 	}

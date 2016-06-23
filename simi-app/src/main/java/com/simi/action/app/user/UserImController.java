@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.huanxin.EasemobMessages;
 import com.simi.action.app.BaseController;
@@ -173,7 +174,7 @@ public class UserImController extends BaseController {
 		imProfile.put("mobile", u.getMobile());
 		imProfile.put("sex", u.getSex());
 		imProfile.put("im_username", imUserName);
-		imProfile.put("name", StringUtil.isEmpty(u.getName()) ? u.getMobile() : u.getName());
+		imProfile.put("name", StringUtil.isEmpty(u.getName()) ? MobileUtil.getMobileStar(u.getMobile()) : u.getName());
 		imProfile.put("head_img", userService.getHeadImg(u));
 		imProfile.put("user_type", u.getUserType().toString());
 		result.setData(imProfile);

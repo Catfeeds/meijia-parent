@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.resume.po.model.dict.HrDictType;
 import com.resume.po.model.dict.HrDicts;
@@ -23,6 +24,7 @@ import com.resume.po.model.dict.HrFrom;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrDictTypeService;
 import com.simi.service.resume.HrDictsService;
 import com.simi.service.resume.HrFromService;
@@ -41,6 +43,9 @@ public class HrDictController extends BaseController {
 	
 	@Autowired
 	private HrDictTypeService hrDictTypeService;
+	
+	@Autowired
+	private DictService dictService;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
@@ -105,16 +110,26 @@ public class HrDictController extends BaseController {
 
 	@AuthPassport
 	@RequestMapping(value = "/hrDictForm", method = { RequestMethod.POST })
-	public String doFromForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") HrDicts record, BindingResult result) throws IOException {
+	public String doFromForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") HrDicts item, BindingResult result) throws IOException {
 
-		Long id = record.getId();
-
+		Long id = item.getId();
+		HrDicts record = hrDictService.initHrDicts();
+		if (id != null && id > 0) {
+			record = hrDictService.selectByPrimaryKey(id);
+		}
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, record);
+		
 		// 更新或者新增
 		if (id != null && id > 0) {
 			hrDictService.updateByPrimaryKeySelective(record);
 		} else {
 			record.setAddTime(TimeStampUtil.getNowSecond());
 			hrDictService.insert(record);
+		}
+		
+		if (record.getType().equals("parse_rule")) {
+			dictService.loadHrDictRules(true);
 		}
 
 		return "redirect:hrDictList";

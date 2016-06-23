@@ -11,6 +11,8 @@ public class HrRuleReglVo {
 	private String fieldMatchIndex;
 	
 	private String matchCorrent;
+	
+	private Long matchDictTypeId;
 
 	public String getBlockRegex() {
 		return blockRegex;
@@ -50,6 +52,14 @@ public class HrRuleReglVo {
 
 	public void setMatchCorrent(String matchCorrent) {
 		this.matchCorrent = matchCorrent;
+	}
+
+	public Long getMatchDictTypeId() {
+		return matchDictTypeId;
+	}
+
+	public void setMatchDictTypeId(Long matchDictTypeId) {
+		this.matchDictTypeId = matchDictTypeId;
 	}
 
 }

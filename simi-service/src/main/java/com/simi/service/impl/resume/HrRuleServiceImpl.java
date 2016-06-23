@@ -1,5 +1,6 @@
 package com.simi.service.impl.resume;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.resume.po.dao.rule.HrRulesMapper;
+import com.resume.po.model.dict.HrDicts;
+import com.resume.po.model.dict.HrFrom;
 import com.resume.po.model.rule.HrRules;
+import com.simi.service.dict.DictService;
+import com.simi.service.resume.HrDictsService;
 import com.simi.service.resume.HrRuleService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.resume.HrRuleVo;
 import com.simi.vo.resume.ResumeRuleSearchVo;
 
 
@@ -23,6 +30,9 @@ public class HrRuleServiceImpl implements HrRuleService {
 	
 	@Autowired
 	private UsersService userService;
+		
+	@Autowired
+	private DictService dictService;
 	
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -66,9 +76,42 @@ public class HrRuleServiceImpl implements HrRuleService {
 	public List<HrRules> selectBySearchVo(ResumeRuleSearchVo searchVo) {
 		return hrRuleMapper.selectBySearchVo(searchVo);
 	}
+	
+	@Override
+	public List<HrRuleVo> getVos(List<HrRules> list) {
+		List<HrRuleVo> result = new ArrayList<HrRuleVo>();
+		
+		if (list.isEmpty()) return result;
+		
+		List<HrDicts> hrDicts = dictService.loadHrDictRules(false);
+		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
+		
+		for (int i =0; i < list.size(); i++) {
+			HrRules item = list.get(i);
+			HrRuleVo vo = new HrRuleVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			for (HrDicts d : hrDicts) {
+				if (vo.getMatchDictId().equals(d.getId())) {
+					vo.setMatchDictName(d.getName());
+					break;
+				}
+			}
+			
+			for (HrFrom f : hrFroms) {
+				if (vo.getFromId().equals(f.getFromId())) {
+					vo.setFromName(f.getName());
+				}
+			}
+			
+			result.add(vo);
+		}
+		
+		return result;
+	}
 
 	@Override
-	public HrRules initHrDictFrom() {
+	public HrRules initHrDict() {
 		HrRules record = new HrRules();	
 		record.setId(0L);
 		record.setFromId(0L);

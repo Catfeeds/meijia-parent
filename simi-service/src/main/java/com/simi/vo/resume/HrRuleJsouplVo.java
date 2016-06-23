@@ -15,6 +15,8 @@ public class HrRuleJsouplVo {
 	private int resultIndex;
 	
 	private String matchCorrect;
+	
+	private Long matchDictTypeId;
 
 	public String getFindPatten() {
 		return findPatten;
@@ -70,6 +72,14 @@ public class HrRuleJsouplVo {
 
 	public void setMatchCorrect(String matchCorrect) {
 		this.matchCorrect = matchCorrect;
+	}
+
+	public Long getMatchDictTypeId() {
+		return matchDictTypeId;
+	}
+
+	public void setMatchDictTypeId(Long matchDictTypeId) {
+		this.matchDictTypeId = matchDictTypeId;
 	}
 
 	

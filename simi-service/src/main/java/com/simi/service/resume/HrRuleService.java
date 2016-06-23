@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.resume.po.model.rule.HrRules;
+import com.simi.vo.resume.HrRuleVo;
 import com.simi.vo.resume.ResumeRuleSearchVo;
 
 public interface HrRuleService {
@@ -18,10 +19,12 @@ public interface HrRuleService {
     
     PageInfo selectByListPage(ResumeRuleSearchVo searchVo, int pageNo, int pageSize);
 	
-    HrRules initHrDictFrom();
-
 	int updateByPrimaryKeySelective(HrRules record);
 
 	List<HrRules> selectBySearchVo(ResumeRuleSearchVo searchVo);
+
+	List<HrRuleVo> getVos(List<HrRules> list);
+
+	HrRules initHrDict();
      
 }

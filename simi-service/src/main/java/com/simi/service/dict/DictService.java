@@ -2,6 +2,9 @@ package com.simi.service.dict;
 
 import java.util.List;
 
+import com.resume.po.model.dict.HrDictType;
+import com.resume.po.model.dict.HrDicts;
+import com.resume.po.model.dict.HrFrom;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictExpress;
 import com.simi.po.model.dict.DictProvince;
@@ -24,6 +27,12 @@ public interface DictService {
 	List<DictExpress> loadExpressData();
 
 	String getRegionName(Long regionId);
+
+	List<HrDicts> loadHrDictRules(Boolean rebuild);
+
+	List<HrFrom> loadHrFrom(Boolean rebuild);
+
+	List<HrDictType> loadHrDictType(Boolean rebuild);
 
 
 

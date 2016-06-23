@@ -4,14 +4,16 @@ public class HrRules {
     private Long id;
 
     private Long fromId;
+    
+    private Long matchDictId;
 
     private String fileType;
 
     private String matchType;
 
-    private String matchField;
-
     private String matchPatten;
+    
+    private String sampleSrc;
 
     private String samplePath;
 
@@ -21,7 +23,7 @@ public class HrRules {
 
     private Long addTime;
 
-    private String sampleSrc;
+    
 
     public Long getId() {
         return id;
@@ -53,14 +55,6 @@ public class HrRules {
 
     public void setMatchType(String matchType) {
         this.matchType = matchType == null ? null : matchType.trim();
-    }
-
-    public String getMatchField() {
-        return matchField;
-    }
-
-    public void setMatchField(String matchField) {
-        this.matchField = matchField == null ? null : matchField.trim();
     }
 
     public String getMatchPatten() {
@@ -110,4 +104,12 @@ public class HrRules {
     public void setSampleSrc(String sampleSrc) {
         this.sampleSrc = sampleSrc == null ? null : sampleSrc.trim();
     }
+
+	public Long getMatchDictId() {
+		return matchDictId;
+	}
+
+	public void setMatchDictId(Long matchDictId) {
+		this.matchDictId = matchDictId;
+	}
 }

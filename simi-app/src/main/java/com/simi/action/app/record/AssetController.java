@@ -251,7 +251,7 @@ public class AssetController extends BaseController {
 		}
 
 		AssetSearchVo searchVo = new AssetSearchVo();
-		searchVo.setUserId(userId);
+//		searchVo.setUserId(userId);
 		searchVo.setCompanyId(companyId);
 		if (assetTypeId > 0L) {
 			searchVo.setAssetTypeId(assetTypeId);

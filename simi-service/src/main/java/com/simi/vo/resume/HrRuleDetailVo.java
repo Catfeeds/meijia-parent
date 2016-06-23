@@ -6,6 +6,8 @@ public class HrRuleDetailVo {
 
 	private Long fromId;
 	
+	private Long matchDictId;
+	
 	private String fileType;
 	
 	private String sampleType;
@@ -45,6 +47,8 @@ public class HrRuleDetailVo {
 	private int resultIndex;
 	
 	private String matchCorrect;
+	
+	private Long matchDictTypeId;
 
 	public Long getId() {
 		return id;
@@ -220,6 +224,22 @@ public class HrRuleDetailVo {
 
 	public void setMatchCorrect(String matchCorrect) {
 		this.matchCorrect = matchCorrect;
+	}
+
+	public Long getMatchDictId() {
+		return matchDictId;
+	}
+
+	public void setMatchDictId(Long matchDictId) {
+		this.matchDictId = matchDictId;
+	}
+
+	public Long getMatchDictTypeId() {
+		return matchDictTypeId;
+	}
+
+	public void setMatchDictTypeId(Long matchDictTypeId) {
+		this.matchDictTypeId = matchDictTypeId;
 	}
 
 	

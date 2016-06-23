@@ -23,7 +23,7 @@
 							<label class="col-md-2 control-label">简历来源</label>
 							<div class="col-md-5">
 								<form:select path="fromId">
-									<option value="">选择来源网站</option>
+									<option value="0">全部</option>
 									<form:options items="${hrFroms}" itemValue="fromId" itemLabel="name" />
 								</form:select>
 								<form:errors path="type" class="field-has-error"></form:errors>

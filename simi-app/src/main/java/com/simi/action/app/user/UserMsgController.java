@@ -203,6 +203,7 @@ public class UserMsgController extends BaseController {
 		List<Short> statusIn = new ArrayList<Short>();
 		statusIn.add((short) 1);
 		statusIn.add((short) 2);
+		statusIn.add((short) 3);
 		searchVo1.setStatusIn(statusIn);
 		
 

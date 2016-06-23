@@ -77,6 +77,7 @@ public class HrDictsServiceImpl implements HrDictsService {
 		record.setFromId(0L);
 		record.setType("");
 		record.setName("");
+		record.setCode("");
 		record.setEnName("");
 		record.setFromMin(0L);
 		record.setToMax(0L);

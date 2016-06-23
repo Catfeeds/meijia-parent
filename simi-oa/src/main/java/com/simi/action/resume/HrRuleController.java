@@ -26,26 +26,28 @@ import com.meijia.utils.GsonUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.resume.po.model.dict.HrDictType;
+import com.resume.po.model.dict.HrDicts;
 import com.resume.po.model.dict.HrFrom;
-import com.resume.po.model.rule.HrRuleFrom;
+import com.resume.po.model.rule.HrRules;
 import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrFromService;
-import com.simi.service.resume.HrRuleFromService;
+import com.simi.service.resume.HrRuleService;
 import com.simi.vo.resume.HrRuleDetailVo;
-import com.simi.vo.resume.HrRuleFromVo;
 import com.simi.vo.resume.HrRuleJsouplVo;
 import com.simi.vo.resume.HrRuleReglVo;
+import com.simi.vo.resume.HrRuleVo;
 import com.simi.vo.resume.ResumeRuleSearchVo;
 
 @Controller
 @RequestMapping(value = "/resume")
-public class HrRuleFromController extends BaseController {
+public class HrRuleController extends BaseController {
 
 	@Autowired
-	private HrRuleFromService hrRuleFromService;
+	private HrRuleService hrRuleService;
 	
 	@Autowired
 	private HrFromService hrFromService;
@@ -53,15 +55,19 @@ public class HrRuleFromController extends BaseController {
 	@Autowired
 	private DictService dictService;
 	
+	
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@AuthPassport
-	@RequestMapping(value = "/hrRuleFromList", method = { RequestMethod.GET })
-	public String list(HttpServletRequest request, Model model, ResumeRuleSearchVo searchVo) {
+	@RequestMapping(value = "/hrRuleList", method = { RequestMethod.GET })
+	public String list(HttpServletRequest request, Model model, ResumeRuleSearchVo searchVo,
+			@RequestParam(value = "fromId", required = false, defaultValue = "0") Long fromId,
+			@RequestParam(value = "matchDictId", required = false, defaultValue = "0") Long matchDictId
+			) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		model.addAttribute("searchModel");
 		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		
@@ -69,21 +75,32 @@ public class HrRuleFromController extends BaseController {
 			searchVo = new ResumeRuleSearchVo();
 		}
 		
+		if (fromId > 0L) {
+			searchVo.setFromId(fromId);
+		}
 		
-		PageInfo result = hrRuleFromService.selectByListPage(searchVo, pageNo, pageSize);
-		List<HrRuleFrom> list = result.getList();
+		if (searchVo.getFromId() == null || searchVo.getFromId().equals(0L)) {
+			searchVo.setFromId(1L);
+		}
 		
-		List<HrRuleFromVo> listVo = hrRuleFromService.getVos(list);
+		if (matchDictId > 0L) {
+			searchVo.setMatchDictId(matchDictId);
+		}
+		
+		model.addAttribute("searchModel", searchVo);
+		PageInfo result = hrRuleService.selectByListPage(searchVo, pageNo, pageSize);
+		List<HrRules> list = result.getList();
+		
+		List<HrRuleVo> listVo = hrRuleService.getVos(list);
 		for (int i = 0; i < list.size(); i++) {
-			HrRuleFrom item = list.get(i);
+			HrRules item = list.get(i);
 			for (int j = 0; j < listVo.size(); j++) {
-				HrRuleFromVo vo = listVo.get(j);
+				HrRuleVo vo = listVo.get(j);
 				if (vo.getId().equals(item.getId())) {
 					list.set(i, vo);
 					break;
 				}
 			}
-			
 		}
 		result = new PageInfo(list);
 		
@@ -92,25 +109,30 @@ public class HrRuleFromController extends BaseController {
 		//来源定义
 		
 		List<HrFrom> hrFroms = dictService.loadHrFrom(false);
-		
 		model.addAttribute("hrFroms", hrFroms);
+		
+		//匹配字段集合
+		List<HrDicts> hrDicts = dictService.loadHrDictRules(false);
+		model.addAttribute("hrRuleDicts", hrDicts);
+		
 	
-		return "resume/hrRuleFromList";
+		return "resume/hrRuleList";
 	}
 
 	@AuthPassport
-	@RequestMapping(value = "/hrRuleFromForm", method = { RequestMethod.GET })
+	@RequestMapping(value = "/hrRuleForm", method = { RequestMethod.GET })
 	public String fromForm(Model model, @RequestParam(value = "id") Long id, HttpServletRequest request) {
 
 		if (id == null) id = 0L;
 
 
-		HrRuleFrom record = hrRuleFromService.initHrDictFrom();
+		HrRules record = hrRuleService.initHrDict();
 		if ( id != null && id > 0) {
-			record = hrRuleFromService.selectByPrimaryKey(id);
+			record = hrRuleService.selectByPrimaryKey(id);
 		}
 		
 		HrRuleDetailVo vo = new HrRuleDetailVo();
+		vo.setMatchDictTypeId(0L);
 		BeanUtilsExp.copyPropertiesIgnoreNull(record, vo);
 		
 		if (id.equals(0L)) {
@@ -120,6 +142,8 @@ public class HrRuleFromController extends BaseController {
 		} else {
 			vo.setSampleType("textarea");
 		}
+		
+		
 		
 		if (StringUtil.isEmpty(vo.getTextOrHtml())) vo.setTextOrHtml("text");
 		
@@ -160,11 +184,19 @@ public class HrRuleFromController extends BaseController {
 		
 		model.addAttribute("hrFroms", hrFroms);
 		
-		return "resume/hrRuleFromForm";
+		//匹配字段集合
+		List<HrDicts> hrDicts = dictService.loadHrDictRules(false);
+		model.addAttribute("hrDicts", hrDicts);
+		
+		//简历字典类型
+		List<HrDictType> hrDictTypes = dictService.loadHrDictType(false);
+		model.addAttribute("hrDictType", hrDictTypes);
+		
+		return "resume/hrRuleForm";
 	}
 
 	@AuthPassport
-	@RequestMapping(value = "/hrRuleFromForm", method = { RequestMethod.POST })
+	@RequestMapping(value = "/hrRuleForm", method = { RequestMethod.POST })
 	public String doFromForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") HrRuleDetailVo vo, BindingResult result) throws IOException {
 
 		Long id = vo.getId();
@@ -207,9 +239,9 @@ public class HrRuleFromController extends BaseController {
 		
 		vo.setSamplePath(ruleFile);
 
-		HrRuleFrom record = hrRuleFromService.initHrDictFrom();
+		HrRules record = hrRuleService.initHrDict();
 		if ( id != null && id > 0) {
-			record = hrRuleFromService.selectByPrimaryKey(id);
+			record = hrRuleService.selectByPrimaryKey(id);
 		}
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(vo, record);
@@ -218,28 +250,28 @@ public class HrRuleFromController extends BaseController {
 		//处理json的情况.
 		if (vo.getMatchType().equals("reg")) {
 			HrRuleReglVo ruleRegVo = new HrRuleReglVo();
-			vo.setMatchDictTypeId(0L);
 			BeanUtilsExp.copyPropertiesIgnoreNull(vo, ruleRegVo);
+			ruleRegVo.setMatchCorrent("");
 			matchPatten = GsonUtil.GsonString(ruleRegVo);
 		}
 		
 		if (vo.getMatchType().equals("jsoup")) {
 			HrRuleJsouplVo ruleJsouplVo = new HrRuleJsouplVo();
-			vo.setMatchDictTypeId(0L);
 			BeanUtilsExp.copyPropertiesIgnoreNull(vo, ruleJsouplVo);
+			ruleJsouplVo.setMatchCorrect("");
 			matchPatten = GsonUtil.GsonString(ruleJsouplVo);
 		}
 		record.setMatchPatten(matchPatten);
 		
 		// 更新或者新增
 		if (id != null && id > 0) {
-			hrRuleFromService.updateByPrimaryKeySelective(record);
+			hrRuleService.updateByPrimaryKeySelective(record);
 		} else {
 			record.setId(id);
 			record.setAddTime(TimeStampUtil.getNowSecond());
-			hrRuleFromService.insert(record);
+			hrRuleService.insert(record);
 		}
 
-		return "redirect:hrRuleFromList";
+		return "redirect:hrRuleList";
 	}
 }
