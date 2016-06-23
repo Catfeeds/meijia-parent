@@ -370,6 +370,13 @@ public class CardsServiceImpl implements CardService {
 		//参与人员
 		List<CardAttend> list = cardAttendService.selectByCardId(item.getCardId());
 		
+		StringBuffer userName = new StringBuffer();
+		
+		if (list.isEmpty()) {
+			vo.setAttendUserName("");
+			return vo;
+		}
+		
 		HashSet<Long> set = new HashSet<Long>();
 		for (CardAttend cardAttend : list) {
 			set.add(cardAttend.getUserId());
@@ -380,7 +387,7 @@ public class CardsServiceImpl implements CardService {
 		
 		List<Users> userList = usersService.selectBySearchVo(userSearchVo);
 		
-		StringBuffer userName = new StringBuffer();
+		
 		
 		for (Users users : userList) {
 			if(!StringUtil.isEmpty(users.getName())){
