@@ -1,5 +1,6 @@
 package com.meijia.utils;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +12,44 @@ import java.io.OutputStreamWriter;
 
 public class FileUtil {
 
+	/**
+	 * 获取文件内容
+	 * @param file 文件对象
+	 * @param encoding 编码格式，UTF-8
+	 * @return
+	 */
+	@SuppressWarnings("finally")
+	public static String getFileContent(File file, String encoding) {
+		String content = "";
+		BufferedReader reader = null;
+		
+		try {
+			InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8"); 
+			reader = new BufferedReader( read );
+			String tempString = null;
+			
+			//读取简历内容
+			while ( (tempString = reader.readLine()) != null ) {
+				content += tempString;
+			}
+			
+			return content;
+		} catch (IOException e) {
+//			e.printStackTrace();
+			return content;
+		} finally {
+			if (null != reader) {
+				try{
+					reader.close();
+				} catch (IOException e) {
+//					System.out.println(e.getMessage());
+					return content;
+				}
+			}
+			return content;
+		}// end finally
+	}	
+	
 	public static byte[] getBytes(String filePath) throws IOException {
 		FileInputStream in = new FileInputStream(filePath);
 

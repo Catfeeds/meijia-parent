@@ -2,6 +2,7 @@ package com.resume.action.parse;
 
 import java.io.File;
 import java.io.IOException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.ConfigPropertiesUtil;
+import com.meijia.utils.FileUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.htmlparse.JSoupUtil;
 import com.simi.action.app.BaseController;
@@ -99,7 +101,7 @@ public class ParseController extends BaseController {
 			String filePath = ConfigPropertiesUtil.getKey("resume.rule.tmp");
 			File input = new File(filePath + "/" + samplePath);
 			
-			content = JSoupUtil.getFileContent(input, "UTF-8");
+			content = FileUtil.getFileContent(input, "UTF-8");
 		} else if (!StringUtil.isEmpty(sampleSrc)) {
 			content = sampleSrc;
 		}

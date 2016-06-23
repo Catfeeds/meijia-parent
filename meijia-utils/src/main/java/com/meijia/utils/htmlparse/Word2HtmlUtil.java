@@ -26,6 +26,8 @@ import org.apache.poi.xwpf.converter.xhtml.XHTMLOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.w3c.dom.Document;
 
+import com.meijia.utils.FileUtil;
+
 /**
  * word文件转为html
  * 如果是那种其他格式文件只修改后缀生成的word文档是会报错的。
@@ -65,7 +67,11 @@ public class Word2HtmlUtil {
 	public static boolean checkWordIsHtml(String wordPath) {
 		
 		File file = new File(wordPath);
-//		String content = 
+		String content = FileUtil.getFileContent(file, "utf8");
+		
+		if (content.indexOf("html") >=0 || content.indexOf("xmlns") >= 0) {
+			return true;
+		}
 		
 		return false;
 	}

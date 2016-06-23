@@ -17,6 +17,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.meijia.utils.FileUtil;
 import com.meijia.utils.StringUtil;
 
 public class JSoupUtil {
@@ -199,43 +200,7 @@ public class JSoupUtil {
 		
 	}
 	
-	/**
-	 * 获取文件内容
-	 * @param file 文件对象
-	 * @param encoding 编码格式，UTF-8
-	 * @return
-	 */
-	@SuppressWarnings("finally")
-	public static String getFileContent(File file, String encoding) {
-		String content = "";
-		BufferedReader reader = null;
-		
-		try {
-			InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8"); 
-			reader = new BufferedReader( read );
-			String tempString = null;
-			
-			//读取简历内容
-			while ( (tempString = reader.readLine()) != null ) {
-				content += tempString;
-			}
-			
-			return content;
-		} catch (IOException e) {
-//			e.printStackTrace();
-			return content;
-		} finally {
-			if (null != reader) {
-				try{
-					reader.close();
-				} catch (IOException e) {
-//					System.out.println(e.getMessage());
-					return content;
-				}
-			}
-			return content;
-		}// end finally
-	}
+
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -251,7 +216,7 @@ public class JSoupUtil {
 		// System.out.print(item1);
 		
 		//基本信息 --> 户口
-		String resume = JSoupUtil.getFileContent(input, "UTF-8");
+		String resume = FileUtil.getFileContent(input, "UTF-8");
 		String baseInfoRegex = "<div\\s*?class=\"resume-preview-main-title\\s+?posR\">([\\s\\S]+?)<div\\s+?class=\"resume-preview-all\">";
 		String permanentAddressRegex = "户口：(.+?)\\s*?\\|";
 		String permanentAddress = JSoupUtil.parseByRegex(resume, baseInfoRegex, 1, permanentAddressRegex, 1);
