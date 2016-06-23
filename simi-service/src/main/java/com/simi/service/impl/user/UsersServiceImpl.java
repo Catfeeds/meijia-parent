@@ -21,6 +21,7 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MathBigDecimalUtil;
+import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
@@ -420,6 +421,11 @@ public class UsersServiceImpl implements UsersService {
 		vo.setProvinceName(viewUser.getProvinceName());
 		vo.setUserType(viewUser.getUserType());
 		vo.setName(viewUser.getName());
+		
+		if (StringUtil.isEmpty(vo.getName())) {
+			vo.setName(MobileUtil.getMobileStar(viewUser.getMobile()));
+		}
+		
 		vo.setRestMoney(new BigDecimal(0));
 		vo.setMobile(viewUser.getMobile());
 		vo.setScore(viewUser.getScore());

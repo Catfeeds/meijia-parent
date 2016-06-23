@@ -24,6 +24,8 @@ import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -126,6 +128,11 @@ public class UserFriendServiceImpl implements UserFriendService {
 				if (u.getId().equals(item.getFriendId())) {
 					vo.setFriendId(item.getFriendId());
 					vo.setName(u.getName());
+					
+					if (StringUtil.isEmpty(vo.getName())) {
+						vo.setName(MobileUtil.getMobileStar(u.getMobile()));
+					}
+					
 					vo.setSex(u.getSex());
 					
 					String headImg = userService.getHeadImg(u);
