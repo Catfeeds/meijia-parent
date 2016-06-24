@@ -19,6 +19,8 @@ public class CardVo extends Cards {
 	
 	private String attendUserName;
 	
+	private Long remindTime;
+	
 	public String getAttendUserName() {
 		return attendUserName;
 	}
@@ -73,6 +75,14 @@ public class CardVo extends Cards {
 
 	public void setAddTimeStr(String addTimeStr) {
 		this.addTimeStr = addTimeStr;
+	}
+
+	public Long getRemindTime() {
+		return remindTime;
+	}
+
+	public void setRemindTime(Long remindTime) {
+		this.remindTime = remindTime;
 	}
 
 }
