@@ -205,6 +205,7 @@ public class HrRuleController extends BaseController {
 		
 		//正式的目录为
 		String filePath = ConfigPropertiesUtil.getKey("resume.rule");
+		String fileTmpPath = ConfigPropertiesUtil.getKey("resume.rule.tmp");
 		String ruleFile = "";
 		//将文件进行保存
 		String simplePath = vo.getSamplePath();

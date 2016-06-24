@@ -101,7 +101,7 @@ public class ResumeFileController extends BaseController {
 				}
 			}
 			
-			result.setData(filePath + "/" + fileFName);
+			result.setData(fileFName);
 		}
 
 		return result;
