@@ -175,6 +175,27 @@ public class CardController extends BaseController {
 		if (cardId > 0L) {
 			record = cardService.selectByPrimaryKey(cardId);
 		}
+
+		//处理如果周期性修改为一次性的情况
+		if (cardId > 0L) {
+			if (record.getPeriod() > 0 && period.equals((short)0)) {
+				//需要删除所有今天之后的所有日程消息.
+				UserMsgSearchVo searchVo = new UserMsgSearchVo();
+				searchVo.setUserId(userId);
+				searchVo.setAction("card");
+				searchVo.setParams(cardId.toString());
+				Long n = TimeStampUtil.getNowSecond();
+				List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
+				for (UserMsg item: list) {
+					if (item.getServiceTime() > n) {
+						userMsgService.deleteByPrimaryKey(item.getMsgId());
+					}
+				}
+			}
+		}
+		
+		
+		
 		
 		record.setCardId(cardId);
 		record.setCreateUserId(createUserId);
@@ -259,6 +280,10 @@ public class CardController extends BaseController {
 		if (record.getSetSecDo().equals((short)1)) {
 			cardAsyncService.cardSecDo(userId, record);
 		}
+		
+		
+		
+		
 		
 		//生成卡片消息
 		userMsgAsyncService.newCardMsg(cardId);
