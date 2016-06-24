@@ -269,6 +269,15 @@ public class CardController extends BaseController {
 		CardVo vo = new CardVo();
 		vo = cardService.changeToCardVo(record);
 		
+		//根据提前量算好时间
+		
+		if (setRemind.equals((short)0)) {
+			int remindMin = CardUtil.getRemindMin(setRemind);
+			Long remindTime = serviceTime - remindMin * 60;
+			vo.setServiceTime(remindTime);
+		}
+		
+		
 		result.setData(vo);
 		return result;
 	}		
