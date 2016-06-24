@@ -136,20 +136,39 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 
 		for (Long uid : userIds) {
-			UserMsg record = userMsgService.initUserMsg();
-
-			record.setUserId(uid);
-			record.setFromUserId(createUserId);
-			record.setToUserId(uid);
-			record.setCategory("app");
-			record.setAction("card");
-			record.setParams(cardId.toString());
-			record.setGotoUrl("");
-			record.setTitle(CardUtil.getCardTypeName(card.getCardType()));
-			record.setServiceTime(card.getServiceTime());
-			record.setSummary(serviceContent);
-			record.setIconUrl(CardUtil.getCardIcon(card.getCardType()));
-			userMsgService.insert(record);
+			
+			//判断是否为已存在，存在则修改.
+			UserMsgSearchVo searchVo = new UserMsgSearchVo();
+			searchVo.setUserId(uid);
+			searchVo.setAction("card");
+			searchVo.setParams(cardId.toString());
+			
+			List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
+			
+			if (!list.isEmpty()) {
+				for (UserMsg item : list) {
+					item.setTitle(CardUtil.getCardTypeName(card.getCardType()));
+					item.setServiceTime(card.getServiceTime());
+					item.setSummary(serviceContent);
+					userMsgService.updateByPrimaryKey(item);
+				}
+			} else {
+				UserMsg record = userMsgService.initUserMsg();
+	
+				record.setUserId(uid);
+				record.setFromUserId(createUserId);
+				record.setToUserId(uid);
+				record.setCategory("app");
+				record.setAction("card");
+				record.setParams(cardId.toString());
+				record.setGotoUrl("");
+				record.setTitle(CardUtil.getCardTypeName(card.getCardType()));
+				record.setServiceTime(card.getServiceTime());
+				record.setSummary(serviceContent);
+				record.setIconUrl(CardUtil.getCardIcon(card.getCardType()));
+				userMsgService.insert(record);
+			
+			}
 		}
 
 		return new AsyncResult<Boolean>(true);
