@@ -64,7 +64,8 @@ public class ResumeFileController extends BaseController {
 		if (file != null && !file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
 			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-
+			fileType = fileType.toLowerCase();
+			
 			String filePath = ConfigPropertiesUtil.getKey("resume.rule.tmp");
 			String fileReName = OrderNoUtil.getUploadFileName().toString();
 
@@ -85,15 +86,20 @@ public class ResumeFileController extends BaseController {
 				fileFName = fileReName + ".html";
 			}
 			
-			if (fileType.equals("doc") || fileType.equals("DOC")) {
+			if (fileType.equals("doc") || fileType.equals("docx") ) {
 				String wordPath = filePath + File.separatorChar + fileFName;
 				String htmlPath = filePath + File.separatorChar + fileReName + ".html";
 				fileFName = fileReName + ".html";
 				if (Word2HtmlUtil.checkWordIsHtml(wordPath)) {
 					FileUtil.copyFile(wordPath, htmlPath);
-				} else {
+				} else if (fileType.equals("doc")) {
 					boolean s = Word2HtmlUtil.doc2html(wordPath, htmlPath);
-					
+					if (!s) {
+						result.setData("");
+						return result;
+					}
+				} else if (fileType.equals("docx")) {
+					boolean s = Word2HtmlUtil.docx2html(wordPath, htmlPath);
 					if (!s) {
 						result.setData("");
 						return result;
@@ -101,7 +107,7 @@ public class ResumeFileController extends BaseController {
 				}
 			}
 			
-			result.setData(fileFName);
+			result.setData(filePath + "/" + fileFName);
 		}
 
 		return result;

@@ -27,22 +27,22 @@ public class TestZhilianHtml {
 		File input = new File(wordPath);
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 		
-		String ID = JSoupUtil.parseByPattenAndSinglRegex(doc, "html > body > div > p:eq(1)", "html", "", "<span[\\s\\S]+?>ID</span>\\s*<span[\\s\\S]+?>：</span>\\s*<span[\\s\\S]+?>(.+?)\\s*?<span", 1);
+		String ID = JSoupUtil.parseByPattenAndSinglRegex(doc, "html > body > div > p:eq(1)", 0, "html", "", "<span[\\s\\S]+?>ID</span>\\s*<span[\\s\\S]+?>：</span>\\s*<span[\\s\\S]+?>(.+?)\\s*?<span", 1);
 		String baseInfoPatten = "html > body > div > table:eq(2)";
-		String name = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "<span[\\s\\S]+?>(.+)<span.+?>", 1);
-		String gender = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "男|女", 0);
-		String birthDate = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "[0-9]+年[0-9]+月", 0);
-		String degree = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "初中|中技|高中|中专|大专|本科|硕士|MBA|EMBA|博士", 0);
-		String maritalStatus = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "已婚|未婚|离异", 0);
-		String abodeAddress = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "现居住地：(.+?)\\s*?\\|", 1);
-		String permanentAddress = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "户口：(.+?)\\s*?\\|", 1);
-		String politicsStatus = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "中共党员(含预备党员)|团员|群众|民主党派|无党派人士 ", 0);
-		String overseasExperience = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "有海外工作/学习经验", 0);
-		String IDNumber = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "身份证：(.+?)<br\\s*?/?>", 1);
-		String mobile = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "手机：(.+?)<br\\s*?/?>", 1);
-		String email = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, "html", "", "E-mail：<a.+?>(.+?)</a>", 1);
+		String name = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "<span[\\s\\S]+?>(.+)<span.+?>", 1);
+		String gender = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "男|女", 0);
+		String birthDate = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "[0-9]+年[0-9]+月", 0);
+		String degree = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "初中|中技|高中|中专|大专|本科|硕士|MBA|EMBA|博士", 0);
+		String maritalStatus = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "已婚|未婚|离异", 0);
+		String abodeAddress = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "现居住地：(.+?)\\s*?\\|", 1);
+		String permanentAddress = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "户口：(.+?)\\s*?\\|", 1);
+		String politicsStatus = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "中共党员(含预备党员)|团员|群众|民主党派|无党派人士 ", 0);
+		String overseasExperience = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "有海外工作/学习经验", 0);
+		String IDNumber = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "身份证：(.+?)<br\\s*?/?>", 1);
+		String mobile = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten,0,  "html", "", "手机：(.+?)<br\\s*?/?>", 1);
+		String email = JSoupUtil.parseByPattenAndSinglRegex(doc, baseInfoPatten, 0, "html", "", "E-mail：<a.+?>(.+?)</a>", 1);
 		String jobIntensionPatten = "table[style=border-collapse:collapse;border:none;mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-border-insideh:none;mso-border-insidev:none]";
-		String hopeCity = JSoupUtil.parseByPattenAndSinglRegex(doc, jobIntensionPatten, "html", "", "[\\s\\S]", 0);
+		String hopeCity = JSoupUtil.parseByPattenAndSinglRegex(doc, jobIntensionPatten, 0, "html", "", "[\\s\\S]", 0);
 		
 		System.out.println("ID：" + ID);
 		System.out.println("姓名：" + name);

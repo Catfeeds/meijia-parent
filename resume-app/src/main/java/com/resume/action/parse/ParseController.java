@@ -30,6 +30,7 @@ public class ParseController extends BaseController {
 			@RequestParam(value = "samplePath", required = false, defaultValue = "") String samplePath,
 			@RequestParam(value = "sampleSrc", required = false, defaultValue = "") String sampleSrc,
 			@RequestParam("findPatten") String findPatten,
+			@RequestParam(value = "findIndex", required = false, defaultValue = "0") int findIndex,
 			@RequestParam(value = "textOrHtml", required = false, defaultValue = "text") String textOrHtml,
 			@RequestParam(value = "attrName", required = false, defaultValue = "") String attrName,
 			@RequestParam(value = "removeRegex", required = false, defaultValue = "") String removeRegex,
@@ -66,9 +67,9 @@ public class ParseController extends BaseController {
 		String matchResult = "";
 		
 		if (StringUtil.isEmpty(resultRegex)) {
-			matchResult = JSoupUtil.parseByPatten(doc, findPatten, textOrHtml, attrName, removeRegex);
+			matchResult = JSoupUtil.parseByPatten(doc, findPatten, findIndex, textOrHtml, attrName, removeRegex);
 		} else {
-			matchResult = JSoupUtil.parseByPattenAndSinglRegex(doc, findPatten, textOrHtml, attrName, resultRegex, resultIndex);
+			matchResult = JSoupUtil.parseByPattenAndSinglRegex(doc, findPatten, findIndex, textOrHtml, attrName, resultRegex, resultIndex);
 		}
 
 		result.setData(matchResult);
@@ -98,8 +99,8 @@ public class ParseController extends BaseController {
 		String content = "";
 		
 		if (!StringUtil.isEmpty(samplePath)) {
-			String filePath = ConfigPropertiesUtil.getKey("resume.rule.tmp");
-			File input = new File(filePath + "/" + samplePath);
+			
+			File input = new File(samplePath);
 			
 			content = FileUtil.getFileContent(input, "UTF-8");
 		} else if (!StringUtil.isEmpty(sampleSrc)) {
@@ -119,7 +120,7 @@ public class ParseController extends BaseController {
 		try {
 			matchResult = JSoupUtil.parseByRegex(content, blockRegex, blockMatchIndex, fieldRegex, fieldMatchIndex);
 		} catch (Exception e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 			result.setStatus(Constants.ERROR_999);
 			result.setData(e.getMessage());
 			return result;

@@ -140,7 +140,12 @@ $("#reg-match-test-btn").click(function() {
 
 			if (rdata.status == "0") {
 				$("#testMatchResult").html(rdata.data);
-				$("#testSuccess").val(1);
+				if (rdata.data == "") {
+					$("#testSuccess").val(0);
+				} else {
+					$("#testSuccess").val(1);
+				}
+				
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -216,7 +221,11 @@ $("#jsoup-match-test-btn").click(function() {
 
 			if (rdata.status == "0") {
 				$("#testMatchResult").html(rdata.data);
-				$("#testSuccess").val(1);
+				if (rdata.data == "") {
+					$("#testSuccess").val(0);
+				} else {
+					$("#testSuccess").val(1);
+				}
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {

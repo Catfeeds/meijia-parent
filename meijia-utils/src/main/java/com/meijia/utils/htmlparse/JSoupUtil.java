@@ -1,12 +1,7 @@
 package com.meijia.utils.htmlparse;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,8 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import com.meijia.utils.FileUtil;
 import com.meijia.utils.StringUtil;
 
@@ -54,11 +47,14 @@ public class JSoupUtil {
 	 */
 	public static String parseByPatten(Document doc, 
 			String findPatten, 
+			int findIndex,
 			String textOrHtml,
 			String attrName, 
 			String removeRegex) {
 		String content = "";
-		Element item = doc.select(findPatten).first();
+		Element item = doc.select(findPatten).get(findIndex);
+		
+		if (item == null) return content;
 		
 		if (textOrHtml.equals("html")) {
 			content = item.html();
@@ -98,13 +94,14 @@ public class JSoupUtil {
 	public static String parseByPattenAndSinglRegex(
 			Document doc, 
 			String findPatten, 
+			int findIndex,
 			String textOrHtml, 
 			String attrName, 
 			String resultRegex, int resultIndex) {
 
 		String result = "";
 		String content = "";
-		Element item = doc.select(findPatten).first();
+		Element item = doc.select(findPatten).get(findIndex);
 		if (textOrHtml.equals("html")) {
 			content = item.html();
 		} else {
@@ -228,18 +225,18 @@ public class JSoupUtil {
 //		System.out.println("match 手机号 = " + JSoupUtil.parseByPatten(doc, "div.main-title-fr", "text", "", "手机 ："));
 //		System.out.println("match 性别 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text", "", "/男|女", 0));
 //		System.out.println("match 生日 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span", "text" , "", "(([0-9]+年[0-9]+月))", 0));
-//		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "(([0-9]+年工作经验), 0)", 0));
+		System.out.println("match 工作经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span",0,  "text" , "", "(([0-9]+年工作经验))", 0));
 //		System.out.println("match 学历 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/小学|初中|高中|大专|专科|本科|硕士|博士|博士后", 0));
 //		System.out.println("match 婚姻状态 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top > span","text" , "", "/已婚|未婚|保密|离异", 0));
 //		System.out.println("match 现居住地 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text", "",  "现居住地：(.+?)\\s*?\\|", 1));
 //		System.out.println("match 户口 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text", "", "户口：(.+?)\\s*?\\|", 1));
-//		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
-//		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", "text" , "", "有海外工作\\/学习经验", 1));
-		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-bottom", "text", "",  "身份证：(.+?)\\s*?\\ ", 1));
+		System.out.println("match 政治面貌 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", 0, "text" , "", "中共党员\\(含预备党员\\) |团员|群众|民主党派|无党派人士|无可奉告", 0));
+		System.out.println("match 海外经验 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-top", 0, "text" , "", "有海外工作\\/学习经验", 1));
+		System.out.println("match 身份证 = " + JSoupUtil.parseByPattenAndSinglRegex(doc, "div.summary-bottom", 0, "text", "",  "身份证：(.+?)\\s*?\\ ", 1));
 //		System.out.println("match 手机 = " + JSoupUtil.parseByPattenAndBetweenRegex(doc, "div.summary-bottom", "", "手机：", " ", ""));
 //		System.out.println("match 邮箱 = " + JSoupUtil.parseByPatten(doc, "a[href^=mailto]", "text", "", ""));
 //		System.out.println("match 头像 = " + JSoupUtil.parseByPatten(doc, "img.headerImg", "text", "src", ""));
-		System.out.println("match 期望工作地区 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-top  table tr:eq(0) td:eq(1)", "text", "", ""));
+		System.out.println("match 期望工作地区 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-top  table tr:eq(0) td:eq(1)", 0, "text", "", ""));
 //		System.out.println("match 期望月薪： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望月薪：", 1));
 //		System.out.println("match 目前状况： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","目前状况：", 1));
 //		System.out.println("match 期望工作性质： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望工作性质：", 1));

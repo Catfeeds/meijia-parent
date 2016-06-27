@@ -72,10 +72,13 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="col-md-2 control-label">级别</label>
+							<label class="col-md-2 control-label">上级</label>
 							<div class="col-md-5">
-								<form:input path="level" class="form-control" placeholder="级别" maxLength="32" />
-								
+								<form:select path="pid">
+									<option value="0">无上级</option>
+									<form:options items="${hrDictTypes}" itemValue="type" itemLabel="typeName" />
+								</form:select>
+								<input type="hidden" id="pid_value" value="${contentModel.pid }"/>
 							</div>
 						</div>
 						
@@ -97,5 +100,9 @@
 	<!--script for this page-->
 	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/js/simi/resume/hrDictForm.js'/>" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		$('#type').trigger('change');
+	</script>
 </body>
 </html>

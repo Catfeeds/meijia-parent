@@ -173,29 +173,31 @@ public class HrRuleFromController extends BaseController {
 		
 		//正式的目录为
 		String filePath = ConfigPropertiesUtil.getKey("resume.rule");
+		
 		String ruleFile = "";
 		//将文件进行保存
-		String simplePath = vo.getSamplePath();
+		String samplePath = vo.getSamplePath();
 		String sampleType = request.getParameter("sampleType");
-		
+
 		if (sampleType.equals("upload")) {
 			
 			if (id.equals(0L)) {
-				String fileName = FileUtil.getFilePrefix(simplePath);
-				String fileExt = FileUtil.getExtend(fileName);
+				String fileName = FileUtil.getFilePrefix(samplePath);
+				String fileExt = FileUtil.getExtend(samplePath);
 				
-				ruleFile = filePath + "/" + fileName + "." + fileExt;
-				FileUtil.copyFile(simplePath, ruleFile);
+				ruleFile = filePath + File.separatorChar + fileName + "." + fileExt;
 				
-				File tmpFile = new File(simplePath);
+				FileUtil.copyFile(samplePath, ruleFile);
+				
+				File tmpFile = new File(samplePath);
 				FileUtils.forceDelete(tmpFile);
 			} else {
-				ruleFile = simplePath;
+				ruleFile = samplePath;
 			}
 		} else {
 			
 			if (id > 0L) {
-				File of = new File(simplePath);
+				File of = new File(samplePath);
 				FileUtils.forceDelete(of);
 			}
 

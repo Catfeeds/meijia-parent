@@ -6,6 +6,8 @@ public class HrDictSearchVo {
 
     private String type;
     
+    private String pid;
+    
 	public Long getFromId() {
 		return fromId;
 	}
@@ -20,6 +22,14 @@ public class HrDictSearchVo {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getPid() {
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 
 }

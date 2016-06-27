@@ -80,7 +80,7 @@ public class HrDictsServiceImpl implements HrDictsService {
 		record.setEnName("");
 		record.setFromMin(0L);
 		record.setToMax(0L);
-		record.setPid("");
+		record.setPid("0");
 		record.setLevel((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());

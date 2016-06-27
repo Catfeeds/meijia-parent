@@ -23,7 +23,7 @@
 						<form:options items="${hrFroms}" itemValue="fromId" itemLabel="name" />
 					</form:select>
 					字典类型
-					<form:select path="matchDictId">
+					<form:select path="type">
 						<option value="">全部</option>
 						<form:options items="${hrDictTypes}" itemValue="type" itemLabel="typeName" />
 					</form:select>

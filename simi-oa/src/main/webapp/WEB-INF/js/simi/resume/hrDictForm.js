@@ -52,6 +52,46 @@ $('#contentForm').validate({
 
 });
 
+$("#type").on('change', function() {
+	var type = $(this).val();
+	
+	if (type == "") return false;
+	
+	var params = {};
+	params.type = type;
+	$.ajax({
+		type : "GET",
+		url : resumeAppRootUrl + "/hrDict/getParents.json",
+		data : params,
+		dataType : "json",
+		async : false,
+		success : function(rdata, textStatus) {
+			if (rdata.status == "0") {
+				var pid = $("#pid_value").val();
+				var $options = '<option value="0">无上级</option>';
+				//$optionList = "";
+				$.each(rdata.data, function(i, obj) {
+					if (obj.id == pid) {
+						$options += '<option value="'+obj.id+'" selected>' + obj.name + "</option>";
+					} else {
+						$options += '<option value="'+obj.id+'">' + obj.name + "</option>";
+					}
+
+				});
+				
+				$("#pid").html($options);
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+
+		},
+
+	});
+	
+	
+});
+
+
 $('.contentForm input').keypress(function (e) {
 	if (e.which == 13) {
 		$("#btn-save").click();

@@ -53,6 +53,10 @@
 		<if test="type != null">
 			and type = #{type,jdbcType=VARCHAR}
 		</if>
+		
+		<if test="pid != null">
+			and pid = #{pid,jdbcType=VARCHAR}
+		</if>
 
 		order by id asc
 	</select>
