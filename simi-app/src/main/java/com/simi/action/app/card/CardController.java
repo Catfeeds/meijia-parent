@@ -178,8 +178,8 @@ public class CardController extends BaseController {
 
 		//处理如果周期性修改为一次性的情况
 		if (cardId > 0L) {
-			if (record.getPeriod() > 0 && period.equals((short)0)) {
-				//需要删除所有今天之后的所有日程消息.
+			if (record.getPeriod() > 0) {
+				//需要删除所有今天之后的所有日程消息. 包括今天的
 				UserMsgSearchVo searchVo = new UserMsgSearchVo();
 				searchVo.setUserId(userId);
 				searchVo.setAction("card");
@@ -187,7 +187,10 @@ public class CardController extends BaseController {
 				Long n = TimeStampUtil.getNowSecond();
 				List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
 				for (UserMsg item: list) {
-					if (item.getServiceTime() > n) {
+					String nowDate = DateUtil.getToday();
+					String serviceDate = TimeStampUtil.timeStampToDateStr(item.getServiceTime() * 1000, "yyyy-MM-dd");
+					if (item.getServiceTime() > n || 
+						nowDate.equals(serviceDate)) {
 						userMsgService.deleteByPrimaryKey(item.getMsgId());
 					}
 				}

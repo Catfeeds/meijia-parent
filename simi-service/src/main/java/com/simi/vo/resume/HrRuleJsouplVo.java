@@ -4,6 +4,8 @@ public class HrRuleJsouplVo {
 
 	private String findPatten;
 	
+	private int findIndex;
+	
 	private String textOrHtml;
 	
 	private String attrName;
@@ -82,7 +84,11 @@ public class HrRuleJsouplVo {
 		this.matchDictTypeId = matchDictTypeId;
 	}
 
-	
+	public int getFindIndex() {
+		return findIndex;
+	}
 
-
+	public void setFindIndex(int findIndex) {
+		this.findIndex = findIndex;
+	}
 }

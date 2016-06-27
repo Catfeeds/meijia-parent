@@ -175,6 +175,8 @@ $("#jsoup-match-test-btn").click(function() {
 	
 	var findPatten = $("#findPatten").val();
 	
+	var findIndex = $("#findIndex").val();
+	
 	var textOrHtml = $("#textOrHtml").val();
 
 	var attrName = $("#attrName").val();
@@ -193,6 +195,7 @@ $("#jsoup-match-test-btn").click(function() {
 	params.samplePath = samplePath;
 	params.sampleSrc = sampleSrc;
 	params.findPatten = findPatten;
+	params.findIndex = findIndex;
 	params.textOrHtml = textOrHtml;
 	params.attrName = attrName;
 	params.removeRegex = removeRegex;

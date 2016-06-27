@@ -52,7 +52,14 @@ public class JSoupUtil {
 			String attrName, 
 			String removeRegex) {
 		String content = "";
-		Element item = doc.select(findPatten).get(findIndex);
+		Element item = null;
+		try {
+			item = doc.select(findPatten).get(findIndex);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+		
 		
 		if (item == null) return content;
 		

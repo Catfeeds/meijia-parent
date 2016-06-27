@@ -106,8 +106,8 @@ public class UserMsgController extends BaseController {
 			vo.setSummary(item.getSummary());
 			vo.setIconUrl(item.getIconUrl());
 
-			Long updateTime = item.getUpdateTime();
-			String msgTime = TimeStampUtil.timeStampToDateStr(updateTime * 1000, "HH:mm");
+			Long serviceTime = item.getServiceTime();
+			String msgTime = TimeStampUtil.timeStampToDateStr(serviceTime * 1000, "HH:mm");
 			vo.setMsgTime(msgTime);
 			resultList.add(vo);
 		}

@@ -36,6 +36,8 @@ public class HrRuleDetailVo {
 	
 	private String findPatten;
 	
+	private int findIndex;
+	
 	private String textOrHtml;
 	
 	private String attrName;
@@ -240,6 +242,14 @@ public class HrRuleDetailVo {
 
 	public void setMatchDictTypeId(Long matchDictTypeId) {
 		this.matchDictTypeId = matchDictTypeId;
+	}
+
+	public int getFindIndex() {
+		return findIndex;
+	}
+
+	public void setFindIndex(int findIndex) {
+		this.findIndex = findIndex;
 	}
 
 	

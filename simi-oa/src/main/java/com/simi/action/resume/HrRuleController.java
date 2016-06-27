@@ -134,6 +134,7 @@ public class HrRuleController extends BaseController {
 		
 		HrRuleDetailVo vo = new HrRuleDetailVo();
 		vo.setMatchDictTypeId(0L);
+		vo.setFindIndex(0);
 		BeanUtilsExp.copyPropertiesIgnoreNull(record, vo);
 		
 		if (id.equals(0L)) {

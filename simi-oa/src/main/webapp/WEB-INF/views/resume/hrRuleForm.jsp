@@ -143,6 +143,14 @@
 									<button type="button" id="jsoup-match-test-btn" class="btn btn-info">测试</button>
 								</div>
 							</div>
+							
+							<div class="form-group required">
+								<label class="col-md-2 control-label">匹配第几个(findIndex)</label>
+								<div class="col-md-6">
+									<form:input path="findIndex" class="form-control" placeholder="查找第几个" maxLength="4" />
+								</div>
+							</div>
+							
 							<div class="form-group required">
 								<label class="col-md-2 control-label">textOrHtml</label>
 								<div class="col-md-8">
