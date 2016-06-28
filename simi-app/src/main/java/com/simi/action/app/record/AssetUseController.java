@@ -137,10 +137,10 @@ public class AssetUseController extends BaseController {
 			searchVo.setUserId(userId);
 			searchVo.setFriendId(toUserId);
 			UserFriends userFriend = userFriendService.selectByIsFirend(searchVo);
-			UserFriendReq userFriendReq = userFriendReqService.selectByIsFirend(searchVo);
+			List<UserFriendReq> userFriendReqs = userFriendReqService.selectBySearchVo(searchVo);
 
-			if (userFriend == null && userFriendReq == null) {
-				userFriendReq = userFriendReqService.initUserFriendReq();
+			if (userFriend == null && userFriendReqs.isEmpty()) {
+				UserFriendReq userFriendReq = userFriendReqService.initUserFriendReq();
 				userFriendReq.setUserId(toUserId);
 				userFriendReq.setFriendId(userId);
 				userFriendReq.setAddTime(TimeStampUtil.getNowSecond());

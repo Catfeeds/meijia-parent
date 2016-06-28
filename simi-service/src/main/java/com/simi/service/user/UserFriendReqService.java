@@ -32,4 +32,6 @@ public interface UserFriendReqService {
 
 	UserFriendReqVo getFriendReqVo(UserFriendReq item, Long userId);
 
+	List<UserFriendReq> selectBySearchVo(UserFriendSearchVo searchVo);
+
 }

@@ -26,4 +26,6 @@ public interface UserFriendReqMapper {
 
 	List<UserFriendReq> selectByListPage(UserFriendSearchVo searchVo);
 
+	List<UserFriendReq> selectBySearchVo(UserFriendSearchVo searchVo);
+
 }

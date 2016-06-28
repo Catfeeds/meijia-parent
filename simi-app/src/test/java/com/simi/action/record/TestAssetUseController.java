@@ -33,18 +33,20 @@ public class TestAssetUseController extends JUnitActionBase  {
 		MockHttpServletRequestBuilder postRequest = post(url);
      	
 		HashMap<String, String> assetMap = new HashMap<String, String>();
-		assetMap.put("asset_id", "1");
+		assetMap.put("asset_id", "18");
 		assetMap.put("total", "1");
 		List<HashMap> assets = new ArrayList<HashMap>();
 		assets.add(assetMap);
 		String assetJson = GsonUtil.GsonString(assets);
 		
      	//新增
-	    postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("company_id", "6");
+	    postRequest = postRequest.param("user_id", "173");
+	    postRequest = postRequest.param("company_id", "7");
 	    postRequest = postRequest.param("asset_json", assetJson);
 	    postRequest = postRequest.param("purpose", "公用");
-	    postRequest = postRequest.param("to_user_id", "18");
+//	    postRequest = postRequest.param("to_user_id", "18");
+	    postRequest = postRequest.param("mobile", "15727372986");
+	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 
 	    resultActions.andExpect(content().contentType(this.mediaType));

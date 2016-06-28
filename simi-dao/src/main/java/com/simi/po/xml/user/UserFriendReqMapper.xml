@@ -38,6 +38,19 @@
 		</if>
 	</select>
 	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserFriendSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_friend_req
+		where 1=1
+		<if test="userId != null">
+			and ( (user_id = #{userId,jdbcType=NUMERIC} and friend_id = #{friendId,jdbcType=NUMERIC} )
+				  OR
+				  (user_id = #{friendId,jdbcType=NUMERIC} OR friend_id = #{userId,jdbcType=NUMERIC} )
+				)
+		</if>
+	</select>
+	
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserFriendSearchVo">
 		select
 		<include refid="Base_Column_List" />

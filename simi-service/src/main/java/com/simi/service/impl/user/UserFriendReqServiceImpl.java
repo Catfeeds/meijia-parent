@@ -86,6 +86,11 @@ public class UserFriendReqServiceImpl implements UserFriendReqService {
 
 		return userFriendReqMapper.selectByIsFirend(searchVo);
 	}
+	
+	@Override
+	public List<UserFriendReq> selectBySearchVo(UserFriendSearchVo searchVo) {
+		return userFriendReqMapper.selectBySearchVo(searchVo);
+	}
 
 	@Override
 	public List<UserFriendReq> selectByUserId(Long userId) {
