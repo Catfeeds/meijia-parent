@@ -250,7 +250,7 @@ public class JSoupUtil {
 //		System.out.println("match 期望从事职业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事职业：", 1));
 //		System.out.println("match 期望从事行业： = " + JSoupUtil.parseTableByPatten(doc, "div.resume-preview-top > table","期望从事行业：", 1));
 //		System.out.println("match 自我评价 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-dl", "html", "", ""));
-//		System.out.println("match 工作经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(工作经历)", "html", "", "<h3.*>工作经历</h3>"));
+		System.out.println("match 工作经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(工作经历) h2", 0, "html", "", ""));
 //		System.out.println("match 项目经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(项目经历)", "html","", "<h3.*>项目经历</h3>"));
 //		System.out.println("match 教育经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(教育经历)", "html","", "<h3.*>教育经历</h3>"));
 //		System.out.println("match 培训经历 = " + JSoupUtil.parseByPatten(doc, "div.resume-preview-all:contains(培训经历)", "html","", "<h3.*>培训经历</h3>"));
