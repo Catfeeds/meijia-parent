@@ -45,7 +45,7 @@ public class UserMsgController extends BaseController {
 
 	@Autowired
 	private UserTrailRealService userTrailRealService;
-	
+
 	@Autowired
 	private CardService cardService;
 
@@ -145,8 +145,9 @@ public class UserMsgController extends BaseController {
 	 *
 	 * @return CardViewVo
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/msg/total_by_month", method = RequestMethod.GET)
-	public AppResultData<Object> getLogs(@RequestParam("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month) {
+	public AppResultData<Object> totalByMonth(@RequestParam("user_id") Long userId, @RequestParam("year") int year, @RequestParam("month") int month) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -164,29 +165,19 @@ public class UserMsgController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
+		
+		List<HashMap> monthDatas = new ArrayList<HashMap>();
 
 		UserMsgSearchVo searchVo = new UserMsgSearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setStartTime(startTime);
 		searchVo.setEndTime(endTime);
-
+		
 		List<HashMap> smonthDatas = userMsgService.totalByMonth(searchVo);
 		List<String> months = DateUtil.getAllDaysOfMonth(year, month);
-		
-		List<HashMap> monthDatas = new ArrayList<HashMap>();
-		
-		for (int i = 0; i < months.size(); i++) {
-			String strDate = months.get(i);
-			for (int j = 0; j < smonthDatas.size(); j++) {
-				HashMap monthData = smonthDatas.get(j);
-				if (monthData.get("service_date").toString().equals(months.get(i))) {
-					monthDatas.add(monthData);
-					break;
-				}
-			}
-		}
-		
-		
+
+		List<HashMap> pmonthDatas = userMsgService.totalByMonth(searchVo);
+
 		// 查找所有重复性的卡片
 		CardSearchVo searchVo1 = new CardSearchVo();
 		searchVo1.setUserId(userId);
@@ -199,117 +190,130 @@ public class UserMsgController extends BaseController {
 		periods.add((short) 4);
 		periods.add((short) 5);
 		searchVo1.setPeriods(periods);
-		
+
 		List<Short> statusIn = new ArrayList<Short>();
 		statusIn.add((short) 1);
 		statusIn.add((short) 2);
 		statusIn.add((short) 3);
 		searchVo1.setStatusIn(statusIn);
-		
 
 		List<Cards> periodCards = cardService.selectBySearchVo(searchVo1);
 
-		if (periodCards.isEmpty()) {
-			result.setData(monthDatas);
-			return result;
+		if (!periodCards.isEmpty()) {
+			String today = DateUtil.getToday();
+			for (int i = 0; i < months.size(); i++) {
+				int total = 0;
+				String strDate = months.get(i);
+				Date date = DateUtil.parse(strDate);
+
+				if (!DateUtil.compare(today, strDate))
+					continue;
+
+				for (Cards item : periodCards) {
+					Date serviceDate = null;
+					try {
+						serviceDate = DateUtil.timeStampToDate(item.getServiceTime() * 1000);
+
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					// 判断重复提醒的开始时间的天数.
+
+					// 1.如果是今天，并且时间已经过了，则不显示红点.
+					if (strDate.equals(today) && item.getServiceTime() < TimeStampUtil.getNowSecond()) {
+						continue;
+					} else {
+						// 其他的是未到第一次时间点则不显示.
+						Long nextTime = TimeStampUtil.getMillisOfDay(strDate) / 1000;
+						if (nextTime < item.getServiceTime())
+							continue;
+					}
+
+					if (item.getPeriod().equals((short) 1))
+						total = total + 1;
+
+					if (item.getPeriod().equals((short) 2)) {
+						Week w = DateUtil.getWeek(date);
+						int weekday = w.getNumber();
+						if (weekday >= 1 && weekday <= 5)
+							total = total + 1;
+					}
+
+					if (item.getPeriod().equals((short) 3)) {
+						Week sw = DateUtil.getWeek(serviceDate);
+						int sweekday = sw.getNumber();
+
+						Week w = DateUtil.getWeek(date);
+						int weekday = w.getNumber();
+
+						if (sweekday == weekday)
+							total = total + 1;
+					}
+
+					if (item.getPeriod().equals((short) 4)) {
+						String cd = TimeStampUtil.timeStampToDateStr(item.getServiceTime() * 1000, "dd");
+
+						String d = DateUtil.format(date, "dd");
+
+						if (cd.equals(d))
+							total = total + 1;
+
+					}
+
+					if (item.getPeriod().equals((short) 5)) {
+						String cd = TimeStampUtil.timeStampToDateStr(item.getServiceTime() * 1000, "MM-dd");
+
+						String d = DateUtil.format(date, "MM-dd");
+
+						if (cd.equals(d))
+							total = total + 1;
+
+					}
+				}
+
+				if (total == 0)
+					continue;
+
+				HashMap<String, String> monthData = new HashMap<String, String>();
+				monthData.put("service_date", months.get(i));
+				monthData.put("total", String.valueOf(total));
+				pmonthDatas.add(monthData);
+			}
 		}
 
-		
-		String today = DateUtil.getToday();
 		for (int i = 0; i < months.size(); i++) {
-			int total = 0;
 			String strDate = months.get(i);
-			Date date = DateUtil.parse(strDate);
-			
-			if (!DateUtil.compare(today, strDate)) continue;
-			
-			for (Cards item : periodCards) {
-				Date serviceDate = null;
-				try {
-					serviceDate = DateUtil.timeStampToDate(item.getServiceTime() * 1000);
-					
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				//判断重复提醒的开始时间的天数.
-				
-				//1.如果是今天，并且时间已经过了，则不显示红点.
-				if (strDate.equals(today) && item.getServiceTime() < TimeStampUtil.getNowSecond()) {
-					continue;
-				} else {
-					//其他的是未到第一次时间点则不显示.
-					Long nextTime = TimeStampUtil.getMillisOfDay(strDate) / 1000;
-					if (nextTime < item.getServiceTime()) continue;
-				}
-				
-
-				if (item.getPeriod().equals((short) 1))
-					total = total + 1;
-
-				if (item.getPeriod().equals((short) 2)) {
-					Week w = DateUtil.getWeek(date);
-					int weekday = w.getNumber();
-					if (weekday >= 1 && weekday <= 5)
-						total = total + 1;
-				}
-
-				if (item.getPeriod().equals((short) 3)) {
-					Week sw = DateUtil.getWeek(serviceDate);
-					int sweekday = sw.getNumber();
-
-					Week w = DateUtil.getWeek(date);
-					int weekday = w.getNumber();
-
-					if (sweekday == weekday)
-						total = total + 1;
-				}
-
-				if (item.getPeriod().equals((short) 4)) {
-					String cd = TimeStampUtil.timeStampToDateStr(item.getServiceTime() * 1000, "dd");
-
-					String d = DateUtil.format(date, "dd");
-
-					if (cd.equals(d))
-						total = total + 1;
-
-				}
-
-				if (item.getPeriod().equals((short) 5)) {
-					String cd = TimeStampUtil.timeStampToDateStr(item.getServiceTime() * 1000, "MM-dd");
-
-					String d = DateUtil.format(date, "MM-dd");
-
-					if (cd.equals(d))
-						total = total + 1;
-
-				}
-			}
-
-			if (total == 0)
-				continue;
-
-			boolean isExist = false;
-			for (int j = 0; j < monthDatas.size(); j++) {
-				HashMap monthData = monthDatas.get(j);
-				if (monthData.get("service_date").toString().equals(months.get(i))) {
-					int htotal = Integer.valueOf(monthData.get("total").toString());
-					monthData.put("total", String.valueOf(htotal + total));
-					monthDatas.set(j, monthData);
-					isExist = true;
+			HashMap item = null;
+			for (int j = 0; j < smonthDatas.size(); j++) {
+				HashMap monthData = smonthDatas.get(j);
+				if (monthData.get("service_date").toString().equals(strDate)) {
+					item = monthData;
 					break;
 				}
 			}
 
-			if (!isExist) {
-				HashMap<String, String> monthData = new HashMap<String, String>();
-				monthData.put("service_date", months.get(i));
-				monthData.put("total", String.valueOf(total));
-				monthDatas.add(monthData);
+			for (int k = 0; k < pmonthDatas.size(); k++) {
+				HashMap monthData = pmonthDatas.get(k);
+				if (monthData.get("service_date").toString().equals(strDate)) {
+					if (item != null) {
+						int total = Integer.valueOf(monthData.get("total").toString());
+						int itotal = Integer.valueOf(item.get("total").toString());
+						item.put("total", String.valueOf(itotal + total));
+					} else {
+						item = monthData;
+					}
+					break;
+				}
+
 			}
 
+			if (item != null) {
+				monthDatas.add(item);
+			}
 		}
+
 		result.setData(monthDatas);
 		return result;
 	}
