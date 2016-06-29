@@ -68,13 +68,13 @@ public class UserCouponController extends BaseController {
 		List<UserCoupons> vUserCoupons = new ArrayList<UserCoupons>();
 		UserCoupons item = null;
 		List<Long> couponsIds  = new ArrayList<Long>();
-		Long now = TimeStampUtil.getNow();
+		Long todayBegin = TimeStampUtil.getBeginOfToday();
 		for(int i = 0; i < listUserCoupons.size(); i++) {
 			item = listUserCoupons.get(i);
 			//已经使用过的
+			if (item.getIsUsed().equals((short)1)) continue;
 			//优惠券已经过期的，都不显示
-			if (item.getIsUsed().equals((short)0) &&
-				(item.getExpTime() > (now/1000) || item.getExpTime() == 0) ) {
+			if (item.getExpTime() == 0 || item.getExpTime() >= todayBegin  ) {
 				couponsIds.add(item.getCouponId());
 				vUserCoupons.add(item);
 			} 
