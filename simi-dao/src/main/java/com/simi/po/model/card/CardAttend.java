@@ -12,6 +12,8 @@ public class CardAttend {
     private String name;
     
     private Short localAlarm;
+    
+    private Long lastAlarmTime;
 
     private Long addTime;
 
@@ -69,5 +71,13 @@ public class CardAttend {
 
 	public void setLocalAlarm(Short localAlarm) {
 		this.localAlarm = localAlarm;
+	}
+
+	public Long getLastAlarmTime() {
+		return lastAlarmTime;
+	}
+
+	public void setLastAlarmTime(Long lastAlarmTime) {
+		this.lastAlarmTime = lastAlarmTime;
 	}
 }

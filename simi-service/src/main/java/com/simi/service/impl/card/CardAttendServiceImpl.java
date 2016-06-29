@@ -51,6 +51,7 @@ public class CardAttendServiceImpl implements CardAttendService {
 		record.setMobile("");
 		record.setName("");
 		record.setLocalAlarm((short) 0);
+		record.setLastAlarmTime(0L);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;

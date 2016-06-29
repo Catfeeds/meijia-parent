@@ -3,6 +3,7 @@ package com.meijia.utils;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -153,10 +154,15 @@ public class GsonUtil {
 	}  
 
 	public static void main(String[] args) {
-		String jsonStr = "{\"attrName\": \"\", \"findPatten\": \"title\", \"removeRegex\": \"\", \"resultIndex\": 0, \"resultRegex\": \"\", \"matchCorrect\": \"智联简历\"}";
+		String jsonStr = "[{\"asset_id\":22,\"asset_name\":\"笔记本\",\"total\":2},{\"asset_id\":21,\"asset_name\":\"啦啦啦\",\"total\":2},{\"asset_id\":20,\"asset_name\":\"看看\",\"total\":3}]";
 		
-		Map<String, String> result = GsonUtil.GsonToMaps(jsonStr);
+//		Map<String, String> result = GsonUtil.GsonToMaps(jsonStr);
 		
-		System.out.println(result.toString());
+//		System.out.println(result.toString());
+		List<Map> assets = GsonUtil.GsonToList(jsonStr, Map.class);
+		
+		for (Map item : assets) {
+			System.out.println(item.get("asset_id").toString());
+		}
 	}
 }

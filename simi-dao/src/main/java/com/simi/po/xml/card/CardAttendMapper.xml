@@ -8,10 +8,11 @@
 		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="local_alarm" property="localAlarm" jdbcType="NUMERIC" />
+		<result column="last_alarm_time" property="lastAlarmTime" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, card_id, user_id, mobile, name, local_alarm, add_time
+		id, card_id, user_id, mobile, name, local_alarm, last_alarm_time, add_time
 	</sql>
 	
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.card.CardSearchVo">
@@ -61,12 +62,12 @@
 
 	<insert id="insert" parameterType="com.simi.po.model.card.CardAttend">
 		insert into card_attend (id, card_id, user_id,
-		mobile, name, local_alarm, add_time
+		mobile, name, local_alarm, last_alarm_time, add_time
 		)
 		values (#{id,jdbcType=NUMERIC},
 		#{cardId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
 		#{mobile,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-		#{localAlarm,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}
+		#{localAlarm,jdbcType=NUMERIC}, #{lastAlarmTime,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.card.CardAttend">
@@ -90,6 +91,9 @@
 			<if test="localAlarm != null">
 				localAlarm,
 			</if>
+			<if test="lastAlarmTime != null">
+				lastAlarmTime,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -112,6 +116,9 @@
 			</if>
 			<if test="localAlarm != null">
 			    #{localAlarm,jdbcType=NUMERIC},
+			</if>
+			<if test="lastAlarmTime != null">
+				#{lastAlarmTime,jdbcType=NUMERIC},
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
@@ -137,6 +144,9 @@
 			<if test="localAlarm != null">
 			    local_alarm = #{localAlarm,jdbcType=NUMERIC},
 			</if>
+			<if test="lastAlarmTime != null">
+				last_alarm_time = #{lastAlarmTime,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -150,6 +160,7 @@
 	mobile = #{mobile,jdbcType=VARCHAR},
 	name = #{name,jdbcType=VARCHAR},
 	local_alarm = #{localAlarm,jdbcType=NUMERIC},
+	last_alarm_time = #{lastAlarmTime,jdbcType=NUMERIC},
 	add_time = #{addTime,jdbcType=NUMERIC}
 	where id = #{id,jdbcType=NUMERIC}
 </update>
