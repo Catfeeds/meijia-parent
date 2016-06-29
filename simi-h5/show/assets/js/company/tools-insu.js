@@ -44,7 +44,7 @@ function getInsurance(){
 	
 	$.ajax({
 		type : "get",
-		url : appRootUrl + "/company/get_insurance_setting.json",
+		url : appRootUrl + "company/get_insurance_setting.json",
 		data : params,
 		dataType : "json",
 		cache : true,
