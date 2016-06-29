@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -144,13 +147,63 @@ public class CompanySeetingController extends BaseController {
 			
 			XcompanySetting xcompanySetting = list.get(0);
 			
-			SettingJsonSettingValue settingValue = (SettingJsonSettingValue) xcompanySetting.getSettingValue();
+//			SettingJsonSettingValue settingValue = (SettingJsonSettingValue) xcompanySetting.getSettingValue();
+			
+			JSONObject setValue = (JSONObject) xcompanySetting.getSettingValue();
+			
+			SettingJsonSettingValue settingValue = JSON.toJavaObject(setValue, SettingJsonSettingValue.class);
 			
 			result.setData(settingValue);
+		}else{
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("地区数据不存在");
 		}
 		
 		return result;
 	}
 	
+	/*
+	 * 个人所得税 基数
+	 * 
+	 * 	工资、薪金（含税/不含税）。。年终奖。。 劳务（含税/不含税）
+	 */
+	@RequestMapping(value = "get_tax_setting.json",method = RequestMethod.GET)
+	public AppResultData<Object> getTax(
+			@RequestParam("taxType")String taxName){
+		
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if(StringUtil.isEmpty(taxName)){
+			result.setMsg("个税类型不存在");
+			result.setStatus(Constants.ERROR_999);
+			
+			return result;
+		}
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		
+		searchVo.setSettingType(taxName);
+		
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		//返回 json字段。集合
+		if(!CollectionUtils.isEmpty(list)){
+			
+			XcompanySetting xcompanySetting = list.get(0);
+			
+			Object value = xcompanySetting.getSettingValue();
+			
+			//传 json字符串
+			String jsonString = JSON.toJSONString(value);
+			
+			result.setData(jsonString);
+		}else{
+			result.setStatus(Constants.ERROR_999);
+			result.setData("地区数据不存在");
+		}
+		
+		return result;
+	}
 	
 }
