@@ -92,6 +92,12 @@ public class ExpressController extends BaseController {
 			return v;
 		}
 		
+		if (StringUtil.isEmpty(expressNo)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("请输入快递单号.");
+			return result;
+		}
+		
 		//查询服务单号是否存在
 		RecordExpress r = recordExpressService.selectByExpressNo(expressNo);
 		if (r != null) {
