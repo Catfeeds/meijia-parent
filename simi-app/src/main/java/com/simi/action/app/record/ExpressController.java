@@ -93,12 +93,8 @@ public class ExpressController extends BaseController {
 		}
 		
 		//查询服务单号是否存在
-		RecordExpressSearchVo searchVo = new RecordExpressSearchVo();
-		searchVo.setUserId(userId);
-		searchVo.setExpressNo(expressNo);
-		List<RecordExpress> rs = recordExpressService.selectBySearchVo(searchVo);
-		if (!rs.isEmpty()) {
-			RecordExpress r = rs.get(0);
+		RecordExpress r = recordExpressService.selectByExpressNo(expressNo);
+		if (r != null) {
 			if (!id.equals(r.getId())) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("快递单号已经存在.");
