@@ -123,4 +123,24 @@ public class JacksonUtil {
         return objectMapper.convertValue(map, clazz);
     }
     
+    public static void main(String[] args) {
+		String jsonStr = "[{\"asset_id\":22,\"asset_name\":\"笔记本\",\"total\":2},{\"asset_id\":21,\"asset_name\":\"啦啦啦\",\"total\":2},{\"asset_id\":20,\"asset_name\":\"看看\",\"total\":3}]";
+		
+//		jsonStr = new String (jsonStr);
+//		Map<String, String> result = GsonUtil.GsonToMaps(jsonStr);
+		
+//		System.out.println(result.toString());
+		List<HashMap> assets = new ArrayList<HashMap>();
+		try {
+			assets = JacksonUtil.json2list(jsonStr, HashMap.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for (HashMap item : assets) {
+			System.out.println(item.get("asset_id").toString());
+		}
+	}
+    
 }

@@ -1,6 +1,7 @@
 package com.simi.service.impl.record;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.GsonUtil;
+import com.meijia.utils.JacksonUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.record.RecordAssetUseMapper;
@@ -94,12 +96,14 @@ public class RecordAssetUseServiceImpl implements RecordAssetUseService {
 		BeanUtilsExp.copyPropertiesIgnoreNull(assetUse, useVo);
 		
 		String assetJson = assetUse.getAssetJson();
-		
-//		RecordAssets assets = GsonUtil.GsonToObject(assetJson, RecordAssets.class);
-		
-//		List<RecordAssets> list = GsonUtil.GsonToList(assetJson, RecordAssets.class);
-		
-		List<HashMap> list = GsonUtil.GsonToList(assetJson, HashMap.class);
+				
+		List<HashMap> list = new ArrayList<HashMap>();
+		try {
+			list = JacksonUtil.json2list(assetJson, HashMap.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//领用 资产名称和 数量。。 可能一次领用 不同种类的 多件物品
 		String assetNameAndNumStr = "";

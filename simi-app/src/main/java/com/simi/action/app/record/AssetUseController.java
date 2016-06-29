@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.GsonUtil;
+import com.meijia.utils.JacksonUtil;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -112,6 +113,12 @@ public class AssetUseController extends BaseController {
 			result.setMsg("领用人为空.");
 			return result;
 		}
+		
+		if (StringUtil.isEmpty(assetJson)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("领用物品为空.");
+			return result;
+		}
 
 		// 会员信息, 如果有手机号，则默认注册会员.
 		Users u = null;
@@ -150,7 +157,17 @@ public class AssetUseController extends BaseController {
 		}
 		
 
-		List<HashMap> assets = GsonUtil.GsonToList(assetJson, HashMap.class);
+		List<HashMap> assets = new ArrayList<HashMap>();
+		try {
+			assets = JacksonUtil.json2list(assetJson, HashMap.class);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 		List<HashMap> assetExt = new ArrayList<HashMap>();
 
 		for (HashMap item : assets) {
