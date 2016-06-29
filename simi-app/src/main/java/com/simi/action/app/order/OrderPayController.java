@@ -104,16 +104,17 @@ public class OrderPayController extends BaseController {
 		}
 		
 		OrderPrices orderPrice = orderPricesService.selectByOrderId(orderId);
-		
-		//获取服务报价的信息。
-		PartnerServicePriceDetail servicePrice = partnerServicePriceDetailService.selectByServicePriceId(orderPrice.getServicePriceId());
-				
-		
-		
 		Long serviceTypeId = order.getServiceTypeId();
 		Long servicePriceId = orderPrice.getServicePriceId();
-
-		BigDecimal orderPay = servicePrice.getDisPrice();//折扣价
+		BigDecimal orderPay = orderPrice.getOrderPay();
+		//获取服务报价的信息。
+		
+		
+		PartnerServicePriceDetail servicePrice = partnerServicePriceDetailService.selectByServicePriceId(orderPrice.getServicePriceId());
+		
+		if (servicePrice != null) {
+			orderPay = servicePrice.getDisPrice();//折扣价
+		}
 		
 		if (serviceTypeId.equals(239L)) {
 			orderPay = orderPrice.getOrderPay();
