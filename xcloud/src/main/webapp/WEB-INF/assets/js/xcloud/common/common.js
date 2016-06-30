@@ -122,6 +122,7 @@ function menuCollapse() {
 				if ($("#"+ tmenuId).hasClass("am-in")) {
 					$("#"+ menuId).collapse('close');
 				} else {
+					console.log("open");
 					$("#"+ tmenuId).collapse('open');
 				}
 			} else {
@@ -131,12 +132,5 @@ function menuCollapse() {
 			
 	    });
 	});
-//	
-//	if ($("#"+ menuId).hasClass("am-in")) {
-//		$("#"+ menuId).collapse('close');
-//	} else {
-//		$("#"+ menuId).collapse('open');
-//	}
-	//console.log($("#"+ menuId).collapse());
 }
 menuCollapse();

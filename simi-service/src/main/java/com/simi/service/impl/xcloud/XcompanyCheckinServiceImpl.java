@@ -1,5 +1,6 @@
 package com.simi.service.impl.xcloud;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,8 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyCheckinMapper;
+import com.simi.po.model.record.RecordExpress;
 import com.simi.po.model.xcloud.XcompanyBenzTime;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.service.xcloud.XcompanyBenzTimeService;
@@ -48,6 +52,20 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public PageInfo selectByListPage(CompanyCheckinSearchVo searchVo, int pageNo, int pageSize) {
+		
+		PageHelper.startPage(pageNo, pageSize);
+
+		List<RecordExpress> list = new ArrayList<RecordExpress>();
+
+		list = xcompanyCheckinMapper.selectByListPage(searchVo);
+
+		PageInfo result = new PageInfo(list);
+		return result;
 	}
 
 	@Override

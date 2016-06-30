@@ -2,6 +2,7 @@ package com.simi.po.dao.xcloud;
 
 import java.util.List;
 
+import com.simi.po.model.record.RecordExpress;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 
@@ -19,4 +20,6 @@ public interface XcompanyCheckinMapper {
     int updateByPrimaryKey(XcompanyCheckin record);
 
 	List<XcompanyCheckin> selectBySearchVo(CompanyCheckinSearchVo searchVo);
+
+	List<RecordExpress> selectByListPage(CompanyCheckinSearchVo searchVo);
 }
