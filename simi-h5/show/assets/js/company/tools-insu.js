@@ -74,13 +74,16 @@ $("#calculate").on("click",function() {
 			var shebaoMin = $("#shebaoMin").html();
 			var shebaoMax = $("#shebaoMax").html();
 			var gjjMin = $("#gjjMin").html();
-			var gjjMax = $("gjjMax").html();
+			var gjjMax = $("#gjjMax").html();
 			
-			if (socialIns < shebaoMin) socialIns = shebaoMin;
-			if (socialIns > shebaoMax) socialIns = shebaoMax;
+			if (parseInt(socialIns) < parseInt(shebaoMin)) socialIns = shebaoMin;
+			if (parseInt(socialIns) > parseInt(shebaoMax)) socialIns = shebaoMax;
 			
 			if (fundPrice < gjjMin) fundPrice = gjjMin;
 			if (fundPrice > gjjMax) fundPrice = gjjMax;
+			
+			console.log("socialIns =" +socialIns + "--- shebaoMin = " + shebaoMin + "--- shebaoMax = " + shebaoMax);
+			console.log("fundPrice =" +fundPrice + "--- gjjMin = " + gjjMin + "--- gjjMax = " + gjjMax);
 			
 			var result = data.data;
 			
