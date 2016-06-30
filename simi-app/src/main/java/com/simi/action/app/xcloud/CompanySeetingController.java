@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +23,8 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
+import com.simi.vo.xcloud.InsuranceVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
-import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 
 @Controller
 @RequestMapping(value = "/app/company")
@@ -134,10 +133,10 @@ public class CompanySeetingController extends BaseController {
 		//社保公积金基数，setting_type = "insurance"
 		searchVo.setSettingType(Constants.SETTING_TYPE_INSURANCE);
 		
-		searchVo.setCityId(cityId.toString());
+		searchVo.setCityId(cityId);
 		
 		
-		searchVo.setRegionId(regionId.toString());
+		searchVo.setRegionId(regionId);
 		
 		
 		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
@@ -151,7 +150,7 @@ public class CompanySeetingController extends BaseController {
 			
 			JSONObject setValue = (JSONObject) xcompanySetting.getSettingValue();
 			
-			SettingJsonSettingValue settingValue = JSON.toJavaObject(setValue, SettingJsonSettingValue.class);
+			InsuranceVo settingValue = JSON.toJavaObject(setValue, InsuranceVo.class);
 			
 			result.setData(settingValue);
 		}else{
