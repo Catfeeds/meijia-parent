@@ -28,6 +28,7 @@ import com.simi.oa.auth.AccountAuth;
 import com.simi.oa.auth.AuthHelper;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
+import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.dict.DictService;
 import com.simi.service.xcloud.XCompanySettingService;
@@ -77,8 +78,9 @@ public class InsuranceController extends BaseController {
 		// 对于社保公积金, settingType = "insurance"
 		searchVo.setSettingType(Constants.SETTING_TYPE_INSURANCE);
 
-		List<XcompanySetting> lists = settingService.selectBySearchVo(searchVo);
-
+		
+		PageInfo p = settingService.selectByListPage(searchVo, pageNo, pageSize);
+		List<XcompanySetting> lists = p.getList();
 		for (int i = 0; i < lists.size(); i++) {
 
 			XcompanySetting setting = lists.get(i);
@@ -98,9 +100,21 @@ public class InsuranceController extends BaseController {
 		}
 
 		PageInfo result = new PageInfo(lists);
-
+		
+		Long total = result.getTotal();
+		
+		//获得北上广深所有区县的总数.
+		List<DictRegion> regionB = dictService.getRegionByCityId(2L);
+		List<DictRegion> regionS = dictService.getRegionByCityId(74L);
+		List<DictRegion> regionG = dictService.getRegionByCityId(198L);
+		List<DictRegion> regionSZ = dictService.getRegionByCityId(200L);
+		int totalNeed = regionB.size() + regionS.size() + regionG.size() + regionSZ.size();
+		
+		totalNeed = totalNeed - total.intValue();
+		
 		model.addAttribute("searchModel", searchVo);
 		model.addAttribute("contentModel", result);
+		model.addAttribute("totalNeed", totalNeed);
 
 		return "xcloud/insuranceList";
 	}

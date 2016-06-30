@@ -19,7 +19,7 @@
 	<!--main content start--> <section id="main-content"> <section class="wrapper"> <!-- page start-->
 	<div class="row">
 		<div class="col-lg-12">
-			<section class="panel"> <header class="panel-heading">社保公积金基数管理 </header>
+			<section class="panel"> <header class="panel-heading">社保公积金分项配置</header>
 
 			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 
