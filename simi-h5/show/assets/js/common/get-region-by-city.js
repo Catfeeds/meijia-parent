@@ -6,7 +6,7 @@
 		
 		var cityId = $(this).val();
 		
-		
+		console.log(cityId);
 		//simiOaRootUrl 定义在 common.js	
 		
 		$.ajax({
@@ -32,6 +32,12 @@
 				}
 				
 				$("#regionId").append(optionHtml);
+				
+				//如果有扩展方法，则调用一下
+				if( typeof cityChangeExtend === 'function' ) {
+					cityChangeExtend();
+				}
+				
 			},
 			error : function(){
 				
