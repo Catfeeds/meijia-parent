@@ -3,6 +3,8 @@ package com.simi.po.model.op;
 public class OpChannel {
     private Long channelId;
     
+    private Short No;
+    
     private String appType;
 
     private String name;
@@ -59,5 +61,13 @@ public class OpChannel {
 
 	public void setAppType(String appType) {
 		this.appType = appType;
+	}
+
+	public Short getNo() {
+		return No;
+	}
+
+	public void setNo(Short no) {
+		No = no;
 	}
 }

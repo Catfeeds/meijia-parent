@@ -11,6 +11,8 @@ public class AdSearchVo {
 	private String serviceTypeIds;
 	
 	private Long updateTime;
+	
+	private Short enable;
 
 	public String getAdType() {
 		return adType;
@@ -50,6 +52,14 @@ public class AdSearchVo {
 
 	public void setServiceTypeIds(String serviceTypeIds) {
 		this.serviceTypeIds = serviceTypeIds;
+	}
+
+	public Short getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Short enable) {
+		this.enable = enable;
 	}
 	
 

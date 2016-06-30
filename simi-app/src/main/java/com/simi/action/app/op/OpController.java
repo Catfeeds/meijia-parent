@@ -86,6 +86,7 @@ public class OpController extends BaseController {
 		
 		searchVo.setAppType(appType);
 		searchVo.setAdType(channelId);
+		searchVo.setEnable((short)1);
 		List<OpAd> list = opAdService.selectBySearchVo(searchVo);
 		
 		if (list.isEmpty()) return result;

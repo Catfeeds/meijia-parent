@@ -49,6 +49,7 @@ public class OpChannelServiceImpl implements OpChannelService {
 		  OpChannel record = new OpChannel();
 		    
 			record.setChannelId(0L);
+			record.setNo((short) 0);
 			record.setName("");
 			record.setAppType("");
 			record.setChannelPosition("");

@@ -24,7 +24,12 @@ var formVal = $('#channel-form').validate({
 	errorClass : 'help-block', // default input error message class
 	focusInvalid : false, // do not focus the last invalid input
 	rules : {
+		No: {
+			required: true,
+     		digits:true,
+			range:[0,255]
 
+		},
 		name : {
 			required : true
 
@@ -40,6 +45,12 @@ var formVal = $('#channel-form').validate({
 	},
 
 	messages : {
+		No: {
+			required: "请输入编号。",
+			digits:"请输入整数",
+			range:"输入值必须介于 0 和 255之间"
+
+		},
 		name : {
 			required : "请输入名称。"
 

@@ -65,6 +65,10 @@
 		<if test="serviceTypeIds != null">
 			and service_type_ids = #{serviceTypeIds,jdbcType=VARCHAR}
 		</if>
+		
+		<if test="enable != null">
+			and enable = #{enable,jdbcType=NUMERIC}
+		</if>
 
 		<if test="updateTime != null">
 			<![CDATA[ and update_time >  #{updateTime,jdbcType=NUMERIC} ]]>

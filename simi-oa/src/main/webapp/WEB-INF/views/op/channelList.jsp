@@ -43,7 +43,7 @@
 			<table class="table table-striped table-advance table-hover">
 				<thead>
 					<tr>
-						<!-- <th>频道ID</th> -->
+						<th>序号</th>
 						<th>频道名称</th>
 						<th>应用类型</th>
 						<th>频道位置</th>
@@ -55,8 +55,7 @@
 				<tbody>
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
-							<%--  <td>${ item.channelId}</td> --%>
-
+							<td>${ item.no}</td>
 							<td>${ item.name }</td>
 							<td>${ item.appType }</td>
 							<td>${ item.channelPosition }</td>

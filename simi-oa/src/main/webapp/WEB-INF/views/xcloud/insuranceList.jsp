@@ -88,26 +88,26 @@
                               <tbody>
                               <c:forEach items="${contentModel.list}" var="item">
                               <tr>
-                                   <td>${ item.cityName }</td>
-                                   <td>${ item.regionName }</td>
+                                   <td>${ item.settingValueVo.cityName }</td>
+                                   <td>${ item.settingValueVo.regionName }</td>
 						           <td>
-										养老(个人):${item.pensionP }%&nbsp;&nbsp;																						
-										养老(单位):${item.pensionC }%<br>																						
+										养老(个人):${item.settingValueVo.pensionP }%&nbsp;&nbsp;																						
+										养老(单位):${item.settingValueVo.pensionC }%<br>																						
 										
-						           		医疗(个人):${item.medicalP }%&nbsp;&nbsp;	
-						           		医疗(单位):${item.medicalC }%<br>
+						           		医疗(个人):${item.settingValueVo.medicalP }%&nbsp;&nbsp;	
+						           		医疗(单位):${item.settingValueVo.medicalC }%<br>
 						           		
-						           		失业(个人):${item.unemploymentP }%&nbsp;&nbsp;	
-						           		失业(单位):${item.unemploymentC }%<br>
+						           		失业(个人):${item.settingValueVo.unemploymentP }%&nbsp;&nbsp;	
+						           		失业(单位):${item.settingValueVo.unemploymentC }%<br>
 						           		
-						           		工伤(个人):${item.injuryP }%&nbsp;&nbsp;	
-						           		工伤(单位):${item.injuryC }%<br>
+						           		工伤(个人):${item.settingValueVo.injuryP }%&nbsp;&nbsp;	
+						           		工伤(单位):${item.settingValueVo.injuryC }%<br>
 						           		
-						           		生育(个人):${item.birthP }%&nbsp;&nbsp;	
-						           		生育(单位):${item.birthC }%<br>
+						           		生育(个人):${item.settingValueVo.birthP }%&nbsp;&nbsp;	
+						           		生育(单位):${item.settingValueVo.birthC }%<br>
 						           		
-						           		公积金(个人):${item.fundP }%&nbsp;&nbsp;	
-						           		公积金(单位):${item.fundC }%
+						           		公积金(个人):${item.settingValueVo.fundP }%&nbsp;&nbsp;	
+						           		公积金(单位):${item.settingValueVo.fundC }%
 						           </td>
 						           <td>
 							           	<button id="btn_update" onclick="btn_update('insurance/form?id=${item.id}')" 

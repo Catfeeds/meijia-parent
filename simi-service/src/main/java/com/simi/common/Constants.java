@@ -186,10 +186,7 @@ public class Constants {
 	/*
 	 *  xcompany_setting 表  setting_type 字段
 	 */
-	public  static String SETTING_TYPE_INSURANCE = "insurance";	//社保公积金基数
-	
-	
-	
-	
+	public static String SETTING_TYPE_INSURANCE = "insurance";	//社保公积金基数分项配置
+	public static String SETTING_TYPE_INSURANCE_BASE = "insurance_base"; //社保公积金基数配置
 	
 }
