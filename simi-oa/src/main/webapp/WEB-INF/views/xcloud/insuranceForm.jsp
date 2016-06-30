@@ -28,7 +28,7 @@
 				<form:form modelAttribute="contentModel" action="form" 
 					id="insuranceForm" class="form-horizontal" method="POST" >
 					
-					<form:hidden path="id" />
+					<input type="hidden" name="id" value="${id }"/>
 					
 					<div class="form-body">
 						<div class="form-group required">

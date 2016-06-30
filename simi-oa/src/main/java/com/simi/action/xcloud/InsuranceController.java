@@ -130,14 +130,15 @@ public class InsuranceController extends BaseController {
 
 		settingVo = (InsuranceVo) InitBeanUtil.initObject(settingVo);
 
-		if (setting.getSettingValue() != null) {
+		if (id > 0L) {
 			JSONObject setValue = (JSONObject) setting.getSettingValue();
 			settingVo = JSON.toJavaObject(setValue, InsuranceVo.class);
 		}
 		
 		vo.setSettingValueVo(settingVo);
-
-		model.addAttribute("contentModel", vo);
+		
+		model.addAttribute("id", id);
+		model.addAttribute("contentModel", settingVo);
 
 		return "xcloud/insuranceForm";
 	}
@@ -147,9 +148,9 @@ public class InsuranceController extends BaseController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String submitInsuranceForm(HttpServletRequest request, @ModelAttribute("contentModel") XCompanySettingVo vo, BindingResult result) {
+	public String submitInsuranceForm(HttpServletRequest request, @ModelAttribute("contentModel") InsuranceVo settingVo, BindingResult result) {
 
-		Long id = vo.getId();
+		Long id = Long.valueOf(request.getParameter("id").toString());
 
 		XcompanySetting xcompanySetting = settingService.initXcompanySetting();
 
@@ -158,7 +159,7 @@ public class InsuranceController extends BaseController {
 
 		Long userId = accountAuth.getId();
 
-		InsuranceVo settingVo = (InsuranceVo) vo.getSettingValueVo();
+//		InsuranceVo settingVo = (InsuranceVo) vo.getSettingValueVo();
 		
 		Long cityId = settingVo.getCityId();
 		
@@ -178,18 +179,18 @@ public class InsuranceController extends BaseController {
 		if (id > 0L) {
 			xcompanySetting = settingService.selectByPrimaryKey(id);
 
-			BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, xcompanySetting);
+//			BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, xcompanySetting);
 
 			xcompanySetting.setUpdateTime(TimeStampUtil.getNowSecond());
 			xcompanySetting.setSettingValue(json);
-			xcompanySetting.setUserId(userId);
+//			xcompanySetting.setUserId(userId);
 
 			settingService.updateByPrimaryKey(xcompanySetting);
 
 		} else {
 
-			BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, xcompanySetting);
-
+//			BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, xcompanySetting);
+			xcompanySetting.setSettingType(Constants.SETTING_TYPE_INSURANCE);
 			xcompanySetting.setSettingValue(json);
 			xcompanySetting.setUserId(userId);
 

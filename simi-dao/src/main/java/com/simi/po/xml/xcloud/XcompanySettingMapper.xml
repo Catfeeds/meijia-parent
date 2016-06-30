@@ -75,7 +75,7 @@
 		<if test="cityId != null and cityId !='' ">
 			<![CDATA[ 
 				and 
-				 JSON_EXTRACT(setting_value,'$.cityId') = #{cityId,jdbcType=VARCHAR}
+				 JSON_EXTRACT(setting_value,'$.cityId') = #{cityId,jdbcType=NUMERIC}
 			]]>
 		</if>
 		

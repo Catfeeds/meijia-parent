@@ -18,24 +18,24 @@ public class CompanySettingSearchVo{
 	
 	
 	
-	private String cityId;
+	private Long cityId;
 	
-	private String regionId;
+	private Long regionId;
 	
 	
-	public String getCityId() {
+	public Long getCityId() {
 		return cityId;
 	}
 
-	public void setCityId(String cityId) {
+	public void setCityId(Long cityId) {
 		this.cityId = cityId;
 	}
 
-	public String getRegionId() {
+	public Long getRegionId() {
 		return regionId;
 	}
 
-	public void setRegionId(String regionId) {
+	public void setRegionId(Long regionId) {
 		this.regionId = regionId;
 	}
 

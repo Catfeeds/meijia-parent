@@ -91,22 +91,22 @@
                                    <td>${ item.settingValueVo.cityName }</td>
                                    <td>${ item.settingValueVo.regionName }</td>
 						           <td>
-										养老(个人):${item.settingValueVo.pensionP }%&nbsp;&nbsp;																						
-										养老(单位):${item.settingValueVo.pensionC }%<br>																						
+										养老(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.pensionP }%&nbsp;&nbsp;&nbsp;&nbsp;																					
+										养老(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.pensionC }%<br>																						
 										
-						           		医疗(个人):${item.settingValueVo.medicalP }%&nbsp;&nbsp;	
-						           		医疗(单位):${item.settingValueVo.medicalC }%<br>
+						           		医疗(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.medicalP }%&nbsp;&nbsp;&nbsp;&nbsp;	
+						           		医疗(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.medicalC }%<br>
 						           		
-						           		失业(个人):${item.settingValueVo.unemploymentP }%&nbsp;&nbsp;	
-						           		失业(单位):${item.settingValueVo.unemploymentC }%<br>
+						           		失业(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.unemploymentP }%&nbsp;&nbsp;&nbsp;&nbsp;	
+						           		失业(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.unemploymentC }%<br>
 						           		
-						           		工伤(个人):${item.settingValueVo.injuryP }%&nbsp;&nbsp;	
-						           		工伤(单位):${item.settingValueVo.injuryC }%<br>
+						           		工伤(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.injuryP }%&nbsp;&nbsp;&nbsp;&nbsp;
+						           		工伤(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.injuryC }%<br>
 						           		
-						           		生育(个人):${item.settingValueVo.birthP }%&nbsp;&nbsp;	
-						           		生育(单位):${item.settingValueVo.birthC }%<br>
+						           		生育(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.birthP }%&nbsp;&nbsp;&nbsp;&nbsp;	
+						           		生育(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.birthC }%<br>
 						           		
-						           		公积金(个人):${item.settingValueVo.fundP }%&nbsp;&nbsp;	
+						           		公积金(个人):${item.settingValueVo.fundP }%&nbsp;&nbsp;
 						           		公积金(单位):${item.settingValueVo.fundC }%
 						           </td>
 						           <td>
