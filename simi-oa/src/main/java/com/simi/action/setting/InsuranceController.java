@@ -104,13 +104,15 @@ public class InsuranceController extends BaseController {
 		Long total = result.getTotal();
 		
 		//获得北上广深所有区县的总数.
-		List<DictRegion> regionB = dictService.getRegionByCityId(2L);
-		List<DictRegion> regionS = dictService.getRegionByCityId(74L);
-		List<DictRegion> regionG = dictService.getRegionByCityId(198L);
-		List<DictRegion> regionSZ = dictService.getRegionByCityId(200L);
-		int totalNeed = regionB.size() + regionS.size() + regionG.size() + regionSZ.size();
+//		List<DictRegion> regionB = dictService.getRegionByCityId(2L);
+//		List<DictRegion> regionS = dictService.getRegionByCityId(74L);
+//		List<DictRegion> regionG = dictService.getRegionByCityId(198L);
+//		List<DictRegion> regionSZ = dictService.getRegionByCityId(200L);
+//		int totalNeed = regionB.size() + regionS.size() + regionG.size() + regionSZ.size();
 		
-		totalNeed = totalNeed - total.intValue();
+		int totalNeed = 4 - total.intValue();
+		
+		if (totalNeed < 0) totalNeed = 0;
 		
 		model.addAttribute("searchModel", searchVo);
 		model.addAttribute("contentModel", result);
@@ -182,11 +184,13 @@ public class InsuranceController extends BaseController {
 			settingVo.setCityName(cityName);
 		}
 		
-		Long regionId = settingVo.getRegionId();
-		if (regionId > 0L) {
-			String regionName = dictService.getRegionName(regionId);
-			settingVo.setRegionName(regionName);
-		}
+//		Long regionId = settingVo.getRegionId();
+//		if (regionId > 0L) {
+//			String regionName = dictService.getRegionName(regionId);
+//			settingVo.setRegionName(regionName);
+//		}
+		settingVo.setRegionId(0L);
+		settingVo.setRegionName("");
 
 		String json = JsonUtil.objecttojson(settingVo);
 

@@ -1,7 +1,10 @@
-function cityChangeExtend() {
+$("#cityId").on('change',function(){
 	console.log("cityChangeExtend");
 	
 	var cityId = $("#cityId").find("option:selected").val();
+	
+	if (cityId == "") return false;
+	
 	var params = {};
 	params.city_id = cityId;
 	$.ajax({
@@ -31,7 +34,7 @@ function cityChangeExtend() {
 			return false;
 		}
 	});
-}
+});
 
 // 点击计算
 $("#calculate").on("click",function() {
@@ -50,7 +53,7 @@ $("#calculate").on("click",function() {
 	var params = {};
 	
 	params.city_id = $("#cityId").find("option:selected").val();
-	params.region_id = $("#regionId").find("option:selected").val();
+//	params.region_id = $("#regionId").find("option:selected").val();
 	
 	$.ajax({
 		type : "get",

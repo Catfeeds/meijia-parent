@@ -60,8 +60,7 @@ public class InsuranceController extends BaseController {
 	 */
 	@RequestMapping(value = "get_insurance.json",method = RequestMethod.GET)
 	public AppResultData<Object> getInsurRance(
-			@RequestParam("city_id")Long cityId,
-			@RequestParam("region_id")Long regionId){
+			@RequestParam("city_id")Long cityId){
 		
 		AppResultData<Object> result = new AppResultData<Object>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -74,13 +73,13 @@ public class InsuranceController extends BaseController {
 			return result;
 		}
 		
-		if(regionId <= 0L || regionId == null){
-			
-			result.setStatus(Constants.ERROR_999);
-			result.setMsg("区县不存在");
-			return result;
-		}
-		
+//		if(regionId <= 0L || regionId == null){
+//			
+//			result.setStatus(Constants.ERROR_999);
+//			result.setMsg("区县不存在");
+//			return result;
+//		}
+//		
 		
 		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
 		
@@ -90,7 +89,7 @@ public class InsuranceController extends BaseController {
 		searchVo.setCityId(cityId);
 		
 		
-		searchVo.setRegionId(regionId);
+//		searchVo.setRegionId(regionId);
 		
 		
 		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);

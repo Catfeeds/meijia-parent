@@ -29,13 +29,13 @@
 						<form:option value="200" label="深圳" />
 					</form:select>
 				</div>
-				<div class="form-group">
+				<%-- <div class="form-group">
 					选择地区:
 					<form:select class="form-control" path="regionId">
 						<option value="">请选择地区</option>
 					</form:select>
 					<input type="hidden" id="returnRegionId" value="${searchModel.regionId }">
-				</div>
+				</div> --%>
 				<button type="submit" class="btn btn-primary">搜索</button>
 			</form:form> </header>
 			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
@@ -51,7 +51,7 @@
 				<thead>
 					<tr>
 						<th>城市</th>
-						<th>区/县</th>
+						<!-- <th>区/县</th> -->
 						<th>配置项</th>
 						<th>操作</th>
 					</tr>
@@ -60,7 +60,7 @@
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
 							<td>${ item.settingValueVo.cityName }</td>
-							<td>${ item.settingValueVo.regionName }</td>
+							<%-- <td>${ item.settingValueVo.regionName }</td> --%>
 							<td>养老(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.pensionP }%&nbsp;&nbsp;&nbsp;&nbsp;
 								养老(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.pensionC }%<br>
 								医疗(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.medicalP }%&nbsp;&nbsp;&nbsp;&nbsp;

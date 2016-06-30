@@ -44,7 +44,7 @@
 							</div>
 						</div>
 						
-						<div class="form-group required">
+						<%-- <div class="form-group required">
 							<label class="col-md-2 control-label">选择区县*</label>
 							<div class="col-md-5">
 								<input type="hidden" id="returnRegionId" value="${contentModel.regionId }">
@@ -53,7 +53,7 @@
 											<option value="">请选择地区</option>
 								</form:select>
 							</div>
-						</div>
+						</div> --%>
 						
 						<div class="form-group required">
 							<label class="col-md-2 control-label">养老(个人)(%)*</label>
@@ -168,9 +168,7 @@
 	
 	<!-- 表单校验 -->	
 	<script type="text/javascript" src="<c:url value='/assets/jquery.validate.min.js' />"></script>
-	
-	<!-- 用作 城市地区联动效果 -->
-	<script type="text/javascript" src="<c:url value='/js/simi/setting/insuranceList.js' />"></script>
+
 	<script type="text/javascript" src="<c:url value='/js/simi/setting/insuranceForm.js' />"></script>
 	
 
