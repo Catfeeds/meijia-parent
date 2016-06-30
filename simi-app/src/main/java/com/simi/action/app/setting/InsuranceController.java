@@ -1,6 +1,5 @@
-package com.simi.action.app.xcloud;
+package com.simi.action.app.setting;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -17,15 +16,12 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.xcloud.XcompanySetting;
-import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceBaseVo;
 import com.simi.vo.setting.InsuranceVo;
-import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/app/insurance")
@@ -161,13 +157,13 @@ public class InsuranceController extends BaseController {
 	 * 
 	 * 	工资、薪金（含税/不含税）。。年终奖。。 劳务（含税/不含税）
 	 */
-	@RequestMapping(value = "get_tax_setting.json",method = RequestMethod.GET)
-	public AppResultData<Object> getTax(
-			@RequestParam("taxType")String taxName){
+	@RequestMapping(value = "get_tax_persion.json",method = RequestMethod.GET)
+	public AppResultData<Object> getTaxPersion(
+			@RequestParam(value = "setting_type", required = false, defaultValue = "tax_persion") String settingType){
 		
 		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		if(StringUtil.isEmpty(taxName)){
+		if(StringUtil.isEmpty(settingType)){
 			result.setMsg("个税类型不存在");
 			result.setStatus(Constants.ERROR_999);
 			return result;
@@ -175,26 +171,22 @@ public class InsuranceController extends BaseController {
 		
 		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
 		
-		searchVo.setSettingType(taxName);
+		searchVo.setSettingType(settingType);
 		
 		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
 		
-		//返回 json字段。集合
-		if(!CollectionUtils.isEmpty(list)){
-			
-			XcompanySetting xcompanySetting = list.get(0);
-			
-			Object value = xcompanySetting.getSettingValue();
-			
-			//传 json字符串
-			String jsonString = JSON.toJSONString(value);
-			
-			result.setData(jsonString);
-		}else{
+		if (list.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
-			result.setData("地区数据不存在");
+			result.setMsg("数据不存在!");
 		}
+
+		XcompanySetting xcompanySetting = list.get(0);		
+		Object value = xcompanySetting.getSettingValue();
 		
+		//传 json字符串
+		String jsonString = JSON.toJSONString(value);		
+		result.setData(jsonString);
+
 		return result;
 	}
 	
