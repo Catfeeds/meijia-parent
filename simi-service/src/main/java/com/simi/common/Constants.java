@@ -188,5 +188,7 @@ public class Constants {
 	 */
 	public static String SETTING_TYPE_INSURANCE = "insurance";	//社保公积金基数分项配置
 	public static String SETTING_TYPE_INSURANCE_BASE = "insurance_base"; //社保公积金基数配置
-	
+	public static String SETTING_TYPE_TAX_PERSION = "tax_persion"; //个人所得税率表.
+	public static String SETTING_TYPE_TAX_YEAR_AWARD = "tax_year_award"; //年终奖所有配置.
+	public static String SETTING_TYPE_TAX_PAY = "tax_pay"; //劳务报酬所得.
 }

@@ -1,4 +1,4 @@
-package com.simi.action.xcloud;
+package com.simi.action.setting;
 
 import java.util.List;
 
@@ -31,8 +31,8 @@ import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.dict.DictService;
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.setting.InsuranceBaseVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.InsuranceBaseVo;
 import com.simi.vo.xcloud.XCompanySettingVo;
 
 @Controller
@@ -101,7 +101,7 @@ public class InsuranceBaseController extends BaseController {
 		model.addAttribute("contentModel", result);
 		model.addAttribute("totalNeed", totalNeed);
 
-		return "xcloud/insuranceBaseList";
+		return "setting/insuranceBaseList";
 	}
 
 	/*
@@ -139,7 +139,7 @@ public class InsuranceBaseController extends BaseController {
 		model.addAttribute("id", id);
 		model.addAttribute("contentModel", settingVo);
 
-		return "xcloud/insuranceBaseForm";
+		return "setting/insuranceBaseForm";
 	}
 
 	/*

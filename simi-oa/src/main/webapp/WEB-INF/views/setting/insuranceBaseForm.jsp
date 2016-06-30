@@ -96,7 +96,7 @@
 	<script type="text/javascript" src="<c:url value='/assets/jquery.validate.min.js' />"></script>
 	
 	<!-- 用作 城市地区联动效果 -->
-	<script type="text/javascript" src="<c:url value='/js/simi/xcloud/insuranceBaseForm.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/js/simi/setting/insuranceBaseForm.js' />"></script>
 	
 
 </body>

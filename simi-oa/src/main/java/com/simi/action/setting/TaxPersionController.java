@@ -1,4 +1,4 @@
-package com.simi.action.xcloud;
+package com.simi.action.setting;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.InitBeanUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.wx.utils.JsonUtil;
 import com.simi.action.BaseController;
@@ -28,39 +29,28 @@ import com.simi.oa.auth.AccountAuth;
 import com.simi.oa.auth.AuthHelper;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.dict.DictService;
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.setting.InsuranceBaseVo;
+import com.simi.vo.setting.TaxVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.InsuranceVo;
 import com.simi.vo.xcloud.XCompanySettingVo;
 
-/**
- * 
- * @author hulj
- * @date 2016年6月14日 下午2:56:45
- * @Description:
- * 
- *               运营平台--系统设置--社保公积金基数
- *
- */
 @Controller
-@RequestMapping(value = "/insurance")
-public class InsuranceController extends BaseController {
+@RequestMapping(value = "/taxPersion")
+public class TaxPersionController extends BaseController {
 
 	@Autowired
 	private XCompanySettingService settingService;
 	
-	@Autowired
-	private DictService dictService;
-
 	/**
-	 * 社保公积金基数列表
+	 * 税率配置列表
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
-	public String userTokenList(HttpServletRequest request, Model model, CompanySettingSearchVo searchVo) {
+	public String userTokenList(HttpServletRequest request, Model model, 
+			CompanySettingSearchVo searchVo) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
@@ -74,25 +64,24 @@ public class InsuranceController extends BaseController {
 		if (searchVo == null) {
 			searchVo = new CompanySettingSearchVo();
 		}
-
-		// 对于社保公积金, settingType = "insurance"
-		searchVo.setSettingType(Constants.SETTING_TYPE_INSURANCE);
-
+		
+		searchVo.setSettingType(Constants.SETTING_TYPE_TAX_PERSION);
 		
 		PageInfo p = settingService.selectByListPage(searchVo, pageNo, pageSize);
 		List<XcompanySetting> lists = p.getList();
+
 		for (int i = 0; i < lists.size(); i++) {
 
 			XcompanySetting setting = lists.get(i);
 
 			XCompanySettingVo vo = settingService.getXCompantSettingVo(setting);
 			
-			InsuranceVo settingVo = new InsuranceVo();
+			TaxVo settingVo = new TaxVo();
 			
-			settingVo = (InsuranceVo)InitBeanUtil.initObject(settingVo);
+			settingVo = (TaxVo)InitBeanUtil.initObject(settingVo);
 			if (setting.getSettingValue() != null) {
 				JSONObject setValue = (JSONObject) setting.getSettingValue();
-				settingVo = JSON.toJavaObject(setValue, InsuranceVo.class);
+				settingVo = JSON.toJavaObject(setValue, TaxVo.class);
 			}
 			
 			vo.setSettingValueVo(settingVo);
@@ -101,22 +90,10 @@ public class InsuranceController extends BaseController {
 
 		PageInfo result = new PageInfo(lists);
 		
-		Long total = result.getTotal();
-		
-		//获得北上广深所有区县的总数.
-		List<DictRegion> regionB = dictService.getRegionByCityId(2L);
-		List<DictRegion> regionS = dictService.getRegionByCityId(74L);
-		List<DictRegion> regionG = dictService.getRegionByCityId(198L);
-		List<DictRegion> regionSZ = dictService.getRegionByCityId(200L);
-		int totalNeed = regionB.size() + regionS.size() + regionG.size() + regionSZ.size();
-		
-		totalNeed = totalNeed - total.intValue();
-		
 		model.addAttribute("searchModel", searchVo);
 		model.addAttribute("contentModel", result);
-		model.addAttribute("totalNeed", totalNeed);
 
-		return "xcloud/insuranceList";
+		return "setting/taxPersionList";
 	}
 
 	/*
@@ -140,21 +117,22 @@ public class InsuranceController extends BaseController {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(setting, vo);
 
-		InsuranceVo settingVo = new InsuranceVo();
+		TaxVo settingVo = new TaxVo();
 
-		settingVo = (InsuranceVo) InitBeanUtil.initObject(settingVo);
+		settingVo = (TaxVo) InitBeanUtil.initObject(settingVo);
 
 		if (id > 0L) {
 			JSONObject setValue = (JSONObject) setting.getSettingValue();
-			settingVo = JSON.toJavaObject(setValue, InsuranceVo.class);
+			settingVo = JSON.toJavaObject(setValue, TaxVo.class);
 		}
 		
 		vo.setSettingValueVo(settingVo);
 		
 		model.addAttribute("id", id);
 		model.addAttribute("contentModel", settingVo);
-
-		return "xcloud/insuranceForm";
+		
+		
+		return "setting/taxPersionForm";
 	}
 
 	/*
@@ -162,9 +140,11 @@ public class InsuranceController extends BaseController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String submitInsuranceForm(HttpServletRequest request, @ModelAttribute("contentModel") InsuranceVo settingVo, BindingResult result) {
+	public String submitInsuranceForm(HttpServletRequest request, @ModelAttribute("contentModel") TaxVo settingVo, BindingResult result) {
 
 		Long id = Long.valueOf(request.getParameter("id").toString());
+		
+		String settingType = Constants.SETTING_TYPE_TAX_PERSION;
 
 		XcompanySetting xcompanySetting = settingService.initXcompanySetting();
 
@@ -173,41 +153,19 @@ public class InsuranceController extends BaseController {
 
 		Long userId = accountAuth.getId();
 
-//		InsuranceVo settingVo = (InsuranceVo) vo.getSettingValueVo();
-		
-		Long cityId = settingVo.getCityId();
-		
-		if (cityId > 0L) {
-			String cityName = dictService.getCityName(cityId);
-			settingVo.setCityName(cityName);
-		}
-		
-		Long regionId = settingVo.getRegionId();
-		if (regionId > 0L) {
-			String regionName = dictService.getRegionName(regionId);
-			settingVo.setRegionName(regionName);
-		}
-
 		String json = JsonUtil.objecttojson(settingVo);
 
 		if (id > 0L) {
 			xcompanySetting = settingService.selectByPrimaryKey(id);
-
-//			BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, xcompanySetting);
-
 			xcompanySetting.setUpdateTime(TimeStampUtil.getNowSecond());
+			xcompanySetting.setSettingType(settingType);
 			xcompanySetting.setSettingValue(json);
-//			xcompanySetting.setUserId(userId);
-
 			settingService.updateByPrimaryKey(xcompanySetting);
 
 		} else {
-
-//			BeanUtilsExp.copyPropertiesIgnoreNull(settingVo, xcompanySetting);
-			xcompanySetting.setSettingType(Constants.SETTING_TYPE_INSURANCE);
+			xcompanySetting.setSettingType(settingType);
 			xcompanySetting.setSettingValue(json);
 			xcompanySetting.setUserId(userId);
-
 			settingService.insert(xcompanySetting);
 		}
 

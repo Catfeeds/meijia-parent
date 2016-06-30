@@ -78,17 +78,6 @@ $.validator.addMethod("cityId",function(value,elements){
 	}
 },"请选择城市");
 
-
-$.validator.addMethod("regionId",function(value,elements){
-	
-	// value 值是  option 选项 在 所有 option 中的 下标，从 0开始
-	if(value != 0){
-		return true;
-	}
-},"请选择区县");
-
-
-
 //提交
 $("#insuranceFormBtn").on("click",function(form){
 	

@@ -21,10 +21,10 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.setting.InsuranceBaseVo;
+import com.simi.vo.setting.InsuranceVo;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.InsuranceBaseVo;
-import com.simi.vo.xcloud.InsuranceVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
