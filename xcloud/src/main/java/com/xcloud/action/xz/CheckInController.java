@@ -25,7 +25,7 @@ import com.xcloud.common.Constant;
 
 
 @Controller
-@RequestMapping(value = "/staff")
+@RequestMapping(value = "/checkin")
 public class CheckInController extends BaseController {
 
 	@Autowired
