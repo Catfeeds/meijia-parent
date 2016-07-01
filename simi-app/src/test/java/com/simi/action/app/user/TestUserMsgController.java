@@ -58,7 +58,7 @@ public class TestUserMsgController extends JUnitActionBase{
 
 		String url="/app/user/get_msg.json";
 
-		String params = "?user_id=1&service_date=2016-07-06&page=1";
+		String params = "?user_id=17&service_date=2016-07-08&page=1";
 		MockHttpServletRequestBuilder postRequest = get(url+params);
 
 
@@ -72,7 +72,7 @@ public class TestUserMsgController extends JUnitActionBase{
     public void testTotalByMonth() throws Exception {
 
 		String url = "/app/user/msg/total_by_month.json";
-		String params = "?user_id=1&year=2016&month=07";
+		String params = "?user_id=77&year=2016&month= 7";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

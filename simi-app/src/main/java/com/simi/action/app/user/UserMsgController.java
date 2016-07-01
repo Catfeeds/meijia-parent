@@ -288,6 +288,7 @@ public class UserMsgController extends BaseController {
 			HashMap item = null;
 			for (int j = 0; j < smonthDatas.size(); j++) {
 				HashMap monthData = smonthDatas.get(j);
+				if (monthData == null || monthData.get("service_date") == null) continue;
 				if (monthData.get("service_date").toString().equals(strDate)) {
 					item = monthData;
 					break;
