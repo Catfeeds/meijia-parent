@@ -211,6 +211,9 @@ public class MathToolsServiceImpl implements MathToolsService {
 		return result;
 	}
 	
+
+	
+	
 	/**
 	 * 计算个人所得税
 	 */
@@ -286,6 +289,195 @@ public class MathToolsServiceImpl implements MathToolsService {
 		
 		Double taxedSalary = salary - taxNeed - insurance;
 		String taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
+		
+		data.put("taxNeed", taxNeedStr);
+		data.put("taxedSalary", taxedSalaryStr);
+		result.setData(data);
+
+		return result;
+	}	
+	
+	/**
+	 * 计算年终奖
+	 */
+	@Override
+	public AppResultData<Object> mathTaxYear(Double money) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Map<String, String> data = new HashMap<String, String>();
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+
+		searchVo.setSettingType(Constants.SETTING_TYPE_TAX_YEAR_AWARD);
+
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+
+		if (list.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数据不存在!");
+		}
+		
+		
+		
+		//应纳税所得额
+		Double taxBase = money / 12;
+		
+		if (taxBase < 0 ) {
+			data.put("taxNeed", "0");
+			data.put("taxedSalary", String.valueOf(money));
+			result.setData(data);
+			return result;
+		}
+		
+		Double taxRio = 0.0;
+		Double taxSs = 0.0;
+		
+		for (XcompanySetting item : list) {
+			JSONObject setValue = (JSONObject) item.getSettingValue();
+			TaxVo taxVo = JSON.toJavaObject(setValue, TaxVo.class);
+			
+			Double taxMin = 0.0;
+			Double taxMax = 0.0;
+			
+			if (StringUtil.isEmpty(taxVo.getTaxMin())) {
+				taxMax = Double.valueOf(taxVo.getTaxMax());
+				if (taxBase > taxMax) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			} else if (StringUtil.isEmpty(taxVo.getTaxMax())) {
+				taxMin = Double.valueOf(taxVo.getTaxMin());
+				if (taxBase < taxMin) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			} else  {
+				taxMin = Double.valueOf(taxVo.getTaxMin());
+				taxMax = Double.valueOf(taxVo.getTaxMax());
+				
+				if (taxBase > taxMin && taxBase < taxMax) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			}
+		}
+		
+		//应纳税额
+		Double taxNeed = taxBase * (taxRio / 100)  - taxSs;
+		String taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
+		
+		
+		Double taxedSalary = taxBase - taxNeed;
+		String taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
+		
+		data.put("taxNeed", taxNeedStr);
+		data.put("taxedSalary", taxedSalaryStr);
+		result.setData(data);
+
+		return result;
+	}
+	
+	/**
+	 * 计算劳动报酬
+	 */
+	@Override
+	public AppResultData<Object> mathTaxPay(Double money) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Map<String, String> data = new HashMap<String, String>();
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+
+		searchVo.setSettingType(Constants.SETTING_TYPE_TAX_PAY);
+
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+
+		if (list.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数据不存在!");
+		}
+		
+		//劳动报酬所得（4000元以下）的个人所得税额=（每次所得收入－800元）×20%
+		//劳动报酬所得（4000元以上）的个人所得税额=[每次所得收入x（1-20%）]X适用税率-速算扣除数。
+		
+		
+		
+		if (money < 0 ) {
+			data.put("taxNeed", "0");
+			data.put("taxedSalary", String.valueOf(money));
+			result.setData(data);
+			return result;
+		}
+		
+		Double taxRio = 0.0;
+		Double taxSs = 0.0;
+		
+		Double taxNeed = 0.0;
+		String taxNeedStr = "";
+		Double taxedSalary = 0.0;
+		String taxedSalaryStr = "";
+		
+		
+		if (money < 4000 ) {
+			taxNeed = (money - 800) * 0.2;
+			taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
+			taxedSalary = money - taxNeed;
+			taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
+
+			data.put("taxNeed", taxNeedStr);
+			data.put("taxedSalary", taxedSalaryStr);
+			result.setData(data);
+			return result;
+		}
+		
+		//应纳税所得额
+		Double taxBase = money * 0.8;
+		
+		
+		
+		for (XcompanySetting item : list) {
+			JSONObject setValue = (JSONObject) item.getSettingValue();
+			TaxVo taxVo = JSON.toJavaObject(setValue, TaxVo.class);
+			
+			Double taxMin = 0.0;
+			Double taxMax = 0.0;
+			
+			if (StringUtil.isEmpty(taxVo.getTaxMin())) {
+				taxMax = Double.valueOf(taxVo.getTaxMax());
+				if (taxBase > taxMax) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			} else if (StringUtil.isEmpty(taxVo.getTaxMax())) {
+				taxMin = Double.valueOf(taxVo.getTaxMin());
+				if (taxBase < taxMin) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			} else  {
+				taxMin = Double.valueOf(taxVo.getTaxMin());
+				taxMax = Double.valueOf(taxVo.getTaxMax());
+				
+				if (taxBase > taxMin && taxBase < taxMax) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			}
+		}
+		
+		//应纳税额
+		taxNeed = taxBase * (taxRio / 100)  - taxSs;
+		taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
+		
+		
+		taxedSalary = taxBase - taxNeed;
+		taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
 		
 		data.put("taxNeed", taxNeedStr);
 		data.put("taxedSalary", taxedSalaryStr);

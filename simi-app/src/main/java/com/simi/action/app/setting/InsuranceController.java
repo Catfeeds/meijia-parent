@@ -141,8 +141,7 @@ public class InsuranceController extends BaseController {
 
 	// 计算五险一金的方法
 	@RequestMapping(value = "math_insurance.json", method = RequestMethod.POST)
-	public AppResultData<Object> mathInsurance(@RequestParam("city_id") Long cityId, 
-			@RequestParam("shebao") Double shebao, @RequestParam("gjj") Double gjj) {
+	public AppResultData<Object> mathInsurance(@RequestParam("city_id") Long cityId, @RequestParam("shebao") Double shebao, @RequestParam("gjj") Double gjj) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
 		result = mathToolsService.mathInsurance(cityId, shebao, gjj);
@@ -150,16 +149,33 @@ public class InsuranceController extends BaseController {
 		return result;
 	}
 
-	// 计算五险一金的方法
+	// 计算个税的方法
 	@RequestMapping(value = "math_tax.json", method = RequestMethod.POST)
-	public AppResultData<Object> mathInsurance(
-			@RequestParam("settingType") String settingType, 
-			@RequestParam("salary") Double salary, 
-			@RequestParam("insurance") Double insurance,
-			@RequestParam("beginTax") Double beginTax) {
+	public AppResultData<Object> mathTax(@RequestParam("settingType") String settingType, @RequestParam("salary") Double salary,
+			@RequestParam("insurance") Double insurance, @RequestParam("beginTax") Double beginTax) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
 		result = mathToolsService.mathTaxPersion(salary, insurance, beginTax);
+
+		return result;
+	}
+
+	// 计算年终奖的方法
+	@RequestMapping(value = "math_tax_year.json", method = RequestMethod.POST)
+	public AppResultData<Object> mathTaxYear(@RequestParam("settingType") String settingType, @RequestParam("money") Double money) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		result = mathToolsService.mathTaxYear(money);
+
+		return result;
+	}
+
+	// 计算年终奖的方法
+	@RequestMapping(value = "math_tax_pay.json", method = RequestMethod.POST)
+	public AppResultData<Object> mathTaxPay(@RequestParam("settingType") String settingType, @RequestParam("money") Double money) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		result = mathToolsService.mathTaxPay(money);
 
 		return result;
 	}

@@ -13,5 +13,9 @@ public interface MathToolsService {
 
 	AppResultData<Object> mathInsurance(Long cityId, Double shebao, Double gjj);
 
+	AppResultData<Object> mathTaxYear(Double money);
+
+	AppResultData<Object> mathTaxPay(Double money);
+
 
 }

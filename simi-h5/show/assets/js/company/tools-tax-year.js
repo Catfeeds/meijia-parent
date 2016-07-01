@@ -16,12 +16,11 @@ $("#btn-do").on("click",function() {
 	var params = {};
 	
 	params.settingType = $("#settingType").val();
-	params.salary = $("#salary").val();
-	params.insurance = $("#insurance").val();
-	params.beginTax = $("#beginTax").find("option:selected").val();
+	params.money = $("#money").val();
+
 	$.ajax({
 		type : "POST",
-		url : appRootUrl + "insurance/math_tax.json",
+		url : appRootUrl + "insurance/math_tax_year.json",
 		data : params,
 		dataType : "json",
 		cache : true,
