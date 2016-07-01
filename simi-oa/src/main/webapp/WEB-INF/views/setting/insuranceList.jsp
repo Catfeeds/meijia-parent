@@ -60,7 +60,6 @@
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
 							<td>${ item.settingValueVo.cityName }</td>
-							<%-- <td>${ item.settingValueVo.regionName }</td> --%>
 							<td>养老(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.pensionP }%&nbsp;&nbsp;&nbsp;&nbsp;
 								养老(单位):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.pensionC }%<br>
 								医疗(个人):&nbsp;&nbsp;&nbsp;&nbsp;${item.settingValueVo.medicalP }%&nbsp;&nbsp;&nbsp;&nbsp;

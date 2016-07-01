@@ -17,6 +17,18 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel"> <header class="panel-heading">
+			<h4>数据搜索</h4>
+			<form:form modelAttribute="searchModel" action="list" method="GET" class="form-inline">
+				<div class="form-group">
+					收入类型:
+					<form:select class="form-control" path="settingType">
+						<form:option value="tax_persion" label="工资、薪金所得" />
+						<form:option value="tax_year_award" label="年终奖所得" />
+						<form:option value="tax_pay" label="劳动报酬" />
+					</form:select>
+				</div>
+				<button type="submit" class="btn btn-primary">搜索</button>
+			</form:form> 
 			</header>
 			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 			<header class="panel-heading"> 税率表</font>
@@ -32,14 +44,14 @@
 					<tr>
 						<th>级别</th>
 						<th>应纳税所得额(含税)</th>
-						<th>应纳税所得额(不含税)</th>
+						
 						<th>税率(%)</th>
 						<th>速算扣除数</th>
 						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${contentModel.list}" var="item">
+					<c:forEach items="${contentModel}" var="item">
 						<tr>
 							<td>${ item.settingValueVo.level }</td>
 							<td>
@@ -56,20 +68,6 @@
 								</c:if>
 							</td>
 							
-							<td>
-								<c:if test="${ item.settingValueVo.noTaxMin == '' }">
-									不超过${ item.settingValueVo.noTaxMax }元的部分
-								</c:if>
-								
-								<c:if test="${ item.settingValueVo.noTaxMax == '' }">
-									超过${ item.settingValueVo.noTaxMin }元的部分
-								</c:if>
-								
-								<c:if test="${ item.settingValueVo.noTaxMin != '' && item.settingValueVo.noTaxMax != '' }">
-									超过${ item.settingValueVo.noTaxMin }元至${ item.settingValueVo.noTaxMax }元的部分
-								</c:if>
-							</td>
-							
 							<td>${ item.settingValueVo.taxRio }%</td>
 							<td>${ item.settingValueVo.taxSs }%</td>
 							<td>
@@ -83,10 +81,6 @@
 				</tbody>
 			</table>
 			</section>
-			<c:import url="../shared/paging.jsp">
-				<c:param name="pageModelName" value="contentModel" />
-				<c:param name="urlAddress" value="/taxPersion/list" />
-			</c:import>
 		</div>
 	</div>
 	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> <%@ include file="../shared/pageFooter.jsp"%>
@@ -95,6 +89,7 @@
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
 	<!--script for this page-->
+	<script type="text/javascript" src="<c:url value='/js/simi/setting/taxList.js' />"></script>
 	
 </body>
 </html>

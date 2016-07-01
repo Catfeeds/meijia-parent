@@ -19,7 +19,7 @@
 	<!--main content start--> <section id="main-content"> <section class="wrapper"> <!-- page start-->
 	<div class="row">
 		<div class="col-lg-12">
-			<section class="panel"> <header class="panel-heading">个人所得税率表 </header>
+			<section class="panel"> <header class="panel-heading">${settingName}税率表 </header>
 
 			<hr style="width: 100%; color: black; height: 1px; background-color: black;" />
 
@@ -31,7 +31,33 @@
 					<input type="hidden" name="id" value="${id }"/>
 					
 					<div class="form-body">
-						
+					
+						<div class="form-group required">
+							<label class="col-md-2 control-label">收入类型*</label>
+							<div class="col-md-5">
+								<select id="settingType" name="settingType" class="form-control" >
+									<option value="">请选择收入类型</option>
+									<option value="tax_persion"
+										<c:if test="${ settingType == 'tax_persion' }">
+											selected
+										</c:if>
+									
+									>工资、薪金所得</option>
+									<option value="tax_year_award"
+										<c:if test="${ settingType == 'tax_year_award' }">
+											selected
+										</c:if>
+									>年终奖所得</option>
+									<option value="tax_pay"
+									
+										<c:if test="${ settingType == 'tax_year_award' }">
+											selected
+										</c:if>
+									>劳动报酬</option>
+								</select>
+							</div>
+						</div>
+					
 						<div class="form-group required">
 							<label class="col-md-2 control-label">级别*</label>
 							<div class="col-md-5">
@@ -46,19 +72,6 @@
 								<form:input path="taxMin" placeholder="" maxlength="10" size="6" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 								至
 								<form:input path="taxMax" placeholder="" maxlength="10" size="6" onkeyup="value=value.replace(/[^\d]/g,'')"/>的部分
-							</div>
-						</div>
-						
-						<div class="form-group required">
-							<label class="col-md-2 control-label">应纳税所得额(不含税)*</label>
-							<div class="col-md-5">
-							
-								超过
-								<form:input path="noTaxMin" placeholder="" maxlength="10" size="6" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-								
-								至
-								<form:input path="noTaxMax"  placeholder="" maxlength="10" size="6" onkeyup="value=value.replace(/[^\d]/g,'')"/>的部分
-								
 							</div>
 						</div>
 						

@@ -4,7 +4,9 @@ $('#insuranceForm').validate({
 	errorClass : 'help-block', // default input error message class
 	focusInvalid : false, // do not focus the last invalid input
 	rules : {
-		
+		settingType : {
+			required : true,
+		},
 		level : {
 			required : true,
 			number : true
@@ -24,6 +26,9 @@ $('#insuranceForm').validate({
 	},
 
 	messages : {
+		settingType : {
+			required : "请选择收入类型",
+		},
 		
 		level : {
 			required : "请输入级别",

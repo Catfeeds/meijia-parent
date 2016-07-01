@@ -8,9 +8,9 @@ public class TaxVo {
 	
 	private String taxMax;
 	
-	private String noTaxMin;
-	
-	private String noTaxMax;
+//	private String noTaxMin;
+//	
+//	private String noTaxMax;
 	
 	private String taxRio;
 	
@@ -56,21 +56,21 @@ public class TaxVo {
 		this.taxSs = taxSs;
 	}
 
-	public String getNoTaxMin() {
-		return noTaxMin;
-	}
-
-	public void setNoTaxMin(String noTaxMin) {
-		this.noTaxMin = noTaxMin;
-	}
-
-	public String getNoTaxMax() {
-		return noTaxMax;
-	}
-
-	public void setNoTaxMax(String noTaxMax) {
-		this.noTaxMax = noTaxMax;
-	}
+//	public String getNoTaxMin() {
+//		return noTaxMin;
+//	}
+//
+//	public void setNoTaxMin(String noTaxMin) {
+//		this.noTaxMin = noTaxMin;
+//	}
+//
+//	public String getNoTaxMax() {
+//		return noTaxMax;
+//	}
+//
+//	public void setNoTaxMax(String noTaxMax) {
+//		this.noTaxMax = noTaxMax;
+//	}
 
 
 }

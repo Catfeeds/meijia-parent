@@ -50,25 +50,25 @@ public class TaxPersionController extends BaseController {
 	@AuthPassport
 	@RequestMapping(value = "/list", method = { RequestMethod.GET })
 	public String userTokenList(HttpServletRequest request, Model model, 
-			CompanySettingSearchVo searchVo) {
+			CompanySettingSearchVo searchVo,
+			@RequestParam(value = "settingType", required = false, defaultValue = "") String settingType) {
 
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
-		int pageNo = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_NO_NAME, ConstantOa.DEFAULT_PAGE_NO);
-		int pageSize = ServletRequestUtils.getIntParameter(request, ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
-
-		// 分页
-		PageHelper.startPage(pageNo, pageSize);
-
+		
+		
 		if (searchVo == null) {
 			searchVo = new CompanySettingSearchVo();
 		}
 		
-		searchVo.setSettingType(Constants.SETTING_TYPE_TAX_PERSION);
+		if (StringUtil.isEmpty(settingType)) settingType = Constants.SETTING_TYPE_TAX_PERSION;
 		
-		PageInfo p = settingService.selectByListPage(searchVo, pageNo, pageSize);
-		List<XcompanySetting> lists = p.getList();
+		if (StringUtil.isEmpty(searchVo.getSettingType())) {
+			searchVo.setSettingType(settingType);
+		}
+		
+		List<XcompanySetting> lists = settingService.selectBySearchVo(searchVo);
 
 		for (int i = 0; i < lists.size(); i++) {
 
@@ -88,10 +88,10 @@ public class TaxPersionController extends BaseController {
 			lists.set(i, vo);
 		}
 
-		PageInfo result = new PageInfo(lists);
+		
 		
 		model.addAttribute("searchModel", searchVo);
-		model.addAttribute("contentModel", result);
+		model.addAttribute("contentModel", lists);
 
 		return "setting/taxPersionList";
 	}
@@ -108,9 +108,11 @@ public class TaxPersionController extends BaseController {
 		}
 
 		XcompanySetting setting = settingService.initXcompanySetting();
-
+		
+		String settingType = "";
 		if (id > 0L) {
 			setting = settingService.selectByPrimaryKey(id);
+			settingType = setting.getSettingType();
 		}
 		
 		XCompanySettingVo vo = new XCompanySettingVo();
@@ -129,6 +131,7 @@ public class TaxPersionController extends BaseController {
 		vo.setSettingValueVo(settingVo);
 		
 		model.addAttribute("id", id);
+		model.addAttribute("settingType", settingType);
 		model.addAttribute("contentModel", settingVo);
 		
 		
@@ -144,7 +147,7 @@ public class TaxPersionController extends BaseController {
 
 		Long id = Long.valueOf(request.getParameter("id").toString());
 		
-		String settingType = Constants.SETTING_TYPE_TAX_PERSION;
+		String settingType = request.getParameter("settingType").toString();
 
 		XcompanySetting xcompanySetting = settingService.initXcompanySetting();
 
@@ -169,7 +172,7 @@ public class TaxPersionController extends BaseController {
 			settingService.insert(xcompanySetting);
 		}
 
-		return "redirect:list";
+		return "redirect:list?settingType="+settingType;
 	}
 
 }
