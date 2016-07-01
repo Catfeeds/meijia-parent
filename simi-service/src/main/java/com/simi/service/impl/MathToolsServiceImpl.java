@@ -31,6 +31,7 @@ import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceBaseVo;
 import com.simi.vo.setting.InsuranceVo;
+import com.simi.vo.setting.TaxVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 
@@ -40,9 +41,11 @@ public class MathToolsServiceImpl implements MathToolsService {
 	@Autowired
 	private XCompanySettingService xCompanySettingService;
 	
-	
+	/**
+	 * 计算五险一金
+	 */
 	@Override
-	public AppResultData<Object> mathInsurance(Long cityId, int shebao, int gjj) {
+	public AppResultData<Object> mathInsurance(Long cityId, Double shebao, Double gjj) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		if(cityId <= 0L || cityId == null){
@@ -99,14 +102,14 @@ public class MathToolsServiceImpl implements MathToolsService {
 		
 		Map<String, String> data = new HashMap<String, String>();
 		
-		int shebaoMin = Integer.valueOf(insuranceBaseVo.getShebaoMin());
-		int shebaoMax = Integer.valueOf(insuranceBaseVo.getShebaoMax());
+		Double shebaoMin = Double.valueOf(insuranceBaseVo.getShebaoMin());
+		Double shebaoMax = Double.valueOf(insuranceBaseVo.getShebaoMax());
 		
 		if (shebao < shebaoMin) shebao = shebaoMin;
 		if (shebao > shebaoMax) shebao = shebaoMax;
 		
-		int gjjMin = Integer.valueOf(insuranceBaseVo.getGjjMin());
-		int gjjMax = Integer.valueOf(insuranceBaseVo.getGjjMax());
+		Double gjjMin = Double.valueOf(insuranceBaseVo.getGjjMin());
+		Double gjjMax = Double.valueOf(insuranceBaseVo.getGjjMax());
 		
 		if (gjj < gjjMin) gjj = gjjMin;
 		if (gjj > gjjMax) gjj = gjjMax;
@@ -205,6 +208,89 @@ public class MathToolsServiceImpl implements MathToolsService {
 		
 		result.setData(data);
 		
+		return result;
+	}
+	
+	/**
+	 * 计算个人所得税
+	 */
+	@Override
+	public AppResultData<Object> mathTaxPersion(Double salary, Double insurance, Double beginTax) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		Map<String, String> data = new HashMap<String, String>();
+		
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+
+		searchVo.setSettingType(Constants.SETTING_TYPE_TAX_PERSION);
+
+		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+
+		if (list.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("数据不存在!");
+		}
+		
+		
+		
+		//应纳税所得额
+		Double taxBase = salary - insurance - beginTax;
+		
+		if (taxBase < 0 ) {
+			data.put("taxNeed", "0");
+			data.put("taxedSalary", String.valueOf(salary));
+			result.setData(data);
+			return result;
+		}
+		
+		Double taxRio = 0.0;
+		Double taxSs = 0.0;
+		
+		for (XcompanySetting item : list) {
+			JSONObject setValue = (JSONObject) item.getSettingValue();
+			TaxVo taxVo = JSON.toJavaObject(setValue, TaxVo.class);
+			
+			Double taxMin = 0.0;
+			Double taxMax = 0.0;
+			
+			if (StringUtil.isEmpty(taxVo.getTaxMin())) {
+				taxMax = Double.valueOf(taxVo.getTaxMax());
+				if (taxBase > taxMax) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			} else if (StringUtil.isEmpty(taxVo.getTaxMax())) {
+				taxMin = Double.valueOf(taxVo.getTaxMin());
+				if (taxBase < taxMin) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			} else  {
+				taxMin = Double.valueOf(taxVo.getTaxMin());
+				taxMax = Double.valueOf(taxVo.getTaxMax());
+				
+				if (taxBase > taxMin && taxBase < taxMax) {
+					taxRio = Double.valueOf(taxVo.getTaxRio());
+					taxSs = Double.valueOf(taxVo.getTaxSs());
+					break;
+				}
+			}
+		}
+		
+		//应纳税额
+		Double taxNeed = taxBase * (taxRio / 100)  - taxSs;
+		String taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
+		
+		
+		Double taxedSalary = salary - taxNeed - insurance;
+		String taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
+		
+		data.put("taxNeed", taxNeedStr);
+		data.put("taxedSalary", taxedSalaryStr);
+		result.setData(data);
+
 		return result;
 	}
 

@@ -3,7 +3,7 @@
 $("#btn-do").on("click",function() {
 			
 	// 数据校验
-	var formValidity = $('#toolsInsuForm').validator().data('amui.validator').validateForm().valid;
+	var formValidity = $('#taxForm').validator().data('amui.validator').validateForm().valid;
 	
 	if (!formValidity) {
 		return false;
@@ -15,11 +15,13 @@ $("#btn-do").on("click",function() {
 	
 	var params = {};
 	
-	params.setting_type = $("#settingType").find("option:selected").val();
-	
+	params.settingType = $("#settingType").find("option:selected").val();
+	params.salary = $("#salary").val();
+	params.insurance = $("#insurance").val();
+	params.beginTax = $("#beginTax").find("option:selected").val();
 	$.ajax({
-		type : "get",
-		url : appRootUrl + "insurance/get_tax.json",
+		type : "POST",
+		url : appRootUrl + "insurance/math_tax.json",
 		data : params,
 		dataType : "json",
 		cache : true,
@@ -33,14 +35,9 @@ $("#btn-do").on("click",function() {
 			
 			var vo = data.data;
 			
-			//税前工资
-			var salary = $("#salary").val();
-			
-			//五险一金
-			var insurance = $("#insurance").val();
-			
-			//起征点
-			var beginTax = $("#beginTax").find("option:selected").val();
+			//应缴税款
+			$("#taxNeed").val(vo.taxNeed);
+			$("#taxedSalary").val(vo.taxedSalary);
 			
 		},
 		error : function() {
