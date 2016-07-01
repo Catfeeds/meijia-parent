@@ -89,7 +89,7 @@
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
 	<!--script for this page-->
-	<script type="text/javascript" src="<c:url value='/js/simi/setting/taxList.js' />"></script>
+
 	
 </body>
 </html>

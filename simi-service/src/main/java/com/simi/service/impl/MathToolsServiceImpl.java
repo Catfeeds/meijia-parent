@@ -239,7 +239,7 @@ public class MathToolsServiceImpl implements MathToolsService {
 		//应纳税所得额
 		Double taxBase = salary - insurance - beginTax;
 		
-		if (taxBase < 0 ) {
+		if (taxBase <= 0 ) {
 			data.put("taxNeed", "0");
 			data.put("taxedSalary", String.valueOf(salary));
 			result.setData(data);
@@ -256,16 +256,10 @@ public class MathToolsServiceImpl implements MathToolsService {
 			Double taxMin = 0.0;
 			Double taxMax = 0.0;
 			
-			if (StringUtil.isEmpty(taxVo.getTaxMin())) {
-				taxMax = Double.valueOf(taxVo.getTaxMax());
-				if (taxBase > taxMax) {
-					taxRio = Double.valueOf(taxVo.getTaxRio());
-					taxSs = Double.valueOf(taxVo.getTaxSs());
-					break;
-				}
-			} else if (StringUtil.isEmpty(taxVo.getTaxMax())) {
+			//最小值为空，则必须是taxBase
+			if (StringUtil.isEmpty(taxVo.getTaxMax())) {
 				taxMin = Double.valueOf(taxVo.getTaxMin());
-				if (taxBase < taxMin) {
+				if (taxBase > taxMin) {
 					taxRio = Double.valueOf(taxVo.getTaxRio());
 					taxSs = Double.valueOf(taxVo.getTaxSs());
 					break;
@@ -319,15 +313,17 @@ public class MathToolsServiceImpl implements MathToolsService {
 		
 		
 		
-		//应纳税所得额
-		Double taxBase = money / 12;
 		
-		if (taxBase < 0 ) {
+		
+		if (money <= 0 ) {
 			data.put("taxNeed", "0");
 			data.put("taxedSalary", String.valueOf(money));
 			result.setData(data);
 			return result;
 		}
+		
+		//应纳税所得额
+		Double taxBase = money / 12;
 		
 		Double taxRio = 0.0;
 		Double taxSs = 0.0;
@@ -339,16 +335,9 @@ public class MathToolsServiceImpl implements MathToolsService {
 			Double taxMin = 0.0;
 			Double taxMax = 0.0;
 			
-			if (StringUtil.isEmpty(taxVo.getTaxMin())) {
-				taxMax = Double.valueOf(taxVo.getTaxMax());
-				if (taxBase > taxMax) {
-					taxRio = Double.valueOf(taxVo.getTaxRio());
-					taxSs = Double.valueOf(taxVo.getTaxSs());
-					break;
-				}
-			} else if (StringUtil.isEmpty(taxVo.getTaxMax())) {
+			if (StringUtil.isEmpty(taxVo.getTaxMax())) {
 				taxMin = Double.valueOf(taxVo.getTaxMin());
-				if (taxBase < taxMin) {
+				if (taxBase > taxMin) {
 					taxRio = Double.valueOf(taxVo.getTaxRio());
 					taxSs = Double.valueOf(taxVo.getTaxSs());
 					break;
@@ -366,11 +355,11 @@ public class MathToolsServiceImpl implements MathToolsService {
 		}
 		
 		//应纳税额
-		Double taxNeed = taxBase * (taxRio / 100)  - taxSs;
+		Double taxNeed = money * (taxRio / 100)  - taxSs;
 		String taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
 		
 		
-		Double taxedSalary = taxBase - taxNeed;
+		Double taxedSalary = money - taxNeed;
 		String taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
 		
 		data.put("taxNeed", taxNeedStr);
@@ -405,7 +394,7 @@ public class MathToolsServiceImpl implements MathToolsService {
 		
 		
 		
-		if (money < 0 ) {
+		if (money <= 0 || money <= 800) {
 			data.put("taxNeed", "0");
 			data.put("taxedSalary", String.valueOf(money));
 			result.setData(data);
@@ -421,7 +410,7 @@ public class MathToolsServiceImpl implements MathToolsService {
 		String taxedSalaryStr = "";
 		
 		
-		if (money < 4000 ) {
+		if (money <= 4000 ) {
 			taxNeed = (money - 800) * 0.2;
 			taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
 			taxedSalary = money - taxNeed;
@@ -445,16 +434,9 @@ public class MathToolsServiceImpl implements MathToolsService {
 			Double taxMin = 0.0;
 			Double taxMax = 0.0;
 			
-			if (StringUtil.isEmpty(taxVo.getTaxMin())) {
-				taxMax = Double.valueOf(taxVo.getTaxMax());
-				if (taxBase > taxMax) {
-					taxRio = Double.valueOf(taxVo.getTaxRio());
-					taxSs = Double.valueOf(taxVo.getTaxSs());
-					break;
-				}
-			} else if (StringUtil.isEmpty(taxVo.getTaxMax())) {
+			if (StringUtil.isEmpty(taxVo.getTaxMax())) {
 				taxMin = Double.valueOf(taxVo.getTaxMin());
-				if (taxBase < taxMin) {
+				if (taxBase > taxMin) {
 					taxRio = Double.valueOf(taxVo.getTaxRio());
 					taxSs = Double.valueOf(taxVo.getTaxSs());
 					break;
@@ -476,7 +458,7 @@ public class MathToolsServiceImpl implements MathToolsService {
 		taxNeedStr = MathBigDecimalUtil.round2(new BigDecimal(taxNeed));
 		
 		
-		taxedSalary = taxBase - taxNeed;
+		taxedSalary = money - taxNeed;
 		taxedSalaryStr = MathBigDecimalUtil.round2(new BigDecimal(taxedSalary));
 		
 		data.put("taxNeed", taxNeedStr);
