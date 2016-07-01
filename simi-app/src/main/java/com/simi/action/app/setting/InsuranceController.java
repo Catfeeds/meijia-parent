@@ -16,6 +16,7 @@ import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.xcloud.XcompanySetting;
+import com.simi.service.MathToolsService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
@@ -30,10 +31,9 @@ public class InsuranceController extends BaseController {
 
 	@Autowired
 	private XCompanySettingService xCompanySettingService;
-
+	
 	@Autowired
-	private XcompanyStaffService xcompanyStaffService;
-
+	private MathToolsService mathToolsService;
 
 	/**
 	 * 
@@ -149,14 +149,30 @@ public class InsuranceController extends BaseController {
 		result.setData(settingValue);
 
 		return result;
-	}	
+	}
+	
+	//计算五险一金的方法
+	@RequestMapping(value = "math_insurance.json",method = RequestMethod.POST)
+	public AppResultData<Object> mathInsurance(
+			@RequestParam("city_id") Long cityId,
+			@RequestParam("shebao") int shebao,
+			@RequestParam("gjj") int gjj
+			){
+		AppResultData<Object> result = new AppResultData<Object>( Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		result = mathToolsService.mathInsurance(cityId, shebao, gjj);
+		
+		return result;
+	}
+	
+	
 	
 	/*
 	 * 个人所得税 基数
 	 * 
 	 * 	工资、薪金（含税/不含税）。。年终奖。。 劳务（含税/不含税）
 	 */
-	@RequestMapping(value = "get_tax_persion.json",method = RequestMethod.GET)
+	@RequestMapping(value = "get_tax.json",method = RequestMethod.GET)
 	public AppResultData<Object> getTaxPersion(
 			@RequestParam(value = "setting_type", required = false, defaultValue = "tax_persion") String settingType){
 		

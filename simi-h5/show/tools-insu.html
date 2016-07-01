@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>五险一金计算器</title>
-<meta name="description" content="这是一个form页面">
+<meta name="description" content="">
 <meta name="keywords" content="form">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="renderer" content="webkit">
@@ -46,7 +46,7 @@
 				<div class="am-form-group">
 					<label class="am-u-sm-5 am-form-label">社保缴纳基数<font color="red">*</font></label>
 					<div class="am-u-sm-7">
-						<input id="socialInsurance" maxLength="6" minlength="1" class="am-form-field am-radius js-pattern-pinteger"
+						<input id="shebao" maxLength="6" minlength="1" class="am-form-field am-radius js-pattern-pinteger"
 							required="required" type="text" value="" autocomplete="off" /> <small><font color="red">最低<label
 								id="shebaoMin">2834</label>/最高<label id="shebaoMax">21258</label></font></small>
 					</div>
@@ -54,7 +54,7 @@
 				<div class="am-form-group">
 					<label class="am-u-sm-5 am-form-label">公积金缴纳基数<font color="red">*</font></label>
 					<div class="am-u-sm-7">
-						<input id="fundPrice" maxLength="6" minlength="1" class="am-form-field am-radiu js-pattern-pinteger"
+						<input id="gjj" maxLength="6" minlength="1" class="am-form-field am-radiu js-pattern-pinteger"
 							required="required" type="text" value="" /> <small><font color="red">最低<label id="gjjMin">1720</label>/最高<label
 								id="gjjMax">19389</label></font></small>
 					</div>
@@ -78,6 +78,47 @@
 								</tr>
 							</thead>
 							<tbody id="displayTBody">
+								<tr>
+										<td>养老</td>
+										<td><label id="pensionP"></label>(<font color="red"><label id="lpensionP">0%</label></font>)</td>
+										<td><label id="pensionC"></label>	(<font color="red"><label id="lpensionC">0%</label></font>)</td>
+									</tr>
+								
+									<tr>
+										<td>医疗</td>
+										<td><label id="medicalP"></label>(<font color="red"><label id="lmedicalP">0%</label></font>)</td>
+										<td><label id="medicalC"></label>	(<font color="red"><label id="lmedicalC">0%</label></font>)</td>
+									</tr>
+								
+									<tr>
+										<td>失业</td>
+										<td><label id="unemploymentP"></label>(<font color="red"><label id="lunemploymentP">0%</label></font>)</td>
+										<td><label id="unemploymentC"></label>	(<font color="red"><label id="lunemploymentC">0%</label></font>)</td>
+									</tr>
+								
+									<tr>
+										<td>工伤</td>
+										<td><label id="injuryP"></label>(<font color="red"><label id="linjuryP">0%</label></font>)</td>
+										<td><label id="injuryC"></label>	(<font color="red"><label id="linjuryC">0%</label></font>)</td>
+									</tr>
+								
+									<tr>
+										<td>生育</td>
+										<td><label id="birthP"></label>(<font color="red"><label id="lbirthP">0%</label></font>)</td>
+										<td><label id="birthC"></label>	(<font color="red"><label id="lbirthP">0%</label></font>)</td>
+									</tr>
+								
+									<tr>
+										<td>公积金</td>
+										<td><label id="fundP"></label>(<font color="red"><label id="lfundP">0%</label></font>)</td>
+										<td><label id="fundC"></label>	(<font color="red"><label id="fundC">0%</label></font>)</td>
+									</tr>
+
+									<tr class="am-active">
+										<td>合计</td>
+										<td><label id="totalP"></label></td>
+										<td><label id="totalC"></label></td>
+									</tr>
 							</tbody>
 						</table>
 					</div>
@@ -94,5 +135,8 @@
 	<script src="assets/js/app.js"></script>
 	<script src="assets/js/common/common.js"></script>
 	<script src="assets/js/company/tools-insu.js"></script>
+	<script>
+		$("#cityId").trigger("change");
+	</script>
 </body>
 </html>
