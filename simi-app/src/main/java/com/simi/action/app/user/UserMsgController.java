@@ -297,6 +297,9 @@ public class UserMsgController extends BaseController {
 
 			for (int k = 0; k < pmonthDatas.size(); k++) {
 				HashMap monthData = pmonthDatas.get(k);
+				
+				if (monthData == null || monthData.get("service_date") == null) continue;
+				
 				if (monthData.get("service_date").toString().equals(strDate)) {
 					if (item != null) {
 						int total = Integer.valueOf(monthData.get("total").toString());
