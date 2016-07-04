@@ -64,6 +64,12 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}	
 	
 	@Override
+	public List<FeedComment> selectBySearchVo(FeedSearchVo searchVo) {
+		return  feedCommentMapper.selectBySearchVo(searchVo);
+
+	}	
+	
+	@Override
 	public List<FeedCommentViewVo> changeToFeedComments(List<FeedComment> feedComments, Long userId) {
 		
 		List<FeedCommentViewVo> result = new ArrayList<FeedCommentViewVo>();

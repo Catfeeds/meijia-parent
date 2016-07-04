@@ -1,6 +1,5 @@
 package com.simi.service.impl.async;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -11,9 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.po.model.card.CardAttend;
-import com.simi.po.model.card.Cards;
-import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.op.AppTools;
 import com.simi.po.model.user.UserLeave;
 import com.simi.po.model.user.UserLeavePass;
@@ -22,7 +18,6 @@ import com.simi.po.model.user.Users;
 import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.card.CardAttendService;
-import com.simi.service.card.CardService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.order.OrdersService;
@@ -32,8 +27,6 @@ import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyCheckinService;
-import com.simi.utils.CardUtil;
-import com.simi.utils.FeedUtil;
 import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
@@ -45,9 +38,6 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 	@Autowired
 	private UserMsgService userMsgService;
-
-	@Autowired
-	private CardService cardService;
 
 	@Autowired
 	private CardAttendService cardAttendService;
@@ -97,124 +87,6 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		record.setSummary("欢迎来到云行政，新手必读，立刻体验");
 		record.setIconUrl(defaultUser.getHeadImg());
 		userMsgService.insert(record);
-		return new AsyncResult<Boolean>(true);
-	}
-
-	/**
-	 * 新增卡片时发送消息
-	 */
-	@Async
-	@Override
-	public Future<Boolean> newCardMsg(Long cardId) {
-
-		Cards card = cardService.selectByPrimaryKey(cardId);
-		if (card == null)
-			return new AsyncResult<Boolean>(true);
-
-		Long createUserId = card.getCreateUserId();
-		// 找出所有需要发送消息人员:
-		// 获取到参会、参与人员列表
-		List<CardAttend> attends = cardAttendService.selectByCardId(cardId);
-		List<Long> userIds = new ArrayList<Long>();
-
-		for (CardAttend item : attends) {
-			if (!userIds.contains(item.getUserId())) {
-				userIds.add(item.getUserId());
-			}
-		}
-
-		if (!userIds.contains(createUserId))
-			userIds.add(createUserId);
-
-		String serviceContent = card.getServiceContent();
-		if (serviceContent != null && serviceContent.length() > 20) {
-			serviceContent = serviceContent.substring(0, 20);
-		}
-
-		if (serviceContent.length() == 0) {
-			serviceContent = "你创建了新的日程安排";
-		}
-
-		for (Long uid : userIds) {
-			
-			//判断是否为已存在，存在则修改.
-			UserMsgSearchVo searchVo = new UserMsgSearchVo();
-			searchVo.setUserId(uid);
-			searchVo.setAction("card");
-			searchVo.setParams(cardId.toString());
-			
-			List<UserMsg> list = userMsgService.selectBySearchVo(searchVo);
-			
-			if (!list.isEmpty()) {
-				for (UserMsg item : list) {
-					item.setTitle(CardUtil.getCardTypeName(card.getCardType()));
-					item.setServiceTime(card.getServiceTime());
-					item.setSummary(serviceContent);
-					userMsgService.updateByPrimaryKey(item);
-				}
-			} else {
-				UserMsg record = userMsgService.initUserMsg();
-	
-				record.setUserId(uid);
-				record.setFromUserId(createUserId);
-				record.setToUserId(uid);
-				record.setCategory("app");
-				record.setAction("card");
-				record.setParams(cardId.toString());
-				record.setGotoUrl("");
-				record.setTitle(CardUtil.getCardTypeName(card.getCardType()));
-				record.setServiceTime(card.getServiceTime());
-				record.setSummary(serviceContent);
-				record.setIconUrl(CardUtil.getCardIcon(card.getCardType()));
-				userMsgService.insert(record);
-			
-			}
-		}
-
-		return new AsyncResult<Boolean>(true);
-	}
-
-	/**
-	 * 新增动态时发送消息
-	 */
-	@Async
-	@Override
-	public Future<Boolean> newFeedMsg(Long fid) {
-
-		Feeds feed = feedService.selectByPrimaryKey(fid);
-		if (feed == null)
-			return new AsyncResult<Boolean>(true);
-		
-		Short feedType = feed.getFeedType();
-		
-		String feedTypeName = FeedUtil.getFeedTypeName(feedType);
-
-		Long userId = feed.getUserId();
-		UserMsg record = userMsgService.initUserMsg();
-
-		record.setUserId(userId);
-		record.setFromUserId(userId);
-		record.setToUserId(userId);
-		record.setCategory("app");
-		record.setAction("feed");
-		record.setParams(fid.toString());
-		record.setGotoUrl("");
-		record.setTitle("发布" + feedTypeName);
-
-		String title = feed.getTitle();
-
-		if (title != null && title.length() > 20) {
-			title = title.substring(0, 20);
-		}
-
-		if (title.length() == 0) {
-			title = "你发布了新的" + feedTypeName;
-		}
-		
-		record.setSummary(title);
-		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
-		userMsgService.insert(record);
-
 		return new AsyncResult<Boolean>(true);
 	}
 

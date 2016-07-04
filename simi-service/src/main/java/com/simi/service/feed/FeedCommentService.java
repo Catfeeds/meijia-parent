@@ -33,4 +33,6 @@ public interface FeedCommentService {
 
 	List<FeedCommentViewVo> changeToFeedComments(List<FeedComment> feedComments, Long userId);
 
+	List<FeedComment> selectBySearchVo(FeedSearchVo searchVo);
+
 }

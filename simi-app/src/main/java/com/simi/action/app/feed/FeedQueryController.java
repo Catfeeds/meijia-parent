@@ -116,7 +116,7 @@ public class FeedQueryController extends BaseController {
 		FeedSearchVo searchVo = new FeedSearchVo();
 		searchVo.setFeedType(feedType);
 		if (feedFrom.equals((short) 1)) {
-			searchVo.setUserId(userId);
+			searchVo.setCommentUserId(userId);
 		}
 
 		PageInfo pageInfo = feedService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);

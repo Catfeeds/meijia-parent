@@ -34,6 +34,7 @@ import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.CardAsyncService;
+import com.simi.service.async.CardMsgAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.card.CardAttendService;
@@ -76,7 +77,7 @@ public class CardController extends BaseController {
 	private CardAsyncService cardAsyncService;
 
 	@Autowired
-	private UserMsgAsyncService userMsgAsyncService;
+	private CardMsgAsyncService cardMsgAsyncService;
 
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
@@ -280,7 +281,7 @@ public class CardController extends BaseController {
 		}
 
 		// 生成卡片消息
-		userMsgAsyncService.newCardMsg(cardId);
+		cardMsgAsyncService.newCardMsg(cardId);
 
 		// 创建卡片积分
 		userScoreAsyncService.sendScoreCard(userId, cardId, cardType);

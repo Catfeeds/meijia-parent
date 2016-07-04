@@ -10,6 +10,8 @@ public class FeedSearchVo {
 	
 	private Long userId;
 	
+	private Long commentUserId;
+	
 	private Short feedType;
 	
 	private List<Long> userIds;
@@ -92,6 +94,14 @@ public class FeedSearchVo {
 
 	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
+	}
+
+	public Long getCommentUserId() {
+		return commentUserId;
+	}
+
+	public void setCommentUserId(Long commentUserId) {
+		this.commentUserId = commentUserId;
 	}
 		
 

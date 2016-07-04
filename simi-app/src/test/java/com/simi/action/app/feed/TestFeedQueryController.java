@@ -37,7 +37,7 @@ public class TestFeedQueryController extends JUnitActionBase  {
     public void testGetList() throws Exception {
 
 		String url = "/app/feed/get_list.json";
-		String params = "?user_id=18&feed_type=2&feed_from=0&page=1";
+		String params = "?user_id=1&feed_type=2&feed_from=1&page=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

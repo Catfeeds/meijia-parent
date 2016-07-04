@@ -37,6 +37,10 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="commentUserId != null">
+			and ( user_id = #{commentUserId,jdbcType=NUMERIC} OR fid IN (select fid from feed_comment where user_id = #{commentUserId,jdbcType=NUMERIC} and feed_type = #{feedType,jdbcType=NUMERIC})  )
+		</if>
+		
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
@@ -47,6 +51,8 @@
 				#{item}
 			</foreach>
 		</if>
+		
+		
 		
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}

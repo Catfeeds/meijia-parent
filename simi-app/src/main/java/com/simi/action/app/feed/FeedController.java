@@ -25,6 +25,7 @@ import com.simi.po.model.feed.FeedZan;
 import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.FeedMsgAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.feed.FeedCommentService;
@@ -56,7 +57,7 @@ public class FeedController extends BaseController {
 	private FeedCommentService feedCommentService;
 
 	@Autowired
-	private UserMsgAsyncService userMsgAsyncService;
+	private FeedMsgAsyncService feedMsgAsyncService;
 
 	@Autowired
 	private FeedTagsService feedTagsService;
@@ -191,7 +192,7 @@ public class FeedController extends BaseController {
 		userScoreAsyncService.consumeScore(userId, score, "qa", fid.toString(), "问题悬赏");
 		
 		// 生成动态消息
-		userMsgAsyncService.newFeedMsg(fid);
+//		feedMsgAsyncService.newFeedMsg(fid);
 
 		result.setData(fid);
 
@@ -311,6 +312,11 @@ public class FeedController extends BaseController {
 				feedZan.setCommentId(commentId);
 				feedZanService.insert(feedZan);
 			}
+			
+			if (feedType.equals((short) 2)) {
+				//针对赞进行消息提醒
+				feedMsgAsyncService.newFeedZanMsg(userId, fid, feedType, commentId);
+			}
 		}
 
 		if (action.equals("del")) {
@@ -326,6 +332,7 @@ public class FeedController extends BaseController {
 		searchVo.setCommentId(commentId);
 		int totalZan = feedZanService.totalByFid(searchVo);
 		result.setData(totalZan);
+
 
 		return result;
 	}
@@ -426,7 +433,12 @@ public class FeedController extends BaseController {
 		if (feedType.equals((short) 2)) {
 			//答题奖励
 			userScoreAsyncService.sendScore(userId, Constants.SCORE_QA_COMMENT, "qa", commentId.toString(), "答题奖励");
+			
+			//针对题主进行消息提醒
+			feedMsgAsyncService.newFeedCommentMsg(userId, fid, feedType, commentId);
 		}
+		
+		
 		
 		return result;
 	}
@@ -487,6 +499,12 @@ public class FeedController extends BaseController {
 			//答题奖励  //问题悬赏
 			userScoreAsyncService.sendScore(commentUserId, score, "qa", commentId.toString(), "采纳问答");
 		}
+		
+		if (feedType.equals((short) 2)) {
+			//针对问题采纳进行消息提醒
+			feedMsgAsyncService.newFeedDoneMsg(userId, fid, feedType, commentId);
+		}
+		
 		return result;
 	}
 	
@@ -526,6 +544,12 @@ public class FeedController extends BaseController {
 			if (score > 0) {
 				userScoreAsyncService.sendScore(userId, score, "qa", fid.toString(), "问题悬赏关闭");
 			}
+			
+			if (feedType.equals((short) 2)) {
+				//针对问题关闭进行消息提醒
+				feedMsgAsyncService.newFeedCloseMsg(userId, fid, feedType);
+			}
+			
 			return result;
 		}	
 	
