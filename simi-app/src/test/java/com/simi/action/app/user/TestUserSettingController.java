@@ -17,10 +17,10 @@ public class TestUserSettingController extends JUnitActionBase  {
 		String url = "/app/user/set_alarm.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
-	    postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("setting_id", "16");
+	    postRequest = postRequest.param("user_id", "95");
+	    postRequest = postRequest.param("setting_id", "18");
 
-	    postRequest = postRequest.param("alarm_day", "1");
+	    postRequest = postRequest.param("alarm_day", "3");
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
 

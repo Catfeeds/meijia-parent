@@ -13,6 +13,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
+import com.meijia.wx.utils.JsonUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
@@ -68,7 +69,10 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		record.setJoinDate(new Date());
 		record.setRegularDate(new Date());
 		
-		record.setJsonInfo(initJsonInfo());
+		StaffJsonInfo v = initJsonInfo();
+		String json = JsonUtil.objecttojson(v);
+		
+		record.setJsonInfo(json);
 		
 		return record;
 	}

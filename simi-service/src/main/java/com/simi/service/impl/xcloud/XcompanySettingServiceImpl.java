@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.dict.DictService;
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.vo.DefaultVo;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.XCompanySettingVo;
 import com.simi.vo.xcloud.json.SettingJsonSettingValue;
@@ -20,6 +21,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.wx.utils.JsonUtil;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanySettingMapper;
 
@@ -47,7 +49,11 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		// 初始化一个json 字段
-		record.setSettingValue(new Object());
+		
+		DefaultVo v = new DefaultVo();
+		String json = JsonUtil.objecttojson(v);
+		
+		record.setSettingValue(json);
 
 		return record;
 	}

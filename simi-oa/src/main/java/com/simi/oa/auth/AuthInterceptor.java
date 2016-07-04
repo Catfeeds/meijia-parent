@@ -40,6 +40,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             				hasPermission=true;
             				if (permissionMenu.getUrl().equals(requestServletPath))
             					AuthHelper.setRequestPermissionMenu(request, permissionMenu);
+            				
+            				break;
             			}
             		}
             		if(hasPermission)
