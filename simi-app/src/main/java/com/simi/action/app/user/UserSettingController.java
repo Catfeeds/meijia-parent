@@ -1,6 +1,8 @@
 package com.simi.action.app.user;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.baidu.vo.BaiduPoiVo;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -21,6 +27,8 @@ import com.simi.service.ValidateService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.setting.CommonToolsVo;
+import com.simi.vo.setting.InsuranceVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
@@ -239,7 +247,37 @@ public class UserSettingController extends BaseController {
 		searchVo.setSettingType(settingType);
 
 		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo);
+		
+		
+		if (settingType.equals("common-tools")) {
+			 
+			List<CommonToolsVo> vos = new ArrayList<CommonToolsVo>();
+			for (XcompanySetting item : list) {
+				JSONObject setValue = (JSONObject) item.getSettingValue();
+	
+				CommonToolsVo vo = JSON.toJavaObject(setValue, CommonToolsVo.class);
+				
+				BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+				
+				vos.add(vo);
+			}
+			
+			Collections.sort(vos, new Comparator<CommonToolsVo>() {
+				@Override
+				public int compare(CommonToolsVo s1, CommonToolsVo s2) {
+					return Integer.valueOf(s1.getNo()).compareTo(s2.getNo());
+				}
+			});
+			
 
+			
+			
+			
+			result.setData(vos);
+			return result;
+		}
+		
+		
 		result.setData(list);
 
 		return result;

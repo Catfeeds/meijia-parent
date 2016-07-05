@@ -215,7 +215,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 		Users u = usersService.selectByPrimaryKey(userId);
 
-		// 给自己发送消息
+		// 给自己产生消息
 		UserMsg record = userMsgService.initUserMsg();
 		record.setUserId(userId);
 		record.setFromUserId(userId);
