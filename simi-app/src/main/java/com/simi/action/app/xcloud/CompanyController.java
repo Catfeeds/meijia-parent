@@ -130,20 +130,9 @@ public class CompanyController extends BaseController {
 			xCompanyService.updateByPrimaryKeySelective(xCompany);
 			return result;
 		}
-
-
-		// 生成团队唯一邀请码
-		String invitationCode = StringUtil.generateShortUuid();
-		xCompany.setInvitationCode(invitationCode);
-		xCompanyService.insert(xCompany);
-		companyId = xCompany.getCompanyId();
-
-		// 生成团队邀请二维码
-		String imgUrl = XcompanyUtil.genQrCode(invitationCode);
-
-		xCompany.setQrCode(imgUrl);
-		xCompanyService.updateByPrimaryKeySelective(xCompany);
 		
+		xCompanyService.insert(xCompany);
+	
 		//创建管理员关联表
 		XcompanyAdmin xcompanyAdmin = xCompanyAdminService.initXcompanyAdmin();
 		xcompanyAdmin.setCompanyId(companyId);
@@ -154,36 +143,75 @@ public class CompanyController extends BaseController {
 		xcompanyAdmin.setIsCreate(1);
 		
 		xCompanyAdminService.insert(xcompanyAdmin);
-		//积分赠送
-		userScoreAsyncService.sendScoreCompany(userId, companyId);
-
-		// 团队部门预置信息.
-		List<String> defaultDepts = MeijiaUtil.getDefaultDept();
-		for (int i = 0; i < defaultDepts.size(); i++) {
-			XcompanyDept dept = xCompanyDeptService.initXcompanyDept();
-			dept.setName(defaultDepts.get(i));
-			dept.setCompanyId(companyId);
-			dept.setParentId(0L);
-			xCompanyDeptService.insert(dept);
-		}
-
-		XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
-		Long deptId = 0L;
-		if (defaultDept != null) {
-			deptId = defaultDept.getDeptId();
-		}
-		// 将用户加入团队员工中
-		XcompanyStaff record = xCompanyStaffService.initXcompanyStaff();
-		record.setUserId(u.getId());
-		record.setCompanyId(companyId);
-		record.setDeptId(deptId);
-		record.setIsDefault((short) 1);
-		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
-		xCompanyStaffService.insertSelective(record);
-
+		
+		xCompanyService.regExtend(userId, companyId);
+		
 		return result;
 
 	}
+	
+	@RequestMapping(value = "/reg_app", method = { RequestMethod.POST })
+	public AppResultData<Object> companyRegApp(
+			@RequestParam("user_id") Long userId,
+			@RequestParam("city_id") Long cityId, 
+			@RequestParam("company_name") String companyName,
+			@RequestParam("short_name") String shortName, 
+			@RequestParam("company_size") Short companySize) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		Users u = usersService.selectByPrimaryKey(userId);
+		
+		if (!StringUtil.isEmpty(u.getMobile())) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您的信息不完善，请完善手机号后再来企业注册.");
+			return result;
+		}
+		
+		// 验证是否出现重名的情况.
+		CompanyAdminSearchVo searchVo = new CompanyAdminSearchVo();
+		searchVo.setCompanyName(companyName);
+		searchVo.setUserId(userId);
+		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo);
+		if (!rs.isEmpty()) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("您已经注册过" + companyName);
+			return result;
+		}
+
+		String passwordMd5 = "";
+		try {
+			passwordMd5 = StringUtil.md5("000000");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		Xcompany xCompany = xCompanyService.initXcompany();
+		xCompany.setCompanyName(companyName);
+		xCompany.setShortName(shortName);
+		xCompany.setCityId(cityId);
+		xCompany.setCompanySize(companySize);
+
+		xCompanyService.insert(xCompany);
+		Long companyId = xCompany.getCompanyId();
+
+		//创建管理员关联表
+		XcompanyAdmin xcompanyAdmin = xCompanyAdminService.initXcompanyAdmin();
+		xcompanyAdmin.setCompanyId(companyId);
+		xcompanyAdmin.setCompanyName(companyName);
+		xcompanyAdmin.setUserId(userId);
+		xcompanyAdmin.setUserName(u.getMobile());
+		xcompanyAdmin.setPassword(passwordMd5);
+		xcompanyAdmin.setIsCreate(1);
+		
+		xCompanyAdminService.insert(xcompanyAdmin);
+		
+		xCompanyService.regExtend(userId, companyId);
+		
+		return result;
+
+	}	
 	
 	@RequestMapping(value = "/get_detail", method = { RequestMethod.GET })
 	public AppResultData<Object> getDetail(
