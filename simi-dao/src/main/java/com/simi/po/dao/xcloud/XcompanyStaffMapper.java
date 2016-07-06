@@ -18,6 +18,8 @@ public interface XcompanyStaffMapper {
 
     int updateByPrimaryKey(XcompanyStaff record);
     
+    int updateByPrimaryKeyAndJson(XcompanyStaff record);
+    
     List<XcompanyStaff> selectBySearchVo(UserCompanySearchVo searchVo);
 
   	List<XcompanyStaff> selectByListPage(UserCompanySearchVo searchVo);

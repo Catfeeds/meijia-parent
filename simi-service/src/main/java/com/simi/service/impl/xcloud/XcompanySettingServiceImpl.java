@@ -87,6 +87,11 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	public int updateByPrimaryKeySelective(XcompanySetting record) {
 		return xcompanySettingMapper.updateByPrimaryKeySelective(record);
 	}
+	
+	@Override
+	public int updateByPrimaryKeyAndJson(XcompanySetting record) {
+		return xcompanySettingMapper.updateByPrimaryKeyAndJson(record);
+	}
 
 	@Override
 	public List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo) {

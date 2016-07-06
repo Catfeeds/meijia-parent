@@ -243,9 +243,6 @@
       <if test="settingJson != null" >
         setting_json = #{settingJson,jdbcType=VARCHAR},
       </if>
-      <if test="settingValue != null" >
-        setting_value = #{settingValue,jdbcType=OTHER},
-      </if>
       <if test="isEnable != null" >
         is_enable = #{isEnable,jdbcType=NUMERIC},
       </if>
@@ -269,6 +266,12 @@
       is_enable = #{isEnable,jdbcType=NUMERIC},
       add_time = #{addTime,jdbcType=NUMERIC},
       update_time = #{updateTime,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=NUMERIC}
+  </update>
+  
+   <update id="updateByPrimaryKeyAndJson" parameterType="com.simi.po.model.xcloud.XcompanySetting" >
+    update xcompany_setting
+    set setting_value = #{settingValue,jdbcType=OTHER}
     where id = #{id,jdbcType=NUMERIC}
   </update>
 </mapper>

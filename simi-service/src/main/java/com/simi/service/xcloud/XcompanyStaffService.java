@@ -50,5 +50,7 @@ public interface XcompanyStaffService {
 	
 	//云平台  xcompanyStaff 对应的Vo    staffListVo 初始化
 	StaffListVo initStaffListVO();
+
+	int updateByPrimaryKeyAndJson(XcompanyStaff xcompanyStaff);
 	
 }

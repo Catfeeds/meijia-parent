@@ -223,6 +223,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 		return xCompanyStaffMapper.updateByPrimaryKeySelective(xcompanyStaff);
 	}
+	
+	@Override
+	public int updateByPrimaryKeyAndJson(XcompanyStaff xcompanyStaff) {
+
+		return xCompanyStaffMapper.updateByPrimaryKeyAndJson(xcompanyStaff);
+	}
 
 	// 获得最大的员工编号
 	@Override

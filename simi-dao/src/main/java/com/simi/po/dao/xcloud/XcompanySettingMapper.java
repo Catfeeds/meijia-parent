@@ -21,4 +21,6 @@ public interface XcompanySettingMapper {
     List<XcompanySetting> selectBySearchVo(CompanySettingSearchVo searchVo);
 
 	List<XcompanySetting> selectByListPage(CompanySettingSearchVo searchVo);
+
+	int updateByPrimaryKeyAndJson(XcompanySetting record);
 }

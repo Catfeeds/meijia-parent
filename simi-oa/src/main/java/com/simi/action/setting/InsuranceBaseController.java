@@ -181,6 +181,7 @@ public class InsuranceBaseController extends BaseController {
 			xcompanySetting.setUpdateTime(TimeStampUtil.getNowSecond());
 			xcompanySetting.setSettingValue(json);
 			settingService.updateByPrimaryKey(xcompanySetting);
+			settingService.updateByPrimaryKeySelective(xcompanySetting);
 
 		} else {
 			xcompanySetting.setSettingType(Constants.SETTING_TYPE_INSURANCE_BASE);

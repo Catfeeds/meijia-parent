@@ -164,6 +164,7 @@ public class TaxPersionController extends BaseController {
 			xcompanySetting.setSettingType(settingType);
 			xcompanySetting.setSettingValue(json);
 			settingService.updateByPrimaryKey(xcompanySetting);
+			settingService.updateByPrimaryKeyAndJson(xcompanySetting);
 
 		} else {
 			xcompanySetting.setSettingType(settingType);

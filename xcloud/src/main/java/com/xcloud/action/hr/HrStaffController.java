@@ -471,6 +471,7 @@ public class HrStaffController extends BaseController {
 		
 		if (staffId > 0L) {
 			xcompanyStaffService.updateByPrimaryKeySelective(xcompanyStaff);
+			xcompanyStaffService.updateByPrimaryKeyAndJson(xcompanyStaff);
 		} else {
 			xcompanyStaff.setJobNumber(xcompanyStaffService.getNextJobNumber(companyId));
 			xcompanyStaffService.insertSelective(xcompanyStaff);

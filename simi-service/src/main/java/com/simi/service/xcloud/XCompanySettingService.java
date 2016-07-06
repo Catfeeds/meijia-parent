@@ -34,5 +34,7 @@ public interface XCompanySettingService {
 	PageInfo selectByListPage(CompanySettingSearchVo searchVo, int pageNo, int pageSize);
 
 	XCompanySettingVo getXCompantSettingVo(XcompanySetting item);
+
+	int updateByPrimaryKeyAndJson(XcompanySetting record);
 	
 }
