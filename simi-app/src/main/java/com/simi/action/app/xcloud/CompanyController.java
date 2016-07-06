@@ -162,7 +162,7 @@ public class CompanyController extends BaseController {
 
 		Users u = usersService.selectByPrimaryKey(userId);
 		
-		if (!StringUtil.isEmpty(u.getMobile())) {
+		if (StringUtil.isEmpty(u.getMobile())) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("您的信息不完善，请完善手机号后再来企业注册.");
 			return result;
