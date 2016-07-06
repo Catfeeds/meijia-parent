@@ -42,7 +42,7 @@
 		</if>
 		
 		<if test="userId != null">
-			and userId = #{userId,jdbcType=NUMERIC}
+			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="userName != null">
@@ -85,7 +85,7 @@
 		</if>
 		
 		<if test="userId != null">
-			and userId = #{userId,jdbcType=NUMERIC}
+			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="userName != null">
