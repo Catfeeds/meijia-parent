@@ -126,6 +126,11 @@ public class CardAttendServiceImpl implements CardAttendService {
 					if (StringUtil.isEmpty(mobile)) continue;
 					if (!RegexUtil.isMobile(mobile)) continue;
 				}
+				
+				if (!StringUtil.isEmpty(mobile)) {
+					if (!RegexUtil.isMobile(mobile)) continue;
+				}
+				
 //				mobile = RegexUtil.checkMobile(mobile);
 				
 				//根据手机号找出对应的userID, 如果没有则直接新增用户.
