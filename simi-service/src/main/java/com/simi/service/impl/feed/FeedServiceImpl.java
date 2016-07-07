@@ -13,9 +13,11 @@ import com.simi.service.feed.FeedService;
 import com.simi.service.feed.FeedTagsService;
 import com.simi.service.feed.FeedZanService;
 import com.simi.service.user.UsersService;
+import com.simi.utils.FeedUtil;
 import com.simi.vo.TagVo;
 import com.simi.vo.feed.FeedListVo;
 import com.simi.vo.feed.FeedSearchVo;
+import com.simi.vo.feed.FeedVo;
 import com.simi.po.model.feed.FeedImgs;
 import com.simi.po.model.feed.FeedTags;
 import com.simi.po.model.feed.Feeds;
@@ -84,7 +86,7 @@ public class FeedServiceImpl implements FeedService {
 			vo.setHeadImg(usersService.getHeadImg(u));
 			
 			if (StringUtil.isEmpty(vo.getName())) {
-				vo.setName(MobileUtil.getMobileStar(u.getMobile()));
+				vo.setName(u.getMobile());
 			}
 			
 		}
@@ -126,6 +128,70 @@ public class FeedServiceImpl implements FeedService {
 		vo.setFeedTags(feedTagVos);
 		return vo;
 	}
+	
+	@Override
+	public FeedVo changeToFeedVo(Feeds item) {
+
+		Long fid = item.getFid();
+		FeedVo vo = new FeedVo();
+
+		// 进行对象复制.
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+
+		// 获取用户名称
+		Users u = usersService.selectByPrimaryKey(vo.getUserId());
+
+		if (u != null) {
+			vo.setName(u.getName());
+			vo.setHeadImg(usersService.getHeadImg(u));
+			
+			if (StringUtil.isEmpty(vo.getName())) {
+				vo.setName(MobileUtil.getMobileStar(u.getMobile()));
+			}
+			
+		}
+
+		// 服务时间字符串
+		Date addTimeDate = TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, null);
+		String addTimeStr = DateUtil.fromToday(addTimeDate);
+		vo.setAddTimeStr(addTimeStr);
+
+		FeedSearchVo searchVo = new FeedSearchVo();
+		searchVo.setFid(fid);
+		searchVo.setFeedType(item.getFeedType());
+		// 统计赞的数量
+		int totalZan = feedZanService.totalByFid(searchVo);
+		vo.setTotalZan(totalZan);
+
+		// 统计评论的数量
+		int totalComment = feedCommentService.totalByFid(searchVo);
+		vo.setTotalComment(totalComment);
+
+		// 动态图片
+		vo.setFeedImgs(new ArrayList<FeedImgs>());
+		List<FeedImgs> list = feedImgsService.selectBySearchVo(searchVo);
+
+		if (list != null) {
+			vo.setFeedImgs(list);
+		}
+
+		// 动态标签/类别
+		List<TagVo> feedTagVos = new ArrayList<TagVo>();
+		List<FeedTags> feedTags = feedTagsService.selectBySearchVo(searchVo);
+		for (FeedTags item1 : feedTags) {
+			TagVo tvo = new TagVo();
+			tvo.setTagId(item1.getTagId());
+			tvo.setTagName(item1.getTags());
+			feedTagVos.add(tvo);
+		}
+		
+		//状态名称
+		String statusName = FeedUtil.getFeedStatusName(vo.getStatus());
+		vo.setStatusName(statusName);
+
+		vo.setFeedTags(feedTagVos);
+		return vo;
+	}	
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {

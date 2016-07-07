@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.feed.Feeds;
 import com.simi.vo.feed.FeedListVo;
 import com.simi.vo.feed.FeedSearchVo;
+import com.simi.vo.feed.FeedVo;
 
 public interface FeedService {
 
@@ -26,6 +27,8 @@ public interface FeedService {
 	PageInfo selectByListPage(FeedSearchVo vo, int pageNo, int pageSize);
 
 	int updateByTotalView(Long fid);
+
+	FeedVo changeToFeedVo(Feeds item);
 
 	
 

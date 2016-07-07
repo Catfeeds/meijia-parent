@@ -207,6 +207,8 @@ public class OpController extends BaseController {
 			
 			List<OpAutoFeed> list =  opAutoFeedService.selectByTotal();
 			
+			if (list.isEmpty()) return result;
+			
 			Collections.shuffle(list);  
 			
 			OpAutoFeed item = list.get(0);
