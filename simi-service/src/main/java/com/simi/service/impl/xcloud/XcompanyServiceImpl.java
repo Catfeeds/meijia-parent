@@ -175,8 +175,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 		
 		Xcompany xCompany = this.selectByPrimaryKey(companyId);
 		// 生成团队唯一邀请码
-		String invitationCode = StringUtil.generateShortUuid();
-		xCompany.setInvitationCode(invitationCode);
+		String invitationCode = xCompany.getInvitationCode();
 
 		// 生成团队邀请二维码
 		String imgUrl = "";

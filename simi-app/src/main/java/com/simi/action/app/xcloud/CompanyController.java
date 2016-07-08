@@ -131,6 +131,9 @@ public class CompanyController extends BaseController {
 			return result;
 		}
 		
+		String invitationCode = StringUtil.generateShortUuid();
+		xCompany.setInvitationCode(invitationCode);
+		
 		xCompanyService.insert(xCompany);
 	
 		//创建管理员关联表
