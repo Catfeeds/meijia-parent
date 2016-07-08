@@ -41,6 +41,32 @@ public class TestCompanyController extends JUnitActionBase  {
 
     }	
 	
+	@Test
+    public void testRegApp() throws Exception {
+
+		String url = "/app/company/reg_app.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("city_id", "2");
+     	postRequest = postRequest.param("user_id", "1306");
+	    postRequest = postRequest.param("company_name", "和谐");
+	    postRequest = postRequest.param("short_name", "不");
+	    postRequest = postRequest.param("company_size", "0");
+
+	    
+
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
+	
 	/**
 	 * 	 团队列表接口
 	 */
