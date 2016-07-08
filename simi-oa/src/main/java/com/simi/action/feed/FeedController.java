@@ -103,10 +103,13 @@ public class FeedController extends AdminController {
 		//马甲列表
 		List<Long> userIds = new ArrayList<Long>();
 		userIds.add(1286L);
+		userIds.add(1287L);
+		userIds.add(1288L);
 		userIds.add(1289L);
 		userIds.add(1290L);
 		userIds.add(1291L);
 		userIds.add(1292L);
+		userIds.add(1293L);
 		userIds.add(1476L);
 		
 		UserSearchVo usearchVo = new UserSearchVo();
@@ -130,10 +133,13 @@ public class FeedController extends AdminController {
 		//马甲列表
 		List<Long> userIds = new ArrayList<Long>();
 		userIds.add(1286L);
+		userIds.add(1287L);
+		userIds.add(1288L);
 		userIds.add(1289L);
 		userIds.add(1290L);
 		userIds.add(1291L);
 		userIds.add(1292L);
+		userIds.add(1293L);
 		userIds.add(1476L);
 		
 		UserSearchVo usearchVo = new UserSearchVo();
