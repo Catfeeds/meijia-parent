@@ -34,6 +34,8 @@ public interface UserLeaveService {
 
 	UserLeaveDetailVo changeToDetailVo(UserLeave item);
 
+	String getLeaveTypeName(Short leaveType);
+
 
 
 }

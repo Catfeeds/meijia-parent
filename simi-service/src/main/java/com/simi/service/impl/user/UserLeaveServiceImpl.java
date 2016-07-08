@@ -217,7 +217,7 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		vo.setPassUsers(passUsers);
 		return vo;
 	}
-
+	
 	private String getStatusName(Short status) {
 		String statusName = "";
 
@@ -238,6 +238,40 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 			statusName = "";
 		}
 		return statusName;
+	}
+
+	//请假类型 0 = 病假 1 = 事假 2 = 婚假 3 = 丧假 4 = 产假 5 = 年休假 6 = 其他
+	@Override
+	public String getLeaveTypeName(Short leaveType) {
+		String leaveTypeName = "";
+
+		switch (leaveType) {
+		case 0:
+			leaveTypeName = "病假";
+			break;
+		case 1:
+			leaveTypeName = "事假";
+			break;
+		case 2:
+			leaveTypeName = "婚假";
+			break;
+		case 3:
+			leaveTypeName = "丧假";
+			break;
+		case 4:
+			leaveTypeName = "产假";
+			break;
+		case 5:
+			leaveTypeName = "年休假";
+			break;
+		case 6:
+			leaveTypeName = "其他";
+			break;
+		
+		default:
+			leaveTypeName = "";
+		}
+		return leaveTypeName;
 	}
 
 }

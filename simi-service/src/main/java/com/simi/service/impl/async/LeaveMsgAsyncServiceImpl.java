@@ -49,7 +49,8 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 			return new AsyncResult<Boolean>(true);
 
 		Users u = usersService.selectByPrimaryKey(userId);
-
+		
+		String leveTypeName = userLeaveService.getLeaveTypeName(userLeave.getLeaveType());
 		// 给自己产生消息
 		UserMsg record = userMsgService.initUserMsg();
 		record.setUserId(userId);
@@ -59,7 +60,7 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 		record.setAction("leave_pass");
 		record.setParams(leaveId.toString());
 		record.setTitle("请假申请");
-		record.setSummary("你申请了" + userLeave.getTotalDays() + "请假.");
+		record.setSummary("你申请了" + userLeave.getTotalDays() + leveTypeName + ".");
 		record.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
 		userMsgService.insert(record);
 
@@ -70,7 +71,7 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 			if (item.getPassUserId() == null || item.getPassUserId().equals(0L))
 				continue;
 
-			String msgContent = u.getName() + "申请" + userLeave.getTotalDays() + "天请假,请查看.";
+			String msgContent = u.getName() + "申请" + userLeave.getTotalDays()  + leveTypeName + ",请查看.";
 
 			UserMsg passRecord = userMsgService.initUserMsg();
 			passRecord.setUserId(item.getPassUserId());
@@ -114,7 +115,9 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 		String statusName = "同意";
 		if (status.equals((short)2)) statusName = "拒绝";
 		
-		String msgContent = "你" + statusName + "了" + name + "请假申请（"+userLeave.getTotalDays()+"）";
+		String leveTypeName = userLeaveService.getLeaveTypeName(userLeave.getLeaveType());
+		
+		String msgContent = "你" + statusName + "了" + name + leveTypeName +"申请（"+userLeave.getTotalDays()+"）";
 		
 
 		// 给审批人产生消息
@@ -130,7 +133,7 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 		record.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
 		userMsgService.insert(record);
 
-		msgContent = passName + statusName + "了你的请假申请（"+userLeave.getTotalDays()+"）";
+		msgContent = passName + statusName + "了你的"+leveTypeName+"申请（"+userLeave.getTotalDays()+"）";
 		// 发送给申请人推送消息
 		noticeAppAsyncService.pushMsgToDevice(userId, "请假审批", msgContent, "app", "leave_pass", leaveId.toString(), "");
 		
@@ -154,11 +157,13 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 		if (StringUtil.isEmpty(name)) name = MobileUtil.getMobileStar(u.getMobile());
 		// 给审批人都发送消息.
 		List<UserLeavePass> passUsers = userLeavePassService.selectByLeaveId(leaveId);
-
+		
+//		String leveTypeName = userLeaveService.getLeaveTypeName(userLeave.getLeaveType());
+		
 		for (UserLeavePass item : passUsers) {
 			if (item.getPassUserId() == null || item.getPassUserId().equals(0L))
 				continue;
-
+		
 			String msgContent = u.getName() + "撤消了请假申请，请知悉";
 
 			// 发送推送消息
