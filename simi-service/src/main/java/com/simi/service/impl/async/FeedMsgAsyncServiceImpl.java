@@ -269,29 +269,33 @@ public class FeedMsgAsyncServiceImpl implements FeedMsgAsyncService {
 		
 		if (feedComments.isEmpty()) return new AsyncResult<Boolean>(true);
 		
+		String msgContent = "";
 		for (FeedComment item : feedComments) {
 			Long commentUserId = item.getUserId();
 			
 	//		Users commentUser = usersService.selectByPrimaryKey(commentUserId);
 			
-			String msgContent = "【"+title+"】已被题主"+name+"关闭~";
+			msgContent = "【"+title+"】已被题主"+name+"关闭~";
 			noticeAppAsyncService.pushMsgToDevice(commentUserId, "互助问答", msgContent, "app", "feed", fid.toString(), "");
 			
-			//答主产生日程.
-			UserMsg record = userMsgService.initUserMsg();
-	
-			record.setUserId(commentUserId);
-			record.setFromUserId(userId);
-			record.setToUserId(commentUserId);
-			record.setCategory("app");
-			record.setAction("feed");
-			record.setParams(fid.toString());
-			record.setGotoUrl("");
-			record.setTitle("互助问答");
-			record.setSummary(msgContent);
-			record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
-			userMsgService.insert(record);
+			
 		}
+		
+		msgContent = "你关闭了【"+title+"】";
+		//答主产生日程.
+		UserMsg record = userMsgService.initUserMsg();
+
+		record.setUserId(userId);
+		record.setFromUserId(userId);
+		record.setToUserId(userId);
+		record.setCategory("app");
+		record.setAction("feed");
+		record.setParams(fid.toString());
+		record.setGotoUrl("");
+		record.setTitle("互助问答");
+		record.setSummary(msgContent);
+		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
+		userMsgService.insert(record);
 
 		return new AsyncResult<Boolean>(true);
 	}		
