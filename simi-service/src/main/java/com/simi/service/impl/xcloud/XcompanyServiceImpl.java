@@ -216,7 +216,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 		record.setUserId(u.getId());
 		record.setCompanyId(companyId);
 		record.setDeptId(deptId);
-		record.setIsDefault((short) 1);
+		record.setIsDefault((short) 0);
 		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
 		
