@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.MobileUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -28,6 +29,8 @@ import com.simi.common.Constants;
 import com.simi.po.model.user.UserLeave;
 import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.Users;
+import com.simi.service.async.LeaveMsgAsyncService;
+import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
@@ -57,12 +60,11 @@ public class UserLeaveController extends BaseController {
 	private UsersAsyncService usersAsyncService;	
 	
 	@Autowired
-	private UserMsgAsyncService userMsgAsyncService;
+	private LeaveMsgAsyncService leaveMsgAsyncService;
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
 	
-
 	// 用户请假接口
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "post_leave", method = RequestMethod.POST)
@@ -226,7 +228,7 @@ public class UserLeaveController extends BaseController {
 		}
 		
 		//生成请假消息，审批人推送消息
-		userMsgAsyncService.newLeaveMsg(userId, leaveId);
+		leaveMsgAsyncService.newLeaveMsg(userId, leaveId);
 		
 		//积分赠送
 		UserLeaveSearchVo searchVo1 = new UserLeaveSearchVo();
@@ -403,6 +405,9 @@ public class UserLeaveController extends BaseController {
 			userLeaveService.updateByPrimaryKey(userLeave);
 		}
 		
+		//发出通知
+		leaveMsgAsyncService.newLeavePassMsg(userId, leaveId);
+		
 		return result;
 	}	
 	
@@ -441,6 +446,9 @@ public class UserLeaveController extends BaseController {
 		userLeave.setStatus((short) 3);
 		userLeave.setUpdateTime(TimeStampUtil.getNowSecond());
 		userLeaveService.updateByPrimaryKey(userLeave);
+		
+		//发出通知
+		leaveMsgAsyncService.newLeaveCancelMsg(leaveId);
 		
 		
 		return result;

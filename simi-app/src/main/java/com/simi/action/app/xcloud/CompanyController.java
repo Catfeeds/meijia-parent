@@ -195,6 +195,9 @@ public class CompanyController extends BaseController {
 		xCompany.setShortName(shortName);
 		xCompany.setCityId(cityId);
 		xCompany.setCompanySize(companySize);
+		
+		String invitationCode = StringUtil.generateShortUuid();
+		xCompany.setInvitationCode(invitationCode);
 
 		xCompanyService.insert(xCompany);
 		Long companyId = xCompany.getCompanyId();

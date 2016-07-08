@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
+import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.model.op.AppTools;
@@ -200,57 +201,6 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 			userMsgService.updateByPrimaryKey(record);
 		} else {
 			userMsgService.insert(record);
-		}
-
-		return new AsyncResult<Boolean>(true);
-	}
-
-	@Async
-	@Override
-	public Future<Boolean> newLeaveMsg(Long userId, Long leaveId) {
-
-		UserLeave userLeave = userLeaveService.selectByPrimaryKey(leaveId);
-		if (userLeave == null)
-			return new AsyncResult<Boolean>(true);
-
-		Users u = usersService.selectByPrimaryKey(userId);
-
-		// 给自己产生消息
-		UserMsg record = userMsgService.initUserMsg();
-		record.setUserId(userId);
-		record.setFromUserId(userId);
-		record.setToUserId(userId);
-		record.setCategory("app");
-		record.setAction("leave_pass");
-		record.setParams(leaveId.toString());
-		record.setTitle("请假申请");
-		record.setSummary("你申请了" + userLeave.getTotalDays() + "天请假.");
-		record.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
-		userMsgService.insert(record);
-
-		// 给审批人都发送消息.
-		List<UserLeavePass> passUsers = userLeavePassService.selectByLeaveId(leaveId);
-
-		for (UserLeavePass item : passUsers) {
-			if (item.getPassUserId() == null || item.getPassUserId().equals(0L))
-				continue;
-
-			String msgContent = u.getName() + "申请" + userLeave.getTotalDays() + "天请假,请查看.";
-
-			UserMsg passRecord = userMsgService.initUserMsg();
-			passRecord.setUserId(item.getPassUserId());
-			passRecord.setFromUserId(userId);
-			passRecord.setToUserId(item.getPassUserId());
-			passRecord.setCategory("app");
-			passRecord.setAction("leave_pass");
-			passRecord.setParams(leaveId.toString());
-			passRecord.setTitle("请假审批");
-			passRecord.setSummary(msgContent);
-			passRecord.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
-			userMsgService.insert(passRecord);
-
-			// 发送推送消息
-			noticeAppAsyncService.pushMsgToDevice(item.getPassUserId(), "请假审批", msgContent, "app", "leave_pass", leaveId.toString(), "");
 		}
 
 		return new AsyncResult<Boolean>(true);
