@@ -201,10 +201,11 @@
 						<div class="form-group required">
 							<label class="col-md-2 control-label">评价:</label>
 							<div class="col-md-5" >
-								<div id="star"></div>
+								<div id="totalRate"></div>
 								${ contentModel.totalRate }
 							</div>
 						</div>
+
 
 						<!-- </fieldset> -->
 				</form:form>
@@ -230,15 +231,14 @@
 									<timestampTag:timestamp patten="yyyy-MM-dd HH:mm" t="${item.addTime * 1000}" />
 									
 									评价: ${item.rate }
-									
-									
-									
+									<div class="rated" value="${item.rate }"></div>
 								</p>
 								<p>${item.rateContent }</p>
 							</div>
 						</div>
 					</div>
 					<!-- /comment -->
+					
 					</c:forEach>
 				</div>
 				<hr>
@@ -311,11 +311,39 @@
 		$('#rate').raty({
 			  precision  : true,
 			  size       : 24,
-
-
 		});
 		
-
+		$('#totalRate').raty({
+			  precision  : true,
+			  size       : 24,
+			  readOnly : true,
+			  score		 : <c:out value="${contentModel.totalRate}" escapeXml="false"></c:out>
+			  
+		});
+		
+		$('#rated_5').raty({
+			  precision  : true,
+			  size       : 24,
+			  readOnly : true,
+			  score		 : 3
+			  
+		});
+		
+		$('.rated').each(function () {
+	        var v = $(this).attr("value");
+	        
+	        $(this).raty({
+				  precision  : true,
+				  size       : 24,
+				  readOnly : true,
+				  score		 : v,
+				  starOn 	 : '../../assets/jquery.raty-2.4.5/img/star-on.png',
+	        	 starOff 	 : '../../assets/jquery.raty-2.4.5/img/star-off.png',
+	        	starHalf 	 : '../../assets/jquery.raty-2.4.5/img/star-half.png'
+				  
+			});
+	        
+		});
 	
 	</script>
 
