@@ -8,7 +8,6 @@ var mobile = getUrlParam("mobile");
 console.log("reqInvitationCode = " + reqInvitationCode);
 if (reqInvitationCode != undefined) {
 	$('#invitation_code').val(reqInvitationCode);
-	$('#href-tab2').click();
 }
 
 if (mobile != undefined) {
@@ -69,6 +68,7 @@ function companyJoinSubmit() {
 	
 	var params = {};
 	params.user_name = userName;
+	params.name = name;
 	params.sms_token = $('#join_sms_token').val();
 	params.invitation_code = $('#invitation_code').val();
 	//提交数据，完成注册流程

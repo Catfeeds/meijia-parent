@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-	<!--  
-	  <classPathEntry location="C:\workspace\java\libs\mysql-connector-java-5.1.5-bin.jar" />
-    -->
+	<!-- <classPathEntry location="C:\workspace\java\libs\mysql-connector-java-5.1.5-bin.jar" /> -->
 	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" />
 
 
@@ -16,130 +14,102 @@
 		</commentGenerator>
 
 		<!-- 数据库链接URL、用户名、密码 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/simi" userId="root"
-			password="root1qaz" />
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/simi" userId="root" password="root1qaz" />
 
 		<!-- 解决数字转换问题 -->
 		<javaTypeResolver>
-			<!-- 只有一个属于forceBigDecimals，默认false。 如果字段精确超过0，生成BigDecimal 如果字段精确是0，总长度10-18生成Long;
-				如果字段精确是0，总长5-9生成Integer; 如果字段精确是0，总长小于5生成Short; 如果forceBigDecimals为true,统一生成BigDecimal -->
+			<!-- 只有一个属于forceBigDecimals，默认false。 如果字段精确超过0，生成BigDecimal 如果字段精确是0，总长度10-18生成Long; 如果字段精确是0，总长5-9生成Integer; 如果字段精确是0，总长小于5生成Short; 如果forceBigDecimals为true,统一生成BigDecimal -->
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="com.simi.po.model.record"
-			targetProject="simi-dao">
-            <property name="enableSubPackages" value="false" />
-            <property name="trimStrings" value="true" />
-        </javaModelGenerator>
+		<javaModelGenerator targetPackage="com.simi.po.model.record" targetProject="simi-dao">
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
 
 		<!-- 生成的映射文件包名和位置 -->
-		<sqlMapGenerator targetPackage="com.simi.po.xml.record"
-			targetProject="simi-dao">
+		<sqlMapGenerator targetPackage="com.simi.po.xml.record" targetProject="simi-dao">
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator targetPackage="com.simi.po.dao.record"
-			targetProject="simi-dao" type="XMLMAPPER">
+		<javaClientGenerator targetPackage="com.simi.po.dao.record" targetProject="simi-dao" type="XMLMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
-		
-		<table schema="simi" tableName="record_express"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="to_user_id" property="toUserId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="express_id" property="expressId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="from_city_id" property="fromCityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="to_city_id" property="toCityId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
-			<columnOverride  column="express_type" property="expressType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="is_done" property="isDone" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="is_close" property="isClose" javaType="java.lang.Short" jdbcType="NUMERIC"/>
-			<columnOverride  column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+
+		<table schema="simi" tableName="record_express" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="to_user_id" property="toUserId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="express_id" property="expressId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="from_city_id" property="fromCityId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="to_city_id" property="toCityId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+
+			<columnOverride column="express_type" property="expressType" javaType="java.lang.Short" jdbcType="NUMERIC" />
+			<columnOverride column="is_done" property="isDone" javaType="java.lang.Short" jdbcType="NUMERIC" />
+			<columnOverride column="is_close" property="isClose" javaType="java.lang.Short" jdbcType="NUMERIC" />
+			<columnOverride column="pay_type" property="payType" javaType="java.lang.Short" jdbcType="NUMERIC" />
 		</table>
 
 		<!--资产登记表 -->
-		<table schema="simi" tableName="record_assets"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
+		<table schema="simi" tableName="record_assets" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+
 		</table>
-		
+
 		<!--资产领用表 -->
-		<table schema="simi" tableName="record_asset_use"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="asset_id" property="assetId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			
-			<columnOverride  column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+		<table schema="simi" tableName="record_asset_use" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="asset_id" property="assetId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="asset_type_id" property="assetTypeId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+
+			<columnOverride column="status" property="status" javaType="java.lang.Short" jdbcType="NUMERIC" />
 		</table>
 
 		<!-- 条形码数据表 -->
-		<table schema="simi" tableName="record_barcode"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		<table schema="simi" tableName="record_barcode" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		</table>
 
-				<!-- 条形码数据表 -->
-		<table schema="simi" tableName="record_holiday"
-			enableInsert="true"
-			enableSelectByPrimaryKey="true"
-			enableUpdateByPrimaryKey="true"
-			selectByExampleQueryId="false"
-			enableUpdateByExample="false"
-			enableDeleteByExample="false"
-			enableSelectByExample="false"
-			enableCountByExample="false">
-			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="hdate" property="hdate" javaType="java.lang.Long" jdbcType="NUMERIC"/>
-			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+		<!-- 假日记录表 -->
+		<table schema="simi" tableName="record_holiday" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="hdate" property="hdate" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		</table>
-		
+
+		<!-- 评价记录表 -->
+		<table schema="simi" tableName="record_rates" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="link_id" property="linkId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+
+			<columnOverride column="rate_type" property="rateType" javaType="java.lang.Short" jdbcType="NUMERIC" />
+			<columnOverride column="rate" property="rate" javaType="java.lang.Short" jdbcType="NUMERIC" />
+
+		</table>
+
 
 	</context>
 </generatorConfiguration>

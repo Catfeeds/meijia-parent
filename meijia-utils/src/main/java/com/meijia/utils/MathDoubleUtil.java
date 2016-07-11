@@ -2,6 +2,7 @@ package com.meijia.utils;
 
 import java.math.BigDecimal;
 
+
 public class MathDoubleUtil {
 	// 默认除法运算精度
 	private static final int DEF_DIV_SCALE = 2;
@@ -106,5 +107,30 @@ public class MathDoubleUtil {
 		BigDecimal b = new BigDecimal(Double.toString(v));
 		BigDecimal one = new BigDecimal("1");
 		return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+	
+	public static void main(String[] args) {
+		
+		int total = 1;
+		int totalRate = 1;
+		
+		total = total + 1;
+		totalRate = totalRate + 5;
+		
+		Double d = MathDoubleUtil.div(Double.valueOf(totalRate), Double.valueOf(total), 2);
+		
+		System.out.println(d);
+		double x = d - Math.floor(d);
+		
+		System.out.println(x);
+		
+		if (x > 0 && x < 0.5)  {
+			d = Math.floor(d) + 0.5;
+		}
+		if (x > 0.5) d = Math.floor(d) + 1;
+		
+		if (d > 5) d = (double) 5;
+		
+		System.out.println(d);
 	}
 }

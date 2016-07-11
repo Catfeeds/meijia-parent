@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
@@ -35,6 +36,7 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
+import com.simi.po.model.record.RecordRates;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
@@ -44,6 +46,7 @@ import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
+import com.simi.service.record.RecordRatesService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
@@ -51,6 +54,8 @@ import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerUserServiceTypeVo;
 import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.record.RecordRateSearchVo;
+import com.simi.vo.record.RecordRateVo;
 
 /**
  * @description：
@@ -87,6 +92,9 @@ public class PartnerUsersController extends BaseController {
 
 	@Autowired
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	
+	@Autowired
+	private RecordRatesService recordRatesService;
 
 	/**
 	 * 服务人员列表
@@ -489,6 +497,118 @@ public class PartnerUsersController extends BaseController {
 
 		return "redirect:partner_service_price_list?partner_id=" + partnerId + "&user_id=" + vo.getUserId() + "&service_type_id=" + serviceTypeId;
 
+	}
+	
+	
+	/**
+	 * 跳转到编辑服务人员的页面
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	@AuthPassport
+	@RequestMapping(value = "/rateform", method = { RequestMethod.GET })
+	public String rateForm(Model model, HttpServletRequest request, @RequestParam("id") Long id, @RequestParam("partnerId") Long partnerId,
+			HttpServletRequest response) throws JsonParseException, JsonMappingException, IOException {
+		
+
+
+		PartnerUsers partnerUser = partnerUserService.selectByPrimaryKey(id);
+		Long userId = partnerUser.getUserId();
+		Users u = userService.selectByPrimaryKey(userId);
+	
+		List<Tags> tags = tagsService.selectByTagType((short) 2);
+		List<Tags> userTags = new ArrayList<Tags>();
+		String tagIds = "";
+	
+		List<TagUsers> tagUsers = tagsUsersService.selectByUserId(userId);
+
+		for (TagUsers item : tagUsers) {
+			tagIds += item.getTagId() + ",";
+		}
+
+		Partners partner = partnersService.selectByPrimaryKey(partnerId);
+
+		PartnerUserVo vo = new PartnerUserVo();
+		
+		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+		BeanUtilsExp.copyPropertiesIgnoreNull(partner, vo);
+		vo.setId(id);
+		vo.setPartnerId(partnerId);
+		vo.setCompanyName(partner.getCompanyName());
+		vo.setUserId(userId);
+		vo.setUserTags(userTags);
+
+		model.addAttribute("contentModel", vo);
+		model.addAttribute("tags", tags);
+		model.addAttribute("tagIds", tagIds);
+
+		// 服务大类，该团队的服务大类
+		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
+
+		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+
+		if (!partnerRefServiceType.isEmpty()) {
+			List<Long> serviceTypeIds = new ArrayList<Long>();
+
+			for (PartnerRefServiceType item : partnerRefServiceType) {
+				if (!serviceTypeIds.contains(item.getServiceTypeId())) {
+					serviceTypeIds.add(item.getServiceTypeId());
+				}
+			}
+
+			partnerServiceType = partnerServiceTypeService.selectByIds(serviceTypeIds);
+		}
+
+		model.addAttribute("partnerServiceType", partnerServiceType);
+		
+		
+		//评价列表
+		RecordRateSearchVo searchVo = new RecordRateSearchVo();
+		searchVo.setRateType((short) 1);
+		searchVo.setLinkId(userId);
+		List<RecordRates> list = recordRatesService.selectBySearchVo(searchVo);
+		
+		List<RecordRateVo> vos = new ArrayList<RecordRateVo>();
+		for (int i = 0; i < list.size(); i++) {
+			RecordRates item = list.get(i);
+			
+			RecordRateVo rvo = new RecordRateVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, rvo);
+			
+			Long uid = item.getUserId();
+			String name = item.getName();
+			
+			Users us = null;
+			
+			if (uid > 0L)  us = userService.selectByPrimaryKey(uid);
+			
+			
+			if (StringUtil.isEmpty(name) && u != null) {
+				name = us.getName();
+				if (StringUtil.isEmpty(name)) name = MobileUtil.getMobileStar(us.getMobile());
+			}
+			
+			String headImg = Constants.DEFAULT_HEAD_IMG;
+			
+			if (uid  > 0L) {
+				headImg = us.getHeadImg();
+			}
+			
+			rvo.setName(name);
+			rvo.setHeadImg(headImg);
+			
+			rvo.setAddTimeStr(TimeStampUtil.fromTodayStr(rvo.getAddTime() * 1000));
+			vos.add(rvo);
+		}
+		
+		model.addAttribute("rates", vos);
+
+		return "partners/partnerUserRateForm";
 	}
 
 }

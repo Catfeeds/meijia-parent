@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simi.po.dao.record.RecordRatesMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.record.RecordRates">
+		<id column="id" jdbcType="NUMERIC" property="id" />
+		<result column="rate_type" jdbcType="NUMERIC" property="rateType" />
+		<result column="link_id" jdbcType="NUMERIC" property="linkId" />
+		<result column="user_id" jdbcType="NUMERIC" property="userId" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="rate" jdbcType="NUMERIC" property="rate" />
+		<result column="rate_content" jdbcType="VARCHAR" property="rateContent" />
+		<result column="add_time" jdbcType="NUMERIC" property="addTime" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, rate_type, link_id, user_id, name, rate, rate_content, add_time
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from record_rates
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordRateSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_rates
+		where 1=1
+
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="rateType != null">
+			and rate_type = #{rateType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="linkId != null">
+			and link_id = #{linkId,jdbcType=NUMERIC}
+		</if>
+
+		order by add_time desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.record.RecordRateSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from record_rates
+		where 1=1
+
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="rateType != null">
+			and rate_type = #{rateType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="linkId != null">
+			and link_id = #{linkId,jdbcType=NUMERIC}
+		</if>
+
+		order by add_time desc
+	</select>
+	
+	<select id="totalByLinkId" resultType="java.util.HashMap" parameterType="com.simi.vo.record.RecordRateSearchVo">
+		select
+		count(*) as total, sum(rate) as total_rate
+		from record_rates
+		where 1=1
+
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="rateType != null">
+			and rate_type = #{rateType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="linkId != null">
+			and link_id = #{linkId,jdbcType=NUMERIC}
+		</if>
+
+		order by add_time desc
+	</select>
+
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from record_rates
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.record.RecordRates">
+		insert into record_rates (id, rate_type, link_id,
+		user_id, name, rate,
+		rate_content, add_time)
+		values
+		(#{id,jdbcType=NUMERIC}, #{rateType,jdbcType=NUMERIC}, #{linkId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{rate,jdbcType=NUMERIC},
+		#{rateContent,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordRates">
+		insert into record_rates
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="rateType != null">
+				rate_type,
+			</if>
+			<if test="linkId != null">
+				link_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="rate != null">
+				rate,
+			</if>
+			<if test="rateContent != null">
+				rate_content,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="rateType != null">
+				#{rateType,jdbcType=NUMERIC},
+			</if>
+			<if test="linkId != null">
+				#{linkId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="rate != null">
+				#{rate,jdbcType=NUMERIC},
+			</if>
+			<if test="rateContent != null">
+				#{rateContent,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.record.RecordRates">
+		update record_rates
+		<set>
+			<if test="rateType != null">
+				rate_type = #{rateType,jdbcType=NUMERIC},
+			</if>
+			<if test="linkId != null">
+				link_id = #{linkId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="rate != null">
+				rate = #{rate,jdbcType=NUMERIC},
+			</if>
+			<if test="rateContent != null">
+				rate_content = #{rateContent,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.record.RecordRates">
+		update record_rates
+		set rate_type = #{rateType,jdbcType=NUMERIC},
+		link_id = #{linkId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		rate = #{rate,jdbcType=NUMERIC},
+		rate_content = #{rateContent,jdbcType=VARCHAR},
+		add_time =
+		#{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	
+</mapper>
