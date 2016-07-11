@@ -36,6 +36,7 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.CompanyAdminSearchVo;
+import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
@@ -222,7 +223,9 @@ public class CompanyController extends BaseController {
 	@RequestMapping(value = "/get_detail", method = { RequestMethod.GET })
 	public AppResultData<Object> getDetail(
 			@RequestParam("user_id") Long userId, 
-			@RequestParam("company_id") Long companyId) throws WriterException, IOException {
+			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId, 
+			@RequestParam(value = "invitation_code", required = false, defaultValue = "") String invitationCode
+			) throws WriterException, IOException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -233,6 +236,32 @@ public class CompanyController extends BaseController {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
+		}
+		
+		if (companyId.equals(0L) && StringUtil.isEmpty(invitationCode)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("没有企业信息.");
+			return result;
+		}
+		
+		if (companyId.equals(0L) && !StringUtil.isEmpty(invitationCode)) {
+			
+			CompanySearchVo searchVo1 = new CompanySearchVo();
+			searchVo1.setInvitationCode(invitationCode);
+			
+			Xcompany xCompany = null;
+			List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
+			if (rs.isEmpty()) {
+				result.setStatus(Constants.ERROR_999);
+				result.setMsg("邀请码不存在!");
+				return result;
+			} else {
+				xCompany = rs.get(0);
+			}
+			
+			if (xCompany != null) {
+				companyId = xCompany.getCompanyId();
+			}
 		}
 		
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
@@ -270,8 +299,7 @@ public class CompanyController extends BaseController {
 		vo.put("shortName", xCompany.getShortName());
 		
 		
-		String invitationCode = xCompany.getInvitationCode();
-		if (StringUtil.isEmpty(invitationCode)) {
+		if (StringUtil.isEmpty(xCompany.getInvitationCode())) {
 			invitationCode = StringUtil.generateShortUuid();
 			xCompany.setInvitationCode(invitationCode);
 			xCompanyService.updateByPrimaryKey(xCompany);

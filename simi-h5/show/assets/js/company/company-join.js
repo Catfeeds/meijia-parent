@@ -4,15 +4,56 @@ if ($.AMUI && $.AMUI.validator) {
 
 var reqInvitationCode = getUrlParam("invitation_code");
 
-var mobile = getUrlParam("mobile");
+var uid = getUrlParam("uid");
+
+if (uid != undefined && uid != "") {
+	//获取用户信息
+	$.ajax({
+		type : "GET",
+		url : appRootUrl + "user/get_user_base.json?user_id=" + uid,
+		dataType : "json",
+		cache : true,
+		async : true,
+		success : function(data) {
+			var user = data.data;
+			
+			console.log(user);
+			
+			$("#userName").html(user.name);
+		}
+	});
+}
+
 console.log("reqInvitationCode = " + reqInvitationCode);
 if (reqInvitationCode != undefined) {
 	$('#invitation_code').val(reqInvitationCode);
+	
+	var params = {};
+	params.user_id = uid;
+	params.company_id = 0;
+	params.invitation_code = reqInvitationCode;
+	//获取公司信息
+	$.ajax({
+		type : "GET",
+		url : appRootUrl + "company/get_detail.json",
+		data : params,
+		dataType : "json",
+		cache : true,
+		async : true,
+		success : function(data) {
+			var d = data.data;
+			console.log(d);
+			$("#companyName").html(d.companyName);
+		}
+	});
+	
+	
+	
 }
 
-if (mobile != undefined) {
-	$('#join_mobile').val(mobile);
-}
+
+
+
 
 $('#company-join-form').validator({
 	validate : function(validity) {

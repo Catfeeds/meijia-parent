@@ -517,6 +517,11 @@ public class UsersServiceImpl implements UsersService {
 		vo.setHeadImg(user.getHeadImg());
 		vo.setMobile(user.getMobile());
 		vo.setName(user.getName());
+		
+		if (StringUtil.isEmpty(vo.getName())) {
+			vo.setName(MobileUtil.getMobileStar(user.getMobile()));
+		}
+		
 		vo.setProvinceName(user.getProvinceName());
 		vo.setSex(user.getSex());
 		

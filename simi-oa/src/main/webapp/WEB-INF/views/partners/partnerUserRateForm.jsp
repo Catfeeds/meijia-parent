@@ -13,25 +13,10 @@
 
 <!--css for this page-->
 <link rel="stylesheet" href="<c:url value='/css/fileinput.css'/>" type="text/css" />
-<link rel="stylesheet" href="<c:url value='/assets/bootstrap-rating/bootstrap-rating.css'/>" type="text/css" />
-<style>
 
-.custom-star-big {
-  font-size: 2.5em;
-  color: red;
-}
-
-.custom-star-small {
-  font-size: 1.5em;
-  color: red;
-}
-
-
-</style>
 
 <%@ include file="../shared/importJs.jsp"%>
-<script type="text/javascript"
-		src="<c:url value='/assets/bootstrap-rating/bootstrap-rating.min.js'/>"></script>	
+<script src="<c:url value='/assets/jquery.raty-2.4.5/js/jquery.raty.min.js'/>" type="text/javascript" ></script>	
 </head>
 
 <body>
@@ -214,9 +199,9 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">评价:${ contentModel.totalRate } </label>
+							<label class="col-md-2 control-label">评价:</label>
 							<div class="col-md-5" >
-								<input type="hidden" id="totalRate" class="rating" value="${ contentModel.totalRate }" data-filled="glyphicon glyphicon-star custom-star-big" data-empty="glyphicon glyphicon-star-empty custom-star-big"/>
+								<div id="star"></div>
 								${ contentModel.totalRate }
 							</div>
 						</div>
@@ -243,7 +228,7 @@
 								<p class="attribution">
 									<a href="#">${item.name }</a>
 									<timestampTag:timestamp patten="yyyy-MM-dd HH:mm" t="${item.addTime * 1000}" />
-									<input type="hidden" id="totalRate" class="rating" value="${item.rate }" data-filled="glyphicon glyphicon-star custom-star-small" data-empty="glyphicon glyphicon-star-empty custom-star-small"/>
+									
 									评价: ${item.rate }
 									
 									
@@ -267,7 +252,9 @@
 					
 					<div class="form-group">
 						<div class="col-md-5">
-							<input type="hidden" id="rate" class="rating" data-filled="glyphicon glyphicon-star custom-star-big" data-empty="glyphicon glyphicon-star-empty custom-star-big"/>
+
+							 <div id="rate"></div>
+						
 						</div>
 					</div>
 					
@@ -321,7 +308,15 @@
 		$('#cityId').trigger('change');
 		setTagButton();
 		
+		$('#rate').raty({
+			  precision  : true,
+			  size       : 24,
 
+
+		});
+		
+
+	
 	</script>
 
 </body>

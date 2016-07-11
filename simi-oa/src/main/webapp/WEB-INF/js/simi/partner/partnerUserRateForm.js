@@ -1,3 +1,8 @@
+$.fn.raty.defaults.starOn = '../../assets/jquery.raty-2.4.5/doc/img/star-on-big.png';
+$.fn.raty.defaults.starOff = '../../assets/jquery.raty-2.4.5/doc/img/star-off-big.png';
+$.fn.raty.defaults.starHalf = '../../assets/jquery.raty-2.4.5/doc/img/star-half-big.png';
+
+
 function partnerUserRate() {
 	var userId = $("#userId").val();
 	
@@ -8,10 +13,10 @@ function partnerUserRate() {
 		return false;
 	}
 	
-	var rate = $('#rate').rating('rate');
+	var rate = $('#rate').raty('score');
 	
-	var ex = /^\d+$/;
-	if (!ex.test(rate)) {
+
+	if (rate == undefined) {
 		alert("需要选择评价星级");
 		return false;
 	}
@@ -33,7 +38,7 @@ function partnerUserRate() {
 	params.rate = rate;
 	params.name = name;
 	params.rate_content = comment;
-	
+
 	$.ajax({
 		type : "POST",
 		url : simiAppRootUrl + "/app/record/post_rate.json",
