@@ -537,11 +537,13 @@ public class PartnerUsersController extends BaseController {
 		
 		BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 		BeanUtilsExp.copyPropertiesIgnoreNull(partner, vo);
+		
 		vo.setId(id);
 		vo.setPartnerId(partnerId);
 		vo.setCompanyName(partner.getCompanyName());
 		vo.setUserId(userId);
 		vo.setUserTags(userTags);
+		vo.setTotalRate(partnerUser.getTotalRate());
 
 		model.addAttribute("contentModel", vo);
 		model.addAttribute("tags", tags);

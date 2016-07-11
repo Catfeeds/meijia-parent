@@ -16,10 +16,16 @@
 <link rel="stylesheet" href="<c:url value='/assets/bootstrap-rating/bootstrap-rating.css'/>" type="text/css" />
 <style>
 
-.custom-star {
+.custom-star-big {
+  font-size: 2.5em;
+  color: red;
+}
+
+.custom-star-small {
   font-size: 1.5em;
   color: red;
 }
+
 
 </style>
 
@@ -208,21 +214,13 @@
 						</div>
 						
 						<div class="form-group required">
-							<label class="col-md-2 control-label">评价</label>
+							<label class="col-md-2 control-label">评价:${ contentModel.totalRate } </label>
 							<div class="col-md-5" >
-								<input type="hidden" id=""totalRate"" class="rating" data-filled="glyphicon glyphicon-star custom-star" data-empty="glyphicon glyphicon-star-empty custom-star"/>
-								<script>	
-									var totalRate = "${contentModel.totalRate}";
-									$('#totalRate').rating('rate', totalRate);
-									console.log($("#totalRate").rating('rate'));
-								</script>
+								<input type="hidden" id="totalRate" class="rating" value="${ contentModel.totalRate }" data-filled="glyphicon glyphicon-star custom-star-big" data-empty="glyphicon glyphicon-star-empty custom-star-big"/>
+								${ contentModel.totalRate }
 							</div>
 						</div>
-						
-						
-						
 
-						
 						<!-- </fieldset> -->
 				</form:form>
 			</div>
@@ -245,7 +243,7 @@
 								<p class="attribution">
 									<a href="#">${item.name }</a>
 									<timestampTag:timestamp patten="yyyy-MM-dd HH:mm" t="${item.addTime * 1000}" />
-									
+									<input type="hidden" id="totalRate" class="rating" value="${item.rate }" data-filled="glyphicon glyphicon-star custom-star-small" data-empty="glyphicon glyphicon-star-empty custom-star-small"/>
 									评价: ${item.rate }
 									
 									
@@ -269,7 +267,7 @@
 					
 					<div class="form-group">
 						<div class="col-md-5">
-							<input type="hidden" id="rate" class="rating" data-filled="glyphicon glyphicon-star custom-star" data-empty="glyphicon glyphicon-star-empty custom-star"/>
+							<input type="hidden" id="rate" class="rating" data-filled="glyphicon glyphicon-star custom-star-big" data-empty="glyphicon glyphicon-star-empty custom-star-big"/>
 						</div>
 					</div>
 					
@@ -323,9 +321,7 @@
 		$('#cityId').trigger('change');
 		setTagButton();
 		
-		 $('.rating').on('change', function () {
-	          $(this).next('.label').text($(this).val());
-	        });
+
 	</script>
 
 </body>
