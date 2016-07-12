@@ -163,7 +163,13 @@ public class UsersServiceImpl implements UsersService {
 			u = this.initUsers();
 			u.setMobile(mobile);
 			u.setAddFrom(addFrom);
-			u.setName(name);
+			
+			if (StringUtil.isEmpty(name)) {
+				u.setName(MobileUtil.getMobileX(mobile));
+			} else {
+				u.setName(name);
+			}
+			
 			u.setIntroduction(introduction);
 			this.insertSelective(u);
 
