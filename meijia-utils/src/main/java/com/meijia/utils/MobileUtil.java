@@ -91,6 +91,30 @@ public class MobileUtil {
 
 		return str;
 	}
+	
+	public static String getMobileX(String mobile) {
+		String str = "";
+
+		for (int i = 0; i < mobile.length(); i++) {
+			if (i == mobile.length() - 11) {
+				str += mobile.charAt(i);
+			} else if (i == mobile.length() - 10) {
+				str += mobile.charAt(i);
+			} else if (i == mobile.length() - 9) {
+				str += mobile.charAt(i);
+			} else if (i == mobile.length() - 3) {
+				str += mobile.charAt(i);
+			} else if (i == mobile.length() - 2) {
+				str += mobile.charAt(i);
+			} else if (i == mobile.length() - 1) {
+				str += mobile.charAt(i);
+			} else {
+				str += "x";
+			}
+		}
+
+		return str;
+	}
 
 	public static void main(String[] args) throws Exception {
 		String testMobileNumber = "18519188816";

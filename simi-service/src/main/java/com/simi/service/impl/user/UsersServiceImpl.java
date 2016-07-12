@@ -223,7 +223,7 @@ public class UsersServiceImpl implements UsersService {
 		vo.setUserId(u.getId());
 
 		if (StringUtil.isEmpty(vo.getName())) {
-			vo.setName(MobileUtil.getMobileStar(vo.getMobile()));
+			vo.setName(MobileUtil.getMobileX(vo.getMobile()));
 		}
 		
 		//用户余额
