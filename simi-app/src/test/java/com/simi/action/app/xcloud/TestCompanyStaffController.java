@@ -34,7 +34,7 @@ public class TestCompanyStaffController extends JUnitActionBase  {
     public void testStaffReq() throws Exception {
 		
 		String url = "/app/company/get_pass.json";
-		String params = "?user_id=18";
+		String params = "?user_id=1306";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

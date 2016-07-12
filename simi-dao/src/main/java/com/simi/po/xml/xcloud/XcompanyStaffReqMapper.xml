@@ -54,7 +54,7 @@
 		</if>
 		
 		<if test="companyId != null ">
-			or company_id = #{companyId,jdbcType=NUMERIC}
+			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
 		order by add_time desc
 	</select>
