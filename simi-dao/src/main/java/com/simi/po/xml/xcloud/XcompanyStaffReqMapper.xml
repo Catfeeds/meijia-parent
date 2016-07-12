@@ -47,7 +47,7 @@
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.UserCompanySearchVo">
 		select
 		<include refid="Base_Column_List" />
-		from xcompany_staff
+		from xcompany_staff_req
 		where 1=1
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}

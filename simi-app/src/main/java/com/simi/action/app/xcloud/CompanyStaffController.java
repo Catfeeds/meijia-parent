@@ -411,12 +411,16 @@ public class CompanyStaffController extends BaseController {
 			}
 		}
 		
+		if (companyId.equals(0L)) return result;
+		
 		List<XcompanyStaffReq> xCompanyStaffReqs = new ArrayList<XcompanyStaffReq>();
 		
 		
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		
+
 		searchVo.setCompanyId(companyId);
-		searchVo.setUserId(userId);
+
 		
 		PageInfo plist = xCompanyStaffReqService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		

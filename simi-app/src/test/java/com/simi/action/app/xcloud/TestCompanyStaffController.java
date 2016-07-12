@@ -29,4 +29,45 @@ public class TestCompanyStaffController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }	
+	
+	@Test
+    public void testStaffReq() throws Exception {
+		
+		String url = "/app/company/get_pass.json";
+		String params = "?user_id=18";
+		MockHttpServletRequestBuilder getRequest = get(url + params);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+		
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }	
+	
+	@Test
+    public void testPass() throws Exception {
+
+		String url = "/app/company/pass.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+     	
+     	//新增
+     	postRequest = postRequest.param("company_id", "111");
+     	postRequest = postRequest.param("user_id", "1306");
+	    postRequest = postRequest.param("req_user_id", "18");
+	    postRequest = postRequest.param("status", "1");
+	    postRequest = postRequest.param("remarks", "好的");
+
+	    
+
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }		
 }
