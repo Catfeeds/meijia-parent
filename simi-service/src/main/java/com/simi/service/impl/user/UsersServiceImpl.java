@@ -222,9 +222,9 @@ public class UsersServiceImpl implements UsersService {
 		vo.setJobName("");
 		vo.setUserId(u.getId());
 
-//		if (StringUtil.isEmpty(vo.getName())) {
-//			vo.setName(MobileUtil.getMobileStar(vo.getMobile()));
-//		}
+		if (StringUtil.isEmpty(vo.getName())) {
+			vo.setName(MobileUtil.getMobileStar(vo.getMobile()));
+		}
 		
 		//用户余额
 		BigDecimal restMoney = u.getRestMoney();
