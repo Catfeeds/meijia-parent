@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyStaffReqMapper;
 import com.simi.po.model.user.Users;
@@ -157,6 +159,10 @@ public class XcompanyStaffReqServiceImpl implements XcompanyStaffReqService {
 				if (user.getId().equals(vo.getUserId())) {
 					vo.setName(user.getName());
 					vo.setHeadImg(user.getHeadImg());
+					
+					if (StringUtil.isEmpty(vo.getName())) {
+						vo.setName(MobileUtil.getMobileStar(user.getMobile()));
+					}
 					break;
 				}
 			}
