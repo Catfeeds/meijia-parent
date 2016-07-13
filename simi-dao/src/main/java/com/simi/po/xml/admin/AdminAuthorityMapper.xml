@@ -41,13 +41,14 @@
         #{item}
     </foreach>
 
-    order by id asc
+    order by position asc
   </select>
   <select id="selectByParentId" resultMap="BaseResultMap"  parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
      from admin_authority
     where parent_id = #{parentId,jdbcType=NUMERIC}
+    order by position asc
 	</select>
 	
 <!-- 查出所有的孩子节点权限 -->
