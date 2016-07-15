@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.dict.DictAd;
@@ -27,6 +28,7 @@ import com.simi.service.dict.DictSeniorTypeService;
 import com.simi.service.dict.ProvinceService;
 import com.simi.service.dict.RegionService;
 import com.simi.service.dict.TradeService;
+import com.simi.service.partners.PartnerRefServiceTypeService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.TagsService;
@@ -44,6 +46,9 @@ public class DictController<T> {
 	
 	@Autowired
 	private PartnersService partnersService;
+	
+	@Autowired
+	private PartnerRefServiceTypeService partnerRefServiceTypeService;
 	
 	@Autowired
 	private UsersService userService;
@@ -170,8 +175,10 @@ public class DictController<T> {
 		//服务大类，该团队的服务大类
 		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
 		
-		
-		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setPartnerId(partnerId);
+		searchVo.setParentId(0L);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		
 		if (!partnerRefServiceType.isEmpty()) {
 	    	List<Long> serviceTypeIds = new ArrayList<Long>();

@@ -17,6 +17,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
@@ -56,6 +57,7 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderCleanOaVo;
 import com.simi.vo.order.OrdersCleanAddOaVo;
+import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -235,8 +237,9 @@ public class OrderCleanController extends AdminController {
 		
 		//服务商信息
 		// 服务商列表
-		
-		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectByServiceTypeId(serviceTypeId);
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
 			Long partnerId = partnerRefServiceType.get(i).getPartnerId();

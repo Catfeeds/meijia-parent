@@ -59,6 +59,7 @@ import com.simi.vo.OrderSearchVo;
 import com.simi.vo.OrdersRecyclePartnerVo;
 import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrdersRecycleAddOaVo;
+import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -236,9 +237,9 @@ public class OrderRecycleController extends AdminController {
 
 		// 服务商信息
 		// 服务商列表
-
-		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService
-				.selectByServiceTypeId(serviceTypeId);
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
 			Long partnerId = partnerRefServiceType.get(i).getPartnerId();

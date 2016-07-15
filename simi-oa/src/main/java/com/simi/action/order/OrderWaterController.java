@@ -64,6 +64,7 @@ import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.order.OrdersWaterAddOaVo;
 import com.simi.vo.order.OrdersWaterListVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.user.UserAddrVo;
 
 @Controller
@@ -285,8 +286,9 @@ public class OrderWaterController extends AdminController {
 
 		// 服务商信息
 		// 服务商列表
-
-		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectByServiceTypeId(serviceTypeId);
+		PartnersSearchVo searchVo1 = new PartnersSearchVo();
+		searchVo1.setServiceTypeId(serviceTypeId);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo1);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
 			Long partnerId = partnerRefServiceType.get(i).getPartnerId();

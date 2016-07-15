@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
 import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.service.partners.PartnerRefServiceTypeService;
+import com.simi.vo.partners.PartnersSearchVo;
 
 @Service
 public class PartnerRefServiceTypeServiceImpl implements PartnerRefServiceTypeService {
@@ -67,17 +68,11 @@ public class PartnerRefServiceTypeServiceImpl implements PartnerRefServiceTypeSe
 
 		return partnerRefServiceTypeMapper.deleteByPartnerId(partnerId);
 	}
-
+	
 	@Override
-	public List<PartnerRefServiceType> selectByServiceTypeId(Long serviceTypeId) {
+	public List<PartnerRefServiceType> selectBySearchVo(PartnersSearchVo searchVo) {
 
-		return partnerRefServiceTypeMapper.selectByServiceTypeId(serviceTypeId);
-	}
-
-	@Override
-	public List<PartnerRefServiceType> selectByPartnerId(Long partnerId) {
-
-		return partnerRefServiceTypeMapper.selectByPartnerId(partnerId);
+		return partnerRefServiceTypeMapper.selectBySearchVo(searchVo);
 	}
 
 }

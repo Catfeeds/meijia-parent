@@ -2,11 +2,13 @@ package com.simi.action.app.partner;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -18,6 +20,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnersSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/partner")
@@ -54,7 +57,10 @@ public class PartnerServiceTypeController extends BaseController {
 
 		Long partnerId = partnerUsers.getPartnerId();
 		
-		List<PartnerRefServiceType> list = partnerRefServiceTypeService.selectByPartnerId(partnerId);
+		
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setPartnerId(partnerId);
+		List<PartnerRefServiceType> list = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		
 		if (list.isEmpty()) return result;
 		

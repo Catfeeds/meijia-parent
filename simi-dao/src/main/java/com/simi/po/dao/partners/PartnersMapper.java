@@ -1,16 +1,16 @@
 package com.simi.po.dao.partners;
 
 import java.util.List;
-import java.util.Map;
 
 import com.simi.po.model.partners.Partners;
+import com.simi.vo.partners.PartnersSearchVo;
 
 public interface PartnersMapper {
     int deleteByPrimaryKey(Long partnerId);
 
-    int insert(Partners record);
+    Long insert(Partners record);
 
-    int insertSelective(Partners record);
+    Long insertSelective(Partners record);
 
     Partners selectByPrimaryKey(Long partnerId);
 
@@ -22,11 +22,7 @@ public interface PartnersMapper {
 
     int updateByPrimaryKey(Partners record);
     
-    List<Partners> selectByListPage(Map<String,Object> conditions);
+    List<Partners> selectByListPage(PartnersSearchVo partnersSearchVo);
 
-    List<Partners> selectByCompanyName(String companyName);
-
-	List<Partners> selectBySpiderIds(List<Long> partnerIds);
-
-	Partners selectByCompanyNames(String companyName);
+	List<Partners> selectBySearchVo(PartnersSearchVo partnersSearchVo);
 }

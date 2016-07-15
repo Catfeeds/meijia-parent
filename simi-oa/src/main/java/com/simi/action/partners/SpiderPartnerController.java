@@ -47,6 +47,7 @@ import com.simi.service.dict.RegionService;
 import com.simi.service.partners.PartnerLinkManService;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
+import com.simi.service.partners.PartnerRefServiceTypeService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.partners.SpiderPartnerService;
@@ -76,6 +77,9 @@ public class SpiderPartnerController extends BaseController{
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private PartnerRefServiceTypeService partnerRefServiceTypeService;
 	
 	@Autowired
 	private PartnerRefRegionService partnerRefRegionService;
@@ -196,7 +200,7 @@ public class SpiderPartnerController extends BaseController{
 		 * 根据partnerId查询服务商对应的地区
 		 */
 		String regionsId = "";
-		List<PartnerRefRegion> partnerRegions =partnersService.selectByPartnerId(partnerFormVo.getPartnerId());			
+		List<PartnerRefRegion> partnerRegions = partnerRefRegionService.selectByPartnerId(partnerFormVo.getPartnerId());
 		if(partnerRegions !=null && partnerRegions.size()>0){
 			for (int i = 0; i < partnerRegions.size();i++) {
 					regionsId += partnerRegions.get(i).getRegionId().toString();
@@ -210,7 +214,10 @@ public class SpiderPartnerController extends BaseController{
 		/**
 		 * 获得服务商服务类别大类
 		 */
-		List<PartnerRefServiceType> listBig = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setPartnerId(partnerFormVo.getPartnerId());
+		searchVo.setParentId(0L);
+		List<PartnerRefServiceType> listBig = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		List<String> bigServiceTypeName = new ArrayList<String>();
 		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
 			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
@@ -221,7 +228,7 @@ public class SpiderPartnerController extends BaseController{
 		 * 获得服务商服务类别小类
 		 */
 		List<String> subServiceTypeName = new ArrayList<String>();
-		List<PartnerRefServiceType> listSub = partnersService.selectSubServiceTypeByPartnerIdAndParentId(partnerFormVo.getPartnerId(),0L);
+		List<PartnerRefServiceType> listSub = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		for (Iterator iterator = listSub.iterator(); iterator.hasNext();) {
 			PartnerRefServiceType partnerRefServiceType = (PartnerRefServiceType) iterator.next();
 			subServiceTypeName.add(partnerRefServiceType.getName());
@@ -283,7 +290,9 @@ public class SpiderPartnerController extends BaseController{
 		Long partnerId = partners.getPartnerId();
 		SpiderPartner spiderPartner = spiderPartnerService.selectByPrimaryKey(spiderPartnerId);
 		//根据采集服务商名称进行排重
-		List<Partners> partnersList =  partnersService.selectByCompanyName(spiderPartner.getCompanyName());
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setCompanyName(spiderPartner.getCompanyName());
+		List<Partners> partnersList =  partnersService.selectBySearchVo(searchVo);
 		
 		//获取登录的用户
     	AccountAuth accountAuth=AuthHelper.getSessionAccountAuth(request);
@@ -354,7 +363,7 @@ public class SpiderPartnerController extends BaseController{
 		 * 操作partner_ref_region表更新
 		 */
 		//1、先删除原来的数据
-		partnersService.deleteRegionByPartnerId(partnersItem.getPartnerId());
+		partnerRefRegionService.deleteByPartnerId(partnersItem.getPartnerId());
 		String tempRegionId = request.getParameter("regionIdStr");
 		if(!StringUtil.isEmpty(tempRegionId)){
 			Long regionIdLong = 0L;

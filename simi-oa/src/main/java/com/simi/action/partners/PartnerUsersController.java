@@ -42,6 +42,7 @@ import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
+import com.simi.service.partners.PartnerRefServiceTypeService;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
@@ -54,6 +55,7 @@ import com.simi.vo.partners.PartnerServicePriceDetailVo;
 import com.simi.vo.partners.PartnerUserServiceTypeVo;
 import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
+import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.record.RecordRateSearchVo;
 import com.simi.vo.record.RecordRateVo;
 
@@ -89,6 +91,9 @@ public class PartnerUsersController extends BaseController {
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
+	
+	@Autowired
+	private PartnerRefServiceTypeService partnerRefServiceTypeService;
 
 	@Autowired
 	private PartnerServicePriceDetailService partnerServicePriceDetailService;
@@ -207,8 +212,11 @@ public class PartnerUsersController extends BaseController {
 
 		// 服务大类，该团队的服务大类
 		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
-
-		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+		
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setPartnerId(partnerId);
+		searchVo.setParentId(0L);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 
 		if (!partnerRefServiceType.isEmpty()) {
 			List<Long> serviceTypeIds = new ArrayList<Long>();
@@ -551,8 +559,11 @@ public class PartnerUsersController extends BaseController {
 
 		// 服务大类，该团队的服务大类
 		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
-
-		List<PartnerRefServiceType> partnerRefServiceType = partnersService.selectServiceTypeByPartnerIdAndParentId(partnerId, 0L);
+		
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setPartnerId(partnerId);
+		searchVo.setParentId(0L);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 
 		if (!partnerRefServiceType.isEmpty()) {
 			List<Long> serviceTypeIds = new ArrayList<Long>();
@@ -570,10 +581,10 @@ public class PartnerUsersController extends BaseController {
 		
 		
 		//评价列表
-		RecordRateSearchVo searchVo = new RecordRateSearchVo();
-		searchVo.setRateType((short) 1);
-		searchVo.setLinkId(userId);
-		List<RecordRates> list = recordRatesService.selectBySearchVo(searchVo);
+		RecordRateSearchVo searchVo1 = new RecordRateSearchVo();
+		searchVo1.setRateType((short) 1);
+		searchVo1.setLinkId(userId);
+		List<RecordRates> list = recordRatesService.selectBySearchVo(searchVo1);
 		
 		List<RecordRateVo> vos = new ArrayList<RecordRateVo>();
 		for (int i = 0; i < list.size(); i++) {

@@ -3,27 +3,26 @@ package com.simi.service.partners;
 import java.util.List;
 
 import com.simi.po.model.partners.PartnerRefServiceType;
+import com.simi.vo.partners.PartnersSearchVo;
 
 public interface PartnerRefServiceTypeService {
-	
+
 	int deleteByPrimaryKey(Long id);
 
-    int insert(PartnerRefServiceType record);
+	int insert(PartnerRefServiceType record);
 
-    int insertSelective(PartnerRefServiceType record);
+	int insertSelective(PartnerRefServiceType record);
 
-    PartnerRefServiceType selectByPrimaryKey(Long id);
+	int updateByPrimaryKeySelective(PartnerRefServiceType record);
 
-    int updateByPrimaryKeySelective(PartnerRefServiceType record);
+	int updateByPrimaryKey(PartnerRefServiceType record);
 
-    int updateByPrimaryKey(PartnerRefServiceType record);
-    
-    PartnerRefServiceType initPartnerRefServiceType();
+	PartnerRefServiceType initPartnerRefServiceType();
 
 	int deleteByPartnerId(Long partnerId);
 
-	List<PartnerRefServiceType> selectByServiceTypeId(Long serviceTypeId);
-	
-	List<PartnerRefServiceType> selectByPartnerId(Long partnerId);
+	PartnerRefServiceType selectByPrimaryKey(Long id);
+
+	List<PartnerRefServiceType> selectBySearchVo(PartnersSearchVo searchVo);
 
 }

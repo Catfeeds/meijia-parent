@@ -42,5 +42,7 @@ public interface PartnerServiceTypeService {
 	PageInfo selectByListPage(PartnerUserServiceTypeVo searchVo, int pageNo,
 			int pageSize);
 
+	List<PartnerServiceType> selectByPartnerId(Long parentId);
+
 	
 }

@@ -62,6 +62,7 @@ import com.simi.vo.OrdersListVo;
 import com.simi.vo.dict.DictCityVo;
 import com.simi.vo.order.OrdersTeamAddOaVo;
 import com.simi.vo.order.OrdersTeamListVo;
+import com.simi.vo.partners.PartnersSearchVo;
 
 @Controller
 @RequestMapping(value = "/order")
@@ -252,7 +253,9 @@ public class OrderTeamController extends AdminController {
 		
 		//服务商信息
 		// 服务商列表
-		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectByServiceTypeId(serviceTypeId);
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
 			Long partnerId = partnerRefServiceType.get(i).getPartnerId();

@@ -50,6 +50,11 @@ public class PartnerServiceTypeServiceImpl implements PartnerServiceTypeService 
 	public PartnerServiceType selectByPrimaryKey(Long serviceTypeId) {
 		return partnerServiceTypeMapper.selectByPrimaryKey(serviceTypeId);
 	}
+	
+	@Override
+	public List<PartnerServiceType> selectByPartnerId(Long parentId) {
+		return partnerServiceTypeMapper.selectByParentId(parentId);
+	}
 
 	@Override
 	public int updateByPrimaryKeySelective(PartnerServiceType record) {

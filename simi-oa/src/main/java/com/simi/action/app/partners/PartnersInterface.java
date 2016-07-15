@@ -14,6 +14,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.partners.Partners;
 import com.simi.service.partners.PartnersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnersSearchVo;
 
 @Controller
 @RequestMapping(value = "/interface-partners")
@@ -33,8 +34,10 @@ public class PartnersInterface extends BaseController {
     		//@RequestParam("name") String name,
     	//	@RequestParam(value = "start", required = true, defaultValue = "" )
     		@RequestParam(value = "companyName" , required = true, defaultValue = "") String companyName) {
-
-		List<Partners> listPartners = partnersService.selectByCompanyName(companyName);
+		
+		PartnersSearchVo searchVo = new PartnersSearchVo();
+		searchVo.setCompanyName(companyName);
+		List<Partners> listPartners = partnersService.selectBySearchVo(searchVo);
 
 		AppResultData<List> result = new AppResultData<List>(
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, listPartners);
