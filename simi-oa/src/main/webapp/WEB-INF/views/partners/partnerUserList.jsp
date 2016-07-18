@@ -48,13 +48,13 @@
                               <thead>
                               <tr>
                                 	  <th width="5%">头像</th>
-		                              <th width="6%">姓名</th>
-		                              <th width="3%">手机号</th>
-		                              <th width="5%">所在地区</th>
-		                              <th width="5%">服务大类</th>
+		                              <th width="10%">姓名</th>
+		                              <th width="5%">手机号</th>
+		                              <th width="10%">所在地区</th>
+		                              <th width="10%">服务大类</th>
 		                              <th width="8%">服务响应时间</th>
-		                              <th width="30%">标签</th>
-		                              <th width="30%">个人简介</th>
+		                              <th width="20%">标签</th>
+		                              <th width="25%">个人简介</th>
 		                              <th width="8%">操作</th>
                               </tr>
                               </thead>
