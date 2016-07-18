@@ -2,7 +2,9 @@ package com.simi.service.impl.partners;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -223,6 +225,11 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 	@Override
 	public List<PartnerUsers> selectBySearchVo(PartnerUserSearchVo partnersSearchVo) {	
 		return partnerUsersMapper.selectBySearchVo(partnersSearchVo);
+	}
+	
+	@Override
+	public List<HashMap> totalUserByPartnerIds(List<Long> partnerIds) {
+		return partnerUsersMapper.totalUserByPartnerIds(partnerIds);
 	}
 	
 }

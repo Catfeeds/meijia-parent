@@ -13,7 +13,7 @@ public class PartnerIsCooperateSelectTag extends SimpleTagSupport {
     private String selectId = "0";
 
     // 是否包含全部，  0 = 不包含  1= 包含
-    private String hasAll =  "8";
+    private String hasAll =  "";
 
     public PartnerIsCooperateSelectTag() {
     }
@@ -29,8 +29,8 @@ public class PartnerIsCooperateSelectTag extends SimpleTagSupport {
             StringBuffer serviceTypeSelect = new StringBuffer();
             serviceTypeSelect.append("<select id = \"isCooperate\" name=\"isCooperate\" class=\"form-control\">");
 
-            if (hasAll.equals("8")) {
-            	serviceTypeSelect.append("<option value='8' >全部</option>");
+            if (hasAll.equals("")) {
+            	serviceTypeSelect.append("<option value='' >全部</option>");
             }
 
             String item = null;

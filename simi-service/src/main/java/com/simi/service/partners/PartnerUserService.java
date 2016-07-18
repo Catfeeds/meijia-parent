@@ -1,6 +1,8 @@
 package com.simi.service.partners;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.partners.PartnerUsers;
@@ -36,6 +38,8 @@ public interface PartnerUserService {
 	List<PartnerUsers> selectByPartnerId(Long partnerId);
 
 	List<PartnerUsers> selectBySearchVo(PartnerUserSearchVo partnersSearchVo);
+
+	List<HashMap> totalUserByPartnerIds(List<Long> partnerIds);
 	
 
 	

@@ -77,13 +77,7 @@ public class PartnerRegisterController extends BaseController {
 			result.setMsg(ConstantMsg.XCOMPANY_NAME_EXIST);
 			return result;
 		}
-		// 团队不存在，新增
-		Partners partners = partnersService.iniPartners();
-		partners.setCompanyName(companyName);
-		partners.setStatus((short) 3L);
-		partners.setRegisterType(registerType);
-		partners.setAddTime(TimeStampUtil.getNowSecond());
-		partnersService.insert(partners);
+
 		// 手机号对应的用户表 users 没有则创建
 		Users users = usersService.selectByMobile(mobile);
 		if (users == null) {
@@ -100,6 +94,16 @@ public class PartnerRegisterController extends BaseController {
 			users.setName(name);
 			usersService.updateByPrimaryKeySelective(users);
 		}
+		
+		userId = users.getId();
+		// 团队不存在，新增
+		Partners partners = partnersService.iniPartners();
+		partners.setCompanyName(companyName);
+		partners.setUserId(userId);
+		partners.setStatus((short) 3L);
+		partners.setRegisterType(registerType);
+		partners.setAddTime(TimeStampUtil.getNowSecond());
+		partnersService.insert(partners);
 
 		// 将此团队和用户建立关系
 		PartnerUsers partnerUsers = partnerUserService.iniPartnerUsers();

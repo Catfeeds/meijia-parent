@@ -1,6 +1,8 @@
 package com.simi.po.dao.partners;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.vo.partners.PartnerUserSearchVo;
@@ -28,4 +30,6 @@ public interface PartnerUsersMapper {
 	List<PartnerUsers> selectByPartnerId(Long partnerId);
 
 	List<PartnerUsers> selectBySearchVo(PartnerUserSearchVo partnersSearchVo);
+
+	List<HashMap> totalUserByPartnerIds(List<Long> partnerIds);
 }

@@ -144,6 +144,9 @@ public class PartnersController extends BaseController{
 		int pageSize = ServletRequestUtils.getIntParameter(request,
 				ConstantOa.PAGE_SIZE_NAME, ConstantOa.DEFAULT_PAGE_SIZE);
 		
+		
+		
+		
 		PageInfo result = partnersService.selectByListPage(searchVo, pageNo, pageSize);
 
 		model.addAttribute("contentModel", result);

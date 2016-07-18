@@ -117,6 +117,18 @@
 
 		order by weight_type desc, weight_no asc, add_time desc 
 	</select>	
+	
+	<select id="totalUserByPartnerIds" resultType="java.util.HashMap" parameterType="java.util.List">
+		select partner_id, count(*) as total
+		from partner_users
+	    where partner_id in
+	 	<foreach item="item" index="index" collection="list"
+	             open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	    group by partner_id
+	    order by partner_id desc
+	</select>
 
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

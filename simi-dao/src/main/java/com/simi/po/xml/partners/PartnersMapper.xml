@@ -3,6 +3,7 @@
 <mapper namespace="com.simi.po.dao.partners.PartnersMapper">
 	<resultMap id="BaseResultMap" type="com.simi.po.model.partners.Partners">
 		<id column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+		<id column="user_id" property="userId" jdbcType="NUMERIC" />
 		<id column="spider_partner_id" property="spiderPartnerId" jdbcType="NUMERIC" />
 		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
 		<result column="register_type" property="registerType" jdbcType="NUMERIC" />
@@ -44,7 +45,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 
-		partner_id,spider_partner_id, company_name, register_type,short_name,register_time,company_desc_img,
+		partner_id, user_id, spider_partner_id, company_name, register_type,short_name,register_time,company_desc_img,
 		addr,credit_file_url,website,spider_url,company_size, company_logo, is_door, keywords,
 		status, status_remark, weixin, qq, email, province_id, city_id,
 		is_cooperate, fax,
@@ -68,6 +69,11 @@
 		<include refid="Base_Column_List" />
 		from partners
 		where 1=1
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="companyName != null">
 			and company_name like CONCAT('%','${companyName}','%' )
 		</if>
@@ -144,7 +150,7 @@
 		</selectKey>
 
 
-		insert into partners (partner_id, spider_partner_id,company_name, register_type,short_name, register_time,addr,
+		insert into partners (partner_id, user_id, spider_partner_id,company_name, register_type,short_name, register_time,addr,
 		credit_file_url,website,spider_url,service_area,service_type,company_desc,company_desc_img,
 		company_size, company_logo, is_door,
 		keywords, status,
@@ -155,7 +161,7 @@
 		remark, add_time, admin_id,
 		update_time, business_desc)
 		values
-		(#{partnerId,jdbcType=NUMERIC},#{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR},
+		(#{partnerId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{spiderPartnerId,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR},
 		#{registerType,jdbcType=NUMERIC},#{shortName,jdbcType=VARCHAR},
 		#{registerTime,jdbcType=DATE}, #{addr,jdbcType=VARCHAR},
 		#{creditFileUrl,jdbcType=VARCHAR},#{website,jdbcType=VARCHAR},#{spiderUrl,jdbcType=VARCHAR},#{serviceArea,jdbcType=VARCHAR},
@@ -180,6 +186,9 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="partnerId != null">
 				partner_id,
+			</if>
+			<if test="userId != null">
+				user_id,
 			</if>
 			<if test="spiderPartnerId != null">
 				spider_partner_id,
@@ -284,6 +293,9 @@
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="partnerId != null">
 				#{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
 			</if>
 			<if test="spiderPartnerId != null">
 				#{spiderPartnerId,jdbcType=NUMERIC},
@@ -391,6 +403,9 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.Partners">
 		update partners
 		<set>
+		    <if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
 			<if test="spiderPartnerId != null">
 				spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
 			</if>
@@ -496,6 +511,7 @@
 	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simi.po.model.partners.Partners">
 		update partners
 		set
+		user_id = #{userId,jdbcType=NUMERIC},
 		spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
 		company_name =
 		#{companyName,jdbcType=VARCHAR},
@@ -545,6 +561,7 @@
 	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.Partners">
 		update partners
 		set
+		user_id = #{userId,jdbcType=NUMERIC},
 		spider_partner_id = #{spiderPartnerId,jdbcType=NUMERIC},
 		company_name =
 		#{companyName,jdbcType=VARCHAR},

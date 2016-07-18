@@ -23,26 +23,35 @@ import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
 import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.dao.partners.PartnersMapper;
 import com.simi.po.dao.partners.SpiderPartnerMapper;
+import com.simi.po.model.admin.AdminAccount;
 import com.simi.po.model.dict.DictCity;
 import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;
+import com.simi.po.model.user.Users;
+import com.simi.service.admin.AdminAccountService;
 import com.simi.service.partners.PartnerRefCityService;
 import com.simi.service.partners.PartnerRefRegionService;
 import com.simi.service.partners.PartnerRefServiceTypeService;
 import com.simi.service.partners.PartnerServiceTypeService;
+import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
+import com.simi.service.user.UsersService;
 import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.partners.PartnersVo;
+import com.simi.vo.user.UserSearchVo;
 
 @Service
 public class PartnersServiceImpl implements PartnersService {
 
 	@Autowired
 	private PartnersMapper partnersMapper;
+	
+	@Autowired
+	private UsersService usersService;
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
@@ -55,6 +64,12 @@ public class PartnersServiceImpl implements PartnersService {
 
 	@Autowired
 	private PartnerRefRegionService partnerRefRegionService;
+	
+	@Autowired
+	private PartnerUserService partnerUserService;
+	
+	@Autowired
+	private AdminAccountService adminAccountService;
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -128,18 +143,60 @@ public class PartnersServiceImpl implements PartnersService {
 
 	@Override
 	public List<PartnersVo> getPartnerVos(List<Partners> list) {
-
-		// List<Long> spiderPartnerIds = new ArrayList<Long>();
+		
+		Long userId = 0L;
+		Long adminId = 0L;
+		Long partnerId = 0L;
+		List<Long> userIds = new ArrayList<Long>();
+		List<Long> adminIds = new ArrayList<Long>();
 		List<Long> spiderPartnerIds = new ArrayList<Long>();
+		List<Long> partnerIds = new ArrayList<Long>();
 		Partners item = null;
 		// 获得所有spiderPartnerId集合
 		for (int i = 0; i < list.size(); i++) {
 			item = list.get(i);
+			userId = item.getUserId();
+			if (!userId.equals(0L) && !userIds.contains(userId)) {
+				userIds.add(userId);
+			}
+			
+			partnerId = item.getPartnerId();
+			
+			if (!partnerId.equals(0L) && !partnerIds.contains(partnerId)) {
+				partnerIds.add(partnerId);
+			}
+			
+			adminId = item.getAdminId();
+			if (!adminId.equals(0L) && !adminIds.contains(adminId)) {
+				adminIds.add(adminId);
+			}
+			
 			Long spiderPartnerId = item.getSpiderPartnerId();
-			if (spiderPartnerId.equals(0L)) continue;
-			if (spiderPartnerIds.contains(spiderPartnerId)) continue;
-			spiderPartnerIds.add(item.getSpiderPartnerId());
+			if (!spiderPartnerId.equals(0L) && !spiderPartnerIds.contains(spiderPartnerId)) {
+				spiderPartnerIds.add(item.getSpiderPartnerId());
+			}
 		}
+		
+		List<Users> users = new ArrayList<Users>();
+		
+		if (!userIds.isEmpty()) {
+			UserSearchVo usearchVo = new UserSearchVo();
+			usearchVo.setUserIds(userIds);
+			users = usersService.selectBySearchVo(usearchVo);
+		}
+		
+		List<AdminAccount> admins = new ArrayList<AdminAccount>();
+		
+		if (!adminIds.isEmpty()) {
+			admins = adminAccountService.selectByIds(adminIds);
+		}
+		
+		List<HashMap> totalUsers = new ArrayList<HashMap>();
+		if (!partnerIds.isEmpty()) {
+			totalUsers = partnerUserService.totalUserByPartnerIds(partnerIds);
+		}
+		
+		
 		// 根据集合查询出所有对应的SpiderPartner集合
 		// List<SpiderPartner> spiderPartnersList =
 		// spiderPartnerMapper.selectBySpiderIds(spiderPartnerIds);
@@ -148,16 +205,16 @@ public class PartnersServiceImpl implements PartnersService {
 		if (!spiderPartnerIds.isEmpty()) {
 			PartnersSearchVo searchVo = new PartnersSearchVo();
 			searchVo.setSpiderPartnerIds(spiderPartnerIds);
-			
 			spiderPartnersList = partnersMapper.selectBySearchVo(searchVo);
 		}
+		
 		List<PartnersVo> result = new ArrayList<PartnersVo>();
 
 		// Long spiderPartnerId = 0L;
-		Long partnerId = 0L;
 		for (int i = 0; i < list.size(); i++) {
 			item = list.get(i);
 			partnerId = item.getPartnerId();
+			userId = item.getUserId();
 			PartnersVo vo = new PartnersVo();
 			try {
 				BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
@@ -166,8 +223,49 @@ public class PartnersServiceImpl implements PartnersService {
 				e.printStackTrace();
 			}
 			// String registerTime = "";
-			String spiderUrl = "";
+			//创建人.
+			if (!users.isEmpty()) {
+				for (Users u : users) {
+					if (u.getId().equals(userId)) {
+						String name = u.getName();
+						vo.setUserName(name);
+						vo.setCreate("用户注册");
+						vo.setMobile(u.getMobile());
+						break;
+					}
+				}
+			}
+			
+			if (!admins.isEmpty()) {
+				for (AdminAccount admin : admins) {
+					if (admin.getId().equals(item.getAdminId())) {
+						vo.setUserName(admin.getName());
+						vo.setCreate("管理员创建");
+						break;
+					}
+				}
+			}
+			
+			if (StringUtil.isEmpty(vo.getUserName())) {
+				vo.setUserName("");
+				vo.setCreate("采集");
+			}
+			
+			//总业务人员数
+			vo.setTotalUser(0);
+			if (!totalUsers.isEmpty()) {
+				for (HashMap totalUser : totalUsers) {
+					Long tmpPartnerId = Long.valueOf(totalUser.get("partner_id").toString());
+					if (tmpPartnerId.equals(partnerId)) {
+						int total = Integer.valueOf(totalUser.get("total").toString());
+						vo.setTotalUser(total);
+						break;
+					}
+				}
+			}
 
+			//采集网址
+			String spiderUrl = "";
 			Partners partners = null;
 			for (int n = 0; n < spiderPartnersList.size(); n++) {
 				partners = spiderPartnersList.get(n);
@@ -177,16 +275,8 @@ public class PartnersServiceImpl implements PartnersService {
 					break;
 				}
 			}
-			/*
-			 * SpiderPartner spiderPartner = null; for(int n = 0; n <
-			 * spiderPartnersList.size(); n++) { spiderPartner =
-			 * spiderPartnersList.get(n); if
-			 * (spiderPartner.getSpiderPartnerId().equals(spiderPartnerId)) {
-			 * registerTime = spiderPartner.getRegisterTime(); spiderUrl =
-			 * spiderPartner.getSpiderUrl(); break; } }
-			 */
-			// vo.setRegisterTime(DateUtil.parse(registerTime));
 			vo.setSpiderUrl(spiderUrl);
+
 			result.add(vo);
 		}
 		return result;
@@ -201,6 +291,7 @@ public class PartnersServiceImpl implements PartnersService {
 	public Partners iniPartners() {
 		Partners vo = new Partners();
 		vo.setPartnerId(0L);
+		vo.setUserId(0L);
 		vo.setSpiderPartnerId(0L);
 		vo.setCompanyName("");
 		vo.setRegisterType((short) 0L);
