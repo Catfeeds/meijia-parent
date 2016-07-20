@@ -24,6 +24,7 @@ import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffReq;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UserSmsTokenService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
@@ -64,7 +65,12 @@ public class CompanyStaffController extends BaseController {
 	
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 
+	
+	
 	@RequestMapping(value = "/join", method = { RequestMethod.POST })
 	public AppResultData<Object> companyReg(
 			@RequestParam("user_name") String userName, 
@@ -175,6 +181,10 @@ public class CompanyStaffController extends BaseController {
 			summary = staffName + "申请加入" + xCompany.getCompanyName() + ".";
 			userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
 		}
+		
+		//统计总公司数
+		userAsyncService.statUser(userId, "totalCompanys");
+		
 		return result;
 
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyAdminService;
@@ -56,6 +57,9 @@ public class XcompanyServiceImpl implements XCompanyService {
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 
 	@Override
 	public Xcompany initXcompany() {
@@ -219,6 +223,9 @@ public class XcompanyServiceImpl implements XCompanyService {
 		record.setIsDefault((short) 0);
 		record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
 		xCompanyStaffService.insertSelective(record);
+		
+		//统计总公司数
+		userAsyncService.statUser(u.getId(), "totalCompanys");
 		
 		return result;
 	}

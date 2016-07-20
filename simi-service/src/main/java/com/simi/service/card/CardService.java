@@ -57,4 +57,6 @@ public interface CardService {
 	PageInfo selectByListPage(CardSearchVo searchVo, int pageNo, int pageSize);
 
 	CardVo changeToCardVo(Cards item);
+
+	List<HashMap> totalByUserIds(CardSearchVo searchVo);
 }

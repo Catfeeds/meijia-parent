@@ -47,6 +47,7 @@ import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.user.UserRefSearchVo;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.user.UserStatVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 @Controller
@@ -109,6 +110,22 @@ public class UserController extends AdminController {
 		if (!StringUtil.isEmpty(mobile)) searchVo.setMobile(mobile);
 		if (!StringUtil.isEmpty(name)) searchVo.setName(name);
 		PageInfo result = usersService.selectByListPage(searchVo, pageNo, pageSize);
+		
+		List<Users> list = result.getList();
+		List<UserStatVo> listVo = usersService.getUserStatVos(list);
+		
+		for (int i = 0; i < list.size(); i++) {
+			Users item = list.get(i);
+			for (UserStatVo vo : listVo) {
+				if (vo.getId().equals(item.getId())) {
+					list.set(i, vo);
+					break;
+				}
+			}
+		}
+		
+		result = new PageInfo(list);
+		
 		model.addAttribute("contentModel", result);
 
 		return "user/userList";

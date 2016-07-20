@@ -25,6 +25,7 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderExtTeamService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
@@ -79,6 +80,9 @@ public class OrderExtTeamController extends BaseController {
 	
 	@Autowired
 	private ValidateService validateService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 	
 
 	/**团建订单列表接口
@@ -252,7 +256,10 @@ public class OrderExtTeamController extends BaseController {
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "teamwork", title, summary, "");
-				
+		
+		//统计总订单数
+		userAsyncService.statUser(userId, "totalOrders");
+		
 		return result;
 	}
 	

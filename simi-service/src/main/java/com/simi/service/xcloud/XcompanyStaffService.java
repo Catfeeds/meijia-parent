@@ -53,4 +53,6 @@ public interface XcompanyStaffService {
 
 	int updateByPrimaryKeyAndJson(XcompanyStaff xcompanyStaff);
 	
+	int totalByUserId(Long userId);
+	
 }

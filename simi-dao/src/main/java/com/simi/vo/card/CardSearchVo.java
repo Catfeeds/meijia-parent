@@ -8,6 +8,8 @@ public class CardSearchVo {
 	
 	private Long userId;
 	
+	private List<Long> userIds;
+	
 	private Short period;
 	
 	private List<Short> periods;
@@ -112,6 +114,14 @@ public class CardSearchVo {
 
 	public void setStatusIn(List<Short> statusIn) {
 		this.statusIn = statusIn;
+	}
+
+	public List<Long> getUserIds() {
+		return userIds;
+	}
+
+	public void setUserIds(List<Long> userIds) {
+		this.userIds = userIds;
 	}
 
 

@@ -7,7 +7,7 @@
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="card_type" property="cardType" jdbcType="NUMERIC" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
-		<result column="service_time" property="serviceTime" jdbcType="NUMERIC" /> 
+		<result column="service_time" property="serviceTime" jdbcType="NUMERIC" />
 		<result column="period" property="period" jdbcType="NUMERIC" />
 		<result column="period_name" property="periodName" jdbcType="VARCHAR" />
 		<result column="service_addr" property="serviceAddr" jdbcType="VARCHAR" />
@@ -79,11 +79,11 @@
 		<include refid="Base_Column_List" />
 		from cards
 		where 1 = 1
-		
+
 		<if test="userId != null">
 			and (user_id = #{userId,jdbcType=NUMERIC} or create_user_id = #{userId,jdbcType=NUMERIC})
 		</if>
-		
+
 		<if test="cardType != null">
 			and card_type = #{cardType,jdbcType=NUMERIC}
 		</if>
@@ -91,18 +91,18 @@
 		<if test="period != null">
 			and period = #{period,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="periods != null">
 			and period in
 			<foreach item="item" index="index" collection="periods" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
-		
+
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="statusIn != null">
 			and status in
 			<foreach item="item" index="index" collection="statusIn" open="(" separator="," close=")">
@@ -452,6 +452,29 @@
 		and status in ( 1, 2)
 		order by service_time asc
 	</select>
+	
+	<select id="totalByUserIds" resultType="java.util.HashMap" parameterType="com.simi.vo.card.CardSearchVo">
+		select user_id, count(distinct card_id) as total
+		from 
+	    (
+			select user_id, card_id
+			from cards where 1 = 1
+			<if test="userIds != null">
+			and user_id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			</if>
+			union all
+			select user_id, card_id
+			from card_attend where 1 = 1
+			and user_id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		)  as T
+		group by user_id
+	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from cards
@@ -469,7 +492,8 @@
 		set_sec_do, set_sec_remarks,
 		set_friend_view, status, sec_remarks, add_time, update_time
 		)
-		values (#{cardId,jdbcType=NUMERIC}, #{createUserId,jdbcType=NUMERIC},
+		values (#{cardId,jdbcType=NUMERIC},
+		#{createUserId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC},
 		#{cardType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, #{serviceTime,jdbcType=NUMERIC},
 		#{period,jdbcType=NUMERIC}, #{periodName,jdbcType=VARCHAR},
@@ -688,20 +712,24 @@
 		service_addr =
 		#{serviceAddr,jdbcType=VARCHAR},
 		service_content = #{serviceContent,jdbcType=VARCHAR},
-		card_extra = #{cardExtra,jdbcType=VARCHAR},
+		card_extra =
+		#{cardExtra,jdbcType=VARCHAR},
 		set_remind =
 		#{setRemind,jdbcType=SMALLINT},
 		set_now_send = #{setNowSend,jdbcType=NUMERIC},
-		set_sec_do = #{setSecDo,jdbcType=NUMERIC},
+		set_sec_do =
+		#{setSecDo,jdbcType=NUMERIC},
 		set_sec_remarks =
 		#{setSecRemarks,jdbcType=VARCHAR},
 		sec_remarks = #{setSecRemarks,jdbcType=VARCHAR},
-		set_friend_view = #{setFriendView,jdbcType=NUMERIC},
+		set_friend_view =
+		#{setFriendView,jdbcType=NUMERIC},
 		status =
 		#{status,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
-		where card_id = #{cardId,jdbcType=NUMERIC}
+		where
+		card_id = #{cardId,jdbcType=NUMERIC}
 	</update>
 
 	<update id="updateFinishByOvertime" parameterType="com.simi.vo.card.CardSearchVo">

@@ -17,5 +17,9 @@ public interface UsersAsyncService {
 	Future<Boolean> addFriends(Users u, Users friendUser);
 
 	Future<Boolean> addDefaultFriends(Long userId);
+
+	Future<Boolean> statUserInit(Long userId);
+
+	Future<Boolean> statUser(Long userId, String statType);
 	
 }

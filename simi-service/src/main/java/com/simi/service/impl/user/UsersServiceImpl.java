@@ -27,6 +27,7 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UsersMapper;
+import com.simi.po.model.stat.StatUser;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef;
@@ -42,6 +43,7 @@ import com.simi.service.card.CardService;
 import com.simi.service.dict.DictCouponsService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.order.OrderQueryService;
+import com.simi.service.stat.StatUserService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
@@ -51,11 +53,14 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserRefSearchVo;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.user.UserStatVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
@@ -113,6 +118,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private UserRefService userRefService;
+	
+	@Autowired
+	private StatUserService statUserService;
 	
 	@Override
 	public Long insert(Users record) {
@@ -172,22 +180,25 @@ public class UsersServiceImpl implements UsersService {
 			
 			u.setIntroduction(introduction);
 			this.insertSelective(u);
-
+			
+			Long userId = u.getId();
 			// 检测用户所在地，异步操作
-			userAsyncService.userMobileCity(u.getId());
+			userAsyncService.userMobileCity(userId);
 
 			// 新用户注册通知运营人员
-			userAsyncService.newUserNotice(u.getId());
+			userAsyncService.newUserNotice(userId);
 
 			// 默认加固定客服用户为好友
-			userAsyncService.addDefaultFriends(u.getId());
+			userAsyncService.addDefaultFriends(userId);
 			
 			// 发送默认欢迎消息
-			userMsgAsyncService.newUserMsg(u.getId());
+			userMsgAsyncService.newUserMsg(userId);
 			
 			//新用户注册赠送积分
-			userScoreAsyncService.sendScore(u.getId(), Constants.SCORE_USER_REG, "new_user", u.getId().toString(), "新用户注册");
+			userScoreAsyncService.sendScore(userId, Constants.SCORE_USER_REG, "new_user", u.getId().toString(), "新用户注册");
 			
+			//默认统计数
+			userAsyncService.statUserInit(userId);
 		}
 		return u;
 	}
@@ -549,6 +560,45 @@ public class UsersServiceImpl implements UsersService {
 			result.add(vo);
 		}
 		
+		return result;
+	}		
+	
+	@Override
+	public List<UserStatVo> getUserStatVos(List<Users> list) {
+		List<UserStatVo> result = new ArrayList<UserStatVo>();
+		
+		if (list.isEmpty()) return result;
+		
+		List<Long> userIds = new ArrayList<Long>();
+		for (Users item : list) {
+			if (!userIds.contains(item.getId())) userIds.add(item.getId());
+		}
+		
+		List<StatUser> statUsers = new ArrayList<StatUser>();
+		if (!userIds.isEmpty()) {
+			statUsers = statUserService.selectByUserIds(userIds);
+		}
+		
+		for (int i = 0; i < list.size(); i++) {
+			Users item = list.get(i);
+			UserStatVo vo = new UserStatVo();
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			for (StatUser s : statUsers) {
+				if (s.getUserId().equals(vo.getId())) {
+					vo.setTotalCards(s.getTotalCards());
+					vo.setTotalFeeds(s.getTotalFeeds());
+					vo.setTotalCompanys(s.getTotalCompanys());
+					vo.setTotalOrders(s.getTotalOrders());
+					break;
+				}
+			}
+			
+			result.add(vo);
+			
+		}
+
 		return result;
 	}		
 	

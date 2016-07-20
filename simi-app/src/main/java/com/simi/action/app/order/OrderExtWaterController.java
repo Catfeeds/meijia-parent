@@ -29,6 +29,7 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
@@ -83,6 +84,9 @@ public class OrderExtWaterController extends BaseController {
 	
 	@Autowired
 	private ValidateService validateService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 	
 
 	/**送水订单列表接口
@@ -282,7 +286,10 @@ public class OrderExtWaterController extends BaseController {
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "water", title, summary, "");		
-				
+		
+		//统计总订单数
+		userAsyncService.statUser(userId, "totalOrders");
+		
 		return result;
 	}
 	

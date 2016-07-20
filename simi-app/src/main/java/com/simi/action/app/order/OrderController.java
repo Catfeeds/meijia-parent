@@ -27,6 +27,7 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
@@ -79,6 +80,9 @@ public class OrderController extends BaseController {
 	
 	@Autowired
 	private ValidateService validateService;	
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 
 	// 1. 订单提交接口
 	/**
@@ -304,6 +308,9 @@ public class OrderController extends BaseController {
 			//订单支付成功后
 			orderPayService.orderPaySuccessToDo(order);
 		}		
+		
+		//统计总订单数
+		userAsyncService.statUser(userId, "totalOrders");
 		
 		OrderListVo vo = orderQueryService.getOrderListVo(order);
 		

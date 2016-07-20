@@ -41,5 +41,7 @@ public interface OrdersMapper {
 	List<Orders> selectByOrderIds(List<Long> orderIds);
 
 	List<Long> getByPartnerUserId(Long partnerUseId);
+
+	int totalByUserId(Long userId);
 	
 }

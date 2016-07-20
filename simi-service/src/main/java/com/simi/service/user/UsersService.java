@@ -1,10 +1,12 @@
 package com.simi.service.user;
 
 import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserIndexVo;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.user.UserStatVo;
 import com.simi.vo.user.UserViewVo;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
@@ -45,5 +47,7 @@ public interface UsersService {
 	UserIndexVo getUserIndexVo(Users user, Users viewUser);
 
 	List<UserBaseVo> getUserBaseVos(List<Users> list);
+
+	List<UserStatVo> getUserStatVos(List<Users> list);
 	
 }

@@ -2,6 +2,7 @@ package com.simi.service.impl.feed;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -239,6 +240,11 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public int updateByTotalView(Long fid) {
 		return feedsMapper.updateByTotalView(fid);
+	}
+	
+	@Override
+	public List<HashMap> totalByUserIds(FeedSearchVo searchVo) {
+		return feedsMapper.totalByUserIds(searchVo);
 	}
 
 }

@@ -22,17 +22,25 @@ import com.meijia.utils.huanxin.EasemobIMUsers;
 import com.meijia.utils.push.PushUtil;
 import com.simi.common.Constants;
 import com.simi.po.model.admin.AdminAccount;
+import com.simi.po.model.stat.StatUser;
 import com.simi.po.model.user.UserLogined;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.service.admin.AdminAccountService;
 import com.simi.service.async.UsersAsyncService;
+import com.simi.service.card.CardService;
+import com.simi.service.feed.FeedService;
+import com.simi.service.order.OrderQueryService;
+import com.simi.service.stat.StatUserService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserLoginedService;
 import com.simi.service.user.UserPushBindService;
 import com.simi.service.user.UserRef3rdService;
 import com.simi.service.user.UsersService;
+import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.card.CardSearchVo;
+import com.simi.vo.feed.FeedSearchVo;
 
 @Service
 public class UsersAsyncServiceImpl implements UsersAsyncService {
@@ -54,6 +62,21 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 
 	@Autowired
 	public AdminAccountService adminAccountService;
+	
+	@Autowired
+	public StatUserService statUserService;
+	
+	@Autowired
+	private CardService cardService;
+	
+	@Autowired
+	private FeedService feedService;
+	
+	@Autowired
+	private XcompanyStaffService xcompanyStaffService;
+	
+	@Autowired
+	private OrderQueryService orderQueryService;
 
 	/**
 	 * 第三方登录，注册绑定环信账号,异步操作
@@ -277,4 +300,119 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 		return new AsyncResult<Boolean>(true);
 	}
 
+	
+	/**
+	 * 初始化统计数据
+	 */
+	@Async
+	@Override
+	public Future<Boolean> statUserInit(Long userId) {
+		
+		if (userId.equals(0L)) return new AsyncResult<Boolean>(true);
+		
+		StatUser record = statUserService.selectByPrimaryKey(userId);
+		
+		if (record != null) return new AsyncResult<Boolean>(true);
+		
+		record = statUserService.initStatUser();
+		
+		record.setUserId(userId);
+		
+		statUserService.insert(record);
+		
+		
+		
+		return new AsyncResult<Boolean>(true);
+	}
+	
+	/**
+	 * 初始化统计数据
+	 * userId   用户ID
+	 * statType
+	 *          totalCards = 总卡片数
+	 *          totalFeeds = 总问答数
+	 *          totalCompanys = 总公司数
+	 *          totalOrders  = 总订单数
+	 */
+	@Async
+	@Override
+	public Future<Boolean> statUser(Long userId, String statType) {
+		
+		if (userId.equals(0L)) return new AsyncResult<Boolean>(true);
+		
+		Boolean isNew = false;
+		StatUser record = statUserService.selectByPrimaryKey(userId);
+		if (record == null) {
+			record = statUserService.initStatUser();
+			record.setUserId(userId);
+			isNew = true;
+		}
+		
+		
+		int total = 0;
+		Long tmpUserId = 0L;
+		List<Long> userIds = new ArrayList<Long>();
+		userIds.add(userId);
+		
+		//总卡片数
+		if (statType.equals("totalCards")) {
+			CardSearchVo cSearchVo = new CardSearchVo();
+			
+			cSearchVo.setUserIds(userIds);
+			List<HashMap> totalCards = cardService.totalByUserIds(cSearchVo);
+			
+			
+			for (HashMap totalCard : totalCards) {
+				tmpUserId = Long.valueOf(totalCard.get("user_id").toString());
+				if (userId.equals(tmpUserId)) {
+					total = Integer.valueOf(totalCard.get("total").toString());
+					record.setTotalCards(total);
+					break;
+				}
+			}
+		}
+		
+		//总问答数
+		if (statType.equals("totalFeeds")) {
+			FeedSearchVo fSearchVo = new FeedSearchVo();
+			fSearchVo.setUserIds(userIds);
+			List<HashMap> totalFeeds = feedService.totalByUserIds(fSearchVo);
+			
+
+			for (HashMap totalFeed : totalFeeds) {
+				tmpUserId = Long.valueOf(totalFeed.get("user_id").toString());
+				if (userId.equals(tmpUserId)) {
+					total = Integer.valueOf(totalFeed.get("total").toString());
+					record.setTotalFeeds(total);
+					break;
+				}
+			}
+		}
+		
+		//总公司数
+		if (statType.equals("totalCompanys")) {
+			total = xcompanyStaffService.totalByUserId(userId);
+			record.setTotalCompanys(total);
+		}
+		
+		//总订单数
+		if (statType.equals("totalOrders")) {
+			total = orderQueryService.totalByUserId(userId);
+			record.setTotalOrders(total);
+		}
+		
+		
+		
+		if (isNew) {
+			statUserService.insert(record);
+		} else {
+			record.setUpdateTime(TimeStampUtil.getNowSecond());
+			statUserService.updateByPrimaryKeySelective(record);
+		}
+		
+		
+		
+		
+		return new AsyncResult<Boolean>(true);
+	}
 }

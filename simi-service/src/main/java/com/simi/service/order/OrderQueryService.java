@@ -37,4 +37,6 @@ public interface OrderQueryService {
 
 	String getServiceTypeImg(Orders order);
 
+	int totalByUserId(Long userId);
+
 }

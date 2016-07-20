@@ -37,6 +37,7 @@ import com.simi.service.async.CardAsyncService;
 import com.simi.service.async.CardMsgAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.card.CardAttendService;
 import com.simi.service.card.CardCommentService;
 import com.simi.service.card.CardImgsService;
@@ -84,6 +85,9 @@ public class CardController extends BaseController {
 
 	@Autowired
 	private UserMsgService userMsgService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 
 	// 卡片提交接口
 	/**
@@ -285,6 +289,9 @@ public class CardController extends BaseController {
 
 		// 创建卡片积分
 		userScoreAsyncService.sendScoreCard(userId, cardId, cardType);
+		
+		// 统计用户卡片数
+		userAsyncService.statUser(userId, "totalCards");
 
 		CardVo vo = new CardVo();
 		vo = cardService.changeToCardVo(record);

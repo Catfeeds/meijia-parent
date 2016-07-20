@@ -46,5 +46,7 @@ public interface CardsMapper {
 
 	int updateFinishByOvertime(CardSearchVo searchVo);
 
+	List<HashMap> totalByUserIds(CardSearchVo searchVo);
+
 	
 }

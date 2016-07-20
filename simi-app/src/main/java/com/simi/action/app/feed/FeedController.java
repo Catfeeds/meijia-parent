@@ -28,6 +28,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.async.FeedMsgAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.feed.FeedCommentService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.feed.FeedTagsService;
@@ -67,6 +68,9 @@ public class FeedController extends BaseController {
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 
 	// 动态添加接口
 	@SuppressWarnings("unchecked")
@@ -193,6 +197,9 @@ public class FeedController extends BaseController {
 		
 		// 生成动态消息
 //		feedMsgAsyncService.newFeedMsg(fid);
+		
+		//统计用问答数
+		userAsyncService.statUser(userId, "totalFeeds");
 
 		result.setData(fid);
 
@@ -436,6 +443,9 @@ public class FeedController extends BaseController {
 			
 			//针对题主进行消息提醒
 			feedMsgAsyncService.newFeedCommentMsg(userId, fid, feedType, commentId);
+			
+			//统计用问答数
+			userAsyncService.statUser(userId, "totalFeeds");
 		}
 		
 		

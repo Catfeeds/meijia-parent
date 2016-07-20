@@ -68,15 +68,19 @@
                           <table class="table table-striped table-advance table-hover">
                               <thead>
                               <tr>
-                              		  <th>序号</th>
+                              		  <th>用户ID</th>
                                   	  <th >手机号</th>
 		                              <th >手机号归属地</th>
 		                              <th >用户姓名</th>
 		                              <th >用户余额</th>
 		                              <th >用户积分</th>
-		                            
 		                              <th>用户来源</th>
 		                              <th >添加时间</th>
+		                              <th>卡片数</th>
+		                              <th>问答数</th>
+		                              <th>公司数</th>
+		                              <th>订单数</th>
+		                              <th>用户组</th>
 		                              <th>操作</th>
                               </tr>
                               </thead>
@@ -102,7 +106,12 @@
 							            <td>
 							            	<timestampTag:timestamp patten="yyyy-MM-dd" t="${item.addTime * 1000}"/>
 							            </td>
-
+										
+										<td>${ item.totalCards }</td>
+										<td>${ item.totalFeeds }</td>
+										<td>${ item.totalCompanys }</td>
+										<td>${ item.totalOrders }</td>
+										<td>${ item.groupName }</td>
                                        <td>
                                             <button id="btn_update" onClick="btn_update('order/list?user_id=${ item.id }')" class="btn btn-primary btn-xs" title="订单"><i class=" icon-ambulance"></i></button>
                                        		<button id="btn1" onClick="btn_update('/user/userForm?id=${item.id}')" class="btn btn-primary btn-xs"

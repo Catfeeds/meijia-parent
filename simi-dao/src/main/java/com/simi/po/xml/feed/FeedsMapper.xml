@@ -90,6 +90,29 @@
 		
 		order by add_time desc
 	</select>
+	
+	<select id="totalByUserIds" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
+		select user_id, count(distinct fid) as total
+		from 
+	    (
+			select user_id, fid
+			from feeds where 1 = 1
+			<if test="userIds != null">
+			and user_id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			</if>
+			union all
+			select user_id, fid
+			from feed_comment where 1 = 1
+			and user_id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		)  as T
+		group by user_id
+	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from feeds

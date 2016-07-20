@@ -1,5 +1,8 @@
 package com.simi.service.feed;
 
+import java.util.HashMap;
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.feed.Feeds;
 import com.simi.vo.feed.FeedListVo;
@@ -30,7 +33,7 @@ public interface FeedService {
 
 	FeedVo changeToFeedVo(Feeds item);
 
-	
+	List<HashMap> totalByUserIds(FeedSearchVo searchVo);
 
 	
 }

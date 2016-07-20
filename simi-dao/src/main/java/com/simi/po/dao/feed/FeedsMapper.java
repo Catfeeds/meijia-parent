@@ -1,5 +1,6 @@
 package com.simi.po.dao.feed;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.simi.po.model.feed.Feeds;
@@ -23,4 +24,6 @@ public interface FeedsMapper {
 	List<Feeds> selectBySearchVo(FeedSearchVo vo);
 
 	int updateByTotalView(Long fid);
+
+	List<HashMap> totalByUserIds(FeedSearchVo searchVo);
 }

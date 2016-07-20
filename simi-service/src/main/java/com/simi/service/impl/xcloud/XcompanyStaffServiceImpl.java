@@ -695,5 +695,14 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		
 		return listVo;
 	}
+	
+	@Override
+	public int totalByUserId(Long userId) {
+		int total = 0;
+		
+		total = xCompanyStaffMapper.totalByUserId(userId);
+		
+		return total;
+	}
 
 }

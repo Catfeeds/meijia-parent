@@ -491,6 +491,12 @@ public class CardsServiceImpl implements CardService {
 		PageInfo result = new PageInfo(list);
 		return result;
 	}		
+	
+	@Override
+	public List<HashMap> totalByUserIds(CardSearchVo searchVo) {
+		List<HashMap> result = cardsMapper.totalByUserIds(searchVo);
+		return result;
+	}	
 
 	@Override
 	public int updateByPrimaryKey(Cards record) {

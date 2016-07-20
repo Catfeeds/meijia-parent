@@ -176,6 +176,9 @@ public class CardAttendServiceImpl implements CardAttendService {
 					userFriendReq.setUpdateTime(TimeStampUtil.getNowSecond());
 					userFriendReqService.insert(userFriendReq);
 				}
+				
+				//统计新用户卡片数
+				usersAsyncService.statUser(newUserId, "totalCards");
 			}
 		}
 		

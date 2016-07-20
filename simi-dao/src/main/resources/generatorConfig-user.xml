@@ -543,5 +543,21 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>
 
+		<!--用户组表 -->
+		<table schema="simi" tableName="groups" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByExampleQueryId="false"
+			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="group_id" property="groupId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+		</table>
+
+		<!--用户组关联表 -->
+		<table schema="simi" tableName="group_user" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" selectByExampleQueryId="false"
+			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="group_id" property="groupId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+		</table>
+
 	</context>
 </generatorConfiguration>

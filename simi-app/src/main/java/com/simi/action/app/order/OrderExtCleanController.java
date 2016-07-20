@@ -27,6 +27,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
 import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderExtCleanService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
@@ -84,6 +85,9 @@ public class OrderExtCleanController extends BaseController {
 	
 	@Autowired
 	private NoticeSmsAsyncService noticeSmsAsyncService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 	
 
 	/**保洁订单列表接口
@@ -272,7 +276,9 @@ public class OrderExtCleanController extends BaseController {
 		String title = serviceType.getName();
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "clean", title, summary, "");
-				
+		
+		//统计总订单数
+		userAsyncService.statUser(userId, "totalOrders");
 		
 		return result;
 	}	

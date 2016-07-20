@@ -26,6 +26,7 @@ import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.order.OrderExtRecycleService;
 import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
@@ -74,6 +75,9 @@ public class OrderExtRecycleController extends BaseController {
 	
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 	
 
 	/**废品回收订单列表接口
@@ -273,6 +277,9 @@ public class OrderExtRecycleController extends BaseController {
 		String summary =  OrderUtil.getOrderStausMsg(order.getOrderStatus());
 		userMsgAsyncService.newActionAppMsg(userId, orderId, "recycle", title, summary, "");
 		
+		//统计总订单数
+		userAsyncService.statUser(userId, "totalOrders");
+				
 		return result;
 	}	
 	

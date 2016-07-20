@@ -118,6 +118,14 @@
 		where l.company_id = #{companyId,jdbcType=NUMERIC} and r.id is null
 		order by start limit 1
 	</select>
+	
+	
+	<select id="totalByUserId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+
+		select count(*) as total
+		from xcompany_staff 
+		where user_id = #{userId,jdbcType=NUMERIC} and status = 1
+	</select>
 
 
 

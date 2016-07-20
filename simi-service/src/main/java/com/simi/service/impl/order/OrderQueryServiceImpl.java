@@ -646,5 +646,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 		return imgUrl;
 	}
+	
+	@Override
+	public int totalByUserId(Long userId) {
+		int total = 0;
+		total = ordersMapper.totalByUserId(userId);
+		return total;
+	}
 
 }

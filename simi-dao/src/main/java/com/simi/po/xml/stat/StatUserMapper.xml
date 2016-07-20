@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.stat.StatUserMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.stat.StatUser">
+		<id column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="total_cards" property="totalCards" jdbcType="INTEGER" />
+		<result column="total_feeds" property="totalFeeds" jdbcType="INTEGER" />
+		<result column="total_companys" property="totalCompanys" jdbcType="INTEGER" />
+		<result column="total_orders" property="totalOrders" jdbcType="INTEGER" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, total_cards, total_feeds, total_companys, total_orders, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from stat_user
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByUserIds" resultMap="BaseResultMap" parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from stat_user
+		where user_id in
+	 	<foreach item="item" index="index" collection="list"
+	             open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</select>	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from stat_user
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.stat.StatUser">
+		insert into stat_user (user_id, total_cards, total_feeds,
+		total_companys, total_orders, add_time,
+		update_time)
+		values
+		(#{userId,jdbcType=NUMERIC}, #{totalCards,jdbcType=INTEGER}, #{totalFeeds,jdbcType=INTEGER},
+		#{totalCompanys,jdbcType=INTEGER},
+		#{totalOrders,jdbcType=INTEGER}, #{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.stat.StatUser">
+		insert into stat_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="totalCards != null">
+				total_cards,
+			</if>
+			<if test="totalFeeds != null">
+				total_feeds,
+			</if>
+			<if test="totalCompanys != null">
+				total_companys,
+			</if>
+			<if test="totalOrders != null">
+				total_orders,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="totalCards != null">
+				#{totalCards,jdbcType=INTEGER},
+			</if>
+			<if test="totalFeeds != null">
+				#{totalFeeds,jdbcType=INTEGER},
+			</if>
+			<if test="totalCompanys != null">
+				#{totalCompanys,jdbcType=INTEGER},
+			</if>
+			<if test="totalOrders != null">
+				#{totalOrders,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.stat.StatUser">
+		update stat_user
+		<set>
+			<if test="totalCards != null">
+				total_cards = #{totalCards,jdbcType=INTEGER},
+			</if>
+			<if test="totalFeeds != null">
+				total_feeds = #{totalFeeds,jdbcType=INTEGER},
+			</if>
+			<if test="totalCompanys != null">
+				total_companys = #{totalCompanys,jdbcType=INTEGER},
+			</if>
+			<if test="totalOrders != null">
+				total_orders = #{totalOrders,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.stat.StatUser">
+		update stat_user
+		set total_cards = #{totalCards,jdbcType=INTEGER},
+		total_feeds =
+		#{totalFeeds,jdbcType=INTEGER},
+		total_companys = #{totalCompanys,jdbcType=INTEGER},
+		total_orders = #{totalOrders,jdbcType=INTEGER},
+		add_time =
+		#{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</update>
+</mapper>
