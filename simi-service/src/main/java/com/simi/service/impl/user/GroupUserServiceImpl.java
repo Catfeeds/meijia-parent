@@ -1,5 +1,7 @@
 package com.simi.service.impl.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,12 @@ public class GroupUserServiceImpl implements GroupUserService{
 	public GroupUser selectByPrimaryKey(Long id) {
 		return groupUserMapper.selectByPrimaryKey(id);
 	}
+	
+	@Override
+	public List<GroupUser> selectByUserIds(List<Long> userIds) {
+		return groupUserMapper.selectByUserIds(userIds);
+	}
+	
 	
 	@Override
 	public int totalByGroupId(Long groupId) {

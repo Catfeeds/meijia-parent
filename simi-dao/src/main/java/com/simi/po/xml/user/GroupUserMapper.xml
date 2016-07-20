@@ -23,6 +23,17 @@
 		where group_id = #{groupId,jdbcType=NUMERIC}
 	</select>
 	
+	<select id="selectByUserIds" resultMap="BaseResultMap" parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from group_user
+		where user_id in
+	 	<foreach item="item" index="index" collection="list"
+	             open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from group_user
 		where id = #{id,jdbcType=NUMERIC}

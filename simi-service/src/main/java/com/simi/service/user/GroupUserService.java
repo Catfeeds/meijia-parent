@@ -1,5 +1,7 @@
 package com.simi.service.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.GroupUser;
 
 public interface GroupUserService {
@@ -15,5 +17,7 @@ public interface GroupUserService {
 	GroupUser selectByPrimaryKey(Long id);
 
 	int totalByGroupId(Long groupId);
+
+	List<GroupUser> selectByUserIds(List<Long> userIds);
 
 }

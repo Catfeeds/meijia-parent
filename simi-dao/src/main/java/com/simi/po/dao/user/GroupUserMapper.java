@@ -1,5 +1,7 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.GroupUser;
 
 public interface GroupUserMapper {
@@ -16,4 +18,6 @@ public interface GroupUserMapper {
     int updateByPrimaryKey(GroupUser record);
 
 	int totalByGroupId(Long groupId);
+
+	List<GroupUser> selectByUserIds(List<Long> userIds);
 }

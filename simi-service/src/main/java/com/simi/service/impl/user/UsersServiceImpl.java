@@ -28,6 +28,8 @@ import com.simi.common.Constants;
 import com.simi.po.dao.user.UserRef3rdMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.stat.StatUser;
+import com.simi.po.model.user.GroupUser;
+import com.simi.po.model.user.Groups;
 import com.simi.po.model.user.UserFriends;
 import com.simi.po.model.user.UserPushBind;
 import com.simi.po.model.user.UserRef;
@@ -44,6 +46,8 @@ import com.simi.service.dict.DictCouponsService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.stat.StatUserService;
+import com.simi.service.user.GroupService;
+import com.simi.service.user.GroupUserService;
 import com.simi.service.user.UserCouponService;
 import com.simi.service.user.UserFriendService;
 import com.simi.service.user.UserPushBindService;
@@ -55,6 +59,7 @@ import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.feed.FeedSearchVo;
+import com.simi.vo.user.GroupsSearchVo;
 import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserFriendSearchVo;
 import com.simi.vo.user.UserIndexVo;
@@ -121,6 +126,12 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private StatUserService statUserService;
+	
+	@Autowired
+	private GroupService groupService;
+	
+	@Autowired
+	private GroupUserService groupUserService;
 	
 	@Override
 	public Long insert(Users record) {
@@ -574,10 +585,22 @@ public class UsersServiceImpl implements UsersService {
 			if (!userIds.contains(item.getId())) userIds.add(item.getId());
 		}
 		
+		//统计数据
 		List<StatUser> statUsers = new ArrayList<StatUser>();
 		if (!userIds.isEmpty()) {
 			statUsers = statUserService.selectByUserIds(userIds);
 		}
+		
+		//用户组
+		List<GroupUser> groupUsers = new ArrayList<GroupUser>();
+		if (!userIds.isEmpty()) {
+			groupUsers = groupUserService.selectByUserIds(userIds);
+		}
+		
+		
+		List<Groups> groups =  new ArrayList<Groups>();
+		GroupsSearchVo gSearchVo = new GroupsSearchVo();
+		groups = groupService.selectBySearchVo(gSearchVo);
 		
 		for (int i = 0; i < list.size(); i++) {
 			Users item = list.get(i);
@@ -594,6 +617,24 @@ public class UsersServiceImpl implements UsersService {
 					break;
 				}
 			}
+			
+			//所属用户组
+			
+			vo.setGroupId(0L);
+			String groupName = "";
+			for (GroupUser gu : groupUsers) {
+				
+				if (gu.getUserId().equals(vo.getId())) {
+					for (Groups g : groups) {
+						if (g.getGroupId().equals(gu.getGroupId())) {
+							groupName+= g.getName() + "";
+						}
+					}
+					
+				}
+			}
+			
+			vo.setGroupName(groupName);
 			
 			result.add(vo);
 			
