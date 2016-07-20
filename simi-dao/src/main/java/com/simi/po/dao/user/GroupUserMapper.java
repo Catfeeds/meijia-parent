@@ -14,4 +14,6 @@ public interface GroupUserMapper {
     int updateByPrimaryKeySelective(GroupUser record);
 
     int updateByPrimaryKey(GroupUser record);
+
+	int totalByGroupId(Long groupId);
 }

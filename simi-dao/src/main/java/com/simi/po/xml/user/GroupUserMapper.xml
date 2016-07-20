@@ -16,6 +16,13 @@
 		from group_user
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="totalByGroupId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+		select count(*) as total
+		from group_user
+		where group_id = #{groupId,jdbcType=NUMERIC}
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from group_user
 		where id = #{id,jdbcType=NUMERIC}
@@ -23,7 +30,8 @@
 	<insert id="insert" parameterType="com.simi.po.model.user.GroupUser">
 		insert into group_user (id, group_id, user_id,
 		add_time)
-		values (#{id,jdbcType=NUMERIC}, #{groupId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		values (#{id,jdbcType=NUMERIC}, #{groupId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.GroupUser">
@@ -76,7 +84,8 @@
 		update group_user
 		set group_id = #{groupId,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
-		add_time = #{addTime,jdbcType=NUMERIC}
+		add_time
+		= #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 </mapper>

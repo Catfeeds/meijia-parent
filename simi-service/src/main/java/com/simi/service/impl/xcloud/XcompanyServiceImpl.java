@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
+import com.simi.service.stat.StatUserService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyAdminService;
@@ -22,6 +23,7 @@ import com.simi.vo.xcloud.CompanySearchVo;
 import com.simi.vo.xcloud.XcompanyVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.stat.StatUser;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyAdmin;
@@ -59,8 +61,8 @@ public class XcompanyServiceImpl implements XCompanyService {
 	private UserScoreAsyncService userScoreAsyncService;
 	
 	@Autowired
-	private UsersAsyncService userAsyncService;
-
+	public StatUserService statUserService;
+	
 	@Override
 	public Xcompany initXcompany() {
 		Xcompany record = new Xcompany();
@@ -225,7 +227,12 @@ public class XcompanyServiceImpl implements XCompanyService {
 		xCompanyStaffService.insertSelective(record);
 		
 		//统计总公司数
-		userAsyncService.statUser(u.getId(), "totalCompanys");
+//		userAsyncService.statUser(u.getId(), "totalCompanys");
+		
+		StatUser stat = statUserService.selectByPrimaryKey(userId);
+		int total = xCompanyStaffService.totalByUserId(userId);
+		stat.setTotalCompanys(total);
+		statUserService.updateByPrimaryKey(stat);
 		
 		return result;
 	}

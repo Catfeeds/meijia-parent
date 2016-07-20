@@ -17,10 +17,12 @@ import com.meijia.wx.utils.JsonUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyStaffMapper;
+import com.simi.po.model.stat.StatUser;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.stat.StatUserService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
@@ -46,6 +48,9 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 
 	@Autowired
 	UsersService usersService;
+	
+	@Autowired
+	public StatUserService statUserService;
 
 	@Override
 	public XcompanyStaff initXcompanyStaff() {
@@ -592,6 +597,12 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 				updateByPrimaryKeySelective(record);
 			} else {
 				insertSelective(record);
+				
+				//计算用户所属公司数。
+				StatUser stat = statUserService.selectByPrimaryKey(userId);
+				int total = this.totalByUserId(userId);
+				stat.setTotalCompanys(total);
+				statUserService.updateByPrimaryKey(stat);
 			}
 			
 		}

@@ -661,7 +661,7 @@ public class UsersServiceImpl implements UsersService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(o.toString());
+
 		String ret = o.get("ret").toString();
 
 		HashMap<String, String> info = (HashMap<String, String>) o.get("info");

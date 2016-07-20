@@ -1,6 +1,9 @@
 package com.simi.po.dao.user;
 
+import java.util.List;
+
 import com.simi.po.model.user.Groups;
+import com.simi.vo.user.GroupsSearchVo;
 
 public interface GroupsMapper {
     int deleteByPrimaryKey(Long groupId);
@@ -14,4 +17,8 @@ public interface GroupsMapper {
     int updateByPrimaryKeySelective(Groups record);
 
     int updateByPrimaryKey(Groups record);
+
+	List<Groups> selectByListPage(GroupsSearchVo searchVo);
+
+	List<Groups> selectBySearchVo(GroupsSearchVo searchVo);
 }

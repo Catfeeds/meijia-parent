@@ -48,6 +48,7 @@ import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
@@ -74,6 +75,9 @@ public class StaffController extends BaseController {
 
 	@Autowired
 	private XcompanyDeptService xcompanyDeptService;
+	
+	@Autowired
+	private UsersAsyncService userAsyncService;
 
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
@@ -230,6 +234,11 @@ public class StaffController extends BaseController {
 		} else {
 			xcompanyStaff.setJobNumber(xcompanyStaffService.getNextJobNumber(companyId));
 			xcompanyStaffService.insertSelective(xcompanyStaff);
+			
+			//统计公司数
+			userAsyncService.statUser(userId, "totalCompanys");
+			
+			
 		}
 
 		// 处理图片上传

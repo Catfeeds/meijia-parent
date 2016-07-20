@@ -16,6 +16,42 @@
 		from groups
 		where group_id = #{groupId,jdbcType=NUMERIC}
 	</select>
+	
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.GroupsSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from groups
+		where 1=1
+		
+		<if test="groupId != null">
+			and group_id = #{groupId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		
+		
+		order by add_time desc
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.GroupsSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from groups
+		where 1=1
+		
+		<if test="groupId != null">
+			and group_id = #{groupId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		
+		order by add_time desc
+	</select>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from groups
 		where group_id = #{groupId,jdbcType=NUMERIC}
@@ -23,7 +59,8 @@
 	<insert id="insert" parameterType="com.simi.po.model.user.Groups">
 		insert into groups (group_id, name, remarks,
 		add_time)
-		values (#{groupId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR},
+		values (#{groupId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.user.Groups">
@@ -76,7 +113,8 @@
 		update groups
 		set name = #{name,jdbcType=VARCHAR},
 		remarks = #{remarks,jdbcType=VARCHAR},
-		add_time = #{addTime,jdbcType=NUMERIC}
+		add_time =
+		#{addTime,jdbcType=NUMERIC}
 		where group_id = #{groupId,jdbcType=NUMERIC}
 	</update>
 </mapper>
