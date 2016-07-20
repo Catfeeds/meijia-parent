@@ -8,6 +8,7 @@
 
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
+<link  href="<c:url value='/assets/jquery-multi-select/css/multi-select.css'/>" media="screen" type="text/css" rel="stylesheet"  />
 
 </head>
 
@@ -25,7 +26,7 @@
 
 			<div class="panel-body">
 				
-				<form:form modelAttribute="contentModel"  class="form-horizontal" method="POST" id="ext-form">
+				<form:form modelAttribute="contentModel"  class="form-horizontal" method="POST" id="user-form">
 					<form:hidden path="id" />
 					<div class="form-body">
 						<div class="form-group required">
@@ -61,9 +62,24 @@
 							</div>
 						</div>
 						
+						<div class="form-group required form-horizontal">
+							<label class="col-md-2 control-label">用户组：</label>
+							<div class="col-md-10">
+								
+								<input type="hidden" id="groupSelected" value="${ groupSelected }"/>
+								<select id="groupSelect" name="groupSelect" class="multi-select" multiple="multiple">
+									
+									<c:forEach items="${groups}" var="item">
+									<option value="${item.groupId }">${item.name }</option>
+									</c:forEach>
+								</select>
+								
+							</div>
+						</div>
+						
 						<div class="form-actions fluid">
 							<div class="col-md-offset-6 col-md-6">
-								<button type="button" id="extForm_btn" class="btn btn-success">保存</button>
+								<button type="button" id="userForm_btn" class="btn btn-success">保存</button>
 							</div>
 						</div>
 				</form:form>
@@ -79,6 +95,8 @@
 	<%@ include file="../shared/importJs.jsp"%>
 
 	<!--script for this page-->
+	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/assets/jquery-multi-select/js/jquery.multi-select.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/js/simi/user/userForm.js'/>" type="text/javascript"></script>
 
 

@@ -32,9 +32,13 @@ import com.simi.common.Constants;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.user.GroupUser;
+import com.simi.po.model.user.Groups;
 import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanySetting;
+import com.simi.service.user.GroupService;
+import com.simi.service.user.GroupUserService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserRefService;
@@ -45,6 +49,7 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
+import com.simi.vo.user.GroupsSearchVo;
 import com.simi.vo.user.UserRefSearchVo;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.user.UserStatVo;
@@ -68,6 +73,12 @@ public class UserController extends AdminController {
 	
 	@Autowired
 	private UserRefService userRefService;
+	
+	@Autowired
+	private GroupService groupService;
+	
+	@Autowired
+	private GroupUserService groupUserService;
 
 	@RequestMapping(value = "/update_name", method = { RequestMethod.POST })
 	public AppResultData<Object> updateName(
@@ -145,6 +156,22 @@ public class UserController extends AdminController {
 		searchVo.setSettingType("op_ext");
 		List<XcompanySetting> opExtList = settingService.selectBySearchVo(searchVo);
 		model.addAttribute("opExtList", opExtList);
+		
+		//用户组
+		GroupsSearchVo gSearchVo = new GroupsSearchVo();
+		List<Groups> groups = groupService.selectBySearchVo(gSearchVo);
+		model.addAttribute("groups", groups);
+		
+		List<Long> userIds = new ArrayList<Long>();
+		userIds.add(id);
+		List<GroupUser> groupUsers = groupUserService.selectByUserIds(userIds);
+		
+		String groupSelected = "";
+		for (GroupUser gu : groupUsers) {
+			groupSelected+= gu.getGroupId().toString() + ",";
+		}
+		model.addAttribute("groupSelected", groupSelected);
+		
 		return "user/userForm";
 	}
 	
@@ -155,7 +182,13 @@ public class UserController extends AdminController {
 
 		Users u = usersService.selectByPrimaryKey(id);
 		
-		String opExtIdStr = request.getParameter("op_ext_id").toString();
+		//推广渠道
+		
+		String opExtIdStr = "";
+		
+		if (request.getParameter("op_ext_id") != null) {
+			opExtIdStr = request.getParameter("op_ext_id").toString();
+		}
 		
 		if (!StringUtil.isEmpty(opExtIdStr)) {
 			Long opExtId = Long.valueOf(opExtIdStr);
@@ -179,7 +212,27 @@ public class UserController extends AdminController {
 			}
 		}
 		
-		return "user/list";
+		//所属用户组
+		String[] groupSelectAry = null;
+		
+		if (request.getParameterValues("groupSelect") != null) {
+			groupSelectAry = request.getParameterValues("groupSelect");
+		}
+		if (groupSelectAry != null) {
+			//先删除再增加
+			groupUserService.deleteByUserId(id);
+			
+			
+			for (int i = 0; i < groupSelectAry.length; i++) {
+				Long groupId = Long.valueOf(groupSelectAry[i]);
+				GroupUser gu = groupUserService.initGroupUser();
+				gu.setGroupId(groupId);
+				gu.setUserId(id);
+				groupUserService.insert(gu);
+			}
+		}
+		
+		return "redirect:list";
 	}
 
 	/**

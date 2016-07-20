@@ -38,6 +38,12 @@
 		delete from group_user
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
+	
+	<delete id="deleteByUserId" parameterType="java.lang.Long">
+		delete from group_user
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</delete>
+	
 	<insert id="insert" parameterType="com.simi.po.model.user.GroupUser">
 		insert into group_user (id, group_id, user_id,
 		add_time)

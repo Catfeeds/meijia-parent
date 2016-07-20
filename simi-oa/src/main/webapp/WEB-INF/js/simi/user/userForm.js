@@ -14,3 +14,16 @@ $("#userForm_btn").click(function() {
 	}
 });
 
+$('#groupSelect option').each(function(){
+	var selectedGroup = "," +  $("#groupSelected").val() + ",";
+	var v = "," +  $(this).val() + ",";
+	if (selectedGroup.indexOf(v) >= 0) {
+		$(this).attr('selected', true);
+     }
+});
+
+$("#groupSelect").multiSelect({   
+	keepOrder: true,
+	selectableHeader: "<div class='custom-header'>可选</div>",
+	selectionHeader: "<div class='custom-header'>已选</div>",
+});

@@ -46,6 +46,11 @@ public class GroupUserServiceImpl implements GroupUserService{
 	}
 	
 	@Override
+	public int deleteByUserId(Long userId) {
+		return groupUserMapper.deleteByUserId(userId);
+	}
+	
+	@Override
 	public GroupUser selectByPrimaryKey(Long id) {
 		return groupUserMapper.selectByPrimaryKey(id);
 	}

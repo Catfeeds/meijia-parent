@@ -20,4 +20,6 @@ public interface GroupUserService {
 
 	List<GroupUser> selectByUserIds(List<Long> userIds);
 
+	int deleteByUserId(Long userId);
+
 }

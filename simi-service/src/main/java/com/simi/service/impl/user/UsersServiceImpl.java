@@ -627,7 +627,7 @@ public class UsersServiceImpl implements UsersService {
 				if (gu.getUserId().equals(vo.getId())) {
 					for (Groups g : groups) {
 						if (g.getGroupId().equals(gu.getGroupId())) {
-							groupName+= g.getName() + "";
+							groupName+= g.getName() + " ";
 						}
 					}
 					

@@ -20,4 +20,6 @@ public interface GroupUserMapper {
 	int totalByGroupId(Long groupId);
 
 	List<GroupUser> selectByUserIds(List<Long> userIds);
+
+	int deleteByUserId(Long userId);
 }
