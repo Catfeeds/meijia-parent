@@ -22,4 +22,6 @@ public interface GroupUserMapper {
 	List<GroupUser> selectByUserIds(List<Long> userIds);
 
 	int deleteByUserId(Long userId);
+
+	List<GroupUser> selectByGroupId(Long gropuId);
 }

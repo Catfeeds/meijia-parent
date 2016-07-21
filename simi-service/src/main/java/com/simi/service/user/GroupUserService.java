@@ -22,4 +22,6 @@ public interface GroupUserService {
 
 	int deleteByUserId(Long userId);
 
+	List<GroupUser> selectByGropuId(Long gropuId);
+
 }

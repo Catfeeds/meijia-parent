@@ -15,13 +15,13 @@ public class OaMsgVo extends Msg {
 	
 	private String sendTestUser;
 	
-	private Short selectUserType;	// 下拉选的 userType
+	private Long selectUserType;	// 下拉选的 userType
 	
-	public Short getSelectUserType() {
+	public Long getSelectUserType() {
 		return selectUserType;
 	}
 
-	public void setSelectUserType(Short selectUserType) {
+	public void setSelectUserType(Long selectUserType) {
 		this.selectUserType = selectUserType;
 	}
 

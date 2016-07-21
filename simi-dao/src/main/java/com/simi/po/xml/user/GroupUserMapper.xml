@@ -17,6 +17,13 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
+	<select id="selectByGroupId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from group_user
+		where group_id = #{gropuId,jdbcType=NUMERIC}
+	</select>
+	
 	<select id="totalByGroupId" resultType="java.lang.Integer" parameterType="java.lang.Long">
 		select count(*) as total
 		from group_user

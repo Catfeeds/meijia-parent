@@ -38,7 +38,7 @@ public class MsgServiceImpl implements MsgService {
 	    record.setTitle("");
 	    record.setSummary("");
 	    record.setGotoUrl("");
-	    record.setUserType((short)0L);
+	    record.setUserType(0L);
 	    record.setAppType("");
 	    record.setSendTime(0L);		// 发送时间
 	    record.setIsSend((short)0L);
@@ -125,7 +125,7 @@ public class MsgServiceImpl implements MsgService {
 		
 		oaMsgVo.setSendWay((short)1);	//1= 保存并立即发送  0= 发送测试人员
 		oaMsgVo.setSendTestUser("");
-		oaMsgVo.setSelectUserType((short)0);	// 0 = 普通用户   1= 秘书 2=服务商  3=全部用户
+		oaMsgVo.setSelectUserType(0L);	// 0 = 普通用户   1= 秘书 2=服务商  3=全部用户
 		
 		return oaMsgVo;
 	}

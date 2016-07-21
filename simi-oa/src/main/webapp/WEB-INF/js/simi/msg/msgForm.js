@@ -13,14 +13,12 @@ $('#msg-form').validate({
 			required: true
 		},
 		category:{
-			category:"category"
+			required : true,
 		},
 		userType:{
-			userType:"userType"
+			required : true
 		},
-		appType:{
-			appType:"appType"
-		}
+
 		
 	},
 
@@ -34,6 +32,14 @@ $('#msg-form').validate({
 		content : {
 			required : "请输入消息内容。"
 		},
+		
+		category:{
+			required : "请选择跳转类型",
+		},
+		userType:{
+			required : "请选择用户类型",
+		},
+
 	},
 
 	invalidHandler : function(event, validator) { // display error alert on
@@ -55,38 +61,6 @@ $('#msg-form').validate({
 	}
 
 });
-
-//下拉框 校验
-$.validator.addMethod("category",function(value,elements){
-	
-	var index = elements.selectedIndex;
-	
-	if(index != 0){
-		return true;
-	}
-},"请选择跳转类型");
-
-$.validator.addMethod("userType",function(value,elements){
-	
-	var index = elements.selectedIndex;
-	
-	if(index != 0){
-		return true;
-	}
-	
-},"请选择用户类型");
-
-$.validator.addMethod("appType",function(value,elements){
-	
-	var index = elements.selectedIndex;
-	
-	if(index != 0){
-		return true;
-	}
-	
-},"请选择应用类型");
-
-
 
 
 $('.msg-form input').keypress(function(e) {

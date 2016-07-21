@@ -60,6 +60,11 @@ public class GroupUserServiceImpl implements GroupUserService{
 		return groupUserMapper.selectByUserIds(userIds);
 	}
 	
+	@Override
+	public List<GroupUser> selectByGropuId(Long gropuId) {
+		return groupUserMapper.selectByGroupId(gropuId);
+	}
+	
 	
 	@Override
 	public int totalByGroupId(Long groupId) {

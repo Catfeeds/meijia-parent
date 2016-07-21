@@ -9,7 +9,7 @@ public class Msg {
 
     private String gotoUrl;
 
-    private Short userType;
+    private Long userType;
 
     private Long sendTime;
 
@@ -61,11 +61,11 @@ public class Msg {
         this.gotoUrl = gotoUrl == null ? null : gotoUrl.trim();
     }
 
-    public Short getUserType() {
+    public Long getUserType() {
         return userType;
     }
 
-    public void setUserType(Short userType) {
+    public void setUserType(Long userType) {
         this.userType = userType;
     }
 

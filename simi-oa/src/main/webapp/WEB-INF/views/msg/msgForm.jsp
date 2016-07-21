@@ -118,16 +118,18 @@
 						<div class=col-md-5>
 							<form:select path="userType" class="form-control">
 								<form:option value="" label="请选择用户类型" />
-								<form:option value="0" label="普通用户" />
+								<<form:options items="${groups}" itemValue="groupId" itemLabel="name"/>/>
+								<form:option value="0" label="全部用户"/>
+								<%-- <form:option value="0" label="普通用户" />
 								<form:option value="1" label="秘书" />
 								<form:option value="2" label="服务商" />
 								<form:option value="3" label="全部用户"/>
-								<form:option value="4" label="测试用户"/>
+								<form:option value="4" label="测试用户"/> --%>
 							</form:select>
 						</div>
 						
 						<div class="col-md-5" id="useTypeTip" style="display:none">
-							<font color="red">只发送给最近一个月登录过的用户</font>
+							<font color="red">全部用户只发送给最近一个月登录过的用户</font>
 						</div>
 					</div>
 
@@ -137,10 +139,10 @@
 						<div class=col-md-5>
 							
 							<form:select path="appType" class="form-control">
-								<form:option value="" label="请选择应用类型" />
-								<form:option value="xcloud" label="xcloud"/>
-								<form:option value="simi" label="simi"/>
-								<form:option value="timechick" label="timechick"/>
+								
+								<form:option value="xcloud" label="菠萝HR"/>
+								<form:option value="simi" label="私秘"/>
+								<form:option value="timechick" label="时光机"/>
 							</form:select>
 							
 						</div>
@@ -167,7 +169,7 @@
 						</div>
 						
 						<div class="col-md-5" id="sendWayTestTip" style="display:none">
-							<font color="red">只发送给运营部人员</font>
+							<font color="red">测试发送只发送给运营组人员</font>
 						</div>
 						
 						<!-- 默认是 保存并立即发送 -->	

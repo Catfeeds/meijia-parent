@@ -102,10 +102,10 @@
     from msg
     where msg_id = #{msgId,jdbcType=NUMERIC}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from msg
-    where msg_id = #{msgId,jdbcType=NUMERIC}
-  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete from msg
+	where msg_id = #{msgId,jdbcType=NUMERIC}
+</delete>
   <insert id="insert" parameterType="com.simi.po.model.msg.Msg" >
     insert into msg (msg_id, title, summary, 
       goto_url, user_type, send_time, 
