@@ -10,19 +10,19 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-checkin">
 				<li>
-					<a href="/xcloud/xz/assets/commpany_asset_list" class="am-cf">
+					<a href="/xcloud/xz/checkin/list" class="am-cf">
 						<span class="am-icon-check"></span>
 						考勤列表
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/xz/assets/use_asset_list">
+					<a href="/xcloud/xz/checkin/set"
 						<span class="am-icon-map-marker"></span>
 						打卡配置
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="/xcloud/xz/checkin/baseSet"
 						<span class="am-icon-archive"></span>
 						基础配置
 					</a>
