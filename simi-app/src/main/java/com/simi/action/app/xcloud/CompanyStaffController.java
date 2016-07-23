@@ -415,7 +415,7 @@ public class CompanyStaffController extends BaseController {
 			XcompanyAdmin xCompanyAdmin = null;
 			List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
 			
-			if (rs != null) {
+			if (rs != null && rs.size() > 0) {
 				xCompanyAdmin = rs.get(0);
 				companyId = xCompanyAdmin.getCompanyId();
 			}
