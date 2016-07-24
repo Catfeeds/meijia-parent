@@ -44,7 +44,7 @@ public class CompanyStaffController extends BaseController {
 
 	@Autowired
 	private XCompanyService xCompanyService;
-	
+
 	@Autowired
 	private XcompanyAdminService xCompanyAdminService;
 
@@ -59,24 +59,19 @@ public class CompanyStaffController extends BaseController {
 
 	@Autowired
 	private XcompanyStaffService xCompanyStaffService;
-	
+
 	@Autowired
 	private XcompanyStaffReqService xCompanyStaffReqService;
-	
+
 	@Autowired
 	private UserMsgAsyncService userMsgAsyncService;
-	
+
 	@Autowired
 	private UsersAsyncService userAsyncService;
 
-	
-	
 	@RequestMapping(value = "/join", method = { RequestMethod.POST })
-	public AppResultData<Object> companyReg(
-			@RequestParam("user_name") String userName, 
-			@RequestParam("sms_token") String smsToken,
-			@RequestParam("invitation_code") String invitationCode,
-			@RequestParam(value = "name", required = false, defaultValue = "") String name, 
+	public AppResultData<Object> companyReg(@RequestParam("user_name") String userName, @RequestParam("sms_token") String smsToken,
+			@RequestParam("invitation_code") String invitationCode, @RequestParam(value = "name", required = false, defaultValue = "") String name,
 			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -102,10 +97,10 @@ public class CompanyStaffController extends BaseController {
 			u = usersService.genUser(userName, name, Constants.USER_APP, "");
 		}
 		userId = u.getId();
-		
+
 		CompanySearchVo searchVo1 = new CompanySearchVo();
 		searchVo1.setInvitationCode(invitationCode);
-		
+
 		Xcompany xCompany = null;
 		List<Xcompany> rs = xCompanyService.selectBySearchVo(searchVo1);
 		Long companyId = 0L;
@@ -116,16 +111,16 @@ public class CompanyStaffController extends BaseController {
 		} else {
 			xCompany = rs.get(0);
 		}
-		
+
 		if (xCompany == null) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("邀请码不存在!");
 			return result;
 		}
-		
+
 		companyId = xCompany.getCompanyId();
-		
-		//是否已经加入团队
+
+		// 是否已经加入团队
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
@@ -142,8 +137,8 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg("您已经加入该团队.");
 			return result;
 		}
-		
-		//是否已经发出过请求.
+
+		// 是否已经发出过请求.
 		List<XcompanyStaffReq> xCompanyStaffReqs = xCompanyStaffReqService.selectByUserId(userId);
 		if (!xCompanyStaffReqs.isEmpty()) {
 			for (XcompanyStaffReq item : xCompanyStaffReqs) {
@@ -154,47 +149,43 @@ public class CompanyStaffController extends BaseController {
 				}
 			}
 		}
-		
+
 		XcompanyStaffReq record = xCompanyStaffReqService.initXcompanyStaffReq();
 		record.setCompanyId(companyId);
 		record.setUserId(userId);
 		record.setRemarks("");
 		xCompanyStaffReqService.insert(record);
-		
-		//异步产生首页消息信息.
-		
-		
-		//1. 给申请者发送
+
+		// 异步产生首页消息信息.
+
+		// 1. 给申请者发送
 		String title = "团队申请";
-		
-		String summary =  "你申请加入"+ xCompany.getCompanyName();
+
+		String summary = "你申请加入" + xCompany.getCompanyName();
 		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
-		
-		//2.给审批者发出msg信息。
+
+		// 2.给审批者发出msg信息。
 		CompanyAdminSearchVo adminSearchVo = new CompanyAdminSearchVo();
 		adminSearchVo.setCompanyId(companyId);
 		List<XcompanyAdmin> adminList = xCompanyAdminService.selectBySearchVo(adminSearchVo);
-		
+
 		for (XcompanyAdmin item : adminList) {
 			Long adminId = item.getUserId();
 			String staffName = (StringUtil.isEmpty(u.getName())) ? u.getMobile() : u.getName();
 			summary = staffName + "申请加入" + xCompany.getCompanyName() + ".";
 			userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
 		}
-		
-		//统计总公司数
+
+		// 统计总公司数
 		userAsyncService.statUser(userId, "totalCompanys");
-		
+
 		return result;
 
 	}
-	
+
 	@RequestMapping(value = "/pass", method = { RequestMethod.POST })
-	public AppResultData<Object> companyPass(
-			@RequestParam("company_id") Long companyId,
-			@RequestParam("user_id") Long userId,
-			@RequestParam("req_user_id") Long reqUserId,
-			@RequestParam(value = "status", required = false, defaultValue = "1") Short status,
+	public AppResultData<Object> companyPass(@RequestParam("company_id") Long companyId, @RequestParam("user_id") Long userId,
+			@RequestParam("req_user_id") Long reqUserId, @RequestParam(value = "status", required = false, defaultValue = "1") Short status,
 			@RequestParam(value = "remarks", required = false, defaultValue = "") String remarks) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -213,21 +204,21 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg("公司信息不存在.");
 			return result;
 		}
-		
+
 		String companyName = company.getCompanyName();
 
 		CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
 		searchVo1.setCompanyId(companyId);
 		searchVo1.setUserId(userId);
-		
+
 		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
 		if (rs.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("你不是团队管理员.");
 			return result;
-		} 
-		
-		//是否已经加入团队
+		}
+
+		// 是否已经加入团队
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(reqUserId);
@@ -240,8 +231,8 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg("您已经加入该团队.");
 			return result;
 		}
-		
-		//是否已经发出过请求.
+
+		// 是否已经发出过请求.
 		XcompanyStaffReq req = null;
 		List<XcompanyStaffReq> xCompanyStaffReqs = xCompanyStaffReqService.selectByUserId(reqUserId);
 		if (!xCompanyStaffReqs.isEmpty()) {
@@ -252,15 +243,15 @@ public class CompanyStaffController extends BaseController {
 				}
 			}
 		}
-		
+
 		if (req != null) {
 			req.setStatus(status);
 			req.setRemarks(remarks);
 			req.setUpdateTime(TimeStampUtil.getNowSecond());
 			xCompanyStaffReqService.updateByPrimaryKey(req);
 		}
-		
-		if (status.equals((short)1)) {
+
+		if (status.equals((short) 1)) {
 			XcompanyDept defaultDept = xCompanyDeptService.selectByXcompanyIdAndDeptName(companyId, "未分配");
 			Long deptId = 0L;
 			if (defaultDept != null) {
@@ -272,30 +263,30 @@ public class CompanyStaffController extends BaseController {
 			record.setCompanyId(companyId);
 			record.setDeptId(deptId);
 			record.setJobNumber(xCompanyStaffService.getNextJobNumber(companyId));
-			xCompanyStaffService.insertSelective(record);	
+			xCompanyStaffService.insertSelective(record);
 		}
-		
-		//异步产生首页消息信息.
-		//1. 给申请者发送
+
+		// 异步产生首页消息信息.
+		// 1. 给申请者发送
 		String title = "团队申请";
-		
-		String summary =  "你已经通过"+ companyName + "申请.";
-		if (status.equals((short)2)) {
-			summary =  "你申请加入"+ companyName + "已被拒绝.";
+
+		String summary = "你已经通过" + companyName + "申请.";
+		if (status.equals((short) 2)) {
+			summary = "你申请加入" + companyName + "已被拒绝.";
 		}
 		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
-		
-		//2.给审批者发出msg信息。
+
+		// 2.给审批者发出msg信息。
 		String staffName = (StringUtil.isEmpty(reqUser.getName())) ? reqUser.getMobile() : reqUser.getName();
-		summary = "你已经通过" + staffName + "申请加入" +companyName + "的请求.";
-		if (status.equals((short)2)) {
+		summary = "你已经通过" + staffName + "申请加入" + companyName + "的请求.";
+		if (status.equals((short) 2)) {
 			summary = "你已经拒绝" + staffName + "申请加入" + companyName + "的请求.";
 		}
 		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
 
 		return result;
 
-	}	
+	}
 
 	@RequestMapping(value = "/get_by_user", method = { RequestMethod.GET })
 	public AppResultData<Object> getByUserId(@RequestParam("user_id") Long userId) {
@@ -330,7 +321,7 @@ public class CompanyStaffController extends BaseController {
 			Xcompany xCompany = xCompanyService.selectByPrimaryKey(item.getCompanyId());
 
 			vo.put("company_name", xCompany.getCompanyName());
-			
+
 			vo.put("is_default", item.getIsDefault().toString());
 			resultMap.add(vo);
 		}
@@ -340,9 +331,7 @@ public class CompanyStaffController extends BaseController {
 	}
 
 	@RequestMapping(value = "/set_default", method = { RequestMethod.GET })
-	public AppResultData<Object> setDefault(
-			@RequestParam("user_id") Long userId, 
-			@RequestParam("company_id") Long companyId) {
+	public AppResultData<Object> setDefault(@RequestParam("user_id") Long userId, @RequestParam("company_id") Long companyId) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -354,28 +343,28 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
-		
+
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
 		searchVo.setStatus((short) 1);
 		List<XcompanyStaff> rsList = xCompanyStaffService.selectBySearchVo(searchVo);
-		
+
 		if (rsList.isEmpty()) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("你不是该团队员工");
 			return result;
 		}
-		
+
 		XcompanyStaff record = rsList.get(0);
-		
+
 		if (!record.getCompanyId().equals(companyId)) {
 			result.setStatus(Constants.ERROR_999);
 			result.setMsg("你不是该团队员工");
 			return result;
 		}
-		
-		//把用户所属的其他的团队设为不默认
+
+		// 把用户所属的其他的团队设为不默认
 		searchVo = new UserCompanySearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setStatus((short) 1);
@@ -384,8 +373,7 @@ public class CompanyStaffController extends BaseController {
 			item.setIsDefault((short) 0);
 			xCompanyStaffService.updateByPrimaryKeySelective(item);
 		}
-		
-		
+
 		record.setIsDefault((short) 1);
 		xCompanyStaffService.updateByPrimaryKeySelective(record);
 		return result;
@@ -393,9 +381,9 @@ public class CompanyStaffController extends BaseController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/get_pass", method = { RequestMethod.GET })
-	public AppResultData<Object> getPass(
-			@RequestParam("user_id") Long userId,
-			@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId,
+	public AppResultData<Object> getPass(@RequestParam("user_id") Long userId,
+	// @RequestParam(value = "company_id", required = false, defaultValue = "0")
+	// Long companyId,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -407,41 +395,42 @@ public class CompanyStaffController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
-		
-		if (companyId.equals(0L)) {
-			CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
-			searchVo1.setUserId(userId);
-			searchVo1.setIsCreate((short) 1);
-			XcompanyAdmin xCompanyAdmin = null;
-			List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
-			
-			if (rs != null && rs.size() > 0) {
-				xCompanyAdmin = rs.get(0);
-				companyId = xCompanyAdmin.getCompanyId();
+
+		List<Long> companyIds = new ArrayList<Long>();
+
+		CompanyAdminSearchVo searchVo1 = new CompanyAdminSearchVo();
+		searchVo1.setUserId(userId);
+		searchVo1.setIsCreate((short) 1);
+
+		List<XcompanyAdmin> rs = xCompanyAdminService.selectBySearchVo(searchVo1);
+
+		if (rs != null && rs.size() > 0) {
+			for (XcompanyAdmin x : rs) {
+
+				if (!companyIds.contains(x.getCompanyId()))
+					companyIds.add(x.getCompanyId());
 			}
+
 		}
-		
-		if (companyId.equals(0L)) return result;
-		
+
+		if (companyIds.isEmpty())
+			return result;
+
 		List<XcompanyStaffReq> xCompanyStaffReqs = new ArrayList<XcompanyStaffReq>();
-		
-		
+
 		UserCompanySearchVo searchVo = new UserCompanySearchVo();
-		
 
-		searchVo.setCompanyId(companyId);
+		searchVo.setCompanyIds(companyIds);
 
-		
 		PageInfo plist = xCompanyStaffReqService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
-		
+
 		xCompanyStaffReqs = plist.getList();
-		
+
 		List<XcompanyStaffReqVo> datas = new ArrayList<XcompanyStaffReqVo>();
 		datas = xCompanyStaffReqService.getVos(xCompanyStaffReqs, userId);
-		
+
 		result.setData(datas);
-		
-		
+
 		return result;
 	}
 }

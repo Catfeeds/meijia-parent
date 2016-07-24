@@ -1,10 +1,14 @@
 package com.simi.vo.xcloud;
 
+import java.util.List;
+
 public class UserCompanySearchVo{
 	
 	private String keyword;
 	
 	private Long companyId;
+	
+	private List<Long> companyIds;
 	
 	private Long deptId;
 	
@@ -110,5 +114,13 @@ public class UserCompanySearchVo{
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public List<Long> getCompanyIds() {
+		return companyIds;
+	}
+
+	public void setCompanyIds(List<Long> companyIds) {
+		this.companyIds = companyIds;
 	}
 }

@@ -56,6 +56,14 @@
 		<if test="companyId != null ">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="companyIds != null">
+			and company_id in
+			<foreach item="item" index="index" collection="companyIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
 		order by add_time desc
 	</select>
 	
