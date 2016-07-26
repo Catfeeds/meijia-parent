@@ -22,7 +22,7 @@ $("#cityId").on('change',function(){
 			
 			var result = data.data;
 			
-			$("#shebaoMin").html(result.shebao_minn);
+			$("#shebaoMin").html(result.shebao_min);
 			$("#shebaoMax").html(result.shebao_max);
 			$("#gjjMin").html(result.gjj_min);
 			$("#gjjMax").html(result.gjj_max);
