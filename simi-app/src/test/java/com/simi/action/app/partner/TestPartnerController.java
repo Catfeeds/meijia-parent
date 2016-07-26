@@ -28,7 +28,7 @@ public class TestPartnerController extends JUnitActionBase  {
     public void testGetUserList() throws Exception {
 
 		String url = "/app/partner/get_user_list.json";
-		String params = "?user_id=472&service_type_ids=52";
+		String params = "?user_id=18&service_type_ids=1";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

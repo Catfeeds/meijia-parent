@@ -79,6 +79,10 @@
 		<if test="mobile != null">
 			and user_id in (select id from users where  mobile like CONCAT('%','${mobile}','%' ) )
 		</if>
+		
+		<if test="partnerStatus != null">
+			and partner_id in (select partner_id from partners where status = #{partnerStatus,jdbcType=NUMERIC})
+		</if>
 
 		order by weight_type desc, weight_no asc, add_time desc 
 	</select>

@@ -118,20 +118,7 @@ public class PartnerUserServiceImpl implements PartnerUserService {
 
 		PageHelper.startPage(pageNo, pageSize);
 		List<PartnerUsers> list = partnerUsersMapper.selectByListPage(partnersSearchVo);
-//		if (list != null) {
-//			int c = list.size();
-//			for (int i = 0; i < c; i++) {
-//				PartnerUsers partnerUsers = list.get(i);
-//				Partners partners = partnersService.selectByPrimaryKey(partnerUsers.getPartnerId());
-//				if (partners != null) {
-//					if (partners.getStatus() != 4) {
-//						list.remove(i);
-//						i--;
-//						c--;
-//					}
-//				}
-//			}
-//		}
+
 		// List<PartnerUserVo> resultList = new ArrayList<PartnerUserVo>();
 		for (int i = 0; i < list.size(); i++) {
 			PartnerUsers item = list.get(i);

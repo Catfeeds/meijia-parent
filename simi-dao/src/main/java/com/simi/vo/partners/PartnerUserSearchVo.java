@@ -16,6 +16,8 @@ public class PartnerUserSearchVo {
 	 
 	 private Long parentId;
 	 
+	 private Short partnerStatus;
+	 
     //权重类型
     private Short weightType;
 
@@ -74,5 +76,13 @@ public class PartnerUserSearchVo {
 
 	public void setWeightType(Short weightType) {
 		this.weightType = weightType;
+	}
+
+	public Short getPartnerStatus() {
+		return partnerStatus;
+	}
+
+	public void setPartnerStatus(Short partnerStatus) {
+		this.partnerStatus = partnerStatus;
 	}	 
 }
