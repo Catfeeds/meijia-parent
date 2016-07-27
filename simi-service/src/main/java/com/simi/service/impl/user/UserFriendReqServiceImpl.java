@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.MobileUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.user.UserFriendReqMapper;
 import com.simi.po.dao.user.UserRef3rdMapper;
@@ -128,6 +130,11 @@ public class UserFriendReqServiceImpl implements UserFriendReqService {
 		}
 		
 		vo.setName(user.getName());
+		if (StringUtil.isEmpty(vo.getName())) {
+			vo.setName(MobileUtil.getMobileX(user.getMobile()));
+		}
+		
+		
 		vo.setSex(user.getSex());
 		vo.setHeadImg(user.getHeadImg());
 		vo.setMobile(user.getMobile());
