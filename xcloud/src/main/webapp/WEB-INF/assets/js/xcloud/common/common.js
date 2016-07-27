@@ -72,7 +72,7 @@ function pad(num, n) {
 
 //顶部菜单点击高亮
 function setTopMenuId(menuId, subMenuId) {
-	console.log("menuId = " + menuId);
+//	console.log("menuId = " + menuId);
 	$.cookie("xcloud-top-menu-id", menuId, { path: "/"}); 
 	$.cookie("xcloud-menu-id", subMenuId, { path: "/"}); 
 }
@@ -103,7 +103,7 @@ setTopMenuHl();
 
 //菜单点击展开
 function setMenuId(menuId) {
-	console.log("setMenuId = " + menuId);
+//	console.log("setMenuId = " + menuId);
 	$.cookie("xcloud-menu-id", menuId, { path: "/"}); 
 	menuCollapse();
 }
@@ -117,16 +117,16 @@ function menuCollapse() {
 	$(".admin-sidebar-list").each(function () {
 		$(this).find('ul').each(function() {
 			var tmenuId = $(this).attr("id");
-			console.log("tmenuId = " + tmenuId+ "---- menuId=" + menuId);
+//			console.log("tmenuId = " + tmenuId+ "---- menuId=" + menuId);
 			if (tmenuId == menuId) {
 				if ($("#"+ tmenuId).hasClass("am-in")) {
 					$("#"+ menuId).collapse('close');
 				} else {
-					console.log("open");
+//					console.log("open");
 					$("#"+ tmenuId).collapse('open');
 				}
 			} else {
-				console.log("close");
+//				console.log("close");
 				$("#"+ tmenuId).collapse('close');
 			}
 			

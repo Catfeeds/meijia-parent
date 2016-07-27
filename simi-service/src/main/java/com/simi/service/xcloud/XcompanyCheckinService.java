@@ -6,6 +6,7 @@ import java.util.Map;
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyDept;
+import com.simi.vo.xcloud.CheckinNetVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 import com.simi.vo.xcloud.company.DeptSearchVo;
 
@@ -32,5 +33,7 @@ public interface XcompanyCheckinService {
 	XcompanyCheckin getTodayCheckOut(Long companyId, Long userId, Long benzTimeId);
 
 	PageInfo selectByListPage(CompanyCheckinSearchVo searchVo, int pageNo, int pageSize);
+
+	CheckinNetVo initCheckinNetVo();
 
 }

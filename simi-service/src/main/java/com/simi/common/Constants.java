@@ -191,4 +191,6 @@ public class Constants {
 	public static String SETTING_TYPE_TAX_PERSION = "tax_persion"; //个人所得税率表.
 	public static String SETTING_TYPE_TAX_YEAR_AWARD = "tax_year_award"; //年终奖所有配置.
 	public static String SETTING_TYPE_TAX_PAY = "tax_pay"; //劳务报酬所得.
+	
+	public static String SETTING_CHICKIN_NET = "checkin-net"; //考勤地点设置
 }

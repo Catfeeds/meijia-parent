@@ -16,13 +16,13 @@
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/xz/checkin/set"
+					<a href="/xcloud/xz/checkin/net"
 						<span class="am-icon-map-marker"></span>
 						打卡配置
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/xz/checkin/baseSet"
+					<a href="/xcloud/xz/checkin/set"
 						<span class="am-icon-archive"></span>
 						基础配置
 					</a>

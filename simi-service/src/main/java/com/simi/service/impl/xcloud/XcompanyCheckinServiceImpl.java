@@ -17,6 +17,7 @@ import com.simi.po.model.xcloud.XcompanyBenzTime;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.service.xcloud.XcompanyBenzTimeService;
 import com.simi.service.xcloud.XcompanyCheckinService;
+import com.simi.vo.xcloud.CheckinNetVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 
 @Service
@@ -52,6 +53,26 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;
+	}
+	
+	@Override
+	public CheckinNetVo initCheckinNetVo() {
+		CheckinNetVo vo = new CheckinNetVo();
+		vo.setId(0L);
+		vo.setAddr("");
+		vo.setLat("");
+		vo.setLng("");
+		vo.setDistance(500);
+		vo.setStartTime("9:00");
+		vo.setEndTime("18:00");
+		vo.setFlexTime(10);
+		vo.setWifis("");
+		vo.setDeptIds("");
+		vo.setDeptNames("");
+		vo.setAddTimeStr("");
+		vo.setUserName("");
+		
+		return vo;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

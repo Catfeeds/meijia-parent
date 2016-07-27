@@ -15,9 +15,9 @@ public interface XCompanySettingService {
 
 	int deleteByPrimaryKey(Long id);
 
-	int insert(XcompanySetting record);
+	Long insert(XcompanySetting record);
 
-	int insertSelective(XcompanySetting record);
+	Long insertSelective(XcompanySetting record);
 
 	XcompanySetting selectByPrimaryKey(Long id);
 

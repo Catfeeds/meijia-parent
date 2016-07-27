@@ -64,12 +64,12 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 	}
 
 	@Override
-	public int insert(XcompanySetting record) {
+	public Long insert(XcompanySetting record) {
 		return xcompanySettingMapper.insert(record);
 	}
 
 	@Override
-	public int insertSelective(XcompanySetting record) {
+	public Long insertSelective(XcompanySetting record) {
 		return xcompanySettingMapper.insertSelective(record);
 	}
 

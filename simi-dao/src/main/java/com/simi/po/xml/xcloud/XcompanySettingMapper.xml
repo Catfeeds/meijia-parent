@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.xcloud.XcompanySettingMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanySetting" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="company_id" property="companyId" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="setting_type" property="settingType" jdbcType="VARCHAR" />
-    <result column="setting_json" property="settingJson" jdbcType="VARCHAR" />
-    <result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-    
-    <!-- <result column="setting_value" property="settingValue" jdbcType="OTHER" /> -->
-    
-    <!-- 对于json属性字段的处理。只需要在 result这里定义好 映射的对象，其余无需改动。 -->
-    <result column="setting_value" property="settingValue"  
-		typeHandler="com.simi.base.handler.JsonTypeHandler" /> 
-     
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, company_id, user_id, name, setting_type, setting_json, setting_value, is_enable, 
-    add_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from xcompany_setting
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  
-  
-  <select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanySettingSearchVo">
+<mapper namespace="com.simi.po.dao.xcloud.XcompanySettingMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanySetting">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="setting_type" property="settingType" jdbcType="VARCHAR" />
+		<result column="setting_json" property="settingJson" jdbcType="VARCHAR" />
+		<result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+
+		<!-- <result column="setting_value" property="settingValue" jdbcType="OTHER" /> -->
+
+		<!-- 对于json属性字段的处理。只需要在 result这里定义好 映射的对象，其余无需改动。 -->
+		<result column="setting_value" property="settingValue" typeHandler="com.simi.base.handler.JsonTypeHandler" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, user_id, name, setting_type, setting_json, setting_value, is_enable,
+		add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_setting
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanySettingSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from xcompany_setting
@@ -39,7 +38,7 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
@@ -47,18 +46,12 @@
 		<if test="settingType != null">
 			and setting_type = #{settingType,jdbcType=VARCHAR}
 		</if>
-				
+
 		<if test="settingTypes != null">
 			and setting_type in
 			<foreach item="item" index="index" collection="settingTypes" open="(" separator="," close=")">
-				
-				<!-- 这里是 传递的 list<String> 参数
-					
-					# 换成 $  : 解决 no getter '_for_item_0' 的错误
-					
-					
-					' ${item} ' : 加上引号, 使参数变成String，使得mysql正常解析
-				 -->	
+
+				<!-- 这里是 传递的 list<String> 参数 # 换成 $ : 解决 no getter '_for_item_0' 的错误 ' ${item} ' : 加上引号, 使参数变成String，使得mysql正常解析 -->	
 			
 				<![CDATA[ '${item}' ]]>
 			</foreach>
@@ -71,24 +64,24 @@
 		<if test="updateTime != null">
 			<![CDATA[ and update_time > #{updateTime,jdbcType=NUMERIC}]]>
 		</if>
-		
+
 		<if test="cityId != null and cityId !='' ">
 			<![CDATA[ 
 				and 
 				 JSON_EXTRACT(setting_value,'$.cityId') = #{cityId,jdbcType=NUMERIC}
 			]]>
 		</if>
-		
+
 		<if test="regionId != null and regionId !='' ">
 			<![CDATA[ 
 				and 
 				 JSON_EXTRACT(setting_value,'$.regionId') = #{regionId,jdbcType=VARCHAR}
-			]]>		
+			]]>
 		</if>
-		
+
 		order by id desc
 	</select>
-	
+
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanySettingSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -97,7 +90,7 @@
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
@@ -105,7 +98,7 @@
 		<if test="settingType != null">
 			and setting_type = #{settingType,jdbcType=VARCHAR}
 		</if>
-		
+
 		<if test="settingTypes != null">
 			and setting_type in
 			<foreach item="item" index="index" collection="settingTypes" open="(" separator="," close=")">
@@ -120,158 +113,172 @@
 		<if test="updateTime != null">
 			<![CDATA[ and update_time > #{updateTime,jdbcType=NUMERIC}]]>
 		</if>
-		
-		
+
+
 		<if test="cityId != null and cityId !='' ">
 			<![CDATA[ 
 				and 
 				 JSON_EXTRACT(setting_value,'$.cityId') = #{cityId,jdbcType=VARCHAR}
 			]]>
 		</if>
-		
+
 		<if test="regionId != null and regionId !='' ">
 			<![CDATA[ 
 				and 
 				 JSON_EXTRACT(setting_value,'$.regionId') = #{regionId,jdbcType=VARCHAR}
-			]]>		
+			]]>
 		</if>
-		
+
 		order by id desc
 	</select>
-  
-  
-  
-  
-  
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from xcompany_setting
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanySetting" >
-    insert into xcompany_setting (id, company_id, user_id, 
-      name, setting_type, setting_json, 
-      setting_value, is_enable, add_time, 
-      update_time)
-    values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, 
-      #{name,jdbcType=VARCHAR}, #{settingType,jdbcType=VARCHAR}, #{settingJson,jdbcType=VARCHAR}, 
-      #{settingValue,jdbcType=OTHER}, #{isEnable,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC}, 
-      #{updateTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanySetting" >
-    insert into xcompany_setting
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="companyId != null" >
-        company_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="settingType != null" >
-        setting_type,
-      </if>
-      <if test="settingJson != null" >
-        setting_json,
-      </if>
-      <if test="settingValue != null" >
-        setting_value,
-      </if>
-      <if test="isEnable != null" >
-        is_enable,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="companyId != null" >
-        #{companyId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="settingType != null" >
-        #{settingType,jdbcType=VARCHAR},
-      </if>
-      <if test="settingJson != null" >
-        #{settingJson,jdbcType=VARCHAR},
-      </if>
-      <if test="settingValue != null" >
-        #{settingValue,jdbcType=OTHER},
-      </if>
-      <if test="isEnable != null" >
-        #{isEnable,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanySetting" >
-    update xcompany_setting
-    <set >
-      <if test="companyId != null" >
-        company_id = #{companyId,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="settingType != null" >
-        setting_type = #{settingType,jdbcType=VARCHAR},
-      </if>
-      <if test="settingJson != null" >
-        setting_json = #{settingJson,jdbcType=VARCHAR},
-      </if>
-      <if test="isEnable != null" >
-        is_enable = #{isEnable,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanySetting" >
-    update xcompany_setting
-    set company_id = #{companyId,jdbcType=NUMERIC},
-      user_id = #{userId,jdbcType=NUMERIC},
-      name = #{name,jdbcType=VARCHAR},
-      setting_type = #{settingType,jdbcType=VARCHAR},
-      setting_json = #{settingJson,jdbcType=VARCHAR},
-      setting_value = #{settingValue,jdbcType=OTHER},
-      is_enable = #{isEnable,jdbcType=NUMERIC},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  
-   <update id="updateByPrimaryKeyAndJson" parameterType="com.simi.po.model.xcloud.XcompanySetting" >
-    update xcompany_setting
-    set setting_value = #{settingValue,jdbcType=OTHER}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+
+
+
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_setting
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanySetting">
+
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+
+		insert into xcompany_setting (id, company_id, user_id,
+		name, setting_type, setting_json,
+		setting_value, is_enable, add_time,
+		update_time)
+		values
+		(#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR}, #{settingType,jdbcType=VARCHAR},
+		#{settingJson,jdbcType=VARCHAR},
+		#{settingValue,jdbcType=OTHER}, #{isEnable,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+		#{updateTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanySetting">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+
+		insert into xcompany_setting
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="settingType != null">
+				setting_type,
+			</if>
+			<if test="settingJson != null">
+				setting_json,
+			</if>
+			<if test="settingValue != null">
+				setting_value,
+			</if>
+			<if test="isEnable != null">
+				is_enable,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="settingType != null">
+				#{settingType,jdbcType=VARCHAR},
+			</if>
+			<if test="settingJson != null">
+				#{settingJson,jdbcType=VARCHAR},
+			</if>
+			<if test="settingValue != null">
+				#{settingValue,jdbcType=OTHER},
+			</if>
+			<if test="isEnable != null">
+				#{isEnable,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanySetting">
+		update xcompany_setting
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="settingType != null">
+				setting_type = #{settingType,jdbcType=VARCHAR},
+			</if>
+			<if test="settingJson != null">
+				setting_json = #{settingJson,jdbcType=VARCHAR},
+			</if>
+			<if test="isEnable != null">
+				is_enable = #{isEnable,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanySetting">
+		update xcompany_setting
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		user_id =
+		#{userId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		setting_type = #{settingType,jdbcType=VARCHAR},
+		setting_json = #{settingJson,jdbcType=VARCHAR},
+		setting_value = #{settingValue,jdbcType=OTHER},
+		is_enable = #{isEnable,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time =
+		#{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+
+	<update id="updateByPrimaryKeyAndJson" parameterType="com.simi.po.model.xcloud.XcompanySetting">
+		update xcompany_setting
+		set setting_value = #{settingValue,jdbcType=OTHER}
+		where id =
+		#{id,jdbcType=NUMERIC}
+	</update>
 </mapper>
