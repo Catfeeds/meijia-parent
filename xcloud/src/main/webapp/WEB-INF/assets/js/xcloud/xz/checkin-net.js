@@ -4,7 +4,7 @@ $("#btn-checkin-add").click(function() {
 
 //删除会议室
 function checkInNetDel(id) {
-	if(confirm("确定要出勤地点吗")) {
+	if(confirm("确定要删除出勤地点吗")) {
 		var params = {};
 		params.id = id;
 		// 发送验证码

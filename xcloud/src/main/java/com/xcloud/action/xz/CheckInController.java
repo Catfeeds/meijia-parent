@@ -21,6 +21,7 @@ import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.baidu.BaiduConfigUtil;
 import com.meijia.wx.utils.JsonUtil;
+import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.op.AppCardType;
 import com.simi.po.model.user.Users;
@@ -32,6 +33,7 @@ import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceVo;
 import com.simi.vo.xcloud.CheckinNetVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
@@ -241,9 +243,31 @@ public class CheckInController extends BaseController {
 		item.setUpdateTime(addTime);
 		xCompanySettingService.updateByPrimaryKey(item);
 		
-
-		return "xz/checkin-net";
+		return "redirect:checkin-net";
 	}
+	
+	// 删除会议
+		@AuthPassport
+		@RequestMapping(value = "net-del", method = RequestMethod.POST)
+		public AppResultData<Object> netDel(HttpServletRequest request, Model model, @RequestParam("id") Long id) {
+			
+			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+			
+			if (id.equals(0L)) return result;
+			AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+			Long companyId = accountAuth.getCompanyId();
+
+			XcompanySetting vo = xCompanySettingService.selectByPrimaryKey(id);
+			if (vo != null) {
+				if (vo.getCompanyId().equals(companyId)) {
+					xCompanySettingService.deleteByPrimaryKey(id);
+				}
+			}
+
+			return result;
+
+		}
 
 	@AuthPassport
 	@RequestMapping(value = "set", method = RequestMethod.GET)
