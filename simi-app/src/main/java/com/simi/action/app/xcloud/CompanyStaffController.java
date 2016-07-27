@@ -23,6 +23,7 @@ import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffReq;
+import com.simi.service.async.NoticeAppAsyncService;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UserSmsTokenService;
@@ -68,6 +69,9 @@ public class CompanyStaffController extends BaseController {
 
 	@Autowired
 	private UsersAsyncService userAsyncService;
+	
+	@Autowired
+	private NoticeAppAsyncService noticeAppAsyncService;
 
 	@RequestMapping(value = "/join", method = { RequestMethod.POST })
 	public AppResultData<Object> companyReg(@RequestParam("user_name") String userName, @RequestParam("sms_token") String smsToken,
@@ -174,6 +178,7 @@ public class CompanyStaffController extends BaseController {
 			String staffName = (StringUtil.isEmpty(u.getName())) ? u.getMobile() : u.getName();
 			summary = staffName + "申请加入" + xCompany.getCompanyName() + ".";
 			userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+			noticeAppAsyncService.pushMsgToDevice(adminId, title, summary, "app", "company_pass", "", "");
 		}
 
 		// 统计总公司数
@@ -274,8 +279,8 @@ public class CompanyStaffController extends BaseController {
 		if (status.equals((short) 2)) {
 			summary = "你申请加入" + companyName + "已被拒绝.";
 		}
-		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
-
+		userMsgAsyncService.newActionAppMsg(reqUserId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		noticeAppAsyncService.pushMsgToDevice(reqUserId, title, summary, "app", "company_pass", "", "");
 		// 2.给审批者发出msg信息。
 		String staffName = (StringUtil.isEmpty(reqUser.getName())) ? reqUser.getMobile() : reqUser.getName();
 		summary = "你已经通过" + staffName + "申请加入" + companyName + "的请求.";
@@ -283,7 +288,7 @@ public class CompanyStaffController extends BaseController {
 			summary = "你已经拒绝" + staffName + "申请加入" + companyName + "的请求.";
 		}
 		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
-
+		
 		return result;
 
 	}

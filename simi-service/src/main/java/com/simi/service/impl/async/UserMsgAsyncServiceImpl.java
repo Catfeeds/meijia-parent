@@ -329,7 +329,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		}
 		
 		// 发送推送消息（发送者）
-		noticeAppAsyncService.pushMsgToDevice(toUserId, "好友申请", summary, "app", "friend_req", "", "");
+		noticeAppAsyncService.pushMsgToDevice(fromUserId, "好友申请", summary, "app", "friend_req", "", "");
 				
 		
 		// 2. 往接收者存储消息
@@ -376,6 +376,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 		// 根据服务大类ID 获得图标
 
+		
 		if (StringUtil.isEmpty(iconUrl)) {
 			iconUrl = "http://img.51xingzheng.cn/437396cc0b49b04dc89a0552f7e90cae?p=0";
 			AppTools appTools = null;
