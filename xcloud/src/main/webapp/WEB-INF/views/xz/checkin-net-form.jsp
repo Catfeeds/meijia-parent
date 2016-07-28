@@ -102,11 +102,12 @@
 							<small>输入wifi的名称，支持多个，用逗号','隔开</small>
 						</div>
 					</div>
+					<form:hidden path="status"/>
 					<c:if test="${contentModel.id > 0 }">
 					<div class="am-form-group">
 						<label class="am-u-sm-3 am-form-label">状态:</label>
 						<div class="am-u-sm-9">
-							<form:hidden path="status"/>
+							
 							<input id="statusSwitch" type="checkbox" checked data-on-color="success" >
 							
 							<small></small>
