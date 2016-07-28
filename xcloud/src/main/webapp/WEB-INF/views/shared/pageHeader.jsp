@@ -29,7 +29,7 @@
 				<a href="/xcloud/hr/staff-list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">人事</a>
 			</li>
 			<li id="top-xz">
-				<a href="/xcloud/xz/assets/commpany_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')"
+				<a href="/xcloud/xz/checkin/list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-checkin')"
 					title="工作日程" target="_top">行政</a>
 			</li>
 			<li id="top-atools">

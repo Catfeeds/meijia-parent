@@ -8,6 +8,7 @@
 <!--css for this page-->
 <link href="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.css'/>" rel="stylesheet">
 <link rel="stylesheet" href="<c:url value='/assets/js/chosen/amazeui.chosen.css'/> " />
+<link href="<c:url value='/assets/js/switch/amazeui.switch.css'/>" rel="stylesheet">	
 </head>
 <body>
 	<!--header start-->
@@ -29,7 +30,7 @@
 				<form:form modelAttribute="contentModel" method="POST" id="checkin-net-form" class="am-form am-form-horizontal">
 					<input type="hidden" id="id" name="id" value="${id}" />
 					<div class="am-form-group">
-						<label for="user-phone" class="am-u-sm-3 am-form-label">出勤部门:</label>
+						<label for="user-phone" class="am-u-sm-3 am-form-label">出勤部门:<font color="red">*</font></label>
 						<div class="am-u-sm-9">
 							<input type="hidden" id="selectedDeptIds" value="${contentModel.deptIds }" />
 							<select id="deptIds" name="deptIds" data-placeholder="选择出勤部门" multiple class="am-form-field chosen-select " required>
@@ -101,6 +102,17 @@
 							<small>输入wifi的名称，支持多个，用逗号','隔开</small>
 						</div>
 					</div>
+					<c:if test="${contentModel.id > 0 }">
+					<div class="am-form-group">
+						<label class="am-u-sm-3 am-form-label">状态:</label>
+						<div class="am-u-sm-9">
+							<form:hidden path="status"/>
+							<input id="statusSwitch" type="checkbox" checked data-on-color="success" >
+							
+							<small></small>
+						</div>
+					</div>
+					</c:if>
 					<hr>
 					<div class="am-form-group">
 						<div class="am-u-sm-9 am-u-sm-push-3">
@@ -131,6 +143,8 @@
 	<script src="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.zh-CN.js'/>"></script>
 	<script src="<c:url value='/assets/js/chosen/amazeui.chosen.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/switch/amazeui.switch.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/xcloud/xz/checkin-net-form.js'/>"></script>
+
 </body>
 </html>

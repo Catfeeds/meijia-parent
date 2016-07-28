@@ -3,10 +3,10 @@
 <%@ include file="../shared/taglib.jsp"%>
 <html>
 <head>
+<title>考勤列表</title>
 <!--common css for all pages-->
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
-<link href="<c:url value='/assets/js/zTree/css/awesomeStyle/awesome.css'/>" rel="stylesheet">
 <link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
 </head>
 <body>
@@ -15,26 +15,30 @@
 	<!--header end-->
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
-		<%@ include file="../staffs/staff-menu.jsp"%>
+		<%@ include file="../xz/xz-menu.jsp"%>
 		<!-- sidebar end -->
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">部门列表</strong> / <small>dept</small>
+					<strong class="am-text-primary am-text-lg">考勤列表</strong>
 				</div>
 			</div>
 			<hr>
 			<div class="am-g">
-				<div class="am-u-sm-12 am-u-md-6">
-					<div class="am-btn-toolbar">
-						<div class="am-btn-group am-btn-group-sm">
-							<button type="button" id="btn-job-add" class="am-btn am-btn-default am-radius">
-								<span class="am-icon-plus"></span>
-								新增部门
-							</button>
+				<div class="am-u-sm-12">
+					<!-- <form class="am-form" id="search-form"> -->
+					<form:form modelAttribute="searchVoModel" action="list" method="GET"
+						class="am-form-inline am-form-horizontal">
+						<div class="am-form-group "></div>
+						<div class="am-form-group">
+							<div class="am-input-group am-input-group-sm">
+								<span class="am-input-group-btn">
+									<button class="am-btn am-btn-default" type="submit">搜索</button>
+								</span>
+							</div>
 						</div>
-					</div>
+					</form:form>
 				</div>
 			</div>
 			<br>
@@ -44,31 +48,40 @@
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
 								<tr>
-									<th class="table-title">部门名称</th>
-									<th class="table-title">所在公司</th>
-									<th>操作</th>
+									<th class="table-title">时间</th>
+									<th class="table-title">员工</th>
+									<th class="table-title">手机号</th>
+									<th class="table-title">签到位置</th>
+									<th class="table-title">签到网络</th>
+									<th class="table-title">匹配出勤地点</th>
+									<th class="table-title">距离(米)</th>
+									<th class="table-title">状态</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${deptListModel.list}" var="item">
+								<c:forEach items="${contentModel.list}" var="item">
 									<tr>
+										<td>${item.addTimeStr }</td>
 										<td>${item.name}</td>
-										<td>${item.companyName}</td>
-										<td><a href="#" onclick="getJobDetail(${item.deptId})" class="am-icon-search" title="查看"></a></td>
+										<td>${item.mobile}</td>
+										<td>${item.poiName }</td>
+										<td>${item.checkinNet}</td>
+										<td></td>
+										<td>${item.poiDistance }</td>
+										<td></td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 						<c:import url="../shared/paging.jsp">
-							<c:param name="pageModelName" value="deptListModel" />
-							<c:param name="urlAddress" value="/staff/dept/dept_list" />
+							<c:param name="pageModelName" value="contentModel" />
+							<c:param name="urlAddress" value="/xz/checkin/list" />
 						</c:import>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- content end -->
 	</div>
 	<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
 		data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
@@ -81,6 +94,6 @@
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
-	<script src="<c:url value='/assets/js/xcloud/staffs/dept-list.js'/>"></script>
+	<script src="<c:url value='/assets/js/xcloud/xz/checkin-list.js'/>"></script>
 </body>
 </html>

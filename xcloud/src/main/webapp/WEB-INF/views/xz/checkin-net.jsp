@@ -46,6 +46,7 @@
 									<th class="table-title">上下班时间</th>
 									<th class="table-title">弹性时间</th>
 									<th class="table-title">出勤部门</th>
+									<th class="table-title">状态</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -59,10 +60,14 @@
 										<td>${item.flexTime}分钟</td>
 										<td>${item.deptNames}</td>
 										<td>
+											<c:if test="${item.status == 1 }">有效</c:if>
+											<c:if test="${item.status == 0 }">无效</c:if>
+										</td>
+										<td>
 											<div class="am-btn-toolbar">
 												<div class="am-btn-group am-btn-group-xs">
 													<a href="/xcloud/xz/checkin/netForm?id=${item.id }" class="am-icon-edit" title="编辑"></a>
-													<a href="#" onClick="javascript:checkInNetDel(${item.id})" class="am-icon-remove" title="删除"></a>
+														<a href="#" onClick="javascript:checkInNetDel(${item.id})" class="am-icon-remove" title="无效"></a>
 												</div>
 											</div>
 										</td>

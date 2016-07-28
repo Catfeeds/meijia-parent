@@ -10,19 +10,28 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyCheckinMapper;
 import com.simi.po.model.record.RecordExpress;
+import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyBenzTime;
 import com.simi.po.model.xcloud.XcompanyCheckin;
+import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyBenzTimeService;
 import com.simi.service.xcloud.XcompanyCheckinService;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.xcloud.CheckinNetVo;
+import com.simi.vo.xcloud.CheckinVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 
 @Service
 public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
-
+	
+	@Autowired
+	UsersService userService;
+	
 	@Autowired
 	XcompanyCheckinMapper xcompanyCheckinMapper;
 	
@@ -71,6 +80,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		vo.setDeptNames("");
 		vo.setAddTimeStr("");
 		vo.setUserName("");
+		vo.setStatus((short) 1);
 		
 		return vo;
 	}
@@ -81,9 +91,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		
 		PageHelper.startPage(pageNo, pageSize);
 
-		List<RecordExpress> list = new ArrayList<RecordExpress>();
-
-		list = xcompanyCheckinMapper.selectByListPage(searchVo);
+		List<XcompanyCheckin> list = xcompanyCheckinMapper.selectByListPage(searchVo);
 
 		PageInfo result = new PageInfo(list);
 		return result;
@@ -92,6 +100,48 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 	@Override
 	public List<XcompanyCheckin> selectBySearchVo(CompanyCheckinSearchVo searchVo) {
 		return xcompanyCheckinMapper.selectBySearchVo(searchVo);
+	}
+	
+	@Override
+	public List<CheckinVo> getVos(List<XcompanyCheckin> list) {
+		List<CheckinVo> result = new ArrayList<CheckinVo>();
+		
+		if (list.isEmpty()) return result;
+		
+		List<Long> userIds = new ArrayList<Long>();
+		for (XcompanyCheckin item : list) {
+			if (!userIds.contains(item.getUserId())) userIds.add(item.getUserId());
+		}
+		
+		List<Users> users = new ArrayList<Users>();
+		
+		if (!userIds.isEmpty()) {
+			UserSearchVo searchVo = new UserSearchVo();
+			searchVo.setUserIds(userIds);
+			users = userService.selectBySearchVo(searchVo);
+		}
+		
+		for (int i = 0 ; i < list.size(); i++) {
+			XcompanyCheckin item = list.get(i);
+			CheckinVo vo = new CheckinVo();
+			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+			
+			for (Users u : users) {
+				if (u.getId().equals(vo.getUserId())) {
+					vo.setName(u.getName());
+					if (StringUtil.isEmpty(vo.getName())) vo.setName(u.getMobile());
+					vo.setMobile(u.getMobile());
+					break;
+				}
+			}
+			
+			Long addTime = vo.getAddTime();
+			String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000, "yyyy-MM-dd HH:MM:ss");
+			vo.setAddTimeStr(addTimeStr);
+			result.add(vo);
+		}
+		
+		return result;
 	}
 
 	@Override

@@ -106,7 +106,7 @@ $("#join-submit").on('click', function(e) {
 
 function companyJoinSubmit() {
 	var userName =  $('#join_mobile').val();
-	
+	var name = $("#real_name").val();
 	var params = {};
 	params.user_name = userName;
 	params.name = name;

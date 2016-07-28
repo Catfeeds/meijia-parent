@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.vo.xcloud.CheckinNetVo;
+import com.simi.vo.xcloud.CheckinVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 import com.simi.vo.xcloud.company.DeptSearchVo;
 
@@ -35,5 +36,7 @@ public interface XcompanyCheckinService {
 	PageInfo selectByListPage(CompanyCheckinSearchVo searchVo, int pageNo, int pageSize);
 
 	CheckinNetVo initCheckinNetVo();
+
+	List<CheckinVo> getVos(List<XcompanyCheckin> list);
 
 }

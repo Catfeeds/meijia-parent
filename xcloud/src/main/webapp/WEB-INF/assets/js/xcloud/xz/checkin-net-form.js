@@ -1,4 +1,3 @@
-
 var curFormDateTime = moment().format('YYYY-MM-DD');
 $('#startTime').datetimepicker({
 	language : 'zh-CN',
@@ -22,20 +21,19 @@ $('#endTime').datetimepicker({
 	showButtonPanel : false,
 });
 
-
-
 $('#deptIds').on('chosen:ready', function(e, params) {
 	
 	var selectedDeptIds = $("#selectedDeptIds").val();
-	console.log("selectedDeptIds = " + selectedDeptIds);
-	if (selectedDeptIds == '') return false;
 	
+	if (selectedDeptIds == '') return false;
+	console.log("selectedDeptIds = " + selectedDeptIds);
 	if (selectedDeptIds.indexOf(",") < 0) {
-		$("#deptIds option[value='" + selectedDeptIds + "']").prop("selected", true);
+		$("#deptIds").val(selectedDeptIds).trigger('chosen:updated');
 	} else {
 		$.each(selectedDeptIds.split(","), function(i, e) {
 			$("#deptIds option[value='" + e + "']").prop("selected", true);
 		});
+		$("#deptIds").trigger('chosen:updated');
 	}
 });
 
@@ -48,37 +46,74 @@ $('#deptIds').on('change', function(e, params) {
 	console.log(v.indexOf("0"));
 	if (v.indexOf("0") >= 0) {
 		$('#deptIds').val(0).trigger('chosen:updated');
-		;
 	}
 });
 $('#deptIds').chosen();
-$('#deptIds').trigger('chosen:ready');
 
+// 设定部门默认值
+var selectedDeptIds = $("#selectedDeptIds").val();
 
+if (selectedDeptIds != '') {
+	console.log("selectedDeptIds = " + selectedDeptIds);
+	if (selectedDeptIds.indexOf(",") < 0) {
+		console.log("asdfasdfasdf");
+		$("#deptIds").val(selectedDeptIds);
+	} else {
+		$.each(selectedDeptIds.split(","), function(i, e) {
+			$("#deptIds option[value='" + e + "']").prop("selected", true);
+		});
+	}
+}
 
-$("#btn-save").on('click', function(e) {
-	
-	
-	var formV = checkNetFormValidaty();
-	
-	if (formV == false) return false;
-	
-	var form = $('#checkin-net-form');
-	
-	var formValidity = $('#checkin-net-form').validator().data('amui.validator').validateForm().valid
-	
-	console.log("deptIds = " + $("#deptIds").val());
-	
-	if (formValidity) {
-		// done, submit form
-		console.log("ok");
-		form.submit();
-	} else  {
-		// fail
-		console.log("fail");
-	};
+$('#statusSwitch').not('[data-switch-no-init]').bootstrapSwitch({
+	size : "sm",
+	onText : "有效",
+	offText : "无效",
 });
 
+//初始化数据
+
+
+if ($("#status").val() == 1) {
+	$('#statusSwitch').bootstrapSwitch('state', true);
+} else {
+	$('#statusSwitch').bootstrapSwitch('state', false);
+}
+
+$('#statusSwitch').on('switchChange.bootstrapSwitch', function(event, state) {
+	if (state) {
+		$("#status").val(1);
+	} else {
+		$("#status").val(0);
+	}
+	
+});
+
+$("#btn-save").on(
+		'click',
+		function(e) {
+			
+			var formV = checkNetFormValidaty();
+			
+			if (formV == false) return false;
+			
+			var form = $('#checkin-net-form');
+			
+			var formValidity = $('#checkin-net-form').validator().data('amui.validator')
+					.validateForm().valid
+
+			console.log("deptIds = " + $("#deptIds").val());
+			
+			if (formValidity) {
+				// done, submit form
+				console.log("ok");
+				form.submit();
+			} else {
+				// fail
+				console.log("fail");
+			}
+			;
+		});
 
 function checkNetFormValidaty() {
 	var deptIds = $("#deptIds").val();
@@ -101,4 +136,3 @@ function checkNetFormValidaty() {
 	
 	return true;
 }
-

@@ -21,5 +21,5 @@ public interface XcompanyCheckinMapper {
 
 	List<XcompanyCheckin> selectBySearchVo(CompanyCheckinSearchVo searchVo);
 
-	List<RecordExpress> selectByListPage(CompanyCheckinSearchVo searchVo);
+	List<XcompanyCheckin> selectByListPage(CompanyCheckinSearchVo searchVo);
 }

@@ -53,11 +53,7 @@
 											<td>${item.jobName}</td>
 											<td>${item.deptName}</td>
 											<td>${item.totalNum}</td> 
-											<td>
-												<button type="button" class="am-btn am-btn-success" 
-												
-												onclick="getJobDetail(${item.jobId})">查看详情</button>
-											</td>
+											<td><a href="#" onclick="getJobDetail(${item.jobId})" class="am-icon-search" title="查看"></a></td>
 										</tr>
 									</c:forEach>
 							</tbody>

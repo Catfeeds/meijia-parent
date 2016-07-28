@@ -29,6 +29,8 @@ public class CheckinNetVo {
 	private String addTimeStr;
 	
 	private String userName;
+	
+	private Short status;
 
 	public String getLat() {
 		return lat;
@@ -140,5 +142,13 @@ public class CheckinNetVo {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
 	}
 }

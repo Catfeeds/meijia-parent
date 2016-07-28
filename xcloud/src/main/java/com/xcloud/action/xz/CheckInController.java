@@ -25,6 +25,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.op.AppCardType;
 import com.simi.po.model.user.Users;
+import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.user.UsersService;
@@ -36,6 +37,7 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceVo;
 import com.simi.vo.xcloud.CheckinNetVo;
+import com.simi.vo.xcloud.CheckinVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.company.DeptSearchVo;
@@ -79,11 +81,28 @@ public class CheckInController extends BaseController {
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
-		Long userId = accountAuth.getUserId();
+		Long companyId = accountAuth.getCompanyId();
 
-		searchVo.setUserId(userId);
+		searchVo.setCompanyId(companyId);
 
 		PageInfo result = xcompanyCheckInService.selectByListPage(searchVo, pageNo, pageSize);
+
+		List<XcompanyCheckin> list = result.getList();
+
+		List<CheckinVo> vos = xcompanyCheckInService.getVos(list);
+
+		for (int i = 0; i < list.size(); i++) {
+			XcompanyCheckin item = list.get(i);
+
+			for (CheckinVo vo : vos) {
+				if (vo.getId().equals(item.getId())) {
+					list.set(i, vo);
+					break;
+				}
+			}
+		}
+
+		result = new PageInfo(list);
 
 		model.addAttribute("contentModel", result);
 
@@ -151,7 +170,7 @@ public class CheckInController extends BaseController {
 				vo.setUserName(u.getName());
 			}
 		}
-
+		if (vo.getStatus() == null) vo.setStatus((short) 1);
 		model.addAttribute("contentModel", vo);
 
 		// 可选部门
@@ -191,9 +210,10 @@ public class CheckInController extends BaseController {
 		item.setCompanyId(companyId);
 		item.setName("出勤地点");
 		item.setSettingType(Constants.SETTING_CHICKIN_NET);
-		
+		item.setIsEnable(vo.getStatus());
+
 		String json = JsonUtil.objecttojson(vo);
-		
+
 		Long addTime = TimeStampUtil.getNowSecond();
 		if (id.equals(0L)) {
 			item.setAddTime(addTime);
@@ -207,7 +227,7 @@ public class CheckInController extends BaseController {
 		String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000, "yyyy-MM-dd HH:MM");
 		vo.setAddTimeStr(addTimeStr);
 		// 处理jsonObject数据
-		String deptIds = request.getParameter("deptIds");
+		String deptIds = vo.getDeptIds();
 		String[] deptAry = StringUtil.convertStrToArray(deptIds);
 
 		// 可选部门
@@ -227,7 +247,7 @@ public class CheckInController extends BaseController {
 
 				for (XcompanyDept xd : deptList) {
 					if (xd.getDeptId().equals(deptId)) {
-						deptNames += xd.getName() + ",";
+						deptNames+= xd.getName() + ",";
 						break;
 					}
 				}
@@ -239,35 +259,52 @@ public class CheckInController extends BaseController {
 
 		item.setSettingValue(json);
 
-
 		item.setUpdateTime(addTime);
 		xCompanySettingService.updateByPrimaryKey(item);
-		
-		return "redirect:checkin-net";
+
+		return "redirect:net";
 	}
-	
+
 	// 删除会议
-		@AuthPassport
-		@RequestMapping(value = "net-del", method = RequestMethod.POST)
-		public AppResultData<Object> netDel(HttpServletRequest request, Model model, @RequestParam("id") Long id) {
-			
-			AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-			
-			if (id.equals(0L)) return result;
-			AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+	@AuthPassport
+	@RequestMapping(value = "net-del", method = RequestMethod.POST)
+	public AppResultData<Object> netDel(HttpServletRequest request, Model model, @RequestParam("id") Long id) {
 
-			Long companyId = accountAuth.getCompanyId();
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
-			XcompanySetting vo = xCompanySettingService.selectByPrimaryKey(id);
-			if (vo != null) {
-				if (vo.getCompanyId().equals(companyId)) {
-					xCompanySettingService.deleteByPrimaryKey(id);
-				}
-			}
-
+		if (id.equals(0L))
 			return result;
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
+		Long companyId = accountAuth.getCompanyId();
+
+		XcompanySetting record = xCompanySettingService.selectByPrimaryKey(id);
+		if (record != null) {
+			if (record.getCompanyId().equals(companyId)) {
+				record.setIsEnable((short) 0);
+				record.setUpdateTime(TimeStampUtil.getNowSecond());
+				
+				if (record.getSettingValue() != null) {
+					JSONObject setValue = (JSONObject) record.getSettingValue();
+
+					CheckinNetVo vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
+
+					vo.setStatus((short) 0);
+					
+					String json = JsonUtil.objecttojson(vo);
+
+					record.setSettingValue(json);
+					
+				}
+				
+				
+				xCompanySettingService.updateByPrimaryKey(record);
+			}
 		}
+
+		return result;
+
+	}
 
 	@AuthPassport
 	@RequestMapping(value = "set", method = RequestMethod.GET)
