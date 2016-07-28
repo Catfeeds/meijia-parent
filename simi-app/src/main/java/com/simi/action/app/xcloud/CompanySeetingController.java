@@ -16,12 +16,14 @@ import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceVo;
+import com.simi.vo.xcloud.CheckinNetVo;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
@@ -76,6 +78,34 @@ public class CompanySeetingController extends BaseController {
 			vo.add(listVo);
 		}
 		result.setData(vo);
+		
+		//针对出勤地点的配置返回
+		if (settingType.equals(Constants.SETTING_CHICKIN_NET)) {
+			List<XcompanySetting> resultList = new ArrayList<XcompanySetting>();
+			for (XcompanySetting item : list) {
+				if (item.getSettingValue() != null) {
+					JSONObject setValue = (JSONObject) item.getSettingValue();
+
+					CheckinNetVo checkinNetVo = JSON.toJavaObject(setValue, CheckinNetVo.class);
+
+					String wifis = checkinNetVo.getWifis();
+					if (!StringUtil.isEmpty(wifis)) {
+						String[] wifiAry = StringUtil.convertStrToArray(wifis);
+						for (int i =0 ; i < wifiAry.length; i++) {
+							if (StringUtil.isEmpty(wifiAry[i])) continue;
+							XcompanySetting v = item;
+							v.setName(wifiAry[i]);
+							v.setSettingValue(null);
+							resultList.add(v);
+						}
+					}
+				}
+			}
+			result.setData(resultList);
+		}
+		
+		
+		
 		
 		return result;
 	}

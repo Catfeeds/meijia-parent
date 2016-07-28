@@ -92,7 +92,7 @@ public class TestCompanyController extends JUnitActionBase  {
     public void testCompanyStaffList() throws Exception {
 
 		String url = "/app/company/get_company_setting.json";
-		String params = "?user_id=77&company_id=3&setting_type=meeting-room";
+		String params = "?user_id=18&company_id=6&setting_type=checkin-net";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
