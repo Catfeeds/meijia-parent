@@ -3,33 +3,28 @@ var appName = "simi";
 var appRootUrl = "http://" + host + "/" + appName + "/app/";
 
 // 云平台 根路径
-var xCloudRootUrl = "http://" + host +"/xcloud"; 
+var xCloudRootUrl = "http://" + host + "/xcloud";
 
-//oa 根路径
+// oa 根路径
 var simiOaRootUrl = "http://" + host + "/simi-oa";
 
 (function($) {
 	'use strict';
-
+	
 	$(function() {
 		var $fullText = $('.admin-fullText');
 		$('#admin-fullscreen').on('click', function() {
 			$.AMUI.fullscreen.toggle();
 		});
-
-		$(document).on(
-				$.AMUI.fullscreen.raw.fullscreenchange,
-				function() {
-					$.AMUI.fullscreen.isFullscreen ? $fullText.text('关闭全屏')
-							: $fullText.text('开启全屏');
-				});
-
-		$(document).ready(
-				function() {
-					var active = $('.tr-main-container').attr('id');
-					$('#tr-header-nav .tr-nav').children('li.' + active)
-							.addClass('am-active');
-				});
+		
+		$(document).on($.AMUI.fullscreen.raw.fullscreenchange, function() {
+			$.AMUI.fullscreen.isFullscreen ? $fullText.text('关闭全屏') : $fullText.text('开启全屏');
+		});
+		
+		$(document).ready(function() {
+			var active = $('.tr-main-container').attr('id');
+			$('#tr-header-nav .tr-nav').children('li.' + active).addClass('am-active');
+		});
 	});
 })(jQuery);
 
@@ -39,8 +34,8 @@ var simiOaRootUrl = "http://" + host + "/simi-oa";
 		$.AMUI.validator.patterns.sms_token = /^\d{4}$/;
 		$.AMUI.validator.patterns.email = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 		$.AMUI.validator.patterns.pinteger = /^[0-9]*[1-9][0-9]*$/;
-		$.AMUI.validator.patterns.price = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/ ;
-
+		$.AMUI.validator.patterns.price = /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/;
+		
 	}
 })(jQuery);
 
@@ -57,12 +52,13 @@ $("#btn-return").on('click', function(e) {
 });
 
 function getUrlParam(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-    if (r != null) return unescape(r[2]); return null; //返回参数值
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); // 构造一个含有目标参数的正则表达式对象
+	var r = window.location.search.substr(1).match(reg); // 匹配目标参数
+	if (r != null) return unescape(r[2]);
+	return null; // 返回参数值
 }
 
-//位数不足补零
+// 位数不足补零
 function pad(num, n) {
 	var i = (num + "").length;
 	while (i++ < n)
@@ -70,18 +66,22 @@ function pad(num, n) {
 	return num;
 }
 
-//顶部菜单点击高亮
+// 顶部菜单点击高亮
 function setTopMenuId(menuId, subMenuId) {
-//	console.log("menuId = " + menuId);
-	$.cookie("xcloud-top-menu-id", menuId, { path: "/"}); 
-	$.cookie("xcloud-menu-id", subMenuId, { path: "/"}); 
+	// console.log("menuId = " + menuId);
+	$.cookie("xcloud-top-menu-id", menuId, {
+		path : "/"
+	});
+	$.cookie("xcloud-menu-id", subMenuId, {
+		path : "/"
+	});
 }
 
 function setTopMenuHl() {
 	var topMenuId = $.cookie('xcloud-top-menu-id');
 	if (topMenuId == undefined) return false;
 	if (topMenuId == "") return false;
-	$("#top-ul").each(function () {
+	$("#top-ul").each(function() {
 		$(this).find('li').each(function() {
 			var menuId = $(this).attr("id");
 			
@@ -95,42 +95,44 @@ function setTopMenuHl() {
 				}
 			}
 			
-	    });
+		});
 	});
 }
 
 setTopMenuHl();
 
-//菜单点击展开
+// 菜单点击展开
 function setMenuId(menuId) {
-//	console.log("setMenuId = " + menuId);
-	$.cookie("xcloud-menu-id", menuId, { path: "/"}); 
+	// console.log("setMenuId = " + menuId);
+	$.cookie("xcloud-menu-id", menuId, {
+		path : "/"
+	});
 	menuCollapse();
 }
 
 function menuCollapse() {
-	var menuId = $.cookie('xcloud-menu-id'); 
+	var menuId = $.cookie('xcloud-menu-id');
 	
 	if (menuId == undefined) return false;
 	if (menuId == "") return false;
 	
-	$(".admin-sidebar-list").each(function () {
+	$(".admin-sidebar-list").each(function() {
 		$(this).find('ul').each(function() {
 			var tmenuId = $(this).attr("id");
-//			console.log("tmenuId = " + tmenuId+ "---- menuId=" + menuId);
-			if (tmenuId == menuId) {
-				if ($("#"+ tmenuId).hasClass("am-in")) {
-					$("#"+ menuId).collapse('close');
-				} else {
-//					console.log("open");
-					$("#"+ tmenuId).collapse('open');
-				}
-			} else {
-//				console.log("close");
-				$("#"+ tmenuId).collapse('close');
-			}
 			
-	    });
+			
+			if (tmenuId == menuId) {
+				console.log("open tmenuId = " + tmenuId + "---- menuId=" + menuId);
+
+				$("#" + tmenuId).addClass("am-in");
+				$("#" + tmenuId).attr("style",""); 
+			} else {
+
+				$("#" + tmenuId).removeClass("am-in");
+				$("#" + tmenuId).attr("style","height: 0px;"); 
+				
+			}
+		});
 	});
 }
 menuCollapse();

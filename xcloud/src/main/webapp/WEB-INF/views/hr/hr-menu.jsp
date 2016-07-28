@@ -30,7 +30,7 @@
 				<span class="am-icon-flag"></span> 招聘管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-hr-recruit">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-recruit">
 				<li>
 					<a href="#" class="am-cf"> 
 						<span class="am-icon-forumbee"></span> 发布职位
@@ -55,7 +55,7 @@
 				<span class="am-icon-th-list"></span> 企业人才库
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-hr-resume">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-resume">
 				<li>
 					<a href="#" class="am-cf"> 
 						<span class="am-icon-cloud-upload"></span> 导入简历

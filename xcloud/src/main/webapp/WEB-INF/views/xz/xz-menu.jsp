@@ -2,15 +2,16 @@
 <!-- sidebar start -->
 <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 	<ul class="am-list admin-sidebar-list">
+		
 		<li class="admin-parent">
-			<a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-checkin')">
-				<span class="am-icon-bus"></span>
+			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-checkin')">
+				<span class="am-icon-file"></span>
 				考勤管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-checkin">
+			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-checkin">
 				<li>
-					<a href="/xcloud/xz/checkin/stat"
+					<a href="/xcloud/xz/checkin/stat" class="am-cf"
 						<span class="am-icon-check"></span>
 						考勤统计
 					</a>
@@ -32,12 +33,12 @@
 	
 		
 		<li class="admin-parent">
-			<a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-assets')">
+			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-assets')">
 				<span class="am-icon-file"></span>
 				资产管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in"  id="collapse-nav-xz-assets">
+			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-assets">
 				<li>
 					<a href="/xcloud/xz/assets/commpany_asset_list" class="am-cf">
 						<span class="am-icon-pencil"></span>
@@ -62,21 +63,15 @@
 						办公用品采购
 					</a>
 				</li>
-				<li>
-					<a href="admin-log.html">
-						<span class="am-icon-calendar"></span>
-						资产常用设置
-					</a>
-				</li>
 			</ul>
 		</li>
 		<li class="admin-parent">
-			<a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-express')">
+			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-express')">
 				<span class="am-icon-truck"></span>
 				快递管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-xz-express">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-express">
 				<li>
 					<a href="/xcloud/xz/express/express-form?id=0" class="am-cf">
 						<span class="am-icon-pencil"></span>
@@ -98,12 +93,12 @@
 			</ul>
 		</li>
 		<li class="admin-parent">
-			<a class="am-collapsed" onclick="setMenuId('collapse-nav-xz-water')">
+			<a class="am-cf" onclick="setMenuId('collapse-nav-xz-water')">
 				<span class="am-icon-coffee"></span>
 				饮用水管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-xz-water">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-water">
 				<li>
 					<a href="/xcloud/xz/water/water-form" class="am-cf">
 						<span class="am-icon-shopping-cart "></span>
@@ -125,12 +120,12 @@
 			</ul>
 		</li>
 		<li class="admin-parent">
-			<a class="am-collapsed" onclick="setMenuId('collapse-nav-xz-clean')">
+			<a class="am-cf" onclick="setMenuId('collapse-nav-xz-clean')">
 				<span class="am-icon-bitbucket"></span>
 				企业保洁
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-xz-clean">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-clean">
 				<li>
 					<a href="/xcloud/xz/clean/clean-form" class="am-cf">
 						<span class="am-icon-phone"></span>
@@ -152,12 +147,12 @@
 			</ul>
 		</li>
 		<li class="admin-parent">
-			<a class="am-collapsed" onclick="setMenuId('collapse-nav-xz-recycle')">
+			<a class="am-cf" onclick="setMenuId('collapse-nav-xz-recycle')">
 				<span class="am-icon-recycle"></span>
 				废品回收
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-xz-recycle">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-recycle">
 				<li>
 					<a href="/xcloud/xz/recycle/recycle-form" class="am-cf">
 						<span class="am-icon-phone"></span>
@@ -179,12 +174,12 @@
 			</ul>
 		</li>
 		<li class="admin-parent">
-			<a class="am-cf am-collapsed" onclick="setMenuId('collapse-nav-xz-meeting')">
+			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-meeting')">
 				<span class="am-icon-university"></span>
 				会议室管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav-xz-meeting">
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-meeting">
 				<li>
 					<a href="/xcloud/xz/meeting/list" class="am-cf">
 						<span class="am-icon-calendar"></span>
