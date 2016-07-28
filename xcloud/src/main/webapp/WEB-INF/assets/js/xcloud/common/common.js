@@ -122,7 +122,7 @@ function menuCollapse() {
 			
 			
 			if (tmenuId == menuId) {
-				console.log("open tmenuId = " + tmenuId + "---- menuId=" + menuId);
+//				console.log("open tmenuId = " + tmenuId + "---- menuId=" + menuId);
 
 				$("#" + tmenuId).addClass("am-in");
 				$("#" + tmenuId).attr("style",""); 
