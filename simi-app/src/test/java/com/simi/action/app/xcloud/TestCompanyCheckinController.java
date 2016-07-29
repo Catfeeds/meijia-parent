@@ -31,12 +31,12 @@ public class TestCompanyCheckinController extends JUnitActionBase  {
      	//新增
      	postRequest = postRequest.param("user_id", "18");
 	    postRequest = postRequest.param("company_id", "6");
-	    postRequest = postRequest.param("poi_name", "北京站");
-	    postRequest = postRequest.param("poi_lat", "39.910286");
-	    postRequest = postRequest.param("poi_lng", "116.433302");
+	    postRequest = postRequest.param("poi_name", "安莱大厦");
+	    postRequest = postRequest.param("poi_lat", "39.906796");
+	    postRequest = postRequest.param("poi_lng", "116.694736");
 	    postRequest = postRequest.param("checkin_type", "0");
-	    postRequest = postRequest.param("checkin_net", "zrj5G");
-	    postRequest = postRequest.param("remarks", "早上打开哦");
+	    postRequest = postRequest.param("checkin_net", "CU_Aj6h");
+
 	    
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -46,7 +46,7 @@ public class TestCompanyCheckinController extends JUnitActionBase  {
 
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
-
+	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
     }
 
 }

@@ -673,19 +673,21 @@ public class DateUtil {
 //		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
 //		timeStampToDate(0L);
 		
-		System.out.println(java.sql.Date.valueOf("2016-6-8"));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 1));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 2));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 3));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 4));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 5));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 6));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 7));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 8));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 9));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 10));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 11));
-		System.out.println(DateUtil.getAllDaysOfMonth(2016, 12));
+//		System.out.println(java.sql.Date.valueOf("2016-6-8"));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 1));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 2));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 3));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 4));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 5));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 6));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 7));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 8));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 9));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 10));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 11));
+//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 12));
+		
+		System.out.println(DateUtil.getYear());
 		
 	}
 }

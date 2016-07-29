@@ -14,13 +14,14 @@
 		<result column="poi_name" property="poiName" jdbcType="VARCHAR" />
 		<result column="poi_lat" property="poiLat" jdbcType="VARCHAR" />
 		<result column="poi_lng" property="poiLng" jdbcType="VARCHAR" />
+		<result column="setting_id" property="settingId" jdbcType="NUMERIC" />
 		<result column="poi_distance" property="poiDistance" jdbcType="INTEGER" />
 		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, company_id, staff_id, user_id, checkin_from, checkin_type, checkin_device, checkin_sn, checkin_net,
-		poi_name, poi_lat, poi_lng, poi_distance, remarks, add_time
+		poi_name, poi_lat, poi_lng, setting_id, poi_distance, remarks, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -106,7 +107,7 @@
 			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
 				
-		order by id desc
+		order by add_time desc
 	</select>
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -117,14 +118,14 @@
 		insert into xcompany_checkin (id, company_id, staff_id,
 		user_id, checkin_from, checkin_type,
 		checkin_device, checkin_sn, checkin_net, poi_name,
-		poi_lat, poi_lng, poi_distance,
+		poi_lat, poi_lng, setting_id, poi_distance,
 		remarks, add_time
 		)
 		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{staffId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{checkinFrom,jdbcType=NUMERIC}, #{checkinType,jdbcType=NUMERIC},
 		#{checkinDevice,jdbcType=VARCHAR}, #{checkinSn,jdbcType=VARCHAR}, #{checkinNet,jdbcType=VARCHAR}, 
 		#{poiName,jdbcType=VARCHAR},
-		#{poiLat,jdbcType=VARCHAR}, #{poiLng,jdbcType=VARCHAR}, #{poiDistance,jdbcType=INTEGER},
+		#{poiLat,jdbcType=VARCHAR}, #{poiLng,jdbcType=VARCHAR}, #{settingId,jdbcType=NUMERIC}, #{poiDistance,jdbcType=INTEGER},
 		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}
 		)
 	</insert>
@@ -171,6 +172,9 @@
 			</if>
 			<if test="poiLng != null">
 				poi_lng,
+			</if>
+			<if test="settingId != null">
+				setting_id,
 			</if>
 			<if test="poiDistance != null">
 				poi_distance,
@@ -219,6 +223,9 @@
 			<if test="poiLng != null">
 				#{poiLng,jdbcType=VARCHAR},
 			</if>
+			<if test="settingId != null">
+				#{settingId,jdbcType=NUMERIC},
+			</if>
 			<if test="poiDistance != null">
 				#{poiDistance,jdbcType=INTEGER},
 			</if>
@@ -266,6 +273,9 @@
 			<if test="poiLng != null">
 				poi_lng = #{poiLng,jdbcType=VARCHAR},
 			</if>
+			<if test="settingId != null">
+				setting_id = #{settingId,jdbcType=NUMERIC},
+			</if>
 			<if test="poiDistance != null">
 				poi_distance = #{poiDistance,jdbcType=INTEGER},
 			</if>
@@ -291,6 +301,7 @@
 		poi_name = #{poiName,jdbcType=VARCHAR},
 		poi_lat = #{poiLat,jdbcType=VARCHAR},
 		poi_lng = #{poiLng,jdbcType=VARCHAR},
+		setting_id = #{settingId,jdbcType=NUMERIC},
 		poi_distance = #{poiDistance,jdbcType=INTEGER},
 		remarks = #{remarks,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC}

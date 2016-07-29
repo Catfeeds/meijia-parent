@@ -17,6 +17,14 @@ public class CompanyCheckinSearchVo{
 	private Long startTime;
 	
 	private Long endTime;
+	
+	private int cyear;
+	
+	private int cmonth;
+	
+	private Long cday;
+	
+	
 		
 	public Long getCompanyId() {
 		return companyId;
@@ -80,5 +88,29 @@ public class CompanyCheckinSearchVo{
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public int getCyear() {
+		return cyear;
+	}
+
+	public void setCyear(int cyear) {
+		this.cyear = cyear;
+	}
+
+	public int getCmonth() {
+		return cmonth;
+	}
+
+	public void setCmonth(int cmonth) {
+		this.cmonth = cmonth;
+	}
+
+	public Long getCday() {
+		return cday;
+	}
+
+	public void setCday(Long cday) {
+		this.cday = cday;
 	}
 }

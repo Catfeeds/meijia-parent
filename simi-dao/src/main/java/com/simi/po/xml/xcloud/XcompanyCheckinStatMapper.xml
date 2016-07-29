@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.xcloud.XcompanyCheckinStatMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.xcloud.XcompanyCheckinStat">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" />
+		<result column="staff_id" property="staffId" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="cyear" property="cyear" jdbcType="NUMERIC" />
+		<result column="cmonth" property="cmonth" jdbcType="NUMERIC" />
+		<result column="cday" property="cday" jdbcType="NUMERIC" />
+		<result column="cday_am" property="cdayAm" jdbcType="NUMERIC" />
+		<result column="cday_pm" property="cdayPm" jdbcType="NUMERIC" />
+		<result column="cday_am_id" property="cdayAmId" jdbcType="NUMERIC" />
+		<result column="cday_pm_id" property="cdayPmId" jdbcType="NUMERIC" />
+		<result column="is_late" property="isLate" jdbcType="NUMERIC" />
+		<result column="is_earyly" property="isEaryly" jdbcType="NUMERIC" />
+		<result column="is_leave" property="isLeave" jdbcType="NUMERIC" />
+		<result column="admin_id" property="adminId" jdbcType="NUMERIC" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_id, staff_id, user_id, cyear, cmonth, cday, cday_am, cday_pm, cday_am_id,
+		cday_pm_id, is_late, is_earyly, is_leave, admin_id, remarks, add_time, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_checkin_stat
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.xcloud.CompanyCheckinSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from xcompany_checkin_stat
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+				
+		<if test="staffId != null">
+			and staff_id = #{staffId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cyear != null and cyear > 0">
+			and cyear = #{cyear,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cmonth != null and cmonth > 0">
+			and cmonth = #{cmonth,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cday != null">
+			and cday = #{cday,jdbcType=NUMERIC}
+		</if>
+		
+		
+				
+		order by id asc
+	</select>
+	
+	<select id="totalBySearchVo" resultType="java.util.HashMap" parameterType="com.simi.vo.xcloud.CompanyCheckinSearchVo">
+		select user_id, 
+		count(*) as total_checkin, 
+		count(case when is_late = 1 then 1 end) as total_late, 
+		count(case when is_early then 1 end) as total_earyly, 
+		count(case when is_leave = 1 then 1 end) as total_leave 
+		from xcompay_checkin_stat
+		where 1=1
+		<if test="companyId != null">
+			and company_id = #{companyId,jdbcType=NUMERIC}
+		</if>
+				
+		<if test="staffId != null">
+			and staff_id = #{staffId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cyear != null">
+			and cyear = #{cyear,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cmonth != null">
+			and cmonth = #{cmonth,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cday != null">
+			and cday = #{cday,jdbcType=NUMERIC}
+		</if>
+		
+		
+				
+		order by id asc
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from xcompany_checkin_stat
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.xcloud.XcompanyCheckinStat">
+		insert into xcompany_checkin_stat (id, company_id, staff_id,
+		user_id, cyear, cmonth,
+		cday, cday_am, cday_pm,
+		cday_am_id, cday_pm_id, is_late,
+		is_earyly, is_leave, admin_id,
+		remarks, add_time, update_time
+		)
+		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{staffId,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC}, #{cyear,jdbcType=NUMERIC}, #{cmonth,jdbcType=NUMERIC},
+		#{cday,jdbcType=NUMERIC}, #{cdayAm,jdbcType=NUMERIC}, #{cdayPm,jdbcType=NUMERIC},
+		#{cdayAmId,jdbcType=NUMERIC}, #{cdayPmId,jdbcType=NUMERIC}, #{isLate,jdbcType=NUMERIC},
+		#{isEaryly,jdbcType=NUMERIC}, #{isLeave,jdbcType=NUMERIC}, #{adminId,jdbcType=NUMERIC},
+		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyCheckinStat">
+		insert into xcompany_checkin_stat
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="staffId != null">
+				staff_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="cyear != null">
+				cyear,
+			</if>
+			<if test="cmonth != null">
+				cmonth,
+			</if>
+			<if test="cday != null">
+				cday,
+			</if>
+			<if test="cdayAm != null">
+				cday_am,
+			</if>
+			<if test="cdayPm != null">
+				cday_pm,
+			</if>
+			<if test="cdayAmId != null">
+				cday_am_id,
+			</if>
+			<if test="cdayPmId != null">
+				cday_pm_id,
+			</if>
+			<if test="isLate != null">
+				is_late,
+			</if>
+			<if test="isEaryly != null">
+				is_earyly,
+			</if>
+			<if test="isLeave != null">
+				is_leave,
+			</if>
+			<if test="adminId != null">
+				admin_id,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="staffId != null">
+				#{staffId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="cyear != null">
+				#{cyear,jdbcType=NUMERIC},
+			</if>
+			<if test="cmonth != null">
+				#{cmonth,jdbcType=NUMERIC},
+			</if>
+			<if test="cday != null">
+				#{cday,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayAm != null">
+				#{cdayAm,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayPm != null">
+				#{cdayPm,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayAmId != null">
+				#{cdayAmId,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayPmId != null">
+				#{cdayPmId,jdbcType=NUMERIC},
+			</if>
+			<if test="isLate != null">
+				#{isLate,jdbcType=NUMERIC},
+			</if>
+			<if test="isEaryly != null">
+				#{isEaryly,jdbcType=NUMERIC},
+			</if>
+			<if test="isLeave != null">
+				#{isLeave,jdbcType=NUMERIC},
+			</if>
+			<if test="adminId != null">
+				#{adminId,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.xcloud.XcompanyCheckinStat">
+		update xcompany_checkin_stat
+		<set>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=NUMERIC},
+			</if>
+			<if test="staffId != null">
+				staff_id = #{staffId,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="cyear != null">
+				cyear = #{cyear,jdbcType=NUMERIC},
+			</if>
+			<if test="cmonth != null">
+				cmonth = #{cmonth,jdbcType=NUMERIC},
+			</if>
+			<if test="cday != null">
+				cday = #{cday,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayAm != null">
+				cday_am = #{cdayAm,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayPm != null">
+				cday_pm = #{cdayPm,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayAmId != null">
+				cday_am_id = #{cdayAmId,jdbcType=NUMERIC},
+			</if>
+			<if test="cdayPmId != null">
+				cday_pm_id = #{cdayPmId,jdbcType=NUMERIC},
+			</if>
+			<if test="isLate != null">
+				is_late = #{isLate,jdbcType=NUMERIC},
+			</if>
+			<if test="isEaryly != null">
+				is_earyly = #{isEaryly,jdbcType=NUMERIC},
+			</if>
+			<if test="isLeave != null">
+				is_leave = #{isLeave,jdbcType=NUMERIC},
+			</if>
+			<if test="adminId != null">
+				admin_id = #{adminId,jdbcType=NUMERIC},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.xcloud.XcompanyCheckinStat">
+		update xcompany_checkin_stat
+		set company_id = #{companyId,jdbcType=NUMERIC},
+		staff_id = #{staffId,jdbcType=NUMERIC},
+		user_id = #{userId,jdbcType=NUMERIC},
+		cyear = #{cyear,jdbcType=NUMERIC},
+		cmonth = #{cmonth,jdbcType=NUMERIC},
+		cday = #{cday,jdbcType=NUMERIC},
+		cday_am = #{cdayAm,jdbcType=NUMERIC},
+		cday_pm = #{cdayPm,jdbcType=NUMERIC},
+		cday_am_id = #{cdayAmId,jdbcType=NUMERIC},
+		cday_pm_id = #{cdayPmId,jdbcType=NUMERIC},
+		is_late = #{isLate,jdbcType=NUMERIC},
+		is_earyly = #{isEaryly,jdbcType=NUMERIC},
+		is_leave = #{isLeave,jdbcType=NUMERIC},
+		admin_id = #{adminId,jdbcType=NUMERIC},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>

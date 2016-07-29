@@ -38,6 +38,20 @@ public class BaiduMapUtil {
 	 *            第二点纬度
 	 * @return 返回距离 单位：米
 	 */
+	public static Integer poiDistance(String lng1, String lat1, String lng2, String lat2) {
+		Integer poiDistance = 0;
+		Double dlng1 = Double.valueOf(lng1);
+		Double dlat1 = Double.valueOf(lat1);
+		Double dlng2 = Double.valueOf(lng2);
+		Double dlat2 = Double.valueOf(lat2);
+		Double d = Distance(dlng1, dlat1, dlng2, dlat2);
+		
+		poiDistance = d.intValue();
+		
+		return poiDistance;
+	}
+	
+	
 	public static double Distance(double long1, double lat1, double long2, double lat2) {
 		double a, b, R;
 		R = 6378137; // 地球半径
@@ -386,6 +400,33 @@ public class BaiduMapUtil {
 		Double lat2 = new Double("39.909921");
 		
 		System.out.println(BaiduMapUtil.Distance(lng1, lat1, lng2, lat2));
+		
+		List<HashMap<String, Object>> matchSettings = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> matchItem1 = new HashMap<String, Object>();
+		matchItem1.put("matchId", 1);
+		matchItem1.put("poiDistance", 50);
+		matchSettings.add(matchItem1);
+		
+		HashMap<String, Object> matchItem2 = new HashMap<String, Object>();
+		matchItem2.put("matchId", 2);
+		matchItem2.put("poiDistance", 30);
+		matchSettings.add(matchItem2);
+		
+		HashMap<String, Object> matchItem3 = new HashMap<String, Object>();
+		matchItem3.put("matchId", 3);
+		matchItem3.put("poiDistance", 80);
+		matchSettings.add(matchItem3);
+		
+		Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
+			public int compare(final Map<String, Object> o1, final Map<String, Object> o2) {
+				return Integer.valueOf(o1.get("poiDistance").toString()).compareTo(Integer.valueOf(o2.get("poiDistance").toString()));
+			}
+		});
+		
+		for (int i = 0; i < matchSettings.size(); i++) {
+			HashMap<String, Object> item = matchSettings.get(i);
+			System.out.println("mathcId = " + item.get("matchId").toString() + " -- poiDistance = " + item.get("poiDistance").toString());
+		}
 		
 	}
 

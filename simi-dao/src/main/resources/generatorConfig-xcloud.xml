@@ -3,7 +3,7 @@
 <generatorConfiguration>
 	<!-- hulj 路径 -->
     <classPathEntry location="D:/workspace/tools/path/mysql-connector-java-5.1.33.jar" />
-    
+    <!-- 	<classPathEntry location="/workspace/work/java/libs/mysql-connector-java-5.1.33.jar" /> -->
 
 	<!-- 数据库链接URL、用户名、密码 -->
 	<context id="jdbc-test">
@@ -272,5 +272,37 @@
 			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
 		</table>-->
+
+		<table schema="simi" tableName="xcompany_checkin_stat"
+			enableInsert="true"
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false"
+			enableUpdateByExample="false"
+			enableDeleteByExample="false"
+			enableSelectByExample="false"
+			enableCountByExample="false">
+			
+			<columnOverride  column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="company_id" property="companyId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="staff_id" property="staffId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="user_id" property="userId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="cday" property="cday" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="cday_am" property="cdayAm" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="cday_pm" property="cdayPm" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="cday_am_id" property="cdayAmId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="cday_pm_id" property="cdayPmId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="admin_id" property="adminId" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			<columnOverride  column="update_time" property="updateTime" javaType="java.lang.Long" jdbcType="NUMERIC"/>
+			
+			
+			<columnOverride  column="cyear" property="cyear" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="cmonth" property="cmonth" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_late" property="isLate" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_earyly" property="isEaryly" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="is_leave" property="isLeave" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+			<columnOverride  column="cyear" property="cyear" javaType="java.lang.Short" jdbcType="NUMERIC"/>
+	</table>
 	</context>
 </generatorConfiguration>

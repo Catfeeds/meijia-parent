@@ -24,6 +24,7 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.po.model.xcloud.XcompanyStaffBenz;
 import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
+import com.simi.service.async.XcompanyAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyBenzService;
@@ -65,6 +66,9 @@ public class CompanyCheckinController extends BaseController {
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private XcompanyAsyncService xcompanyAsyncService;
 	
 	@RequestMapping(value = "/checkin", method = { RequestMethod.POST })
 	public AppResultData<Object> checkin(
@@ -108,7 +112,17 @@ public class CompanyCheckinController extends BaseController {
 		Long staffId = staff.getId();
 		
 		Long checkinTime = TimeStampUtil.getNowSecond();
-				
+		
+		//测试时间为 8：59：59秒
+		String testDay = DateUtil.getToday();
+		String testTimeStr = testDay + " 08:59:59";
+		checkinTime = TimeStampUtil.getMillisOfDayFull(testTimeStr) / 1000;
+		
+		//测试时间为 18:00:01
+//		String testDay = DateUtil.getToday();
+//		String testTimeStr = testDay + " 18:00:10";
+//		checkinTime = TimeStampUtil.getMillisOfDayFull(testTimeStr) / 1000;
+		
 		//记录考勤信息
 		XcompanyCheckin record = xCompanyCheckinService.initXcompanyCheckin();
 
@@ -129,6 +143,10 @@ public class CompanyCheckinController extends BaseController {
 		record.setAddTime(checkinTime);
 		
 		xCompanyCheckinService.insertSelective(record);
+		
+		//计算员工每天考勤信息，并且计算是否匹配到出勤设置记录.
+		Long id = record.getId();
+		xcompanyAsyncService.checkin(id);
 		
 		Map<String, String> datas = new HashMap<String, String>();
 		String checkinTimeStr = TimeStampUtil.timeStampToDateStr(checkinTime * 1000, "HH:mm");
@@ -152,6 +170,8 @@ public class CompanyCheckinController extends BaseController {
 		if (list.size() <= 10) {
 			userScoreAsyncService.sendScore(userId, Constants.SCORE_CHECKIN, "checkin", record.getId().toString(), "云考勤");
 		}
+		
+		
 
 		return result;
 	}

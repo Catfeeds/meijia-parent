@@ -25,6 +25,8 @@ public class XcompanyCheckin {
 
     private String poiLng;
 
+    private Long settingId;
+    
     private Integer poiDistance;
 
     private String remarks;
@@ -150,5 +152,13 @@ public class XcompanyCheckin {
 
 	public void setCheckinNet(String checkinNet) {
 		this.checkinNet = checkinNet;
+	}
+
+	public Long getSettingId() {
+		return settingId;
+	}
+
+	public void setSettingId(Long settingId) {
+		this.settingId = settingId;
 	}
 }
