@@ -2,8 +2,6 @@ package com.simi.service.record;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.record.RecordRates;
 import com.simi.vo.record.RecordRateSearchVo;

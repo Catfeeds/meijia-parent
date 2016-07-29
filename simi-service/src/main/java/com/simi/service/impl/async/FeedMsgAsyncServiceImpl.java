@@ -10,33 +10,19 @@ import org.springframework.stereotype.Service;
 
 import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.simi.po.model.feed.FeedComment;
 import com.simi.po.model.feed.Feeds;
-import com.simi.po.model.op.AppTools;
-import com.simi.po.model.user.UserLeave;
-import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.FeedMsgAsyncService;
 import com.simi.service.async.NoticeAppAsyncService;
-import com.simi.service.async.UserMsgAsyncService;
-import com.simi.service.card.CardAttendService;
 import com.simi.service.feed.FeedCommentService;
 import com.simi.service.feed.FeedService;
 import com.simi.service.feed.FeedZanService;
-import com.simi.service.op.AppToolsService;
-import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServiceTypeService;
-import com.simi.service.user.UserLeavePassService;
-import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UserMsgService;
 import com.simi.service.user.UsersService;
-import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.utils.FeedUtil;
-import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.feed.FeedSearchVo;
-import com.simi.vo.user.UserMsgSearchVo;
 
 @Service
 public class FeedMsgAsyncServiceImpl implements FeedMsgAsyncService {

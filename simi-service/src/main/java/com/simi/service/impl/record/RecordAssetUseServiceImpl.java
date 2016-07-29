@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.GsonUtil;
 import com.meijia.utils.JacksonUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;

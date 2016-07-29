@@ -52,18 +52,22 @@ public class FeedVo extends Feeds {
 		this.totalComment = totalComment;
 	}
 
+	@Override
 	public int getTotalView() {
 		return totalView;
 	}
 
+	@Override
 	public void setTotalView(int totalView) {
 		this.totalView = totalView;
 	}
 
+	@Override
 	public String getFeedExtra() {
 		return feedExtra;
 	}
 
+	@Override
 	public void setFeedExtra(String feedExtra) {
 		this.feedExtra = feedExtra;
 	}

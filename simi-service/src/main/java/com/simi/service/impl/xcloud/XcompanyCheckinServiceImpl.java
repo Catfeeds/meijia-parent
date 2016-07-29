@@ -21,15 +21,12 @@ import com.meijia.utils.baidu.BaiduMapUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyCheckinMapper;
-import com.simi.po.model.record.RecordExpress;
 import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.XcompanyBenzTime;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
-import com.simi.service.xcloud.XcompanyBenzTimeService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
@@ -193,7 +190,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 	public AppResultData<Object> matchCheckinSetting(Long id) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-
+		
 		XcompanyCheckin record = this.selectByPrimarykey(id);
 
 		if (record == null)
@@ -309,6 +306,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 
 		if (!matchSettings.isEmpty()) {
 			Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
+				@Override
 				public int compare(final Map<String, Object> o1, final Map<String, Object> o2) {
 					return Integer.valueOf(o1.get("poiDistance").toString()).compareTo(Integer.valueOf(o2.get("poiDistance").toString()));
 				}

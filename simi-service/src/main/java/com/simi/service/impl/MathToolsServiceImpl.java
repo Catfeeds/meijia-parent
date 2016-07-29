@@ -1,7 +1,6 @@
 package com.simi.service.impl;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,22 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.meijia.utils.DateUtil;
-import com.meijia.utils.GsonUtil;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
-import com.meijia.utils.weather.WeatherDataVo;
-import com.meijia.utils.weather.WeatherIndexVo;
-import com.meijia.utils.weather.WeatherInfoVo;
-import com.meijia.utils.weather.WeatherResultVo;
-import com.meijia.utils.weather.WeatherUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.dao.common.WeathersMapper;
-import com.simi.po.model.common.Weathers;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.MathToolsService;
-import com.simi.service.WeatherService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceBaseVo;

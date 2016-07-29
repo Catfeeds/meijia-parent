@@ -6,7 +6,6 @@ import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.vo.xcloud.CompanySettingVo;
 import com.simi.vo.xcloud.XCompanySettingVo;
-import com.simi.vo.xcloud.json.SettingJsonSettingValue;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 

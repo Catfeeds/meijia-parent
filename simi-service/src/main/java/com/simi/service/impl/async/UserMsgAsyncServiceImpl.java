@@ -8,12 +8,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import com.meijia.utils.MobileUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.model.op.AppTools;
-import com.simi.po.model.user.UserLeave;
-import com.simi.po.model.user.UserLeavePass;
 import com.simi.po.model.user.UserMsg;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.NoticeAppAsyncService;

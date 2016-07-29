@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +14,8 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.simi.po.dao.dict.DictCityMapper;
-import com.simi.po.dao.dict.DictRegionMapper;
-import com.simi.po.dao.partners.PartnerRefRegionMapper;
-import com.simi.po.dao.partners.PartnerRefServiceTypeMapper;
-import com.simi.po.dao.partners.PartnerServiceTypeMapper;
 import com.simi.po.dao.partners.PartnersMapper;
-import com.simi.po.dao.partners.SpiderPartnerMapper;
 import com.simi.po.model.admin.AdminAccount;
-import com.simi.po.model.dict.DictCity;
-import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.partners.PartnerRefRegion;
 import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.Partners;

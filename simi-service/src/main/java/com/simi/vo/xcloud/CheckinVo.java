@@ -40,10 +40,12 @@ public class CheckinVo extends XcompanyCheckin {
 		this.addTimeStr = addTimeStr;
 	}
 
+	@Override
 	public Long getSettingId() {
 		return settingId;
 	}
 
+	@Override
 	public void setSettingId(Long settingId) {
 		this.settingId = settingId;
 	}

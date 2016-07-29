@@ -2,8 +2,6 @@ package com.simi.service.partners;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.vo.partners.PartnerUserSearchVo;

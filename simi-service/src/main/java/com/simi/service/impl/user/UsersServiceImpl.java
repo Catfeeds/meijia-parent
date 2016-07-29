@@ -57,8 +57,6 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.card.CardSearchVo;
-import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.user.GroupsSearchVo;
 import com.simi.vo.user.UserBaseVo;
 import com.simi.vo.user.UserFriendSearchVo;

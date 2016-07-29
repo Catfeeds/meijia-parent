@@ -2,8 +2,6 @@ package com.simi.service.impl.async;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +10,12 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import com.meijia.utils.MathDoubleUtil;
-import com.meijia.utils.TimeStampUtil;
-import com.simi.common.Constants;
-import com.simi.po.model.card.Cards;
 import com.simi.po.model.partners.PartnerUsers;
-import com.simi.po.model.user.UserDetailScore;
-import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.service.async.RecordAsyncService;
-import com.simi.service.async.UserScoreAsyncService;
-import com.simi.service.card.CardService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.record.RecordRatesService;
-import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
-import com.simi.service.xcloud.XCompanyService;
-import com.simi.service.xcloud.XcompanyAdminService;
-import com.simi.utils.CardUtil;
-import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.record.RecordRateSearchVo;
-import com.simi.vo.xcloud.CompanyAdminSearchVo;
 
 @Service
 public class RecordAsyncServiceImpl implements RecordAsyncService {

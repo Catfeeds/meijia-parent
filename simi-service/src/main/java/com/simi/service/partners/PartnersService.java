@@ -3,10 +3,6 @@ package com.simi.service.partners;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
-import com.simi.po.model.dict.DictCity;
-import com.simi.po.model.dict.DictRegion;
-import com.simi.po.model.partners.PartnerRefRegion;
-import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.Partners;
 import com.simi.vo.partners.PartnerFormVo;
 import com.simi.vo.partners.PartnersSearchVo;

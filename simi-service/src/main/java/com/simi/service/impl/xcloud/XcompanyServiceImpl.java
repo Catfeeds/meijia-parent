@@ -7,9 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
-import com.simi.service.async.UsersAsyncService;
 import com.simi.service.stat.StatUserService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
@@ -32,7 +30,6 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.google.zxing.WriterException;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.MeijiaUtil;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyMapper;
 
@@ -53,10 +50,7 @@ public class XcompanyServiceImpl implements XCompanyService {
 
 	@Autowired
 	private XcompanyStaffService xCompanyStaffService;
-	
-	@Autowired
-	private UserMsgAsyncService userMsgAsyncService;
-	
+		
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
 	
