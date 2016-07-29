@@ -1,6 +1,5 @@
 package com.xcloud.action.company;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,20 +18,15 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyJob;
-import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyJobService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.xcloud.CompanyJobSearchVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
-import com.simi.vo.xcloud.XcompanyDeptVo;
 import com.simi.vo.xcloud.XcompanyJobVo;
 import com.simi.vo.xcloud.company.DeptSearchVo;
 import com.xcloud.action.BaseController;

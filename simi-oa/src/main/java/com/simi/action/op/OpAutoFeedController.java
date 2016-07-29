@@ -1,11 +1,8 @@
 package com.simi.action.op;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +19,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.GsonUtil;
 import com.meijia.utils.ImgServerUtil;
-import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.card.CardImgs;
 import com.simi.po.model.common.Imgs;
 import com.simi.po.model.op.OpAutoFeed;
-import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.ImgService;
 import com.simi.service.op.OpAutoFeedService;
-import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.ImgSearchVo;
 import com.simi.vo.op.OpAutoFeedVo;
-import com.simi.vo.op.OpExtVo;
-import com.simi.vo.xcloud.CompanySettingSearchVo;
 
 @Controller
 @RequestMapping(value = "/op")

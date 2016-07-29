@@ -26,7 +26,6 @@ import com.simi.po.model.feed.Feeds;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
 import com.simi.service.async.FeedMsgAsyncService;
-import com.simi.service.async.UserMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.feed.FeedCommentService;

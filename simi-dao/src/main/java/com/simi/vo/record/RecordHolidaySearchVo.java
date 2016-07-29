@@ -1,7 +1,5 @@
 package com.simi.vo.record;
 
-import java.util.Date;
-
 public class RecordHolidaySearchVo {
 	
     private Long hdate;

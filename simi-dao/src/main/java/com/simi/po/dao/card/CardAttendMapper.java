@@ -3,7 +3,6 @@ package com.simi.po.dao.card;
 import java.util.List;
 
 import com.simi.po.model.card.CardAttend;
-import com.simi.po.model.card.CardComment;
 import com.simi.vo.card.CardSearchVo;
 
 public interface CardAttendMapper {

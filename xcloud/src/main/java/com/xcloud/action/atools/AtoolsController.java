@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageInfo;
 import com.simi.po.model.op.AppTools;
 import com.simi.po.model.op.UserAppTools;
 import com.simi.service.op.AppToolsService;

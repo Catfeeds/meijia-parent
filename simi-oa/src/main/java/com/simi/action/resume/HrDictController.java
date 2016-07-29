@@ -1,9 +1,6 @@
 package com.simi.action.resume;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,25 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
-import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.resume.po.model.dict.HrDictType;
 import com.resume.po.model.dict.HrDicts;
 import com.resume.po.model.dict.HrFrom;
 import com.simi.action.BaseController;
-import com.simi.common.ConstantMsg;
-import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.service.CacheDictService;
-import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrDictTypeService;
 import com.simi.service.resume.HrDictsService;
 import com.simi.service.resume.HrFromService;
-import com.simi.vo.AppResultData;
 import com.simi.vo.resume.HrDictSearchVo;
-import com.simi.vo.resume.ResumeRuleSearchVo;
 
 @Controller
 @RequestMapping(value = "/resume")

@@ -17,21 +17,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.baidu.vo.BaiduPoiVo;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.xcloud.XcompanySetting;
-import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.ValidateService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.CommonToolsVo;
-import com.simi.vo.setting.InsuranceVo;
 import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.CompanySettingVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
 
 @Controller
 @RequestMapping(value = "/app/user")

@@ -28,7 +28,6 @@ import com.simi.oa.auth.AccountAuth;
 import com.simi.oa.auth.AuthHelper;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
-import com.simi.po.model.dict.DictRegion;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.dict.DictService;
 import com.simi.service.xcloud.XCompanySettingService;

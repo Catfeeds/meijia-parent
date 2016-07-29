@@ -2,7 +2,6 @@ package com.simi.action.app.setting;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,6 @@ import com.simi.common.Constants;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.service.MathToolsService;
 import com.simi.service.xcloud.XCompanySettingService;
-import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.setting.InsuranceBaseVo;
 import com.simi.vo.setting.InsuranceVo;

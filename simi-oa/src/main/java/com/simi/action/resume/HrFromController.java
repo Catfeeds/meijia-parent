@@ -22,7 +22,6 @@ import com.simi.action.BaseController;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.service.CacheDictService;
-import com.simi.service.dict.DictService;
 import com.simi.service.resume.HrFromService;
 import com.simi.vo.resume.ResumeRuleSearchVo;
 

@@ -2,7 +2,6 @@ package com.simi.po.dao.xcloud;
 
 import java.util.List;
 
-import com.simi.po.model.record.RecordExpress;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 

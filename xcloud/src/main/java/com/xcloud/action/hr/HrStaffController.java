@@ -30,7 +30,6 @@ import com.meijia.utils.DateUtil;
 import com.meijia.utils.RegexUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.wx.utils.JsonUtil;
 import com.simi.common.Constants;
 import com.simi.po.model.common.Imgs;
 import com.simi.po.model.user.Users;

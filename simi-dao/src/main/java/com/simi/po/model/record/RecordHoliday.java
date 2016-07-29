@@ -1,7 +1,5 @@
 package com.simi.po.model.record;
 
-import java.util.Date;
-
 public class RecordHoliday {
     private Long id;
 
