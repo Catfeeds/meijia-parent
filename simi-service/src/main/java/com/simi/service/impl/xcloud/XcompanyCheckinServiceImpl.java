@@ -28,6 +28,7 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyCheckinService;
+import com.simi.service.xcloud.XcompanyCheckinStatService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserSearchVo;
@@ -51,6 +52,9 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
+	
+	@Autowired
+	private XcompanyCheckinStatService xcompanyCheckinStatService;
 
 	@Override
 	public XcompanyCheckin initXcompanyCheckin() {
@@ -127,8 +131,8 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			if (!userIds.contains(item.getUserId()))
 				userIds.add(item.getUserId());
 		}
-		
-		//用户信息
+
+		// 用户信息
 		List<Users> users = new ArrayList<Users>();
 
 		if (!userIds.isEmpty()) {
@@ -136,8 +140,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			searchVo.setUserIds(userIds);
 			users = userService.selectBySearchVo(searchVo);
 		}
-		
-		
+
 		for (int i = 0; i < list.size(); i++) {
 			XcompanyCheckin item = list.get(i);
 			CheckinVo vo = new CheckinVo();
@@ -152,19 +155,18 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 					break;
 				}
 			}
-			
-			//匹配出勤信息
+
+			// 匹配出勤信息
 			vo.setSettingName("");
 			if (item.getSettingId() > 0L) {
 				XcompanySetting checkinSetting = xCompanySettingService.selectByPrimaryKey(item.getSettingId());
-				
+
 				if (checkinSetting.getSettingValue() != null) {
 					JSONObject setValue = (JSONObject) checkinSetting.getSettingValue();
 					CheckinNetVo c = JSON.toJavaObject(setValue, CheckinNetVo.class);
 					vo.setSettingName(c.getAddr());
 				}
 			}
-			
 
 			Long addTime = vo.getAddTime();
 			String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000, "yyyy-MM-dd HH:MM:ss");
@@ -208,12 +210,11 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 
 		XcompanyCheckin record = this.selectByPrimarykey(id);
 
-		if (record == null)
-			return false;
-
+		if (record == null) return false;
+		
 		Long userId = record.getUserId();
 		Long companyId = record.getCompanyId();
-//		String checkinNet = record.getCheckinNet();
+		// String checkinNet = record.getCheckinNet();
 		String poiLat = record.getPoiLat();
 		String poiLng = record.getPoiLng();
 
@@ -223,8 +224,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 		searchVo.setSettingType(Constants.SETTING_CHICKIN_NET);
 
 		List<XcompanySetting> checkinSettings = xCompanySettingService.selectBySearchVo(searchVo);
-		if (checkinSettings.isEmpty())
-			return false;
+		if (checkinSettings.isEmpty()) return false;
 
 		// 判断员工是否为团队一员
 		UserCompanySearchVo companySearchVo = new UserCompanySearchVo();
@@ -239,8 +239,12 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			userDeptId = userStaff.getDeptId();
 		}
 
-		if (userDeptId.equals(0L))
+		if (userDeptId.equals(0L)) {
+			xcompanyCheckinStatService.setCheckinFirst(companyId, userId);
+			xcompanyCheckinStatService.setCheckinLast(companyId, userId);
 			return false;
+		}
+			
 
 		CheckinNetVo vo = null;
 		Long matchId = 0L;
@@ -270,39 +274,12 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			}
 		}
 
-		if (matchDepts.isEmpty())
+		if (matchDepts.isEmpty()) {
+			xcompanyCheckinStatService.setCheckinFirst(companyId, userId);
+			xcompanyCheckinStatService.setCheckinLast(companyId, userId);
 			return false;
-
-		// List<XcompanySetting> matchWifis = new ArrayList<XcompanySetting>();
-		// // 2. 在符合部门的配置列表中匹配wifis是否符合
-		// if (!StringUtil.isEmpty(checkinNet)) {
-		// for (XcompanySetting item : matchDepts) {
-		// vo = null;
-		// if (item.getSettingValue() != null) {
-		// JSONObject setValue = (JSONObject) item.getSettingValue();
-		// vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
-		// }
-		//
-		// if (vo == null)
-		// continue;
-		// String wifis = vo.getWifis();
-		// if (!StringUtil.isEmpty(wifis)) {
-		// String[] wifiAry = StringUtil.convertStrToArray(wifis);
-		// for (int i = 0; i < wifiAry.length; i++) {
-		// if (StringUtil.isEmpty(wifiAry[i]))
-		// continue;
-		// // 如果网络wifi相同,还需要计算距离
-		// if (checkinNet.toLowerCase().equals(wifiAry[i].toLowerCase())) {
-		// matchWifis.add(item);
-		// }
-		// }
-		// }
-		// }
-		// } else {
-		// matchWifis = matchDepts;
-		// }
-		//
-		// if (matchWifis.isEmpty()) return result;
+		}
+			
 
 		HashMap<String, Object> resultData = new HashMap<String, Object>();
 		// 3.找出距离最短的
@@ -321,8 +298,11 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			}
 		}
 
-		if (matchSettings.isEmpty())
+		if (matchSettings.isEmpty()) {
+			xcompanyCheckinStatService.setCheckinFirst(companyId, userId);
+			xcompanyCheckinStatService.setCheckinLast(companyId, userId);
 			return false;
+		}
 
 		Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
 			@Override
@@ -340,6 +320,9 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			record.setPoiDistance(poiDistance);
 			this.updateByPrimaryKeySelective(record);
 		}
+		
+		xcompanyCheckinStatService.setCheckinFirst(companyId, userId);
+		xcompanyCheckinStatService.setCheckinLast(companyId, userId);
 
 		return true;
 	}

@@ -78,6 +78,11 @@
 				 JSON_EXTRACT(setting_value,'$.regionId') = #{regionId,jdbcType=VARCHAR}
 			]]>
 		</if>
+		
+		<if test="isEnable != null">
+			and is_enable = #{isEnable,jdbcType=NUMERIC}
+		</if>
+		
 
 		order by id desc
 	</select>

@@ -128,9 +128,20 @@ public class TimeStampUtil {
 	 * @return long
 	 */
 	public static Long getBeginOfYesterDay() {
-		String today = DateUtil.getYesterday();
-		Date d = DateUtil.parse(today);
+		String y = DateUtil.getYesterday();
+		Date d = DateUtil.parse(y);
 		return getMillisOfDate(d) / 1000;
+	}
+	
+	/**
+	 * 结束开始时间戳，注意为精确到毫秒
+	 * 
+	 * @return long
+	 */
+	public static Long getEndOfYesterDay() {
+		String y = DateUtil.getYesterday();
+		y = y + " 23:59:59";
+		return getMillisOfDayFull(y) / 1000;
 	}
 
 	/**
@@ -251,5 +262,8 @@ public class TimeStampUtil {
 		// 1000,DateUtil.DEFAULT_FULL_PATTERN));
 		
 		System.out.println(TimeStampUtil.getHour(1469786410L * 1000));
+		
+		System.out.println(TimeStampUtil.getBeginOfYesterDay());
+		System.out.println(TimeStampUtil.getEndOfYesterDay());
 	}
 }

@@ -48,5 +48,24 @@ public class TestCompanyCheckinController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
     }
+	
+	/**
+	 * 	提交卡片接口 单元测试
+	 */
+	@Test
+    public void testCronCheckinLate() throws Exception {
+
+		String url = "/app/job/company/checkin-late.json";
+
+		MockHttpServletRequestBuilder getRequest = get(url);
+
+	    ResultActions resultActions = this.mockMvc.perform(getRequest);
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
+    }	
 
 }

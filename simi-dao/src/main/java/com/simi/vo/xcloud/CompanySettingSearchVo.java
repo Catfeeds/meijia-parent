@@ -16,7 +16,7 @@ public class CompanySettingSearchVo{
 	
 	private Long updateTime;
 	
-	
+	private Short isEnable;
 	
 	private Long cityId;
 	
@@ -85,6 +85,14 @@ public class CompanySettingSearchVo{
 
 	public void setSettingTypes(List<String> settingTypes) {
 		this.settingTypes = settingTypes;
+	}
+
+	public Short getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Short isEnable) {
+		this.isEnable = isEnable;
 	}
 
 }

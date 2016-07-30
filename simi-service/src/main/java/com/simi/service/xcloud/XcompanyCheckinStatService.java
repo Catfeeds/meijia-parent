@@ -22,7 +22,13 @@ public interface XcompanyCheckinStatService {
 
 	List<HashMap> totalBySearchVo(CompanyCheckinSearchVo searchVo);
 
-	Boolean checkInStat(Long id);
+	Boolean checkInStatLate(Long companyId, Long userId, Long deptId);
+
+	Boolean checkInStatEarly(Long companyId, Long userId, Long deptId);
+
+	Boolean setCheckinFirst(Long companyId, Long userId);
+
+	Boolean setCheckinLast(Long companyId, Long userId);
 
 
 }

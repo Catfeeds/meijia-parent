@@ -6,7 +6,9 @@ public interface XcompanyAsyncService {
 
 	Future<Boolean> checkin(Long id);
 
-	Future<Boolean> checkinStat(Long companyId, Long userId);
+	Future<Boolean> checkinStatLate(Long companyId);
+
+	Future<Boolean> checkinStatEarly(Long companyId);
 
 
 }
