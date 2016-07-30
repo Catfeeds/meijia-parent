@@ -27,18 +27,7 @@
 			<hr>
 			<div class="am-g">
 				<div class="am-u-sm-12">
-					<!-- <form class="am-form" id="search-form"> -->
-					<form:form modelAttribute="searchVoModel" action="list" method="GET"
-						class="am-form-inline am-form-horizontal">
-						<div class="am-form-group "></div>
-						<div class="am-form-group">
-							<div class="am-input-group am-input-group-sm">
-								<span class="am-input-group-btn">
-									<button class="am-btn am-btn-default" type="submit">搜索</button>
-								</span>
-							</div>
-						</div>
-					</form:form>
+					
 				</div>
 			</div>
 			<br>
@@ -55,7 +44,7 @@
 									<th class="table-title">签到网络</th>
 									<th class="table-title">匹配出勤地点</th>
 									<th class="table-title">距离(米)</th>
-									<th class="table-title">状态</th>
+
 								</tr>
 							</thead>
 							<tbody>
@@ -66,9 +55,8 @@
 										<td>${item.mobile}</td>
 										<td>${item.poiName }</td>
 										<td>${item.checkinNet}</td>
-										<td></td>
+										<td>${item.settingName }</td>
 										<td>${item.poiDistance }</td>
-										<td></td>
 									</tr>
 								</c:forEach>
 							</tbody>

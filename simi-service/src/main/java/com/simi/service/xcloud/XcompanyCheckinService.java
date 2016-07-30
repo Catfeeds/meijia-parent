@@ -29,6 +29,6 @@ public interface XcompanyCheckinService {
 
 	List<CheckinVo> getVos(List<XcompanyCheckin> list);
 
-	AppResultData<Object> matchCheckinSetting(Long id);
+	Boolean matchCheckinSetting(Long id);
 
 }

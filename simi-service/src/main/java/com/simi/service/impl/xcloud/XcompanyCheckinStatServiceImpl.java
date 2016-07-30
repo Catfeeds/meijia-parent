@@ -23,19 +23,19 @@ import com.simi.vo.xcloud.CompanyCheckinSearchVo;
 
 @Service
 public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatService {
-	
+
 	@Autowired
 	UsersService userService;
-	
+
 	@Autowired
 	XcompanyCheckinStatMapper xcompanyCheckinStatMapper;
-	
+
 	@Autowired
 	private XcompanyCheckinService xcompanyCheckinService;
-	
+
 	@Autowired
 	private XCompanySettingService xCompanySettingService;
-	
+
 	@Override
 	public XcompanyCheckinStat initXcompanyCheckinStat() {
 
@@ -67,8 +67,6 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 	public List<XcompanyCheckinStat> selectBySearchVo(CompanyCheckinSearchVo searchVo) {
 		return xcompanyCheckinStatMapper.selectBySearchVo(searchVo);
 	}
-	
-	
 
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -90,7 +88,7 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 	public int updateByPrimaryKeySelective(XcompanyCheckinStat record) {
 		return xcompanyCheckinStatMapper.updateByPrimaryKeySelective(record);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public List<HashMap> totalBySearchVo(CompanyCheckinSearchVo searchVo) {
@@ -99,96 +97,104 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 
 	@Override
 	public Boolean checkInStat(Long id) {
-		
+
 		XcompanyCheckin record = xcompanyCheckinService.selectByPrimarykey(id);
-		
+
 		Long userId = record.getUserId();
 		Long companyId = record.getCompanyId();
-				
+
 		CompanyCheckinSearchVo searchVo = new CompanyCheckinSearchVo();
-		
+
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
 		searchVo.setStartTime(TimeStampUtil.getBeginOfToday());
 		searchVo.setEndTime(TimeStampUtil.getEndOfToday());
 		List<XcompanyCheckin> checkinList = xcompanyCheckinService.selectBySearchVo(searchVo);
-		
-		if (checkinList.isEmpty()) return false;
-		
+
+		if (checkinList.isEmpty())
+			return false;
+
 		String today = DateUtil.getToday();
 		int hour = DateUtil.getHours();
-		
-		//测试时间为8点
+
+		// 测试时间为8点
 		hour = 8;
-		
-		//测试时间为18点
-//		hour = 18;
-		
+
+		// 测试时间为18点
+		// hour = 18;
 
 		int flexMin = 0;
-		//计算上午的最早时间 注：时间为倒序
+		// 计算上午的最早时间 注：时间为倒序
 		Long cdayAm = 0L;
 		Long cdayAmId = 0L;
-		Short isLate = 0;
+		Short isLate = 1;
 		XcompanyCheckin amCheckin = null;
+		
+		//确定早上打开是否有对应的出勤配置匹配
+		Boolean isMatchId = false;
+		for (int i = checkinList.size() - 1; i >= 0; i--) {
+			amCheckin = checkinList.get(i);
 
-		amCheckin = checkinList.get(checkinList.size() - 1);
-		int checkHour = TimeStampUtil.getHour(amCheckin.getAddTime() * 1000);
-		if (checkHour <=12) {
-			cdayAm = amCheckin.getAddTime();
-			cdayAmId = amCheckin.getSettingId();
-			//计算是否迟到
-			if (amCheckin.getSettingId() > 0L) {
-				XcompanySetting settingItem = xCompanySettingService.selectByPrimaryKey(amCheckin.getSettingId());
-				JSONObject setValue = (JSONObject) settingItem.getSettingValue();
-				CheckinNetVo vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
-				
-				String beginCheckTimeStr = today + " " + vo.getStartTime() + ":00";
-				Long beginCheckTime = TimeStampUtil.getMillisOfDayFull(beginCheckTimeStr) / 1000;
-				Long beginFlexTime = beginCheckTime + vo.getFlexTime() * 60;
-				Long firstCheckTime = amCheckin.getAddTime();
-				//是否为弹性时间.
-				if (firstCheckTime > beginFlexTime) {
-					isLate = 1;
-					flexMin = 0;
-				} else if (firstCheckTime > beginCheckTime && firstCheckTime < beginFlexTime) {
-					flexMin = (int) ((beginFlexTime - firstCheckTime) / 60);
-				}
+			int checkHour = TimeStampUtil.getHour(amCheckin.getAddTime() * 1000);
+			if (checkHour > 12) continue;
+
+//			cdayAm = amCheckin.getAddTime();
+//			cdayAmId = amCheckin.getSettingId();
+			
+			if (amCheckin.getSettingId().equals(0L)) continue;
+			isMatchId = true;
+			
+			// 计算是否迟到
+			XcompanySetting settingItem = xCompanySettingService.selectByPrimaryKey(amCheckin.getSettingId());
+			JSONObject setValue = (JSONObject) settingItem.getSettingValue();
+			CheckinNetVo vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
+
+			String beginCheckTimeStr = today + " " + vo.getStartTime() + ":00";
+			Long beginCheckTime = TimeStampUtil.getMillisOfDayFull(beginCheckTimeStr) / 1000;
+			Long beginFlexTime = beginCheckTime + vo.getFlexTime() * 60;
+			Long firstCheckTime = amCheckin.getAddTime();
+			// 是否为弹性时间.
+			if (firstCheckTime > beginFlexTime) {
+				isLate = 1;
+				flexMin = 0;
+			} else if (firstCheckTime > beginCheckTime && firstCheckTime < beginFlexTime) {
+				flexMin = (int) ((beginFlexTime - firstCheckTime) / 60);
 			}
+
 		}
-	
-	
-		//计算下午的最晚时间
+
+		// 计算下午的最晚时间
 		Long cdayPm = 0L;
 		Long cdayPmId = 0L;
 		Short isEarly = 0;
 		XcompanyCheckin pmCheckin = null;
-		if (hour >=13) {
+		if (hour >= 13) {
 			pmCheckin = checkinList.get(0);
-			checkHour = TimeStampUtil.getHour(pmCheckin.getAddTime() * 1000);
-			
-			if (checkHour >=13) {
+			int checkHour = TimeStampUtil.getHour(pmCheckin.getAddTime() * 1000);
+
+			if (checkHour >= 13) {
 				cdayPm = pmCheckin.getAddTime();
 				cdayPmId = pmCheckin.getSettingId();
-				
-				//计算是否早退
+
+				// 计算是否早退
 				if (pmCheckin.getSettingId() > 0L) {
 					XcompanySetting settingItem = xCompanySettingService.selectByPrimaryKey(pmCheckin.getSettingId());
 					JSONObject setValue = (JSONObject) settingItem.getSettingValue();
 					CheckinNetVo vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
-					
+
 					String endCheckTimeStr = today + " " + vo.getEndTime() + ":00";
 					Long endCheckTime = TimeStampUtil.getMillisOfDayFull(endCheckTimeStr) / 1000;
-					Long endFlexTime = endCheckTime + flexMin * 60; 
+					Long endFlexTime = endCheckTime + flexMin * 60;
 					Long lastCheckTime = pmCheckin.getAddTime();
-					
-					if (lastCheckTime < endFlexTime) isEarly = 1;
+
+					if (lastCheckTime < endFlexTime)
+						isEarly = 1;
 				}
 			}
 		}
-		
+
 		XcompanyCheckinStat stat = this.initXcompanyCheckinStat();
-		
+
 		int cyear = DateUtil.getYear();
 		int cmonth = DateUtil.getMonth();
 		Long cday = TimeStampUtil.getBeginOfToday();
@@ -196,10 +202,11 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		searchVo.setCompanyId(companyId);
 		searchVo.setUserId(userId);
 		searchVo.setCday(cday);
-		
+
 		List<XcompanyCheckinStat> list = this.selectBySearchVo(searchVo);
-		if (!list.isEmpty()) stat = list.get(0);
-		
+		if (!list.isEmpty())
+			stat = list.get(0);
+
 		stat.setCompanyId(companyId);
 		stat.setUserId(userId);
 		stat.setCyear(cyear);
@@ -211,7 +218,7 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		stat.setCdayPmId(cdayPmId);
 		stat.setIsLate(isLate);
 		stat.setIsEaryly(isEarly);
-		
+
 		if (stat.getId() > 0L) {
 			stat.setUpdateTime(TimeStampUtil.getNowSecond());
 			this.updateByPrimaryKeySelective(stat);
@@ -222,5 +229,5 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		}
 		return true;
 	}
-	
+
 }

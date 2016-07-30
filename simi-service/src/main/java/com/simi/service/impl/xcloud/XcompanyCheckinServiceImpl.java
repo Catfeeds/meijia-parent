@@ -127,7 +127,8 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			if (!userIds.contains(item.getUserId()))
 				userIds.add(item.getUserId());
 		}
-
+		
+		//用户信息
 		List<Users> users = new ArrayList<Users>();
 
 		if (!userIds.isEmpty()) {
@@ -135,7 +136,8 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			searchVo.setUserIds(userIds);
 			users = userService.selectBySearchVo(searchVo);
 		}
-
+		
+		
 		for (int i = 0; i < list.size(); i++) {
 			XcompanyCheckin item = list.get(i);
 			CheckinVo vo = new CheckinVo();
@@ -150,6 +152,19 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 					break;
 				}
 			}
+			
+			//匹配出勤信息
+			vo.setSettingName("");
+			if (item.getSettingId() > 0L) {
+				XcompanySetting checkinSetting = xCompanySettingService.selectByPrimaryKey(item.getSettingId());
+				
+				if (checkinSetting.getSettingValue() != null) {
+					JSONObject setValue = (JSONObject) checkinSetting.getSettingValue();
+					CheckinNetVo c = JSON.toJavaObject(setValue, CheckinNetVo.class);
+					vo.setSettingName(c.getAddr());
+				}
+			}
+			
 
 			Long addTime = vo.getAddTime();
 			String addTimeStr = TimeStampUtil.timeStampToDateStr(addTime * 1000, "yyyy-MM-dd HH:MM:ss");
@@ -187,18 +202,18 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 	 * matchId poiDistance
 	 */
 	@Override
-	public AppResultData<Object> matchCheckinSetting(Long id) {
+	public Boolean matchCheckinSetting(Long id) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
+
 		XcompanyCheckin record = this.selectByPrimarykey(id);
 
 		if (record == null)
-			return result;
+			return false;
 
 		Long userId = record.getUserId();
 		Long companyId = record.getCompanyId();
-		String checkinNet = record.getCheckinNet();
+//		String checkinNet = record.getCheckinNet();
 		String poiLat = record.getPoiLat();
 		String poiLng = record.getPoiLng();
 
@@ -209,7 +224,7 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 
 		List<XcompanySetting> checkinSettings = xCompanySettingService.selectBySearchVo(searchVo);
 		if (checkinSettings.isEmpty())
-			return result;
+			return false;
 
 		// 判断员工是否为团队一员
 		UserCompanySearchVo companySearchVo = new UserCompanySearchVo();
@@ -223,8 +238,9 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			XcompanyStaff userStaff = staffList.get(0);
 			userDeptId = userStaff.getDeptId();
 		}
-		
-		if (userDeptId.equals(0L)) return result;
+
+		if (userDeptId.equals(0L))
+			return false;
 
 		CheckinNetVo vo = null;
 		Long matchId = 0L;
@@ -253,44 +269,45 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 				}
 			}
 		}
-		
-		if (matchDepts.isEmpty()) return result;
 
-		List<XcompanySetting> matchWifis = new ArrayList<XcompanySetting>();
-		// 2. 在符合部门的配置列表中匹配wifis是否符合
-		if (!StringUtil.isEmpty(checkinNet)) {
-			for (XcompanySetting item : matchDepts) {
-				vo = null;
-				if (item.getSettingValue() != null) {
-					JSONObject setValue = (JSONObject) item.getSettingValue();
-					vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
-				}
+		if (matchDepts.isEmpty())
+			return false;
 
-				if (vo == null)
-					continue;
-				String wifis = vo.getWifis();
-				if (!StringUtil.isEmpty(wifis)) {
-					String[] wifiAry = StringUtil.convertStrToArray(wifis);
-					for (int i = 0; i < wifiAry.length; i++) {
-						if (StringUtil.isEmpty(wifiAry[i]))
-							continue;
-						// 如果网络wifi相同,还需要计算距离
-						if (checkinNet.toLowerCase().equals(wifiAry[i].toLowerCase())) {
-							matchWifis.add(item);
-						}
-					}
-				}
-			}
-		} else {
-			matchWifis = matchDepts;
-		}
-		
-		if (matchWifis.isEmpty()) return result;
+		// List<XcompanySetting> matchWifis = new ArrayList<XcompanySetting>();
+		// // 2. 在符合部门的配置列表中匹配wifis是否符合
+		// if (!StringUtil.isEmpty(checkinNet)) {
+		// for (XcompanySetting item : matchDepts) {
+		// vo = null;
+		// if (item.getSettingValue() != null) {
+		// JSONObject setValue = (JSONObject) item.getSettingValue();
+		// vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
+		// }
+		//
+		// if (vo == null)
+		// continue;
+		// String wifis = vo.getWifis();
+		// if (!StringUtil.isEmpty(wifis)) {
+		// String[] wifiAry = StringUtil.convertStrToArray(wifis);
+		// for (int i = 0; i < wifiAry.length; i++) {
+		// if (StringUtil.isEmpty(wifiAry[i]))
+		// continue;
+		// // 如果网络wifi相同,还需要计算距离
+		// if (checkinNet.toLowerCase().equals(wifiAry[i].toLowerCase())) {
+		// matchWifis.add(item);
+		// }
+		// }
+		// }
+		// }
+		// } else {
+		// matchWifis = matchDepts;
+		// }
+		//
+		// if (matchWifis.isEmpty()) return result;
 
 		HashMap<String, Object> resultData = new HashMap<String, Object>();
 		// 3.找出距离最短的
 		List<HashMap<String, Object>> matchSettings = new ArrayList<HashMap<String, Object>>();
-		for (XcompanySetting item : checkinSettings) {
+		for (XcompanySetting item : matchDepts) {
 			vo = null;
 			if (item.getSettingValue() != null) {
 				JSONObject setValue = (JSONObject) item.getSettingValue();
@@ -304,63 +321,27 @@ public class XcompanyCheckinServiceImpl implements XcompanyCheckinService {
 			}
 		}
 
-		if (!matchSettings.isEmpty()) {
-			Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
-				@Override
-				public int compare(final Map<String, Object> o1, final Map<String, Object> o2) {
-					return Integer.valueOf(o1.get("poiDistance").toString()).compareTo(Integer.valueOf(o2.get("poiDistance").toString()));
-				}
-			});
+		if (matchSettings.isEmpty())
+			return false;
 
-			resultData = matchSettings.get(0);
-			result.setData(resultData);
-			return result;
+		Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
+			@Override
+			public int compare(final Map<String, Object> o1, final Map<String, Object> o2) {
+				return Integer.valueOf(o1.get("poiDistance").toString()).compareTo(Integer.valueOf(o2.get("poiDistance").toString()));
+			}
+		});
+
+		resultData = matchSettings.get(0);
+		matchId = Long.valueOf(resultData.get("matchId").toString());
+		poiDistance = Integer.valueOf(resultData.get("poiDistance").toString());
+
+		if (matchId > 0L && poiDistance > 0) {
+			record.setSettingId(matchId);
+			record.setPoiDistance(poiDistance);
+			this.updateByPrimaryKeySelective(record);
 		}
 
-		return result;
+		return true;
 	}
-	/**
-	 * 根据考勤时间和班次对比 签到，返回考勤状态 正常或者迟到
-	 * 
-	 * 注意，都是换算为秒进行计算
-	 */
-	// @Override
-	// public Map<String, Object> getCheckinStatus(Long benzTimeId, Long
-	// checkinTime, Short checkinType) {
-	// Map<String, Object> result = new HashMap<String, Object>();
-	//
-	// XcompanyBenzTime benzTime =
-	// xCompanyBenzTimeService.selectByPrimaryKey(benzTimeId);
-	//
-	// if (benzTime == null) return result;
-	//
-	// String checkinStartTimeStr = benzTime.getCheckIn();
-	// Integer flexibleMin = benzTime.getFlexibleMin();
-	//
-	// String checkInTimeStr = TimeStampUtil.timeStampToDateStr(checkinTime *
-	// 1000, "yyyy-MM-dd");
-	//
-	// checkinStartTimeStr = checkInTimeStr + checkinStartTimeStr + "00";
-	// Long checkinStartTime =
-	// TimeStampUtil.getMillisOfDayFull(checkinStartTimeStr) / 1000;
-	// Long checkinLimitTime = checkinStartTime + flexibleMin * 60;
-	// String checkinStatusStr = "正常";
-	// Short checkinStatus = 0;
-	//
-	// if (checkinTime > checkinLimitTime) {
-	// checkinStatus = 1;
-	//
-	// Long laterSecond = checkinTime - checkinLimitTime;
-	// if (laterSecond < 60) {
-	// checkinStatusStr = "迟到" + laterSecond + "秒";
-	// } else {
-	// checkinStatusStr = "迟到" + laterSecond / 60 + "分钟";
-	// }
-	// }
-	//
-	// result.put("checkinStatus", checkinStatus);
-	// result.put("checkinStatusStr", checkinStatusStr);
-	//
-	// return result;
-	// }
+
 }
