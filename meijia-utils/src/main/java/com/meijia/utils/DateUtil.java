@@ -674,7 +674,7 @@ public class DateUtil {
 //		timeStampToDate(0L);
 		
 //		System.out.println(java.sql.Date.valueOf("2016-6-8"));
-//		System.out.println(DateUtil.getAllDaysOfMonth(2016, 1));
+		System.out.println(DateUtil.getAllDaysOfMonth(2016, 1));
 //		System.out.println(DateUtil.getAllDaysOfMonth(2016, 2));
 //		System.out.println(DateUtil.getAllDaysOfMonth(2016, 3));
 //		System.out.println(DateUtil.getAllDaysOfMonth(2016, 4));
@@ -688,6 +688,12 @@ public class DateUtil {
 //		System.out.println(DateUtil.getAllDaysOfMonth(2016, 12));
 		
 		System.out.println(DateUtil.getYear());
+		
+		int day = Integer.valueOf("2016-01-02".substring(8));
+		System.out.println(String.valueOf(day));
+		
+		String w = "星期三";
+		System.out.println(w.substring(2));
 		
 	}
 }

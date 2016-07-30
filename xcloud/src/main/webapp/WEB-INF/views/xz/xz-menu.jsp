@@ -11,9 +11,15 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-checkin">
 				<li>
+					<a href="/xcloud/xz/checkin/stat-list" class="am-cf">
+						<span class="am-icon-check"></span>
+						考勤明细表
+					</a>
+				</li>
+				<li>
 					<a href="/xcloud/xz/checkin/stat" class="am-cf">
 						<span class="am-icon-check"></span>
-						考勤统计
+						考勤统计表
 					</a>
 				</li>
 				<li>

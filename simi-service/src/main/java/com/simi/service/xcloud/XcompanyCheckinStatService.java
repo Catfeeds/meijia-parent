@@ -30,5 +30,7 @@ public interface XcompanyCheckinStatService {
 
 	Boolean setCheckinLast(Long companyId, Long userId);
 
+	List<HashMap<String, Object>> getStaffCheckin(CompanyCheckinSearchVo searchVo);
+
 
 }
