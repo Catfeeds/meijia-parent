@@ -47,6 +47,11 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="mobile != null">
+			and user_id in (select id from users where mobile like CONCAT('%','${mobile}','%' ) )
+		</if>
+		
+		
 		<if test="checkinFrom != null">
 			and checkin_from = #{checkinFrom,jdbcType=NUMERIC}
 		</if>

@@ -49,7 +49,7 @@
 					</form:form>
 				</div>
 			</div>
-			<br> <br>
+			<br>
 			<div class="am-g">
 				<div class="am-u-sm-12 am-scrollable-horizontal">
 					<table class="am-table am-table-bordered am-table-centered">

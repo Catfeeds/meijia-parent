@@ -8,6 +8,7 @@
 <%@ include file="../shared/importCss.jsp"%>
 <!--css for this page-->
 <link href="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.css'/>" rel="stylesheet">
+<link href="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.css'/>" rel="stylesheet">
 </head>
 <body>
 	<!--header start-->
@@ -27,7 +28,28 @@
 			<hr>
 			<div class="am-g">
 				<div class="am-u-sm-12">
-					
+					<!-- <form class="am-form" id="search-form"> -->
+					<form:form modelAttribute="searchModel" action="list" method="GET" class="am-form-inline am-form-horizontal">
+						<div class="am-form-group ">
+							<div class="am-input-group date form_datetime form-datetime-lang" data-date="">
+
+								<input type="text" id="selectDay" name="selectDay" size="10"  value="" class="am-form-field" readonly minlength="1" maxlength="20">
+								<span class="am-input-group-label add-on">
+									<i class="icon-th am-icon-calendar"></i>
+								</span>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<form:input path="mobile" placeholder="手机号" class="am-form-field"/>
+						</div>
+						<div class="am-form-group">
+							<div class="am-input-group am-input-group-sm">
+								<span class="am-input-group-btn">
+									<button class="am-btn am-btn-default" type="submit">搜索</button>
+								</span>
+							</div>
+						</div>
+					</form:form>
 				</div>
 			</div>
 			<br>
@@ -44,7 +66,6 @@
 									<th class="table-title">签到网络</th>
 									<th class="table-title">匹配出勤地点</th>
 									<th class="table-title">距离(米)</th>
-
 								</tr>
 							</thead>
 							<tbody>
@@ -82,6 +103,8 @@
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.min.js'/>"></script>
+	<script src="<c:url value='/assets/js/datetimepicker/amazeui.datetimepicker.zh-CN.js'/>"></script>
 	<script src="<c:url value='/assets/js/xcloud/xz/checkin-list.js'/>"></script>
 </body>
 </html>

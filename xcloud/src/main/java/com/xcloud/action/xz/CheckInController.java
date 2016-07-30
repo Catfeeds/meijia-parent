@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.baidu.BaiduConfigUtil;
@@ -72,7 +73,7 @@ public class CheckInController extends BaseController {
 	public String list(HttpServletRequest request, Model model, CompanyCheckinSearchVo searchVo) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
-		model.addAttribute("searchModel", searchVo);
+		
 		int pageNo = ServletRequestUtils.getIntParameter(request, Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
 		int pageSize = ServletRequestUtils.getIntParameter(request, Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);
 
@@ -82,7 +83,21 @@ public class CheckInController extends BaseController {
 		Long companyId = accountAuth.getCompanyId();
 
 		searchVo.setCompanyId(companyId);
-
+		
+		
+		if (StringUtil.isEmpty(searchVo.getSelectDay())) {
+			searchVo.setSelectDay(DateUtil.getToday());
+		}
+		
+		String startTimeStr = searchVo.getSelectDay() + " 00:00:00";
+		String endTimeStr = searchVo.getSelectDay() + " 23:59:59";
+		Long startTime = TimeStampUtil.getMillisOfDayFull(startTimeStr) / 1000;
+		Long endTime = TimeStampUtil.getMillisOfDayFull(endTimeStr) / 1000;
+		searchVo.setStartTime(startTime);
+		searchVo.setEndTime(endTime);
+		
+		model.addAttribute("searchModel", searchVo);
+		
 		PageInfo result = xcompanyCheckInService.selectByListPage(searchVo, pageNo, pageSize);
 
 		List<XcompanyCheckin> list = result.getList();

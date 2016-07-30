@@ -6,6 +6,8 @@ public class CompanyCheckinSearchVo{
 		
 	private Long userId;
 	
+	private String mobile;
+	
 	private Long staffId;
 	
 	private Short checkinFrom;
@@ -23,6 +25,8 @@ public class CompanyCheckinSearchVo{
 	private int cmonth;
 	
 	private Long cday;
+	
+	private String selectDay;
 	
 	
 		
@@ -112,5 +116,21 @@ public class CompanyCheckinSearchVo{
 
 	public void setCday(Long cday) {
 		this.cday = cday;
+	}
+
+	public String getSelectDay() {
+		return selectDay;
+	}
+
+	public void setSelectDay(String selectDay) {
+		this.selectDay = selectDay;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }
