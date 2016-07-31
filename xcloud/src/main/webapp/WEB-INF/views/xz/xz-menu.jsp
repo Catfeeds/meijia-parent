@@ -18,7 +18,7 @@
 				</li>
 				<li>
 					<a href="/xcloud/xz/checkin/stat" class="am-cf">
-						<span class="am-icon-check"></span>
+						<span class="am-icon-bars"></span>
 						考勤统计表
 					</a>
 				</li>
