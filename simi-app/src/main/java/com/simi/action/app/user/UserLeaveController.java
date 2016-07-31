@@ -31,6 +31,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.async.LeaveMsgAsyncService;
 import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.async.UsersAsyncService;
+import com.simi.service.async.XcompanyAsyncService;
 import com.simi.service.user.UserLeavePassService;
 import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UsersService;
@@ -61,6 +62,9 @@ public class UserLeaveController extends BaseController {
 	
 	@Autowired
 	private UserScoreAsyncService userScoreAsyncService;
+	
+	@Autowired
+	private XcompanyAsyncService xcompanyAsyncService;
 	
 	// 用户请假接口
 	@SuppressWarnings("unchecked")
@@ -400,6 +404,11 @@ public class UserLeaveController extends BaseController {
 			userLeave.setStatus(passStatusAll);
 			userLeave.setUpdateTime(TimeStampUtil.getNowSecond());
 			userLeaveService.updateByPrimaryKey(userLeave);
+			
+			//如果全部通过，则需要更新考勤统计表,异步操作.
+			if (passStatusAll == 1) {
+				xcompanyAsyncService.checkinStatLeave(userLeave.getLeaveId());
+			}
 		}
 		
 		//发出通知

@@ -670,7 +670,7 @@ public class DateUtil {
 //		String dateStr = "11-五月-2015";
 //		System.out.println(DateUtil.isDate(dateStr));
 		
-//		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
+		System.out.println(DateUtil.getDateSpace("2016-01-27", "2016-01-26"));
 //		timeStampToDate(0L);
 		
 //		System.out.println(java.sql.Date.valueOf("2016-6-8"));

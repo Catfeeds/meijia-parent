@@ -15,7 +15,8 @@
 		<result column="cday_pm_id" property="cdayPmId" jdbcType="NUMERIC" />
 		<result column="is_late" property="isLate" jdbcType="NUMERIC" />
 		<result column="is_earyly" property="isEaryly" jdbcType="NUMERIC" />
-		<result column="is_leave" property="isLeave" jdbcType="NUMERIC" />
+		<result column="leave_id" property="leaveId" jdbcType="NUMERIC" />
+		<result column="leave_type" property="leaveType" jdbcType="NUMERIC" />
 		<result column="admin_id" property="adminId" jdbcType="NUMERIC" />
 		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
@@ -23,7 +24,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, company_id, staff_id, user_id, cyear, cmonth, cday, cday_am, cday_pm, cday_am_id,
-		cday_pm_id, is_late, is_earyly, is_leave, admin_id, remarks, add_time, update_time
+		cday_pm_id, is_late, is_earyly, leave_id, leave_type, admin_id, remarks, add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -71,7 +72,7 @@
 		count(*) as total_checkin, 
 		count(case when is_late = 1 then 1 end) as total_late, 
 		count(case when is_early then 1 end) as total_earyly, 
-		count(case when is_leave = 1 then 1 end) as total_leave 
+		count(case when leave_id > 0 then 1 end) as total_leave 
 		from xcompay_checkin_stat
 		where 1=1
 		<if test="companyId != null">
@@ -113,14 +114,14 @@
 		user_id, cyear, cmonth,
 		cday, cday_am, cday_pm,
 		cday_am_id, cday_pm_id, is_late,
-		is_earyly, is_leave, admin_id,
+		is_earyly, leave_id, leave_type, admin_id,
 		remarks, add_time, update_time
 		)
 		values (#{id,jdbcType=NUMERIC}, #{companyId,jdbcType=NUMERIC}, #{staffId,jdbcType=NUMERIC},
 		#{userId,jdbcType=NUMERIC}, #{cyear,jdbcType=NUMERIC}, #{cmonth,jdbcType=NUMERIC},
 		#{cday,jdbcType=NUMERIC}, #{cdayAm,jdbcType=NUMERIC}, #{cdayPm,jdbcType=NUMERIC},
 		#{cdayAmId,jdbcType=NUMERIC}, #{cdayPmId,jdbcType=NUMERIC}, #{isLate,jdbcType=NUMERIC},
-		#{isEaryly,jdbcType=NUMERIC}, #{isLeave,jdbcType=NUMERIC}, #{adminId,jdbcType=NUMERIC},
+		#{isEaryly,jdbcType=NUMERIC}, #{leaveId,jdbcType=NUMERIC}, #{leaveType,jdbcType=NUMERIC}, #{adminId,jdbcType=NUMERIC},
 		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
 		)
 	</insert>
@@ -166,8 +167,11 @@
 			<if test="isEaryly != null">
 				is_earyly,
 			</if>
-			<if test="isLeave != null">
-				is_leave,
+			<if test="leaveId != null">
+				leave_id,
+			</if>
+			<if test="leaveType != null">
+				leave_type,
 			</if>
 			<if test="adminId != null">
 				admin_id,
@@ -222,8 +226,11 @@
 			<if test="isEaryly != null">
 				#{isEaryly,jdbcType=NUMERIC},
 			</if>
-			<if test="isLeave != null">
-				#{isLeave,jdbcType=NUMERIC},
+			<if test="leaveId != null">
+				#{leaveId,jdbcType=NUMERIC},
+			</if>
+			<if test="leaveType != null">
+				#{leaveType,jdbcType=NUMERIC},
 			</if>
 			<if test="adminId != null">
 				#{adminId,jdbcType=NUMERIC},
@@ -278,8 +285,11 @@
 			<if test="isEaryly != null">
 				is_earyly = #{isEaryly,jdbcType=NUMERIC},
 			</if>
-			<if test="isLeave != null">
-				is_leave = #{isLeave,jdbcType=NUMERIC},
+			<if test="leaveId != null">
+				leave_id = #{leaveId,jdbcType=NUMERIC},
+			</if>
+			<if test="leaveType != null">
+				leave_type = #{leaveType,jdbcType=NUMERIC},
 			</if>
 			<if test="adminId != null">
 				admin_id = #{adminId,jdbcType=NUMERIC},
@@ -310,7 +320,8 @@
 		cday_pm_id = #{cdayPmId,jdbcType=NUMERIC},
 		is_late = #{isLate,jdbcType=NUMERIC},
 		is_earyly = #{isEaryly,jdbcType=NUMERIC},
-		is_leave = #{isLeave,jdbcType=NUMERIC},
+		leave_id = #{leaveId,jdbcType=NUMERIC},
+		leave_type = #{leaveType,jdbcType=NUMERIC},
 		admin_id = #{adminId,jdbcType=NUMERIC},
 		remarks = #{remarks,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC},

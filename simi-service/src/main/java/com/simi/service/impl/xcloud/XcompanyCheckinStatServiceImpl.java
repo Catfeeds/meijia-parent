@@ -70,7 +70,8 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		record.setCdayPmId(0L);
 		record.setIsLate((short) 0);
 		record.setIsEaryly((short) 0);
-		record.setIsLeave((short) 0);
+		record.setLeaveId(0L);
+		record.setLeaveType((short) 0);
 		record.setAdminId(0L);
 		record.setRemarks("");
 		record.setAddTime(TimeStampUtil.getNowSecond());

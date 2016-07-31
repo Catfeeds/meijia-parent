@@ -27,7 +27,9 @@ public class XcompanyCheckinStat {
 
     private Short isEaryly;
 
-    private Short isLeave;
+    private Long leaveId;
+    
+    private Short leaveType;
 
     private Long adminId;
 
@@ -141,14 +143,6 @@ public class XcompanyCheckinStat {
         this.isEaryly = isEaryly;
     }
 
-    public Short getIsLeave() {
-        return isLeave;
-    }
-
-    public void setIsLeave(Short isLeave) {
-        this.isLeave = isLeave;
-    }
-
     public Long getAdminId() {
         return adminId;
     }
@@ -180,4 +174,20 @@ public class XcompanyCheckinStat {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Long getLeaveId() {
+		return leaveId;
+	}
+
+	public void setLeaveId(Long leaveId) {
+		this.leaveId = leaveId;
+	}
+
+	public Short getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(Short leaveType) {
+		this.leaveType = leaveType;
+	}
 }
