@@ -31,12 +31,10 @@
 					<!-- <form class="am-form" id="search-form"> -->
 					<form:form modelAttribute="searchModel" action="list" method="GET" class="am-form-inline am-form-horizontal">
 						<div class="am-form-group ">
-							<div class="am-input-group date form_datetime form-datetime-lang" data-date="">
-
-								<input type="text" id="selectDay" name="selectDay" size="10"  value="" class="am-form-field" readonly minlength="1" maxlength="20">
-								<span class="am-input-group-label add-on">
-									<i class="icon-th am-icon-calendar"></i>
-								</span>
+							<div class="am-input-group date form_datetime form-datetime-lang"
+									data-date="">
+									<input type="text" id="selectDay" name="selectDay" size="16"  value="${searchModel.selectDay }" class="am-form-field" readonly minlength="1" maxlength="20">
+									<span class="am-input-group-label add-on"><i class="icon-th am-icon-calendar"></i></span>
 							</div>
 						</div>
 						<div class="am-form-group">
