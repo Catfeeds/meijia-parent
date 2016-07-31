@@ -24,6 +24,5 @@ public interface RecordHolidayService {
 
 	Boolean getHolidayByApi(int year);
 
-
 	
 }

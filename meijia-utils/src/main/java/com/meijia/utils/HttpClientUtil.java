@@ -9,10 +9,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -217,6 +222,69 @@ public class HttpClientUtil {
 
 		return response;
 	}
+	
+	/**
+	 * GET方式提交数据
+	 *
+	 * @param url
+	 *            待请求的URL
+	 * @param params
+	 *            要提交的数据
+	 * @param enc
+	 *            编码
+	 * @return 响应结果
+	 * @throws IOException
+	 *             IO异常
+	 */
+	public static String get(String url, Map<String, String> params, Map<String, String> headers) {
+
+		String response = EMPTY;
+		GetMethod getMethod = null;
+		StringBuffer strtTotalURL = new StringBuffer(EMPTY);
+
+		if (strtTotalURL.indexOf("?") == -1) {
+			strtTotalURL.append(url).append("?").append(getUrl(params));
+		} else {
+			strtTotalURL.append(url).append("&").append(getUrl(params));
+		}
+		log.debug("GET请求URL = \n" + strtTotalURL.toString());
+
+		try {
+			getMethod = new GetMethod(strtTotalURL.toString());
+			getMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=" + URL_PARAM_DECODECHARSET_UTF8);
+			
+			Set<String> keys = headers.keySet();
+			for (Iterator<String> it = keys.iterator(); it.hasNext();) {
+				String key = it.next();
+				if (headers.containsKey(key)) {
+					String val = headers.get(key);
+					String str = val != null ? val : "";
+					getMethod.setRequestHeader(key, str);
+				}
+			}
+			
+			// 执行getMethod
+			int statusCode = client.executeMethod(getMethod);
+			if (statusCode == HttpStatus.SC_OK) {
+				response = getMethod.getResponseBodyAsString();
+			} else {
+				log.debug("响应状态码 = " + getMethod.getStatusCode());
+			}
+		} catch (HttpException e) {
+			log.error("发生致命的异常，可能是协议不对或者返回的内容有问题", e);
+			e.printStackTrace();
+		} catch (IOException e) {
+			log.error("发生网络异常", e);
+			e.printStackTrace();
+		} finally {
+			if (getMethod != null) {
+				getMethod.releaseConnection();
+				getMethod = null;
+			}
+		}
+
+		return response;
+	}	
 
 	public static String post_xml(String urlStr, String xml) {
 		try {
@@ -308,13 +376,52 @@ public class HttpClientUtil {
 		// System.out.println(HttpClientUtil.getUrl(params));
 		// System.out.println(HttpClientUtil.post("xxxx", params));
 		//开门
-		String username = "admin";
-		String password = "888888";
-		String url = "http://192.168.0.67/cdor.cgi?open=1";
-//		params.put("open", "1");
-		System.out.println(HttpClientUtil.postByAuth(url, username, password, params));
+//		String username = "admin";
+//		String password = "888888";
+//		String url = "http://192.168.0.67/cdor.cgi?open=1";
+////		params.put("open", "1");
+//		System.out.println(HttpClientUtil.postByAuth(url, username, password, params));
 		
 		//
+		
+		String apiKey = "8cca3859e9b222f51c51698f8016e293";
+		int year = 2016;
+		// 获取年度的假日列表url
+		String yearUrl = "http://apis.baidu.com/xiaogg/holiday/holiday";
+
+		Map<String, String> yearParams = new HashMap<String, String>();
+		yearParams.put("d", String.valueOf(year));
+		
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("apikey", apiKey);
+		
+//		String yearRes = HttpClientUtil.get(yearUrl, yearParams, headers);
+		
+		String yearRes = "{\"2016\":[\"0207\",\"0208\",\"0209\",\"0210\",\"0211\",\"0212\",\"0213\",\"0404\",\"0501\",\"0502\",\"0609\",\"0610\",\"0611\",\"0915\",\"0916\",\"0917\",\"1001\",\"1002\",\"1003\",\"1004\",\"1005\",\"1006\",\"1007\",\"0101\"]}";
+		System.out.println(yearRes);
+		
+		JSONObject ja = JSONObject.fromObject(yearRes);
+		if (ja.containsKey("errNum")) {
+			System.out.println(ja.get("errNum") + ":" + ja.get("errMsg"));
+		}
+		
+		System.out.println(ja);
+		
+		String list = ja.get(String.valueOf(year)).toString();
+		System.out.println(list);
+		
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		
+		Iterator it = jsonArray.iterator();
+		
+		while (it.hasNext()) {
+			System.out.println(it.next().toString());
+			String datePart = it.next().toString();
+			String dateStr = String.valueOf(year) + datePart;
+			Date date = DateUtil.parse(dateStr, "yyyyMMdd");
+			String day = DateUtil.formatDate(date);
+			System.out.println(day);
+        }
 	}
 
 }

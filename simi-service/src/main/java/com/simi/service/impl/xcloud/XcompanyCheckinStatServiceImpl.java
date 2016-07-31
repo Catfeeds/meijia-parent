@@ -23,6 +23,7 @@ import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyCheckinStat;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyCheckinService;
@@ -554,12 +555,12 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 	@Override
 	public List<HashMap<String, Object>> getStaffCheckin(CompanyCheckinSearchVo searchVo) {
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-		
+
 		int cyear = searchVo.getCyear();
 		int cmonth = searchVo.getCmonth();
-		//当月所有日期
+		// 当月所有日期
 		List<String> months = DateUtil.getAllDaysOfMonth(cyear, cmonth);
-		
+
 		Long companyId = searchVo.getCompanyId();
 		UserCompanySearchVo ucSearchVo = new UserCompanySearchVo();
 		ucSearchVo.setCompanyId(companyId);
@@ -584,16 +585,17 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			userSearchVo.setUserIds(userIds);
 			users = userService.selectBySearchVo(userSearchVo);
 		}
-		
+
 		int no = 1;
 		for (XcompanyStaff staff : staffList) {
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			Long userId = staff.getUserId();
 			String name = "";
-			for(Users u : users) {
+			for (Users u : users) {
 				if (staff.getUserId().equals(u.getId())) {
 					name = u.getName();
-					if (StringUtil.isEmpty(name)) name = u.getMobile();
+					if (StringUtil.isEmpty(name))
+						name = u.getMobile();
 				}
 			}
 			data.put("companyId", companyId.toString());
@@ -601,14 +603,14 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			data.put("no", String.valueOf(no));
 			data.put("name", name);
 			no++;
-			
-			List<HashMap<String,String>> dataAm = new ArrayList<HashMap<String,String>>();
-			List<HashMap<String,String>> dataPm = new ArrayList<HashMap<String,String>>();
-			
+
+			List<HashMap<String, String>> dataAm = new ArrayList<HashMap<String, String>>();
+			List<HashMap<String, String>> dataPm = new ArrayList<HashMap<String, String>>();
+
 			for (int i = 0; i < months.size(); i++) {
 				String dayStr = months.get(i);
 				Long day = TimeStampUtil.getMillisOfDay(dayStr) / 1000;
-				
+
 				XcompanyCheckinStat checkinStat = null;
 				for (XcompanyCheckinStat stat : checkinStats) {
 					if (userId.equals(stat.getUserId()) && day.equals(stat.getCday())) {
@@ -616,34 +618,17 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 						break;
 					}
 				}
-				
+
 				String checkinAmStatus = "";
 				String checkinPmStatus = "";
 				if (checkinStat != null) {
+					// 判断上午的情况
+					checkinAmStatus = this.getCheckinAmStatus(checkinStat);
 					
-					//判断上午的情况
-					if (checkinStat.getCdayAm() > 0L && checkinStat.getIsLate().equals((short)1)) {
-						checkinAmStatus = "迟";
-					}
-					
-					if (checkinStat.getCdayAm() > 0l && checkinStat.getIsLate().equals((short)0)) {
-						checkinAmStatus = "√";
-					}
-					
-					if (checkinStat.getCdayAm().equals(0L)) checkinAmStatus = "";
-					
-					//判断下午的情况
-					if(checkinStat.getCdayPm() > 0L && checkinStat.getIsEaryly().equals((short)1)) {
-						checkinPmStatus = "退";
-					}
-					
-					if(checkinStat.getCdayPm() > 0L && checkinStat.getIsEaryly().equals((short)0)) {
-						checkinPmStatus = "√";
-					}
-					
-					if (checkinStat.getCdayPm().equals(0L)) checkinPmStatus = "";
+					// 判断下午的情况
+					checkinPmStatus = this.getCheckinPmStatus(checkinStat);
 				}
-				
+
 				HashMap<String, String> am = new HashMap<String, String>();
 				am.put("cday", dayStr);
 				am.put("status", checkinAmStatus);
@@ -653,13 +638,13 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 				pm.put("status", checkinPmStatus);
 				dataPm.add(pm);
 			}
-			
+
 			data.put("dataAm", dataAm);
 			data.put("dataPm", dataPm);
-			
+
 			result.add(data);
 		}
-		
+
 		return result;
 	}
 
@@ -735,6 +720,187 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			distanceMatch = true;
 
 		return distanceMatch;
+	}
+
+	/**
+	 * 获得考勤状态 1. leaveId > 0 ,则根据leaveType 
+	 * 判断为请假类型 病假 = 病 事假 = 事 婚假 = 婚 丧假 = 丧 产假 = 产 年休假 = 休 其他 = 其 
+	 * 2. cdayAm == 0 && cdayPm == 0 && leaveId == 0 ,则为旷工 
+	 *   旷工 = 旷 
+	 * 3. cdayAm > 0 && lsLate == 0 则为正常打卡. 
+	 *    日勤 = √ 
+	 * 4. cdayAm > 0 && lsLate = 1 ,则为迟到 
+	 *    迟到 = 迟 
+	 * 5. cdayAm = 0 && lsLate = 0 , 则为上午未打卡 
+	 *    未打卡 = - 
+	 * 6. cdayPM > 0 && isEarly = 0 . 则为正常打卡. 
+	 *    日勤 = √ 
+	 * 7. cdayPm > 0 && lsEarly = 1, 则为早退 
+	 *    早退 = 退 
+	 * 8. cdayPm == 0 && lsEarly == 0 , 则为下午未打卡 
+	 *    未打卡 = -
+	 * 
+	 * 
+	 * @param checkinStat
+	 * @return
+	 */
+	private String getCheckinAmStatus(XcompanyCheckinStat checkinStat) {
+		String checkinStatus = "";
+
+		// 1. leaveId > 0 ,则根据leaveType 判断为请假类型
+		Long leaveId = checkinStat.getLeaveId();
+		Short leaveType = checkinStat.getLeaveType();
+		if (leaveId > 0L) {
+			switch (leaveType) {
+			case 0:
+				checkinStatus = "病";
+				break;
+			case 1:
+				checkinStatus = "事";
+				break;
+			case 2:
+				checkinStatus = "婚";
+				break;
+			case 3:
+				checkinStatus = "丧";
+				break;
+			case 4:
+				checkinStatus = "产";
+				break;
+			case 5:
+				checkinStatus = "年";
+				break;
+			case 6:
+				checkinStatus = "其";
+				break;
+
+			default:
+				checkinStatus = "";
+			}
+
+			if (!StringUtil.isEmpty(checkinStatus))
+				return checkinStatus;
+		}
+
+		Long cdayAm = checkinStat.getCdayAm();
+		Long cdayPm = checkinStat.getCdayPm();
+		Short isLate = checkinStat.getIsLate();
+		// 2. cdayAm == 0 && cdayPm == 0 && leaveId == 0 , 则为旷工
+		if (cdayAm.equals(0L) && cdayPm.equals(0L) && leaveId.equals(0L)) {
+			checkinStatus = "旷";
+			return checkinStatus;
+		}
+
+		// 3. cdayAm > 0 && lsLate == 0 则为正常打卡.
+		if (cdayAm > 0L && isLate == 0) {
+			checkinStatus = "√";
+			return checkinStatus;
+		}
+
+		// 4. cdayAm > 0 && lsLate = 1 ,则为迟到
+		if (cdayAm > 0L && isLate == 1) {
+			checkinStatus = "迟";
+			return checkinStatus;
+		}
+
+		// 5. cdayAm = 0 && lsLate = 0 , 则为上午未打卡
+		if (cdayAm.equals(0L) && isLate == 0) {
+			checkinStatus = "-";
+			return checkinStatus;
+		}
+
+		return checkinStatus;
+	}
+
+	/**
+	 * 获得考勤状态 1. leaveId > 0 ,则根据leaveType 
+	 * 判断为请假类型 病假 = 病 事假 = 事 婚假 = 婚 丧假 = 丧 产假 = 产 年休假 = 休 其他 = 其 
+	 * 2. cdayAm == 0 && cdayPm == 0 && leaveId == 0 ,则为旷工 
+	 *   旷工 = 旷 
+	 * 3. cdayAm > 0 && lsLate == 0 则为正常打卡. 
+	 *    日勤 = √ 
+	 * 4. cdayAm > 0 && lsLate = 1 ,则为迟到 
+	 *    迟到 = 迟 
+	 * 5. cdayAm = 0 && lsLate = 0 , 则为上午未打卡 
+	 *    未打卡 = - 
+	 * 6. cdayPM > 0 && isEarly = 0 . 则为正常打卡. 
+	 *    日勤 = √ 
+	 * 7. cdayPm > 0 && lsEarly = 1, 则为早退 
+	 *    早退 = 退 
+	 * 8. cdayPm == 0 && lsEarly == 0 , 则为下午未打卡 
+	 *    未打卡 = -
+	 * 
+	 * 
+	 * @param checkinStat
+	 * @return
+	 */
+	private String getCheckinPmStatus(XcompanyCheckinStat checkinStat) {
+		String checkinStatus = "";
+
+		// 1. leaveId > 0 ,则根据leaveType 判断为请假类型
+		Long leaveId = checkinStat.getLeaveId();
+		Short leaveType = checkinStat.getLeaveType();
+		if (leaveId > 0L) {
+			switch (leaveType) {
+			case 0:
+				checkinStatus = "病";
+				break;
+			case 1:
+				checkinStatus = "事";
+				break;
+			case 2:
+				checkinStatus = "婚";
+				break;
+			case 3:
+				checkinStatus = "丧";
+				break;
+			case 4:
+				checkinStatus = "产";
+				break;
+			case 5:
+				checkinStatus = "年";
+				break;
+			case 6:
+				checkinStatus = "其";
+				break;
+
+			default:
+				checkinStatus = "";
+			}
+
+			if (!StringUtil.isEmpty(checkinStatus))
+				return checkinStatus;
+		}
+
+		Long cdayAm = checkinStat.getCdayAm();
+		Long cdayPm = checkinStat.getCdayPm();
+		Short isLate = checkinStat.getIsLate();
+		Short isEarly = checkinStat.getIsEaryly();
+		// 2. cdayAm == 0 && cdayPm == 0 && leaveId == 0 , 则为旷工
+		if (cdayAm.equals(0L) && cdayPm.equals(0L) && leaveId.equals(0L)) {
+			checkinStatus = "旷";
+			return checkinStatus;
+		}
+
+		// 6. cdayPM > 0 && isEarly = 0 . 则为正常打卡.
+		if (cdayPm > 0L && isEarly == 0) {
+			checkinStatus = "√";
+			return checkinStatus;
+		}
+
+		// 7. cdayPm > 0 && lsEarly = 1, 则为早退 
+		if (cdayPm > 0L && isEarly == 1) {
+			checkinStatus = "退";
+			return checkinStatus;
+		}
+
+		// 8. cdayPm == 0 && lsEarly == 0 , 则为下午未打卡 
+		if (cdayPm.equals(0L) && isLate == 0) {
+			checkinStatus = "-";
+			return checkinStatus;
+		}
+
+		return checkinStatus;
 	}
 
 }

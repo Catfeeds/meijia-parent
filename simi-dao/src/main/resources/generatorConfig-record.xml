@@ -110,6 +110,13 @@
 
 		</table>
 
+		<!-- 假日记录天数表 -->
+		<table schema="simi" tableName="record_holiday_day" enableInsert="true" enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			selectByExampleQueryId="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableCountByExample="false">
+			<columnOverride column="id" property="id" javaType="java.lang.Long" jdbcType="NUMERIC" />
+			<columnOverride column="add_time" property="addTime" javaType="java.lang.Long" jdbcType="NUMERIC" />
+		</table>
+
 
 	</context>
 </generatorConfiguration>

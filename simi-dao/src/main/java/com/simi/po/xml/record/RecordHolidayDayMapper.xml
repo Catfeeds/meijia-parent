@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simi.po.dao.record.RecordHolidayDayMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.record.RecordHolidayDay">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="year" property="year" jdbcType="SMALLINT" />
+		<result column="cday" property="cday" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, year, cday, add_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from record_holiday_day
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByYear" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from record_holiday_day
+		where year = #{year,jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectByDay" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from record_holiday_day
+		where cday = #{cday,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from record_holiday_day
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.record.RecordHolidayDay">
+		insert into record_holiday_day (id, year, cday,
+		add_time)
+		values (#{id,jdbcType=NUMERIC}, #{year,jdbcType=SMALLINT}, #{cday,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.record.RecordHolidayDay">
+		insert into record_holiday_day
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="year != null">
+				year,
+			</if>
+			<if test="cday != null">
+				cday,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="year != null">
+				#{year,jdbcType=SMALLINT},
+			</if>
+			<if test="cday != null">
+				#{cday,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.record.RecordHolidayDay">
+		update record_holiday_day
+		<set>
+			<if test="year != null">
+				year = #{year,jdbcType=SMALLINT},
+			</if>
+			<if test="cday != null">
+				cday = #{cday,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.record.RecordHolidayDay">
+		update record_holiday_day
+		set year = #{year,jdbcType=SMALLINT},
+		cday = #{cday,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+</mapper>
