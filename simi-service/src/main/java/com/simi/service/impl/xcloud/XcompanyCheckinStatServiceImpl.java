@@ -15,14 +15,17 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
+import com.meijia.utils.Week;
 import com.meijia.utils.baidu.BaiduMapUtil;
 import com.simi.common.Constants;
 import com.simi.po.dao.xcloud.XcompanyCheckinStatMapper;
+import com.simi.po.model.record.RecordHolidayDay;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyCheckinStat;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.record.RecordHolidayDayService;
 import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
@@ -52,6 +55,9 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 
 	@Autowired
 	private XcompanyStaffService xcompanyStaffService;
+	
+	@Autowired
+	private RecordHolidayDayService recordHolidayDayService;
 
 	@Override
 	public XcompanyCheckinStat initXcompanyCheckinStat() {
@@ -585,7 +591,10 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			userSearchVo.setUserIds(userIds);
 			users = userService.selectBySearchVo(userSearchVo);
 		}
-
+		
+		//全年度的假日列表
+		List<RecordHolidayDay> holidays = recordHolidayDayService.selectByYear(cyear);
+		
 		int no = 1;
 		for (XcompanyStaff staff : staffList) {
 			HashMap<String, Object> data = new HashMap<String, Object>();
@@ -621,12 +630,21 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 
 				String checkinAmStatus = "";
 				String checkinPmStatus = "";
-				if (checkinStat != null) {
-					// 判断上午的情况
-					checkinAmStatus = this.getCheckinAmStatus(checkinStat);
-					
-					// 判断下午的情况
-					checkinPmStatus = this.getCheckinPmStatus(checkinStat);
+				
+				Boolean isHoliday = this.getIsHoliday(dayStr, holidays);
+				
+				if (isHoliday) {
+					checkinAmStatus = "/";
+					checkinPmStatus = "/";
+				} else {
+					if (checkinStat != null) {
+						
+						// 判断上午的情况
+						checkinAmStatus = this.getCheckinAmStatus(checkinStat);
+						
+						// 判断下午的情况
+						checkinPmStatus = this.getCheckinPmStatus(checkinStat);
+					}
 				}
 
 				HashMap<String, String> am = new HashMap<String, String>();
@@ -720,6 +738,33 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			distanceMatch = true;
 
 		return distanceMatch;
+	}
+	
+	/**
+	 * 判断是否为周末或者假日
+	 */
+	public Boolean getIsHoliday(String cday, List<RecordHolidayDay> holidayList) {
+		
+		Boolean isHoliday = false;
+		
+		//1. 先判断是否为假日
+		for (RecordHolidayDay item : holidayList) {
+			if (item.getCday().equals(cday)) {
+				isHoliday = true;
+				break;
+			}
+		}
+		
+		//2. 在判断是否为周六，周日.
+		if (isHoliday == false) {
+			Date date = DateUtil.parse(cday);
+			Week d = DateUtil.getWeek(date);
+			
+			if (d.getNumber() == 6 || d.getNumber() == 7) isHoliday = true;
+		}
+		
+		
+		return isHoliday;
 	}
 
 	/**
