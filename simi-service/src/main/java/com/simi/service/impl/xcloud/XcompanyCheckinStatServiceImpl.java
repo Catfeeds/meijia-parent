@@ -601,8 +601,8 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			data.put("name", name);
 			no++;
 			
-			List<String> dataAm = new ArrayList<String>();
-			List<String> dataPm = new ArrayList<String>();
+			List<HashMap<String,String>> dataAm = new ArrayList<HashMap<String,String>>();
+			List<HashMap<String,String>> dataPm = new ArrayList<HashMap<String,String>>();
 			
 			for (int i = 0; i < months.size(); i++) {
 				String dayStr = months.get(i);
@@ -643,8 +643,14 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 					if (checkinStat.getCdayPm().equals(0L)) checkinPmStatus = "";
 				}
 				
-				dataAm.add(checkinAmStatus);
-				dataPm.add(checkinPmStatus);
+				HashMap<String, String> am = new HashMap<String, String>();
+				am.put("cday", dayStr);
+				am.put("status", checkinAmStatus);
+				dataAm.add(am);
+				HashMap<String, String> pm = new HashMap<String, String>();
+				pm.put("cday", dayStr);
+				pm.put("status", checkinPmStatus);
+				dataPm.add(pm);
 			}
 			
 			data.put("dataAm", dataAm);

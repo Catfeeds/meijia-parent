@@ -44,16 +44,16 @@ import com.simi.vo.xcloud.CompanySettingSearchVo;
 @Controller
 @RequestMapping(value = "/app/job/company")
 public class JobCheckinController extends BaseController {
-	
+
 	@Autowired
 	private XCompanySettingService xCompanySettingService;
-	
+
 	@Autowired
 	private XcompanyCheckinStatService xcompanyCheckinStatService;
-	
+
 	@Autowired
 	private XcompanyAsyncService xcompanyAsyncService;
-		
+
 	/**
 	 * 定时判断员工考勤状态，是否迟到，每分钟执行
 	 */
@@ -62,74 +62,31 @@ public class JobCheckinController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-//		String reqHost = request.getRemoteHost();
-//		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
-//			
-//		}
-		
-		//1. 找出所有有配置出勤配置的公司，并计算是否达到早上考勤时间点
+		// String reqHost = request.getRemoteHost();
+		// if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+		//
+		// }
+
+		// 1. 找出所有有配置出勤配置的公司，并计算是否达到早上考勤时间点
 		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
 		searchVo.setSettingType(Constants.SETTING_CHICKIN_NET);
 		searchVo.setIsEnable((short) 1);
 		List<XcompanySetting> checkinSettings = xCompanySettingService.selectBySearchVo(searchVo);
-		
+
 		List<Long> companyIds = new ArrayList<Long>();
-		
+
 		for (XcompanySetting item : checkinSettings) {
-			if (!companyIds.contains(item.getCompanyId())) companyIds.add(item.getCompanyId());
+			if (!companyIds.contains(item.getCompanyId()))
+				companyIds.add(item.getCompanyId());
 		}
-		
-		
-		String today = DateUtil.getToday();
-		Long nowSecond = TimeStampUtil.getNowSecond();
-		
-		
-		//测试，指定时间
-		
-		String testTimeStr = today + " 09:11:00";
-		nowSecond = TimeStampUtil.getMillisOfDayFull(testTimeStr) / 1000;
-		
-		
-		Long nowMin = TimeStampUtil.timeStampToDateHour(nowSecond * 1000) / 1000;
-		
-		
+
 		for (Long companyId : companyIds) {
-
-			Boolean checkinStatLate = false;
-//			Boolean checkinStatEarly = false;
-			for (XcompanySetting item : checkinSettings) {
-				if (!item.getCompanyId().equals(companyId)) continue;
-
-				CheckinNetVo vo = null;
-				if (item.getSettingValue() != null) {
-					JSONObject setValue = (JSONObject) item.getSettingValue();
-					vo = JSON.toJavaObject(setValue, CheckinNetVo.class);
-				}
-	
-				if (vo == null) continue;
-				
-				//找出设定的早上考勤时间点
-				String beginCheckinTimeStr = today + " " + vo.getStartTime() + ":00";
-				Long beginCheckinTime = TimeStampUtil.getMillisOfDayFull(beginCheckinTimeStr) / 1000;
-				Long beginFlexTime = beginCheckinTime + vo.getFlexTime() * 60;
-				
-				//算出设定的考勤时间点延后一分钟.
-				Long beginCheckTime = beginFlexTime + 60;
-				
-				if (beginCheckTime.equals(nowMin)) {
-					checkinStatLate = true;
-				}
-				
-
-			}
-			
-			if (checkinStatLate) xcompanyAsyncService.checkinStatLate(companyId);
-
+			xcompanyAsyncService.checkinStatLate(companyId);
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * 定时判断员工考勤状态，是否早退，每天一点执行即可，查找昨天的记录
 	 */
@@ -138,29 +95,28 @@ public class JobCheckinController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-//		String reqHost = request.getRemoteHost();
-//		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
-//			
-//		}
-		
-		//1. 找出所有有配置出勤配置的公司
+		// String reqHost = request.getRemoteHost();
+		// if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+		//
+		// }
+
+		// 1. 找出所有有配置出勤配置的公司
 		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
 		searchVo.setSettingType(Constants.SETTING_CHICKIN_NET);
 		searchVo.setIsEnable((short) 1);
 		List<XcompanySetting> checkinSettings = xCompanySettingService.selectBySearchVo(searchVo);
-		
-		List<Long> companyIds = new ArrayList<Long>();
-		
-		for (XcompanySetting item : checkinSettings) {
-			if (!companyIds.contains(item.getCompanyId())) companyIds.add(item.getCompanyId());
-		}
-		
-		for (Long companyId : companyIds) {
-			xcompanyAsyncService.checkinStatEarly(companyId);	
-		}	
-		return result;
-	}	
-	
 
+		List<Long> companyIds = new ArrayList<Long>();
+
+		for (XcompanySetting item : checkinSettings) {
+			if (!companyIds.contains(item.getCompanyId()))
+				companyIds.add(item.getCompanyId());
+		}
+
+		for (Long companyId : companyIds) {
+			xcompanyAsyncService.checkinStatEarly(companyId);
+		}
+		return result;
+	}
 
 }

@@ -114,9 +114,9 @@ public class CompanyCheckinController extends BaseController {
 		Long checkinTime = TimeStampUtil.getNowSecond();
 		
 		//测试时间为 8：59：59秒
-		String testDay = DateUtil.getToday();
-		String testTimeStr = testDay + " 08:59:59";
-		checkinTime = TimeStampUtil.getMillisOfDayFull(testTimeStr) / 1000;
+//		String testDay = DateUtil.getToday();
+//		String testTimeStr = testDay + " 08:59:59";
+//		checkinTime = TimeStampUtil.getMillisOfDayFull(testTimeStr) / 1000;
 		
 		//测试时间为 18:00:01
 //		String testDay = DateUtil.getToday();

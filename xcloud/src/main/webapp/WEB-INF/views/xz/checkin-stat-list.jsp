@@ -74,22 +74,22 @@
 								<td rowspan="2" class="am-text-middle">${checkin.name }</td>
 								<td>上午</td>
 								<c:forEach items="${checkin.dataAm}" var="dataAm">
-									<c:if test="${dataAm == '迟' }">
-										<td><font color="red">${dataAm}</font></td>
+									<c:if test="${dataAm.status != '√' }">
+										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataAm.cday}&userId=${checkin.userId}"><font color="red">${dataAm.status}</font></a></td>
 									</c:if>
-									<c:if test="${dataAm != '迟' }">
-										<td>${dataAm}</td>
+									<c:if test="${dataAm.status == '√' }">
+										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataAm.cday}&userId=${checkin.userId}">${dataAm.status}</a></td>
 									</c:if>
 								</c:forEach>
 							</tr>
 							<tr>
 								<td>下午</td>
 								<c:forEach items="${checkin.dataPm}" var="dataPm">
-									<c:if test="${dataAm == '退' }">
-										<td><font color="red">${dataPm}</font></td>
+									<c:if test="${dataPm.status != '√' }">
+										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataPm.cday}&userId=${checkin.userId}"><font color="red">${dataPm.status}</font></a></td>
 									</c:if>
-									<c:if test="${dataAm != '退' }">
-										<td>${dataPm}</td>
+									<c:if test="${dataPm == '√' }">
+										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataPm.cday}&userId=${checkin.userId}">${dataPm.status}</a></td>
 									</c:if>
 								</c:forEach>
 							</tr>
