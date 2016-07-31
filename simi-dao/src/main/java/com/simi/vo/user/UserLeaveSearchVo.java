@@ -11,6 +11,8 @@ public class UserLeaveSearchVo {
 	
 	private Long userId;
 	
+	private String mobile;
+	
 	private Long passUserId;
 		
 	private List<Short> status;
@@ -24,6 +26,10 @@ public class UserLeaveSearchVo {
 	private Long startTime;
 
 	private Long endTime;
+	
+	private int cyear;
+	
+	private int cmonth;
 
 	public Long getLeaveId() {
 		return leaveId;
@@ -103,6 +109,30 @@ public class UserLeaveSearchVo {
 
 	public void setPassUserId(Long passUserId) {
 		this.passUserId = passUserId;
+	}
+
+	public int getCyear() {
+		return cyear;
+	}
+
+	public void setCyear(int cyear) {
+		this.cyear = cyear;
+	}
+
+	public int getCmonth() {
+		return cmonth;
+	}
+
+	public void setCmonth(int cmonth) {
+		this.cmonth = cmonth;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 

@@ -117,12 +117,15 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 			vo.setEndDate(DateUtil.format(item.getEndDate(), "yyyy-MM-dd"));
 
 			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime() * 1000));
+			
+			vo.setLeaveTypeName(this.getLeaveTypeName(vo.getLeaveType()));
 
 			// 处理状态中文名
 			vo.setStatusName(getStatusName(item.getStatus()));
 			
 			vo.setName(u.getName());
 			vo.setHeadImg(u.getHeadImg());
+			vo.setMobile(u.getMobile());
 			
 			result.add(vo);
 
@@ -147,6 +150,8 @@ public class UserLeaveServiceImpl implements UserLeaveService {
 		vo.setEndDate(DateUtil.format(item.getEndDate(), "yyyy-MM-dd"));
 
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(item.getAddTime()));
+		
+		
 
 		// 处理图片
 		List<String> imgs = new ArrayList<String>();

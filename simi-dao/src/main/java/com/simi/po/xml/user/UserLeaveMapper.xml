@@ -39,6 +39,10 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="mobile != null">
+			and user_id in (select id from users where mobile like CONCAT('%','${mobile}','%' ) )
+		</if>
+		
 		<if test="passUserId != null">
 			and leave_id in (select leave_id from user_leave_pass where pass_user_id = #{passUserId,jdbcType=NUMERIC})
 		</if>
@@ -72,6 +76,10 @@
 
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="mobile != null">
+			and user_id in (select id from users where mobile like CONCAT('%','${mobile}','%' ) )
 		</if>
 
 		<if test="startDate != null">

@@ -13,25 +13,31 @@
 				<li>
 					<a href="/xcloud/xz/checkin/stat-list" class="am-cf">
 						<span class="am-icon-check"></span>
-						考勤明细表
+						 考勤明细表
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/checkin/stat" class="am-cf">
 						<span class="am-icon-bars"></span>
-						考勤统计表
+						 考勤统计表
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/xz/checkin/net"
+					<a href="/xcloud/xz/checkin/net" class="am-cf">
 						<span class="am-icon-map-marker"></span>
-						出勤配置
+						 出勤配置
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/checkin/list" class="am-cf">
 						<span class="am-icon-table"></span>
-						考勤日志列表
+						 考勤日志列表
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/leave/list" class="am-cf">
+						<span class="am-icon-pause"></span>
+						 请假列表
 					</a>
 				</li>
 			</ul>

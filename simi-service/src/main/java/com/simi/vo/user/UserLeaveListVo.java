@@ -11,8 +11,12 @@ public class UserLeaveListVo {
     private String name;
     
     private String headImg;
+    
+    private String mobile;
 
     private Short leaveType;
+    
+    private String leaveTypeName;
 
     private String startDate;
 
@@ -130,6 +134,22 @@ public class UserLeaveListVo {
 
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
+	}
+
+	public String getLeaveTypeName() {
+		return leaveTypeName;
+	}
+
+	public void setLeaveTypeName(String leaveTypeName) {
+		this.leaveTypeName = leaveTypeName;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 }

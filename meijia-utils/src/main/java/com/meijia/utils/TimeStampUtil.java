@@ -154,6 +154,17 @@ public class TimeStampUtil {
 		Date d = DateUtil.parse(today);
 		return getMillisOfDate(d) / 1000;
 	}
+	
+	/**
+	 * 本周周一开始时间戳，注意为精确到毫秒
+	 * 
+	 * @return long
+	 */
+	public static Long getEndOfMonth(int year, int month) {
+		String today = DateUtil.getLastDayOfMonth(year, month);
+		Date d = DateUtil.parseFull(today + " 23:59:59");
+		return getMillisOfDate(d) / 1000;
+	}
 
 	/**
 	 * 根据时间戳 -> String yyyy-MM-dd HH:MM:ss
@@ -265,5 +276,8 @@ public class TimeStampUtil {
 		
 		System.out.println(TimeStampUtil.getBeginOfYesterDay());
 		System.out.println(TimeStampUtil.getEndOfYesterDay());
+		
+		System.out.println(TimeStampUtil.getBeginOfMonth(2016, 2));
+		System.out.println(TimeStampUtil.getEndOfMonth(2016, 2));
 	}
 }
