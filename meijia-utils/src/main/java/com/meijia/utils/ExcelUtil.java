@@ -2,6 +2,7 @@ package com.meijia.utils;
 
 import java.awt.Font;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,8 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -25,6 +32,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import net.sf.jxls.util.Util;
 
 public class ExcelUtil {
 	/*
@@ -126,7 +135,7 @@ public class ExcelUtil {
 				if (null == row) {
 					break;
 				}
-				
+
 				if (row.getLastCellNum() > cells)
 					cells = row.getPhysicalNumberOfCells();
 				if (cells == 0) {
@@ -135,13 +144,12 @@ public class ExcelUtil {
 				List<String> r = new ArrayList<String>(cells);
 				for (int c = 0; c < cells; c++) {
 
-					
 					String v = "";
 					if (row.getCell(c) != null) {
 						System.out.println(cells + "-----" + c + "----- " + row.getCell(c).getCellType());
 						v = readCellValues(row.getCell(c));
 					}
-					
+
 					r.add(v);
 				}
 				ls.add(r);
@@ -295,22 +303,237 @@ public class ExcelUtil {
 		return wb;
 	}
 
+	/**
+	 * insert row into the target sheet, the style of cell is the same as
+	 * startRow
+	 * 
+	 * @param wb
+	 * @param sheet
+	 * @param starRow
+	 *            - the row to start shifting
+	 * @param rows
+	 */
+	public static void insertRow(HSSFWorkbook wb, HSSFSheet sheet, int startRow, int rows) {
+
+		sheet.shiftRows(startRow + 1, sheet.getLastRowNum(), rows, true, false);
+		// Parameters:
+		// startRow - the row to start shifting
+		// endRow - the row to end shifting
+		// n - the number of rows to shift
+		// copyRowHeight - whether to copy the row height during the shift
+		// resetOriginalRowHeight - whether to set the original row's height to
+		// the default
+
+		for (int i = 0; i < rows; i++) {
+
+			HSSFRow sourceRow = null;
+			HSSFRow targetRow = null;
+
+			sourceRow = (HSSFRow) sheet.getRow(startRow);
+			targetRow = (HSSFRow) sheet.createRow(++startRow);
+
+			Util.copyRow((HSSFSheet) sheet, sourceRow, targetRow);
+		}
+
+	}
+
+	/**
+	 * 行复制功能
+	 * 
+	 * @param fromRow
+	 * @param toRow
+	 */
+	public static void copyRow(HSSFWorkbook wb, HSSFRow fromRow, HSSFRow toRow, boolean copyValueFlag) {
+		for (Iterator cellIt = fromRow.cellIterator(); cellIt.hasNext();) {
+			HSSFCell tmpCell = (HSSFCell) cellIt.next();
+			HSSFCell newCell = toRow.createCell(tmpCell.getCellNum());
+			copyCell(wb, tmpCell, newCell, copyValueFlag);
+		}
+	}
+
+	/**
+	 * 复制单元格
+	 * 
+	 * @param srcCell
+	 * @param distCell
+	 * @param copyValueFlag
+	 *            true则连同cell的内容一起复制
+	 */
+	public static void copyCell(HSSFWorkbook wb, HSSFCell srcCell, HSSFCell distCell, boolean copyValueFlag) {
+		HSSFCellStyle newstyle = wb.createCellStyle();
+		copyCellStyle(srcCell.getCellStyle(), newstyle);
+		// distCell.setEncoding(srcCell.getEncoding());
+		// 样式
+		distCell.setCellStyle(newstyle);
+		// 评论
+		if (srcCell.getCellComment() != null) {
+			distCell.setCellComment(srcCell.getCellComment());
+		}
+		// 不同数据类型处理
+		int srcCellType = srcCell.getCellType();
+		distCell.setCellType(srcCellType);
+		if (copyValueFlag) {
+			if (srcCellType == HSSFCell.CELL_TYPE_NUMERIC) {
+				if (HSSFDateUtil.isCellDateFormatted(srcCell)) {
+					distCell.setCellValue(srcCell.getDateCellValue());
+				} else {
+					distCell.setCellValue(srcCell.getNumericCellValue());
+				}
+			} else if (srcCellType == HSSFCell.CELL_TYPE_STRING) {
+				distCell.setCellValue(srcCell.getRichStringCellValue());
+			} else if (srcCellType == HSSFCell.CELL_TYPE_BLANK) {
+				// nothing21
+			} else if (srcCellType == HSSFCell.CELL_TYPE_BOOLEAN) {
+				distCell.setCellValue(srcCell.getBooleanCellValue());
+			} else if (srcCellType == HSSFCell.CELL_TYPE_ERROR) {
+				distCell.setCellErrorValue(srcCell.getErrorCellValue());
+			} else if (srcCellType == HSSFCell.CELL_TYPE_FORMULA) {
+				distCell.setCellFormula(srcCell.getCellFormula());
+			} else { // nothing29
+			}
+		}
+	}
+
+	/**
+	 * 复制一个单元格样式到目的单元格样式
+	 * 
+	 * @param fromStyle
+	 * @param toStyle
+	 */
+	public static void copyCellStyle(HSSFCellStyle fromStyle, HSSFCellStyle toStyle) {
+		toStyle.setAlignment(fromStyle.getAlignment());
+		// 边框和边框颜色
+		toStyle.setBorderBottom(fromStyle.getBorderBottom());
+		toStyle.setBorderLeft(fromStyle.getBorderLeft());
+		toStyle.setBorderRight(fromStyle.getBorderRight());
+		toStyle.setBorderTop(fromStyle.getBorderTop());
+		toStyle.setTopBorderColor(fromStyle.getTopBorderColor());
+		toStyle.setBottomBorderColor(fromStyle.getBottomBorderColor());
+		toStyle.setRightBorderColor(fromStyle.getRightBorderColor());
+		toStyle.setLeftBorderColor(fromStyle.getLeftBorderColor());
+
+		// 背景和前景
+		toStyle.setFillBackgroundColor(fromStyle.getFillBackgroundColor());
+		toStyle.setFillForegroundColor(fromStyle.getFillForegroundColor());
+
+		toStyle.setDataFormat(fromStyle.getDataFormat());
+		toStyle.setFillPattern(fromStyle.getFillPattern());
+		// toStyle.setFont(fromStyle.getFont(null));
+		toStyle.setHidden(fromStyle.getHidden());
+		toStyle.setIndention(fromStyle.getIndention());// 首行缩进
+		toStyle.setLocked(fromStyle.getLocked());
+		toStyle.setRotation(fromStyle.getRotation());// 旋转
+		toStyle.setVerticalAlignment(fromStyle.getVerticalAlignment());
+		toStyle.setWrapText(fromStyle.getWrapText());
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 
-		String path = "/Users/lnczx/Desktop/tmp/staff-excel/";
-		String fileName = "批量导入员工模板文件(5).xlsx";
+		// String path = "/Users/lnczx/Desktop/tmp/staff-excel/";
+		// String fileName = "批量导入员工模板文件(5).xlsx";
+		//
+		// InputStream in = new FileInputStream(path + fileName);
+		// List<Object> excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
+		// for (int i = 0; i < excelDatas.size(); i++) {
+		// List<String> b = (List<String>) excelDatas.get(i);
+		//
+		// System.out.println(b.size() + "-----" + excelDatas.get(i));
+		// }
+		// String v = "1";
+		// v = String.format("%04d", Integer.parseInt(v));
+		// System.out.println(v);
 
-		InputStream in = new FileInputStream(path + fileName);
-		List<Object> excelDatas = ExcelUtil.readToList(fileName, in, 0, 0);
-		for (int i = 0; i < excelDatas.size(); i++) {
-			List<String> b = (List<String>) excelDatas.get(i);
+		FileOutputStream out = new FileOutputStream("/Users/lnczx/Downloads/1.xls");
 
-			System.out.println(b.size() + "-----" + excelDatas.get(i));
+		String cpath = "/workspace/work/java/meijia-parent/xcloud/src/main/webapp/WEB-INF/attach/";
+		String fileName = "考勤明细表.xls";
+
+		InputStream in = new FileInputStream(cpath + fileName);
+
+		HSSFWorkbook wb = (HSSFWorkbook) ExcelUtil.loadWorkbook(fileName, in);
+		HSSFSheet sh = wb.getSheetAt(0);
+		int rows = sh.getPhysicalNumberOfRows();
+		System.out.println("rows = " + rows);
+		// 单位和日期
+		HSSFRow row3 = sh.getRow(3);
+		// System.out.println(ExcelUtil.readCellValues(row4.getCell(1)));
+		// 单位名称:
+		HSSFCell cellCompanyName = row3.getCell(3);
+		cellCompanyName.setCellValue("北京美家生活科技有限公司");
+
+		// 年度
+		int year = com.meijia.utils.DateUtil.getYear();
+		int month = com.meijia.utils.DateUtil.getMonth();
+		String yearStr = String.valueOf(year);
+		HSSFCell cellYear1 = row3.getCell(28);
+		cellYear1.setCellValue(yearStr.substring(0, 1));
+		HSSFCell cellYear2 = row3.getCell(29);
+		cellYear2.setCellValue(yearStr.substring(1, 2));
+		HSSFCell cellYear3 = row3.getCell(30);
+		cellYear3.setCellValue(yearStr.substring(2, 3));
+		HSSFCell cellYear4 = row3.getCell(31);
+		cellYear4.setCellValue(yearStr.substring(3, 4));
+
+		// 月份
+		HSSFCell cellMonth = row3.getCell(33);
+		cellMonth.setCellValue(month);
+
+		// 日期表头
+		HSSFRow row4 = sh.getRow(4);
+		HSSFRow row5 = sh.getRow(5);
+		List<String> months = com.meijia.utils.DateUtil.getAllDaysOfMonth(year, month);
+		int startIndex = 5;
+		for (int i = 0; i < months.size(); i++) {
+			String dayStr = months.get(i);
+			int day = Integer.valueOf(dayStr.substring(8));
+			HSSFCell cellDate = row4.getCell(startIndex);
+			cellDate.setCellValue(day);
+
+			Date tmpDate = com.meijia.utils.DateUtil.parse(months.get(i));
+			Week w = com.meijia.utils.DateUtil.getWeek(tmpDate);
+			String wName = w.getChineseName();
+			HSSFCell cellWeek = row5.getCell(startIndex);
+			cellWeek.setCellValue(wName.substring(2));
+			startIndex++;
 		}
-		String v  = "1";
-		v = String.format("%04d", Integer.parseInt(v));
-		System.out.println(v);
-	}
 
+		// 数据填入
+		int startRow = 6;
+		int totalStaffs = 5;
+		int endRow = totalStaffs * 2 - 1;
+		int no = 1;
+		ExcelUtil.insertRow(wb, sh, startRow, endRow);
+		
+		//先合并单元格.
+		for(int i = startRow; i < startRow + endRow; i++) {
+			HSSFRow rowData = sh.getRow(i);
+			
+			
+			//序号
+			HSSFCell cellNo = rowData.getCell(1);
+			cellNo.setCellValue(no);
+			
+			//姓名
+			HSSFCell cellName = rowData.getCell(2);
+			cellName.setCellValue("刘德华");
+			//上午、下午
+			HSSFCell cellAm = rowData.getCell(3);
+			if (i % 2 == 0) {
+				//合并单元格
+				sh.addMergedRegion(new CellRangeAddress(i, i + 1, 1, 1));
+				sh.addMergedRegion(new CellRangeAddress(i, i + 1, 2, 2));
+				
+				//上午
+				cellAm.setCellValue("上午");
+				
+				no++;
+			} else {
+				cellAm.setCellValue("下午");
+			}
+		}
+
+		wb.write(out);
+	}
 }

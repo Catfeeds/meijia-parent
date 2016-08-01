@@ -886,9 +886,6 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 	private String getCheckinPmStatus(XcompanyCheckinStat checkinStat) {
 		String checkinStatus = "";
 		
-		//如果为今天时间，则不出现下午考勤情况.
-		if (checkinStat.getCday().equals(TimeStampUtil.getBeginOfToday())) return checkinStatus;
-		
 		// 1. leaveId > 0 ,则根据leaveType 判断为请假类型
 		Long leaveId = checkinStat.getLeaveId();
 		Short leaveType = checkinStat.getLeaveType();
@@ -923,6 +920,9 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			if (!StringUtil.isEmpty(checkinStatus))
 				return checkinStatus;
 		}
+		
+		//如果为今天时间，则不出现下午考勤情况.
+		if (checkinStat.getCday().equals(TimeStampUtil.getBeginOfToday())) return checkinStatus;
 
 		Long cdayAm = checkinStat.getCdayAm();
 		Long cdayPm = checkinStat.getCdayPm();

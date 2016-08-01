@@ -41,12 +41,15 @@
 						   周末--/;&nbsp;&nbsp;&nbsp;&nbsp;
 						   节假日--/;&nbsp;&nbsp;&nbsp;&nbsp;
 					</small>
+					<br>
+					<small>注:每天中午12点之后能看上午的考勤情况，第二天能看昨天下午的考勤情况.</small>
+					
 				</div>
 				
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
 					<div class="am-btn-toolbar am-fr">
 						<div class="am-btn-group am-btn-group-sm ">
-							<button type="button" id="btn-excel" class="am-btn am-btn-success am-radius">
+							<button type="button" id="btn-excel" onclick="exportStat()" class="am-btn am-btn-success am-radius">
 								<span class="am-icon-plus"></span> 导出excel
 							</button>
 						</div>
@@ -157,5 +160,14 @@
 	<!--script for this page-->
 	<script src="<c:url value='/assets/js/amazeui.datatables/amazeui.datatables.min.js'/>"></script>
 	<script src="<c:url value='/assets/js/amazeui.datatables/dataTables.responsive.min.js'/>"></script>
+	
+	<script>
+	 	function exportStat() {
+	 		var cyear = $("#cyear").val();
+	 		var cmonth = $("#cmonth").val();
+		    var url="/xcloud/xz/checkin/export-stat?cyear="+cyear+"&cmonth="+cmonth;
+		    window.open(url);
+		}
+	</script>
 </body>
 </html>

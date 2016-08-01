@@ -12,7 +12,7 @@
 
 	<name>meijia-utils</name>
 	<url>http://maven.apache.org</url>
- 
+
 	<properties>
 		<jackson.version>2.4.2</jackson.version>
 		<spring.version>4.1.1.RELEASE</spring.version>
@@ -139,10 +139,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.sf.jxls</groupId>
+			<artifactId>jxls-core</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.baidu.yun</groupId>
 			<artifactId>com.baidu.yun.push</artifactId>
 			<version>3.0.0</version>
-		</dependency> 
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -246,35 +252,35 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.9.1</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>${poi.version}</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-scratchpad</artifactId>
-		    <version>${poi.version}</version>
-		  </dependency>
-		  
-		  <dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml</artifactId>
-		    <version>${poi.version}</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>${poi.version}</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>fr.opensagres.xdocreport</groupId>
-		    <artifactId>org.apache.poi.xwpf.converter.core</artifactId>
-		    <version>1.0.5</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>fr.opensagres.xdocreport</groupId>
-		    <artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
-		    <version>1.0.5</version>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>org.apache.poi.xwpf.converter.core</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
+			<version>1.0.5</version>
 		</dependency>
 
 	</dependencies>
