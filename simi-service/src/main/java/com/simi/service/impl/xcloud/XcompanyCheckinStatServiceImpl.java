@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -26,7 +23,6 @@ import com.simi.po.model.xcloud.XcompanyCheckinStat;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.record.RecordHolidayDayService;
-import com.simi.service.user.UserLeaveService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyCheckinService;

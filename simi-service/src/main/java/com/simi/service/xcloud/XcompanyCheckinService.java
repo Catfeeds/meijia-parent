@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.xcloud.XcompanyCheckin;
-import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.CheckinNetVo;
 import com.simi.vo.xcloud.CheckinVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;

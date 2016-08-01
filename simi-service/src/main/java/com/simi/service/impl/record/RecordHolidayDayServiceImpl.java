@@ -12,18 +12,12 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.HttpClientUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.record.RecordHolidayDayMapper;
-import com.simi.po.dao.record.RecordHolidayMapper;
-import com.simi.po.model.record.RecordHoliday;
 import com.simi.po.model.record.RecordHolidayDay;
 import com.simi.service.record.RecordHolidayDayService;
-import com.simi.service.record.RecordHolidayService;
-import com.simi.vo.record.RecordHolidaySearchVo;
 
 @Service
 public class RecordHolidayDayServiceImpl implements RecordHolidayDayService {
