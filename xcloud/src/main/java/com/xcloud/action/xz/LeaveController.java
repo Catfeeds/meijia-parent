@@ -1,6 +1,7 @@
 package com.xcloud.action.xz;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,6 +89,15 @@ public class LeaveController extends BaseController {
 
 		int cyear = DateUtil.getYear();
 		int cmonth = DateUtil.getMonth();
+		
+		
+		//处理接收参数一天的情况，selectDay
+		String selectDay = request.getParameter("selectDay");
+		if (!StringUtil.isEmpty(selectDay)) {
+			Date selectDate = DateUtil.parse(selectDay);
+			cyear = DateUtil.getYear(selectDate);
+			cmonth = DateUtil.getMonth(selectDate);
+		}
 
 		// 年度选择框
 		List<Integer> selectYears = new ArrayList<Integer>();
@@ -108,11 +118,16 @@ public class LeaveController extends BaseController {
 		if (searchVo.getCmonth() == 0)
 			searchVo.setCmonth(cmonth);
 
-		Long startTime = TimeStampUtil.getBeginOfMonth(searchVo.getCyear(), searchVo.getCmonth());
-		Long endTime = TimeStampUtil.getEndOfMonth(searchVo.getCyear(), searchVo.getCmonth());
-		searchVo.setStartTime(startTime);
-		searchVo.setEndTime(endTime);
-
+		String monthBeginDay = DateUtil.getFirstDayOfMonth(cyear, cmonth);
+		String monthEndDay = DateUtil.getLastDayOfMonth(cyear, cmonth);
+		
+		Date startDate = DateUtil.parse(monthBeginDay);
+		Date endDate = DateUtil.parse(monthEndDay);
+		
+		searchVo.setStartDate(startDate);
+		searchVo.setEndDate(endDate);
+		
+		
 		model.addAttribute("searchModel", searchVo);
 
 		PageInfo result = userLeaveService.selectByListPage(searchVo, pageNo, pageSize);

@@ -53,7 +53,14 @@
 				#{item}
 			</foreach>
 		</if>
-
+		
+		<if test="startDate != null and endDate != null">
+			and (
+			 (start_date BETWEEN #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}) or 
+			 (end_date BETWEEN #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE})
+			)
+		</if>
+		
 		<if test="startTime != null">
 			<![CDATA[ and add_time >= #{startTime,jdbcType=NUMERIC} ]]>
 		</if>

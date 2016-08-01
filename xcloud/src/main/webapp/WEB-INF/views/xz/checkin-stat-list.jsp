@@ -22,6 +22,35 @@
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
 					<strong class="am-text-primary am-text-lg">员工考勤明细表</strong>
+					<br>
+					<small>表格说明:</small>
+					<br>
+					<small>&nbsp;&nbsp;&nbsp;&nbsp;日勤--√;&nbsp;&nbsp;&nbsp;&nbsp;
+						   迟到--迟;&nbsp;&nbsp;&nbsp;&nbsp;
+						   早退--退;&nbsp;&nbsp;&nbsp;&nbsp;
+						   旷工--旷
+					</small>
+					<br>
+					<small>年休假--年;&nbsp;&nbsp;&nbsp;&nbsp;
+						   事假--事;&nbsp;&nbsp;&nbsp;&nbsp;
+						   病假--病;&nbsp;&nbsp;&nbsp;&nbsp;
+						   婚假--婚;&nbsp;&nbsp;&nbsp;&nbsp;
+						   产假--产;&nbsp;&nbsp;&nbsp;&nbsp;
+						   丧假--丧;&nbsp;&nbsp;&nbsp;&nbsp;
+						   其他--其;&nbsp;&nbsp;&nbsp;&nbsp;
+						   周末--/;&nbsp;&nbsp;&nbsp;&nbsp;
+						   节假日--/;&nbsp;&nbsp;&nbsp;&nbsp;
+					</small>
+				</div>
+				
+				<div class="am-u-sm-12 am-u-md-3 am-fr">
+					<div class="am-btn-toolbar am-fr">
+						<div class="am-btn-group am-btn-group-sm ">
+							<button type="button" id="btn-excel" class="am-btn am-btn-success am-radius">
+								<span class="am-icon-plus"></span> 导出excel
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<hr>
@@ -74,23 +103,40 @@
 								<td rowspan="2" class="am-text-middle">${checkin.name }</td>
 								<td>上午</td>
 								<c:forEach items="${checkin.dataAm}" var="dataAm">
-									<c:if test="${dataAm.status != '√' }">
-										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataAm.cday}&userId=${checkin.userId}"><font color="red">${dataAm.status}</font></a></td>
-									</c:if>
-									<c:if test="${dataAm.status == '√' }">
-										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataAm.cday}&userId=${checkin.userId}">${dataAm.status}</a></td>
-									</c:if>
+									<c:choose>
+										<c:when test="${dataAm.status == '√' }">   
+											<td><a href="/xcloud/xz/checkin/list?selectDay=${dataAm.cday}&userId=${checkin.userId}">${dataAm.status}</a></td>
+  										</c:when>
+  										<c:when test="${dataAm.leaveId > 0 }">   
+											<td><a href="/xcloud/xz/leave/list?selectDay=${dataAm.cday}&userId=${checkin.userId}">${dataAm.status}</a></td>
+  										</c:when>
+										<c:otherwise>  
+											<td><a href="/xcloud/xz/checkin/list?selectDay=${dataAm.cday}&userId=${checkin.userId}">
+												<font color="red">${dataAm.status}</font>
+											</a></td>
+  										
+  										</c:otherwise>
+									</c:choose>
+									
 								</c:forEach>
 							</tr>
 							<tr>
 								<td>下午</td>
 								<c:forEach items="${checkin.dataPm}" var="dataPm">
-									<c:if test="${dataPm.status != '√' }">
-										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataPm.cday}&userId=${checkin.userId}"><font color="red">${dataPm.status}</font></a></td>
-									</c:if>
-									<c:if test="${dataPm == '√' }">
-										<td><a href="/xcloud/xz/checkin/list?selectDay=${dataPm.cday}&userId=${checkin.userId}">${dataPm.status}</a></td>
-									</c:if>
+									<c:choose>
+										<c:when test="${dataPm.status == '√' }">   
+											<td><a href="/xcloud/xz/checkin/list?selectDay=${dataPm.cday}&userId=${checkin.userId}">${dataPm.status}</a></td>
+  										</c:when>
+  										<c:when test="${dataPm.leaveId > 0 }">   
+											<td><a href="/xcloud/xz/leave/list?selectDay=${dataPm.cday}&userId=${checkin.userId}">${dataPm.status}</a></td>
+  										</c:when>
+										<c:otherwise>  
+											<td><a href="/xcloud/xz/checkin/list?selectDay=${dataPm.cday}&userId=${checkin.userId}">
+												<font color="red">${dataPm.status}</font>
+											</a></td>
+  										
+  										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</tr>
 						</c:forEach>

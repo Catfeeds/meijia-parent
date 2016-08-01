@@ -459,4 +459,27 @@ public class UserLeaveController extends BaseController {
 		
 		return result;
 	}		
+	
+	// 用户请假取消接口
+	@RequestMapping(value = "leave_checkin_stat", method = RequestMethod.GET)
+	public AppResultData<Object> leaveCheckinStat() {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		UserLeaveSearchVo searchVo = new UserLeaveSearchVo();
+		
+		List<Short> statusAry = new ArrayList<Short>();
+		statusAry.add((short) 1);
+		searchVo.setStatus(statusAry);
+		
+		
+		List<UserLeave> list = userLeaveService.selectBySearchVo(searchVo);
+		
+		for (UserLeave item : list) {
+			xcompanyAsyncService.checkinStatLeave(item.getLeaveId());
+		}
+		
+		return result;
+	}
+	
 }

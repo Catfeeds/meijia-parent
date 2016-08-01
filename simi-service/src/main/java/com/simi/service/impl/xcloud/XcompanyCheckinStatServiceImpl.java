@@ -628,6 +628,11 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 				String checkinPmStatus = "";
 				
 				Boolean isHoliday = this.getIsHoliday(dayStr, holidays);
+				HashMap<String, String> am = new HashMap<String, String>();
+				HashMap<String, String> pm = new HashMap<String, String>();
+				
+				am.put("leaveId", "0");
+				pm.put("leaveId", "0");
 				
 				if (isHoliday) {
 					checkinAmStatus = "/";
@@ -640,14 +645,17 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 						
 						// 判断下午的情况
 						checkinPmStatus = this.getCheckinPmStatus(checkinStat);
+						
+						am.put("leaveId", checkinStat.getLeaveId().toString());
+						pm.put("leaveId", checkinStat.getLeaveId().toString());
 					}
 				}
 
-				HashMap<String, String> am = new HashMap<String, String>();
+				
 				am.put("cday", dayStr);
 				am.put("status", checkinAmStatus);
 				dataAm.add(am);
-				HashMap<String, String> pm = new HashMap<String, String>();
+				
 				pm.put("cday", dayStr);
 				pm.put("status", checkinPmStatus);
 				dataPm.add(pm);

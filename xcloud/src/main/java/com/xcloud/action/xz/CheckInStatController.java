@@ -4,56 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
-import com.meijia.utils.StringUtil;
-import com.meijia.utils.TimeStampUtil;
 import com.meijia.utils.Week;
-import com.meijia.utils.baidu.BaiduConfigUtil;
-import com.meijia.wx.utils.JsonUtil;
-import com.simi.common.ConstantMsg;
-import com.simi.common.Constants;
-import com.simi.po.model.user.Users;
-import com.simi.po.model.xcloud.XcompanyCheckin;
-import com.simi.po.model.xcloud.XcompanyCheckinStat;
-import com.simi.po.model.xcloud.XcompanyDept;
-import com.simi.po.model.xcloud.XcompanySetting;
-import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
-import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.service.xcloud.XcompanyCheckinStatService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
-import com.simi.vo.AppResultData;
-import com.simi.vo.user.UserSearchVo;
-import com.simi.vo.xcloud.CheckinNetVo;
-import com.simi.vo.xcloud.CheckinVo;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
-import com.simi.vo.xcloud.CompanySettingSearchVo;
-import com.simi.vo.xcloud.UserCompanySearchVo;
-import com.simi.vo.xcloud.company.DeptSearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
 import com.xcloud.auth.AuthPassport;
-import com.xcloud.common.Constant;
 
 @Controller
 @RequestMapping(value = "/xz/checkin")
