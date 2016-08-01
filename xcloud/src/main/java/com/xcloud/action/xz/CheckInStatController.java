@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.Week;
+import com.simi.common.ConstantMsg;
+import com.simi.common.Constants;
+import com.simi.po.model.op.OpChannel;
+import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyCheckinStatService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.AppResultData;
 import com.simi.vo.xcloud.CompanyCheckinSearchVo;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
@@ -46,6 +55,8 @@ public class CheckInStatController extends BaseController {
 
 	@Autowired
 	private XcompanyCheckinStatService xcompanyCheckInStatService;
+	
+	
 
 	@AuthPassport
 	@RequestMapping(value = "stat-list", method = RequestMethod.GET)
@@ -102,11 +113,32 @@ public class CheckInStatController extends BaseController {
 		model.addAttribute("weeks", weeks);
 
 		// 所有员工的统计情况
-
+		
 		List<HashMap<String, Object>> staffChekins = xcompanyCheckInStatService.getStaffCheckin(searchVo);
 		model.addAttribute("staffChekins", staffChekins);
 		model.addAttribute("searchModel", searchVo);
 		return "xz/checkin-stat-list";
 	}
+	
+	@RequestMapping(value = "checkin-stat-late", method = RequestMethod.GET)
+	public AppResultData<Object> checkinStatLate(
+			@RequestParam(value = "company_id", required = false, defaultValue="0") Long companyId,
+			@RequestParam(value = "user_id", required = false, defaultValue="0") Long userId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(
+				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setStatus((short) 1);
+		List<XcompanyStaff> staffList = xcompanyStaffService.selectBySearchVo(searchVo);
+		
+		for (XcompanyStaff item : staffList) {
+			xcompanyCheckInStatService.setCheckinFirst(companyId, item.getUserId());
+		}
+		return result;
+	}
+	
+	
 
 }
