@@ -131,7 +131,7 @@ public class CheckInStatController extends BaseController {
 		model.addAttribute("weeks", weeks);
 
 		// 所有员工的统计情况
-
+		
 		List<HashMap<String, Object>> staffChekins = xcompanyCheckInStatService.getStaffCheckin(searchVo);
 		model.addAttribute("staffChekins", staffChekins);
 		model.addAttribute("searchModel", searchVo);
