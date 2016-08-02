@@ -352,6 +352,7 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		Boolean distanceMatch = false;
 
 		XcompanyCheckin pmCheckin = null;
+		XcompanyCheckin matchPmCheckin = null;
 		XcompanySetting matchSetting = null;
 		for (int i = 0; i < checkinList.size(); i++) {
 			pmCheckin = checkinList.get(i);
@@ -394,6 +395,7 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 
 				// 最后如果三个都匹配，则可以记录并退出循环
 				if (timeMatch == true && wifiMatch == true && distanceMatch == true) {
+					matchPmCheckin = pmCheckin;
 					matchSetting = item;
 					break;
 				}
@@ -428,11 +430,11 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 
 		// 最后如果三个都匹配，如果符合则正常打卡，记录最早符合的上班打卡时间
 		if (timeMatch == true && wifiMatch == true && distanceMatch == true) {
-			stat.setCdayPm(pmCheckin.getAddTime());
+			stat.setCdayPm(matchPmCheckin.getAddTime());
 			stat.setCdayPmId(matchSetting.getId());
 		} else if (isCheckin == true) {
 			stat.setIsEaryly((short) 1);
-			stat.setCdayPm(pmCheckin.getAddTime());
+			stat.setCdayPm(checkinList.get(0).getAddTime());
 			stat.setUpdateTime(TimeStampUtil.getNowSecond());
 		} 
 
