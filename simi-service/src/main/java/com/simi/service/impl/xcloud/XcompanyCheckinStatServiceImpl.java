@@ -335,7 +335,10 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		csearchVo.setStartTime(TimeStampUtil.getBeginOfYesterDay());
 		csearchVo.setEndTime(TimeStampUtil.getEndOfYesterDay());
 		List<XcompanyCheckin> checkinList = xcompanyCheckinService.selectBySearchVo(csearchVo);
-
+		
+		//设置昨天下午是否已经打开
+		Boolean isCheckin = false;
+		
 		// 4. 循环集合C，找出与此配置项是否符合规则，注：时间为倒序
 		String today = DateUtil.getYesterday();
 
@@ -358,6 +361,10 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 			int checkHour = TimeStampUtil.getHour(pmCheckin.getAddTime() * 1000);
 			if (checkHour < 13)
 				continue;
+			
+			//下午有打过卡
+			isCheckin = true;
+			
 			// 找出符合规则的打卡记录
 			// 1. 判断时间是否符合
 			// 2. 如果有wifi查看wifi是否符合
@@ -398,9 +405,9 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		}
 
 		Long cday = TimeStampUtil.getBeginOfYesterDay();
-		Date cdate = TimeStampUtil.timeStampToDate(cday);
-		int cyear = cdate.getYear();
-		int cmonth = cdate.getMonth() + 1;
+		Date cdate = TimeStampUtil.timeStampToDate(cday * 1000);
+		int cyear = DateUtil.getYear(cdate);
+		int cmonth = DateUtil.getMonth(cdate);
 		CompanyCheckinSearchVo ccsearchVo = new CompanyCheckinSearchVo();
 		ccsearchVo.setCompanyId(companyId);
 		ccsearchVo.setUserId(userId);
@@ -423,10 +430,11 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		if (timeMatch == true && wifiMatch == true && distanceMatch == true) {
 			stat.setCdayPm(pmCheckin.getAddTime());
 			stat.setCdayPmId(matchSetting.getId());
-		} else {
+		} else if (isCheckin == true) {
 			stat.setIsEaryly((short) 1);
+			stat.setCdayPm(pmCheckin.getAddTime());
 			stat.setUpdateTime(TimeStampUtil.getNowSecond());
-		}
+		} 
 
 		if (stat.getId() > 0L) {
 			stat.setUpdateTime(TimeStampUtil.getNowSecond());
@@ -570,7 +578,6 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		List<XcompanyStaff> staffList = xcompanyStaffService.selectBySearchVo(ucSearchVo);
 
 		// 所有员工的统计情况
-
 		List<XcompanyCheckinStat> checkinStats = this.selectBySearchVo(searchVo);
 
 		List<Long> userIds = new ArrayList<Long>();
@@ -691,7 +698,7 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 	 */
 	private Boolean checkendTimeMatch(CheckinNetVo vo, Long checkinTime, String d) {
 		boolean timeMatch = false;
-		String endCheckTimeStr = d + " " + vo.getStartTime() + ":00";
+		String endCheckTimeStr = d + " " + vo.getEndTime() + ":00";
 		Long endCheckTime = TimeStampUtil.getMillisOfDayFull(endCheckTimeStr) / 1000;
 		Long beginFlexTime = endCheckTime - vo.getFlexTime() * 60;
 
