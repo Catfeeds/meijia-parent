@@ -99,4 +99,28 @@ public class AtoolsController extends BaseController {
 		}
 		return "redirect:index";
 	}
+	
+	/*
+	 *  社保公积金计算 form
+	 * 
+	 */
+	@RequestMapping(value = "tools-insu",method = RequestMethod.GET)
+	public String toolsInsu(){
+		return "atools/tools-insu";
+	}
+	
+	@RequestMapping(value = "tools-tax",method = RequestMethod.GET)
+	public String toolsTax(){
+		return "atools/tools-tax";
+	}
+	
+	@RequestMapping(value = "tools-year",method = RequestMethod.GET)
+	public String toolsYear(){
+		return "atools/tools-year";
+	}
+	
+	@RequestMapping(value = "tools-pay",method = RequestMethod.GET)
+	public String toolsPay(){
+		return "atools/tools-pay";
+	}
 }

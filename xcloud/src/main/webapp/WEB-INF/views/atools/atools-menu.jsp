@@ -17,15 +17,29 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-atools">
 				<li>
-					<a href="/xcloud/atools/insurance_calculate_form" class="am-cf">
+					<a href="/xcloud/atools/tools-insu" class="am-cf">
 						<span class="am-icon-certificate"></span>
-						社保公积金计算
+						社保公积金计算器
 					</a>
 				</li>
 				<li>
-					<a href="#" class="am-cf">
+					<a href="/xcloud/atools/tools-tax" class="am-cf">
 						<span class="am-icon-rmb"></span>
-						工资所得税计算
+						 个税计算器
+					</a>
+				</li>
+				
+				<li>
+					<a href="/xcloud/atools/tools-year" class="am-cf">
+						<span class="am-icon-rmb"></span>
+						 年终奖计算器
+					</a>
+				</li>
+				
+				<li>
+					<a href="/xcloud/atools/tools-pay" class="am-cf">
+						<span class="am-icon-rmb"></span>
+						 劳务报酬所得计算器
 					</a>
 				</li>
 			</ul>
