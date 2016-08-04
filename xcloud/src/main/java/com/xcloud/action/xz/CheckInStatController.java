@@ -130,13 +130,54 @@ public class CheckInStatController extends BaseController {
 		}
 		model.addAttribute("weeks", weeks);
 
-		// 所有员工的统计情况
-		
+		// 所有员工的明细情况
 		List<HashMap<String, Object>> staffChekins = xcompanyCheckInStatService.getStaffCheckin(searchVo);
 		model.addAttribute("staffChekins", staffChekins);
 		model.addAttribute("searchModel", searchVo);
 		return "xz/checkin-stat-list";
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "stat-total", method = RequestMethod.GET)
+	public String statTotal(HttpServletRequest request, Model model, CompanyCheckinSearchVo searchVo) {
+		model.addAttribute("requestUrl", request.getServletPath());
+		model.addAttribute("requestQuery", request.getQueryString());
+
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long companyId = accountAuth.getCompanyId();
+
+		int cyear = DateUtil.getYear();
+		int cmonth = DateUtil.getMonth();
+		searchVo.setCompanyId(companyId);
+		if (searchVo.getCyear() == 0)
+			searchVo.setCyear(cyear);
+		if (searchVo.getCmonth() == 0)
+			searchVo.setCmonth(cmonth);
+
+		// 年度选择框
+		List<Integer> selectYears = new ArrayList<Integer>();
+		selectYears.add(cyear - 1);
+		selectYears.add(cyear);
+		model.addAttribute("selectYears", selectYears);
+		// 月份选择框
+		List<Integer> selectMonths = new ArrayList<Integer>();
+		for (int i = 1; i <= 12; i++) {
+			if (i > cmonth)
+				break;
+			selectMonths.add(i);
+		}
+		model.addAttribute("selectMonths", selectMonths);
+		
+		// 所有员工的明细情况
+		List<HashMap<String, Object>> staffTotalChekins = xcompanyCheckInStatService.getStaffTotalCheckin(searchVo);
+
+		model.addAttribute("staffTotalChekins", staffTotalChekins);
+		model.addAttribute("searchModel", searchVo);
+		return "xz/checkin-stat-total";
+	}
+	
 
 	@RequestMapping(value = "checkin-stat-late", method = RequestMethod.GET)
 	public AppResultData<Object> checkinStatLate(@RequestParam(value = "company_id", required = false, defaultValue = "0") Long companyId,
@@ -165,7 +206,7 @@ public class CheckInStatController extends BaseController {
 	 */
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@RequestMapping(value = "/export-stat", method = { RequestMethod.GET })
-	public String download(HttpServletRequest request, HttpServletResponse response, CompanyCheckinSearchVo searchVo) throws Exception {
+	public String exportStat(HttpServletRequest request, HttpServletResponse response, CompanyCheckinSearchVo searchVo) throws Exception {
 
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
@@ -303,6 +344,162 @@ public class CheckInStatController extends BaseController {
 		}
 		
 		String fileName = "考勤明细表";
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		wb.write(os);
+		byte[] content = os.toByteArray();
+		InputStream is = new ByteArrayInputStream(content);
+		// 设置response参数，可以打开下载页面
+		response.reset();
+		response.setContentType("application/vnd.ms-excel;charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment;filename=" + new String((fileName + ".xls").getBytes(), "iso-8859-1"));
+		ServletOutputStream out = response.getOutputStream();
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+		try {
+			bis = new BufferedInputStream(is);
+			bos = new BufferedOutputStream(out);
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+			}
+		} catch (final IOException e) {
+			throw e;
+		} finally {
+			if (bis != null)
+				bis.close();
+			if (bos != null)
+				bos.close();
+		}		
+
+		return null;
+	}
+	
+	/**
+	 *
+	 * @param request
+	 * @param response
+	 * @param searchVo
+	 * @return
+	 * @throws Exception 
+	 */
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@RequestMapping(value = "/export-total", method = { RequestMethod.GET })
+	public String exportTotal(HttpServletRequest request, HttpServletResponse response, CompanyCheckinSearchVo searchVo) throws Exception {
+
+		// 获取登录的用户
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long companyId = accountAuth.getCompanyId();
+
+		int cyear = DateUtil.getYear();
+		int cmonth = DateUtil.getMonth();
+		searchVo.setCompanyId(companyId);
+		if (searchVo.getCyear() == 0)
+			searchVo.setCyear(cyear);
+		if (searchVo.getCmonth() == 0)
+			searchVo.setCmonth(cmonth);
+
+		// 当月所有日期
+		List<String> months = DateUtil.getAllDaysOfMonth(searchVo.getCyear(), searchVo.getCmonth());
+		// 所有员工的统计情况
+
+		List<HashMap<String, Object>> staffTotalChekins = xcompanyCheckInStatService.getStaffTotalCheckin(searchVo);
+		
+		
+		String cpath = request.getSession().getServletContext().getRealPath("/WEB-INF") + "/attach/";
+		String templateName = "考勤统计表.xls";
+		
+		InputStream in = new FileInputStream(cpath + templateName);
+
+		HSSFWorkbook wb = (HSSFWorkbook) ExcelUtil.loadWorkbook(templateName, in);
+		HSSFSheet sh = wb.getSheetAt(0);
+		int rows = sh.getPhysicalNumberOfRows();
+
+		
+		// 年度
+		int year = DateUtil.getYear();
+		int month = DateUtil.getMonth();
+		// 表头
+		HSSFRow row0 = sh.getRow(0);
+
+		HSSFCell cellHeader = row0.getCell(0);
+		cellHeader.setCellValue(year + "年" + month + "月公司考勤统计表");
+
+		// 数据填入
+		int startRow = 4;
+		int totalStaffs = staffTotalChekins.size();
+		int endRow = totalStaffs;
+		ExcelUtil.insertRow(wb, sh, startRow, endRow);
+	
+		//先合并单元格.
+		int rowNum = startRow;
+		for(int i = 0; i < staffTotalChekins.size(); i++) {
+			HashMap<String, Object> item = staffTotalChekins.get(i);
+			
+			HSSFRow rowData = sh.getRow(rowNum);
+			
+			HSSFCell cell0 = rowData.getCell(0);
+			cell0.setCellValue(item.get("no").toString());
+			
+			HSSFCell cell1 = rowData.getCell(1);
+			cell1.setCellValue(item.get("name").toString());
+			
+			HSSFCell cell2 = rowData.getCell(2);
+			cell2.setCellValue(item.get("deptName").toString());
+			
+			HSSFCell cell3 = rowData.getCell(3);
+			cell3.setCellValue(item.get("totalCheckinDays").toString());
+			
+			HSSFCell cell4 = rowData.getCell(4);
+			cell4.setCellValue(item.get("totalRestDays").toString());
+			
+			HSSFCell cell5 = rowData.getCell(5);
+			cell5.setCellValue(item.get("totalOverTimeDays").toString());
+			
+			HSSFCell cell6 = rowData.getCell(6);
+			cell6.setCellValue(item.get("totalLeavelType0").toString());
+			
+			HSSFCell cell7 = rowData.getCell(7);
+			cell7.setCellValue(item.get("totalLeavelType1").toString());
+			
+			HSSFCell cell8 = rowData.getCell(8);
+			cell8.setCellValue(item.get("totalLeavelType2").toString());
+			
+			HSSFCell cell9 = rowData.getCell(9);
+			cell9.setCellValue(item.get("totalLeavelType3").toString());
+			
+			HSSFCell cell10 = rowData.getCell(10);
+			cell10.setCellValue(item.get("totalLeavelType4").toString());
+			
+			HSSFCell cell11 = rowData.getCell(11);
+			cell11.setCellValue(item.get("totalLeavelType5").toString());
+			
+			HSSFCell cell12 = rowData.getCell(12);
+			cell12.setCellValue(item.get("totalLeavelType6").toString());
+			
+			HSSFCell cell13 = rowData.getCell(13);
+			cell13.setCellValue(item.get("totalLate").toString());
+			
+			HSSFCell cell14 = rowData.getCell(14);
+			cell14.setCellValue(item.get("totalEarly").toString());
+			
+			HSSFCell cell15 = rowData.getCell(15);
+			cell15.setCellValue(item.get("totalAbsence").toString());
+			
+			HSSFCell cell16 = rowData.getCell(16);
+			cell16.setCellValue(item.get("totalNoCheckin").toString());
+			
+			HSSFCell cell17 = rowData.getCell(17);
+			cell17.setCellValue(item.get("isAllCheckin").toString());
+			
+			rowNum++;
+		}
+		
+
+
+		
+		String fileName = "考勤统计表";
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		wb.write(os);
 		byte[] content = os.toByteArray();

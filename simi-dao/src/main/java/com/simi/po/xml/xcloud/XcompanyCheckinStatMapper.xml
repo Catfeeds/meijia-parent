@@ -69,10 +69,10 @@
 	
 	<select id="totalBySearchVo" resultType="java.util.HashMap" parameterType="com.simi.vo.xcloud.CompanyCheckinSearchVo">
 		select user_id, 
-		count(*) as total_checkin, 
-		count(case when is_late = 1 then 1 end) as total_late, 
-		count(case when is_early then 1 end) as total_earyly, 
-		count(case when leave_id > 0 then 1 end) as total_leave 
+		count(*) as totalCheckin, 
+		count(case when is_late = 1 then 1 end) as totalLate, 
+		count(case when is_early then 1 end) as totalEarly, 
+		count(case when leave_id > 0 then 1 end) as totalLeave
 		from xcompay_checkin_stat
 		where 1=1
 		<if test="companyId != null">

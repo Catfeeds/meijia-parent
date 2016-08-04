@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import com.simi.po.model.record.RecordHolidayDay;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.XcompanyCheckin;
 import com.simi.po.model.xcloud.XcompanyCheckinStat;
+import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.record.RecordHolidayDayService;
@@ -27,6 +29,7 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyCheckinService;
 import com.simi.service.xcloud.XcompanyCheckinStatService;
+import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.xcloud.CheckinNetVo;
@@ -54,6 +57,9 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 	
 	@Autowired
 	private RecordHolidayDayService recordHolidayDayService;
+	
+	@Autowired
+	private XcompanyDeptService xcompanyDeptService;
 
 	@Override
 	public XcompanyCheckinStat initXcompanyCheckinStat() {
@@ -563,7 +569,10 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 
 		return false;
 	}
-
+	
+	/**
+	 * 获取每个员工的月度考勤明细表
+	 */
 	@Override
 	public List<HashMap<String, Object>> getStaffCheckin(CompanyCheckinSearchVo searchVo) {
 		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
@@ -679,6 +688,227 @@ public class XcompanyCheckinStatServiceImpl implements XcompanyCheckinStatServic
 		return result;
 	}
 
+	
+	/**
+	 * 获取每个员工的月度考勤统计表
+	 * 具备的数据有
+	 * 1. 月份日期列表
+	 * 2. 月份的公休日期列表
+	 * 3. 员工列表
+	 * 4. 员工考勤列表
+	 * 计算前的数据有
+	 * 应总考勤天数 totalDays = 月份天数 - 周末天数 - 公休天数
+	 * 总休息日totalHolidays = 周末天数 + 公休天数
+	 * 员工总考勤天数 totalCheckin = 员工考勤统计列表 - totalCheckin
+	 * 总迟到次数totalLate = 员工考勤列表循环计算得出. - totalLate
+	 * 总早退次数totalEarly = 员工考勤列表循环计算得出. - totalEarly
+	 * 总请假次数totalLeave = 员工考勤列表循环计算得出.- totalLeave
+	 * 各个请假类别的总数  = 员工考勤列表循环计算得出.
+	 */
+	@Override
+	public List<HashMap<String, Object>> getStaffTotalCheckin(CompanyCheckinSearchVo searchVo) {
+		List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+
+		int cyear = searchVo.getCyear();
+		int cmonth = searchVo.getCmonth();
+		// 当月所有日期
+		List<String> months = DateUtil.getAllDaysOfMonth(cyear, cmonth);
+
+		Long companyId = searchVo.getCompanyId();
+		UserCompanySearchVo ucSearchVo = new UserCompanySearchVo();
+		ucSearchVo.setCompanyId(companyId);
+		ucSearchVo.setStatus((short) 1);
+		List<XcompanyStaff> staffList = xcompanyStaffService.selectBySearchVo(ucSearchVo);
+
+		// 所有员工的统计情况
+		List<XcompanyCheckinStat> checkinStats = this.selectBySearchVo(searchVo);
+
+		List<Long> userIds = new ArrayList<Long>();
+
+		for (XcompanyStaff staff : staffList) {
+			if (!userIds.contains(staff.getUserId()))
+				userIds.add(staff.getUserId());
+		}
+
+		List<Users> users = new ArrayList<Users>();
+		if (!userIds.isEmpty()) {
+			UserSearchVo userSearchVo = new UserSearchVo();
+			userSearchVo.setUserIds(userIds);
+			users = userService.selectBySearchVo(userSearchVo);
+		}
+		
+		//部门列表
+		List<XcompanyDept> deptList = xcompanyDeptService.selectByXcompanyId(companyId);
+		
+		//全年度的假日列表
+		List<RecordHolidayDay> holidays = recordHolidayDayService.selectByYear(cyear);
+		
+		//周末总数
+		int totalWeekends = 0;
+		int totalPHolidays = 0;
+		for (int i = 0; i < months.size(); i++) {
+			Date tmpDate = DateUtil.parse(months.get(i));
+			Week w = DateUtil.getWeek(tmpDate);
+			if (w.getNumber() == 6 || w.getNumber() == 7) 
+				totalWeekends++;
+			
+			//公共假日数
+			for (RecordHolidayDay p : holidays) {
+				if (p.getCday().equals(months.get(i))) {
+					totalPHolidays++;
+					break;
+				}
+			}
+		}
+		
+		//应总考勤天数
+		int totalDays = months.size() - totalWeekends - totalPHolidays;
+		
+		int no = 1;
+		for (XcompanyStaff staff : staffList) {
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			Long userId = staff.getUserId();
+			String name = "";
+			for (Users u : users) {
+				if (staff.getUserId().equals(u.getId())) {
+					name = u.getName();
+					if (StringUtil.isEmpty(name))
+						name = u.getMobile();
+				}
+			}
+			data.put("companyId", companyId.toString());
+			data.put("userId", userId.toString());
+			data.put("no", String.valueOf(no));
+			data.put("name", name);
+			no++;
+			
+			//部门名称
+			data.put("deptName", "");
+			for (XcompanyDept xd : deptList) {
+				if (xd.getDeptId().equals(staff.getDeptId())) {
+					data.put("deptName", xd.getName());
+					break;
+				}
+			}
+			
+			//循环考勤记录，并计算各个数值.
+			
+			//总考勤天数
+			int totalCheckinDays = 0;
+						
+			//总迟到次数
+			int totalLate = 0;
+			
+			//总早退次数
+			int totalEarly = 0;
+			
+			//总旷工次数
+			int totalAbsence = 0;
+			
+
+			
+			//总未打卡次数
+			int totalNoCheckin = 0;
+			
+			//是否满勤
+			String isAllCheckin = "";
+			
+			//总请假次数
+			int totalLeave = 0;
+			
+			//总病假次数
+			int totalLeavelType0 = 0;
+			//总事假次数
+			int totalLeavelType1 = 0;
+			//总婚假次数
+			int totalLeavelType2 = 0;
+			//总丧假次数
+			int totalLeavelType3 = 0;
+			//总产假次数
+			int totalLeavelType4 = 0;
+			//总年假次数
+			int totalLeavelType5 = 0;
+			//总其他次数
+			int totalLeavelType6 = 0;
+			
+			for (XcompanyCheckinStat stat : checkinStats) {
+				if (!userId.equals(stat.getUserId())) continue;
+				
+
+				
+				if (stat.getCdayAm() > 0L || stat.getCdayPm() > 0L) totalCheckinDays++;
+				
+				if (stat.getIsLate() == 1) totalLate++;
+				if (stat.getIsEaryly() == 1) totalEarly++;
+				
+				if (stat.getCdayAm().equals(0L) && stat.getCdayPm().equals(0L)) totalAbsence++;
+				
+				if (stat.getLeaveId() > 0) {
+					totalLeave++;
+					Short leaveType = stat.getLeaveType();
+					switch (leaveType) {
+					case 0:
+						totalLeavelType0++;
+						break;
+					case 1:
+						totalLeavelType1++;
+						break;
+					case 2:
+						totalLeavelType2++;
+						break;
+					case 3:
+						totalLeavelType3++;
+						break;
+					case 4:
+						totalLeavelType4++;
+						break;
+					case 5:
+						totalLeavelType5++;
+						break;
+					case 6:
+						totalLeavelType6++;
+						break;
+					}
+				}
+
+			}
+			
+			
+			//旷工天数
+			int totalNoCheckinDays = totalDays - totalCheckinDays - totalLeave;
+			totalAbsence = totalAbsence + totalNoCheckinDays;
+			
+			//未打卡次数 = 旷工天数 * 2；
+			totalNoCheckin = totalAbsence * 2;
+			
+			//是否满勤
+			if (totalDays == totalCheckinDays && totalLate == 0 && totalEarly == 0 && totalLeave == 0) {
+				isAllCheckin = "√";
+			}
+			
+			data.put("totalCheckinDays", totalCheckinDays);
+			data.put("totalRestDays", totalWeekends + totalPHolidays);
+			data.put("totalOverTimeDays", 0);
+			data.put("totalLeavelType0", totalLeavelType0);
+			data.put("totalLeavelType1", totalLeavelType1);
+			data.put("totalLeavelType2", totalLeavelType2);
+			data.put("totalLeavelType3", totalLeavelType3);
+			data.put("totalLeavelType4", totalLeavelType4);
+			data.put("totalLeavelType5", totalLeavelType5);
+			data.put("totalLeavelType6", totalLeavelType6);
+			
+			data.put("totalLate", totalLate);
+			data.put("totalEarly", totalEarly);
+			data.put("totalAbsence", totalAbsence);
+			data.put("totalNoCheckin", totalNoCheckin);
+			data.put("isAllCheckin", isAllCheckin);
+			
+			result.add(data);
+		}
+
+		return result;
+	}
+	
 	/**
 	 * 判断时间 是否符合
 	 */

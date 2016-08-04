@@ -445,10 +445,10 @@ public class ExcelUtil {
 		// v = String.format("%04d", Integer.parseInt(v));
 		// System.out.println(v);
 
-		FileOutputStream out = new FileOutputStream("/Users/lnczx/Downloads/1.xls");
+		FileOutputStream out = new FileOutputStream("/Users/lnczx/Downloads/2.xls");
 
 		String cpath = "/workspace/work/java/meijia-parent/xcloud/src/main/webapp/WEB-INF/attach/";
-		String fileName = "考勤明细表.xls";
+		String fileName = "考勤统计表.xls";
 
 		InputStream in = new FileInputStream(cpath + fileName);
 
@@ -456,84 +456,83 @@ public class ExcelUtil {
 		HSSFSheet sh = wb.getSheetAt(0);
 		int rows = sh.getPhysicalNumberOfRows();
 		System.out.println("rows = " + rows);
-		// 单位和日期
-		HSSFRow row3 = sh.getRow(3);
-		// System.out.println(ExcelUtil.readCellValues(row4.getCell(1)));
-		// 单位名称:
-		HSSFCell cellCompanyName = row3.getCell(3);
-		cellCompanyName.setCellValue("北京美家生活科技有限公司");
-
-		// 年度
 		int year = com.meijia.utils.DateUtil.getYear();
 		int month = com.meijia.utils.DateUtil.getMonth();
-		String yearStr = String.valueOf(year);
-		HSSFCell cellYear1 = row3.getCell(28);
-		cellYear1.setCellValue(yearStr.substring(0, 1));
-		HSSFCell cellYear2 = row3.getCell(29);
-		cellYear2.setCellValue(yearStr.substring(1, 2));
-		HSSFCell cellYear3 = row3.getCell(30);
-		cellYear3.setCellValue(yearStr.substring(2, 3));
-		HSSFCell cellYear4 = row3.getCell(31);
-		cellYear4.setCellValue(yearStr.substring(3, 4));
-
-		// 月份
-		HSSFCell cellMonth = row3.getCell(33);
-		cellMonth.setCellValue(month);
-
-		// 日期表头
-		HSSFRow row4 = sh.getRow(4);
-		HSSFRow row5 = sh.getRow(5);
-		List<String> months = com.meijia.utils.DateUtil.getAllDaysOfMonth(year, month);
-		int startIndex = 5;
-		for (int i = 0; i < months.size(); i++) {
-			String dayStr = months.get(i);
-			int day = Integer.valueOf(dayStr.substring(8));
-			HSSFCell cellDate = row4.getCell(startIndex);
-			cellDate.setCellValue(day);
-
-			Date tmpDate = com.meijia.utils.DateUtil.parse(months.get(i));
-			Week w = com.meijia.utils.DateUtil.getWeek(tmpDate);
-			String wName = w.getChineseName();
-			HSSFCell cellWeek = row5.getCell(startIndex);
-			cellWeek.setCellValue(wName.substring(2));
-			startIndex++;
-		}
-
-		// 数据填入
-		int startRow = 6;
-		int totalStaffs = 5;
-		int endRow = totalStaffs * 2 - 1;
-		int no = 1;
-		ExcelUtil.insertRow(wb, sh, startRow, endRow);
 		
-		//先合并单元格.
-		for(int i = startRow; i < startRow + endRow; i++) {
-			HSSFRow rowData = sh.getRow(i);
-			
-			
-			//序号
-			HSSFCell cellNo = rowData.getCell(1);
-			cellNo.setCellValue(no);
-			
-			//姓名
-			HSSFCell cellName = rowData.getCell(2);
-			cellName.setCellValue("刘德华");
-			//上午、下午
-			HSSFCell cellAm = rowData.getCell(3);
-			if (i % 2 == 0) {
-				//合并单元格
-				sh.addMergedRegion(new CellRangeAddress(i, i + 1, 1, 1));
-				sh.addMergedRegion(new CellRangeAddress(i, i + 1, 2, 2));
-				
-				//上午
-				cellAm.setCellValue("上午");
-				
-				no++;
-			} else {
-				cellAm.setCellValue("下午");
-			}
-		}
+		HSSFRow row0 = sh.getRow(0);
 
+		HSSFCell cellHeader = row0.getCell(0);
+		cellHeader.setCellValue(year + "年" + month + "月公司考勤统计表");
+
+
+		int startRow = 4;
+		int totalStaffs = 5;
+		int endRow = totalStaffs;
+		ExcelUtil.insertRow(wb, sh, startRow, endRow);
+	
+		int rowNum = startRow;
+		for(int i = 0; i < 5; i++) {
+			
+			
+			HSSFRow rowData = sh.getRow(rowNum);
+			
+			HSSFCell cell0 = rowData.getCell(0);
+			cell0.setCellValue("0");
+			
+			HSSFCell cell1 = rowData.getCell(1);
+			cell1.setCellValue("刘德华"+ i);
+			
+			HSSFCell cell2 = rowData.getCell(2);
+			cell2.setCellValue("财务部");
+			
+			HSSFCell cell3 = rowData.getCell(3);
+			cell3.setCellValue(1);
+			
+			HSSFCell cell4 = rowData.getCell(4);
+			cell4.setCellValue(2);
+			
+			HSSFCell cell5 = rowData.getCell(5);
+			cell5.setCellValue(3);
+			
+			HSSFCell cell6 = rowData.getCell(6);
+			cell6.setCellValue(4);
+			
+			HSSFCell cell7 = rowData.getCell(7);
+			cell7.setCellValue(5);
+			
+			HSSFCell cell8 = rowData.getCell(8);
+			cell8.setCellValue(6);
+			
+			HSSFCell cell9 = rowData.getCell(9);
+			cell9.setCellValue(7);
+			
+			HSSFCell cell10 = rowData.getCell(10);
+			cell10.setCellValue(8);
+			
+			HSSFCell cell11 = rowData.getCell(11);
+			cell11.setCellValue(9);
+			
+			HSSFCell cell12 = rowData.getCell(12);
+			cell12.setCellValue(10);
+			
+			HSSFCell cell13 = rowData.getCell(13);
+			cell13.setCellValue(11);
+			
+			HSSFCell cell14 = rowData.getCell(14);
+			cell14.setCellValue(12);
+			
+			HSSFCell cell15 = rowData.getCell(15);
+			cell15.setCellValue(13);
+			
+			HSSFCell cell16 = rowData.getCell(16);
+			cell16.setCellValue(14);
+			
+			HSSFCell cell17 = rowData.getCell(17);
+			cell17.setCellValue(15);
+			
+			rowNum++;
+		}		
+		
 		wb.write(out);
 	}
 }

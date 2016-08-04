@@ -32,5 +32,7 @@ public interface XcompanyCheckinStatService {
 
 	List<HashMap<String, Object>> getStaffCheckin(CompanyCheckinSearchVo searchVo);
 
+	List<HashMap<String, Object>> getStaffTotalCheckin(CompanyCheckinSearchVo searchVo);
+
 
 }
