@@ -38,11 +38,12 @@ public class TimeStampUtil {
 	 * 
 	 * 但 日期 精确到分钟, 针对 精确到 分钟的 定时任务
 	 */
-	public static Long getNowSecondByMinute() throws ParseException {
+	public static Long getNowMin()  {
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date date = simpleDateFormat.parse(DateUtil.getNow("yyyy-MM-dd HH:mm"));
-		Long timeStemp = date.getTime() / 1000;
+		Date now = DateUtil.getNowOfDate();
+		
+		String nowMinStr = DateUtil.format(now, "yyyy-MM-dd HH:mm:00");
+		Long timeStemp = TimeStampUtil.getMillisOfDayFull(nowMinStr);
 		return timeStemp;
 	}
 

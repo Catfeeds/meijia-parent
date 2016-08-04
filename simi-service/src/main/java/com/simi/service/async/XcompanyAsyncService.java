@@ -12,5 +12,7 @@ public interface XcompanyAsyncService {
 
 	Future<Boolean> checkinStatLeave(Long leaveId);
 
+	Future<Boolean> checkinNotice(Long companyId);
+
 
 }

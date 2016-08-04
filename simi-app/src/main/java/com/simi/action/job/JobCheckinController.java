@@ -97,5 +97,38 @@ public class JobCheckinController extends BaseController {
 		}
 		return result;
 	}
+	
+	/**
+	 * 定时提醒员工考勤签到
+	 */
+	@RequestMapping(value = "checkin-notice", method = RequestMethod.GET)
+	public AppResultData<Object> checkinNotice(HttpServletRequest request) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		// String reqHost = request.getRemoteHost();
+		// if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+		//
+		// }
+
+		// 1. 找出所有有配置出勤配置的公司
+		CompanySettingSearchVo searchVo = new CompanySettingSearchVo();
+		searchVo.setSettingType(Constants.SETTING_CHICKIN_NET);
+		searchVo.setIsEnable((short) 1);
+		List<XcompanySetting> checkinSettings = xCompanySettingService.selectBySearchVo(searchVo);
+
+		List<Long> companyIds = new ArrayList<Long>();
+
+		for (XcompanySetting item : checkinSettings) {
+			if (!companyIds.contains(item.getCompanyId()))
+				companyIds.add(item.getCompanyId());
+		}
+
+		for (Long companyId : companyIds) {
+			xcompanyAsyncService.checkinStatEarly(companyId);
+		}
+		return result;
+	}
+	
 
 }

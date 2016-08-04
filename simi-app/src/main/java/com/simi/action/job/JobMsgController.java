@@ -80,7 +80,7 @@ public class JobMsgController extends BaseController {
 		List<Msg> list = msgService.selectMsgBySearchVo(msgSearchVo);
 
 		// 发送时间 精确到 分钟的 时间戳 == 当前分钟时间的 时间戳（ 但都是 11位的 秒值时间戳）
-		Long minute = TimeStampUtil.getNowSecondByMinute();
+		Long minute = TimeStampUtil.getNowMin();
 
 		for (Msg msg : list) {
 
