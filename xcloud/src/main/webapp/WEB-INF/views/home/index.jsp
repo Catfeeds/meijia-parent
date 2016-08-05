@@ -106,44 +106,52 @@
 			</div>
 			<div class="am-g">
 				<div class="am-u-md-6">
-					<div class="am-panel am-panel-danger">
+					<div class="am-panel am-panel-success">
 						<div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-index-card'}">
-							今日提醒
+							首页精选
 							<span class="am-icon-arrow-right am-fr">更多</span>
 						</div>
-						<div id="collapse-index-card" class="am-in" height="100%">
-							<table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+						<div class="am-in" height="100%">
+							<table id="news-index" class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
 								<tbody>
-									<tr>
-										<th class="am-text-center"></th>
-										<th>内容</th>
-										<th>提醒类型</th>
-									</tr>
-									<tr>
-										<td class="am-text-center">1</td>
-										<td>关于新员工培训的会议室</td>
-										<td>会议安排</td>
-									</tr>
-									<tr>
-										<td class="am-text-center">1</td>
-										<td>关于新员工培训的会议室</td>
-										<td>会议安排</td>
-									</tr>
-									<tr>
-										<td class="am-text-center">1</td>
-										<td>关于新员工培训的会议室</td>
-										<td>会议安排</td>
-									</tr>
-									<tr>
-										<td class="am-text-center">1</td>
-										<td>关于新员工培训的会议室</td>
-										<td>会议安排</td>
-									</tr>
-									<tr>
-										<td class="am-text-center">1</td>
-										<td>关于新员工培训的会议室</td>
-										<td>会议安排</td>
-									</tr>
+									
+									
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+				</div>
+				<div class="am-u-md-6">
+					<div class="am-panel am-panel-secondary">
+						<div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-index-wp'}">
+							薪资资讯
+							<span class="am-icon-arrow-right am-fr">更多</span>
+						</div>
+						<div class="am-in">
+							<table id="news-64" class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			
+			<div class="am-g">
+				<div class="am-u-md-6">
+					<div class="am-panel am-panel-danger">
+						<div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-index-card'}">
+							招聘资讯
+							<span class="am-icon-arrow-right am-fr">更多</span>
+						</div>
+						<div class="am-in" height="100%">
+							<table id="news-62" class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+								<tbody>
+									
+									
 								</tbody>
 							</table>
 						</div>
@@ -153,31 +161,13 @@
 				<div class="am-u-md-6">
 					<div class="am-panel am-panel-warning">
 						<div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-index-wp'}">
-							每日新知
+							绩效资讯
 							<span class="am-icon-arrow-right am-fr">更多</span>
 						</div>
-						<div id="collapse-index-wp" class="am-in">
-							<table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+						<div class="am-in">
+							<table id="news-65" class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
 								<tbody>
-									<tr>
-										<th>最新资讯</th>
-										<th></th>
-									</tr>
-									<tr>
-										<td>关于新员工培训的会议室</td>
-									</tr>
-									<tr>
-										<td>关于新员工培训的会议室</td>
-									</tr>
-									<tr>
-										<td>关于新员工培训的会议室</td>
-									</tr>
-									<tr>
-										<td>关于新员工培训的会议室</td>
-									</tr>
-									<tr>
-										<td>关于新员工培训的会议室</td>
-									</tr>
+									
 								</tbody>
 							</table>
 						</div>
