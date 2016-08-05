@@ -197,6 +197,11 @@ public class XcompanyAsyncServiceImpl implements XcompanyAsyncService {
 		ucSearchVo.setStatus((short) 1);
 		List<XcompanyStaff> staffList = xCompanyStaffService.selectBySearchVo(ucSearchVo);
 		
+		CompanyCheckinSearchVo searchVo = new CompanyCheckinSearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setCday(TimeStampUtil.getEndOfToday());
+		List<XcompanyCheckinStat> checkinStats = xcompanyCheckinStatService.selectBySearchVo(searchVo);
+		
 		String today = DateUtil.getToday();
 		Long nowMin = TimeStampUtil.getNowMin();
 		Long willDoMin = nowMin + 15 * 60;
@@ -239,9 +244,19 @@ public class XcompanyAsyncServiceImpl implements XcompanyAsyncService {
 			if (willDoMin.equals(beginCheckTime) ) {
 				for (Long userId : userIds) {
 					// 发送给提醒签到推送消息
-					msgContent = "还有15分钟,别忘了早上打卡哦";
-					noticeAppAsyncService.pushMsgToDevice(userId, "考勤签到", msgContent, "app", "checkin", "", "");
 					
+					Boolean isCheckined = false;
+					for(XcompanyCheckinStat s : checkinStats) {
+						if (s.getUserId().equals(userId) && s.getCdayAm() > 0L) {
+							isCheckined = true;
+							break;
+						}
+					}
+					
+					if (isCheckined == false) {
+						msgContent = "还有15分钟,别忘了早上打卡哦";
+						noticeAppAsyncService.pushMsgToDevice(userId, "考勤签到", msgContent, "app", "checkin", "", "");
+					}
 				}
 			}
 			
@@ -250,8 +265,19 @@ public class XcompanyAsyncServiceImpl implements XcompanyAsyncService {
 			
 			if (afterDoMin.equals(endCheckTime)) {
 				for (Long userId : userIds) {
+					
+					Boolean isCheckined = false;
+					for(XcompanyCheckinStat s : checkinStats) {
+						if (s.getUserId().equals(userId) && s.getCdayPm() > 0L) {
+							isCheckined = true;
+							break;
+						}
+					}
+					
+					if (isCheckined == false) {
 					msgContent = "已经下班了,别忘了下班打卡哦";
 					noticeAppAsyncService.pushMsgToDevice(userId, "考勤签到", msgContent, "app", "checkin", "", "");
+					}
 				}
 			}
 			

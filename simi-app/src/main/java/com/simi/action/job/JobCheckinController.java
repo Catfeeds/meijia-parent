@@ -125,7 +125,7 @@ public class JobCheckinController extends BaseController {
 		}
 
 		for (Long companyId : companyIds) {
-			xcompanyAsyncService.checkinStatEarly(companyId);
+			xcompanyAsyncService.checkinNotice(companyId);
 		}
 		return result;
 	}
