@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="tr-yunpan-container am-container am-container-collapse am-vertical-align">
-			<div class="am-vertical-align-middle am-g am-g-collapse" style="width: 100%;">
+			<div class="am-vertical-align-middle am-g am-g-collapse" style="  width: 90%; margin-left: 9%;">
 				<div
 					class="tr-yunpan-login-container am-container am-animation-slide-right am-animation-delay-1 am-u-md-4 am-u-md-push-8 am-u-sm-10 am-u-sm-push-1">
 					<form:form method="post" modelAttribute="contentModel" id="login-form"
