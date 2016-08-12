@@ -61,7 +61,7 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 		record.setParams(leaveId.toString());
 		record.setTitle("请假申请");
 		record.setSummary("你申请了" + userLeave.getTotalDays() + leveTypeName + ".");
-		record.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/icon-qingjia.png");
 		userMsgService.insert(record);
 
 		// 给审批人都发送消息.
@@ -82,7 +82,7 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 			passRecord.setParams(leaveId.toString());
 			passRecord.setTitle("请假审批");
 			passRecord.setSummary(msgContent);
-			passRecord.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
+			passRecord.setIconUrl("http://app.bolohr.com/images/icon/icon-qingjia.png");
 			userMsgService.insert(passRecord);
 
 			// 发送推送消息
@@ -130,7 +130,7 @@ public class LeaveMsgAsyncServiceImpl implements LeaveMsgAsyncService {
 		record.setParams(leaveId.toString());
 		record.setTitle("请假申请");
 		record.setSummary(msgContent);
-		record.setIconUrl("http://123.57.173.36/images/icon/icon-qingjia.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/icon-qingjia.png");
 		userMsgService.insert(record);
 
 		msgContent = passName + statusName + "了你的"+leveTypeName+"申请（"+userLeave.getTotalDays()+"）";

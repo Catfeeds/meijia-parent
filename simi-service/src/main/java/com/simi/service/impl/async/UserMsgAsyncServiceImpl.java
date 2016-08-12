@@ -192,7 +192,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		record.setGotoUrl("");
 		record.setTitle("考勤");
 		record.setSummary("完成一次考勤记录");
-		record.setIconUrl("http://123.57.173.36/images/icon/icon-kaoqin.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/icon-kaoqin.png");
 		if (record.getMsgId() > 0L) {
 			record.setUpdateTime(TimeStampUtil.getNowSecond());
 			userMsgService.updateByPrimaryKey(record);
@@ -375,7 +375,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 
 		
 		if (StringUtil.isEmpty(iconUrl)) {
-			iconUrl = "http://img.51xingzheng.cn/437396cc0b49b04dc89a0552f7e90cae?p=0";
+			iconUrl = "http://img.bolohr.com/437396cc0b49b04dc89a0552f7e90cae?p=0";
 			AppTools appTools = null;
 			ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
 			searchVo.setAction(extType);

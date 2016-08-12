@@ -155,7 +155,7 @@ public class AppToolsServiceImpl implements AppToolsService {
 		
 		if (!StringUtil.isEmpty(qrCode)) return qrCode;
 		
-		String qrUrl = "http://www.51xingzheng.cn/d/open.html";
+		String qrUrl = "http://www.bolohr.com/d/open.html";
 		String category = item.getOpenType();
 		String action = item.getAction();
 		String params = item.getParams();

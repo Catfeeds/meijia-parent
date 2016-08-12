@@ -186,7 +186,7 @@ public class UserCarController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		if (StringUtil.isEmpty(capImg)) {
-			capImg = "http://img.51xingzheng.cn/9790863671ef3249011398e23f137fc6";
+			capImg = "http://img.bolohr.com/9790863671ef3249011398e23f137fc6";
 		}
 		
 		
@@ -290,7 +290,7 @@ public class UserCarController extends BaseController {
 
 		// 推送信息
 		if (StringUtil.isEmpty(capImg)) {
-			capImg = "http://img.51xingzheng.cn/9790863671ef3249011398e23f137fc6";
+			capImg = "http://img.bolohr.com/9790863671ef3249011398e23f137fc6";
 		}
 		noticeAppAsyncService.pushMsgToExpr(orderId, carNo, "白色", capImg, "成功");
 

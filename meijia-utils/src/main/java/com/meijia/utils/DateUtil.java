@@ -695,5 +695,7 @@ public class DateUtil {
 		String w = "星期三";
 		System.out.println(w.substring(2));
 		
+		System.out.println(DateUtil.compare("2016-08-09", "2016-08-08"));
+		
 	}
 }

@@ -182,7 +182,7 @@ public class QrCodeUtil {
   
     public static void main(String[] args) {  
     	QrCodeUtil.encode("1",  800, 800, 
-    		"http://img.51xingzheng.cn/3f20537c7e3a6e09545d66649746f680?p=0", 
+    		"http://img.bolohr.com/3f20537c7e3a6e09545d66649746f680?p=0", 
             "/Users/lnczx/Pictures/1.jpg");  
     }  
 }  

@@ -55,45 +55,45 @@ public class OController extends BaseController {
 			return "";
 		}		
 		String mobile = users.getMobile();
-		String url = "http://123.57.173.36/simi-h5/show/";
+		String url = "http://app.bolohr.com/simi-h5/show/";
 		
 		//处理参数p;
 		
 		switch (t) {
 			case "company" :
-				url = "http://123.57.173.36/simi-h5/show/company-reg.html";
+				url = "http://app.bolohr.com/simi-h5/show/company-reg.html";
 				url = url + "?uid="+uid;
 				break;
 			case "company-join" :
-				url = "http://123.57.173.36/simi-h5/show/company-reg.html";
+				url = "http://app.bolohr.com/simi-h5/show/company-reg.html";
 				url = url + "?uid="+uid;
 				url = url + "&mobile="+mobile;
 				url = url + "&invitation_code="+p;
 				break;
 			case "meeting" :
-				url = "http://123.57.173.36/simi-h5/show/order-meeting.html";
+				url = "http://app.bolohr.com/simi-h5/show/order-meeting.html";
 				url = url + "?uid="+uid;
 				break;
 			case "express" :
 				url = "http://m.kuaidi100.com/";
 				break;
 			case "water" :
-				url = "http://123.57.173.36/simi-h5/show/order-water.html";
+				url = "http://app.bolohr.com/simi-h5/show/order-water.html";
 				url = url + "?uid="+uid;
 				break;
 			case "clean" :
 				url = "http://light.yunjiazheng.com/oncecleaning/";
 				break;
 			case "green" :
-				url = "http://123.57.173.36/simi-h5/show/order-green.html";
+				url = "http://app.bolohr.com/simi-h5/show/order-green.html";
 				url = url + "?uid="+uid;
 				break;
 			case "checkin" :
-				url = "http://123.57.173.36/simi-h5/show/order-checkin.html";
+				url = "http://app.bolohr.com/simi-h5/show/order-checkin.html";
 				url = url + "?uid="+uid;
 				break;
 			case "store-my" :
-				url = "http://123.57.173.36/simi-h5/show/store-my-index.html";
+				url = "http://app.bolohr.com/simi-h5/show/store-my-index.html";
 				url = url + "?uid="+uid;
 				break;
 		}

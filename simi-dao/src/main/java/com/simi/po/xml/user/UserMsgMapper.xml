@@ -53,6 +53,11 @@
 		<include refid="Base_Column_List" />
 		from user_msg
 		where 1=1
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="fromUserId != null">
 			and from_user_id = #{fromUserId,jdbcType=NUMERIC}
 		</if>
@@ -74,7 +79,7 @@
 		</if>
 		
 		<if test="startTime != null">
-			<![CDATA[ and ( (add_time >= #{startTime,jdbcType=NUMERIC} and add_time <= #{endTime,jdbcType=NUMERIC}) OR (service_time >= #{startTime,jdbcType=NUMERIC} and service_time <= #{endTime,jdbcType=NUMERIC}) ) ]]>
+			<![CDATA[ and (service_time >= #{startTime,jdbcType=NUMERIC} and service_time <= #{endTime,jdbcType=NUMERIC})  ]]>
 		</if>
 				
 		order by msg_id desc

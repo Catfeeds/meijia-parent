@@ -84,7 +84,7 @@ public class FeedMsgAsyncServiceImpl implements FeedMsgAsyncService {
 		}
 		
 		record.setSummary(title);
-		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/iconfont-dongtai.png");
 		userMsgService.insert(record);
 
 		return new AsyncResult<Boolean>(true);
@@ -135,7 +135,7 @@ public class FeedMsgAsyncServiceImpl implements FeedMsgAsyncService {
 		record.setGotoUrl("");
 		record.setTitle("互助问答");
 		record.setSummary(msgContent);
-		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/iconfont-dongtai.png");
 		userMsgService.insert(record);
 
 		return new AsyncResult<Boolean>(true);
@@ -219,7 +219,7 @@ public class FeedMsgAsyncServiceImpl implements FeedMsgAsyncService {
 		record.setGotoUrl("");
 		record.setTitle("互助问答");
 		record.setSummary(msgContent);
-		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/iconfont-dongtai.png");
 		userMsgService.insert(record);
 
 		return new AsyncResult<Boolean>(true);
@@ -280,7 +280,7 @@ public class FeedMsgAsyncServiceImpl implements FeedMsgAsyncService {
 		record.setGotoUrl("");
 		record.setTitle("互助问答");
 		record.setSummary(msgContent);
-		record.setIconUrl("http://123.57.173.36/images/icon/iconfont-dongtai.png");
+		record.setIconUrl("http://app.bolohr.com/images/icon/iconfont-dongtai.png");
 		userMsgService.insert(record);
 
 		return new AsyncResult<Boolean>(true);

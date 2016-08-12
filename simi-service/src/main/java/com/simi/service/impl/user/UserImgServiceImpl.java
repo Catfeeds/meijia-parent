@@ -73,7 +73,7 @@ public class UserImgServiceImpl implements UserImgService{
 			qrCodeLogo = Constants.DEFAULT_LOGO;
 		}
 		
-		String qrUrl = "http://www.51xingzheng.cn/d/open.html?";
+		String qrUrl = "http://www.bolohr.com/d/open.html?";
 		String contents = qrUrl + "category=app";
 			   contents+= "&action=add_friend";
 			   contents+= "&params="+u.getId().toString();

@@ -172,7 +172,7 @@ public class PartnerController extends BaseController {
 			imgUrl = imgUrl + "?p=0";
 			servicePriceVo.setImgUrl(imgUrl);
 			
-			String detailUrl = "http://123.57.173.36/simi-h5/discover/service-detail.html?service_type_id=" + item.getId();
+			String detailUrl = "http://app.bolohr.com/simi-h5/discover/service-detail.html?service_type_id=" + item.getId();
 			
 			if (servicePriceDetail.getContentDesc().equals("") &&
 				servicePriceDetail.getContentFlow().equals("") &&

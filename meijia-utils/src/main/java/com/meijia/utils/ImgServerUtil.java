@@ -264,7 +264,7 @@ public class ImgServerUtil {
 
 		// 中文两个字
 		// ImgYin("马云" ,
-		// "http://img.51xingzheng.cn/85ebd46f40d90977ee01ead3e71bd6fa",-82,
+		// "http://img.bolohr.com/85ebd46f40d90977ee01ead3e71bd6fa",-82,
 		// 22);
 		//
 		// //英文两个字
@@ -275,7 +275,7 @@ public class ImgServerUtil {
 		String fileName = "1.jpg";
 		String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
 		File file = new File(filePath);
-		String url = "http://img.51xingzheng.cn/upload/";
+		String url = "http://img.bolohr.com/upload/";
 
 		String sendResult = ImgServerUtil.sendPostBytes(url, ImgServerUtil.getBytes(filePath), fileType);
 
@@ -287,7 +287,7 @@ public class ImgServerUtil {
 
 		HashMap<String, String> info = (HashMap<String, String>) o.get("info");
 
-		String imgUrl = "http://img.51xingzheng.cn/" + info.get("md5").toString();
+		String imgUrl = "http://img.bolohr.com/" + info.get("md5").toString();
 		
 		System.out.println(imgUrl);
 	}

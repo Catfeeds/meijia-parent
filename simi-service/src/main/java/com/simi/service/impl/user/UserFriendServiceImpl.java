@@ -136,7 +136,7 @@ public class UserFriendServiceImpl implements UserFriendService {
 					vo.setSex(u.getSex());
 					
 					String headImg = userService.getHeadImg(u);
-					if (headImg.indexOf("http://img.51xingzheng.cn") >= 0) {
+					if (headImg.indexOf("http://img.bolohr.com") >= 0) {
 						headImg = headImg + "?w=100&h=100";
 					}
 					

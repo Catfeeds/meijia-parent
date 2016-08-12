@@ -498,7 +498,7 @@ public class UsersServiceImpl implements UsersService {
 		String level = "LV1";
 		Integer levelMin = 0;
 		Integer levelMax = 0;
-		String levelBanner = "http://app.51xingzheng.cn/simi-h5/show/images/level-banner-1.jpg";
+		String levelBanner = "http://app.bolohr.com/simi-h5/show/images/level-banner-1.jpg";
 		
 		Integer exp = vo.getExp();
 		

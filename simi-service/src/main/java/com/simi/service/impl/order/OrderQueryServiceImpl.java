@@ -641,7 +641,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 		
 		if (StringUtil.isEmpty(imgUrl)) {
-			imgUrl = "http://img.51xingzheng.cn/5d553848efcbe873128e49beb6b9c840";
+			imgUrl = "http://img.bolohr.com/5d553848efcbe873128e49beb6b9c840";
 		}
 		
 		return imgUrl;

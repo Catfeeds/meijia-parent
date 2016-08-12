@@ -314,27 +314,27 @@ public class CardUtil {
 				break;
 			case 1:
 //				cardTypeName = "会议安排";
-				iconUrl = "http://123.57.173.36/images/icon/icon-huiyi.png";
+				iconUrl = "http://app.bolohr.com/images/icon/icon-huiyi.png";
 				break;
 			case 2:
 //				cardTypeName = "通知公告";
-				iconUrl = "http://123.57.173.36/images/icon/icon-tongzhi.png";
+				iconUrl = "http://app.bolohr.com/images/icon/icon-tongzhi.png";
 				break;
 			case 3:
 //				cardTypeName = "事务提醒";
-				iconUrl = "http://123.57.173.36/images/icon/icon-tixing.png";
+				iconUrl = "http://app.bolohr.com/images/icon/icon-tixing.png";
 				break;
 			case 4:
 //				cardTypeName = "面试邀约";
-				iconUrl = "http://123.57.173.36/images/icon/icon-mianshi.png";
+				iconUrl = "http://app.bolohr.com/images/icon/icon-mianshi.png";
 				break;
 			case 5:
 //				cardTypeName = "差旅规划";
-				iconUrl = "http://123.57.173.36/images/icon/icon-chailv.png";
+				iconUrl = "http://app.bolohr.com/images/icon/icon-chailv.png";
 				break;
 			default:
 //				cardTypeName = "";
-				iconUrl = "http://123.57.173.36/images/icon/";
+				iconUrl = "http://app.bolohr.com/images/icon/";
 		}
 		return iconUrl;
 	}		

@@ -130,16 +130,16 @@ public class Constants {
 	public static String SCORE_CONVERT_COUPON_CARD_PASSWORD="CSNINL8B";
 	
 	//图片服务器地址
-	public static String IMG_SERVER_HOST = "http://img.51xingzheng.cn";
+	public static String IMG_SERVER_HOST = "http://img.bolohr.com";
 	
 	//默认头像
-	public static String DEFAULT_HEAD_IMG = "http://img.51xingzheng.cn/6bf03aff8873e76bfa11e9a24f4df4c4";
+	public static String DEFAULT_HEAD_IMG = "http://img.bolohr.com/6bf03aff8873e76bfa11e9a24f4df4c4";
 
 	//默认头像底图
-	public static String DEFAULT_HEAD_IMG_BACK = "http://img.51xingzheng.cn/85ebd46f40d90977ee01ead3e71bd6fa";
+	public static String DEFAULT_HEAD_IMG_BACK = "http://img.bolohr.com/85ebd46f40d90977ee01ead3e71bd6fa";
 	
 	//云行政logo
-	public static String DEFAULT_LOGO = "http://img.51xingzheng.cn/3f20537c7e3a6e09545d66649746f680?p=0";
+	public static String DEFAULT_LOGO = "http://img.bolohr.com/3f20537c7e3a6e09545d66649746f680?p=0";
 	
 	
 	/*

@@ -166,7 +166,7 @@ public class CompanyStaffController extends BaseController {
 		String title = "团队申请";
 
 		String summary = "你申请加入" + xCompany.getCompanyName();
-		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.bolohr.com/2997737093caa7e25d98579512053b5c?p=0");
 
 		// 2.给审批者发出msg信息。
 		CompanyAdminSearchVo adminSearchVo = new CompanyAdminSearchVo();
@@ -177,7 +177,7 @@ public class CompanyStaffController extends BaseController {
 			Long adminId = item.getUserId();
 			String staffName = (StringUtil.isEmpty(u.getName())) ? u.getMobile() : u.getName();
 			summary = staffName + "申请加入" + xCompany.getCompanyName() + ".";
-			userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+			userMsgAsyncService.newActionAppMsg(adminId, 0L, "company_pass", title, summary, "http://img.bolohr.com/2997737093caa7e25d98579512053b5c?p=0");
 			noticeAppAsyncService.pushMsgToDevice(adminId, title, summary, "app", "company_pass", "", "");
 		}
 
@@ -279,7 +279,7 @@ public class CompanyStaffController extends BaseController {
 		if (status.equals((short) 2)) {
 			summary = "你申请加入" + companyName + "已被拒绝.";
 		}
-		userMsgAsyncService.newActionAppMsg(reqUserId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		userMsgAsyncService.newActionAppMsg(reqUserId, 0L, "company_pass", title, summary, "http://img.bolohr.com/2997737093caa7e25d98579512053b5c?p=0");
 		noticeAppAsyncService.pushMsgToDevice(reqUserId, title, summary, "app", "company_pass", "", "");
 		// 2.给审批者发出msg信息。
 		String staffName = (StringUtil.isEmpty(reqUser.getName())) ? reqUser.getMobile() : reqUser.getName();
@@ -287,7 +287,7 @@ public class CompanyStaffController extends BaseController {
 		if (status.equals((short) 2)) {
 			summary = "你已经拒绝" + staffName + "申请加入" + companyName + "的请求.";
 		}
-		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.51xingzheng.cn/2997737093caa7e25d98579512053b5c?p=0");
+		userMsgAsyncService.newActionAppMsg(userId, 0L, "company_pass", title, summary, "http://img.bolohr.com/2997737093caa7e25d98579512053b5c?p=0");
 		
 		return result;
 

@@ -42,7 +42,7 @@ public class WeatherUtil {
 //	
 	@SuppressWarnings("unchecked")
 	public static void genWeatherIconList(String filePath) throws IOException {
-		String imgServerUrl = "http://img.51xingzheng.cn";
+		String imgServerUrl = "http://img.bolohr.com";
 		String url = imgServerUrl + "/upload/";
 		File f = new File(filePath);
 		File[] files = f.listFiles();
@@ -102,7 +102,7 @@ public class WeatherUtil {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		String dayPictureUrl = "http://api.map.baidu.com/images/weather/day/mai.png";
-		dayPictureUrl = dayPictureUrl.replace("http://api.map.baidu.com", "http://123.57.173.36");
+		dayPictureUrl = dayPictureUrl.replace("http://api.map.baidu.com", "http://app.bolohr.com");
 		dayPictureUrl = dayPictureUrl.replace("png", "jpg");
 		System.out.println(dayPictureUrl);
 //		String repo = WeatherUtil.getWeathInfo("北京市");

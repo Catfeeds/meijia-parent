@@ -67,7 +67,7 @@ function renderCalendar() {
 //			start : '2015-12-12 14:30:00'
 //		}, {
 //			title : '访问官网',
-//			url : 'http://51xingzheng.cn/',
+//			url : 'http://bolohr.com/',
 //			start : '2015-12-28'
 //		} ]
 	});

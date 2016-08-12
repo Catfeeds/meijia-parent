@@ -123,7 +123,7 @@ $("#btn_submit").click(function() {
 
 $("#btn_preview").click(function() {
 	var serviceTypeId = $("#servicePriceId").val()
-	//http://123.57.173.36/simi-h5/discover/service-detail.html?service_type_id=1
+	//http://app.bolohr.com/simi-h5/discover/service-detail.html?service_type_id=1
 	var url = "http://" + host + "/simi-h5/discover/service-detail.html?service_type_id="+ serviceTypeId;
 	window.open(url,"_blank");
 });
