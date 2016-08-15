@@ -105,7 +105,7 @@
 					
 					<div class="form-group">
 						<div class="col-md-5">
-						<textarea id="comment" rows=3 cols=10  class="form-control"></textarea>
+						<textarea id="comment" rows=10 cols=20  class="form-control"></textarea>
 						</div>
 					</div>
 					
