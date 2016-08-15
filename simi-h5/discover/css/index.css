@@ -6,7 +6,7 @@ ul li { list-style: outside none none; }
 .f-clear::after { visibility: hidden; display: block; font-size: 0px; content: " "; clear: both; height: 0px; }
 .r_t2 { margin-top: 15px; border-top: 1px solid rgb(213, 213, 213); }
 body { margin: 0px; padding: 0px; font-family: "微软雅黑"; background: rgb(241, 245, 248) none repeat scroll 0% 0%; }
-.wrapper { width: 640px; background: rgb(241, 245, 248) none repeat scroll 0% 0%; margin: 0px auto; }
+.wrapper { width: 750px; background: rgb(241, 245, 248) none repeat scroll 0% 0%; margin: 0px auto; }
 .bott_box { padding-bottom: 94px; }
 .clear { clear: both; }
 ul { overflow: hidden; }
