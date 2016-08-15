@@ -148,6 +148,13 @@ public class FeedController extends AdminController {
 		userIds.add(1292L);
 		userIds.add(1293L);
 		userIds.add(1476L);
+		userIds.add(3440L);
+		userIds.add(3439L);
+		userIds.add(3416L);
+		userIds.add(3415L);
+		userIds.add(3414L);
+		userIds.add(3413L);
+		userIds.add(3412L);
 		
 		UserSearchVo usearchVo = new UserSearchVo();
 		usearchVo.setUserIds(userIds);
