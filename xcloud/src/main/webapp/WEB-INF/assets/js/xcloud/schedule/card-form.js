@@ -4,63 +4,10 @@ if (hiddenNames != undefined) {
 	$("#selectUserNames").html(hiddenNames);
 }
 
-//初始化员工表格
-$("#list-table").DataTable(
-		{
-			"processing" : true,
-			"serverSide" : true,
-			"ordering" : false,
-			"bPaginate" : true, // Pagination True
-			"aLengthMenu" : false,
-			"pageLength" : 10,
-			"searching" : true,
-
-			"language" : {
-				"lengthMenu" : "",
-				"paginate" : {
-					"previous" : "前一页",
-					"next" : "下一页"
-				},
-				"zeroRecords" : "",
-				"sEmptyTable" : "",
-				"info" : "显示_START_到_END_, 共有_TOTAL_条数据"
-			},
-			"ajax" : {
-				"url" : "/xcloud/staff/get-by-dept.json",
-				"type" : "GET",
-				"data" : function(d) {
-					var info = $('#list-table').DataTable().page.info();
-					d.page = info.page + 1;
-
-				}
-			},
-
-			"columns" : [
-					{
-						"data" : "user_id",
-						"render" : function(data, type, full, meta) {
-							return '<input type="checkbox" onclick="setSelectTable(' + data
-									+ ')" id="user_id" name="user_id" value="' + data + '"\>';
-						}
-					}, {
-						"data" : "job_number"
-					}, {
-						"data" : "name"
-					}, {
-						"data" : "mobile"
-					}, {
-						"data" : "dept_name"
-					}, {
-						"data" : "job_name"
-					}, {
-						"data" : "staff_type_name"
-					},
-
-			]
-		});
 
 // 初始化选择后的效果
 $('#selected_users').tagsinput({
+
 	itemValue : 'id',
 	itemText : 'label',
 	itemMobile : 'mobile',
@@ -70,65 +17,34 @@ $('#selected_users').tagsinput({
 });
 
 // 表格中checkbox 选择触发事件
-function setSelectTable(userId) {
-	var table = $("#list-table").DataTable();
-
-	var name = "";
-
-	table.$('input[type="checkbox"]').each(function() {
-
-		var $row = this.closest('tr');
-		var data = table.row($row).data();
-
-		if (data.user_id == userId) {
-
-			name = data.name;
-			mobile = data.mobile;
-			if (this.checked) {
-				addSelectUser(userId, name, mobile);
-				$('#selected_users').tagsinput('add', {
-					id : userId,
-					label : name,
-					mobile : mobile,
-				});
-			} else {
-				removeSelectUser(userId, name, mobile);
-				$('#selected_users').tagsinput('remove', {
-					id : userId,
-					label : name,
-					mobile : mobile,
-				});
-			}
-
-			return false;
-		}
-	});
-
-	$('#selected_users').tagsinput('refresh');
+function setSelectUser(obj, userId, name, mobile) {
+	console.log("setSelectUser");
+	console.log(obj.checked);
+    console.log("userId=" + userId);
+    console.log("name =" + name);
+    console.log("mobile = " + mobile);
+	
+    var isChecked = obj.checked;
+    
+    if (isChecked) {
+		addSelectUser(userId, name, mobile);
+		$('#selected_users').tagsinput('add', {
+			id : userId,
+			label : name,
+			mobile : mobile,
+		});
+	} else {
+		removeSelectUser(userId, name, mobile);
+		$('#selected_users').tagsinput('remove', {
+			id : userId,
+			label : name,
+			mobile : mobile,
+		});
+    }
 
 }
 
-// 表格中 checkBox 未选中的事件处理
-function removeSelectTable(userId) {
-	var table = $("#list-table").DataTable();
 
-	var name = "";
-
-	table.$('input[type="checkbox"]').each(function() {
-
-		var $row = this.closest('tr');
-		var data = table.row($row).data();
-
-		if (data.user_id == userId) {
-			this.checked = false;
-
-			return false;
-		}
-	});
-
-	// $('#selected_users').tagsinput('refresh');
-
-}
 
 // hidden selectUserIds 和 selectUserNames 处理添加的情况
 function addSelectUser(userId, name, mobile) {
@@ -199,16 +115,16 @@ function removeSelectUser(userId, name, mobile) {
 // tagsInput 删除元素完成后的触发事件
 $('#selected_users').on('itemRemoved', function(event) {
 	// event.item: contains the item
-
+	console.log(event.item);
+	if (event.item == undefined) return false;
 	var item = event.item;
 	var userId = item.id;
 	var name = item.label;
-	var mobiel = item.mobile;
+	var mobile = item.mobile;
 
 	removeSelectUser(userId, name, mobile);
-
-	removeSelectTable(userId);
-
+	
+//	$("#checkbox-"+userId).attr('checked',false);
 });
 
 var curFormDateTime = moment().add('m', 5).format('YYYY-MM-DD HH:mm');

@@ -1,6 +1,5 @@
 package com.xcloud.action.schedule;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
-import com.meijia.utils.Week;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.card.Cards;
 import com.simi.po.model.user.UserMsg;
@@ -34,7 +31,6 @@ import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.CardUtil;
-import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;

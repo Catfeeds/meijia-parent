@@ -49,53 +49,53 @@
 							<ul class="am-avg-sm-1 am-avg-md-8 am-margin am-padding am-text-center admin-content-list ">
 								<li>
 									<a href="/xcloud/schedule/card-form?card_type=2" class="am-text-success">
-										<img src="http://img.51xingzheng.cn/733d857f736cdb7cefe39379df5634ea?p=0">
+										<img src="http://img.bolohr.com/733d857f736cdb7cefe39379df5634ea?p=0">
 										<br />通知公告<br />
 									</a>
 								</li>
 								<li>
 									<a href="/xcloud/schedule/card-form?card_type=3" class="am-text-warning">
-										<img src="http://img.51xingzheng.cn/8befcfd517342750758dceb3893e705c?p=0">
+										<img src="http://img.bolohr.com/8befcfd517342750758dceb3893e705c?p=0">
 										<br />事务提醒<br />
 									</a>
 								</li>
 								<li>
 									<a href="/xcloud/schedule/card-form?card_type=1" class="am-text-danger">
-										<img src="http://img.51xingzheng.cn/3fdcf4c046095e6b1a352d8316635e2a?p=0">
+										<img src="http://img.bolohr.com/3fdcf4c046095e6b1a352d8316635e2a?p=0">
 										<br />会议安排<br />
 									</a>
 								</li>
 								<li>
 									<a href="/xcloud/schedule/card-form?card_type=4" class="am-text-secondary">
-										<img src="http://img.51xingzheng.cn/b7573e98e89ce8a59a3107fa66be2591?p=0">
+										<img src="http://img.bolohr.com/b7573e98e89ce8a59a3107fa66be2591?p=0">
 										<br />面试邀约<br />
 									</a>
 								</li>
 								
 								<li>
 									<a href="/xcloud/staff/list" class="am-text-secondary">
-										<img src="http://img.51xingzheng.cn/ded312297decfd7d0bbe07650894e8d0?p=0">
+										<img src="http://img.bolohr.com/ded312297decfd7d0bbe07650894e8d0?p=0">
 										<br />通讯录<br />
 									</a>
 								</li>
 								
 								<li>
 									<a href="/xcloud/xz/checkin/stat-list" class="am-text-secondary">
-										<img src="http://img.51xingzheng.cn/0467c7ef376f21477359124fa8f038e1?p=0">
+										<img src="http://img.bolohr.com/0467c7ef376f21477359124fa8f038e1?p=0">
 										<br />云考勤<br />
 									</a>
 								</li>
 								
 								<li>
 									<a href="/xcloud/xz/assets/commpany_asset_list" class="am-text-secondary">
-										<img src="http://img.51xingzheng.cn/ff54c25acfe1c170e7c93e457483aa9a?p=0">
+										<img src="http://img.bolohr.com/ff54c25acfe1c170e7c93e457483aa9a?p=0">
 										<br />资产管理<br />
 									</a>
 								</li>
 								
 								<li>
 									<a href="/xcloud/atools/tools-tax" class="am-text-secondary">
-										<img src="http://img.51xingzheng.cn/15bd4e23a7882291d3ca9bd612011cd1?p=0">
+										<img src="http://img.bolohr.com/15bd4e23a7882291d3ca9bd612011cd1?p=0">
 										<br />个税计算器<br />
 									</a>
 								</li>
