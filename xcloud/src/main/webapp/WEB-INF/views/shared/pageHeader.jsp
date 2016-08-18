@@ -41,7 +41,7 @@
 			<li class="am-dropdown" data-am-dropdown>
 				<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
 					<img src="<c:url value='${sessionScope.accountAuth.headImg}'/>" class="am-img-thumbnail am-circle" width="30"
-						height="30"> ${sessionScope.accountAuth.name}
+						height="30"> ${sessionScope.accountAuth.realName}
 					<span class="am-icon-caret-down"></span>
 				</a>
 				<ul class="am-dropdown-content">

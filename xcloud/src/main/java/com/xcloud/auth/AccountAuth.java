@@ -6,6 +6,8 @@ public class AccountAuth {
 	
 	private String name;
 	
+	private String realName;
+	
 	private String headImg;
 	
 	private String mobile;
@@ -80,6 +82,14 @@ public class AccountAuth {
 
 	public void setStaffId(Long staffId) {
 		this.staffId = staffId;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 

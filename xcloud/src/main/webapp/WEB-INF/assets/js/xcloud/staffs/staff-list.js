@@ -15,9 +15,9 @@ $("#btn-change-dept").click(function() {
 		var selectStaffId = $(tds[0]).find(".select-cell");
 		if (selectStaffId.prop('checked') == true) {
 			// console.log(selectStaffId.val());
-			// console.log($(tds[1]).find(".name-cell").html());
+			 console.log($(tds[2]).find(".name-cell").html());
 
-			selectStaffNames += $(tds[1]).find(".name-cell").html() + ",";
+			selectStaffNames += $(tds[2]).find(".name-cell").html() + ",";
 			selectStaffIds += selectStaffId.val() + ","
 		}
 
@@ -73,10 +73,10 @@ $("#btn-staff-add").click(function() {
 
 //批量导入员工
 $("#btn-staff-import").click(function() {
-	location.href = "/xcloud/hr/staff-import";
+	location.href = "/xcloud/staff/staff-import";
 });
 //导出通讯录
 $("#btn-dept").click(function() {
-	location.href = "/xcloud/hr/staff-export";
+	location.href = "/xcloud/staff/staff-export";
 });
 

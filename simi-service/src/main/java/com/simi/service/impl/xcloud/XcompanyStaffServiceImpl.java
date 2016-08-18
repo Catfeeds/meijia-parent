@@ -30,6 +30,7 @@ import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.utils.XcompanyUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.xcloud.StaffDetailVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.json.StaffJsonInfo;
@@ -308,18 +309,14 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			List<String> item = (List<String>) excelDatas.get(i);
 			
 //			String name = item.get(0);
-//			String mobile = item.get(1);
-			String jobNumber = item.get(2);
-			jobNumber = jobNumber.replace(",", "");
-			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
-					
-			
+			String mobile = item.get(1).trim();
+
 			for (StaffListVo vo : existStaffs) {
-				if (vo.getJobNumber().equals(jobNumber)) {
+				if (vo.getMobile().equals(mobile)) {
 					
 					item.add(String.valueOf(i+1));
 					for (int j = 0; j < item.size(); j++) {
-						String v = item.get(j);
+						String v = item.get(j).trim();
 						
 						if (j == 2) {
 							if (!StringUtil.isEmpty(v)) {
@@ -364,7 +361,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		
 		if (!datas.get(0).equals("*姓名")) tableHeaderFalg = false;
 		if (!datas.get(1).equals("*手机号")) tableHeaderFalg = false;
-		if (!datas.get(2).equals("*工号")) tableHeaderFalg = false;
+		if (!datas.get(2).equals("工号")) tableHeaderFalg = false;
 		if (!datas.get(3).equals("*职位")) tableHeaderFalg = false;
 		if (!datas.get(4).equals("*员工类型")) tableHeaderFalg = false;
 		if (!datas.get(5).equals("身份证号")) tableHeaderFalg = false;
@@ -403,10 +400,8 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			}
 			
 			//如果工号不为空，则需要验证工号是否正确
-			if (StringUtil.isEmpty(item.get(2))) {
-				error+= "工号为必填项<br>";		
-			} else {
-				String jobNumber = item.get(2);
+			if (!StringUtil.isEmpty(item.get(2).trim())) {
+				String jobNumber = item.get(2).trim();
 				jobNumber = jobNumber.replace(",", "");
 				if (!RegexUtil.isInteger(jobNumber)) {
 					error+= "工号填写不正确<br>";		
@@ -425,8 +420,8 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			if (StringUtil.isEmpty(item.get(4))) error+= "员工类型为必填项<br>";		
 			
 			//如果身份证号不为空，则需要检测身份证是否正确
-			if (!StringUtil.isEmpty(item.get(5))) {
-				if (!RegexUtil.isIdCardNo(item.get(5))) {
+			if (!StringUtil.isEmpty(item.get(5).trim())) {
+				if (!RegexUtil.isIdCardNo(item.get(5).trim())) {
 					error+= "身份证号填写不正确<br>";		
 				}
 			}
@@ -491,8 +486,11 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
 			String jobNumber = item.get(2).trim();
-			jobNumber = jobNumber.replace(",", "");
-			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
+			if (!StringUtil.isEmpty(jobNumber)) {
+				jobNumber = jobNumber.replace(",", "");
+				jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
+			}
+			
 			for (StaffListVo vo : existStaffs) {
 				if (vo.getJobNumber().equals(jobNumber)) {
 					if (!vo.getName().equals(name) || !vo.getMobile().equals(mobile)) {
@@ -541,8 +539,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			String name = item.get(0).trim();
 			String mobile = item.get(1).trim();
 			String jobNumber = item.get(2).trim();
-			jobNumber = jobNumber.replace(",", "");
-			jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
+			if (!StringUtil.isEmpty(jobNumber)) {
+				jobNumber = jobNumber.replace(",", "");
+				jobNumber = String.format("%04d", Integer.parseInt(jobNumber));
+			} else {
+				jobNumber = this.getNextJobNumber(companyId);
+			}
+			
 			String jobName = item.get(3).trim();
 			String staffTypeName = item.get(4).trim();
 			String idCard = item.get(5).trim();
@@ -554,14 +557,13 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 			Users u = usersService.selectByMobile(mobile);
 
 			if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-				u = usersService.genUser(mobile, name, Constants.USER_XCOULD, "");
+				u = usersService.genUser(mobile, name, name, Constants.USER_XCOULD, "");
 			}
 			
 			Long userId = u.getId();
 			
-			if (!u.getName().equals(name)) {
-				u.setName(name);
-				
+			if (!u.getRealName().equals(name)) {
+				u.setRealName(name);
 			}			
 			if (!StringUtil.isEmpty(idCard)) u.setIdCard(idCard);
 			
@@ -601,8 +603,16 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 				//计算用户所属公司数。
 				StatUser stat = statUserService.selectByPrimaryKey(userId);
 				int total = this.totalByUserId(userId);
-				stat.setTotalCompanys(total);
-				statUserService.updateByPrimaryKey(stat);
+				
+				if (stat == null) {
+					stat = statUserService.initStatUser();
+					stat.setUserId(userId);
+					stat.setTotalCompanys(total);
+					statUserService.insert(stat);
+				} else {
+					stat.setTotalCompanys(total);
+					statUserService.updateByPrimaryKey(stat);
+				}
 			}
 			
 		}
@@ -667,44 +677,44 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	}
 
 	@Override
-	public StaffListVo initStaffListVO() {
+	public StaffDetailVo initStaffDetailVo() {
 		
 		XcompanyStaff xcompanyStaff = initXcompanyStaff();
 		
-		StaffListVo listVo = new StaffListVo();
+		StaffDetailVo vo = new StaffDetailVo();
 		
-		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, listVo);
+		BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
 		
-		listVo.setStaffTypeName("");
-		listVo.setDeptName("");
+		vo.setStaffTypeName("");
+		vo.setDeptName("");
 		
 		//user 表字段
 //		private Long id;
-		listVo.setUserId(0L);
-		listVo.setMobile("");
-		listVo.setName("");
-		listVo.setUserName("");
-		listVo.setSex("男");
-		listVo.setIdCard("");
-		listVo.setHeadImg(Constants.DEFAULT_HEAD_IMG);	//默认头像
+		vo.setUserId(0L);
+		vo.setMobile("");
+		vo.setName("");
+		vo.setUserName("");
+		vo.setSex("男");
+		vo.setIdCard("");
+		vo.setHeadImg(Constants.DEFAULT_HEAD_IMG);	//默认头像
 	    
 	    /*
 	     * imgs 表对应属性
 	     */
 		//身份证照背面
-	    listVo.setIdCardBack(Constants.DEFAULT_HEAD_IMG);
+		vo.setIdCardBack(Constants.DEFAULT_HEAD_IMG);
 	    //身份证照正面
-	    listVo.setIdCardFront(Constants.DEFAULT_HEAD_IMG);
+		vo.setIdCardFront(Constants.DEFAULT_HEAD_IMG);
 	    
 	    /*
 	     * 封装成 json 格式的字段 ,加入vo
 	     */
-	    listVo.setBankCardNo("");
-	    listVo.setBankName("");
-		listVo.setContractBeginDate(DateUtil.getNowOfDate());
-		listVo.setContractLimit("");
+		vo.setBankCardNo("");
+		vo.setBankName("");
+		vo.setContractBeginDate(DateUtil.getNowOfDate());
+		vo.setContractLimit("");
 		
-		return listVo;
+		return vo;
 	}
 	
 	@Override

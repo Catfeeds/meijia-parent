@@ -144,7 +144,7 @@ public class CardAttendServiceImpl implements CardAttendService {
 				}
 				
 				if (newUser == null) {
-					newUser = userService.genUser(mobile, item.getName(), (short) 3, "");					
+					newUser = userService.genUser(mobile, item.getName(), "", (short) 3, "");					
 					usersAsyncService.genImUser(newUser.getId());
 				}
 				

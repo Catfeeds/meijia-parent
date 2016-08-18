@@ -22,8 +22,6 @@ public interface UsersService {
 	
 	Users initUsers();
 	
-	Users genUser(String mobile, String name, short addFrom, String introduction);
-	
 	Users selectByPrimaryKey(Long id);
 	
 	Users selectByMobile(String mobile);
@@ -49,5 +47,7 @@ public interface UsersService {
 	List<UserBaseVo> getUserBaseVos(List<Users> list);
 
 	List<UserStatVo> getUserStatVos(List<Users> list);
+
+	Users genUser(String mobile, String name, String realName, short addFrom, String introduction);
 	
 }

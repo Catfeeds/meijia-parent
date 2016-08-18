@@ -98,7 +98,7 @@ public class CompanyStaffController extends BaseController {
 		Users u = usersService.selectByMobile(userName);
 		Long userId = 0L;
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = usersService.genUser(userName, name, Constants.USER_APP, "");
+			u = usersService.genUser(userName, name, name, Constants.USER_APP, "");
 		}
 		userId = u.getId();
 

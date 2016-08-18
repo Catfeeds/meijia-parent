@@ -120,6 +120,7 @@ public class LoginController extends BaseController {
         accountAuth.setUserId(userId);
         accountAuth.setName(u.getName());
         accountAuth.setHeadImg(headImg);
+        accountAuth.setRealName(u.getRealName());
         accountAuth.setMobile(u.getMobile());
         accountAuth.setCompanyId(companyId);
         accountAuth.setCompanyName(companyName);

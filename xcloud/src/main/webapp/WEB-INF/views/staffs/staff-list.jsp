@@ -84,7 +84,7 @@
 									<tr>
 										<td><input type="checkbox" class="select-cell" value="${item.id}"></td>
 										<td>${item.jobNumber}</td>
-										<td><a href="#" class="name-cell">${ item.name }</a></td>
+										<td><a href="/xcloud/staff/staff-form?staff_id=${item.id }" class="name-cell">${ item.realName }</a></td>
 										<td class="am-hide-sm-only">${item.sex}</td>
 										<td class="am-hide-sm-only">${item.mobile}</td>
 										<td>${item.deptName}</td>

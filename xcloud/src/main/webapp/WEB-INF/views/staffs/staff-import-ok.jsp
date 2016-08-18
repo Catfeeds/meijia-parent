@@ -36,8 +36,12 @@
 			
 			<div class="am-g">
 				<div class="am-u-sm-12" >
-					导入成功 <button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
-				</div>				
+					导入成功
+				</div>		
+				<hr>
+				<div class="am-u-sm-12" >
+					<button type="button" class="am-btn am-btn-success" onclick="location.href = '/xcloud/staff/list/';">返回</button>
+				</div>			
 			</div>
 			
 		</div>

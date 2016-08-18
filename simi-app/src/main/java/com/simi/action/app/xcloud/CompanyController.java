@@ -99,7 +99,7 @@ public class CompanyController extends BaseController {
 		Users u = usersService.selectByMobile(mobile);
 
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-			u = usersService.genUser(mobile, "", Constants.USER_XCOULD, "");
+			u = usersService.genUser(mobile, "", "", Constants.USER_XCOULD, "");
 		}
 
 		Long userId = u.getId();

@@ -44,6 +44,7 @@ import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.ImgSearchVo;
 import com.simi.vo.user.UserSearchVo;
+import com.simi.vo.xcloud.StaffDetailVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.json.StaffJsonInfo;
@@ -158,7 +159,7 @@ public class HrStaffController extends BaseController {
 
 			XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
 			
-			StaffListVo vo = xcompanyStaffService.initStaffListVO();
+			StaffDetailVo vo = xcompanyStaffService.initStaffDetailVo();
 
 			BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
 
@@ -265,7 +266,7 @@ public class HrStaffController extends BaseController {
 	@AuthPassport
 	@RequestMapping(value = "/staff-form",method = RequestMethod.POST)
 	public String submitStaffForm(HttpServletRequest request,Model model,
-			@ModelAttribute("contentModel") StaffListVo vo, BindingResult result) throws IOException, InterruptedException, ExecutionException{
+			@ModelAttribute("contentModel") StaffDetailVo vo, BindingResult result) throws IOException, InterruptedException, ExecutionException{
 		 
 		/*
 		 * 数据校验 
@@ -306,7 +307,7 @@ public class HrStaffController extends BaseController {
 		if (u == null) {
 			
 			// 生成一个 基本的用户信息，包含  form表单中的    mobile、name
-			u = usersService.genUser(userMobile, userName, Constants.USER_XCOULD, "");
+			u = usersService.genUser(userMobile, "", userName, Constants.USER_XCOULD, "");
 			
 		}
 		Long userId  = u.getId();

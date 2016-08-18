@@ -28,6 +28,7 @@ public class StatUserServiceImpl implements StatUserService {
 		record.setTotalFeeds(0);
 		record.setTotalOrders(0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
+		record.setUpdateTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
 

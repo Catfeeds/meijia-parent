@@ -156,10 +156,10 @@ public class StaffController extends BaseController {
 			staffId = vo.getId();
 
 		String mobile = vo.getMobile();
-		String name = vo.getName();
+		String realName = vo.getRealName();
 		String jobNumber = vo.getJobNumber();
 
-		if (StringUtil.isEmpty(mobile) || StringUtil.isEmpty(name)) {
+		if (StringUtil.isEmpty(mobile) || StringUtil.isEmpty(realName)) {
 			result.addError(new FieldError("contentModel", "mobile", "手机号或姓名不能为空"));
 			return staffUserForm(model, request, staffId);
 		}
@@ -168,11 +168,11 @@ public class StaffController extends BaseController {
 		Long userId = 0L;
 		// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 		if (u == null) {
-			u = usersService.genUser(mobile, vo.getName(), Constants.USER_XCOULD, "");
+			u = usersService.genUser(mobile, "", realName, Constants.USER_XCOULD, "");
 		}
 		userId = u.getId();
-		if (!u.getName().equals(vo.getName())) {
-			u.setName(name);
+		if (!u.getRealName().equals(realName)) {
+			u.setRealName(realName);
 			usersService.updateByPrimaryKeySelective(u);
 		}
 

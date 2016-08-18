@@ -174,7 +174,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
-	public Users genUser(String mobile, String name, short addFrom, String introduction) {
+	public Users genUser(String mobile, String name, String realName, short addFrom, String introduction) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers();
@@ -185,6 +185,10 @@ public class UsersServiceImpl implements UsersService {
 				u.setName(MobileUtil.getMobileX(mobile));
 			} else {
 				u.setName(name);
+			}
+			
+			if (!StringUtil.isEmpty(realName)) {
+				u.setRealName(realName);
 			}
 			
 			u.setIntroduction(introduction);

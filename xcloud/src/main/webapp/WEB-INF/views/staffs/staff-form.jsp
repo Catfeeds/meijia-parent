@@ -33,42 +33,34 @@
 			<hr>
 
 			<div class="am-g">
-
-				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
-					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
-						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35"
-					> 云小秘提示您 </header>
-					<div class="am-panel-bd">可以扫码加入员工，快来试试吧</div>
-					<div class="am-panel-bd">
-						<img src="${xCompany.qrCode }" width="250" height="250" />
-					</div>
-					</section>
-				</div>
-
-				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-					<form:form modelAttribute="contentModel" method="POST" id="staff-form" class="am-form am-form-horizontal"
+				<form:form modelAttribute="contentModel" method="POST" id="staff-form" class="am-form am-form-horizontal"
 						enctype="multipart/form-data"
 					>
 						<form:hidden path="companyId" />
 						<form:hidden path="id" />
-
+				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+					<section class="am-panel am-panel-default"> 
+					<div class="am-panel-bd"></div>
+					<div class="am-panel-bd">
+						
+						
 						<div class="am-form-group">
 							<label  class="am-u-sm-1 am-form-label"></label>
-							<div class="am-u-sm-6">
-								<c:if test="${contentModel.headImg != null }">
-									<img class="am-circle" src="${contentModel.headImg }" width="140" height="140" />
-								</c:if>
-							</div>
+							<div class="am-u-sm-9">
+									<c:if test="${contentModel.headImg != null }">
+										<img class="am-circle" src="${contentModel.headImg }" width="140" height="140" />
+									</c:if>
+								</div>
 						</div>
-
+						
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">头像:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label"></label>
 							<div class="am-u-sm-9">
 								
 								<div class="am-form-group am-form-file">
 									<div class="am-u-sm-5">
 									<button type="button" id="btnUpload" name="btnUpload" class="am-btn am-btn-danger am-btn-sm">
-										<i class="am-icon-cloud-upload"></i> 选择要上传的图片
+										<i class="am-icon-cloud-upload"></i> 选择要上传的头像
 									</button>
 									<input id="file" type="file" name="file" accept="image/*">
 									</div>
@@ -77,12 +69,14 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					</section>
+				</div>
 
+				<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
 
 						<div class="am-form-group">
-							<label for="user-email" class="am-u-sm-3 am-form-label">员工编号<i class="am-icon-asterisk am-primary"
-								style="color: red;"
-							></i>:
+							<label for="user-email" class="am-u-sm-3 am-form-label">员工编号:
 							</label>
 							<div class="am-u-sm-9">
 								<form:input path="jobNumber" class="am-form-field am-radius js-pattern-pinteger" maxLength="4"
@@ -94,9 +88,7 @@
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号码<i class="am-icon-asterisk am-primary"
-								style="color: red;"
-							></i>:
+							<label for="user-phone" class="am-u-sm-3 am-form-label">手机号码:
 							</label>
 							<div class="am-u-sm-9">
 								<form:input path="mobile" class="am-form-field am-radius js-pattern-mobile" maxLength="11"
@@ -107,12 +99,10 @@
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">姓名<i class="am-icon-asterisk am-primary"
-								style="color: red;"
-							></i>:
+							<label for="user-phone" class="am-u-sm-3 am-form-label">姓名:
 							</label>
 							<div class="am-u-sm-9">
-								<form:input path="name" class="am-form-field am-radius" placeholder="" maxLength="64" required="required" />
+								<form:input path="realName" class="am-form-field am-radius" placeholder="" maxLength="64" required="required" />
 
 							</div>
 						</div>
@@ -128,7 +118,7 @@
 						</div>
 
 						<div class="am-form-group">
-							<label for="user-phone" class="am-u-sm-3 am-form-label">邮箱:</label>
+							<label for="user-phone" class="am-u-sm-3 am-form-label">企业邮箱:</label>
 							<div class="am-u-sm-9">
 								<form:input path="companyEmail" class="am-form-field am-radius js-pattern-email" 
 									maxLength="64"
