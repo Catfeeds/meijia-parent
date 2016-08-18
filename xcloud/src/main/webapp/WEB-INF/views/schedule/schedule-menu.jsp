@@ -15,8 +15,7 @@
 				<li><a href="/xcloud/schedule/card-form?card_type=4"><span class="am-icon-calendar"></span> 面试邀约</a></li>
 				
 			</ul></li>
-		<li><a href="#" onclick="setMenuId('collapse-nav-shcedule-set')"><span class="am-icon-tags" ></span> 常用提醒设置</a></li>
-
+		
 	</ul>
 
 

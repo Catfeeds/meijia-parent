@@ -20,7 +20,7 @@
 				<a href="/xcloud/index" onclick="setTopMenuId('top-index', '')" title="首页">首页</a>
 			</li>
 			<li id="top-schedule">
-				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', '')" title="工作日程">日程</a>
+				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-shcedule-card')" title="工作日程">日程</a>
 			</li>
 			<li id="top-staff">
 				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-staff', '')" title="通讯录" target="_top">通讯录</a>

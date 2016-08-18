@@ -11,7 +11,7 @@
 		</li>
 		<li class="admin-parent">
 			<a class="am-collapsed" onclick="setMenuId('collapse-nav-atools')">
-				<span class="am-icon-th-gear"></span>
+				<span class="am-icon-gear"></span>
 				应用工具
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
