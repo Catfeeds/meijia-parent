@@ -192,6 +192,8 @@ public class UsersServiceImpl implements UsersService {
 			}
 			
 			u.setIntroduction(introduction);
+			
+			u.setHeadImg(Constants.DEFAULT_HEAD_IMG);
 			this.insertSelective(u);
 			
 			Long userId = u.getId();
