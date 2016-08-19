@@ -173,9 +173,14 @@ public class StaffController extends BaseController {
 		userId = u.getId();
 		if (!u.getRealName().equals(realName)) {
 			u.setRealName(realName);
-			usersService.updateByPrimaryKeySelective(u);
 		}
-
+		
+		if (!u.getIdCard().equals(vo.getIdCard().trim())) {
+			u.setIdCard(vo.getIdCard().trim());
+		}
+		
+		usersService.updateByPrimaryKeySelective(u);
+		
 		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
 
 		// 新增要判断员工是否重复
@@ -508,7 +513,7 @@ public class StaffController extends BaseController {
 			xcompanyStaff = list.get(j);
 			Users users = usersService.selectByPrimaryKey(xcompanyStaff.getUserId());
 			Map<String, Object> mapValue = new HashMap<String, Object>();
-			mapValue.put("name", users.getName());
+			mapValue.put("name", users.getRealName());
 			mapValue.put("mobile", users.getMobile());
 			mapValue.put("jobNumber", xcompanyStaff.getJobNumber());
 			mapValue.put("jobName", xcompanyStaff.getJobName());

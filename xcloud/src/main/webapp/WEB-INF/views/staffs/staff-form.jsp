@@ -116,6 +116,15 @@
 								</label>
 							</div>
 						</div>
+						
+						<div class="am-form-group">
+							<label for="user-phone" class="am-u-sm-3 am-form-label">身份证号:
+							</label>
+							<div class="am-u-sm-9">
+								<form:input path="idCard" class="am-form-field am-radius" placeholder="" maxLength="18"  />
+
+							</div>
+						</div>
 
 						<div class="am-form-group">
 							<label for="user-phone" class="am-u-sm-3 am-form-label">企业邮箱:</label>
