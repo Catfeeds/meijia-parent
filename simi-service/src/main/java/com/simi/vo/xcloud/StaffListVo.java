@@ -1,7 +1,5 @@
 package com.simi.vo.xcloud;
 
-import java.util.Date;
-
 import com.simi.po.model.xcloud.XcompanyStaff;
 
 
@@ -28,6 +26,8 @@ public class StaffListVo extends XcompanyStaff {
     private String sex;
 
     private	String headImg;
+    
+    private String idCard;
 
 	public String getStaffTypeName() {
 		return staffTypeName;
@@ -91,6 +91,14 @@ public class StaffListVo extends XcompanyStaff {
 
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
+	}
+
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
 	}
     
  
