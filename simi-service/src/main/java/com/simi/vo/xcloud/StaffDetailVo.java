@@ -16,12 +16,8 @@ public class StaffDetailVo extends XcompanyStaff {
 	/* 
 	 * user 表对应属性 
 	 */
-	private Long id;
-	private Long userId;
     private String mobile;
-    // name 无法直接传参
-    private String name;	
-    
+
     private String realName;
     
     private String userName;
@@ -39,6 +35,9 @@ public class StaffDetailVo extends XcompanyStaff {
     //身份证照背面
     private String idCardBack;	
     
+    //毕业证照片
+    private String imgDegree;
+    
     /*
      * 封装成 json 格式的字段 ,加入vo
      */
@@ -46,9 +45,15 @@ public class StaffDetailVo extends XcompanyStaff {
 	
 	private String bankName;	//开户行
 	
-	private Date contractBeginDate; //合同开始日期
+	private String contractBeginDate; //合同开始日期
 	
 	private String contractLimit;  //合同期限
+	
+	private Long degreeId;
+	
+	private String degreeName;
+	
+	private String school;
 
 	public String getStaffTypeName() {
 		return staffTypeName;
@@ -66,25 +71,7 @@ public class StaffDetailVo extends XcompanyStaff {
 		this.deptName = deptName;
 	}
 
-	@Override
-	public Long getId() {
-		return id;
-	}
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Override
-	public Long getUserId() {
-		return userId;
-	}
-
-	@Override
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
 	public String getMobile() {
 		return mobile;
@@ -92,14 +79,6 @@ public class StaffDetailVo extends XcompanyStaff {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getUserName() {
@@ -166,14 +145,6 @@ public class StaffDetailVo extends XcompanyStaff {
 		this.bankName = bankName;
 	}
 
-	public Date getContractBeginDate() {
-		return contractBeginDate;
-	}
-
-	public void setContractBeginDate(Date contractBeginDate) {
-		this.contractBeginDate = contractBeginDate;
-	}
-
 	public String getContractLimit() {
 		return contractLimit;
 	}
@@ -189,8 +160,44 @@ public class StaffDetailVo extends XcompanyStaff {
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-	
 
-	
-	
+	public String getContractBeginDate() {
+		return contractBeginDate;
+	}
+
+	public void setContractBeginDate(String contractBeginDate) {
+		this.contractBeginDate = contractBeginDate;
+	}
+
+	public Long getDegreeId() {
+		return degreeId;
+	}
+
+	public void setDegreeId(Long degreeId) {
+		this.degreeId = degreeId;
+	}
+
+	public String getDegreeName() {
+		return degreeName;
+	}
+
+	public void setDegreeName(String degreeName) {
+		this.degreeName = degreeName;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+	public String getImgDegree() {
+		return imgDegree;
+	}
+
+	public void setImgDegree(String imgDegree) {
+		this.imgDegree = imgDegree;
+	}
 }

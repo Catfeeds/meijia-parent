@@ -1,11 +1,26 @@
 
-$('#file').on('change', function() {
-		var fileNames = '';
-		$.each(this.files, function() {
-			fileNames += '<span class="am-badge">' + this.name + '</span> ';
-		});
-		$('#file-list').html(fileNames);
-});
+function showMyImage(fileInput, prewName) {
+	var files = fileInput.files;
+	for (var i = 0; i < files.length; i++) {
+		var file = files[i];
+		var imageType = /image.*/;
+		if (!file.type.match(imageType)) {
+			continue;
+		}
+		var img = document.getElementById(prewName);
+		img.file = file;
+		var reader = new FileReader();
+		reader.onload = (function(aImg) {
+			return function(e) {
+				aImg.src = e.target.result;
+			};
+		})(img);
+		reader.readAsDataURL(file);
+		$("#" + prewName).css('display','block'); 
+	}
+	
+}
+
 
 $("#jobNumber").on('blur', function(e) {
 	var v = $("#jobNumber").val();

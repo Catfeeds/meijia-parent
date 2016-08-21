@@ -32,6 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,19 +44,24 @@ import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
+import com.simi.vo.ImgSearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.common.Imgs;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
+import com.simi.service.ImgService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.xcloud.StaffDetailVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
+import com.simi.vo.xcloud.json.StaffJsonInfo;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;
@@ -75,9 +82,12 @@ public class StaffController extends BaseController {
 
 	@Autowired
 	private XcompanyDeptService xcompanyDeptService;
-	
+
 	@Autowired
 	private UsersAsyncService userAsyncService;
+
+	@Autowired
+	private ImgService imgService;
 
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
@@ -87,22 +97,19 @@ public class StaffController extends BaseController {
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 
 		Long companyId = accountAuth.getCompanyId();
-		
+
 		Xcompany xCompany = xCompanyService.selectByPrimaryKey(companyId);
 
 		if (!model.containsAttribute("contentModel")) {
 
 			XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
-			StaffListVo vo = new StaffListVo();
-
-			BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
-
-			Users u = usersService.initUsers();
+			StaffDetailVo vo = xcompanyStaffService.initStaffDetailVo();
 
 			Long userId = 0L;
+			Users u = usersService.initUsers();
 
-			String jobNumber = xcompanyStaffService.getNextJobNumber(companyId);
-			vo.setJobNumber(jobNumber);
+			// json 格式字段的映射 对象, 先初始化一个
+			StaffJsonInfo staffJsonInfo = xcompanyStaffService.initJsonInfo();
 
 			if (staffId > 0L) {
 
@@ -112,14 +119,62 @@ public class StaffController extends BaseController {
 
 				u = usersService.selectByPrimaryKey(userId);
 
-				BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+				JSONObject jsonInfo = (JSONObject) xcompanyStaff.getJsonInfo();
 
-				BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+				if (jsonInfo != null) {
 
+					staffJsonInfo = JSON.toJavaObject(jsonInfo, StaffJsonInfo.class);
+				}
+
+			} else {
+
+				String jobNumber = xcompanyStaffService.getNextJobNumber(companyId);
+				vo.setJobNumber(jobNumber);
 			}
+
+			BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+
+			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
+
+			BeanUtilsExp.copyPropertiesIgnoreNull(staffJsonInfo, vo);
+
 			// 注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
 			vo.setId(xcompanyStaff.getId());
 			vo.setCompanyId(companyId);
+
+			vo.setId(xcompanyStaff.getId());
+			vo.setCompanyId(companyId);
+
+			vo.setUserName(u.getName());
+			vo.setHeadImg(vo.getHeadImg().trim());
+
+			// 附件图片 。。。 身份证号 图片
+			ImgSearchVo imgSearchVo = new ImgSearchVo();
+
+			imgSearchVo.setUserId(userId);
+
+			List<Imgs> imgList = imgService.selectBySearchVo(imgSearchVo);
+
+			for (Imgs imgs : imgList) {
+
+				String linkType = imgs.getLinkType();
+
+				if (linkType.equalsIgnoreCase(Constants.IMGS_LINK_TYPE_IDCARD_FRONT)) {
+					// 身份证正面
+					vo.setIdCardFront(imgs.getImgUrl().trim());
+				}
+
+				if (linkType.equalsIgnoreCase(Constants.IMGS_LINK_TYPE_IDCARD_BACK)) {
+					// 身份证背面
+					vo.setIdCardBack(imgs.getImgUrl().trim());
+				}
+				
+				if (linkType.equalsIgnoreCase(Constants.IMGS_LINK_TYPE_DEGREE)) {
+					// 身份证背面
+					vo.setImgDegree(imgs.getImgUrl().trim());
+				}
+				
+			}
 
 			model.addAttribute("contentModel", vo);
 		}
@@ -135,16 +190,16 @@ public class StaffController extends BaseController {
 
 	/**
 	 * 员工修改
-	 * @throws IOException 
-	 * @throws JsonMappingException 
-	 * @throws JsonParseException 
+	 * 
+	 * @throws IOException
+	 * @throws JsonMappingException
+	 * @throws JsonParseException
 	 */
 	@SuppressWarnings("unchecked")
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = RequestMethod.POST)
-	public String saveUserForm(HttpServletRequest request, Model model, 
-			@ModelAttribute("contentModel") StaffListVo vo, 
-			BindingResult result) throws JsonParseException, JsonMappingException, IOException {
+	public String saveUserForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") StaffListVo vo, BindingResult result)
+			throws JsonParseException, JsonMappingException, IOException {
 
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
@@ -174,13 +229,13 @@ public class StaffController extends BaseController {
 		if (!u.getRealName().equals(realName)) {
 			u.setRealName(realName);
 		}
-		
+
 		if (!u.getIdCard().equals(vo.getIdCard().trim())) {
 			u.setIdCard(vo.getIdCard().trim());
 		}
-		
+
 		usersService.updateByPrimaryKeySelective(u);
-		
+
 		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
 
 		// 新增要判断员工是否重复
@@ -239,11 +294,10 @@ public class StaffController extends BaseController {
 		} else {
 			xcompanyStaff.setJobNumber(xcompanyStaffService.getNextJobNumber(companyId));
 			xcompanyStaffService.insertSelective(xcompanyStaff);
-			
-			//统计公司数
+
+			// 统计公司数
 			userAsyncService.statUser(userId, "totalCompanys");
-			
-			
+
 		}
 
 		// 处理图片上传

@@ -22,11 +22,11 @@
 			<li id="top-schedule">
 				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-shcedule-card')" title="工作日程">日程</a>
 			</li>
-			<li id="top-staff">
+<!-- 			<li id="top-staff">
 				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-staff', '')" title="通讯录" target="_top">通讯录</a>
-			</li>
+			</li> -->
 			<li id="top-hr">
-				<a href="/xcloud/hr/staff-list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">人事</a>
+				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">人事</a>
 			</li>
 			<li id="top-xz">
 				<a href="/xcloud/xz/checkin/stat-list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-checkin')"

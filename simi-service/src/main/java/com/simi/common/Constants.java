@@ -176,6 +176,9 @@ public class Constants {
 	//身份证图片 背面
 	public static String IMGS_LINK_TYPE_IDCARD_BACK = "idCardBack";
 	
+	//毕业证照片 
+	public static String IMGS_LINK_TYPE_DEGREE = "degree";
+	
 	//建表时,规定的几种 图片类型
 	public static String IMGS_LINK_TYPE_EXPRESS = "express";	//快递
 	public static String IMGS_LINK_TYPE_FEED = "feed";			//动态

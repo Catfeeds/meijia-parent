@@ -210,9 +210,9 @@ public class HrStaffController extends BaseController {
 			BeanUtilsExp.copyPropertiesIgnoreNull(staffJsonInfo, vo);
 			
 			// string 类型的日期 转为 date 类型   
-			if(!StringUtil.isEmpty(staffJsonInfo.getContractBeginDate())){
-				vo.setContractBeginDate(DateUtil.parse(staffJsonInfo.getContractBeginDate()));
-			}
+//			if(!StringUtil.isEmpty(staffJsonInfo.getContractBeginDate())){
+//				vo.setContractBeginDate(DateUtil.parse(staffJsonInfo.getContractBeginDate()));
+//			}
 			
 			// 注意这里user表id 和 xcompanyStaff表的id同名，所以需要手动设置
 			vo.setId(xcompanyStaff.getId());

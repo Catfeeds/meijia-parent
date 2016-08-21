@@ -673,6 +673,10 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		jsonInfo.setContractBeginDate(DateUtil.getNow());
 		jsonInfo.setContractLimit("");
 		
+		jsonInfo.setDegreeId(0L);
+		jsonInfo.setDegreeName("");
+		jsonInfo.setSchool("");
+		
 		return jsonInfo;
 	}
 
@@ -692,7 +696,6 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 //		private Long id;
 		vo.setUserId(0L);
 		vo.setMobile("");
-		vo.setName("");
 		vo.setUserName("");
 		vo.setSex("男");
 		vo.setIdCard("");
@@ -702,16 +705,18 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	     * imgs 表对应属性
 	     */
 		//身份证照背面
-		vo.setIdCardBack(Constants.DEFAULT_HEAD_IMG);
+		vo.setIdCardBack("");
 	    //身份证照正面
-		vo.setIdCardFront(Constants.DEFAULT_HEAD_IMG);
+		vo.setIdCardFront("");
+		
+		vo.setImgDegree("");
 	    
 	    /*
 	     * 封装成 json 格式的字段 ,加入vo
 	     */
 		vo.setBankCardNo("");
 		vo.setBankName("");
-		vo.setContractBeginDate(DateUtil.getNowOfDate());
+		vo.setContractBeginDate("");
 		vo.setContractLimit("");
 		
 		return vo;
