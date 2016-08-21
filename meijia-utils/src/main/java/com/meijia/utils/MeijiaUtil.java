@@ -1,7 +1,9 @@
 package com.meijia.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 云行政的常用方法
@@ -375,6 +377,7 @@ public class MeijiaUtil {
 		}
 		return DegreeName;
 	}
+	
 	public static List<String> getDegreeType(){
 		List<String> list = new ArrayList<String>();
 		list.add(0,"小学");
@@ -386,6 +389,20 @@ public class MeijiaUtil {
 		list.add(6,"博士研究生");
 		return list;
 	}
+	
+	public static HashMap getDegreeTypeMap(){
+		HashMap<Integer, String> data = new HashMap<Integer, String>();
+		data.put(0,"小学");
+		data.put(1,"初中");
+		data.put(2,"高中");
+		data.put(3,"专科");
+		data.put(4,"本科");
+		data.put(5,"硕士研究生");
+		data.put(6,"博士研究生");
+		return data;
+	}
+	
+	
 	public static String getNationName(String nameId) {
 		String NationName = "";
 		switch (nameId) {

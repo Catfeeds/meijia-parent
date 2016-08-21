@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +33,7 @@ import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.dict.DictAd;
 import com.simi.po.model.op.AppTools;
 import com.simi.po.model.total.TotalHit;
+import com.simi.service.ImgService;
 import com.simi.service.dict.AdService;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.total.TotalHitService;
@@ -51,6 +53,9 @@ public class DictAdController extends BaseController {
 	
 	@Autowired
 	private TotalHitService hitService;
+	
+	@Autowired
+	private ImgService imgService;
 	
 	/*
 	 * 
@@ -142,40 +147,14 @@ public class DictAdController extends BaseController {
 
 		Long id = Long.valueOf(request.getParameter("id"));
 
-		// 创建一个通用的多部分解析器.
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
-		String addr = request.getRemoteAddr();
-		int port = request.getServerPort();
-		if (multipartResolver.isMultipart(request)) {
-			// 判断 request 是否有文件上传,即多部分请求...
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-					String url = Constants.IMG_SERVER_HOST + "/upload/";
-					String fileName = file.getOriginalFilename();
-					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-					fileType = fileType.toLowerCase();
-					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-					
-					ObjectMapper mapper = new ObjectMapper();
 
-					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-					String ret = o.get("ret").toString();
-
-					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
-					dictAd.setImgUrl(imgUrl);
-
-				}
-			}
+		// 处理 多文件 上传
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);	
+		if (fileMaps.get("imgUrl") != null) {
+			String imgUrl = fileMaps.get("imgUrl").toString();
+			dictAd.setImgUrl(imgUrl);
 		}
-
+		
 		// 更新或者新增
 		if (id != null && id > 0) {
 			dictAd.setUpdateTime(TimeStampUtil.getNow() / 1000);

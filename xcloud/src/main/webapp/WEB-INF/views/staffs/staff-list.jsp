@@ -21,7 +21,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">通讯录</strong> / <small>Contacts</small>
+					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small>Personnel files</small>
 				</div>
 				<div class="am-u-sm-12 am-u-md-6 am-fr">
 					<div class="am-btn-toolbar am-fr">

@@ -118,7 +118,7 @@
 						<div class=col-md-5>
 							<form:select path="userType" class="form-control">
 								<form:option value="" label="请选择用户类型" />
-								<<form:options items="${groups}" itemValue="groupId" itemLabel="name"/>/>
+								<<form:options items="${groups}" itemValue="groupId" itemLabel="name"/>
 								<form:option value="0" label="全部用户"/>
 								<%-- <form:option value="0" label="普通用户" />
 								<form:option value="1" label="秘书" />

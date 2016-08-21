@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -41,8 +43,11 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.ExcelUtil;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.MeijiaUtil;
 import com.meijia.utils.RandomUtil;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
+import com.meijia.wx.utils.JsonUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.ImgSearchVo;
 import com.simi.common.ConstantMsg;
@@ -53,11 +58,13 @@ import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.ImgService;
+import com.simi.service.async.FileUploadAsyncService;
 import com.simi.service.async.UsersAsyncService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.user.UserSearchVo;
 import com.simi.vo.xcloud.StaffDetailVo;
 import com.simi.vo.xcloud.StaffListVo;
 import com.simi.vo.xcloud.UserCompanySearchVo;
@@ -89,6 +96,9 @@ public class StaffController extends BaseController {
 	@Autowired
 	private ImgService imgService;
 
+	@Autowired
+	private FileUploadAsyncService fileUploadAsyncService;
+
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = { RequestMethod.GET })
 	public String staffUserForm(Model model, HttpServletRequest request, @RequestParam(value = "staff_id", required = false) Long staffId) {
@@ -104,17 +114,19 @@ public class StaffController extends BaseController {
 
 			XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
 			StaffDetailVo vo = xcompanyStaffService.initStaffDetailVo();
-
+			
+			
 			Long userId = 0L;
 			Users u = usersService.initUsers();
-
+			
 			// json 格式字段的映射 对象, 先初始化一个
 			StaffJsonInfo staffJsonInfo = xcompanyStaffService.initJsonInfo();
 
 			if (staffId > 0L) {
 
 				xcompanyStaff = xcompanyStaffService.selectByPrimarykey(staffId);
-
+				BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+				
 				userId = xcompanyStaff.getUserId();
 
 				u = usersService.selectByPrimaryKey(userId);
@@ -127,12 +139,12 @@ public class StaffController extends BaseController {
 				}
 
 			} else {
-
+				BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
 				String jobNumber = xcompanyStaffService.getNextJobNumber(companyId);
 				vo.setJobNumber(jobNumber);
 			}
 
-			BeanUtilsExp.copyPropertiesIgnoreNull(xcompanyStaff, vo);
+			
 
 			BeanUtilsExp.copyPropertiesIgnoreNull(u, vo);
 
@@ -168,12 +180,12 @@ public class StaffController extends BaseController {
 					// 身份证背面
 					vo.setIdCardBack(imgs.getImgUrl().trim());
 				}
-				
+
 				if (linkType.equalsIgnoreCase(Constants.IMGS_LINK_TYPE_DEGREE)) {
 					// 身份证背面
 					vo.setImgDegree(imgs.getImgUrl().trim());
 				}
-				
+
 			}
 
 			model.addAttribute("contentModel", vo);
@@ -185,21 +197,30 @@ public class StaffController extends BaseController {
 
 		model.addAttribute("deptList", deptList);
 
+		// 学位
+		HashMap<Integer, String> degreeTypes = MeijiaUtil.getDegreeTypeMap();
+		model.addAttribute("degreeTypes", degreeTypes);
+
 		return "/staffs/staff-form";
 	}
 
 	/**
 	 * 员工修改
+	 * 校验的流程如下
+	 * 1. 手机号和姓名不能为空
+	 * 2. 新增信息判断该公司成员重复.
+	 * 3. 身份证号不能重复
 	 * 
 	 * @throws IOException
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
-	@SuppressWarnings("unchecked")
 	@AuthPassport
 	@RequestMapping(value = "/staff-form", method = RequestMethod.POST)
-	public String saveUserForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") StaffListVo vo, BindingResult result)
-			throws JsonParseException, JsonMappingException, IOException {
+	public String saveUserForm(HttpServletRequest request, Model model, @ModelAttribute("contentModel") StaffDetailVo vo, BindingResult result)
+			throws JsonParseException, JsonMappingException, IOException, InterruptedException, ExecutionException {
 
 		// 获取登录的用户
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
@@ -207,45 +228,37 @@ public class StaffController extends BaseController {
 		Long companyId = accountAuth.getCompanyId();
 
 		Long staffId = 0L;
-		if (vo.getId() != null)
-			staffId = vo.getId();
-
+		if (vo.getId() != null) staffId = vo.getId();
+		
+		Long userId = vo.getUserId();
+		Users u = null;
+		
 		String mobile = vo.getMobile();
 		String realName = vo.getRealName();
 		String jobNumber = vo.getJobNumber();
 
+		// 1. 手机号和姓名不能为空
 		if (StringUtil.isEmpty(mobile) || StringUtil.isEmpty(realName)) {
-			result.addError(new FieldError("contentModel", "mobile", "手机号或姓名不能为空"));
+			result.addError(new FieldError("contentModel", "mobile", "手机号和姓名不能为空"));
 			return staffUserForm(model, request, staffId);
 		}
+		
+		Users userExist = usersService.selectByMobile(mobile);
+		if (userId.equals(0L)) {
 
-		Users u = usersService.selectByMobile(mobile);
-		Long userId = 0L;
-		// 验证手机号是否已经注册，如果未注册，则自动注册用户，
-		if (u == null) {
-			u = usersService.genUser(mobile, "", realName, Constants.USER_XCOULD, "");
+			// 验证手机号是否已经注册，如果未注册，则自动注册用户，
+			if (userExist == null) {
+				u = usersService.genUser(mobile, "", realName, Constants.USER_XCOULD, "");
+			}
+			userId = u.getId();
 		}
-		userId = u.getId();
-		if (!u.getRealName().equals(realName)) {
-			u.setRealName(realName);
-		}
-
-		if (!u.getIdCard().equals(vo.getIdCard().trim())) {
-			u.setIdCard(vo.getIdCard().trim());
-		}
-
-		usersService.updateByPrimaryKeySelective(u);
-
-		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
-
-		// 新增要判断员工是否重复
+		
+		// 1.新增要判断员工是否重复
 		if (staffId.equals(0L)) {
-
 			UserCompanySearchVo searchVo = new UserCompanySearchVo();
 			searchVo.setCompanyId(companyId);
 			searchVo.setUserId(userId);
 			searchVo.setStatus((short) 1);
-
 			List<XcompanyStaff> rsList = xcompanyStaffService.selectBySearchVo(searchVo);
 			XcompanyStaff xcompanyStaffExist = null;
 			if (!rsList.isEmpty()) {
@@ -273,6 +286,49 @@ public class StaffController extends BaseController {
 				return staffUserForm(model, request, staffId);
 			}
 		}
+		
+		//判断手机号是否已经重复
+		if (staffId > 0L) {
+			if (userExist != null && !userExist.getId().equals(userId)) {
+				result.addError(new FieldError("contentModel", "mobile", "手机号已存在，请重新填写"));
+				return staffUserForm(model, request, staffId);
+			}
+		}
+		
+		u = usersService.selectByPrimaryKey(userId);
+		
+		// 2. 校验身份证号, 根据身份证号得到一个 userId
+		
+		
+
+		if (!StringUtil.isEmpty(vo.getIdCard())) {
+			UserSearchVo userSearchVo = new UserSearchVo();
+			userSearchVo.setIdCard(vo.getIdCard());
+			List<Users> idCardUserList = usersService.selectBySearchVo(userSearchVo);
+			
+			if (!idCardUserList.isEmpty()) {
+				for (Users uitem : idCardUserList) {
+					if (!userId.equals(uitem.getId())) {
+						result.addError(new FieldError("contentModel", "mobile", "身份证号有重复,请重新填写"));
+						return staffUserForm(model, request, staffId);
+					}
+				}
+			}
+		}
+
+		// 先更新users对象
+		if (!u.getRealName().equals(realName)) {
+			u.setRealName(realName);
+		}
+
+		if (!u.getIdCard().equals(vo.getIdCard().trim())) {
+			u.setIdCard(vo.getIdCard().trim());
+		}
+
+		usersService.updateByPrimaryKeySelective(u);
+
+		// 处理 XcompanyStaff对象，包括json数据
+		XcompanyStaff xcompanyStaff = xcompanyStaffService.initXcompanyStaff();
 
 		if (staffId > 0L) {
 			xcompanyStaff = xcompanyStaffService.selectByPrimarykey(staffId);
@@ -285,9 +341,37 @@ public class StaffController extends BaseController {
 		String joinDate = request.getParameter("joinDate");
 		xcompanyStaff.setJoinDate(DateUtil.parse(joinDate));
 
+		String regularDate = request.getParameter("regularDate");
+		xcompanyStaff.setRegularDate(DateUtil.parse(regularDate));
+
 		xcompanyStaff.setJobName(vo.getJobName());
 		xcompanyStaff.setDeptId(vo.getDeptId());
 		xcompanyStaff.setStaffType(vo.getStaffType());
+
+		/*
+		 * 组装 json 字段
+		 */
+		StaffJsonInfo info = xcompanyStaffService.initJsonInfo();
+
+		info.setBankCardNo(vo.getBankCardNo());
+		info.setBankName(vo.getBankName());
+
+		String contractBeginDate = request.getParameter("contractBeginDate");
+		Long cbTime = TimeStampUtil.getMillisOfDay(contractBeginDate);
+		contractBeginDate = TimeStampUtil.timeStampToDateStr(cbTime, DateUtil.DEFAULT_PATTERN);
+		info.setContractBeginDate(contractBeginDate);
+
+		info.setContractLimit(vo.getContractLimit());
+
+		if (vo.getDegreeId() != null && vo.getDegreeId() > 0L) {
+			info.setDegreeId(vo.getDegreeId());
+			info.setDegreeName(MeijiaUtil.getDegreeName(vo.getDegreeId().shortValue()));
+		}
+
+		info.setSchool(vo.getSchool());
+
+		String json = JsonUtil.objecttojson(info);
+		xcompanyStaff.setJsonInfo(json);
 
 		if (staffId > 0L) {
 			xcompanyStaffService.updateByPrimaryKeySelective(xcompanyStaff);
@@ -300,39 +384,98 @@ public class StaffController extends BaseController {
 
 		}
 
-		// 处理图片上传
-		// 创建一个通用的多部分解析器.
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		if (multipartResolver.isMultipart(request)) {
-			// 判断 request 是否有文件上传,即多部分请求...
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-					String url = Constants.IMG_SERVER_HOST + "/upload/";
-					String fileName = file.getOriginalFilename();
-					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-					fileType = fileType.toLowerCase();
-					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-
-					ObjectMapper mapper = new ObjectMapper();
-
-					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-					String ret = o.get("ret").toString();
-
-					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-					String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
-					u.setHeadImg(imgUrl);
-					usersService.updateByPrimaryKeySelective(u);
-				}
-			}
+		// 处理 多文件 上传
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		
+		String headImgUrl = "";
+		
+		if (fileMaps.get("headImg") != null) {
+			headImgUrl = fileMaps.get("headImg");
+			// 用户头像
+			u.setHeadImg(headImgUrl);
+			usersService.updateByPrimaryKeySelective(u);
 		}
 
-		// todo 给相应的用户进行通知
+		ImgSearchVo imgSearchVo = new ImgSearchVo();
+		
+		imgSearchVo.setUserId(userId);
+		List<Imgs> imgList = imgService.selectBySearchVo(imgSearchVo);
+		Imgs img = imgService.initImg();
+		// 身份证正反面
+		if (fileMaps.get("imgIdCardFront") != null) {
+			String imgIdCardFront = fileMaps.get("imgIdCardFront");
+			img = imgService.initImg();
+			//修改
+			for (Imgs item : imgList) {
+				if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_IDCARD_FRONT)) {
+					img = item;
+					break;
+				}
+			}
+			
+			img.setUserId(userId);
+			img.setLinkId(userId);
+			img.setLinkType(Constants.IMGS_LINK_TYPE_IDCARD_FRONT);
+			img.setImgUrl(imgIdCardFront);
+			
+			if (img.getImgId() > 0L) {
+				imgService.updateByPrimaryKey(img);
+			} else {
+				imgService.insert(img);
+			}
+			
+		}
+		
+		if (fileMaps.get("imgIdCardBack") != null) {
+			String imgIdCardBack = fileMaps.get("imgIdCardBack");
+			
+			img = imgService.initImg();
+			//修改
+			for (Imgs item : imgList) {
+				if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_IDCARD_BACK)) {
+					img = item;
+					break;
+				}
+			}
+			
+			img.setUserId(userId);
+			img.setLinkId(userId);
+			img.setLinkType(Constants.IMGS_LINK_TYPE_IDCARD_BACK);
+			img.setImgUrl(imgIdCardBack);
+			
+			if (img.getImgId() > 0L) {
+				imgService.updateByPrimaryKey(img);
+			} else {
+				imgService.insert(img);
+			}
+		}
+		
+
+		if (fileMaps.get("imgDegree") != null) {
+			String imgDegree = fileMaps.get("imgDegree");
+
+			img = imgService.initImg();
+			//修改
+			for (Imgs item : imgList) {
+				if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_DEGREE)) {
+					img = item;
+					break;
+				}
+			}
+			
+			img.setUserId(userId);
+			img.setLinkId(userId);
+			img.setLinkType(Constants.IMGS_LINK_TYPE_DEGREE);
+			img.setImgUrl(imgDegree);
+			
+			if (img.getImgId() > 0L) {
+				imgService.updateByPrimaryKey(img);
+			} else {
+				imgService.insert(img);
+			}
+		}
+		
+		
 
 		return "redirect:list";
 	}

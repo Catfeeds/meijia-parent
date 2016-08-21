@@ -670,7 +670,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 		jsonInfo.setBankName("");
 		
 		//默认一个合同开始时间， 今天 
-		jsonInfo.setContractBeginDate(DateUtil.getNow());
+		jsonInfo.setContractBeginDate(DateUtil.getToday());
 		jsonInfo.setContractLimit("");
 		
 		jsonInfo.setDegreeId(0L);
@@ -716,7 +716,7 @@ public class XcompanyStaffServiceImpl implements XcompanyStaffService {
 	     */
 		vo.setBankCardNo("");
 		vo.setBankName("");
-		vo.setContractBeginDate("");
+		vo.setContractBeginDate(DateUtil.getToday());
 		vo.setContractLimit("");
 		
 		return vo;

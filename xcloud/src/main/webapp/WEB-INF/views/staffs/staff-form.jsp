@@ -19,7 +19,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small></small>
+					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small>Personnel files</small>
 				</div>
 			</div>
 			<div class="am-g">
@@ -27,18 +27,18 @@
 					enctype="multipart/form-data">
 					<form:hidden path="companyId" />
 					<form:hidden path="id" />
+					<form:hidden path="userId" />
 					<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
 						<br> <br> <section class="am-panel am-panel-default">
 						<div class="am-panel-bd"></div>
 						<div class="am-panel-bd">
 							<div class="am-form-group">
 								<label class="am-u-sm-1 am-form-label"></label>
-								<div class="am-u-sm-9" style="height:140px;">
-										<img id="preHeadImg"  src="${contentModel.headImg }" width="140" height="140" 
-										  <c:if test="${contentModel.headImg == '' }">
+								<div class="am-u-sm-9" style="height: 140px;">
+									<img id="preHeadImg" src="${contentModel.headImg }" width="140" height="140"
+										<c:if test="${contentModel.headImg == '' }">
 										  	 style="display:none"
-										  </c:if>
-										/>
+										  </c:if> />
 								</div>
 							</div>
 							<div class="am-form-group">
@@ -50,9 +50,8 @@
 												<i class="am-icon-cloud-upload"></i>
 												选择要上传的头像
 											</button>
-											<input id="file" type="file" name="file" accept="image/*" onchange="showMyImage(this, 'preHeadImg')">
+											<input id="headImg" type="file" name="headImg" accept="image/*" onchange="showMyImage(this, 'preHeadImg')">
 										</div>
-										
 									</div>
 								</div>
 							</div>
@@ -110,6 +109,23 @@
 										</div>
 									</div>
 									<div class="am-form-group">
+										<label for="user-phone" class="am-u-sm-3 am-form-label">毕业院校:</label>
+										<div class="am-u-sm-9">
+											<form:input path="school" class="am-form-field am-radius" maxLength="64" />
+											<small></small>
+										</div>
+									</div>
+									<div class="am-form-group">
+										<label for="user-phone" class="am-u-sm-3 am-form-label">学历:</label>
+										<div class="am-u-sm-9">
+											<form:select path="degreeId">
+												<form:option value="">请选择</form:option>
+												<form:options items="${degreeTypes}" />
+											</form:select>
+											<small></small>
+										</div>
+									</div>
+									<div class="am-form-group">
 										<label for="user-phone" class="am-u-sm-3 am-form-label">银行卡号:</label>
 										<div class="am-u-sm-9">
 											<form:input path="bankCardNo" class="am-form-field am-radius" maxLength="64" />
@@ -131,7 +147,7 @@
 										<div class="am-u-sm-9">
 											<form:input path="jobNumber" class="am-form-field am-radius js-pattern-pinteger" maxLength="4"
 												data-validation-message="" placeholder="" required="required"
-												readOnly="${(contentModel.id > 0) ? 'readonly' : ''}" style="background-color: #fff;"/>
+												readOnly="${(contentModel.id > 0) ? 'readonly' : ''}" style="background-color: #fff;" />
 										</div>
 									</div>
 									<div class="am-form-group">
@@ -183,6 +199,17 @@
 										</div>
 									</div>
 									<div class="am-form-group">
+										<label class="am-u-sm-3 am-form-label">合同年限:</label>
+										<div class="am-u-sm-9">
+											<form:select path="contractLimit" class="am-form-field am-radius">
+												<form:option value="6个月">6个月</form:option>
+												<form:option value="1年">1年</form:option>
+												<form:option value="2年">2年</form:option>
+											</form:select>
+										</div>
+										<div class="am-u-sm-3"></div>
+									</div>
+									<div class="am-form-group">
 										<label for="user-phone" class="am-u-sm-3 am-form-label">职位:</label>
 										<div class="am-u-sm-9">
 											<form:input path="jobName" class="am-form-field am-radius" placeholder="" maxLength="64" />
@@ -212,17 +239,15 @@
 								</div>
 								<!----------------- 附件信息 ------------------------------------>
 								<div class="am-tab-panel am-fade am-in am-g" id="staff-files">
-									
 									<div class="am-u-sm-4">
 										<section class="am-panel am-panel-default">
 										<div class="am-panel-bd"></div>
 										<div class="am-panel-bd">
-											<div class="am-form-group" style="height=140px;">
-												<img id="imgIdCardFrontPrew"  src="${contentModel.idCardFront}" width="140" height="140" 
-												  <c:if test="${contentModel.idCardFront == '' }">
+											<div class="am-form-group" style="">
+												<img id="imgIdCardFrontPrew" src="${contentModel.idCardFront}" width="140" height="140"
+													<c:if test="${contentModel.idCardFront == '' }">
 												  	 style="display:none"
-												  </c:if>
-												/>
+												  </c:if> />
 											</div>
 											<div class="am-form-group am-form-file">
 												<div class="am-u-sm-5">
@@ -230,24 +255,22 @@
 														<i class="am-icon-cloud-upload"></i>
 														身份证正面照片
 													</button>
-													<input id="imgIdCardFront" type="file" name="imgIdCardFront" accept="image/*" onchange="showMyImage(this, 'imgIdCardFrontPrew')">
+													<input id="imgIdCardFront" type="file" name="imgIdCardFront" accept="image/*"
+														onchange="showMyImage(this, 'imgIdCardFrontPrew')">
 												</div>
 											</div>
 										</div>
 										</section>
 									</div>
-
 									<div class="am-u-sm-4">
 										<section class="am-panel am-panel-default">
 										<div class="am-panel-bd"></div>
 										<div class="am-panel-bd">
-											<div class="am-form-group" style="height=140px;">
-
-												<img id="imgIdCardBackPrew"  src="${contentModel.idCardBack }" width="140" height="140" 
-												  <c:if test="${contentModel.idCardBack == '' }">
+											<div class="am-form-group" style="">
+												<img id="imgIdCardBackPrew" src="${contentModel.idCardBack }" width="140" height="140"
+													<c:if test="${contentModel.idCardBack == '' }">
 												  	 style="display:none"
-												  </c:if>
-												/>
+												  </c:if> />
 											</div>
 											<div class="am-form-group am-form-file">
 												<div class="am-u-sm-5">
@@ -255,25 +278,22 @@
 														<i class="am-icon-cloud-upload"></i>
 														身份证反面照片
 													</button>
-													<input id="imgIdCardBack" type="file" name="imgIdCardBack" accept="image/*" onchange="showMyImage(this, 'imgIdCardBackPrew')">
+													<input id="imgIdCardBack" type="file" name="imgIdCardBack" accept="image/*"
+														onchange="showMyImage(this, 'imgIdCardBackPrew')">
 												</div>
-												
 											</div>
 										</div>
 										</section>
 									</div>
-									
 									<div class="am-u-sm-4">
 										<section class="am-panel am-panel-default">
 										<div class="am-panel-bd"></div>
 										<div class="am-panel-bd">
-											<div class="am-form-group" style="height=140px;">
-												
-												<img id="imgDegreePrew"  src="${contentModel.imgDegree }" width="140" height="140" 
-												  <c:if test="${contentModel.imgDegree == '' }">
+											<div class="am-form-group" style="">
+												<img id="imgDegreePrew" src="${contentModel.imgDegree }" width="140" height="140"
+													<c:if test="${contentModel.imgDegree == '' }">
 												  	 style="display:none"
-												  </c:if>
-												/>
+												  </c:if> />
 											</div>
 											<div class="am-form-group am-form-file">
 												<div class="am-u-sm-5">
@@ -281,9 +301,9 @@
 														<i class="am-icon-cloud-upload"></i>
 														毕业证照片
 													</button>
-													<input id="imgDegree" type="file" name="imgDegree" accept="image/*" onchange="showMyImage(this, 'imgDegreePrew')">
+													<input id="imgDegree" type="file" name="imgDegree" accept="image/*"
+														onchange="showMyImage(this, 'imgDegreePrew')">
 												</div>
-												
 											</div>
 										</div>
 										</section>

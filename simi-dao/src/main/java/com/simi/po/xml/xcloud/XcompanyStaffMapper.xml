@@ -148,7 +148,7 @@
 		#{cityId,jdbcType=NUMERIC}, #{tel,jdbcType=VARCHAR}, #{telExt,jdbcType=VARCHAR},
 		#{companyEmail,jdbcType=VARCHAR}, #{companyFax,jdbcType=VARCHAR}, #{staffType,jdbcType=NUMERIC},
 		#{jobNumber,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{joinDate,jdbcType=DATE},
-		#{regularDate,jdbcType=DATE}, #{jsonInfo,jdbcType=OTHER})
+		#{regularDate,jdbcType=DATE}, #{jsonInfo,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.xcloud.XcompanyStaff">
 		insert into xcompany_staff
@@ -307,6 +307,9 @@
 			<if test="regularDate != null">
 				regular_date = #{regularDate,jdbcType=DATE},
 			</if>
+			<if test="jsonInfo != null">
+				json_info = #{jsonInfo,jdbcType=OTHER}
+			</if>
 		</set>
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
@@ -327,6 +330,7 @@
 		job_name = #{jobName,jdbcType=VARCHAR},
 		join_date = #{joinDate,jdbcType=DATE},
 		regular_date = #{regularDate,jdbcType=DATE},
+		json_info = #{jsonInfo,jdbcType=OTHER}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>
 	

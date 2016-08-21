@@ -74,7 +74,8 @@ $("#mobile").on('blur', function(e) {
 
 $("#btn-staff-submit").on('click', function(e) {
 	var form = $('#staff-form');
-	
+	$('#staff-form').validator();
+
 	var formValidity = $('#staff-form').validator().data('amui.validator').validateForm().valid
 	
 	if (formValidity) {
