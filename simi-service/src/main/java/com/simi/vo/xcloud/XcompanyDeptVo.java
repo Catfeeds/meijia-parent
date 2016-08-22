@@ -14,6 +14,8 @@ public class XcompanyDeptVo extends XcompanyDept {
 	
 	private String leadUserName;	//负责人名称
 	
+	private int total;
+	
 	
 	public String getLeadUserName() {
 		return leadUserName;
@@ -40,6 +42,12 @@ public class XcompanyDeptVo extends XcompanyDept {
 	}
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	
 	

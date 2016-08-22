@@ -96,6 +96,7 @@
 											<div class="am-btn-toolbar">
 												<div class="am-btn-group am-btn-group-xs">
 													<a href="/xcloud/staff/staff-form?staff_id=${item.id }" class="am-icon-edit" title="编辑"></a>
+													<a href="#" onClick="javascript:staffDel(${item.id})" class="am-icon-user-times" title="删除"></a>
 												</div>
 											</div>
 										</td>

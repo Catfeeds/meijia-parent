@@ -45,7 +45,8 @@
 							<thead>
 								<tr>
 									<th class="table-title">部门名称</th>
-									<th class="table-title">所在公司</th>
+									<th class="table-title">负责人</th>
+									<th class="table-title">人数</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -53,7 +54,8 @@
 								<c:forEach items="${deptListModel.list}" var="item">
 									<tr>
 										<td>${item.name}</td>
-										<td>${item.companyName}</td>
+										<td>${item.leadUserName}</td>
+										<td>${item.total}</td>
 										<td><a href="#" onclick="getJobDetail(${item.deptId})" class="am-icon-search" title="查看"></a></td>
 									</tr>
 								</c:forEach>

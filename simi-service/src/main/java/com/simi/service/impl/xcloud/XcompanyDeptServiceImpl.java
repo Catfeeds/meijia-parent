@@ -16,6 +16,7 @@ import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
+import com.simi.vo.xcloud.UserCompanySearchVo;
 import com.simi.vo.xcloud.XcompanyDeptVo;
 import com.simi.vo.xcloud.company.DeptSearchVo;
 
@@ -146,16 +147,21 @@ public class XcompanyDeptServiceImpl implements XcompanyDeptService {
 //		initVo.setParentName(dept2.getName());
 		
 		//负责人
-		XcompanyStaff xcompanyStaff = xcompanyStaffService.selectByPrimarykey(dept.getLeaderUserId());
-		
-		if(xcompanyStaff != null){
-			Long userId = xcompanyStaff.getUserId();
-			
-			Users users = userService.selectByPrimaryKey(userId);
-			
+
+		initVo.setLeadUserName("");
+		if (dept.getLeaderUserId() > 0L) {
+			Users users = userService.selectByPrimaryKey(dept.getLeaderUserId());
 			initVo.setLeadUserName(users.getName());
 		}
 		
+		initVo.setTotal(0);
+		UserCompanySearchVo searchVo = new UserCompanySearchVo();
+		searchVo.setCompanyId(companyId);
+		searchVo.setDeptId(dept.getDeptId());
+		List<XcompanyStaff> staffs = xcompanyStaffService.selectBySearchVo(searchVo);
+		if (!staffs.isEmpty()) {
+			initVo.setTotal(staffs.size());
+		}
 		return initVo;
 	}
 
