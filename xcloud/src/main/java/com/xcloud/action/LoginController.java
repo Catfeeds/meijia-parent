@@ -156,6 +156,7 @@ public class LoginController extends BaseController {
 		accountAuth.setCompanyId(companyId);
 		accountAuth.setCompanyName(companyName);
 		accountAuth.setShortName(shortName);
+		accountAuth.setCompanyList(rs);
 
 		if (xcompanyStaffExist != null) {
 			accountAuth.setStaffId(xcompanyStaffExist.getId());
@@ -170,6 +171,7 @@ public class LoginController extends BaseController {
 
 	}
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/login-sms", method = { RequestMethod.POST })
 	public String loginSms(
 			HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") LoginVo loginVo, BindingResult result)
@@ -276,6 +278,7 @@ public class LoginController extends BaseController {
 		accountAuth.setCompanyId(companyId);
 		accountAuth.setCompanyName(companyName);
 		accountAuth.setShortName(shortName);
+		accountAuth.setCompanyList(rs);
 
 		if (xcompanyStaffExist != null) {
 			accountAuth.setStaffId(xcompanyStaffExist.getId());

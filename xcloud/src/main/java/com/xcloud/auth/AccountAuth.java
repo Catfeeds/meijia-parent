@@ -1,5 +1,9 @@
 package com.xcloud.auth;
 
+import java.util.List;
+
+import com.simi.po.model.xcloud.XcompanyAdmin;
+
 public class AccountAuth {
 
 	private Long userId;
@@ -19,6 +23,8 @@ public class AccountAuth {
 	private String shortName;
 	
 	private Long staffId;
+	
+	private List<XcompanyAdmin> companyList;
 
 	public Long getUserId() {
 		return userId;
@@ -90,6 +96,14 @@ public class AccountAuth {
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+
+	public List<XcompanyAdmin> getCompanyList() {
+		return companyList;
+	}
+
+	public void setCompanyList(List<XcompanyAdmin> companyList) {
+		this.companyList = companyList;
 	}
 
 
