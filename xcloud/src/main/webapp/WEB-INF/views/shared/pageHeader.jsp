@@ -2,7 +2,7 @@
 <header class="am-topbar admin-header">
 	<div class="am-topbar-brand">
 		<img src="http://app.bolohr.com/simi-h5/icon/web-logo.png" height="25" width="25">
-		<a href="/xcloud/company/company_edit_form">
+		<a href="/xcloud/company/company-form" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')">
 			</i> | ${sessionScope.accountAuth.companyName}
 		</a>
 		<a href="javascript:;">

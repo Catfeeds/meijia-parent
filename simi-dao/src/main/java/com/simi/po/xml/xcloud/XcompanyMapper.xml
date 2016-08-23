@@ -8,7 +8,7 @@
 		<result column="short_name" property="shortName" jdbcType="VARCHAR" />
 		<result column="company_size" property="companySize" jdbcType="NUMERIC" />
 		<result column="company_trade" property="companyTrade" jdbcType="SMALLINT" />
-		<result column="city_id" property="cityId" jdbcType="lng" />
+		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
 		<result column="lat" property="lat" jdbcType="VARCHAR" />
 		<result column="lng" property="lng" jdbcType="VARCHAR" />
 		<result column="addr" property="addr" jdbcType="VARCHAR" />
@@ -109,7 +109,8 @@
 		#{companyType,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR},
 		#{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
 		#{companyTrade,jdbcType=SMALLINT}, #{cityId,jdbcType=NUMERIC},
-		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR},
+		#{lat,jdbcType=VARCHAR},
+		#{lng,jdbcType=VARCHAR},
 		#{addr,jdbcType=VARCHAR},
 		#{invitationCode,jdbcType=CHAR},
 		#{qrCode,jdbcType=CHAR},
@@ -288,13 +289,15 @@
 		city_id = #{cityId,jdbcType=NUMERIC},
 		lat = #{lat,jdbcType=VARCHAR},
 		lng = #{lng,jdbcType=VARCHAR},
-		addr = #{addr,jdbcType=VARCHAR},
+		addr =
+		#{addr,jdbcType=VARCHAR},
 		invitation_code
 		= #{invitationCode,jdbcType=CHAR},
 		qr_code = #{qrCode,jdbcType=CHAR},
 		link_man =
 		#{linkMan,jdbcType=VARCHAR},
-		email = #{email,jdbcType=VARCHAR},
+		email =
+		#{email,jdbcType=VARCHAR},
 		add_time =
 		#{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC}
