@@ -1,22 +1,27 @@
-$(function() {
-	var $form = $('#login-form');
-	var $tooltip = $('<div id="vld-tooltip">提示信息！</div>');
-	$tooltip.appendTo(document.body);
-	$form.validator();
-	var validator = $form.data('amui.validator');
-	$form.on('focusin focusout', '.am-form-error input', function(e) {
-		if (e.type === 'focusin') {
-			var $this = $(this);
-			var offset = $this.offset();
-			var width = $this.width();
-			var msg = $this.data('validationMessage')
-					|| validator.getValidationMessage($this.data('validity'));
-			$tooltip.text(msg).show().css({
-				left : offset.left + width + 30,
-				top : offset.top
-			});
-		} else {
-			$tooltip.hide();
+$('#drag').drag();
+
+$("#login-btn").on('click', function(e) {
+	
+	var form = $('#login-form');
+	
+	var formValidity = $('#login-form').validator().data('amui.validator').validateForm().valid
+
+	if (formValidity) {
+		// done, submit form
+		console.log("ok");
+		
+		
+		var dragText = $(".drag_text").html();
+		if (dragText != '验证通过') {
+			console.log("drag fail");
+			return false;
 		}
-	});
+
+		form.submit();
+	} else {
+		// fail
+		console.log("fail");
+		
+	}
+	;
 });

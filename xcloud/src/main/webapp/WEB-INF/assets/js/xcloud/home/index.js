@@ -10,10 +10,12 @@ $.ajax({
 		
 		var h = "";
 		$.each(datas, function(i, c) {
+			var total = c.custom_fields.views;
+			if (total == undefined) total = 0;
 			h+="<tr>";
 			h+="<td class=\"am-text-center\">" + (i + 1) + "</td>";
 			h+="<td>" + c.title + "</td>";
-			h+="<td>" + c.custom_fields.views + "看过</td>";
+			h+="<td>" + total + "看过</td>";
 			h+="</tr>";
 		});
 		
