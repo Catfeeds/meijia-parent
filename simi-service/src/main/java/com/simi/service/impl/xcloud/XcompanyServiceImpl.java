@@ -65,13 +65,9 @@ public class XcompanyServiceImpl implements XCompanyService {
 		record.setCompanyName("");
 		record.setCompanyTrade(0L);
 		record.setCompanySize((short) 0);
-		record.setProvinceId(0L);
 		record.setCityId(0L);
-		record.setRegionId(0L);
-		record.setLongitude(" ");
-		record.setLatitude(" ");
-		record.setPoiType((short) 0);
-		record.setAddrName(" ");
+		record.setLat("");
+		record.setLng("");
 		record.setAddr("");
 		record.setLinkMan("");
 		record.setInvitationCode("");

@@ -13,19 +13,11 @@ public class Xcompany {
 
     private Long companyTrade;
 
-    private Long provinceId;
-
     private Long cityId;
 
-    private Long regionId;
+    private String lat;
 
-    private String latitude;
-
-    private String longitude;
-
-    private Short poiType;
-
-    private String addrName;
+    private String lng;
 
     private String addr;
 
@@ -71,62 +63,6 @@ public class Xcompany {
 
     public void setCompanyTrade(Long companyTrade) {
         this.companyTrade = companyTrade;
-    }
-
-    public Long getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Long provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public Long getRegionId() {
-        return regionId;
-    }
-
-    public void setRegionId(Long regionId) {
-        this.regionId = regionId;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
-    }
-
-    public Short getPoiType() {
-        return poiType;
-    }
-
-    public void setPoiType(Short poiType) {
-        this.poiType = poiType;
-    }
-
-    public String getAddrName() {
-        return addrName;
-    }
-
-    public void setAddrName(String addrName) {
-        this.addrName = addrName == null ? null : addrName.trim();
     }
 
     public String getAddr() {
@@ -199,5 +135,29 @@ public class Xcompany {
 
 	public void setCompanyType(Short companyType) {
 		this.companyType = companyType;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getLng() {
+		return lng;
+	}
+
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+
+	public Long getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
 	}
 }

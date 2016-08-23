@@ -28,12 +28,10 @@ public class CompanyController extends BaseController {
 	private XCompanyService xCompanyService;
 
 	//获得公司详情
-	@RequestMapping(value = "company_edit_form", method = RequestMethod.GET)
+	@RequestMapping(value = "company-form", method = RequestMethod.GET)
 	public String getComapnyForm(
 			HttpServletRequest request,Model model) {
 		
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, null);
 		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
 		Long xcompanyId = accountAuth.getCompanyId();
 
@@ -41,11 +39,11 @@ public class CompanyController extends BaseController {
 
     	model.addAttribute("contentModel", xcompany);
     	
-		return "home/company-edit";
+		return "hr/company-form";
 
 	}
 	
-	@RequestMapping(value = "company_edit_form", method = RequestMethod.POST)
+	@RequestMapping(value = "company-form", method = RequestMethod.POST)
 	public String saveComapnyForm(HttpServletRequest request,
 			 Model model, @ModelAttribute("contentModel") Xcompany xcompany, BindingResult result) {
 		
@@ -57,6 +55,6 @@ public class CompanyController extends BaseController {
 		}
         xCompanyService.updateByPrimaryKeySelective(record);
     	
-    	return "redirect:"+"/index";
+        return "hr/company-form";
 	}
 }

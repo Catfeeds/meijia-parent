@@ -10,6 +10,12 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-staff">
 				<li>
+					<a href="/xcloud/company/company-form" class="am-cf"> 
+						<span class="am-icon-file-text"></span> 公司信息
+					</a>
+				</li>
+			
+				<li>
 					<a href="/xcloud/staff/list" class="am-cf"> 
 						<span class="am-icon-file-text"></span> 人事档案
 					</a>

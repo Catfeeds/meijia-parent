@@ -8,13 +8,9 @@
 		<result column="short_name" property="shortName" jdbcType="VARCHAR" />
 		<result column="company_size" property="companySize" jdbcType="NUMERIC" />
 		<result column="company_trade" property="companyTrade" jdbcType="SMALLINT" />
-		<result column="province_id" property="provinceId" jdbcType="NUMERIC" />
-		<result column="city_id" property="cityId" jdbcType="NUMERIC" />
-		<result column="region_id" property="regionId" jdbcType="NUMERIC" />
-		<result column="latitude" property="latitude" jdbcType="VARCHAR" />
-		<result column="longitude" property="longitude" jdbcType="VARCHAR" />
-		<result column="poi_type" property="poiType" jdbcType="NUMERIC" />
-		<result column="addr_name" property="addrName" jdbcType="VARCHAR" />
+		<result column="city_id" property="cityId" jdbcType="lng" />
+		<result column="lat" property="lat" jdbcType="VARCHAR" />
+		<result column="lng" property="lng" jdbcType="VARCHAR" />
 		<result column="addr" property="addr" jdbcType="VARCHAR" />
 		<result column="invitation_code" property="invitationCode" jdbcType="CHAR" />
 		<result column="qr_code" property="qrCode" jdbcType="CHAR" />
@@ -24,10 +20,10 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		company_id, company_type, company_name, short_name, company_size, company_trade, province_id, city_id, region_id,
-		latitude, longitude, poi_type,
-		addr_name, addr, invitation_code, qr_code,
-		link_man, email, add_time, update_time
+		company_id, company_type, company_name, short_name, company_size, company_trade, city_id,
+		lat, lng, addr, invitation_code, qr_code,
+		link_man, email,
+		add_time, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -104,21 +100,21 @@
 			SELECT LAST_INSERT_ID() AS company_id
 		</selectKey>
 		insert into xcompany (company_id, company_type, company_name, short_name, company_size,
-		company_trade, province_id, city_id,
-		region_id, latitude, longitude,
-		poi_type, addr_name, addr,
+		company_trade, city_id, lat, lng, addr,
 		invitation_code, qr_code,
-		link_man, email, add_time,
+		link_man,
+		email, add_time,
 		update_time)
 		values (#{companyId,jdbcType=NUMERIC},
-		#{companyType,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
-		#{companyTrade,jdbcType=SMALLINT}, #{provinceId,jdbcType=NUMERIC}, #{cityId,jdbcType=NUMERIC},
-		#{regionId,jdbcType=NUMERIC}, #{latitude,jdbcType=VARCHAR},
-		#{longitude,jdbcType=VARCHAR},
-		#{poiType,jdbcType=NUMERIC}, #{addrName,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
+		#{companyType,jdbcType=NUMERIC}, #{companyName,jdbcType=VARCHAR},
+		#{shortName,jdbcType=VARCHAR}, #{companySize,jdbcType=NUMERIC},
+		#{companyTrade,jdbcType=SMALLINT}, #{cityId,jdbcType=NUMERIC},
+		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR},
+		#{addr,jdbcType=VARCHAR},
 		#{invitationCode,jdbcType=CHAR},
 		#{qrCode,jdbcType=CHAR},
-		#{linkMan,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{linkMan,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
 		#{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC})
 	</insert>
@@ -147,26 +143,14 @@
 			<if test="companyTrade != null">
 				company_trade,
 			</if>
-			<if test="provinceId != null">
-				province_id,
-			</if>
 			<if test="cityId != null">
 				city_id,
 			</if>
-			<if test="regionId != null">
-				region_id,
+			<if test="lat != null">
+				lat,
 			</if>
-			<if test="latitude != null">
-				latitude,
-			</if>
-			<if test="longitude != null">
-				longitude,
-			</if>
-			<if test="poiType != null">
-				poi_type,
-			</if>
-			<if test="addrName != null">
-				addr_name,
+			<if test="lng != null">
+				lng,
 			</if>
 			<if test="addr != null">
 				addr,
@@ -209,26 +193,14 @@
 			<if test="companyTrade != null">
 				#{companyTrade,jdbcType=SMALLINT},
 			</if>
-			<if test="provinceId != null">
-				#{provinceId,jdbcType=NUMERIC},
-			</if>
 			<if test="cityId != null">
 				#{cityId,jdbcType=NUMERIC},
 			</if>
-			<if test="regionId != null">
-				#{regionId,jdbcType=NUMERIC},
+			<if test="lat != null">
+				#{lat,jdbcType=VARCHAR},
 			</if>
-			<if test="latitude != null">
-				#{latitude,jdbcType=VARCHAR},
-			</if>
-			<if test="longitude != null">
-				#{longitude,jdbcType=VARCHAR},
-			</if>
-			<if test="poiType != null">
-				#{poiType,jdbcType=NUMERIC},
-			</if>
-			<if test="addrName != null">
-				#{addrName,jdbcType=VARCHAR},
+			<if test="lng != null">
+				#{lng,jdbcType=VARCHAR},
 			</if>
 			<if test="addr != null">
 				#{addr,jdbcType=VARCHAR},
@@ -271,26 +243,14 @@
 			<if test="companyTrade != null">
 				company_trade = #{companyTrade,jdbcType=SMALLINT},
 			</if>
-			<if test="provinceId != null">
-				province_id = #{provinceId,jdbcType=NUMERIC},
-			</if>
 			<if test="cityId != null">
 				city_id = #{cityId,jdbcType=NUMERIC},
 			</if>
-			<if test="regionId != null">
-				region_id = #{regionId,jdbcType=NUMERIC},
+			<if test="lat != null">
+				lat = #{lat,jdbcType=VARCHAR},
 			</if>
-			<if test="latitude != null">
-				latitude = #{latitude,jdbcType=VARCHAR},
-			</if>
-			<if test="longitude != null">
-				longitude = #{longitude,jdbcType=VARCHAR},
-			</if>
-			<if test="poiType != null">
-				poi_type = #{poiType,jdbcType=NUMERIC},
-			</if>
-			<if test="addrName != null">
-				addr_name = #{addrName,jdbcType=VARCHAR},
+			<if test="lng != null">
+				lng = #{lng,jdbcType=VARCHAR},
 			</if>
 			<if test="addr != null">
 				addr = #{addr,jdbcType=VARCHAR},
@@ -325,14 +285,9 @@
 		company_size = #{companySize,jdbcType=NUMERIC},
 		company_trade =
 		#{companyTrade,jdbcType=SMALLINT},
-		province_id = #{provinceId,jdbcType=NUMERIC},
 		city_id = #{cityId,jdbcType=NUMERIC},
-		region_id = #{regionId,jdbcType=NUMERIC},
-		latitude = #{latitude,jdbcType=VARCHAR},
-		longitude = #{longitude,jdbcType=VARCHAR},
-		poi_type = #{poiType,jdbcType=NUMERIC},
-		addr_name =
-		#{addrName,jdbcType=VARCHAR},
+		lat = #{lat,jdbcType=VARCHAR},
+		lng = #{lng,jdbcType=VARCHAR},
 		addr = #{addr,jdbcType=VARCHAR},
 		invitation_code
 		= #{invitationCode,jdbcType=CHAR},
