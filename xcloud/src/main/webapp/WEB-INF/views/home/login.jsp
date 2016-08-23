@@ -60,7 +60,7 @@
 						<div class="am-tabs-bd">
 							<!----------------- 密码登陆 ------------------------------------>
 							<div class="am-tab-panel am-fade am-in am-active" id="tab-login-pass">
-								<form:form method="post" modelAttribute="contentModel" id="login-form"
+								<form:form method="post" modelAttribute="contentModel" id="login-form" 
 									class="am-form am-padding-xl am-padding-bottom-sm">
 									<div class="am-g am-container">
 										<h2>登录云平台</h2>
@@ -96,7 +96,47 @@
 								</form:form>
 							</div>
 							<!----------------- 短信登陆 ------------------------------------>
-							<div class="am-tab-panel am-fade am-in " id="tag-login-sms">短信登陆</div>
+							<div class="am-tab-panel am-fade am-in " id="tag-login-sms">
+								<form:form method="post" modelAttribute="contentModel" id="login-form-sms" action="login-sms"
+									class="am-form am-padding-xl am-padding-bottom-sm">
+									<div class="am-g am-container">
+										<h2>登录云平台</h2>
+										<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
+									</div>
+									<div class="am-g am-padding-sm">
+										<div class="am-form-group am-form-icon">
+											<span class="am-icon-user"></span>
+											<input type="text" id="mobile" name="mobile" class="js-pattern-mobile am-form-field am-radius" placeholder="手机号"
+												data-validation-message="手机号" required="required" />
+										</div>
+										<div class="am-form-group am-input-group">
+											
+											<input type="text" id="sms_token" name="sms_token"
+												class="am-form-field js-pattern-sms_token js-ajax-validate" placeholder="短信验证码" required="required"
+												data-validation-message="验证失败" />
+											<span class="am-input-group-btn">
+												<button id="btn_sms_token" class="am-btn am-btn-warning" type="button">
+													<i class="am-icon-spinner am-icon-spin"></i>
+													获取
+												</button>
+											</span>
+										</div>
+										
+										<button type="button" id="login-btn-sms" class="am-btn am-btn-danger am-btn-block am-radius">登 录</button>
+										<div class="am-form-group am-margin-top-sm am-text-sm">
+											<div class="am-fl">
+												<a href="#" onclick="javascript:loginSwitch('tab-login-pass')">
+													<font color="red">密码登陆</font>
+												</a>
+											</div>
+											<div class="am-fr">
+												<a href="javascript:void(0)"
+													data-am-modal="{target: '#yunpan-forgotpassword-modal', width: 520, height: 360}">忘记密码?</a>
+											</div>
+										</div>
+									</div>
+								</form:form>
+							</div>
 						</div>
 					</div>
 					<div class="am-container am-g tr-yunpan-btn-block-container">
@@ -160,6 +200,8 @@
 	<!--common script for all pages-->
 	<%@ include file="../shared/importJs.jsp"%>
 	<!--script for this page-->
+	<script src="<c:url value='/assets/js/xcloud/common/validate-methods.js'/>" type="text/javascript"></script>
+	<script src="<c:url value='/assets/js/countdown.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/drag/drag.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/xcloud/home/login.js'/>" type="text/javascript"></script>
 </body>
