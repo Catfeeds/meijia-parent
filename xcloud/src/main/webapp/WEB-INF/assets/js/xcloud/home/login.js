@@ -1,5 +1,15 @@
 $('#drag').drag();
 
+function loginSwitch(loginType) {
+	if (loginType == "tab-login-pass") {
+		$("#tab-login-pass").click();
+	}
+	
+	if (loginType == "tab-login-sms") {
+		$("#tab-login-sms").click();
+	}
+}
+
 $("#login-btn").on('click', function(e) {
 	
 	var form = $('#login-form');

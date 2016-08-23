@@ -45,45 +45,60 @@
 			</div>
 		</div>
 		<div class="tr-yunpan-container am-container am-container-collapse am-vertical-align">
-			<div class="am-vertical-align-middle am-g am-g-collapse" style="  width: 90%; margin-left: 9%;">
+			<div class="am-vertical-align-middle am-g am-g-collapse" style="width: 90%; margin-left: 9%;">
 				<div
-					class="tr-yunpan-login-container am-container am-animation-slide-right am-animation-delay-1 am-u-md-4 am-u-md-push-8 am-u-sm-10 am-u-sm-push-1">
-					<form:form method="post" modelAttribute="contentModel" id="login-form"
-						class="am-form am-padding-xl am-padding-bottom-sm">
-						<div class="am-g am-container">
-							<h2>登录云行政</h2>
-							<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
-						</div>
-						<div class="am-g am-padding-sm">
-							<div class="am-form-group am-form-icon">
-								<span class="am-icon-user"></span>
-								<form:input path="username" class="js-pattern-mobile am-form-field am-radius" placeholder="手机号"
-									data-validation-message="手机号" required="required" />
-							</div>
-							
-							<div class="am-form-group am-form-icon">
-								<span class="am-icon-lock"></span>
-								<form:password path="password" class="am-form-field am-radius" autocomplete="off" minlength="6" placeholder="密码"
-									data-validation-message="请输入密码" required="required" />
-							</div>
-							<div class="am-form-group">
-								<div id="drag" style="width:215px;" ></div>
-								
-							</div>
-							<button type="button" id="login-btn" class="am-btn am-btn-danger am-btn-block am-radius">登 录</button>
-							<div class="am-form-group am-margin-top-sm am-text-sm">
-								<div class="am-fl">
-									<div class="checkbox">
-										<label> <input name="remember" type="checkbox"> 记住账号
-										</label>
+					class="tr-yunpan-login-container am-container am-animation-slide-right am-animation-delay-1 am-u-md-5 am-u-md-push-8 am-u-sm-10 am-u-sm-push-1">
+					<div class="am-tabs am-margin " data-am-tabs>
+						<ul class="am-tabs-nav am-nav am-nav-tabs">
+							<li class="am-active">
+								<a id="tab-login-pass" href="#tab-login-pass"></a>
+							</li>
+							<li>
+								<a id="tab-login-sms" href="#tag-login-sms"></a>
+							</li>
+						</ul>
+						<div class="am-tabs-bd">
+							<!----------------- 密码登陆 ------------------------------------>
+							<div class="am-tab-panel am-fade am-in am-active" id="tab-login-pass">
+								<form:form method="post" modelAttribute="contentModel" id="login-form"
+									class="am-form am-padding-xl am-padding-bottom-sm">
+									<div class="am-g am-container">
+										<h2>登录云平台</h2>
+										<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
 									</div>
-								</div>
-								<div class="am-fr">
-									<a href="javascript:void(0)" data-am-modal="{target: '#yunpan-forgotpassword-modal', width: 520, height: 360}">忘记密码?</a>
-								</div>
+									<div class="am-g am-padding-sm">
+										<div class="am-form-group am-form-icon">
+											<span class="am-icon-user"></span>
+											<form:input path="username" class="js-pattern-mobile am-form-field am-radius" placeholder="手机号"
+												data-validation-message="手机号" required="required" />
+										</div>
+										<div class="am-form-group am-form-icon">
+											<span class="am-icon-lock"></span>
+											<form:password path="password" class="am-form-field am-radius" autocomplete="off" minlength="6"
+												placeholder="密码" data-validation-message="请输入密码" required="required" />
+										</div>
+										<div class="am-form-group">
+											<div id="drag" style="width: 239px;"></div>
+										</div>
+										<button type="button" id="login-btn" class="am-btn am-btn-danger am-btn-block am-radius">登 录</button>
+										<div class="am-form-group am-margin-top-sm am-text-sm">
+											<div class="am-fl">
+												<a href="#" onclick="javascript:loginSwitch('tab-login-sms')">
+													<font color="red">短信登陆</font>
+												</a>
+											</div>
+											<div class="am-fr">
+												<a href="javascript:void(0)"
+													data-am-modal="{target: '#yunpan-forgotpassword-modal', width: 520, height: 360}">忘记密码?</a>
+											</div>
+										</div>
+									</div>
+								</form:form>
 							</div>
+							<!----------------- 短信登陆 ------------------------------------>
+							<div class="am-tab-panel am-fade am-in " id="tag-login-sms">短信登陆</div>
 						</div>
-					</form:form>
+					</div>
 					<div class="am-container am-g tr-yunpan-btn-block-container">
 						<a href="/xcloud/register" class="am-btn am-btn-block am-btn-lg tr-yunpan-btn-block">立即注册</a>
 					</div>
