@@ -52,7 +52,7 @@
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-assets">
 				<li>
-					<a href="/xcloud/xz/assets/commpany_asset_list" class="am-cf">
+					<a href="/xcloud/xz/assets/company_asset_list" class="am-cf">
 						<span class="am-icon-pencil"></span>
 						资产登记
 					</a>
@@ -64,17 +64,12 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="/xcloud/xz/assets/company_asset">
 						<span class="am-icon-archive"></span>
 						库存管理
 					</a>
 				</li>
-				<li>
-					<a href="admin-404.html">
-						<span class="am-icon-shopping-cart"></span>
-						办公用品采购
-					</a>
-				</li>
+				
 			</ul>
 		</li>
 		<li class="admin-parent">
@@ -96,12 +91,7 @@
 						查询与结算
 					</a>
 				</li>
-				<li>
-					<a href="/xcloud/xz/express/service" class="am-cf">
-						<span class="am-icon-star"></span>
-						快递服务商
-					</a>
-				</li>
+				
 			</ul>
 		</li>
 		<li class="admin-parent">
@@ -123,12 +113,7 @@
 						查询与结算
 					</a>
 				</li>
-				<li>
-					<a href="/xcloud/xz/water/service">
-						<span class="am-icon-star"></span>
-						饮用水服务商
-					</a>
-				</li>
+				
 			</ul>
 		</li>
 		<li class="admin-parent">
@@ -150,12 +135,7 @@
 						查询与结算
 					</a>
 				</li>
-				<li>
-					<a href="/xcloud/xz/clean/service">
-						<span class="am-icon-star"></span>
-						保洁服务商
-					</a>
-				</li>
+				
 			</ul>
 		</li>
 		<li class="admin-parent">
@@ -177,12 +157,7 @@
 						查询与结算
 					</a>
 				</li>
-				<li>
-					<a href="/xcloud/xz/recycle/service">
-						<span class="am-icon-star"></span>
-						废品回收服务商
-					</a>
-				</li>
+				
 			</ul>
 		</li>
 		<li class="admin-parent">
@@ -204,12 +179,7 @@
 						会议室设置
 					</a>
 				</li>
-				<li>
-					<a href="/xcloud/xz/meeting/service">
-						<span class="am-icon-star"></span>
-						会展服务商
-					</a>
-				</li>
+				
 			</ul>
 		</li>
 	</ul>

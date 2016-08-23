@@ -87,7 +87,7 @@
 								</li>
 								
 								<li>
-									<a href="/xcloud/xz/assets/commpany_asset_list" class="am-text-secondary">
+									<a href="/xcloud/xz/assets/company_asset_list" class="am-text-secondary">
 										<img src="http://img.bolohr.com/ff54c25acfe1c170e7c93e457483aa9a?p=0">
 										<br />资产管理<br />
 									</a>

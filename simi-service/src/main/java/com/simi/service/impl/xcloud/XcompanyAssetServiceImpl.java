@@ -12,8 +12,11 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.po.dao.xcloud.XcompanyAssetsMapper;
 import com.simi.po.model.xcloud.XcompanyAssets;
+import com.simi.po.model.xcloud.XcompanySetting;
+import com.simi.service.xcloud.XCompanySettingService;
 import com.simi.service.xcloud.XcompanyAssetService;
 import com.simi.vo.AssetSearchVo;
+import com.simi.vo.xcloud.CompanySettingSearchVo;
 import com.simi.vo.xcloud.XcompanyAssetVo;
 
 
@@ -22,6 +25,9 @@ public class XcompanyAssetServiceImpl implements XcompanyAssetService {
 
 	@Autowired
 	XcompanyAssetsMapper xCompanyAssetMapper;
+	
+	@Autowired
+	private XCompanySettingService xCompanySettingService;
 
 	@Override
 	public XcompanyAssets initXcompanyAssets() {
@@ -52,6 +58,12 @@ public class XcompanyAssetServiceImpl implements XcompanyAssetService {
 		PageHelper.startPage(pageNo, pageSize);
 		List<XcompanyAssets> list = xCompanyAssetMapper.selectByListPage(searchVo);
 		
+		//资产类别
+		CompanySettingSearchVo searchVo1 = new CompanySettingSearchVo();
+		searchVo1.setSettingType("asset_type");
+		
+		List<XcompanySetting> assetTypes = xCompanySettingService.selectBySearchVo(searchVo1);
+
 		for (int i = 0; i < list.size(); i++) {
 			XcompanyAssets assets = list.get(i);
 			
@@ -60,6 +72,14 @@ public class XcompanyAssetServiceImpl implements XcompanyAssetService {
 			BeanUtilsExp.copyPropertiesIgnoreNull(assets, assetVo);
 			
 			assetVo.setAddTimeStr(TimeStampUtil.fromTodayStr(assets.getAddTime() * 1000));
+			
+			assetVo.setAssetTypeName("");
+			for (XcompanySetting item : assetTypes) {
+				if (item.getId().equals(assetVo.getAssetTypeId())) {
+					assetVo.setAssetTypeName(item.getName());
+					break;
+				}
+			}
 			
 			list.set(i, assetVo);
 		}

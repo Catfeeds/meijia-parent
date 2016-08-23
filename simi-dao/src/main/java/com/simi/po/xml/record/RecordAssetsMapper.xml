@@ -49,6 +49,10 @@
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="name != null and name !='' ">
+			 and name like CONCAT('%','${name}','%' )
+		</if>
 				
 		order by update_time desc
 	</select>
@@ -72,6 +76,10 @@
 		
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="name != null and name !='' ">
+			 and name like CONCAT('%','${name}','%' )
 		</if>
 				
 		order by update_time desc

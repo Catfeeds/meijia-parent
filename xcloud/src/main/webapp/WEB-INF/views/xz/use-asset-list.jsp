@@ -69,7 +69,7 @@
 										<td>${item.name}</td>
 										<td>${item.mobile}</td>
 										<td>${item.assetNameAndNumStr }</td>
-										<td class="am-fr">${item.purpose }</td>
+										<td>${item.purpose }</td>
 										<td>${item.fromName }</td>
 										<td>${item.fromMobile }</td>
 										<td><c:if test="${item.status == 0 }">

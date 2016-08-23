@@ -16,6 +16,8 @@ public class XcompanyAssetVo extends XcompanyAssets {
 	
 	private String addTimeStr;
 	
+	private String assetTypeName;
+	
 	public String getAddTimeStr() {
 		return addTimeStr;
 	}
@@ -30,6 +32,14 @@ public class XcompanyAssetVo extends XcompanyAssets {
 
 	public void setAssetNum(Long assetNum) {
 		this.assetNum = assetNum;
+	}
+
+	public String getAssetTypeName() {
+		return assetTypeName;
+	}
+
+	public void setAssetTypeName(String assetTypeName) {
+		this.assetTypeName = assetTypeName;
 	}
 	
 	

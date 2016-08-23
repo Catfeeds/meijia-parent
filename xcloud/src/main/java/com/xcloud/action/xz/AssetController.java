@@ -199,10 +199,10 @@ public class AssetController extends BaseController {
 	}
 
 	/* ********************************************
-	 * 库存管理 模块 ******************************************** 库存管理列表
+	 * 资产登记列表 ********************************************
 	 */
 	@AuthPassport
-	@RequestMapping(value = "commpany_asset_list", method = RequestMethod.GET)
+	@RequestMapping(value = "company_asset_list", method = RequestMethod.GET)
 	public String xcompanyAssetList(HttpServletRequest request, Model model, AssetSearchVo searchVo) {
 
 		int pageNo = ServletRequestUtils.getIntParameter(request, Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
@@ -232,7 +232,7 @@ public class AssetController extends BaseController {
 
 		model.addAttribute("assetTypes", assetTypeList);
 
-		return "xz/commpany-asset-list";
+		return "xz/company-asset-list";
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class AssetController extends BaseController {
 	 * @throws
 	 */
 	@AuthPassport
-	@RequestMapping(value = "commpany_asset_form", method = RequestMethod.GET)
+	@RequestMapping(value = "company_asset_form", method = RequestMethod.GET)
 	public String goToCompanyAssetForm(Model model, HttpServletRequest request, @RequestParam("id") Long id) {
 
 		// 1. 获取登录的用户/公司 id
@@ -303,7 +303,41 @@ public class AssetController extends BaseController {
 			qrCode = "/assets/img/erweima.png";
 		model.addAttribute("qrCode", qrCode);
 
-		return "xz/commpany-asset-form";
+		return "xz/company-asset-form";
+	}
+	
+	/* ********************************************
+	 * 资产登记列表 ********************************************
+	 */
+	@AuthPassport
+	@RequestMapping(value = "company_asset", method = RequestMethod.GET)
+	public String xcompanyAsset(HttpServletRequest request, Model model, AssetSearchVo searchVo) {
+
+		int pageNo = ServletRequestUtils.getIntParameter(request, Constant.PAGE_NO_NAME, Constant.DEFAULT_PAGE_NO);
+		int pageSize = ServletRequestUtils.getIntParameter(request, Constant.PAGE_SIZE_NAME, Constant.DEFAULT_PAGE_SIZE);
+		
+		// 1. 获取登录的用户/公司 id
+		AccountAuth accountAuth = AuthHelper.getSessionAccountAuth(request);
+
+		Long userId = accountAuth.getUserId();
+		Long companyId = accountAuth.getCompanyId();
+		
+		searchVo.setCompanyId(companyId);
+		
+		PageInfo info = companAssetService.selectByListPage(searchVo, pageNo, pageSize);
+
+		model.addAttribute("contentModel", info);
+		model.addAttribute("searchVoModel", searchVo);
+
+		CompanySettingSearchVo s = new CompanySettingSearchVo();
+
+		s.setSettingType("asset_type");
+
+		List<XcompanySetting> assetTypeList = settingService.selectBySearchVo(s);
+
+		model.addAttribute("assetTypes", assetTypeList);
+
+		return "xz/company-asset";
 	}
 
 }
