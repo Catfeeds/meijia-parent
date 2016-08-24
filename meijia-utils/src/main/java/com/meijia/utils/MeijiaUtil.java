@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 云行政的常用方法
+ * 菠萝人事的常用方法
  *
  */
 public class MeijiaUtil {
@@ -487,12 +487,12 @@ public class MeijiaUtil {
 	//服务响应时间
 	public static String getAppTypeName(String appType) {
 		
-		String appTypeName = "云行政";
+		String appTypeName = "菠萝人事";
 		
 		if (StringUtil.isEmpty(appType)) return appTypeName;
 		switch (appType) {
 			case "xcloud":
-				appTypeName = "云行政";
+				appTypeName = "菠萝人事";
 				break;
 			case "timechick":
 				appTypeName = "时光机";
@@ -504,7 +504,7 @@ public class MeijiaUtil {
 				appTypeName = "速通宝";
 				break;
 			default:
-				appTypeName = "云行政";
+				appTypeName = "菠萝人事";
 		}
 		return appTypeName;		
 	}	

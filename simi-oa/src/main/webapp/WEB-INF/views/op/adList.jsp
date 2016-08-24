@@ -37,7 +37,7 @@
 					</form:select>
 					应用类型
 					<form:select path="appType">
-						<form:option value="xcloud" selected="true">云行政</form:option>
+						<form:option value="xcloud" selected="true">菠萝人事</form:option>
 						<form:option value="timechick">时光机</form:option>
 						<form:option value="simi">私秘</form:option>
 						<form:option value="sutongbao">速通宝</form:option>

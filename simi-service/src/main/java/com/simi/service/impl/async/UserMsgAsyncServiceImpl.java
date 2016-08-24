@@ -82,7 +82,7 @@ public class UserMsgAsyncServiceImpl implements UserMsgAsyncService {
 		record.setParams("");
 		record.setGotoUrl("http://eqxiu.com/s/5RaYy1wM");
 		record.setTitle(defaultUser.getName());
-		record.setSummary("欢迎来到云行政，新手必读，立刻体验");
+		record.setSummary("欢迎来到菠萝人事，新手必读，立刻体验");
 		record.setIconUrl(defaultUser.getHeadImg());
 		userMsgService.insert(record);
 		return new AsyncResult<Boolean>(true);

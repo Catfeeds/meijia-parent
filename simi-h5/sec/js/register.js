@@ -122,7 +122,7 @@ myApp.onPageInit('register', function (page) {
 		if (results.status == "998") {
 			console.log(mobile+"-------mobile-----")
 			console.log(name+"-------name-----")
-    		    myApp.confirm('你已注册过云行政，确定要进行秘书注册吗？', function () {
+    		    myApp.confirm('你已注册过菠萝人事，确定要进行秘书注册吗？', function () {
     		    	mainView.router.loadPage("register2.html?mobile="+mobile +"&name="+name);
     		    });
     		 

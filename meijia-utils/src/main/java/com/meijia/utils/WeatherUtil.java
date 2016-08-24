@@ -22,7 +22,7 @@ import com.cloopen.rest.sdk.utils.encoder.BASE64Encoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 云行政的常用方法
+ * 菠萝人事的常用方法
  *
  */
 public class WeatherUtil {

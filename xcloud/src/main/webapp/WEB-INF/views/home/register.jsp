@@ -50,7 +50,7 @@
 						class="am-form am-container am-padding-xl am-padding-bottom" >
 						<form:hidden path="companyId" />
 						<div class="am-g am-container">
-							<h2>注册云行政团队账号</h2>
+							<h2>注册菠萝人事团队账号</h2>
 							<form:errors path="userName" class="am-alert am-alert-danger center"></form:errors>
 						</div>
 						<div class="am-g am-padding-sm">

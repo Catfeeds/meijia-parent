@@ -17,7 +17,7 @@ import com.meijia.utils.ImgServerUtil;
 
 
 /**
- * 云行政的常用方法
+ * 菠萝人事的常用方法
  *
  */
 public class WeatherUtil {

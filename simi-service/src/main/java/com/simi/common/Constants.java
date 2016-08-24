@@ -138,7 +138,7 @@ public class Constants {
 	//默认头像底图
 	public static String DEFAULT_HEAD_IMG_BACK = "http://img.bolohr.com/85ebd46f40d90977ee01ead3e71bd6fa";
 	
-	//云行政logo
+	//菠萝人事logo
 	public static String DEFAULT_LOGO = "http://img.bolohr.com/3f20537c7e3a6e09545d66649746f680?p=0";
 	
 	

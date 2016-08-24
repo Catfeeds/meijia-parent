@@ -62,7 +62,7 @@ public class OrderWxPayController extends BaseController {
 	 * @param response
 	 * @param mobile   
 	 * @param orderNo
-	 * @param orderType  // 订单类型 0 = 订单支付 1= 充值卡充值 2 = 云行政服务购买
+	 * @param orderType  // 订单类型 0 = 订单支付 1= 充值卡充值 2 = 菠萝人事服务购买
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 * 
@@ -152,7 +152,7 @@ public class OrderWxPayController extends BaseController {
 			body = "充值";
 		}		
 		
-		//处理云行政卡购买的情况
+		//处理菠萝人事卡购买的情况
 		if (orderType.equals(Constants.ORDER_TYPE_2)) {
 			OrderSenior orderSenior = orderSeniorService.selectByOrderSeniorNo(orderNo);
 			if (orderSenior == null || orderSenior.getId().equals(0)) {
