@@ -36,27 +36,21 @@
 		
 		<li class="admin-parent">
 			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-checkin')">
-				<span class="am-icon-file"></span>
+				<span class="am-icon-street-view"></span>
 				考勤管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-checkin">
 				<li>
 					<a href="/xcloud/xz/checkin/stat-list" class="am-cf">
-						<span class="am-icon-check"></span>
+						<span class="am-icon-list-alt"></span>
 						 考勤明细表
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/checkin/stat-total" class="am-cf">
-						<span class="am-icon-bars"></span>
+						<span class="am-icon-bar-chart"></span>
 						 考勤统计表
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/xz/checkin/net" class="am-cf">
-						<span class="am-icon-map-marker"></span>
-						 出勤配置
 					</a>
 				</li>
 				<li>
@@ -67,8 +61,14 @@
 				</li>
 				<li>
 					<a href="/xcloud/xz/leave/list" class="am-cf">
-						<span class="am-icon-pause"></span>
+						<span class="am-icon-twitch"></span>
 						 请假列表
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/checkin/net" class="am-cf">
+						<span class="am-icon-gear"></span>
+						 出勤配置
 					</a>
 				</li>
 			</ul>
@@ -82,13 +82,13 @@
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-recruit">
 				<li>
 					<a href="/xcloud/hr/resume/resume_exchange_list" class="am-cf"> 
-						<span class="am-icon-exchange"></span> 简历交换大厅
+						<span class="am-icon-refresh"></span> 简历交换大厅
 					</a>
 				</li>
 				
 				<li>
 					<a href="/xcloud/hr/hunter/job_publish_list" class="am-cf"> 
-						<span class="am-icon-dot-circle-o"></span> 内推悬赏大厅
+						<span class="am-icon-compass"></span> 内推悬赏大厅
 					</a>
 				</li>
 			
@@ -134,7 +134,7 @@
 				</li>
 			</ul>
 		</li> -->
-		<li><a href="/xcloud/hr/service"><span class="am-icon-th"></span> 找服务商</a></li>
+		<li><a href="/xcloud/hr/service"><span class="am-icon-binoculars"></span> 找服务商</a></li>
 	</ul>
 </div>
 <!-- sidebar end -->

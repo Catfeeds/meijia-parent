@@ -8,7 +8,7 @@
 		
 		<li class="admin-parent">
 			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-assets')">
-				<span class="am-icon-file"></span>
+				<span class="am-icon-tags"></span>
 				资产管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
@@ -45,12 +45,12 @@
 				<li>
 					<a href="/xcloud/xz/meeting/list" class="am-cf">
 						<span class="am-icon-calendar"></span>
-						会议一览
+						会议情况一览
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/meeting/room-list/">
-						<span class="am-icon-calendar"></span>
+						<span class="am-icon-gear"></span>
 						会议室设置
 					</a>
 				</li>
@@ -74,7 +74,7 @@
 				<li>
 					<a href="/xcloud/xz/express/list" class="am-cf">
 						<span class="am-icon-search-plus"></span>
-						查询与结算
+						服务单查阅
 					</a>
 				</li>
 				
@@ -90,13 +90,13 @@
 				<li>
 					<a href="/xcloud/xz/water/water-form" class="am-cf">
 						<span class="am-icon-shopping-cart "></span>
-						饮用水订购
+						茶点饮用水订购
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/water/list">
 						<span class="am-icon-search-plus"></span>
-						查询与结算
+						服务单查阅
 					</a>
 				</li>
 				
@@ -111,14 +111,14 @@
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-clean">
 				<li>
 					<a href="/xcloud/xz/clean/clean-form" class="am-cf">
-						<span class="am-icon-phone"></span>
-						保洁预约
+						<span class="am-icon-shopping-cart"></span>
+						保洁维修预约
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/clean/list">
 						<span class="am-icon-search-plus"></span>
-						查询与结算
+						服务单查阅
 					</a>
 				</li>
 				
@@ -133,21 +133,21 @@
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-recycle">
 				<li>
 					<a href="/xcloud/xz/recycle/recycle-form" class="am-cf">
-						<span class="am-icon-phone"></span>
-						回收预约
+						<span class="am-icon-shopping-cart"></span>
+						回收服务预约
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/recycle/list">
 						<span class="am-icon-search-plus"></span>
-						查询与结算
+						服务单查阅
 					</a>
 				</li>
 				
 			</ul>
 		</li>
 		
-		<li><a href="/xcloud/xz/service"><span class="am-icon-th"></span> 找服务商</a></li>
+		<li><a href="/xcloud/xz/service"><span class="am-icon-binoculars"></span> 找服务商</a></li>
 		
 	</ul>
 </div>
