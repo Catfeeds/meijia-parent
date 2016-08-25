@@ -10,10 +10,12 @@
 					| ${sessionScope.accountAuth.companyName}
 					<span class="am-icon-caret-down"></span>
 			</a>
-
+			
 			<ul class="am-dropdown-content">
+			<center>[切换所在的公司]</center>
 				<c:forEach items="${sessionScope.accountAuth.companyList}" var="item">
 					<c:if test="${item.companyId != sessionScope.accountAuth.companyId}">
+
 						<li>
 							<a href="/xcloud/company/company-form?companyId=${item.companyId }" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')">
 								<span class="am-icon-book"></span>
@@ -70,7 +72,7 @@
 					<li>
 						<a href="/xcloud/staff/staff-form?staff_id=${sessionScope.accountAuth.staffId}">
 							<span class="am-icon-user"></span>
-							资料
+							个人资料
 						</a>
 					</li>
 					<!-- <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li> -->

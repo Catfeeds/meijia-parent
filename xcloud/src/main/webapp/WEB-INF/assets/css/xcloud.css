@@ -3,7 +3,7 @@
 header .xcloud-topbar { background-color: rgb(48,131,235); }
 
 /* 下面设置顶部菜单-主菜单-左侧的效果等 */
-header .tl-nav { margin-top: 0.5rem; margin-left: 6rem; }
+header .tl-nav { margin-top: 0.5rem; margin-left: 12rem; }
 header .tl-nav > .am-dropdown .am-dropdown-content { margin-top: 0px; background-color: rgb(26,111,217); min-width: 100px; left: 0%; }
 header .tl-nav > .am-dropdown .am-dropdown-content::before { left: 40px; }
 header .tl-nav > .am-dropdown .am-dropdown-content::after { border-bottom-color: rgb(110, 110, 110); left: 40px; }

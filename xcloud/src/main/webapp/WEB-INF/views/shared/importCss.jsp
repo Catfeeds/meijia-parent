@@ -5,17 +5,13 @@
 <meta name="description" content="">
 <meta name="author" content="meijia">
 <meta name="keyword" content="">
-<title>菠萝人事</title>
+<title>人事行政管理平台 | 菠萝人事出品</title>
 
 <!-- Set render engine for 360 browser -->
 <meta name="renderer" content="webkit">
 
 <!-- No Baidu Siteapp-->
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<title>美家生活-行政云平台</title>
-
-
 <link rel="shortcut icon" href="img/favicon.png">
 
 <!-- Add to homescreen for Chrome on Android -->
@@ -45,5 +41,5 @@
 <!--external css-->
 <link href="<c:url value='/assets/css/animate.min.css'/>" rel="stylesheet" />
 
-<!-- Custom styles for this template -->
+<!-- 自定义样式都在此css文件中 -->
 <link href="<c:url value='/assets/css/admin.css'/>" rel="stylesheet" />

@@ -87,13 +87,13 @@
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="companyName" class="am-form-field am-radius" placeholder="输入团队全称" maxLength="64" required="required" />	
+								<form:input path="companyName" class="am-form-field am-radius" placeholder="输入团队全称，若在APP创建过团队则可直接短信验证码登录" maxLength="64" required="required" />	
 							</div>
 
 							<div class="am-form-group am-input-group">
 								<span class="am-input-group-label"><i class="am-icon am-icon-male"></i></span> 
 
-								<form:input path="shortName" class="am-form-field am-radius"  placeholder="输入团队简称" maxLength="32" required="required" />	
+								<form:input path="shortName" class="am-form-field am-radius"  placeholder="输入团队简称，若在APP创建过团队则可直接短信验证码登录" maxLength="32" required="required" />	
 							</div>
 
 							<button type="button"  class="am-btn am-btn-success am-btn-block am-radius"

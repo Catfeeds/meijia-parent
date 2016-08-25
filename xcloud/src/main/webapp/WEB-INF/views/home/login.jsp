@@ -63,7 +63,7 @@
 								<form:form method="post" modelAttribute="contentModel" id="login-form" 
 									class="am-form am-padding-xl am-padding-bottom-sm">
 									<div class="am-g am-container">
-										<h2>登录云平台</h2>
+										<h2>登录管理平台</h2>
 										<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
 									</div>
 									<div class="am-g am-padding-sm">
@@ -100,7 +100,7 @@
 								<form:form method="post" modelAttribute="contentModel" id="login-form-sms" action="login-sms"
 									class="am-form am-padding-xl am-padding-bottom-sm">
 									<div class="am-g am-container">
-										<h2>登录云平台</h2>
+										<h2>登录管理平台</h2>
 										<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
 									</div>
 									<div class="am-g am-padding-sm">
@@ -149,7 +149,7 @@
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="yunpan-forgotpassword-modal">
 		<div class="am-modal-dialog">
 			<div class="am-modal-hd">
-				忘记密码
+				忘记密码-重设密码
 				<a href="javascript:%20void(0)" class="am-close am-close-spin" data-am-modal-close="">×</a>
 			</div>
 			<div class="am-modal-bd">
@@ -176,14 +176,14 @@
 						<span class="am-input-group-label">
 							<i class="am-icon am-icon-lock"></i>
 						</span>
-						<input id="fp_new_password" name="new_password" class="am-form-field am-radius" placeholder="密码" minlength="6"
+						<input id="fp_new_password" name="new_password" class="am-form-field am-radius" placeholder="重新设置新密码" minlength="6"
 							required="required" type="password">
 					</div>
 					<div class="am-form-group am-input-group">
 						<span class="am-input-group-label">
 							<i class="am-icon am-icon-lock"></i>
 						</span>
-						<input id="fp_confirm_password" name="confirm_password" class="am-form-field am-radius" placeholder="确认密码"
+						<input id="fp_confirm_password" name="confirm_password" class="am-form-field am-radius" placeholder="再次输入新密码"
 							data-validation-message="请确认前后输入密码一致" required="required" data-equal-to="#fp_new_password" type="password">
 					</div>
 					<p>

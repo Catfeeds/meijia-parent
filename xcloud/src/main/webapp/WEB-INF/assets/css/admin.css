@@ -35,6 +35,9 @@
   padding: 0.4em 1em;
   border-radius: 0;
 }
+/**
+ * 如下是顶部右侧菜单被选中后的背景色
+ */
 .am-nav > li > a:hover,
 .am-nav > li > a:focus {
   text-decoration: none;
@@ -315,7 +318,7 @@
   }
   .am-topbar-right {
     float: right;
-    margin-right: 10px;
+    margin-right: 15px;
   }
 }
 @media only screen and (max-width: 640px) {
