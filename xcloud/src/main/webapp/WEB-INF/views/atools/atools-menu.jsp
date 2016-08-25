@@ -12,7 +12,7 @@
 		<li class="admin-parent">
 			<a class="am-collapsed" onclick="setMenuId('collapse-nav-atools')">
 				<span class="am-icon-gear"></span>
-				应用工具
+				常用计算器
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-atools">
@@ -45,7 +45,7 @@
 			</ul>
 		</li>
 		<li>
-			<a href="#" onclick="setMenuId('collapse-nav-atools-pay')">
+			<a href="/xcloud/atools/req" onclick="setMenuId('collapse-nav-atools-pay')">
 				<span class="am-icon-sitemap" ></span>
 				应用需求悬赏
 			</a>

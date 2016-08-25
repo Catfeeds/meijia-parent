@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.baidu.BaiduConfigUtil;
-import com.simi.common.ConstantMsg;
-import com.simi.common.Constants;
 import com.simi.po.model.xcloud.Xcompany;
 import com.simi.po.model.xcloud.XcompanyAdmin;
 import com.simi.service.xcloud.XCompanyService;
-import com.simi.vo.AppResultData;
 import com.xcloud.action.BaseController;
 import com.xcloud.auth.AccountAuth;
 import com.xcloud.auth.AuthHelper;

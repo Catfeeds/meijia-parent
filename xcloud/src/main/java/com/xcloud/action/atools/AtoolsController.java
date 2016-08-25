@@ -104,23 +104,33 @@ public class AtoolsController extends BaseController {
 	 *  社保公积金计算 form
 	 * 
 	 */
+	@AuthPassport
 	@RequestMapping(value = "tools-insu",method = RequestMethod.GET)
 	public String toolsInsu(){
 		return "atools/tools-insu";
 	}
 	
+	@AuthPassport
 	@RequestMapping(value = "tools-tax",method = RequestMethod.GET)
 	public String toolsTax(){
 		return "atools/tools-tax";
 	}
 	
+	@AuthPassport
 	@RequestMapping(value = "tools-year",method = RequestMethod.GET)
 	public String toolsYear(){
 		return "atools/tools-year";
 	}
 	
+	@AuthPassport
 	@RequestMapping(value = "tools-pay",method = RequestMethod.GET)
 	public String toolsPay(){
 		return "atools/tools-pay";
+	}
+	
+	@AuthPassport
+	@RequestMapping(value = "req",method = RequestMethod.GET)
+	public String toolsReq(){
+		return "atools/atools-req";
 	}
 }

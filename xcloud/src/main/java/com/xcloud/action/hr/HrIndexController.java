@@ -21,4 +21,12 @@ public class HrIndexController extends BaseController {
 		return "hr/hr-index";
 
 	}	
+	
+	@AuthPassport
+	@RequestMapping(value = "service", method = RequestMethod.GET)
+	public String hrService(HttpServletRequest request) {
+
+		return "hr/hr-service";
+
+	}	
 }

@@ -54,11 +54,11 @@
 				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">人事</a>
 			</li>
 			<li id="top-xz">
-				<a href="/xcloud/xz/checkin/stat-list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-checkin')" title="工作日程"
+				<a href="/xcloud/xz/assets/company_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')" title="行政"
 					target="_top">行政</a>
 			</li>
 			<li id="top-atools">
-				<a href="/xcloud/atools/list" onclick="setTopMenuId('top-atools')" title="应用中心" target="_top">应用中心</a>
+				<a href="/xcloud/atools/list" onclick="setTopMenuId('top-atools', 'collapse-nav-atools')" title="应用中心" target="_top">应用中心</a>
 			</li>
 			<li class="am-dropdown" data-am-dropdown>
 				<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">

@@ -3,45 +3,7 @@
 <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
 	<ul class="am-list admin-sidebar-list">
 		
-		<li class="admin-parent">
-			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-checkin')">
-				<span class="am-icon-file"></span>
-				考勤管理
-				<span class="am-icon-angle-right am-fr am-margin-right"></span>
-			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-checkin">
-				<li>
-					<a href="/xcloud/xz/checkin/stat-list" class="am-cf">
-						<span class="am-icon-check"></span>
-						 考勤明细表
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/xz/checkin/stat-total" class="am-cf">
-						<span class="am-icon-bars"></span>
-						 考勤统计表
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/xz/checkin/net" class="am-cf">
-						<span class="am-icon-map-marker"></span>
-						 出勤配置
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/xz/checkin/list" class="am-cf">
-						<span class="am-icon-table"></span>
-						 考勤日志列表
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/xz/leave/list" class="am-cf">
-						<span class="am-icon-pause"></span>
-						 请假列表
-					</a>
-				</li>
-			</ul>
-		</li>
+		
 	
 		
 		<li class="admin-parent">
@@ -72,6 +34,30 @@
 				
 			</ul>
 		</li>
+		
+		<li class="admin-parent">
+			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-meeting')">
+				<span class="am-icon-university"></span>
+				会议室管理
+				<span class="am-icon-angle-right am-fr am-margin-right"></span>
+			</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-meeting">
+				<li>
+					<a href="/xcloud/xz/meeting/list" class="am-cf">
+						<span class="am-icon-calendar"></span>
+						会议一览
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/meeting/room-list/">
+						<span class="am-icon-calendar"></span>
+						会议室设置
+					</a>
+				</li>
+				
+			</ul>
+		</li>
+		
 		<li class="admin-parent">
 			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-express')">
 				<span class="am-icon-truck"></span>
@@ -97,7 +83,7 @@
 		<li class="admin-parent">
 			<a class="am-cf" onclick="setMenuId('collapse-nav-xz-water')">
 				<span class="am-icon-coffee"></span>
-				饮用水管理
+				茶点饮用水
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-water">
@@ -119,7 +105,7 @@
 		<li class="admin-parent">
 			<a class="am-cf" onclick="setMenuId('collapse-nav-xz-clean')">
 				<span class="am-icon-bitbucket"></span>
-				企业保洁
+				办公环境
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-clean">
@@ -160,28 +146,9 @@
 				
 			</ul>
 		</li>
-		<li class="admin-parent">
-			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-meeting')">
-				<span class="am-icon-university"></span>
-				会议室管理
-				<span class="am-icon-angle-right am-fr am-margin-right"></span>
-			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-xz-meeting">
-				<li>
-					<a href="/xcloud/xz/meeting/list" class="am-cf">
-						<span class="am-icon-calendar"></span>
-						会议一览
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/xz/meeting/room-list/">
-						<span class="am-icon-calendar"></span>
-						会议室设置
-					</a>
-				</li>
-				
-			</ul>
-		</li>
+		
+		<li><a href="/xcloud/xz/service"><span class="am-icon-th"></span> 找服务商</a></li>
+		
 	</ul>
 </div>
 <!-- sidebar end -->

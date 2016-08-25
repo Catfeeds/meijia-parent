@@ -5,7 +5,7 @@
 		
 		<li class="admin-parent">
 			<a class="am-collapsed" onclick="setMenuId('collapse-nav-hr-staff')"> 
-				<span class="am-icon-file-text-o"></span> 组织结构
+				<span class="am-icon-file-text-o"></span> 员工管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-staff">
@@ -31,6 +31,46 @@
 					</a>
 				</li>
 				
+			</ul>
+		</li>
+		
+		<li class="admin-parent">
+			<a class="am-cf " onclick="setMenuId('collapse-nav-hr-checkin')">
+				<span class="am-icon-file"></span>
+				考勤管理
+				<span class="am-icon-angle-right am-fr am-margin-right"></span>
+			</a>
+			<ul class="am-list am-collapse admin-sidebar-sub"  id="collapse-nav-xz-checkin">
+				<li>
+					<a href="/xcloud/xz/checkin/stat-list" class="am-cf">
+						<span class="am-icon-check"></span>
+						 考勤明细表
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/checkin/stat-total" class="am-cf">
+						<span class="am-icon-bars"></span>
+						 考勤统计表
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/checkin/net" class="am-cf">
+						<span class="am-icon-map-marker"></span>
+						 出勤配置
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/checkin/list" class="am-cf">
+						<span class="am-icon-table"></span>
+						 考勤日志列表
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/xz/leave/list" class="am-cf">
+						<span class="am-icon-pause"></span>
+						 请假列表
+					</a>
+				</li>
 			</ul>
 		</li>
 		
@@ -94,6 +134,7 @@
 				</li>
 			</ul>
 		</li> -->
+		<li><a href="/xcloud/hr/service"><span class="am-icon-th"></span> 找服务商</a></li>
 	</ul>
 </div>
 <!-- sidebar end -->

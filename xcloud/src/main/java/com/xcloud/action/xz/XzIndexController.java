@@ -21,4 +21,12 @@ public class XzIndexController extends BaseController {
 		return "xz/xz-index";
 
 	}	
+	
+	@AuthPassport
+	@RequestMapping(value = "service", method = RequestMethod.GET)
+	public String service(HttpServletRequest request) {
+
+		return "xz/xz-service";
+
+	}	
 }

@@ -267,4 +267,12 @@ public class ScheduleController extends BaseController {
 		vo.put("start", timeStr);
 		return vo;
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "/setting", method = { RequestMethod.GET })
+	public String setting(HttpServletRequest request, Model model) {
+		
+		
+		return "/schedule/setting";
+	}
 }
