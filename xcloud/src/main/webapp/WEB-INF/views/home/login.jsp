@@ -204,5 +204,9 @@
 	<script src="<c:url value='/assets/js/countdown.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/drag/drag.js'/>" type="text/javascript"></script>
 	<script src="<c:url value='/assets/js/xcloud/home/login.js'/>" type="text/javascript"></script>
+	
+	<script>
+		loginSwitch('${contentModel.loginType}');
+	</script>
 </body>
 </html>

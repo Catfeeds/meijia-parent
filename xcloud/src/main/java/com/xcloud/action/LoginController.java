@@ -57,8 +57,7 @@ public class LoginController extends BaseController {
 	public String login(Model model) {
 		if (!model.containsAttribute("contentModel")) {
 			LoginVo vo = new LoginVo();
-			// vo.setUsername("13810002890");
-			// vo.setPassword("000000");
+			vo.setLoginType("tab-login-pass");
 			model.addAttribute("contentModel", vo);
 		}
 
@@ -88,6 +87,7 @@ public class LoginController extends BaseController {
 		Xcompany xcompany = null;
 		if (rs.isEmpty()) {
 			result.addError(new FieldError("contentModel", "username", "用户名或密码错误。"));
+			model.addAttribute("contentModel", loginVo);
 			return login(model);
 		} else {
 			if (rs.size() == 1) {
@@ -122,6 +122,7 @@ public class LoginController extends BaseController {
 
 		if (xCompanyAdmn == null) {
 			result.addError(new FieldError("contentModel", "username", "用户名或密码错误。"));
+			model.addAttribute("contentModel", loginVo);
 			return login(model);
 		}
 
@@ -190,6 +191,8 @@ public class LoginController extends BaseController {
 		
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
 			result.addError(new FieldError("contentModel","password","验证码错误"));
+			loginVo.setLoginType("tab-login-pass");
+			model.addAttribute("contentModel", loginVo);
 			return login(model);
 		}
 		
@@ -198,6 +201,8 @@ public class LoginController extends BaseController {
 		
 		if (u == null) {
 			result.addError(new FieldError("contentModel","password","用户不存在"));
+			loginVo.setLoginType("tab-login-pass");
+			model.addAttribute("contentModel", loginVo);
 			return login(model);
 		}
 
@@ -212,6 +217,8 @@ public class LoginController extends BaseController {
 		Xcompany xcompany = null;
 		if (rs.isEmpty()) {
 			result.addError(new FieldError("contentModel", "password", "用户名或密码错误。"));
+			loginVo.setLoginType("tab-login-sms");
+			model.addAttribute("contentModel", loginVo);
 			return login(model);
 		} else {
 			if (rs.size() == 1) {
@@ -248,6 +255,8 @@ public class LoginController extends BaseController {
 
 		if (xCompanyAdmn == null) {
 			result.addError(new FieldError("contentModel", "password", "用户名或密码错误。"));
+			loginVo.setLoginType("tab-login-sms");
+			model.addAttribute("contentModel", loginVo);
 			return login(model);
 		}
 

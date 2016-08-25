@@ -4,10 +4,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class LoginVo {
 
-	@NotEmpty(message="用户名不能为空")
+	
 	private String username;
-	@NotEmpty(message="用户名和密码错误}")
+
 	private String password;
+	
+	private String loginType;
 
 	public void setUsername(String username){
 		this.username=username;
@@ -21,5 +23,11 @@ public class LoginVo {
 	}
 	public String getPassword(){
 		return this.password;
+	}
+	public String getLoginType() {
+		return loginType;
+	}
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
 	}
 }
