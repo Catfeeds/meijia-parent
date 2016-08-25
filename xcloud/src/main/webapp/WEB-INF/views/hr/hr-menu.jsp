@@ -5,29 +5,29 @@
 		
 		<li class="admin-parent">
 			<a class="am-collapsed" onclick="setMenuId('collapse-nav-hr-staff')"> 
-				<span class="am-icon-file-text-o"></span> 员工管理
+				<span class="am-icon-user"></span> 员工管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
 			</a>
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-staff">
 				<li>
-					<a href="/xcloud/company/company-form" class="am-cf"> 
-						<span class="am-icon-file-text"></span> 公司信息
+					<a href="/xcloud/staff/list" class="am-cf"> 
+						<span class="am-icon-folder-open-o"></span> 人事档案
 					</a>
 				</li>
-			
+				
 				<li>
-					<a href="/xcloud/staff/list" class="am-cf"> 
-						<span class="am-icon-file-text"></span> 人事档案
+					<a href="/xcloud/job/job_list" class="am-cf"> 
+						<span class="am-icon-puzzle-piece"></span> 职位管理
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/staff/dept/dept_list" class="am-cf"> 
-						<span class="am-icon-file-text"></span> 部门管理
+						<span class="am-icon-users"></span> 部门管理
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/job/job_list"> 
-						<span class="am-icon-check-square"></span> 职位管理
+					<a href="/xcloud/company/company-form" class="am-cf"> 
+						<span class="am-icon-file-text-o"></span> 公司信息
 					</a>
 				</li>
 				
