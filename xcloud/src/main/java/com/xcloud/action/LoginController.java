@@ -180,7 +180,7 @@ public class LoginController extends BaseController {
 
 		String mobile = request.getParameter("mobile");
 		if (StringUtil.isEmpty(mobile)) {
-			result.addError(new FieldError("contentModel","username","手机号不能为空"));
+			result.addError(new FieldError("contentModel","password","手机号不能为空"));
 			return login(model);
 		}
 		
@@ -189,7 +189,7 @@ public class LoginController extends BaseController {
 		AppResultData<Object> validateResult = smsTokenService.validateSmsToken(mobile, smsToken, (short) 3);
 		
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
-			result.addError(new FieldError("contentModel","username","验证码错误"));
+			result.addError(new FieldError("contentModel","password","验证码错误"));
 			return login(model);
 		}
 		
@@ -197,7 +197,7 @@ public class LoginController extends BaseController {
 		Long userId = u.getId();
 		
 		if (u == null) {
-			result.addError(new FieldError("contentModel","username","用户不存在"));
+			result.addError(new FieldError("contentModel","password","用户不存在"));
 			return login(model);
 		}
 
@@ -211,7 +211,7 @@ public class LoginController extends BaseController {
 		Long companyId = 0L;
 		Xcompany xcompany = null;
 		if (rs.isEmpty()) {
-			result.addError(new FieldError("contentModel", "username", "用户名或密码错误。"));
+			result.addError(new FieldError("contentModel", "password", "用户名或密码错误。"));
 			return login(model);
 		} else {
 			if (rs.size() == 1) {
@@ -239,13 +239,15 @@ public class LoginController extends BaseController {
 							break;
 						}
 					}
+					
+					if (xCompanyAdmn == null) xCompanyAdmn = rs.get(0);
 				}
 
 			}
 		}
 
 		if (xCompanyAdmn == null) {
-			result.addError(new FieldError("contentModel", "username", "用户名或密码错误。"));
+			result.addError(new FieldError("contentModel", "password", "用户名或密码错误。"));
 			return login(model);
 		}
 

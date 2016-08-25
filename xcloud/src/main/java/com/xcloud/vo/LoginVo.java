@@ -4,9 +4,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class LoginVo {
 
-	@NotEmpty(message="{username.not.empty}")
+	@NotEmpty(message="用户名不能为空")
 	private String username;
-	@NotEmpty(message="{password.not.empty}")
+	@NotEmpty(message="用户名和密码错误}")
 	private String password;
 
 	public void setUsername(String username){

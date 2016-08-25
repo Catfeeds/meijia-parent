@@ -101,7 +101,7 @@
 									class="am-form am-padding-xl am-padding-bottom-sm">
 									<div class="am-g am-container">
 										<h2>登录管理平台</h2>
-										<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
+										<form:errors path="password" class="am-alert am-alert-danger center"></form:errors>
 									</div>
 									<div class="am-g am-padding-sm">
 										<div class="am-form-group am-form-icon">
