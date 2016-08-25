@@ -35,7 +35,7 @@
 		</li>
 		
 		<li class="admin-parent">
-			<a class="am-cf " onclick="setMenuId('collapse-nav-hr-checkin')">
+			<a class="am-cf " onclick="setMenuId('collapse-nav-xz-checkin')">
 				<span class="am-icon-file"></span>
 				考勤管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
