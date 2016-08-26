@@ -52,7 +52,7 @@
 						<div class="form-group ">
 							<label class="col-md-2 control-label">图片</label>
 							<div class="col-md-5">
-								<img src="${ contentModel.imgUrl }?p=0" />
+								<img src="${ contentModel.imgUrl }?p=0" width=300 heigh=300/>
 							</div>
 						</div>
 					</c:if>
