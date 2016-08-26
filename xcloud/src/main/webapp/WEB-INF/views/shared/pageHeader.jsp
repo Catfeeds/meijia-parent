@@ -57,7 +57,7 @@
 			</li>
 			<li id="top-xz">
 				<a href="/xcloud/xz/assets/company_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')" title="行政"
-					target="_top">行政</a>
+					 target="_top">行政</a>
 			</li>
 			<li id="top-atools">
 				<a href="/xcloud/atools/list" onclick="setTopMenuId('top-atools', 'collapse-nav-atools')" title="应用中心" target="_top">应用中心</a>

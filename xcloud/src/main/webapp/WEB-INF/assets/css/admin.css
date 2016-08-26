@@ -44,7 +44,12 @@
   background-color: #4169E1;
 }
 .am-nav > li.am-active > a,
-.am-nav > li.am-active > a:hover,
+.am-nav > li.am-active > a:hover
+{
+  color: #fff;
+  background-color: #000;
+  cursor: default;
+}
 .am-nav > li.am-active > a:focus {
   color: #fff;
   background-color: #000;
@@ -465,7 +470,7 @@ ul {
 
 .admin-header-list a{
   color: #fff;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .admin-header-list a:hover :after {
