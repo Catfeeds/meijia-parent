@@ -86,6 +86,8 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 		record.setContentStandard("");
 		record.setContentDesc("");
 		record.setContentFlow("");
+		record.setVideoUrl("");
+		record.setVideoFilter("");
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}

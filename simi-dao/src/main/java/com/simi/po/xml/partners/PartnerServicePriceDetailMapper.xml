@@ -12,6 +12,8 @@
 		<result column="content_standard" property="contentStandard" jdbcType="VARCHAR" />
 		<result column="content_desc" property="contentDesc" jdbcType="VARCHAR" />
 		<result column="content_flow" property="contentFlow" jdbcType="VARCHAR" />
+		<result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+		<result column="video_filter" property="videoFilter" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
 		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
@@ -19,7 +21,8 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, service_price_id, service_title, user_id, img_url, price, dis_price, order_type, order_duration, content_standard,
-		is_addr, content_desc, content_flow, add_time
+		is_addr, content_desc,
+		content_flow, video_url, video_filter, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -27,14 +30,14 @@
 		from partner_service_price_detail
 		where id = #{servicePriceId,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByServicePriceId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_price_detail
 		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
-	</select>	
-	
+	</select>
+
 	<select id="selectByServicePriceIds" parameterType="java.lang.String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -45,7 +48,7 @@
 		</foreach>
 		order by add_time asc
 	</select>
-	
+
 	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
@@ -53,13 +56,13 @@
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>
 
-<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_price_detail
 		where 1=1
 		<if test="userId != null">
-			and user_id =  #{userId,jdbcType=NUMERIC}
+			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		<if test="serviceTypeIds != null">
 			and service_price_id in
@@ -67,25 +70,20 @@
 				#{item}
 			</foreach>
 		</if>
-		<!-- <if test="partnerId != null">
-			and partner_id =  #{partnerId,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="serviceTypeId != null">
-			and service_type_id =  #{serviceTypeId,jdbcType=NUMERIC}
-		</if> -->
-		order by add_time desc 
+		<!-- <if test="partnerId != null"> and partner_id = #{partnerId,jdbcType=NUMERIC} </if> <if test="serviceTypeId != null"> and service_type_id = #{serviceTypeId,jdbcType=NUMERIC} 
+			</if> -->
+		order by add_time desc
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from partner_service_price_detail
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
-	
+
 	<delete id="deleteByServiceTypeId" parameterType="java.lang.Long">
 		delete from partner_service_price_detail
 		where service_price_id = #{id,jdbcType=NUMERIC}
-	</delete>	
-	
+	</delete>
+
 	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
@@ -93,14 +91,18 @@
 
 		insert into partner_service_price_detail (id, service_price_id, service_title,
 		user_id, img_url, price,
-		dis_price, order_type, order_duration, is_addr, content_standard, content_desc,
-		content_flow, add_time)
+		dis_price, order_type, order_duration, is_addr,
+		content_standard, content_desc,
+		content_flow, video_url, video_filter, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
-		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC}, #{orderDuration,jdbcType=NUMERIC},
+		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC},
+		#{orderDuration,jdbcType=NUMERIC},
 		#{isAddr,jdbcType=NUMERIC},
 		#{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
-		#{contentFlow,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC})
+		#{contentFlow,jdbcType=VARCHAR}, 
+		#{videoUrl,jdbcType=VARCHAR}, #{videoFilter,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
 
@@ -149,6 +151,12 @@
 			<if test="contentFlow != null">
 				content_flow,
 			</if>
+			<if test="videoUrl != null">
+				video_url,
+			</if>
+			<if test="videoFilter != null">
+				video_filter,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -192,6 +200,12 @@
 			</if>
 			<if test="contentFlow != null">
 				#{contentFlow,jdbcType=VARCHAR},
+			</if>
+			<if test="videoUrl != null">
+				#{videoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="videoFilter != null">
+				#{videoFilter,jdbcType=VARCHAR},
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
@@ -237,6 +251,12 @@
 			<if test="contentFlow != null">
 				content_flow = #{contentFlow,jdbcType=VARCHAR},
 			</if>
+			<if test="videoUrl != null">
+				video_url = #{videoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="videoFilter != null">
+				video_filter = #{videoFilter,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -253,10 +273,14 @@
 		dis_price = #{disPrice,jdbcType=DECIMAL},
 		order_type = #{orderType,jdbcType=DECIMAL},
 		order_duration = #{orderDuration,jdbcType=DECIMAL},
-		is_addr = #{isAddr,jdbcType=DECIMAL},
+		is_addr =
+		#{isAddr,jdbcType=DECIMAL},
 		content_standard = #{contentStandard,jdbcType=VARCHAR},
 		content_desc = #{contentDesc,jdbcType=VARCHAR},
-		content_flow = #{contentFlow,jdbcType=VARCHAR},
+		content_flow =
+		#{contentFlow,jdbcType=VARCHAR},
+		video_url = #{videoUrl,jdbcType=VARCHAR},
+		video_filter = #{videoFilter,jdbcType=VARCHAR},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

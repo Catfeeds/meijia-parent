@@ -29,6 +29,10 @@ public class PartnerServicePriceDetail {
     
     private Short orderDuration;
     
+    private String videoUrl;
+    
+    private String videoFilter;
+    
     private Short isAddr;
 
     public Long getId() {
@@ -143,5 +147,21 @@ public class PartnerServicePriceDetail {
 
 	public void setIsAddr(Short isAddr) {
 		this.isAddr = isAddr;
+	}
+
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
+
+	public String getVideoFilter() {
+		return videoFilter;
+	}
+
+	public void setVideoFilter(String videoFilter) {
+		this.videoFilter = videoFilter;
 	}
 }

@@ -43,6 +43,8 @@
  						<form:hidden path="serviceTypeId" />
  						<form:hidden path="partnerId" />
  						<form:hidden path="servicePriceId" />
+ 						<form:hidden path="videoUrl" />
+ 						<form:hidden path="videoFilter" />
                         <div class="form-body">
                         
                         	<div class="form-group">
