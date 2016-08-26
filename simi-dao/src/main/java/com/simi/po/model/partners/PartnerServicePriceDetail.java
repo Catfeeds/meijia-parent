@@ -33,6 +33,8 @@ public class PartnerServicePriceDetail {
     
     private String videoFilter;
     
+    private Long extendId;
+    
     private Short isAddr;
 
     public Long getId() {
@@ -163,5 +165,13 @@ public class PartnerServicePriceDetail {
 
 	public void setVideoFilter(String videoFilter) {
 		this.videoFilter = videoFilter;
+	}
+
+	public Long getExtendId() {
+		return extendId;
+	}
+
+	public void setExtendId(Long extendId) {
+		this.extendId = extendId;
 	}
 }

@@ -17,12 +17,13 @@
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
 		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
+		<result column="extend_id" property="extendId" jdbcType="NUMERIC" />
 		<result column="is_addr" property="isAddr" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, service_price_id, service_title, user_id, img_url, price, dis_price, order_type, order_duration, content_standard,
 		is_addr, content_desc,
-		content_flow, video_url, video_filter, add_time
+		content_flow, video_url, video_filter, extend_id, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -93,7 +94,7 @@
 		user_id, img_url, price,
 		dis_price, order_type, order_duration, is_addr,
 		content_standard, content_desc,
-		content_flow, video_url, video_filter, add_time)
+		content_flow, video_url, video_filter, extend_id, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
 		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC},
@@ -102,7 +103,7 @@
 		#{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
 		#{contentFlow,jdbcType=VARCHAR}, 
 		#{videoUrl,jdbcType=VARCHAR}, #{videoFilter,jdbcType=VARCHAR},
-		#{addTime,jdbcType=NUMERIC})
+		#{extendId,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
 
@@ -157,6 +158,9 @@
 			<if test="videoFilter != null">
 				video_filter,
 			</if>
+			<if test="extendId != null">
+				extend_id,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -206,6 +210,9 @@
 			</if>
 			<if test="videoFilter != null">
 				#{videoFilter,jdbcType=VARCHAR},
+			</if>
+			<if test="extendId != null">
+				#{extendId,jdbcType=NUMERIC},
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
@@ -257,6 +264,9 @@
 			<if test="videoFilter != null">
 				video_filter = #{videoFilter,jdbcType=VARCHAR},
 			</if>
+			<if test="extendId != null">
+				extend_id = #{extendId,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -281,6 +291,7 @@
 		#{contentFlow,jdbcType=VARCHAR},
 		video_url = #{videoUrl,jdbcType=VARCHAR},
 		video_filter = #{videoFilter,jdbcType=VARCHAR},
+		extend_id = #{extendId,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

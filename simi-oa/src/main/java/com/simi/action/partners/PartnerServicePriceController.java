@@ -135,7 +135,9 @@ public class PartnerServicePriceController extends AdminController {
 		record.setContentStandard(partnerServiceTypeDetailVo.getContentStandard());
 		record.setContentDesc(partnerServiceTypeDetailVo.getContentDesc());
 		record.setContentFlow(partnerServiceTypeDetailVo.getContentFlow());
-		
+		record.setVideoFilter(partnerServiceTypeDetailVo.getVideoFilter());
+		record.setVideoUrl(partnerServiceTypeDetailVo.getVideoUrl());
+		record.setExtendId(partnerServiceTypeDetailVo.getExtendId());
 		if (file != null && !file.isEmpty()) {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
 			String fileName = file.getOriginalFilename();

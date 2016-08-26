@@ -25,13 +25,10 @@
 				<form:hidden path="serviceTypeId" />
 				<form:hidden path="partnerId" />
 				<form:hidden path="servicePriceId" />
-				
 				<form:hidden path="orderType" />
 				<form:hidden path="orderDuration" />
 				<form:hidden path="isAddr" />
 				<form:hidden path="contentDesc" />
-				<form:hidden path="imgUrl" />
-				
 				<div class="form-body">
 					<div class="form-group">
 						<label class="col-md-2 control-label">排序&nbsp;*</label>
@@ -43,6 +40,30 @@
 					</div>
 					
 					<div class="form-group">
+						<label class="col-md-2 control-label">频道&nbsp;*</label>
+						<div class="col-md-5">
+							<form:select path="extendId" class="form-control">
+								<form:options items="${channelList}" itemValue="id" itemLabel="name"></form:options>
+							</form:select>
+						</div>
+					</div>
+					
+					<c:if test="${contentModel.imgUrl != null && contentModel.imgUrl != '' }">
+						<div class="form-group ">
+							<label class="col-md-2 control-label">图片</label>
+							<div class="col-md-5">
+								<img src="${ contentModel.imgUrl }?p=0" />
+							</div>
+						</div>
+					</c:if>
+					<div class="form-group required">
+						<label class="col-md-2 control-label">图片地址(640 × 370)</label>
+						<div class="col-md-5">
+							<input id="imgUrlFile" type="file" name="imgUrlFile" accept="image/*" data-show-upload="false">
+							<form:errors path="imgUrl" class="field-has-error"></form:errors>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-md-2 control-label">标题&nbsp;*</label>
 						<div class="col-md-5">
 							<form:input path="name" class="form-control" placeholder="名称" />
@@ -50,18 +71,14 @@
 							<form:errors path="name" class="field-has-error"></form:errors>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label class="col-md-2 control-label"></label>
-
 						<div class="col-md-5">
 							<div id='J_prismPlayer' class='prism-player'></div>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label class="col-md-2 control-label">视频地址&nbsp;*</label>
-
 						<div class="col-md-5">
 							<form:input path="videoUrl" class="form-control" placeholder="阿里云地址" />
 							<br />
@@ -71,17 +88,15 @@
 							<button type="button" id="prew-video-btn" class="btn btn-info">试播</button>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label class="col-md-2 control-label">播放视频校验&nbsp;</label>
 						<div class="col-md-5">
-							<form:select path="videoFilter">
+							<form:select path="videoFilter" class="form-control">
 								<form:option value="">不需要校验</form:option>
 								<form:option value="persion_info">需完善公司信息</form:option>
 							</form:select>
 						</div>
 					</div>
-
 					<div class="form-group">
 						<label class="col-md-2 control-label">原价&nbsp;*</label>
 						<div class="col-md-5">
@@ -105,7 +120,6 @@
 							<form:errors path="contentStandard" class="field-has-error"></form:errors>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label class="col-md-2 control-label">标签&nbsp;*</label>
 						<div class="col-md-5">
@@ -114,7 +128,6 @@
 							<form:errors path="contentFlow" class="field-has-error"></form:errors>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<label class="col-md-2 control-label">是否下架</label>
 						<div class="col-md-5">
@@ -128,7 +141,6 @@
 				<div class="form-actions fluid">
 					<div class="col-md-offset-4">
 						<button type="button" id="btn_submit" class="btn btn-success">保存</button>
-						
 					</div>
 				</div>
 			</form:form> </section>
@@ -136,8 +148,6 @@
 	</div>
 	<!-- page end--> </section> </section> <!--main content end--> <!--footer start--> <%@ include file="../shared/pageFooter.jsp"%>
 	<!--footer end--> </section>
-	
-	
 	<%@ include file="../shared/importJs.jsp"%>
 	<!--script for this page-->
 	<script src="<c:url value='/assets/aliplayer/prism-min.js'/>"></script>
@@ -159,6 +169,5 @@
 		});
 	</script>
 	<script src="<c:url value='/js/simi/partner/partnerServiceVideoForm.js'/>" type="text/javascript"></script>
-
 </body>
 </html>

@@ -52,6 +52,7 @@ import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.partners.PartnerServicePriceDetailVo;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerUserServiceTypeVo;
 import com.simi.vo.partners.PartnerUserVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
@@ -423,6 +424,14 @@ public class PartnerUsersController extends BaseController {
 
 		// 视频播放文章内容表单 品类 = 306
 		if (serviceTypeId.equals(306L)) {
+			
+			//读取二级品类，当做频道来使用.
+			PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+			searchVo.setParentId(serviceTypeId);
+			searchVo.setViewType((short) 0);
+			List<PartnerServiceType> channelList = partnerServiceTypeService.selectBySearchVo(searchVo);
+			
+			model.addAttribute("channelList", channelList);
 			return "partners/partnerStoreVideoForm";
 		} else {
 			return "partners/partnerStorePriceForm";
@@ -478,6 +487,7 @@ public class PartnerUsersController extends BaseController {
 		record.setContentFlow(vo.getContentFlow());
 		record.setVideoUrl(vo.getVideoUrl());
 		record.setVideoFilter(vo.getVideoFilter());
+		record.setExtendId(vo.getExtendId());
 
 		if (file != null && !file.isEmpty()) {
 			String url = Constants.IMG_SERVER_HOST + "/upload/";
