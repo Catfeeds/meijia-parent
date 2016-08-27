@@ -28,7 +28,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">快递管理</strong> / <small>快递单</small>
+					<strong class="am-text-primary am-text-lg">快递登记</strong> / <small>快递详细信息登记</small>
 				</div>
 			</div>
 			<hr>
@@ -41,8 +41,8 @@
 						src="<c:url value='/assets/img/a1.png'/>"
 						class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
-					<div class="am-panel-bd">可以用App扫码加入快递，快去试试吧</div>
-					<div class="am-panel-bd"><img src="<c:url value='${qrCode }'/>" width="250" height="250" /></div>
+					<div class="am-panel-bd">可以用App扫描快递单的二维码快速录入快递信息，快去试试吧~~</div>
+					<div class="am-panel-bd"><center><img src="<c:url value='${qrCode }'/>" width="200" height="200" /></center></div>
 					</section>
 				</div>
 

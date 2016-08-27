@@ -36,7 +36,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">我的应用</strong> / <small>My Application</small>
+					<strong class="am-text-primary am-text-lg">我的应用</strong> / <small>选择自己所需的应用功能</small>
 				</div>
 			</div>
 			<hr>

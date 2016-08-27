@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">废品回收</strong> / <small>recycle</small>
+					<strong class="am-text-primary am-text-lg">废品回收服务下单</strong> / <small>废品回收服务需求详情</small>
 				</div>
 			</div>
 			<hr>
@@ -38,8 +38,8 @@
 					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
 						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
-					<div class="am-panel-bd">可以一键扫码预约废品回收，快来试试吧</div>
-					<div class="am-panel-bd"><img src="<c:url value='${qrCode }'/>" width="250" height="250" /></div>
+					<div class="am-panel-bd">可以用APP一键扫码预约废品回收服务，快来试试吧~~</div>
+					<div class="am-panel-bd"><center><img src="<c:url value='${qrCode }'/>" width="200" height="200" /></center></div>
 					</section>
 				</div>
 

@@ -54,21 +54,21 @@
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/xz/checkin/list" class="am-cf">
-						<span class="am-icon-table"></span>
-						 考勤日志列表
+					<a href="/xcloud/xz/leave/list" class="am-cf">
+						<span class="am-icon-twitch"></span>
+						 请假情况查阅
 					</a>
 				</li>
 				<li>
-					<a href="/xcloud/xz/leave/list" class="am-cf">
-						<span class="am-icon-twitch"></span>
-						 请假列表
+					<a href="/xcloud/xz/checkin/list" class="am-cf">
+						<span class="am-icon-table"></span>
+						 考勤日志查询
 					</a>
 				</li>
 				<li>
 					<a href="/xcloud/xz/checkin/net" class="am-cf">
 						<span class="am-icon-gear"></span>
-						 出勤配置
+						 考勤相关设置
 					</a>
 				</li>
 			</ul>
@@ -82,13 +82,13 @@
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-recruit">
 				<li>
 					<a href="/xcloud/hr/resume/resume_exchange_list" class="am-cf"> 
-						<span class="am-icon-refresh"></span> 简历交换大厅
+						<span class="am-icon-refresh"></span> 简历交换
 					</a>
 				</li>
 				
 				<li>
 					<a href="/xcloud/hr/hunter/job_publish_list" class="am-cf"> 
-						<span class="am-icon-compass"></span> 内推悬赏大厅
+						<span class="am-icon-compass"></span> 内推悬赏
 					</a>
 				</li>
 			

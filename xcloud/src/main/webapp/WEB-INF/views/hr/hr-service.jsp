@@ -29,7 +29,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">找服务商</strong> / <small>Service Partner</small>
+					<strong class="am-text-primary am-text-lg">找服务商</strong> / <small>对比挑选最佳的服务供应商</small>
 				</div>
 			</div>
 			<hr>

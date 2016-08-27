@@ -31,7 +31,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">会议室列表</strong> / <small>meeting-room</small>
+					<strong class="am-text-primary am-text-lg">会议室列表</strong> / <small>会议室情况一览</small>
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-3 am-fr">

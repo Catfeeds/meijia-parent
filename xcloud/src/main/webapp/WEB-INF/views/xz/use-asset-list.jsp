@@ -30,7 +30,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">资产领用列表</strong>
+					<strong class="am-text-primary am-text-lg">资产领用管理</strong> / <small>公司资产领用信息一览</small>
 				</div>
 				
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
@@ -49,9 +49,9 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-compact am-table-centered">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									<th class="table-title">领用人名称</th>
 									<th class="table-title">领用人手机号</th>
 									<th class="table-title">物品名称/数量</th>

@@ -31,7 +31,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">快递记录</strong> / <small>Express</small>
+					<strong class="am-text-primary am-text-lg">快递登记列表</strong> / <small>快递登记信息一览</small>
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
@@ -49,7 +49,7 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form:form modelAttribute="searchModel" class="am-form-inline am-form-horizontal" action="list" method="GET">
-						<div class="am-form-group">
+						从<div class="am-form-group">
 							<input type="hidden" id="userId" name="userId" value="${userId}"/>
 							
 
@@ -136,7 +136,7 @@
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									
 									<th class="table-date">时间</th>
 									<th class="table-title">快递服务商</th>

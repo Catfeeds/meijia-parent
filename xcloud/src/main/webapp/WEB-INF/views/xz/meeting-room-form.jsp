@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">会议室</strong> / <small>meeting</small>
+					<strong class="am-text-primary am-text-lg">会议室信息</strong> / <small>会议室详情描述</small>
 				</div>
 			</div>
 			<hr>

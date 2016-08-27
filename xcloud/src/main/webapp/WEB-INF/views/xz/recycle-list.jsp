@@ -31,7 +31,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">废品回收列表</strong> / <small>recycle</small>
+					<strong class="am-text-primary am-text-lg">废品回收服务记录</strong> / <small>废品回收服务记录一览</small>
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
@@ -51,7 +51,7 @@
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									<th class="table-date am-hide-sm-only">服务大类名称</th>
 									<th class="table-date am-hide-sm-only">回收类型</th>
 									<th class="table-title">地址</th>

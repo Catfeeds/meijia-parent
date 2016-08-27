@@ -29,7 +29,7 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">资产一览</strong>
+					<strong class="am-text-primary am-text-lg">资产入库管理</strong> / <small>公司资产入库信息一览</small>
 				</div>
 
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
@@ -73,9 +73,9 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-compact am-table-centered">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									<th class="table-title">资产名称</th>
 									<th class="table-title">类别</th>
 									<th class="table-title">编号</th>

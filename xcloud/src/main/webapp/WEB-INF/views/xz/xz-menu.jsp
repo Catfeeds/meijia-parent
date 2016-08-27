@@ -16,7 +16,7 @@
 				<li>
 					<a href="/xcloud/xz/assets/company_asset_list" class="am-cf">
 						<span class="am-icon-pencil"></span>
-						资产登记
+						入库登记
 					</a>
 				</li>
 				<li>
@@ -112,7 +112,7 @@
 				<li>
 					<a href="/xcloud/xz/clean/clean-form" class="am-cf">
 						<span class="am-icon-shopping-cart"></span>
-						保洁维修预约
+						办公环境服务预约
 					</a>
 				</li>
 				<li>

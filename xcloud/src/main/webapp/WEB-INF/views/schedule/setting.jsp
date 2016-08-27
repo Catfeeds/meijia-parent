@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">常用提醒设置</strong> / <small>Alarm Setting</small>
+					<strong class="am-text-primary am-text-lg">常用提醒设置</strong> / <small>工作中常用事项的提醒设置</small>
 				</div>
 			</div>
 			<hr>

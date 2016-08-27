@@ -28,7 +28,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">资产管理</strong> / <small>资产入库登记</small>
+					<strong class="am-text-primary am-text-lg">入库登记</strong> / <small>资产入库详情登记</small>
 				</div>
 			</div>
 			<hr>
@@ -41,8 +41,8 @@
 						src="<c:url value='/assets/img/a1.png'/>"
 						class="am-img-thumbnail am-circle" width="35" height="35">
 					云小秘提示您 </header>
-					<div class="am-panel-bd">可以用App扫码加入快递，快去试试吧</div>
-					<div class="am-panel-bd"><img src="<c:url value='${qrCode }'/>" width="250" height="250" /></div>
+					<div class="am-panel-bd">可以用App扫描资产物品的二维码快速完成入库登记，快去试试吧~~</div>
+					<div class="am-panel-bd"><center><img src="<c:url value='${qrCode }'/>" width="200" height="200" /></center></div>
 					</section>
 				</div>
 
