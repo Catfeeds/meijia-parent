@@ -32,27 +32,21 @@
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">团建列表</strong> / <small>team</small>
+					<strong class="am-text-primary am-text-lg">团建列表</strong> / <small>团队建设信息一览</small>
 				</div>
-			</div>
-			<hr>
-			<div class="am-g">
-				<div class="am-u-sm-12 am-u-md-6">
-					<div class="am-btn-toolbar">
+				<div class="am-btn-toolbar am-fr">
 						<div class="am-btn-group am-btn-group-sm">
-							<button type="button" id="btn-express-add" class="am-btn am-btn-default am-radius">
+							<button type="button" id="btn-express-add" class="am-btn am-btn-warning am-radius">
 								<span class="am-icon-plus"></span> 一键下单
 							</button>							
 						</div>
 					</div>
-				</div>
-
 			</div>
-			<br>
-				<div class="am-g">
+			<hr>
+			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
 								<tr>
 								    <th class="table-date am-hide-sm-only">服务大类名称</th>

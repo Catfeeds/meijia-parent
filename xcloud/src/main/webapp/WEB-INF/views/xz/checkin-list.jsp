@@ -22,7 +22,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">考勤列表</strong>
+					<strong class="am-text-primary am-text-lg">考勤日志查询</strong> / <small>按条件查询考勤日志情况</small>
 				</div>
 			</div>
 			<hr>
@@ -30,7 +30,7 @@
 				<div class="am-u-sm-12">
 					<!-- <form class="am-form" id="search-form"> -->
 					<form:form modelAttribute="searchModel" action="list" method="GET" class="am-form-inline am-form-horizontal">
-						<div class="am-form-group ">
+						<div class="am-form-group ">时间：
 							<div class="am-input-group date form_datetime form-datetime-lang"
 									data-date="">
 									<input type="text" id="selectDay" name="selectDay" size="16"  value="${searchModel.selectDay }" class="am-form-field" readonly minlength="1" maxlength="20">
@@ -54,7 +54,7 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
 								<tr>
 									<th class="table-title">时间</th>

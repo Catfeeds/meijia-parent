@@ -20,7 +20,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">打卡设置</strong> / <small>check-in</small>
+					<strong class="am-text-primary am-text-lg">打卡设置</strong> / <small>考勤打卡的设置</small>
 				</div>
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
 					<div class="am-btn-toolbar am-fr">
@@ -37,7 +37,7 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
 								<tr>
 									<th class="table-title">出勤地点</th>

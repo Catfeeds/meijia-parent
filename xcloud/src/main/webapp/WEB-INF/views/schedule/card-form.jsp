@@ -24,7 +24,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">${cardTypeName }</strong> / <small>Notice Alarm</small>
+					<strong class="am-text-primary am-text-lg">${cardTypeName }</strong> / <small>设置详细信息</small>
 				</div>
 			</div>
 			<hr />
@@ -104,16 +104,16 @@
 							</div>
 						</div>
 						<div class="am-form-group">
-							<label for="user-email" class="am-u-sm-3 am-form-label">立即给相关人员信息：</label>
+							<label for="user-email" class="am-u-sm-3 am-form-label">立即告知相关人员：</label>
 							<div class="am-u-sm-9">
-								<input id="setNowSend" type="checkbox" checked data-on-color="success">
+								<input id="setNowSend" type="checkbox" data-on-color="success">
 								<small></small>
 							</div>
 						</div>
 						<hr>
 						<div class="am-form-group">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<button type="button" id="btn-card-submit" class="am-btn am-btn-primary">保存修改</button>
+								<button type="button" id="btn-card-submit" class="am-btn am-btn-primary">确定保存</button>
 							</div>
 						</div>
 					</form>

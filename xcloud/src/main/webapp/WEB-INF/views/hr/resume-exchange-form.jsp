@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">发布悬赏</strong> / <small>job</small>
+					<strong class="am-text-primary am-text-lg">简历交换需求</strong> / <small>简历交换需求详情</small>
 				</div>
 			</div>
 			<hr>
@@ -129,7 +129,7 @@
 						<hr>
 						<div class="am-form-group">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<button type="button" class="am-btn am-btn-danger" id="btn-team-submit">提交</button>
+								<button type="button" class="am-btn am-btn-danger" id="btn-team-submit">确定</button>
 								<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 							</div>
 						</div>

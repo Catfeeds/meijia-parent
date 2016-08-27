@@ -19,15 +19,15 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">公司信息</strong> / <small>companyName</small>
+					<strong class="am-text-primary am-text-lg">公司信息</strong> / <small>公司详细信息</small>
 				</div>
 			</div>
 			<hr>
 			<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
-				<section class="am-panel am-panel-default"> <header class="am-panel-hd"> 公司二维码 </header>
-				<div class="am-panel-bd"></div>
+				<section class="am-panel am-panel-default"> <header class="am-panel-hd"><img src="/xcloud/assets/img/a1.png" class="am-img-thumbnail am-circle" width="35" height="35"> 云小秘提醒您 </header>
+				<div class="am-panel-bd">只要让同事们扫码下方二维码，即可快速加入公司，一起来体验吧~~</div>
 				<div class="am-panel-bd">
-					<img src="${contentModel.qrCode }" width="250" height="250" />
+					<center><img src="${contentModel.qrCode }" width="200" height="200" /></center>
 				</div>
 				</section>
 			</div>
@@ -37,13 +37,13 @@
 					<div class="am-form-group">
 						<label for="user-phone" class="am-u-sm-3 am-form-label">公司名称:<font color="red">*</font></label>
 						<div class="am-u-sm-9">
-							${contentModel.companyName } <small></small>
+							${contentModel.companyName } 
 						</div>
 					</div>
 					<div class="am-form-group">
 						<label for="user-phone" class="am-u-sm-3 am-form-label">公司邀请码:<font color="red">*</font></label>
 						<div class="am-u-sm-9">
-							${contentModel.invitationCode } <small></small>
+							${contentModel.invitationCode } 
 						</div>
 					</div>
 					<div class="am-form-group am-form-inline">
@@ -78,7 +78,7 @@
 								class="am-form-field am-radius" />
 							<div id="searchResultPanel" style="border: 1px solid #C0C0C0; width: 150px; height: auto; display: none;"></div>
 							<br>
-							<div style="width: 620px; height: 340px; border: 1px solid gray" id="containers"></div>
+							<div style="width: 490px; height: 340px; border: 1px solid gray" id="containers"></div>
 							<small></small>
 						</div>
 					</div>

@@ -20,7 +20,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">职位管理</strong>
+					<strong class="am-text-primary am-text-lg">职位管理</strong> / <small>公司职位列表</small>
 				</div>
 				
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
@@ -36,9 +36,9 @@
 			
 			<hr>
 			<div class="am-g">
-				<div class="am-u-sm-12">
+				<div class="am-u-sm-10">
 					<form class="am-form">
-						<table class="am-table am-table-bordered am-table-striped">
+						<table class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
 								<tr>
 									<th class="table-title">职位名称</th>

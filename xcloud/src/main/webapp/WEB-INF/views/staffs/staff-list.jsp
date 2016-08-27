@@ -21,7 +21,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small>Personnel files</small>
+					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small>公司员工列表与管理</small>
 				</div>
 				<div class="am-u-sm-12 am-u-md-6 am-fr">
 					<div class="am-btn-toolbar am-fr">
@@ -65,7 +65,7 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
 								<tr>
 									<th class="table-check"><input type="checkbox" name="select_all" id="select_all" value="1" /></th>

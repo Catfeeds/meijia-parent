@@ -15,30 +15,30 @@
 	<!--header end-->
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
-		<%@ include file="../xz/xz-menu.jsp"%>
+		<%@ include file="../hr/hr-menu.jsp"%>
 		<!-- sidebar end -->
 		<!-- content start -->
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">请假列表</strong>
+					<strong class="am-text-primary am-text-lg">请假列表</strong> / <small>员工请假情况列表</small>
 				</div>
 			</div>
 			<hr>
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<!-- <form class="am-form" id="search-form"> -->
-					<form:form modelAttribute="searchModel" action="list" method="GET" class="am-form-inline am-form-horizontal">
+					<form:form modelAttribute="searchModel" action="list" method="GET" class="am-form-inline am-form-horizontal">时间：
 						<div class="am-form-group ">
 							<form:select path="cyear" class="am-form-field">
 								<form:options items="${selectYears}" />
 							</form:select>
-						</div>
+						</div>年
 						<div class="am-form-group">
 							<form:select path="cmonth" class="am-form-field">
 								<form:options items="${selectMonths}" />
 							</form:select>
-						</div>
+						</div>月
 						<div class="am-form-group">
 							<form:input path="mobile" placeholder="手机号" class="am-form-field"/>
 						</div>
@@ -56,7 +56,7 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form class="am-form">
-						<table id="list-table" class="am-table am-table-bordered am-table-striped">
+						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
 								<tr>
 									<th class="table-title">申请时间</th>

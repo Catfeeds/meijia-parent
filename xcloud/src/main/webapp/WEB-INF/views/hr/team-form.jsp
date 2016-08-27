@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">团建</strong> / <small>team</small>
+					<strong class="am-text-primary am-text-lg">团建需求</strong> / <small>团队建设需求信息详情</small>
 				</div>
 			</div>
 			<hr>

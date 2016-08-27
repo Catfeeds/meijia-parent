@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">部门管理</strong> / <small>dept</small>
+					<strong class="am-text-primary am-text-lg">部门管理</strong> / <small>部门信息详情</small>
 				</div>
 			</div>
 			<hr>
@@ -47,7 +47,7 @@
 						
 						
 						<div class="am-form-group">
-							<label  class="am-u-sm-3 am-form-label">部门名称:</label>
+							<label  class="am-u-sm-3 am-form-label">部门名称<font color="red">*</font>:</label>
 							<div class="am-u-sm-9">
 								<form:input path="name"
 									class="am-form-field am-radius" autocomplete="off"

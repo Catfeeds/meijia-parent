@@ -21,11 +21,11 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工考勤明细表</strong>
+					<strong class="am-text-primary am-text-lg">考勤明细表</strong> / <small>按月查询员工每日考勤情况</small>
+					<br><br>
+					<small>考勤内容说明:（注:每天中午12点之后能看上午的考勤情况，第二天能看昨天下午的考勤情况）</small>
 					<br>
-					<small>表格说明:</small>
-					<br>
-					<small>&nbsp;&nbsp;&nbsp;&nbsp;日勤--√;&nbsp;&nbsp;&nbsp;&nbsp;
+					<small>日&nbsp;&nbsp;&nbsp;&nbsp;勤--√;&nbsp;&nbsp;&nbsp;&nbsp;
 						   迟到--迟;&nbsp;&nbsp;&nbsp;&nbsp;
 						   早退--退;&nbsp;&nbsp;&nbsp;&nbsp;
 						   旷工--旷
@@ -41,16 +41,13 @@
 						   周末--/;&nbsp;&nbsp;&nbsp;&nbsp;
 						   节假日--/;&nbsp;&nbsp;&nbsp;&nbsp;
 					</small>
-					<br>
-					<small>注:每天中午12点之后能看上午的考勤情况，第二天能看昨天下午的考勤情况.</small>
-					
 				</div>
 				
 				<div class="am-u-sm-12 am-u-md-3 am-fr">
 					<div class="am-btn-toolbar am-fr">
 						<div class="am-btn-group am-btn-group-sm ">
 							<button type="button" id="btn-excel" onclick="exportStat()" class="am-btn am-btn-success am-radius">
-								<span class="am-icon-plus"></span> 导出excel
+								<span class="am-icon-plus"></span> 导出考勤明细excel
 							</button>
 						</div>
 					</div>
@@ -60,21 +57,21 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<!-- <form class="am-form" id="search-form"> -->
-					<form:form modelAttribute="searchModel" action="stat-list" method="GET" class="am-form-inline am-form-horizontal">
+					<form:form modelAttribute="searchModel" action="stat-list" method="GET" class="am-form-inline am-form-horizontal">选择时间：
 						<div class="am-form-group ">
 							<form:select path="cyear" class="am-form-field">
 								<form:options items="${selectYears}" />
-							</form:select>
+							</form:select>年
 						</div>
 						<div class="am-form-group">
 							<form:select path="cmonth" class="am-form-field">
 								<form:options items="${selectMonths}" />
-							</form:select>
+							</form:select>月
 						</div>
 						<div class="am-form-group">
 							<div class="am-input-group am-input-group-sm">
 								<span class="am-input-group-btn">
-									<button class="am-btn am-btn-default" type="submit">搜索</button>
+									<button class="am-btn am-btn-default" type="submit">查阅</button>
 								</span>
 							</div>
 						</div>
@@ -84,9 +81,9 @@
 			<br>
 			<div class="am-g">
 				<div class="am-u-sm-12 am-scrollable-horizontal">
-					<table class="am-table am-table-bordered am-table-centered">
-						、
-						<tr>
+					<table class="am-table am-table-bordered am-table-compact am-table-centered">
+						
+						<tr class="am-primary">
 							<td rowspan="2" class="am-text-middle">序号</td>
 							<td rowspan="2" class="am-text-middle">姓名</td>
 							<td>日期</td>
@@ -94,7 +91,7 @@
 								<td>${day}</td>
 							</c:forEach>
 						</tr>
-						<tr>
+						<tr class="am-primary">
 							<td>星期</td>
 							<c:forEach items="${weeks}" var="w">
 								<td>${w}</td>

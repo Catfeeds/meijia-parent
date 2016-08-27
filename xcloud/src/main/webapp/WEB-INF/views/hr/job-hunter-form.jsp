@@ -27,7 +27,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">发布悬赏</strong> / <small>job</small>
+					<strong class="am-text-primary am-text-lg">职位悬赏需求</strong> / <small>职位悬赏需求详情</small>
 				</div>
 			</div>
 			<hr>

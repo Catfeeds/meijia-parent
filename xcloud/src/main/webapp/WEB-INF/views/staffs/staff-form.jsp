@@ -19,9 +19,11 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small>Personnel files</small>
+					<strong class="am-text-primary am-text-lg">人事档案</strong> / <small>员工信息详情</small>
 				</div>
 			</div>
+			<hr>
+			
 			<div class="am-g">
 				<form:form modelAttribute="contentModel" method="POST" id="staff-form" class="am-form am-form-horizontal"
 					enctype="multipart/form-data">
@@ -29,7 +31,8 @@
 					<form:hidden path="id" />
 					<form:hidden path="userId" />
 					<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
-						<br> <br> <section class="am-panel am-panel-default">
+						<br> <section class="am-panel am-panel-default">
+						<header class="am-panel-hd"> 员工头像或照片 </header>
 						<div class="am-panel-bd"></div>
 						<div class="am-panel-bd">
 							<div class="am-form-group">
@@ -45,10 +48,10 @@
 								<label for="user-phone" class="am-u-sm-1 am-form-label"></label>
 								<div class="am-u-sm-9">
 									<div class="am-form-group am-form-file">
-										<div class="am-u-sm-5">
+										<div class="am-u-sm-8">
 											<button type="button" id="btnUpload" name="btnUpload" class="am-btn am-btn-danger am-btn-sm">
 												<i class="am-icon-cloud-upload"></i>
-												选择要上传的头像
+												选择要上传的图片
 											</button>
 											<input id="headImg" type="file" name="headImg" accept="image/*" onchange="showMyImage(this, 'preHeadImg')">
 										</div>
@@ -72,7 +75,7 @@
 								</li>
 							</ul>
 							<div class="am-tabs-bd">
-								<!----------------- 基本信息 ------------------------------------>
+								<!-- --------------- 基本信息 ---------------------------------- -->
 								<div class="am-tab-panel am-fade am-in am-active" id="staff-info">
 									<div class="am-form-group">
 										<label for="user-phone" class="am-u-sm-3 am-form-label">手机号码: </label>

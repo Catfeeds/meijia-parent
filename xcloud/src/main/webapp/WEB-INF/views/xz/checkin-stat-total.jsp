@@ -22,7 +22,7 @@
 		<div class="admin-content">
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<strong class="am-text-primary am-text-lg">员工考勤统计表</strong>
+					<strong class="am-text-primary am-text-lg">考勤统计表</strong> / <small>按月查阅员工考勤汇总情况</small>
 					
 				</div>
 				
@@ -30,7 +30,7 @@
 					<div class="am-btn-toolbar am-fr">
 						<div class="am-btn-group am-btn-group-sm ">
 							<button type="button" id="btn-excel" onclick="exportTotal()" class="am-btn am-btn-success am-radius">
-								<span class="am-icon-plus"></span> 导出excel
+								<span class="am-icon-plus"></span> 导出员工考勤统计excel
 							</button>
 						</div>
 					</div>
@@ -40,21 +40,21 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<!-- <form class="am-form" id="search-form"> -->
-					<form:form modelAttribute="searchModel" action="stat-total" method="GET" class="am-form-inline am-form-horizontal">
+					<form:form modelAttribute="searchModel" action="stat-total" method="GET" class="am-form-inline am-form-horizontal">选择时间：
 						<div class="am-form-group ">
 							<form:select path="cyear" class="am-form-field">
 								<form:options items="${selectYears}" />
-							</form:select>
+							</form:select>年
 						</div>
 						<div class="am-form-group">
 							<form:select path="cmonth" class="am-form-field">
 								<form:options items="${selectMonths}" />
-							</form:select>
+							</form:select>月
 						</div>
 						<div class="am-form-group">
 							<div class="am-input-group am-input-group-sm">
 								<span class="am-input-group-btn">
-									<button class="am-btn am-btn-default" type="submit">搜索</button>
+									<button class="am-btn am-btn-default" type="submit">查看</button>
 								</span>
 							</div>
 						</div>
@@ -64,20 +64,18 @@
 			<br>
 			<div class="am-g">
 				<div class="am-u-sm-12 am-scrollable-horizontal">
-					<table class="am-table am-table-bordered am-table-centered">
+					<table class="am-table am-table-bordered am-table-compact am-table-centered">
 						
-						<tr>
+						<tr class="am-primary">
 							<th rowspan="3" class="am-text-middle">序号</th>
 							<th rowspan="3" class="am-text-middle">姓名</th>
 							<th rowspan="3" class="am-text-middle">部门</th>
 							<th colspan="13" >出勤记录</th>
 							<th rowspan="3" class="am-text-middle">未打卡(次)</th>
 							<th rowspan="3" class="am-text-middle">是否满勤</th>
-
-							
 						</tr>
 						
-						<tr>
+						<tr class="am-primary">
 							<th rowspan="2" class="am-text-middle">实际上班(天)</th>
 							<th rowspan="2" class="am-text-middle">休息日</th>
 							<th rowspan="2" class="am-text-middle">加班(天)</th>
@@ -85,12 +83,8 @@
 							<th rowspan="2" class="am-text-middle">迟到(次)</th>
 							<th rowspan="2" class="am-text-middle">早退(次)</th>
 							<th rowspan="2" class="am-text-middle">旷工(天)</th>
-							
-							
 						</tr>
-						
-						
-						<tr>
+						<tr class="am-primary">
 							<th >事假</th>
 							<th >病假</th>
 							<th >婚假</th>
