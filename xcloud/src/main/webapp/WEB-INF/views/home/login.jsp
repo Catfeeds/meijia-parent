@@ -58,7 +58,7 @@
 							</li>
 						</ul>
 						<div class="am-tabs-bd">
-							<!----------------- 密码登陆 ------------------------------------>
+							<!----------------- 密码登录 ------------------------------------>
 							<div class="am-tab-panel am-fade am-in am-active" id="tab-login-pass">
 								<form:form method="post" modelAttribute="contentModel" id="login-form" 
 									class="am-form am-padding-xl am-padding-bottom-sm">
@@ -84,7 +84,7 @@
 										<div class="am-form-group am-margin-top-sm am-text-sm">
 											<div class="am-fl">
 												<a href="#" onclick="javascript:loginSwitch('tab-login-sms')">
-													<font color="red">短信登陆</font>
+													<font color="red">短信登录</font>
 												</a>
 											</div>
 											<div class="am-fr">
@@ -95,7 +95,7 @@
 									</div>
 								</form:form>
 							</div>
-							<!----------------- 短信登陆 ------------------------------------>
+							<!----------------- 短信登录 ------------------------------------>
 							<div class="am-tab-panel am-fade am-in " id="tag-login-sms">
 								<form:form method="post" modelAttribute="contentModel" id="login-form-sms" action="login-sms"
 									class="am-form am-padding-xl am-padding-bottom-sm">
@@ -126,7 +126,7 @@
 										<div class="am-form-group am-margin-top-sm am-text-sm">
 											<div class="am-fl">
 												<a href="#" onclick="javascript:loginSwitch('tab-login-pass')">
-													<font color="red">密码登陆</font>
+													<font color="red">密码登录</font>
 												</a>
 											</div>
 											<div class="am-fr">
