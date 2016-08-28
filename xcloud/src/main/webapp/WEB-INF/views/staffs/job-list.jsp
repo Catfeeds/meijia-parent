@@ -40,7 +40,7 @@
 					<form class="am-form">
 						<table class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									<th class="table-title">职位名称</th>
 									<th class="table-title">所属部门</th>
 									<th class="table-title">规划人数</th>
