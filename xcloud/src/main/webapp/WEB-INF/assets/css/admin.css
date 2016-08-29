@@ -354,8 +354,13 @@
     width: 100%;
   }
 }
+
+/**
+ * 如下是顶部右侧菜单被选中后的背景色
+ */
+
 .am-topbar-inverse {
-  background-color: #0e90d2;
+  background-color: #3d73d1;
   border-color: #0b6fa2;
   color: #eeeeee;
 }

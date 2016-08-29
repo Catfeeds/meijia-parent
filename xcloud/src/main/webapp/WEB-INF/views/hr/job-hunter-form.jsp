@@ -120,7 +120,7 @@
 							<div class="am-u-sm-9">
 								<form:textarea path="jobRes" class="form-control am-form-field am-radius"  
 									maxlength="1000" required="required"
-									placeholder="请输入岗位职责,不超过1000字" />
+									placeholder="请输入岗位职责,不超过1000字"  rows="12" />
 								<small>*必填项</small>		
 							</div>
 						</div>
@@ -130,7 +130,7 @@
 							<div class="am-u-sm-9">
 								<form:textarea path="jobReq" class="form-control"
 									 maxlength="1000"	required="required"
-									 placeholder="请输入任职要求,不超过1000字" />
+									 placeholder="请输入任职要求,不超过1000字"  rows="12" />
 								<small>*必填项</small>		 
 							</div>
 						</div>
@@ -140,14 +140,14 @@
 							<div class="am-u-sm-9">
 								<form:textarea path="remarks" class="form-control" 
 									maxlength="1000" 
-									placeholder="请输入补充说明,不超过1000字" />
+									placeholder="请输入补充说明,不超过1000字"  rows="4" />
 							</div>
 						</div>
 						
 						<hr>
 						<div class="am-form-group">
 							<div class="am-u-sm-9 am-u-sm-push-3">
-								<button type="button" class="am-btn am-btn-danger" id="btn-team-submit">提交</button>
+								<button type="button" class="am-btn am-btn-danger" id="btn-team-submit">确定</button>
 								<button type="button" class="am-btn am-btn-success" id="btn-return">返回</button>
 							</div>
 						</div>

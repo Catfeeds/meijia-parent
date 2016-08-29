@@ -11,10 +11,14 @@
 			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-staff">
 				<li>
 					<a href="/xcloud/staff/list" class="am-cf"> 
-						<span class="am-icon-folder-open-o"></span> 人事档案
+						<span class="am-icon-folder-open-o"></span> 员工列表
 					</a>
 				</li>
-				
+				<li>
+					<a href="/xcloud/staff/staff-form?staff_id=0" class="am-cf"> 
+						<span class="am-icon-user-plus"></span> 录入新员工
+					</a>
+				</li>
 				<li>
 					<a href="/xcloud/job/job_list" class="am-cf"> 
 						<span class="am-icon-puzzle-piece"></span> 职位管理

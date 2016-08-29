@@ -36,7 +36,7 @@
 				<div class="am-btn-toolbar am-fr">
 						<div class="am-btn-group am-btn-group-sm">
 							<button type="button" id="btn-job-add" class="am-btn am-btn-warning am-radius">
-								<span class="am-icon-plus"></span> 发布交换需求
+								<span class="am-icon-plus"></span> 发布简历交换需求
 							</button>							
 						</div>
 				</div>
@@ -47,7 +47,7 @@
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 								    <th class="table-title">发布者</th>
 									<th class="table-title">城市</th>
 									<th class="table-title">截止天数</th>

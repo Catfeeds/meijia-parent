@@ -51,11 +51,11 @@
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
-								<tr>
-									<th class="table-date am-hide-sm-only">会议室名称</th>
-									<th class="table-date am-hide-sm-only">位置/备注</th>
-									<th class="table-set">添加时间</th>
-									<th class="table-set">操作</th>
+								<tr class="am-primary">
+									<th class="table-date am-hide-sm-only am-text-center">会议室名称</th>
+									<th class="table-date am-hide-sm-only am-text-center">位置/备注</th>
+									<th class="table-set am-text-center">添加时间</th>
+									<th class="table-set am-text-center">操作</th>
 								</tr>
 							</thead>
 							<tbody>

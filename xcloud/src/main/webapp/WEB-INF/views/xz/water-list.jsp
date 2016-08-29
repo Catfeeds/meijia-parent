@@ -54,14 +54,13 @@
 							<thead>
 								<tr class="am-primary">
 									<!-- <th class="table-date am-hide-sm-only">服务大类名称</th> -->
-									<th class="table-title">商品名称</th>
-									<th class="table-id">数量</th>
-									<th class="table-title">金额</th>
-									<th class="table-title">地址</th>
-									<th >订单状态</th>
-									
-									<th class="table-set">下单时间</th>
-									<th>操作</th>
+									<th class="table-title am-text-center">商品名称</th>
+									<th class="table-id am-text-center">数量</th>
+									<th class="table-title am-text-center">金额</th>
+									<th class="table-title am-text-center">地址</th>
+									<th class="table-title am-text-center">订单状态</th>
+									<th class="table-set am-text-center">下单时间</th>
+									<th class="table-title am-text-center">操作</th>
 								</tr>
 							</thead>
 							<tbody>

@@ -58,7 +58,7 @@
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									<th class="table-title">申请时间</th>
 									<th class="table-title">员工</th>
 									<th class="table-title">手机号</th>

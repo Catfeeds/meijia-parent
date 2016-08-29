@@ -1,30 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header class="am-topbar admin-header">
 	<div class="am-topbar-brand">
-		<img src="http://app.bolohr.com/simi-h5/icon/web-logo.png" height="25" width="25">
+		<img src="http://app.bolohr.com/simi-h5/icon/web-logo.png" height="25" width="25"> | <a href="/xcloud/company/company-form" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" 
+				class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+						${sessionScope.accountAuth.companyName}
+				</a>
 		<c:if test="${sessionScope.accountAuth.companyList.size() > 1 }">
 			<li class="am-dropdown" data-am-dropdown>
 
-			<a href="/xcloud/company/company-form" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" 
-			class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-					| ${sessionScope.accountAuth.companyName}
-					<span class="am-icon-caret-down"></span>
-			</a>
-			
-			<ul class="am-dropdown-content">
-			<center>[切换所在的公司]</center>
-				<c:forEach items="${sessionScope.accountAuth.companyList}" var="item">
-					<c:if test="${item.companyId != sessionScope.accountAuth.companyId}">
+				<a href="/xcloud/company/company-form" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" 
+				class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+						
+						<span class="am-icon-caret-down"></span>
+				</a>
+				
+				<ul class="am-dropdown-content">
+				<center>[切换所在的公司]</center>
+					<c:forEach items="${sessionScope.accountAuth.companyList}" var="item">
+						<c:if test="${item.companyId != sessionScope.accountAuth.companyId}">
 
-						<li>
-							<a href="/xcloud/company/company-form?companyId=${item.companyId }" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')">
-								<span class="am-icon-book"></span>
-								${item.companyName }
-							</a>
-						</li>
-					</c:if>
-				</c:forEach>
-			</ul>
+							<li>
+								<a href="/xcloud/company/company-form?companyId=${item.companyId }" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')">
+									<span class="am-icon-book"></span>
+									${item.companyName }
+								</a>
+							</li>
+						</c:if>
+					</c:forEach>
+				</ul>
 			</li>
 		</c:if>
 		<c:if test="${sessionScope.accountAuth.companyList.size() == 1 }">

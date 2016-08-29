@@ -49,13 +49,13 @@
 			<div class="am-g">
 				<div class="am-u-sm-12">
 					<form:form modelAttribute="searchModel" class="am-form-inline am-form-horizontal" action="list" method="GET">
-						从<div class="am-form-group">
+						<div class="am-form-group">
 							<input type="hidden" id="userId" name="userId" value="${userId}"/>
 							
 
 							<div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'day'}">
 								<input type="text" id="startDate" name="startDate" value="${searchModel.startDate}" class="am-form-field"
-									readonly size=15> <span class="am-input-group-btn am-datepicker-add-on">
+									readonly size=10> <span class="am-input-group-btn am-datepicker-add-on">
 									<button class="am-btn am-btn-default" type="button">
 										<span class="am-icon-calendar"></span>
 									</button>
@@ -64,14 +64,14 @@
 
 
 						</div>
-
+						到
 						<div class="am-form-group">
-							<label class="am-form-label am-fl">至&nbsp;</label>
+							<label class="am-form-label am-fl">&nbsp;</label>
 
 
 							<div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'day'}">
 								<input type="text" id="endDate" name="endDate" value="${searchModel.endDate}" class="am-form-field" readonly
-									size=15> <span class="am-input-group-btn am-datepicker-add-on">
+									size=10> <span class="am-input-group-btn am-datepicker-add-on">
 									<button class="am-btn am-btn-default" type="button">
 										<span class="am-icon-calendar"></span>
 									</button>
@@ -80,10 +80,8 @@
 
 
 						</div>
-
+						&nbsp;选择：
 						<div class="am-form-group ">
-							
-
 							<form:select path="expressId" class="am-form-field">
 								<form:option value="">全部快递公司</form:option>
 								<form:options items="${expressList}" itemValue="expressId" itemLabel="name" />
@@ -91,7 +89,6 @@
 						</div>
 
 						<div class="am-form-group">
-
 							<form:select path="isClose" class="am-form-field">
 								<form:option value="">是否结算</form:option>
 								<form:option value="0">未结算</form:option>
@@ -100,7 +97,6 @@
 						</div>
 						
 						<div class="am-form-group">
-
 							<form:select path="expressType" class="am-form-field">
 								<form:option value="">收发件</form:option>
 								<form:option value="1">寄件</form:option>
@@ -120,7 +116,7 @@
 						<div class="am-form-group">
 							<div class="am-input-group am-input-group-sm">
 
-								<form:input path="expressNo" class="am-form-field am-radius " placeholder="快递单号" maxLength="18" />
+								<form:input path="expressNo" class="am-form-field am-radius " placeholder="快递单号" maxLength="20" />
 								<span class="am-input-group-btn">
 									<button class="am-btn am-btn-default" type="submit">搜索</button>
 								</span>
@@ -129,6 +125,21 @@
 
 					</form:form>
 				</div>
+				<br><br>
+				<div class="am-u-sm-12">
+							<div class="am-btn-toolbar">
+								<div class="am-btn-group am-btn-group-sm">
+									<button type="button" id="btn-express-close-all" class="am-btn am-btn-danger">
+										<span class="am-icon-shopping-cart"></span> 一键结算
+									</button>
+									
+									<button type="button" id="btn-express-export" class="am-btn am-btn-success">
+										<span class="am-icon-table"></span> 导出快递单
+									</button>
+
+								</div>
+							</div>
+						</div>
 			</div>
 			<br>
 			<div class="am-g">
@@ -138,13 +149,13 @@
 							<thead>
 								<tr class="am-primary">
 									
-									<th class="table-date">时间</th>
-									<th class="table-title">快递服务商</th>
-									<th class="table-type">快递单号</th>
-									<th class="table-date">类型</th>
-									<th class="table-date">付费方式</th>
-									<th class="table-date">是否结算</th>
-									<th class="table-set">操作</th>
+									<th class="table-date am-text-center">时间</th>
+									<th class="table-title am-text-center">快递服务商</th>
+									<th class="table-type am-text-center">快递单号</th>
+									<th class="table-date am-text-center">类型</th>
+									<th class="table-date am-text-center">付费方式</th>
+									<th class="table-date am-text-center">是否结算</th>
+									<th class="table-set am-text-center">操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -176,7 +187,7 @@
 								</c:forEach>
 							</tbody>
 						</table>
-
+						<!--
 						<div class="am-u-sm-12">
 							<div class="am-btn-toolbar">
 								<div class="am-btn-group am-btn-group-sm">
@@ -193,7 +204,7 @@
 								</div>
 							</div>
 						</div>
-
+						-->
 
 						<c:import url="../shared/paging.jsp">
 							<c:param name="pageModelName" value="contentModel" />

@@ -52,19 +52,17 @@
 						<table id="list-table" class="am-table am-table-bordered am-table-striped">
 							<thead>
 								<tr class="am-primary">
-									<th class="table-date am-hide-sm-only">服务大类名称</th>
-									<th class="table-date am-hide-sm-only">清洁类型</th>
-									<th class="table-title">地址</th>
-									<th class="table-title">联系人</th>
-									<th class="table-title">联系方式</th>
-									<th>订单状态</th>
-									<th class="table-set">下单时间</th>
+									<th class="table-date am-hide-sm-only am-text-center">服务类型</th>
+									<th class="table-title am-text-center">地址</th>
+									<th class="table-title am-text-center">联系人</th>
+									<th class="table-title am-text-center">联系方式</th>
+									<th class="table-title am-text-center">订单状态</th>
+									<th class="table-set am-text-center">下单时间</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${contentModel.list}" var="item">
 									<tr>
-										<td>${item.serviceTypeName}</td>
 										<td>${item.cleanTypeName}</td>
 										<td>${item.addrName}</td>
 										<td>${item.linkMan}</td>

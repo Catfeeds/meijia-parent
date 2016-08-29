@@ -39,7 +39,7 @@
 					<form class="am-form">
 						<table id="list-table" class="am-table am-table-bordered am-table-striped am-table-centered">
 							<thead>
-								<tr>
+								<tr class="am-primary">
 									<th class="table-title">出勤地点</th>
 									<th class="table-title">范围</th>
 									<th class="table-title">指定wifi</th>

@@ -8065,6 +8065,9 @@ img.am-thumbnail,
 .am-text-danger {
   color: #dd514c;
 }
+.am-text-xcloud {
+  color: #4169E1;
+}
 .am-link-muted {
   color: #666;
 }

@@ -110,7 +110,7 @@
 							<div class="am-u-sm-9">
 								<form:textarea path="content" class="form-control am-form-field am-radius"  
 									maxlength="1000" required="required"
-									placeholder="请输入需求内容,不超过1000字" />
+									placeholder="请输入需求内容,不超过1000字" rows="12"/>
 								<small>*必填项</small>		
 							</div>
 						</div>
@@ -120,7 +120,7 @@
 							<div class="am-u-sm-9">
 								<form:textarea path="link" class="form-control"
 									 maxlength="200"	required="required"
-									 placeholder="请输入联系方式,不超过200字" />
+									 placeholder="请输入联系方式,不超过200字"  rows="3"/>
 								<small>*必填项</small>		 
 							</div>
 						</div>
