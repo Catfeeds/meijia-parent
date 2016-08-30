@@ -12,23 +12,21 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.service.partners.PartnerServicePriceDetailService;
 import com.simi.vo.partners.PartnerUserServiceTypeVo;
 
-
 @Service
 public class PartnerServicePriceDetailServiceImpl implements PartnerServicePriceDetailService {
 
 	@Autowired
 	private PartnerServicePriceDetailMapper partnerServicePriceDetailMapper;
-	
+
 	@Override
 	public int deleteByPrimaryKey(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.deleteByPrimaryKey(servicePriceId);
 	}
-	
+
 	@Override
 	public int deleteByServiceTypeId(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.deleteByServiceTypeId(servicePriceId);
 	}
-	
 
 	@Override
 	public Long insert(PartnerServicePriceDetail record) {
@@ -44,17 +42,17 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 	public PartnerServicePriceDetail selectByPrimaryKey(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.selectByPrimaryKey(servicePriceId);
 	}
-	
+
 	@Override
 	public PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId) {
 		return partnerServicePriceDetailMapper.selectByServicePriceId(servicePriceId);
-	}	
-	
+	}
+
 	@Override
 	public List<PartnerServicePriceDetail> selectByServicePriceIds(List<Long> servicePriceIds) {
 		return partnerServicePriceDetailMapper.selectByServicePriceIds(servicePriceIds);
-	}	
-	
+	}
+
 	@Override
 	public List<PartnerServicePriceDetail> selectByUserId(Long userId) {
 		return partnerServicePriceDetailMapper.selectByUserId(userId);
@@ -73,7 +71,7 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 	@Override
 	public PartnerServicePriceDetail initPartnerServicePriceDetail() {
 		PartnerServicePriceDetail record = new PartnerServicePriceDetail();
-		
+
 		record.setId(0L);
 		record.setServicePriceId(0L);
 		record.setServiceTitle("");
@@ -87,20 +85,25 @@ public class PartnerServicePriceDetailServiceImpl implements PartnerServicePrice
 		record.setContentDesc("");
 		record.setContentFlow("");
 		record.setVideoUrl("");
-		record.setVideoFilter("");
+		record.setCategory("");
+		record.setAction("");
+		record.setParams("");
+		record.setGotoUrl("");
 		record.setExtendId(0L);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
 
 	@Override
-	public List<PartnerServicePriceDetail> selectByListPage(
-			PartnerUserServiceTypeVo searchVo) {
-		
+	public List<PartnerServicePriceDetail> selectByListPage(PartnerUserServiceTypeVo searchVo) {
+
 		return partnerServicePriceDetailMapper.selectByListPage(searchVo);
 	}
 
-	
-	
+	@Override
+	public List<PartnerServicePriceDetail> selectBySearchVo(PartnerUserServiceTypeVo searchVo) {
+
+		return partnerServicePriceDetailMapper.selectBySearchVo(searchVo);
+	}
 
 }

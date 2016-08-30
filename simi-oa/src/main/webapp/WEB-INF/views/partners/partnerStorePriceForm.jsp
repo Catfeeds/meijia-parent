@@ -44,7 +44,10 @@
  						<form:hidden path="partnerId" />
  						<form:hidden path="servicePriceId" />
  						<form:hidden path="videoUrl" />
- 						<form:hidden path="videoFilter" />
+ 						<form:hidden path="category" />
+ 						<form:hidden path="action" />
+ 						<form:hidden path="params" />
+ 						<form:hidden path="gotoUrl" />
  						<form:hidden path="extendId" />
                         <div class="form-body">
                         

@@ -6,19 +6,19 @@ import com.simi.po.model.partners.PartnerServicePriceDetail;
 import com.simi.vo.partners.PartnerUserServiceTypeVo;
 
 public interface PartnerServicePriceDetailMapper {
-    int deleteByPrimaryKey(Long id);
-    
-    int deleteByServiceTypeId(Long servicePriceId);
+	int deleteByPrimaryKey(Long id);
 
-    Long insert(PartnerServicePriceDetail record);
+	int deleteByServiceTypeId(Long servicePriceId);
 
-    Long insertSelective(PartnerServicePriceDetail record);
+	Long insert(PartnerServicePriceDetail record);
 
-    PartnerServicePriceDetail selectByPrimaryKey(Long id);
+	Long insertSelective(PartnerServicePriceDetail record);
 
-    int updateByPrimaryKeySelective(PartnerServicePriceDetail record);
+	PartnerServicePriceDetail selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKey(PartnerServicePriceDetail record);
+	int updateByPrimaryKeySelective(PartnerServicePriceDetail record);
+
+	int updateByPrimaryKey(PartnerServicePriceDetail record);
 
 	PartnerServicePriceDetail selectByServicePriceId(Long servicePriceId);
 
@@ -26,6 +26,7 @@ public interface PartnerServicePriceDetailMapper {
 
 	List<PartnerServicePriceDetail> selectByUserId(Long userId);
 
-	List<PartnerServicePriceDetail> selectByListPage(
-			PartnerUserServiceTypeVo searchVo);
+	List<PartnerServicePriceDetail> selectByListPage(PartnerUserServiceTypeVo searchVo);
+
+	List<PartnerServicePriceDetail> selectBySearchVo(PartnerUserServiceTypeVo searchVo);
 }

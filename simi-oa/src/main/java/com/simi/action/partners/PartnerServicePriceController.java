@@ -135,7 +135,15 @@ public class PartnerServicePriceController extends AdminController {
 		record.setContentStandard(partnerServiceTypeDetailVo.getContentStandard());
 		record.setContentDesc(partnerServiceTypeDetailVo.getContentDesc());
 		record.setContentFlow(partnerServiceTypeDetailVo.getContentFlow());
-		record.setVideoFilter(partnerServiceTypeDetailVo.getVideoFilter());
+		
+		record.setVideoUrl("");
+		record.setExtendId(0L);
+		record.setCategory("");
+		record.setAction("");
+		record.setParams("");
+		record.setGotoUrl("");
+		
+		
 		record.setVideoUrl(partnerServiceTypeDetailVo.getVideoUrl());
 		record.setExtendId(partnerServiceTypeDetailVo.getExtendId());
 		if (file != null && !file.isEmpty()) {

@@ -486,7 +486,13 @@ public class PartnerUsersController extends BaseController {
 		record.setContentDesc(vo.getContentDesc());
 		record.setContentFlow(vo.getContentFlow());
 		record.setVideoUrl(vo.getVideoUrl());
-		record.setVideoFilter(vo.getVideoFilter());
+		
+		record.setCategory(vo.getCategory());
+		record.setAction(vo.getAction());
+		record.setParams(vo.getParams());
+		record.setGotoUrl(vo.getGotoUrl());
+		
+		
 		record.setExtendId(vo.getExtendId());
 
 		if (file != null && !file.isEmpty()) {

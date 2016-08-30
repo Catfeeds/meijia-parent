@@ -88,15 +88,45 @@
 							<button type="button" id="prew-video-btn" class="btn btn-info">试播</button>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label">播放视频校验&nbsp;</label>
-						<div class="col-md-5">
-							<form:select path="videoFilter" class="form-control">
-								<form:option value="">不需要校验</form:option>
-								<form:option value="persion_info">需完善公司信息</form:option>
-							</form:select>
+					
+					<div class="form-group required">
+							<label class="col-md-2 control-label">操作类别(视频页面弹窗)</label>
+							<div class="col-md-5">
+								<form:select path="category" class="form-control">
+								    <option value="">无</option>
+									<form:option value="h5">h5</form:option>
+									<form:option value="app">app</form:option>
+								</form:select>
+							</div>
 						</div>
-					</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">动作标识</label>
+							<div class="col-md-5">
+								<form:input path="action" class="form-control" placeholder="动作标识"
+									maxLength="32" />
+								<form:errors path="action" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">操作相关参数</label>
+							<div class="col-md-5">
+								<form:input path="params" class="form-control" placeholder="动作标识"
+									maxLength="32" />
+								<form:errors path="params" class="field-has-error"></form:errors>
+							</div>
+						</div>
+						<div class="form-group required">
+
+							<label class="col-md-2 control-label">跳转地址</label>
+							<div class="col-md-5">
+								<form:input path="gotoUrl" class="form-control" placeholder="跳转路径"/>
+								<form:errors path="gotoUrl" class="field-has-error"></form:errors>
+							</div>
+						</div>
+					
+					
 					<div class="form-group">
 						<label class="col-md-2 control-label">原价&nbsp;*</label>
 						<div class="col-md-5">

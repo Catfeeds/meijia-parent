@@ -13,7 +13,10 @@
 		<result column="content_desc" property="contentDesc" jdbcType="VARCHAR" />
 		<result column="content_flow" property="contentFlow" jdbcType="VARCHAR" />
 		<result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
-		<result column="video_filter" property="videoFilter" jdbcType="VARCHAR" />
+		<result column="category" property="category" jdbcType="VARCHAR" />
+		<result column="action" property="action" jdbcType="VARCHAR" />
+		<result column="params" property="params" jdbcType="VARCHAR" />
+		<result column="goto_url" property="gotoUrl" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
 		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
@@ -23,7 +26,7 @@
 	<sql id="Base_Column_List">
 		id, service_price_id, service_title, user_id, img_url, price, dis_price, order_type, order_duration, content_standard,
 		is_addr, content_desc,
-		content_flow, video_url, video_filter, extend_id, add_time
+		content_flow, video_url, category, action, params, goto_url, extend_id, add_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -75,6 +78,37 @@
 			</if> -->
 		order by add_time desc
 	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_price_detail
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		<if test="serviceTypeIds != null">
+			and service_price_id in
+			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		<if test="extendId != null">
+			and extend_id = #{extendId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="keyword != null">
+			and service_price_id in (select service_type_id from partner_service_price where parent_id = #{parentId,jdbcType=NUMERIC} and and name like
+			CONCAT('%','${keyword}','%' ))
+		</if>
+
+		and service_price_id in (select service_type_id from partner_service_price where parent_id = #{parentId,jdbcType=NUMERIC} and is_enable =
+		#{isEnable,jdbcType=NUMERIC})
+
+		order by add_time desc
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from partner_service_price_detail
 		where id = #{id,jdbcType=NUMERIC}
@@ -94,16 +128,24 @@
 		user_id, img_url, price,
 		dis_price, order_type, order_duration, is_addr,
 		content_standard, content_desc,
-		content_flow, video_url, video_filter, extend_id, add_time)
-		values (#{id,jdbcType=NUMERIC}, #{servicePriceId,jdbcType=NUMERIC}, #{serviceTitle,jdbcType=VARCHAR},
+		content_flow, video_url, category, action, params, goto_url, extend_id, add_time)
+		values (#{id,jdbcType=NUMERIC},
+		#{servicePriceId,jdbcType=NUMERIC},
+		#{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
-		#{disPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=NUMERIC},
+		#{disPrice,jdbcType=DECIMAL},
+		#{orderType,jdbcType=NUMERIC},
 		#{orderDuration,jdbcType=NUMERIC},
 		#{isAddr,jdbcType=NUMERIC},
-		#{contentStandard,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR},
-		#{contentFlow,jdbcType=VARCHAR}, 
-		#{videoUrl,jdbcType=VARCHAR}, #{videoFilter,jdbcType=VARCHAR},
-		#{extendId,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
+		#{contentStandard,jdbcType=VARCHAR},
+		#{contentDesc,jdbcType=VARCHAR},
+		#{contentFlow,jdbcType=VARCHAR},
+		#{videoUrl,jdbcType=VARCHAR},
+		#{category,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR},
+		#{params,jdbcType=VARCHAR},
+		#{gotoUrl,jdbcType=VARCHAR},
+		#{extendId,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
 
@@ -155,8 +197,17 @@
 			<if test="videoUrl != null">
 				video_url,
 			</if>
-			<if test="videoFilter != null">
-				video_filter,
+			<if test="category != null">
+				category,
+			</if>
+			<if test="action != null">
+				action,
+			</if>
+			<if test="params != null">
+				params,
+			</if>
+			<if test="gotoUrl != null">
+				goto_url,
 			</if>
 			<if test="extendId != null">
 				extend_id,
@@ -208,8 +259,17 @@
 			<if test="videoUrl != null">
 				#{videoUrl,jdbcType=VARCHAR},
 			</if>
-			<if test="videoFilter != null">
-				#{videoFilter,jdbcType=VARCHAR},
+			<if test="category != null">
+				#{category,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				#{action,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				#{params,jdbcType=VARCHAR},
+			</if>
+			<if test="gotoUrl != null">
+				#{gotoUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="extendId != null">
 				#{extendId,jdbcType=NUMERIC},
@@ -261,8 +321,17 @@
 			<if test="videoUrl != null">
 				video_url = #{videoUrl,jdbcType=VARCHAR},
 			</if>
-			<if test="videoFilter != null">
-				video_filter = #{videoFilter,jdbcType=VARCHAR},
+			<if test="category != null">
+				category = #{category,jdbcType=VARCHAR},
+			</if>
+			<if test="action != null">
+				action = #{action,jdbcType=VARCHAR},
+			</if>
+			<if test="params != null">
+				params = #{params,jdbcType=VARCHAR},
+			</if>
+			<if test="gotoUrl != null">
+				goto_url = #{gotoUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="extendId != null">
 				extend_id = #{extendId,jdbcType=NUMERIC},
@@ -290,8 +359,12 @@
 		content_flow =
 		#{contentFlow,jdbcType=VARCHAR},
 		video_url = #{videoUrl,jdbcType=VARCHAR},
-		video_filter = #{videoFilter,jdbcType=VARCHAR},
-		extend_id = #{extendId,jdbcType=NUMERIC},
+		category = #{category,jdbcType=VARCHAR},
+		action = #{action,jdbcType=VARCHAR},
+		params = #{params,jdbcType=VARCHAR},
+		goto_url = #{gotoUrl,jdbcType=VARCHAR},
+		extend_id =
+		#{extendId,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where id = #{id,jdbcType=NUMERIC}
 	</update>

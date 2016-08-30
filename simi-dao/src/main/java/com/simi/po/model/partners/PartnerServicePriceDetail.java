@@ -31,7 +31,13 @@ public class PartnerServicePriceDetail {
     
     private String videoUrl;
     
-    private String videoFilter;
+    private String category;
+    
+    private String action;
+    
+    private String params;
+    
+    private String gotoUrl;
     
     private Long extendId;
     
@@ -159,19 +165,43 @@ public class PartnerServicePriceDetail {
 		this.videoUrl = videoUrl;
 	}
 
-	public String getVideoFilter() {
-		return videoFilter;
-	}
-
-	public void setVideoFilter(String videoFilter) {
-		this.videoFilter = videoFilter;
-	}
-
 	public Long getExtendId() {
 		return extendId;
 	}
 
 	public void setExtendId(Long extendId) {
 		this.extendId = extendId;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	public String getGotoUrl() {
+		return gotoUrl;
+	}
+
+	public void setGotoUrl(String gotoUrl) {
+		this.gotoUrl = gotoUrl;
 	}
 }
