@@ -1,5 +1,7 @@
 package com.simi.action.app.user;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +38,7 @@ public class UserTrailController extends BaseController {
 			@RequestParam("user_id") Long userId, 
 			@RequestParam("lat") String latitude, 
 			@RequestParam("lng") String longitude,
-			@RequestParam("poi_name") String poiName, 
+			@RequestParam(value = "poi_name", required = false, defaultValue="") String poiName,
 			@RequestParam("city") String city) {
 
 		AppResultData<String> result = new AppResultData<String>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
