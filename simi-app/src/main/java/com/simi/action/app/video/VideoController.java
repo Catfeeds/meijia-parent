@@ -12,19 +12,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.po.model.total.TotalHit;
 import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
+import com.simi.service.total.TotalHitService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServicePriceSearchVo;
+import com.simi.vo.total.TotalHitSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/video")
@@ -44,6 +48,9 @@ public class VideoController extends BaseController {
 
 	@Autowired
 	private PartnerServicePriceService partnerServicePriceService;
+	
+	@Autowired
+	private TotalHitService totalHitService;
 	
 	public Long serviceTypeId = 306L;
 
@@ -105,14 +112,20 @@ public class VideoController extends BaseController {
 		
 		List<PartnerServicePrice> list = partnerServicePriceService.selectBySearchVo(searchVo);
 		
-		List<Long> servicePriceIds = new ArrayList<Long>(); 
-		for(PartnerServicePrice item : list) {
-			if (!servicePriceIds.contains(item.getServicePriceId())) {
-				servicePriceIds.add(item.getServicePriceId());
+		//阅读数
+		List<Long> linkIds = new ArrayList<Long>();
+		for (PartnerServicePrice item : list) {
+			if (!linkIds.contains(item.getServicePriceId())) {
+				linkIds.add(item.getServicePriceId());
 			}
 		}
 		
-
+		
+		TotalHitSearchVo searchVo1 = new TotalHitSearchVo();
+		searchVo1.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
+		searchVo1.setLinkIds(linkIds);
+		List<TotalHit> totalHits = totalHitService.selectBySearchVo(searchVo1);
+		
 		List<HashMap<String, Object>> datas = new ArrayList<HashMap<String, Object>>();
 		
 		for (int i = 0 ; i < list.size(); i++) {
@@ -120,20 +133,76 @@ public class VideoController extends BaseController {
 			
 			HashMap<String, Object> vo = new HashMap<String, Object>();
 			vo.put("channelId", item.getServiceTypeId());
+			vo.put("id", item.getServicePriceId());
 			vo.put("title", item.getName());
-			vo.put("imgUrl", item.getImgUrl());
-			vo.put("price", MathBigDecimalUtil.round2(item.getPrice()));
-			vo.put("disPrice", MathBigDecimalUtil.round2(item.getDisPrice()));
-			vo.put("content", item.getContentDesc());
-			vo.put("keywords", item.getContentFlow());
-			vo.put("videoUrl", item.getVideoUrl());
+			vo.put("imgUrl", item.getImgUrl());			
+			vo.put("totalView", 0);
 			
+			for (TotalHit t : totalHits) {
+				if (t.getLinkId().equals(item.getServicePriceId())) {
+					vo.put("totalView", t.getTotal().intValue());
+					break;
+				}
+			}
+
 		}
 		
 		result.setData(datas);
-		
 		return result;
+	}
+	
+	
+	/**
+	 * 视频文章频道列表
+	 * 
+	 */
+	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	public AppResultData<Object> getDetail(
+			@RequestParam(value = "id") Long servicePriceId,
+			@RequestParam(value = "user_id") Long userId
+			) {
 
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+		
+		HashMap<String, Object> vo = new HashMap<String, Object>();
+		vo.put("channelId", servicePrice.getServiceTypeId());
+		vo.put("title", servicePrice.getName());
+		vo.put("imgUrl", servicePrice.getImgUrl());
+		vo.put("price", MathBigDecimalUtil.round2(servicePrice.getPrice()));
+		vo.put("disPrice", MathBigDecimalUtil.round2(servicePrice.getDisPrice()));
+		vo.put("content", servicePrice.getContentDesc());
+		vo.put("keywords", servicePrice.getContentFlow());
+		vo.put("videoUrl", servicePrice.getVideoUrl());
+		vo.put("category", servicePrice.getCategory());
+		vo.put("contentDesc", servicePrice.getContentDesc());
+		vo.put("gotoUrl", servicePrice.getGotoUrl());
+		
+		
+		result.setData(vo);
+		
+		//阅读数加1
+		TotalHit record = totalHitService.initTotalHit();
+		TotalHitSearchVo searchVo1 = new TotalHitSearchVo();
+		searchVo1.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
+		searchVo1.setLinkId(serviceTypeId);
+		List<TotalHit> totalHits = totalHitService.selectBySearchVo(searchVo1);
+		if (!totalHits.isEmpty()) {
+			record = totalHits.get(0);
+		}
+		
+		record.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
+		record.setLinkId(servicePriceId);
+		record.setTotal(record.getTotal() + 1);
+		record.setAddTime(TimeStampUtil.getNowSecond());
+		if (record.getId() > 0L) {
+			totalHitService.updateByPrimaryKeySelective(record);
+		} else {
+			totalHitService.insertSelective(record);
+		}
+		return result;
 	}
 	
 

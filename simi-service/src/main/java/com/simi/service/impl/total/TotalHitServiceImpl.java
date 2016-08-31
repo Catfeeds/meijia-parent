@@ -17,26 +17,26 @@ import com.simi.vo.total.TotalHitSearchVo;
  *
  * @author :hulj
  * @Date : 2016年5月18日下午6:11:44
- * @Description: 
+ * @Description:
  *
  */
 @Service
 public class TotalHitServiceImpl implements TotalHitService {
-	
+
 	@Autowired
 	private TotalHitMapper hitMapper;
-	
+
 	@Override
 	public TotalHit initTotalHit() {
-		
+
 		TotalHit hit = new TotalHit();
-		
+
 		hit.setId(0L);
 		hit.setLinkId(0L);
 		hit.setLinkType("");
 		hit.setTotal(0L);
 		hit.setAddTime(TimeStampUtil.getNowSecond());
-		
+
 		return hit;
 	}
 
@@ -57,21 +57,13 @@ public class TotalHitServiceImpl implements TotalHitService {
 
 	@Override
 	public PageInfo searchVoListPage(TotalHitSearchVo searchVo, int pageNo, int pageSize) {
-		
+
 		PageHelper.startPage(pageNo, pageSize);
-		
+
 		List<TotalHit> list = hitMapper.selectByListPage(searchVo);
-		
-		for (TotalHit totalHit : list) {
-			
-			
-			
-		}
-		
-		
-		
+
 		PageInfo result = new PageInfo(list);
-		
+
 		return result;
 	}
 

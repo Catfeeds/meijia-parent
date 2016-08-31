@@ -1,126 +1,141 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.total.TotalHitMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.total.TotalHit" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="link_type" property="linkType" jdbcType="VARCHAR" />
-    <result column="link_id" property="linkId" jdbcType="NUMERIC" />
-    <result column="total" property="total" jdbcType="NUMERIC" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, link_type, link_id, total, add_time
-  </sql>
-  
-  <select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.total.TotalHitSearchVo">
-	  	select
+<mapper namespace="com.simi.po.dao.total.TotalHitMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.total.TotalHit">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="link_type" property="linkType" jdbcType="VARCHAR" />
+		<result column="link_id" property="linkId" jdbcType="NUMERIC" />
+		<result column="total" property="total" jdbcType="NUMERIC" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, link_type, link_id, total, add_time
+	</sql>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.total.TotalHitSearchVo">
+		select
 		<include refid="Base_Column_List" />
 		from total_hit
 		where 1=1
 		<if test="linkType != null and linkType !='' ">
-			and link_type like CONCAT('%','${linkType}','%' )
+			and link_type = #{linkType,jdbcType=VARCHAR}
 		</if>
-		
+
 		<if test="linkId != null">
 			and link_id = #{linkId,jdbcType=NUMERIC}
 		</if>
-		order by add_time asc	
-  
-  </select>
-  
-  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.total.TotalHitSearchVo">
+
+		<if test="linkIds != null">
+			and link_id in
+			<foreach item="item" index="index" collection="linkIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		order by add_time asc
+
+	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.total.TotalHitSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from total_hit
 		where 1=1
 		<if test="linkType != null">
-			and link_type like CONCAT('%','${linkType}','%' )
+			and link_type = #{linkType,jdbcType=VARCHAR}
 		</if>
-		
+
 		<if test="linkId != null">
 			and link_id = #{linkId,jdbcType=NUMERIC}
 		</if>
-		order by add_time asc	  
-  </select>
-  
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from total_hit
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from total_hit
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.total.TotalHit" >
-    insert into total_hit (id, link_type, link_id, 
-      total, add_time)
-    values (#{id,jdbcType=NUMERIC}, #{linkType,jdbcType=VARCHAR}, #{linkId,jdbcType=NUMERIC}, 
-      #{total,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.total.TotalHit" >
-    insert into total_hit
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="linkType != null" >
-        link_type,
-      </if>
-      <if test="linkId != null" >
-        link_id,
-      </if>
-      <if test="total != null" >
-        total,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="linkType != null" >
-        #{linkType,jdbcType=VARCHAR},
-      </if>
-      <if test="linkId != null" >
-        #{linkId,jdbcType=NUMERIC},
-      </if>
-      <if test="total != null" >
-        #{total,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.total.TotalHit" >
-    update total_hit
-    <set >
-      <if test="linkType != null" >
-        link_type = #{linkType,jdbcType=VARCHAR},
-      </if>
-      <if test="linkId != null" >
-        link_id = #{linkId,jdbcType=NUMERIC},
-      </if>
-      <if test="total != null" >
-        total = #{total,jdbcType=NUMERIC},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.total.TotalHit" >
-    update total_hit
-    set link_type = #{linkType,jdbcType=VARCHAR},
-      link_id = #{linkId,jdbcType=NUMERIC},
-      total = #{total,jdbcType=NUMERIC},
-      add_time = #{addTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+
+		<if test="linkIds != null">
+			and link_id in
+			<foreach item="item" index="index" collection="linkIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by add_time asc
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from total_hit
+		where id = #{id,jdbcType=NUMERIC}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from total_hit
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.total.TotalHit">
+		insert into total_hit (id, link_type, link_id,
+		total, add_time)
+		values (#{id,jdbcType=NUMERIC}, #{linkType,jdbcType=VARCHAR}, #{linkId,jdbcType=NUMERIC},
+		#{total,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.total.TotalHit">
+		insert into total_hit
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="linkType != null">
+				link_type,
+			</if>
+			<if test="linkId != null">
+				link_id,
+			</if>
+			<if test="total != null">
+				total,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="linkType != null">
+				#{linkType,jdbcType=VARCHAR},
+			</if>
+			<if test="linkId != null">
+				#{linkId,jdbcType=NUMERIC},
+			</if>
+			<if test="total != null">
+				#{total,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.total.TotalHit">
+		update total_hit
+		<set>
+			<if test="linkType != null">
+				link_type = #{linkType,jdbcType=VARCHAR},
+			</if>
+			<if test="linkId != null">
+				link_id = #{linkId,jdbcType=NUMERIC},
+			</if>
+			<if test="total != null">
+				total = #{total,jdbcType=NUMERIC},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.total.TotalHit">
+		update total_hit
+		set link_type = #{linkType,jdbcType=VARCHAR},
+		link_id = #{linkId,jdbcType=NUMERIC},
+		total = #{total,jdbcType=NUMERIC},
+		add_time = #{addTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

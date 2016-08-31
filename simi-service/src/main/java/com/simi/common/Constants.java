@@ -146,7 +146,7 @@ public class Constants {
 	 *   点击次数 -- linkType 字段 可选值
 	 */
 	public static String TOTAL_HIT_LINK_TYPE_DICT_AD = "dict_ad";	//广告位 点击
-	
+	public static String TOTAL_HIT_LINK_TYPE_SERVICE_PRICE = "service_price"; //服务报价类点击.
 	
 	/*
 	 *  平台   推送  用户 类型

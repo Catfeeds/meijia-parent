@@ -28,7 +28,9 @@
 				<form:hidden path="orderType" />
 				<form:hidden path="orderDuration" />
 				<form:hidden path="isAddr" />
-				<form:hidden path="contentDesc" />
+				
+				<form:hidden path="action" />
+				<form:hidden path="params" />
 				<div class="form-body">
 					<div class="form-group">
 						<label class="col-md-2 control-label">排序&nbsp;*</label>
@@ -99,24 +101,16 @@
 								</form:select>
 							</div>
 						</div>
+						
 						<div class="form-group required">
 
-							<label class="col-md-2 control-label">动作标识</label>
+							<label class="col-md-2 control-label">弹窗内容</label>
 							<div class="col-md-5">
-								<form:input path="action" class="form-control" placeholder="动作标识"
-									maxLength="32" />
-								<form:errors path="action" class="field-has-error"></form:errors>
+								<form:textarea path="contentDesc" class="form-control" placeholder="弹窗时出现的内容"/>
+								<form:errors path="contentDesc" class="field-has-error"></form:errors>
 							</div>
 						</div>
-						<div class="form-group required">
-
-							<label class="col-md-2 control-label">操作相关参数</label>
-							<div class="col-md-5">
-								<form:input path="params" class="form-control" placeholder="动作标识"
-									maxLength="32" />
-								<form:errors path="params" class="field-has-error"></form:errors>
-							</div>
-						</div>
+						
 						<div class="form-group required">
 
 							<label class="col-md-2 control-label">跳转地址</label>

@@ -1,5 +1,7 @@
 package com.simi.vo.total;
 
+import java.util.List;
+
 /**
  *
  * @author :hulj
@@ -12,6 +14,8 @@ public class TotalHitSearchVo {
 	private String linkType;	// 被点击  项目 的 类型，如 广告位= op_ad
 	private Long linkId;		// 被点击 的具体 的Id(主键) , 如 工商注册广告位
 	
+	private List<Long> linkIds;
+	
 	public String getLinkType() {
 		return linkType;
 	}
@@ -23,6 +27,12 @@ public class TotalHitSearchVo {
 	}
 	public void setLinkId(Long linkId) {
 		this.linkId = linkId;
+	}
+	public List<Long> getLinkIds() {
+		return linkIds;
+	}
+	public void setLinkIds(List<Long> linkIds) {
+		this.linkIds = linkIds;
 	}
 	
 }
