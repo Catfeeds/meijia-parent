@@ -39,7 +39,7 @@ public class UserTrailController extends BaseController {
 			@RequestParam("lat") String latitude, 
 			@RequestParam("lng") String longitude,
 			@RequestParam(value = "poi_name", required = false, defaultValue="") String poiName,
-			@RequestParam("city") String city) {
+			@RequestParam(value = "city", required = false, defaultValue="") String city) {
 
 		AppResultData<String> result = new AppResultData<String>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
