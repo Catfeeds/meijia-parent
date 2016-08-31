@@ -395,7 +395,11 @@ public class PartnerUsersController extends BaseController {
 		if (!servicePriceId.equals(0L)) {
 			servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		}
-
+		
+		servicePrice.setUserId(userId);
+		servicePrice.setServiceTypeId(serviceTypeId);
+		servicePrice.setPartnerId(partnerId);
+		servicePrice.setServicePriceId(servicePriceId);
 		model.addAttribute("contentModel", servicePrice);
 
 		// 视频播放文章内容表单 品类 = 306
@@ -413,7 +417,6 @@ public class PartnerUsersController extends BaseController {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@AuthPassport
 	@RequestMapping(value = "/partner_service_price_form", method = { RequestMethod.POST })
 	public String partnerPriceAdd(Model model, HttpServletRequest request, @ModelAttribute("contentModel") PartnerServicePrice vo,
@@ -429,9 +432,13 @@ public class PartnerUsersController extends BaseController {
 			record = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		}
 
-		record.setUserId(vo.getUserId());
+		
 		record.setServicePriceId(servicePriceId);
+		record.setServiceTypeId(serviceTypeId);
+		record.setPartnerId(partnerId);
 		record.setServiceTitle(vo.getServiceTitle());
+		record.setUserId(vo.getUserId());
+		record.setName(vo.getName());
 		record.setPrice(vo.getPrice());
 		record.setDisPrice(vo.getDisPrice());
 		record.setOrderType(vo.getOrderType());
