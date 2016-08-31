@@ -60,11 +60,10 @@ function orderGetList () {
 				htmlPart = htmlPart.replace('{userId}',partnerServicePriceDetailVo[i].user_id);
 				
 				var isEnableName = "";
-				if (partnerServicePriceDetailVo[i].is_enable_name == "0") isEnableName = "上架";
-				if (partnerServicePriceDetailVo[i].is_enable_name == "1") isEnableName = "上架";
+				if (partnerServicePriceDetailVo[i].is_enable == "0") isEnableName = "上架";
+				if (partnerServicePriceDetailVo[i].is_enable == "1") isEnableName = "已上架";
 				
 				htmlPart = htmlPart.replace('{isEnableName}',isEnableName);
-				console.log(partnerServicePriceDetailVo[i].user_id+"~~~~~~~~~~~~~~~~~~~");
 				
 				htmlPart = "<a href=\"store-price-form.html?user_id="+partnerServicePriceDetailVo[i].user_id+"&service_price_id="+partnerServicePriceDetailVo[i].service_price_id+"\"> " + htmlPart + "</a>";
 				
