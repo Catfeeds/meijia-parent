@@ -17,7 +17,7 @@ import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.StringUtil;
 import com.simi.po.model.op.AppTools;
 import com.simi.po.model.order.OrderExtWater;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.UserAddrs;
@@ -25,7 +25,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.op.AppToolsService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderQueryService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.user.UserAddrsService;
@@ -36,6 +36,7 @@ import com.simi.vo.ApptoolsSearchVo;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.order.OrdersWaterAddOaVo;
+import com.simi.vo.partners.PartnerServicePriceSearchVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.user.UserAddrVo;
 import com.xcloud.action.BaseController;
@@ -64,7 +65,7 @@ public class WaterController extends BaseController {
 	private PartnerUserService partnerUserService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
@@ -109,27 +110,22 @@ public class WaterController extends BaseController {
 		PartnerUsers partnerUser = list.get(0);
 
 		Long parnterUserId = partnerUser.getUserId();
+		
+		PartnerServicePriceSearchVo searchVo1 = new PartnerServicePriceSearchVo();
+		searchVo1.setUserId(parnterUserId);
+		List<PartnerServicePrice> servicePrices = partnerServicePriceService.selectBySearchVo(searchVo1);
 
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
-
-		List<Long> servicePriceIds = new ArrayList<Long>();
-		for (PartnerServicePriceDetail item : servicePriceDetails) {
-			if (!servicePriceIds.contains(item.getServicePriceId())) {
-				servicePriceIds.add(item.getServicePriceId());
-			}
-		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
+		
 		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
-		PartnerServiceType serviceType = null;
-		for (PartnerServiceType item : serviceTypes) {
-			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(serviceType.getId());
+
+		for (PartnerServicePrice item : servicePrices) {
+
 			OrderWaterComVo waterComVo = new OrderWaterComVo();
-			waterComVo.setPrice(detail.getPrice());
-			waterComVo.setDisprice(detail.getDisPrice());
-			waterComVo.setImgUrl(detail.getImgUrl());
-			waterComVo.setServicePriceId(serviceType.getId());
-			waterComVo.setName(serviceType.getName());
+			waterComVo.setPrice(item.getPrice());
+			waterComVo.setDisprice(item.getDisPrice());
+			waterComVo.setImgUrl(item.getImgUrl());
+			waterComVo.setServicePriceId(item.getServiceTypeId());
+			waterComVo.setName(item.getName());
 			waterComVos.add(waterComVo);
 
 		}
@@ -137,10 +133,9 @@ public class WaterController extends BaseController {
 
 		// 商品名称
 		Long servicePriceId = water.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		model.addAttribute("servicePrice", servicePrice);
-		model.addAttribute("servicePriceDetail", servicePriceDetail);
+		model.addAttribute("servicePrice", servicePrice);
 
 		// 用户地址列表
 		List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(userId);
@@ -158,9 +153,9 @@ public class WaterController extends BaseController {
 		
 		//二维码
 		String qrCode = "";
-		ApptoolsSearchVo searchVo1 = new ApptoolsSearchVo();
-		searchVo1.setAction("water");
-		List<AppTools> apptools = appToolsService.selectBySearchVo(searchVo1);
+		ApptoolsSearchVo searchVo2 = new ApptoolsSearchVo();
+		searchVo2.setAction("water");
+		List<AppTools> apptools = appToolsService.selectBySearchVo(searchVo2);
 		if (!apptools.isEmpty()) {
 			AppTools a = apptools.get(0);
 			qrCode = a.getQrCode();

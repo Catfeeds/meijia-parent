@@ -15,16 +15,16 @@ import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.partners.PartnerUserServiceTypeVo;
+import com.simi.vo.partners.PartnerServicePriceSearchVo;
 
 @Controller
 @RequestMapping(value = "/app/video")
@@ -43,7 +43,7 @@ public class VideoController extends BaseController {
 	private PartnerServiceTypeService partnerServiceTypeService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 	
 	public Long serviceTypeId = 306L;
 
@@ -59,7 +59,6 @@ public class VideoController extends BaseController {
 		
 		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
 		searchVo.setParentId(serviceTypeId);
-		searchVo.setViewType((short) 0);
 		searchVo.setIsEnable((short) 1);
 		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);
 		
@@ -94,8 +93,8 @@ public class VideoController extends BaseController {
 			return result;
 		}
 		
-		PartnerUserServiceTypeVo searchVo = new PartnerUserServiceTypeVo();
-		searchVo.setParentId(serviceTypeId);
+		PartnerServicePriceSearchVo searchVo = new PartnerServicePriceSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
 		if (channelId > 0L) {
 			searchVo.setExtendId(channelId);
 		}
@@ -104,46 +103,30 @@ public class VideoController extends BaseController {
 			searchVo.setKeyword(keyword);
 		}
 		
-		List<PartnerServicePriceDetail> list = partnerServicePriceDetailService.selectBySearchVo(searchVo);
-		
+		List<PartnerServicePrice> list = partnerServicePriceService.selectBySearchVo(searchVo);
 		
 		List<Long> servicePriceIds = new ArrayList<Long>(); 
-		for(PartnerServicePriceDetail item : list) {
+		for(PartnerServicePrice item : list) {
 			if (!servicePriceIds.contains(item.getServicePriceId())) {
 				servicePriceIds.add(item.getServicePriceId());
 			}
 		}
 		
-		PartnerServiceTypeSearchVo searchVo1 = new PartnerServiceTypeSearchVo();
-		searchVo1.setServiceTypeIds(servicePriceIds);
-		
-		List<PartnerServiceType> serviceTypeList = partnerServiceTypeService.selectBySearchVo(searchVo1);
-		
+
 		List<HashMap<String, Object>> datas = new ArrayList<HashMap<String, Object>>();
 		
 		for (int i = 0 ; i < list.size(); i++) {
-			PartnerServicePriceDetail item = list.get(i);
-			
-			String title = "";
-			
-			for (PartnerServiceType p : serviceTypeList) {
-				if (p.getId().equals(item.getServicePriceId())) {
-					title = p.getName();
-					break;
-				}
-			}
+			PartnerServicePrice item = list.get(i);
 			
 			HashMap<String, Object> vo = new HashMap<String, Object>();
-			vo.put("channelId", item.getId());
-			vo.put("title", title);
+			vo.put("channelId", item.getServiceTypeId());
+			vo.put("title", item.getName());
 			vo.put("imgUrl", item.getImgUrl());
 			vo.put("price", MathBigDecimalUtil.round2(item.getPrice()));
 			vo.put("disPrice", MathBigDecimalUtil.round2(item.getDisPrice()));
 			vo.put("content", item.getContentDesc());
 			vo.put("keywords", item.getContentFlow());
 			vo.put("videoUrl", item.getVideoUrl());
-			
-			
 			
 		}
 		

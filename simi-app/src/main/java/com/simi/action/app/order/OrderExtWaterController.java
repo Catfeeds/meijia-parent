@@ -24,7 +24,7 @@ import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.Users;
 import com.simi.service.ValidateService;
@@ -35,7 +35,7 @@ import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
@@ -62,7 +62,7 @@ public class OrderExtWaterController extends BaseController {
 	private PartnerServiceTypeService partnerServiceTypeService;
 	
     @Autowired
-    private PartnerServicePriceDetailService partnerServicePriceDetailService;	
+    private PartnerServicePriceService partnerServicePriceService;	
 	
 	@Autowired
 	private OrderLogService orderLogService;
@@ -204,17 +204,16 @@ public class OrderExtWaterController extends BaseController {
 		}
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = null;
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+
 		String servicePriceName = "";
 		if (servicePrice != null) {
 			servicePriceName = servicePrice.getName();
-			servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		}
 		BigDecimal orderMoney = new BigDecimal(0.0);//原价
 		BigDecimal orderPay = new BigDecimal(0.0);//折扣价
 		
-		BigDecimal disPrice = servicePriceDetail.getDisPrice();
+		BigDecimal disPrice = servicePrice.getDisPrice();
 		BigDecimal serviceNumDe = BigDecimal.valueOf(serviceNum.doubleValue());
 		orderMoney = MathBigDecimalUtil.mul(disPrice, serviceNumDe);
 		orderPay = orderMoney;

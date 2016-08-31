@@ -153,9 +153,9 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">标签&nbsp;*</label>
 						<div class="col-md-5">
-							<form:input path="contentFlow" class="form-control" placeholder="名称" />
+							<form:input path="tags" class="form-control" placeholder="名称" />
 							<br />
-							<form:errors path="contentFlow" class="field-has-error"></form:errors>
+							<form:errors path="tags" class="field-has-error"></form:errors>
 						</div>
 					</div>
 					<div class="form-group">

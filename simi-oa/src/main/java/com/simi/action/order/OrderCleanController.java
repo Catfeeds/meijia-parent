@@ -47,7 +47,7 @@ import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerRefServiceTypeService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
@@ -95,7 +95,7 @@ public class OrderCleanController extends AdminController {
 	private PartnerRefServiceTypeService partnerRefServiceTypeService;
 	
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;

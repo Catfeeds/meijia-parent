@@ -103,9 +103,6 @@ public class DictCouponsController extends BaseController {
 		
 		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
 		searchVo.setParentId(0L);
-		searchVo.setViewType((short) 0);
-
-		
 		
 		List<PartnerServiceType> partnerServiceType =   partnerServiceTypeService.selectBySearchVo(searchVo);
 		model.addAttribute("partnerServiceType", partnerServiceType);

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.common.extension.StringHelper;
 import com.simi.action.admin.AdminController;
 import com.simi.models.AuthorityEditModel;
@@ -29,7 +30,7 @@ import com.simi.oa.auth.AuthPassport;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.service.admin.AdminAuthorityService;
 import com.simi.service.partners.PartnerServiceTypeService;
-import com.simi.vo.partners.PartnerServiceTypeVo;
+import com.simi.vo.partners.PartnerServiceTypeTreeVo;
 
 @Controller
 @RequestMapping(value = "/partnerServiceType")
@@ -53,7 +54,7 @@ public class PartnerServiceTypeController extends AdminController {
 	public String chain(HttpServletRequest request, Model model) {
 		if (!model.containsAttribute("contentModel")) {
 			String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 			String jsonString = JSONArray.fromObject(treeModels, new JsonConfig()).toString();
@@ -84,11 +85,11 @@ public class PartnerServiceTypeController extends AdminController {
 		List<TreeModel> treeModels;
 		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
 		if (id != null && id > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), id, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(new ArrayList<Long>()), id, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, true, false, children)));
 		}
@@ -108,7 +109,7 @@ public class PartnerServiceTypeController extends AdminController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/add/{id}", method = { RequestMethod.POST })
-	public String add(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PartnerServiceTypeVo partnerServiceTypeVo,
+	public String add(HttpServletRequest request, Model model, @Valid @ModelAttribute("contentModel") PartnerServiceTypeTreeVo partnerServiceTypeVo,
 			@PathVariable(value = "id") String id, BindingResult result) {
 		if (result.hasErrors())
 			return add(request, model, Integer.valueOf(id));
@@ -116,7 +117,6 @@ public class PartnerServiceTypeController extends AdminController {
 
 		PartnerServiceType partnerServiceType = partnerServiceTypeService.initPartnerServiceType();
 		partnerServiceType.setName(partnerServiceTypeVo.getName());
-		partnerServiceType.setViewType((short) 0);
 		partnerServiceType.setParentId(partnerServiceTypeVo.getParentId());
 		/*
 		 * String levelCode = ""; int count =
@@ -156,11 +156,11 @@ public class PartnerServiceTypeController extends AdminController {
 		PartnerServiceType editModel = (PartnerServiceType) model.asMap().get("contentModel");
 		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
 		if (editModel.getParentId() != null && editModel.getParentId() > 0) {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), editModel
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(new ArrayList<Long>()), editModel
 					.getParentId().intValue(), null, StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, false, false, children)));
 		} else {
-			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null, null,
+			List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(new ArrayList<Long>()), null, null,
 					StringHelper.toIntegerList(expanded, ","));
 			treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel("0", "0", "根节点", false, true, false, children)));
 		}
@@ -186,8 +186,16 @@ public class PartnerServiceTypeController extends AdminController {
 		if (result.hasErrors())
 			return edit(request, model, id);
 		String returnUrl = ServletRequestUtils.getStringParameter(request, "returnUrl", null);
+		
 		if (partnerServiceType != null) {
 			partnerServiceType.setId(Long.valueOf(id));
+			
+			String parentIdStr = request.getParameter("parentId");
+			if (!StringUtil.isEmpty(parentIdStr)) {
+				Long parentId = Long.valueOf(parentIdStr);
+				partnerServiceType.setParentId(parentId);
+			}
+			
 			partnerServiceTypeService.updateByPrimaryKeySelective(partnerServiceType);
 		}
 		if (returnUrl == null)

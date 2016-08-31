@@ -9,21 +9,11 @@ public class PartnerServiceType {
     private Long parentId;
 
     private Short isEnable;
-    
-    private Short viewType;
-    
+        
     private Integer no;
     
     private Long partnerId;
   
-
-    public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
         return name;
@@ -40,14 +30,6 @@ public class PartnerServiceType {
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
-
-	public Short getViewType() {
-		return viewType;
-	}
-
-	public void setViewType(Short viewType) {
-		this.viewType = viewType;
-	}
 
 	public Integer getNo() {
 		return no;
@@ -71,5 +53,13 @@ public class PartnerServiceType {
 
 	public void setIsEnable(Short isEnable) {
 		this.isEnable = isEnable;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

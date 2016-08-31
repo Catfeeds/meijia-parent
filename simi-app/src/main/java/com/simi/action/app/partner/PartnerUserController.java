@@ -3,6 +3,7 @@ package com.simi.action.app.partner;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,8 +27,9 @@ import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Users;
+import com.simi.service.ImgService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
@@ -59,13 +61,17 @@ public class PartnerUserController extends BaseController {
 	private PartnerServiceTypeService partnerServiceTypeService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	private TagsUsersService tagsUsersService;
 	
 	@Autowired
 	private OrdersService orderService;
+	
+	@Autowired
+	private ImgService imgService;
+
 
 	/**
 	 * 服务商人员列表
@@ -144,28 +150,16 @@ public class PartnerUserController extends BaseController {
 
 //		u.setIsApproval((short) 2);
 		// 更新头像
-		if (file != null && !file.isEmpty()) {
-			String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String fileName = file.getOriginalFilename();
-			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-			fileType = fileType.toLowerCase();
-			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-			String ret = o.get("ret").toString();
-
-			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-			String imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
-			imgUrl = DwzUtil.dwzApi(imgUrl);
-
-			u.setHeadImg(imgUrl);
+		
+		// 处理 多文件 上传
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		if (fileMaps.get("imgUrlFile") != null) {
+			String imgUrl = fileMaps.get("imgUrlFile");
+			
+			if (!StringUtil.isEmpty(imgUrl)) u.setHeadImg(imgUrl);
+			
 		}
-
+		
 		userService.updateByPrimaryKeySelective(u);
 
 		// 更新服务商用户表

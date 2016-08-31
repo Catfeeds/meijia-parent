@@ -2,10 +2,15 @@ package com.simi.po.model.partners;
 
 import java.math.BigDecimal;
 
-public class PartnerServicePriceDetail {
-    private Long id;
+public class PartnerServicePrice {
 
     private Long servicePriceId;
+    
+    private Long serviceTypeId;
+    
+    private Long partnerId;
+    
+    private String name;
 
     private String serviceTitle;
 
@@ -41,16 +46,14 @@ public class PartnerServicePriceDetail {
     
     private Long extendId;
     
+    private String tags;
+    
     private Short isAddr;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
+    private Short isEnable;
+    
+    private int no;
+    
     public Long getServicePriceId() {
         return servicePriceId;
     }
@@ -204,4 +207,53 @@ public class PartnerServicePriceDetail {
 	public void setGotoUrl(String gotoUrl) {
 		this.gotoUrl = gotoUrl;
 	}
+
+	public Long getServiceTypeId() {
+		return serviceTypeId;
+	}
+
+	public void setServiceTypeId(Long serviceTypeId) {
+		this.serviceTypeId = serviceTypeId;
+	}
+
+	public Long getPartnerId() {
+		return partnerId;
+	}
+
+	public void setPartnerId(Long partnerId) {
+		this.partnerId = partnerId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Short getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Short isEnable) {
+		this.isEnable = isEnable;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
 }

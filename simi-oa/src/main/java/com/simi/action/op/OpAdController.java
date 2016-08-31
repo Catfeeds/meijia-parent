@@ -3,6 +3,7 @@ package com.simi.action.op;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,7 @@ import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.op.OpChannel;
 import com.simi.po.model.partners.PartnerServiceType;
+import com.simi.service.ImgService;
 import com.simi.service.op.OpAdService;
 import com.simi.service.op.OpChannelService;
 import com.simi.service.partners.PartnerServiceTypeService;
@@ -47,6 +49,9 @@ public class OpAdController extends BaseController {
 	
 	@Autowired
 	private OpChannelService opChannelService;	
+	
+	@Autowired
+	private ImgService imgService;
 
 	@AuthPassport
 	@RequestMapping(value = "/ad_list", method = { RequestMethod.GET })
@@ -111,7 +116,6 @@ public class OpAdController extends BaseController {
 		// 所有大类信息
 		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
 		searchVo.setParentId(0L);
-		searchVo.setViewType((short) 0);
 
 		List<PartnerServiceType> serviceTypelist = partnerServiceTypeService.selectBySearchVo(searchVo);
 		model.addAttribute("serviceTypelist", serviceTypelist);
@@ -132,36 +136,14 @@ public class OpAdController extends BaseController {
 
 		// 更新头像
 		String imgUrl = "";
-		if (file != null && !file.isEmpty()) {
-			String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String fileName = file.getOriginalFilename();
-			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-			fileType = fileType.toLowerCase();
-			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-			String ret = o.get("ret").toString();
-
-			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString() + "?p=0";
-			
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		if (fileMaps.get("imgUrlFile") != null) {
+			imgUrl = fileMaps.get("imgUrlFile");
 		}
 		
 		String gotoType = opAd.getGotoType();
 		String gotoUrl = opAd.getGotoUrl();
 		
-//		if (gotoType.equals("h5")) {
-//			if (gotoUrl.indexOf("?") >= 0) {
-//				gotoUrl+= "&goto_type=h5";
-//			} else {
-//				gotoUrl+= "?goto_type=h5";
-//			}
-//		}
-//		
 		if (gotoType.equals("app")) {
 			gotoUrl = "xcloud://service_type_ids="+opAd.getServiceTypeIds();
 			gotoUrl+= "&goto_type=app";

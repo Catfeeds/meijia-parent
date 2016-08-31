@@ -9,7 +9,7 @@ var partnerId = getUrlParam("partner_id");
 console.log(partnerId);
 $.ajax({
 	type : "GET",
-	url : appRootUrl + "dict/get_service_type_by_partnerId_list.json?partner_id="+partnerId,
+	url : appRootUrl + "dict/get_service_type_by_partner_id.json?partner_id="+partnerId,
 	dataType : "json",
 	cache : true,
 	async : false,	
@@ -21,7 +21,7 @@ $.ajax({
 		
 		var partnerServiceTypeHtml = "";
 		for(var i=0 ; i < partnerServiceType.length; i++){
-			var partnerServiceTypeId = partnerServiceType[i].id;
+			var partnerServiceTypeId = partnerServiceType[i].service_type_id;
 			//console.log(partnerServiceTypeId);
 			var partnerServiceTypeName = partnerServiceType[i].name;
 			//console.log(partnerServiceTypeName);

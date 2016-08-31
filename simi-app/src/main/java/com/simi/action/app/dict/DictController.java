@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
@@ -155,17 +156,12 @@ public class DictController<T> {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 	    List<PartnerServiceType> listBig = partnerServiceTypeService.selectByParentId(parentId);
-		/*List<String> bigServiceTypeName = new ArrayList<String>();
-		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
-			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
-			bigServiceTypeName.add(partnerServiceType.getName());
-		}*/
-		
 		result.setData(listBig);
 
 		return result;
 	}
-	@RequestMapping(value = "get_service_type_by_partnerId_list", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "get_service_type_by_partner_id", method = RequestMethod.GET)
 	public AppResultData<Object> getServiceTypeByPartnerIdList(
 			@RequestParam("partner_id") Long partnerId) {
 
@@ -173,7 +169,7 @@ public class DictController<T> {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		//服务大类，该团队的服务大类
-		List<PartnerServiceType> partnerServiceType = new ArrayList<PartnerServiceType>();
+		List<PartnerServiceType> list = new ArrayList<PartnerServiceType>();
 		
 		PartnersSearchVo searchVo = new PartnersSearchVo();
 		searchVo.setPartnerId(partnerId);
@@ -189,9 +185,13 @@ public class DictController<T> {
 	    		}
 	    	}
 	    	
-	    	partnerServiceType =   partnerServiceTypeService.selectByIds(serviceTypeIds);
+	    	PartnerServiceTypeSearchVo searchVo1 = new PartnerServiceTypeSearchVo();
+	    	searchVo1.setServiceTypeIds(serviceTypeIds); 
+	    	list = partnerServiceTypeService.selectBySearchVo(searchVo1);
+	    	
+	    	
 		}
-		result.setData(partnerServiceType);
+		result.setData(list);
 
 		return result;
 	}
@@ -207,11 +207,6 @@ public class DictController<T> {
 				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 	   List<DictProvince> list = provinceService.selectAll();
-		/*List<String> bigServiceTypeName = new ArrayList<String>();
-		for (Iterator iterator = listBig.iterator(); iterator.hasNext();) {
-			PartnerServiceType partnerServiceType = (PartnerServiceType) iterator.next();
-			bigServiceTypeName.add(partnerServiceType.getName());
-		}*/
 		result.setData(list);
 
 		return result;

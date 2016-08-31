@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +54,7 @@ import com.simi.po.model.partners.PartnerRefServiceType;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
+import com.simi.service.ImgService;
 import com.simi.service.dict.CityService;
 import com.simi.service.dict.RegionService;
 import com.simi.service.order.OrderQueryService;
@@ -109,6 +111,9 @@ public class PartnersController extends BaseController {
 
 	@Autowired
 	private OrderQueryService orderQueryService;
+	
+	@Autowired
+	private ImgService imgService;
 
 	/**
 	 * 服务提供商列表
@@ -203,6 +208,7 @@ public class PartnersController extends BaseController {
 
 		// 获得服务商的联系人
 		List<PartnerLinkMan> linkMan = new ArrayList<PartnerLinkMan>();
+		linkMan = partnerLinkManService.selectByPartnerId(partnerId);
 		// 保证至少有一个，默认为空的列表
 		if (linkMan == null || linkMan.size() == 0) {
 			PartnerLinkMan linkManVo = partnerLinkManService.initPartnerLinkMan();
@@ -237,7 +243,7 @@ public class PartnersController extends BaseController {
 		}
 		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
 
-		List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain((short) 0, new ArrayList<Long>()), null,
+		List<TreeModel> children = TreeModelExtension.ToTreeModels(partnerServiceTypeService.listChain(new ArrayList<Long>()), null,
 				checkedPartnerTypeIntegers, StringHelper.toIntegerList(expanded, ","));
 		List<TreeModel> treeModels = new ArrayList<TreeModel>(Arrays.asList(new TreeModel(null, null, "根节点", false, false, false, children)));
 		model.addAttribute("treeDataSource", JSONArray.fromObject(treeModels, new JsonConfig()).toString());
@@ -318,52 +324,17 @@ public class PartnersController extends BaseController {
 			throws IOException {
 		// String registerTime = request.getParameter("registerTime");
 		String registerTime = request.getParameter("registerTime");
-		// model.addAttribute("requestUrl", request.getServletPath());
-		// model.addAttribute("requestQuery", request.getQueryString());
-		// Long spiderPartnerId =
-		// Long.valueOf(request.getParameter("spiderPartnerId"));
-		// Long partnerId = partners.getPartnerId();
-		// SpiderPartner spiderPartner =
-		// spiderPartnerService.selectByPrimaryKey(spiderPartnerId);
-		// 根据采集服务商名称进行排重
-		// List<Partners> partnersList =
-		// partnersService.selectByCompanyName(partners.getCompanyName());
-		// 创建一个通用的多部分解析器.
+
 		Long partnerId = partners.getPartnerId();
-
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		// String path =
-		// request.getSession().getServletContext().getRealPath("/WEB-INF/upload/ad");
-		// String addr = request.getRemoteAddr();
-		// int port = request.getServerPort();
-		if (multipartResolver.isMultipart(request)) {
-			// 判断 request 是否有文件上传,即多部分请求...
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);
-			Iterator<String> iter = multiRequest.getFileNames();
-			while (iter.hasNext()) {
-				MultipartFile file = multiRequest.getFile(iter.next());
-				if (file != null && !file.isEmpty()) {
-					String url = Constants.IMG_SERVER_HOST + "/upload/";
-					String fileName = file.getOriginalFilename();
-					String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-					fileType = fileType.toLowerCase();
-					String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-
-					ObjectMapper mapper = new ObjectMapper();
-
-					HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-					String ret = o.get("ret").toString();
-
-					HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-					String companyDescImg = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
-					companyDescImg = ImgServerUtil.getImgSize(companyDescImg, "100", "100");
-
-					partners.setCompanyDescImg(companyDescImg);
-
-				}
+		  
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		if (fileMaps.get("companyDescImg") != null) {
+			String imgUrl = fileMaps.get("companyDescImg");
+			
+			if (!StringUtil.isEmpty(imgUrl)) {
+				imgUrl = ImgServerUtil.getImgSize(imgUrl, "100", "100");
+	
+				partners.setCompanyDescImg(imgUrl);
 			}
 		}
 
@@ -372,25 +343,14 @@ public class PartnersController extends BaseController {
 
 		Partners partnersItem = partnersService.iniPartners();
 		if (partnerId > 0L) {
+			
+			partnersItem = partnersService.selectByPrimaryKey(partnerId);
+			
+			BeanUtilsExp.copyPropertiesIgnoreNull(partners, partnersItem);
+			
 			partnersItem.setPartnerId(partners.getPartnerId());
-			partnersItem.setCompanyName(partners.getCompanyName());
-			partnersItem.setShortName(partners.getShortName());
-			partnersItem.setCompanySize(partners.getCompanySize());
-			partnersItem.setIsDoor(partners.getIsDoor());
-			partnersItem.setCompanyDescImg(partners.getCompanyDescImg());
-			partnersItem.setKeywords(partners.getKeywords());
-			partnersItem.setStatus(partners.getStatus());
-			partnersItem.setBusinessDesc(partners.getBusinessDesc());
-			partnersItem.setWeixin(partners.getWeixin());
-			partnersItem.setQq(partners.getQq());
-			partnersItem.setEmail(partners.getEmail());
-			partnersItem.setFax(partners.getFax());
-			partnersItem.setPayType(partners.getPayType());
-			partnersItem.setDiscout(partners.getDiscout());
-			partnersItem.setAddr(partners.getAddr());
 			// 注册时间
 			partnersItem.setRegisterTime(DateUtil.parse(registerTime));
-			partnersItem.setIsCooperate(partners.getIsCooperate());
 			partnersItem.setUpdateTime(TimeStampUtil.getNow() / 1000);
 
 			partnersService.updateByPrimaryKeySelective(partnersItem);
@@ -402,7 +362,7 @@ public class PartnersController extends BaseController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// partnersItem.setRegisterTime("");
+
 			partnersItem.setServiceArea("");
 			partnersItem.setServiceType("");
 			partnersItem.setAdminId(accountAuth.getId());

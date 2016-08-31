@@ -101,7 +101,6 @@ public class DictInterface extends BaseController {
 
 		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
 		searchVo.setParentId(serviceTypeId);
-		searchVo.setViewType((short) 1);
 		searchVo.setPartnerIds(partnerIds);
 		
 		List<PartnerServiceType> list = partnerServiceTypeService.selectBySearchVo(searchVo);

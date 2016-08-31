@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.partners.PartnerServicePriceDetailMapper">
-	<resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerServicePriceDetail">
-		<id column="id" property="id" jdbcType="NUMERIC" />
+<mapper namespace="com.simi.po.dao.partners.PartnerServicePriceMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.partners.PartnerServicePrice">
 		<result column="service_price_id" property="servicePriceId" jdbcType="NUMERIC" />
+		<result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
+		<result column="service_type_id" property="serviceTypeId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="service_title" property="serviceTitle" jdbcType="VARCHAR" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
@@ -21,116 +23,151 @@
 		<result column="order_type" property="orderType" jdbcType="NUMERIC" />
 		<result column="order_duration" property="orderDuration" jdbcType="NUMERIC" />
 		<result column="extend_id" property="extendId" jdbcType="NUMERIC" />
+		<result column="tags" property="tags" jdbcType="VARCHAR" />
 		<result column="is_addr" property="isAddr" jdbcType="NUMERIC" />
+		<result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
+		<result column="no" property="no" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, service_price_id, service_title, user_id, img_url, price, dis_price, order_type, order_duration, content_standard,
+		service_price_id, partner_id, service_type_id, name, service_title, user_id, img_url, price, dis_price, order_type, order_duration,
+		content_standard,
 		is_addr, content_desc,
-		content_flow, video_url, category, action, params, goto_url, extend_id, add_time
+		content_flow,
+		video_url, category, action, params,
+		goto_url, extend_id, tags, add_time, is_enable, no
 	</sql>
+	
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
-		from partner_service_price_detail
-		where id = #{servicePriceId,jdbcType=NUMERIC}
-	</select>
-
-	<select id="selectByServicePriceId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from partner_service_price_detail
+		from partner_service_price
 		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</select>
 
-	<select id="selectByServicePriceIds" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.partners.PartnerServicePriceSearchVo">
 		select
 		<include refid="Base_Column_List" />
-		from partner_service_price_detail
-		where service_price_id in
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		order by add_time asc
-	</select>
-
-	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select
-		<include refid="Base_Column_List" />
-		from partner_service_price_detail
-		where user_id = #{userId,jdbcType=NUMERIC}
-	</select>
-
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-		select
-		<include refid="Base_Column_List" />
-		from partner_service_price_detail
+		from partner_service_price
 		where 1=1
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
+		<if test="servicePriceId != null">
+			and service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="serviceTypeId != null">
+			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="serviceTypeIds != null">
 			and service_price_id in
 			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
-		<!-- <if test="partnerId != null"> and partner_id = #{partnerId,jdbcType=NUMERIC} </if> <if test="serviceTypeId != null"> and service_type_id = #{serviceTypeId,jdbcType=NUMERIC} 
-			</if> -->
-		order by add_time desc
-	</select>
-
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-		select
-		<include refid="Base_Column_List" />
-		from partner_service_price_detail
-		where 1=1
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
+		
+		<if test="partnerId != null">
+			and partner_id = #{partnerId,jdbcType=NUMERIC}
 		</if>
-		<if test="serviceTypeIds != null">
-			and service_price_id in
-			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+		
+		<if test="partnerIds != null">
+			and partner_id in
+			<foreach item="item" index="index" collection="partnerIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
-
+		
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
 		<if test="extendId != null">
 			and extend_id = #{extendId,jdbcType=NUMERIC}
 		</if>
-
-		<if test="keyword != null">
-			and service_price_id in (select service_type_id from partner_service_price where parent_id = #{parentId,jdbcType=NUMERIC} and and name like
-			CONCAT('%','${keyword}','%' ))
+		
+		<if test="isEnable != null">
+			and is_enable = #{isEnable,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="keyword != null">
+			and ( name like CONCAT('%','${keyword}','%' ) OR tags like CONCAT('%','${keyword}','%' ))
+		</if>
+		
 
-		and service_price_id in (select service_type_id from partner_service_price where parent_id = #{parentId,jdbcType=NUMERIC} and is_enable =
-		#{isEnable,jdbcType=NUMERIC})
+		order by add_time desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.partners.PartnerServicePriceSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from partner_service_price
+		where 1=1
+		<if test="servicePriceId != null">
+			and service_price_id = #{servicePriceId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="serviceTypeId != null">
+			and service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="serviceTypeIds != null">
+			and service_price_id in
+			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="partnerId != null">
+			and partner_id = #{partnerId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="partnerIds != null">
+			and partner_id in
+			<foreach item="item" index="index" collection="partnerIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="extendId != null">
+			and extend_id = #{extendId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="isEnable != null">
+			and is_enable = #{isEnable,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="keyword != null">
+			and ( name like CONCAT('%','${keyword}','%' ) OR tags like CONCAT('%','${keyword}','%' ))
+		</if>
 
 		order by add_time desc
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from partner_service_price_detail
-		where id = #{id,jdbcType=NUMERIC}
+		delete from partner_service_price
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</delete>
 
-	<delete id="deleteByServiceTypeId" parameterType="java.lang.Long">
-		delete from partner_service_price_detail
-		where service_price_id = #{id,jdbcType=NUMERIC}
-	</delete>
-
-	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
-		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
+	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServicePrice">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="servicePriceId">
+			SELECT LAST_INSERT_ID() AS service_price_id
 		</selectKey>
 
-		insert into partner_service_price_detail (id, service_price_id, service_title,
+		insert into partner_service_price (service_price_id, partner_id, service_type_id, name, service_title,
 		user_id, img_url, price,
-		dis_price, order_type, order_duration, is_addr,
-		content_standard, content_desc,
-		content_flow, video_url, category, action, params, goto_url, extend_id, add_time)
-		values (#{id,jdbcType=NUMERIC},
-		#{servicePriceId,jdbcType=NUMERIC},
+		dis_price, order_type,
+		order_duration, is_addr,
+		content_standard,
+		content_desc,
+		content_flow, video_url,
+		category, action, params, goto_url, extend_id, tags, add_time, is_enable, no)
+		values
+		(#{servicePriceId,jdbcType=NUMERIC}, #{partnerId,jdbcType=NUMERIC},
+		#{serviceTypeId,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR},
 		#{serviceTitle,jdbcType=VARCHAR},
 		#{userId,jdbcType=NUMERIC}, #{imgUrl,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
 		#{disPrice,jdbcType=DECIMAL},
@@ -144,19 +181,28 @@
 		#{category,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR},
 		#{params,jdbcType=VARCHAR},
 		#{gotoUrl,jdbcType=VARCHAR},
-		#{extendId,jdbcType=NUMERIC},
-		#{addTime,jdbcType=NUMERIC})
+		#{extendId,jdbcType=NUMERIC}, #{tags,jdbcType=VARCHAR},
+		#{addTime,jdbcType=NUMERIC}, #{isEnable,jdbcType=NUMERIC}, #{no,jdbcType=NUMERIC})
 	</insert>
-	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
+	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServicePrice">
 
-		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="servicePriceId">
+			SELECT LAST_INSERT_ID() AS service_price_id
 		</selectKey>
 
-		insert into partner_service_price_detail
+		insert into partner_service_price
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
+			<if test="servicePriceId != null">
+				service_price_id,
+			</if>
+			<if test="partnerId != null">
+				partner_id,
+			</if>
+			<if test="serviceTypeId != null">
+				service_type_id,
+			</if>
+			<if test="name != null">
+				name,
 			</if>
 			<if test="servicePriceId != null">
 				service_price_id,
@@ -212,16 +258,31 @@
 			<if test="extendId != null">
 				extend_id,
 			</if>
+			<if test="tags != null">
+				tags,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
+			<if test="isEnable != null">
+				is_enable,
+			</if>
+			<if test="no != null">
+				no,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=NUMERIC},
-			</if>
 			<if test="servicePriceId != null">
 				#{servicePriceId,jdbcType=NUMERIC},
+			</if>
+			<if test="partnerId != null">
+				#{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTypeId != null">
+				#{serviceTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
 			</if>
 			<if test="serviceTitle != null">
 				#{serviceTitle,jdbcType=VARCHAR},
@@ -274,16 +335,31 @@
 			<if test="extendId != null">
 				#{extendId,jdbcType=NUMERIC},
 			</if>
+			<if test="tags != null">
+				#{tags,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
 			</if>
+			<if test="isEnable != null">
+				#{isEnable,jdbcType=NUMERIC},
+			</if>
+			<if test="no != null">
+				#{no,jdbcType=NUMERIC},
+			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
-		update partner_service_price_detail
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.partners.PartnerServicePrice">
+		update partner_service_price
 		<set>
-			<if test="servicePriceId != null">
-				service_price_id = #{servicePriceId,jdbcType=NUMERIC},
+			<if test="partnerId != null">
+				partner_id = #{partnerId,jdbcType=NUMERIC},
+			</if>
+			<if test="serviceTypeId != null">
+				service_type_id = #{serviceTypeId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
 			</if>
 			<if test="serviceTitle != null">
 				service_title = #{serviceTitle,jdbcType=VARCHAR},
@@ -336,36 +412,59 @@
 			<if test="extendId != null">
 				extend_id = #{extendId,jdbcType=NUMERIC},
 			</if>
+			<if test="tags != null">
+				tags = #{tags,jdbcType=VARCHAR},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
+			<if test="isEnable != null">
+				is_enable = #{isEnable,jdbcType=NUMERIC},
+			</if>
+			<if test="no != null">
+				no = #{no,jdbcType=NUMERIC},
+			</if>
 		</set>
-		where id = #{id,jdbcType=NUMERIC}
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerServicePriceDetail">
-		update partner_service_price_detail
-		set service_price_id = #{servicePriceId,jdbcType=NUMERIC},
-		service_title = #{serviceTitle,jdbcType=VARCHAR},
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.partners.PartnerServicePrice">
+		update partner_service_price
+		set partner_id = #{partnerId,jdbcType=NUMERIC},
+		service_type_id =
+		#{serviceTypeId,jdbcType=NUMERIC},
+		name =
+		#{name,jdbcType=VARCHAR},
+		service_title =
+		#{serviceTitle,jdbcType=VARCHAR},
 		user_id = #{userId,jdbcType=NUMERIC},
-		img_url = #{imgUrl,jdbcType=VARCHAR},
+		img_url
+		= #{imgUrl,jdbcType=VARCHAR},
 		price = #{price,jdbcType=DECIMAL},
-		dis_price = #{disPrice,jdbcType=DECIMAL},
+		dis_price =
+		#{disPrice,jdbcType=DECIMAL},
 		order_type = #{orderType,jdbcType=DECIMAL},
 		order_duration = #{orderDuration,jdbcType=DECIMAL},
 		is_addr =
 		#{isAddr,jdbcType=DECIMAL},
-		content_standard = #{contentStandard,jdbcType=VARCHAR},
-		content_desc = #{contentDesc,jdbcType=VARCHAR},
+		content_standard =
+		#{contentStandard,jdbcType=VARCHAR},
+		content_desc =
+		#{contentDesc,jdbcType=VARCHAR},
 		content_flow =
 		#{contentFlow,jdbcType=VARCHAR},
 		video_url = #{videoUrl,jdbcType=VARCHAR},
-		category = #{category,jdbcType=VARCHAR},
+		category =
+		#{category,jdbcType=VARCHAR},
 		action = #{action,jdbcType=VARCHAR},
 		params = #{params,jdbcType=VARCHAR},
 		goto_url = #{gotoUrl,jdbcType=VARCHAR},
 		extend_id =
 		#{extendId,jdbcType=NUMERIC},
-		add_time = #{addTime,jdbcType=NUMERIC}
-		where id = #{id,jdbcType=NUMERIC}
+		tags = #{tags,jdbcType=VARCHAR},
+		add_time =
+		#{addTime,jdbcType=NUMERIC},
+		is_enable = #{isEnable,jdbcType=NUMERIC},
+		no = #{no,jdbcType=NUMERIC}
+		where service_price_id = #{servicePriceId,jdbcType=NUMERIC}
 	</update>
 </mapper>

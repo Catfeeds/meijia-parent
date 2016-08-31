@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UsersService;
@@ -18,11 +18,13 @@ import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtWaterListVo;
 import com.simi.vo.order.OrderExtWaterXcloudVo;
+import com.simi.vo.partners.PartnerServicePriceSearchVo;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.po.dao.order.OrderExtWaterMapper;
 import com.simi.po.model.order.OrderExtWater;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.github.pagehelper.PageHelper;
@@ -51,7 +53,7 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
     private PartnerServiceTypeService partnerServiceTypeService;
     
     @Autowired
-    private PartnerServicePriceDetailService partnerServicePriceDetailService;
+    private PartnerServicePriceService partnerServicePriceService;
     
 	@Override
 	public int deleteByPrimaryKey(Long id) {
@@ -173,15 +175,11 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		vo.setDisPrice(new BigDecimal(0));
 		
 		Long servicePriceId = item.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		if (servicePrice != null) {
 			vo.setServicePriceName(servicePrice.getName());
-		}
-
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
-		if (servicePriceDetail != null) {
-			vo.setImgUrl(servicePriceDetail.getImgUrl());
-			vo.setDisPrice(servicePriceDetail.getDisPrice());
+			vo.setImgUrl(servicePrice.getImgUrl());
+			vo.setDisPrice(servicePrice.getDisPrice());
 		}
 		
 		vo.setServiceNum(item.getServiceNum());
@@ -239,15 +237,12 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		vo.setDisPrice(new BigDecimal(0));
 		
 		Long servicePriceId = item.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		if (servicePrice != null) {
 			vo.setServicePriceName(servicePrice.getName());
-		}
-
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
-		if (servicePriceDetail != null) {
-			vo.setImgUrl(servicePriceDetail.getImgUrl());
-			vo.setDisPrice(servicePriceDetail.getDisPrice());
+			vo.setImgUrl(servicePrice.getImgUrl());
+			vo.setDisPrice(servicePrice.getDisPrice());
 		}
 		
 		vo.setServiceNum(item.getServiceNum());
@@ -288,12 +283,12 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 		
 		List<OrderPrices> orderPrices = orderPricesService.selectByOrderIds(orderIds);
 		
-		List<Long> serviceTypeIds = new ArrayList<Long>();
+		List<Long> servicePriceIds = new ArrayList<Long>();
 		List<Long> userAddrIds = new ArrayList<Long>();
 		
 		for (Orders item : orders) {
-			if (!serviceTypeIds.contains(item.getServiceTypeId())) {
-				serviceTypeIds.add(item.getServiceTypeId());
+			if (!servicePriceIds.contains(item.getServiceTypeId())) {
+				servicePriceIds.add(item.getServiceTypeId());
 			}
 			
 			if(!userAddrIds.contains(item.getAddrId())) {
@@ -303,9 +298,10 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			}
 		}
 		
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(serviceTypeIds);
-		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectByIds(serivcePriceIds);
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByServicePriceIds(serivcePriceIds);
+
+		PartnerServicePriceSearchVo searchVo1 = new PartnerServicePriceSearchVo();
+		searchVo1.setServicePriceIds(servicePriceIds);
+		List<PartnerServicePrice> servicePrices = partnerServicePriceService.selectBySearchVo(searchVo1);
 		List<UserAddrs> userAddrs = new ArrayList<UserAddrs>();
 		if (!userAddrIds.isEmpty())
 			userAddrsService.selectByIds(userAddrIds);
@@ -365,46 +361,31 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			//服务大类名称
 			vo.setServiceTypeName("");
 			Long serviceTypeId = order.getServiceTypeId();
-			PartnerServiceType serviceType = null;
-			for (PartnerServiceType tmpServiceType : serviceTypes) {
-				if (tmpServiceType.getId().equals(serviceTypeId)) {
-					serviceType = tmpServiceType;
-					break;
+			if (serviceTypeId > 0L) {
+				PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
+				if (serviceType != null) {
+					vo.setServiceTypeName(serviceType.getName());
 				}
 			}
-			
-			if (serviceType != null) {
-				vo.setServiceTypeName(serviceType.getName());
-			}
-	
+
 			//服务价格商品名称
 			vo.setServicePriceName("");
 			vo.setImgUrl("");
 			vo.setDisPrice(new BigDecimal(0));
 			
 			Long servicePriceId = item.getServicePriceId();
-			PartnerServiceType servicePrice = null;
-			for (PartnerServiceType tmpServicePrice : servicePrices) {
-				if (tmpServicePrice.getId().equals(servicePriceId)) {
+			PartnerServicePrice servicePrice = null;
+			for (PartnerServicePrice tmpServicePrice : servicePrices) {
+				if (tmpServicePrice.getServicePriceId().equals(servicePriceId)) {
 					servicePrice = tmpServicePrice;
 					break;
 				}
 			}
+			
 			if (servicePrice != null) {
 				vo.setServicePriceName(servicePrice.getName());
-			}
-			
-			
-			PartnerServicePriceDetail servicePriceDetail = null;
-			for (PartnerServicePriceDetail tmpServicePriceDetail : servicePriceDetails) {
-				if (tmpServicePriceDetail.getServicePriceId().equals(servicePriceId)) {
-					servicePriceDetail = tmpServicePriceDetail;
-					break;
-				}
-			}
-			if (servicePriceDetail != null) {
-				vo.setImgUrl(servicePriceDetail.getImgUrl());
-				vo.setDisPrice(servicePriceDetail.getDisPrice());
+				vo.setImgUrl(servicePrice.getImgUrl());
+				vo.setDisPrice(servicePrice.getDisPrice());
 			}
 			
 			vo.setServiceNum(item.getServiceNum());

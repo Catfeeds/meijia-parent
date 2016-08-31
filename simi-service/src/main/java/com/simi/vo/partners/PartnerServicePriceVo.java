@@ -1,45 +1,18 @@
 package com.simi.vo.partners;
 
+import com.simi.po.model.partners.PartnerServicePrice;
+public class PartnerServicePriceVo extends PartnerServicePrice {
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+	private Long id;
 
-import com.simi.base.model.models.ChainEntity;
-
-
-public class PartnerServicePriceVo extends ChainEntity<Integer, PartnerServicePriceVo> implements Serializable{
-
-	private Integer id;
-	
-	private Long parentId;
-	
-	private List<PartnerServicePriceVo> childList = new ArrayList<PartnerServicePriceVo>();
-	
-	public Long getParentId() {
-		return parentId;
-	}
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-	public List<PartnerServicePriceVo> getChildList() {
-		return childList;
-	}
-	public void setChildList(List<PartnerServicePriceVo> childList) {
-		this.childList = childList;
-	}
-	@Override
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	@Override
-	public void setId(Integer id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 	
-
-
+	
 
 }

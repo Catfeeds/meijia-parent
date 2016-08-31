@@ -123,7 +123,7 @@
 							<div class="col-md-5">
 								<form:select path="serviceTypeId" class="form-control">
 									<option value="">请选择服务类别</option>
-									<form:options items="${partnerServiceType}" itemValue="id"
+									<form:options items="${partnerServiceTypes}" itemValue="servicePriceId"
 										itemLabel="name" />
 								</form:select>
 							</div>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,7 @@ import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
+import com.simi.service.ImgService;
 import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
@@ -39,6 +41,10 @@ public class UserImageController extends BaseController {
 
 	@Autowired
 	private UserImgService userImgService;
+	
+	@Autowired
+	private ImgService imgService;
+
 	
 	/**
 	 * 用户头像上传接口
@@ -65,44 +71,25 @@ public class UserImageController extends BaseController {
 			result.setMsg(ConstantMsg.USER_NOT_EXIST_MG);
 			return result;
 		}
-
+		
+		// 处理 多文件 上传
 		HashMap<String, String> img = new HashMap<String, String>();
-		if (file != null && !file.isEmpty()) {
-
-			String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String fileName = file.getOriginalFilename();
-			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		if (fileMaps.get("file") != null) {
+			String imgUrl = fileMaps.get("file");
 			
-			
-			System.out.println("fileName = " + fileName);
-			System.out.println("fileType = " + fileType);
-			
-			fileType = fileType.toLowerCase();
-			String sendResult = ImgServerUtil.sendPostBytes(url,
-					file.getBytes(), fileType);
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult,
-					HashMap.class);
-			System.out.println(o.toString());
-			String ret = o.get("ret").toString();
-			
-			HashMap<String, String> info = (HashMap<String, String>) o
-					.get("info");
-
-			String imgUrl = Constants.IMG_SERVER_HOST + "/"
-					+ info.get("md5").toString();
-			imgUrl = ImgServerUtil.getImgSize(imgUrl, "100", "100");
-			u.setHeadImg(imgUrl);
-
-			userService.updateByPrimaryKeySelective(u);
-			
-			//更新用户二维码
-			userImgService.genUserQrCode(u.getId());
-
-			img.put("user_id", userId.toString());
-			img.put("head_img", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
+			if (!StringUtil.isEmpty(imgUrl)) {
+				imgUrl = ImgServerUtil.getImgSize(imgUrl, "100", "100");
+				u.setHeadImg(imgUrl);
+	
+				userService.updateByPrimaryKeySelective(u);
+				
+				//更新用户二维码
+				userImgService.genUserQrCode(u.getId());
+	
+				img.put("user_id", userId.toString());
+				img.put("head_img", ImgServerUtil.getImgSize(imgUrl, "100", "100"));
+			}
 		}
 
 		result.setData(img);

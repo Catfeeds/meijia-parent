@@ -84,13 +84,13 @@ public class PartnerFormVo extends Partners {
 		this.linkMan = linkMan;
 	}
 
-	List<PartnerServiceTypeVo>  serviceTypes;
+	List<PartnerServiceTypeTreeVo>  serviceTypes;
 
-	public List<PartnerServiceTypeVo> getServiceTypes() {
+	public List<PartnerServiceTypeTreeVo> getServiceTypes() {
 		return serviceTypes;
 	}
 
-	public void setServiceTypes(List<PartnerServiceTypeVo> serviceTypes) {
+	public void setServiceTypes(List<PartnerServiceTypeTreeVo> serviceTypes) {
 		this.serviceTypes = serviceTypes;
 	}
 

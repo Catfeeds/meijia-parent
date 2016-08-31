@@ -22,7 +22,7 @@ import com.simi.common.Constants;
 import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserCoupons;
 import com.simi.po.model.user.Users;
@@ -33,7 +33,7 @@ import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserCouponService;
@@ -67,7 +67,7 @@ public class OrderController extends BaseController {
 	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;	
+	private PartnerServicePriceService partnerServicePriceService;	
 	
 	@Autowired
 	UserAddrsService addrsService;
@@ -151,7 +151,7 @@ public class OrderController extends BaseController {
 		}
 		
 		//获取服务报价的信息。
-		PartnerServicePriceDetail servicePrice = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		
 		if (servicePrice == null) {
 			result.setStatus(Constants.ERROR_999);

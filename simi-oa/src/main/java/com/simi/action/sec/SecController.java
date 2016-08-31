@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,7 @@ import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.UserSmsToken;
 import com.simi.po.model.user.Users;
+import com.simi.service.ImgService;
 import com.simi.service.async.NoticeSmsAsyncService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
@@ -70,6 +72,9 @@ public class SecController extends AdminController {
 	
 	@Autowired
 	private NoticeSmsAsyncService noticeSmsAsyncService;
+	
+	@Autowired
+	private ImgService imgService;
 
 	
 	   /**
@@ -273,6 +278,15 @@ public class SecController extends AdminController {
 		String path = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/sec");
 		String addr = request.getRemoteAddr();
 		int port = request.getServerPort();
+		
+		// 处理 多文件 上传
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		if (fileMaps.get("headImg") != null) {
+			String imgUrl = fileMaps.get("headImg");
+			if (!StringUtil.isEmpty(imgUrl)) userApplyVo.setHeadImg(imgUrl);
+		}
+		
+		
 		if (multipartResolver.isMultipart(request)) {
 			// 判断 request 是否有文件上传,即多部分请求...
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) (request);

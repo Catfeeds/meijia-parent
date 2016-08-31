@@ -2,6 +2,7 @@ package com.simi.action.op;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,6 +27,7 @@ import com.simi.common.Constants;
 import com.simi.oa.auth.AuthPassport;
 import com.simi.oa.common.ConstantOa;
 import com.simi.po.model.op.AppIndex;
+import com.simi.service.ImgService;
 import com.simi.service.op.AppIndexService;
 
 @Controller
@@ -35,6 +37,10 @@ public class AppIndexController extends BaseController {
 	
 	@Autowired
 	private AppIndexService appIndexService;
+	
+	@Autowired
+	private ImgService imgService;
+	
 	//加好导航列表
 	@AuthPassport
 	@RequestMapping(value = "/appIndex_list", method = { RequestMethod.GET })
@@ -86,29 +92,16 @@ public class AppIndexController extends BaseController {
 
 		// 更新头像
 		String imgUrl = "";
-		if (file != null && !file.isEmpty()) {
-			String url = Constants.IMG_SERVER_HOST + "/upload/";
-			String fileName = file.getOriginalFilename();
-			String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-			fileType = fileType.toLowerCase();
-			String sendResult = ImgServerUtil.sendPostBytes(url, file.getBytes(), fileType);
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			HashMap<String, Object> o = mapper.readValue(sendResult, HashMap.class);
-
-			String ret = o.get("ret").toString();
-
-			HashMap<String, String> info = (HashMap<String, String>) o.get("info");
-
-			imgUrl = Constants.IMG_SERVER_HOST + "/" + info.get("md5").toString();
-
+		// 处理 多文件 上传
+		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
+		if (fileMaps.get("cardIconFile") != null) {
+			imgUrl = fileMaps.get("cardIconFile");
 		}
+		
+		
 		if (!StringUtil.isEmpty(imgUrl)) {
 			appIndex.setIconUrl(imgUrl+"?p=0");
-		}/*else {
-			appIndex.setIconUrl("");
-		}*/
+		}
 		// 更新或者新增
 		if (id != null && id > 0) {
 			//appCardType.setAddTime(addTime);

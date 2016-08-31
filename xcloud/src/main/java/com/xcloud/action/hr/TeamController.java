@@ -20,7 +20,7 @@ import com.simi.service.dict.CityService;
 import com.simi.service.order.OrderExtTeamService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderQueryService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.user.UserAddrsService;
@@ -56,7 +56,7 @@ public class TeamController extends BaseController {
 	private PartnerUserService partnerUserService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;

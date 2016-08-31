@@ -4,45 +4,36 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.partners.PartnerServiceType;
-import com.simi.vo.partners.PartnerServicePriceDetailVoAll;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
-import com.simi.vo.partners.PartnerServiceTypeVo;
-import com.simi.vo.partners.PartnerUserServiceTypeVo;
+import com.simi.vo.partners.PartnerServiceTypeTreeVo;
+import com.simi.vo.partners.PartnerServicePriceSearchVo;
 
 public interface PartnerServiceTypeService {
-	
+
 	int deleteByPrimaryKey(Long serviceTypeId);
 
-    int insert(PartnerServiceType record);
+	int insert(PartnerServiceType record);
 
-    int insertSelective(PartnerServiceType record);
+	int insertSelective(PartnerServiceType record);
 
-    PartnerServiceType selectByPrimaryKey(Long serviceTypeId);
+	PartnerServiceType selectByPrimaryKey(Long serviceTypeId);
 
-    int updateByPrimaryKeySelective(PartnerServiceType record);
+	int updateByPrimaryKeySelective(PartnerServiceType record);
 
-    int updateByPrimaryKey(PartnerServiceType record);
-    
+	int updateByPrimaryKey(PartnerServiceType record);
+
 	PartnerServiceType initPartnerServiceType();
 
-	List<PartnerServiceType> selectByIds(List<Long> ids);
+	List<PartnerServiceTypeTreeVo> listChain(List<Long> partnerIds);
 
-	List<PartnerServiceTypeVo> listChain(Short viewType, List<Long> partnerIds);
-
-	PartnerServiceTypeVo ToTree(Long id, Short viewType, List<Long> partnerIds);
+	PartnerServiceTypeTreeVo ToTree(Long id, List<Long> partnerIds);
 
 	List<PartnerServiceType> selectBySearchVo(PartnerServiceTypeSearchVo searchVo);
 
 	List<PartnerServiceType> selectByParentId(Long parentId);
 
-	List<PartnerServiceType> selectByPartnerIdIn(Long partnerId);
-
-	PartnerServicePriceDetailVoAll getPartnerPriceList(PartnerServiceType item, Long userId);
-
-	PageInfo selectByListPage(PartnerUserServiceTypeVo searchVo, int pageNo,
-			int pageSize);
+	PageInfo selectByListPage(PartnerServiceTypeSearchVo searchVo, int pageNo, int pageSize);
 
 	List<PartnerServiceType> selectByPartnerId(Long parentId);
 
-	
 }

@@ -25,7 +25,7 @@ import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.user.UserAddrsService;
@@ -47,7 +47,7 @@ import com.simi.po.model.op.AppTools;
 import com.simi.po.model.op.OpAd;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.user.UserAddrs;
 import com.simi.po.model.user.UserCoupons;
@@ -84,7 +84,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
-	PartnerServicePriceDetailService partnerServicePriceDetailService;
+	PartnerServicePriceService partnerServicePriceService;
 	
 	@Autowired
 	UserCouponService userCouponService;   
@@ -382,7 +382,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		
 //		Long servciePriceId = orderPrice.getServicePriceId();
 		
-		PartnerServicePriceDetail  partnerServicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+		PartnerServicePrice  partnerServicePriceDetail = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		
 		vo.setOrderMoney(new BigDecimal(0));
 		vo.setOrderPay(new BigDecimal(0));

@@ -392,8 +392,10 @@ public class StaffController extends BaseController {
 		if (fileMaps.get("headImg") != null) {
 			headImgUrl = fileMaps.get("headImg");
 			// 用户头像
-			u.setHeadImg(headImgUrl);
-			usersService.updateByPrimaryKeySelective(u);
+			if (!StringUtil.isEmpty(headImgUrl)) {
+				u.setHeadImg(headImgUrl);
+				usersService.updateByPrimaryKeySelective(u);
+			}
 		}
 
 		ImgSearchVo imgSearchVo = new ImgSearchVo();
@@ -404,24 +406,27 @@ public class StaffController extends BaseController {
 		// 身份证正反面
 		if (fileMaps.get("imgIdCardFront") != null) {
 			String imgIdCardFront = fileMaps.get("imgIdCardFront");
-			img = imgService.initImg();
-			//修改
-			for (Imgs item : imgList) {
-				if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_IDCARD_FRONT)) {
-					img = item;
-					break;
+			
+			if (!StringUtil.isEmpty(imgIdCardFront)) {
+				img = imgService.initImg();
+				//修改
+				for (Imgs item : imgList) {
+					if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_IDCARD_FRONT)) {
+						img = item;
+						break;
+					}
 				}
-			}
-			
-			img.setUserId(userId);
-			img.setLinkId(userId);
-			img.setLinkType(Constants.IMGS_LINK_TYPE_IDCARD_FRONT);
-			img.setImgUrl(imgIdCardFront);
-			
-			if (img.getImgId() > 0L) {
-				imgService.updateByPrimaryKey(img);
-			} else {
-				imgService.insert(img);
+				
+				img.setUserId(userId);
+				img.setLinkId(userId);
+				img.setLinkType(Constants.IMGS_LINK_TYPE_IDCARD_FRONT);
+				img.setImgUrl(imgIdCardFront);
+				
+				if (img.getImgId() > 0L) {
+					imgService.updateByPrimaryKey(img);
+				} else {
+					imgService.insert(img);
+				}
 			}
 			
 		}
@@ -429,49 +434,53 @@ public class StaffController extends BaseController {
 		if (fileMaps.get("imgIdCardBack") != null) {
 			String imgIdCardBack = fileMaps.get("imgIdCardBack");
 			
-			img = imgService.initImg();
-			//修改
-			for (Imgs item : imgList) {
-				if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_IDCARD_BACK)) {
-					img = item;
-					break;
+			if (!StringUtil.isEmpty(imgIdCardBack)) {
+				img = imgService.initImg();
+				//修改
+				for (Imgs item : imgList) {
+					if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_IDCARD_BACK)) {
+						img = item;
+						break;
+					}
 				}
-			}
-			
-			img.setUserId(userId);
-			img.setLinkId(userId);
-			img.setLinkType(Constants.IMGS_LINK_TYPE_IDCARD_BACK);
-			img.setImgUrl(imgIdCardBack);
-			
-			if (img.getImgId() > 0L) {
-				imgService.updateByPrimaryKey(img);
-			} else {
-				imgService.insert(img);
+				
+				img.setUserId(userId);
+				img.setLinkId(userId);
+				img.setLinkType(Constants.IMGS_LINK_TYPE_IDCARD_BACK);
+				img.setImgUrl(imgIdCardBack);
+				
+				if (img.getImgId() > 0L) {
+					imgService.updateByPrimaryKey(img);
+				} else {
+					imgService.insert(img);
+				}
 			}
 		}
 		
 
 		if (fileMaps.get("imgDegree") != null) {
 			String imgDegree = fileMaps.get("imgDegree");
-
-			img = imgService.initImg();
-			//修改
-			for (Imgs item : imgList) {
-				if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_DEGREE)) {
-					img = item;
-					break;
+			
+			if (!StringUtil.isEmpty(imgDegree)) {
+				img = imgService.initImg();
+				//修改
+				for (Imgs item : imgList) {
+					if (item.getLinkType().equals(Constants.IMGS_LINK_TYPE_DEGREE)) {
+						img = item;
+						break;
+					}
 				}
-			}
-			
-			img.setUserId(userId);
-			img.setLinkId(userId);
-			img.setLinkType(Constants.IMGS_LINK_TYPE_DEGREE);
-			img.setImgUrl(imgDegree);
-			
-			if (img.getImgId() > 0L) {
-				imgService.updateByPrimaryKey(img);
-			} else {
-				imgService.insert(img);
+				
+				img.setUserId(userId);
+				img.setLinkId(userId);
+				img.setLinkType(Constants.IMGS_LINK_TYPE_DEGREE);
+				img.setImgUrl(imgDegree);
+				
+				if (img.getImgId() > 0L) {
+					imgService.updateByPrimaryKey(img);
+				} else {
+					imgService.insert(img);
+				}
 			}
 		}
 		

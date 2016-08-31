@@ -50,6 +50,7 @@ $('#partner-service-type-form').validate({
 		$("#btn_submit").click(function(){
 			if (confirm("确认要保存吗?")){
 				if ($('#partner-service-type-form').validate().form()) {
+					console.log("parent_id = " + $("#parentId").val());
 					$('#partner-service-type-form').submit();
 				}
 		    }

@@ -19,7 +19,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.order.OrderExtCleanService;
 import com.simi.service.order.OrderExtWaterService;
 import com.simi.service.order.OrderQueryService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.user.UserAddrsService;
@@ -55,7 +55,7 @@ public class CleanController extends BaseController {
 	private PartnerUserService partnerUserService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;

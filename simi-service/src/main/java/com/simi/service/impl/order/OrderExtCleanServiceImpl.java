@@ -15,6 +15,7 @@ import com.simi.utils.OrderUtil;
 import com.simi.vo.OrderSearchVo;
 import com.simi.vo.order.OrderExtCleanListVo;
 import com.simi.vo.order.OrderExtCleanXcloudVo;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.po.dao.order.OrderExtCleanMapper;
 import com.simi.po.model.order.OrderExtClean;
 import com.simi.po.model.order.Orders;
@@ -25,22 +26,22 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
-public class OrderExtCleanServiceImpl implements OrderExtCleanService{
-    @Autowired
-    private OrderExtCleanMapper orderExtCleanMapper;
-    
-    @Autowired
-    private UsersService usersService;
-    
-    @Autowired
-    private UserAddrsService userAddrsService;
-    
-    @Autowired
-    private OrdersService ordersService;
-    
-    @Autowired
-    private PartnerServiceTypeService partnerServiceTypeService;
-        
+public class OrderExtCleanServiceImpl implements OrderExtCleanService {
+	@Autowired
+	private OrderExtCleanMapper orderExtCleanMapper;
+
+	@Autowired
+	private UsersService usersService;
+
+	@Autowired
+	private UserAddrsService userAddrsService;
+
+	@Autowired
+	private OrdersService ordersService;
+
+	@Autowired
+	private PartnerServiceTypeService partnerServiceTypeService;
+
 	@Override
 	public int deleteByPrimaryKey(Long id) {
 		return orderExtCleanMapper.deleteByPrimaryKey(id);
@@ -60,11 +61,11 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 	public OrderExtClean selectByPrimaryKey(Long id) {
 		return orderExtCleanMapper.selectByPrimaryKey(id);
 	}
-	
+
 	@Override
 	public OrderExtClean selectByOrderId(Long orderId) {
 		return orderExtCleanMapper.selectByOrderId(orderId);
-	}	
+	}
 
 	@Override
 	public int updateByPrimaryKey(OrderExtClean record) {
@@ -78,7 +79,7 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 
 	@Override
 	public OrderExtClean initOrderExtClean() {
-		
+
 		OrderExtClean record = new OrderExtClean();
 		record.setId(0L);
 		record.setOrderId(0L);
@@ -92,33 +93,33 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		return record;
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public PageInfo selectByListPage(OrderSearchVo orderSearchVo, int pageNo, int pageSize) {
 
-		 PageHelper.startPage(pageNo, pageSize);
-         List<OrderExtClean> list = orderExtCleanMapper.selectByListPage(orderSearchVo);
-                  
-         PageInfo result = new PageInfo(list);
-         
-        return result;
-    }
+		PageHelper.startPage(pageNo, pageSize);
+		List<OrderExtClean> list = orderExtCleanMapper.selectByListPage(orderSearchVo);
+
+		PageInfo result = new PageInfo(list);
+
+		return result;
+	}
 
 	@Override
 	public List<OrderExtClean> selectByUserId(Long userId) {
 		return orderExtCleanMapper.selectByUserId(userId);
 	}
-	
+
 	@Override
 	public OrderExtCleanListVo getListVo(OrderExtClean item) {
-		OrderExtCleanListVo  vo = new OrderExtCleanListVo();
+		OrderExtCleanListVo vo = new OrderExtCleanListVo();
 		vo.setOrderId(item.getOrderId());
 		vo.setOrderNo(item.getOrderNo());
 		vo.setUserId(item.getUserId());
 		vo.setCompanyName(item.getCompanyName());
-		
-		//服务地址
+
+		// 服务地址
 		vo.setAddrName("");
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
 		Long addrId = order.getAddrId();
@@ -127,68 +128,71 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 			vo.setAddrName(userAddr.getName() + " " + userAddr.getAddr());
 		}
 
-		//服务大类名称
+		// 服务大类名称
 		vo.setServiceTypeName("");
 		Long serviceTypeId = order.getServiceTypeId();
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
 		if (serviceType != null) {
 			vo.setServiceTypeName(serviceType.getName());
 		}
-		
+
 		vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 		vo.setOrderStatus(order.getOrderStatus());
 		vo.setOrderExtStatus(item.getOrderExtStatus());
 		return vo;
 	}
-	
+
 	@Override
 	public List<OrderExtCleanListVo> getListVos(List<OrderExtClean> list) {
-		List<OrderExtCleanListVo>  result = new ArrayList<OrderExtCleanListVo>();
-		
+		List<OrderExtCleanListVo> result = new ArrayList<OrderExtCleanListVo>();
+
 		List<Long> orderIds = new ArrayList<Long>();
-		
-		//批量查找userAddrs;
+
+		// 批量查找userAddrs;
 		for (OrderExtClean item : list) {
 			if (!orderIds.contains(item.getOrderId())) {
 				orderIds.add(item.getOrderId());
 			}
-			
+
 		}
-		
-		if (orderIds.isEmpty()) return result;
+
+		if (orderIds.isEmpty())
+			return result;
 		List<Orders> orders = ordersService.selectByOrderIds(orderIds);
-		
+
 		List<Long> serviceTypeIds = new ArrayList<Long>();
 		List<Long> userAddrIds = new ArrayList<Long>();
-		
+
 		for (Orders item : orders) {
 			if (!serviceTypeIds.contains(item.getServiceTypeId())) {
 				serviceTypeIds.add(item.getServiceTypeId());
 			}
-			
-			if(!userAddrIds.contains(item.getAddrId())) {
+
+			if (!userAddrIds.contains(item.getAddrId())) {
 				if (item.getAddrId() > 0L) {
 					userAddrIds.add(item.getAddrId());
 				}
 			}
 		}
-		
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(serviceTypeIds);
-		
+
+		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
+		searchVo.setServiceTypeIds(serviceTypeIds);
+		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectBySearchVo(searchVo);
+
 		List<UserAddrs> userAddrs = new ArrayList<UserAddrs>();
-		
+
 		if (!userAddrIds.isEmpty()) {
-				userAddrsService.selectByIds(userAddrIds);
+			userAddrsService.selectByIds(userAddrIds);
 		}
 		for (int i = 0; i < list.size(); i++) {
 			OrderExtClean item = list.get(i);
 			OrderExtCleanListVo vo = new OrderExtCleanListVo();
-			
+
 			vo.setOrderId(item.getOrderId());
 			vo.setOrderNo(item.getOrderNo());
 			vo.setUserId(item.getUserId());
-			
+
 			Orders order = null;
 			for (Orders tmpOrder : orders) {
 				if (tmpOrder.getOrderId().equals(item.getOrderId())) {
@@ -196,12 +200,12 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 					break;
 				}
 			}
-			
+
 			if (order != null) {
 				vo.setOrderStatus(order.getOrderStatus());
 			}
-			
-			//服务地址
+
+			// 服务地址
 			vo.setAddrName("");
 			Long addrId = order.getAddrId();
 			UserAddrs userAddr = null;
@@ -211,13 +215,12 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 					break;
 				}
 			}
-			
+
 			if (userAddr != null) {
 				vo.setAddrName(userAddr.getName() + " " + userAddr.getAddr());
 			}
-			
-			
-			//服务大类名称
+
+			// 服务大类名称
 			vo.setServiceTypeName("");
 			Long serviceTypeId = order.getServiceTypeId();
 			PartnerServiceType serviceType = null;
@@ -227,12 +230,11 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 					break;
 				}
 			}
-			
+
 			if (serviceType != null) {
 				vo.setServiceTypeName(serviceType.getName());
 			}
-	
-			
+
 			vo.setOrderStatusName(OrderUtil.getOrderStausName(order.getOrderStatus()));
 			vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 			vo.setOrderExtStatus(item.getOrderExtStatus());
@@ -243,30 +245,31 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 		}
 		return result;
 	}
+
 	@Override
-	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo,
-			int pageSize) {
+	public PageInfo selectByPage(OrderSearchVo searchVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		List<OrderExtCleanXcloudVo> listVo = new ArrayList<OrderExtCleanXcloudVo>();
 		List<OrderExtClean> list = orderExtCleanMapper.selectByListPage(searchVo);
 		OrderExtClean item = null;
 		for (int i = 0; i < list.size(); i++) {
-			 item = list.get(i);
-        	 OrderExtCleanXcloudVo vo = this.getXcloudList(item);
-        	 list.set(i, vo);
+			item = list.get(i);
+			OrderExtCleanXcloudVo vo = this.getXcloudList(item);
+			list.set(i, vo);
 		}
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
+
 	@Override
 	public OrderExtCleanXcloudVo getXcloudList(OrderExtClean item) {
-		OrderExtCleanXcloudVo  vo = new OrderExtCleanXcloudVo();
+		OrderExtCleanXcloudVo vo = new OrderExtCleanXcloudVo();
 		vo.setOrderId(item.getOrderId());
 		vo.setOrderNo(item.getOrderNo());
 		vo.setUserId(item.getUserId());
 		vo.setCompanyName(item.getCompanyName());
-		
-		//服务地址
+
+		// 服务地址
 		vo.setAddrName("");
 		Orders order = ordersService.selectByOrderNo(item.getOrderNo());
 		Long addrId = order.getAddrId();
@@ -274,8 +277,8 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 		if (userAddr != null) {
 			vo.setAddrName(userAddr.getName() + " " + userAddr.getAddr());
 		}
-        
-		//服务大类名称
+
+		// 服务大类名称
 		vo.setServiceTypeName("");
 		Long serviceTypeId = order.getServiceTypeId();
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
@@ -283,19 +286,19 @@ public class OrderExtCleanServiceImpl implements OrderExtCleanService{
 			vo.setServiceTypeName(serviceType.getName());
 		}
 		vo.setOrderExtStatusName("");
-		if (item.getOrderExtStatus() ==0) {
+		if (item.getOrderExtStatus() == 0) {
 			vo.setOrderExtStatusName("运营人员处理中");
 		}
-		if (item.getOrderExtStatus() ==1) {
+		if (item.getOrderExtStatus() == 1) {
 			vo.setOrderExtStatusName("已转派服务商");
 		}
-	
+
 		vo.setCleanTypeName(OrderUtil.getOrderCleaTypeName(item.getCleanType()));
 		vo.setOrderStatusName(OrderUtil.getOrderStausNameClean(order.getOrderStatus(), vo.getOrderExtStatus()));
 		vo.setAddTimeStr(TimeStampUtil.fromTodayStr(order.getAddTime() * 1000));
 		vo.setOrderStatus(order.getOrderStatus());
 		vo.setOrderExtStatus(item.getOrderExtStatus());
-		
+
 		return vo;
 	}
 }

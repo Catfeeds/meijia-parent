@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 
 
 public class PartnerServicePriceListVo {
-	
-	private Long id;
-	
+		
 	private String name;
 	
 	private Long serviceTypeId;
@@ -66,14 +64,6 @@ public class PartnerServicePriceListVo {
 
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Short getIsAddr() {

@@ -19,7 +19,7 @@ import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderSeniorService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserDetailPayService;
 import com.simi.service.user.UserRefService;
@@ -69,7 +69,7 @@ public class OrderPayServiceImpl implements OrderPayService {
 	OrderSeniorService orderSeniorService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	PartnerServiceTypeService partnerServiceTypeService;

@@ -47,6 +47,7 @@
                            <div class="form-group">
                               <label  class="col-md-2 control-label">隶属于&nbsp;*</label>
                               <div class="col-md-5">
+
                                  <div class="portlet" id="parentId">
 					                  <div class="portlet-body">
 				                     	   <c:import url = "../shared/treeSelector.jsp">

@@ -74,11 +74,10 @@
 		                    var selectedId = $('#treeData-list').treeLite('selectedId');
 		                    var expanded = $('#treeData-list').treeLite('expandedIds');
 		                    if(selectedId != undefined)
-		                    	location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/form/{0}",
-						request.getAttribute("requestUrl"),
-						request.getAttribute("requestQuery"), "expanded={1}",
-						pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
-		                    else
+		                    	location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/form?serviceTypeId={0}&servicePriceId=0",
+										"", "", "", pageContext)%>".replace("{0}", selectedId);
+
+							else
 		                        alert("必须选择择一个节点！");
 		                    return false;
 		                }
@@ -90,8 +89,6 @@
 		                    var parentId = $('#treeData-list').treeLite('parentId');
 		                    var expanded = $('#treeData-list').treeLite('expandedIds');
 		                    
-		                    /* console.log("parentId = " + parentId);
-		                    return false; */
 		                    if (parentId != undefined && parentId == 0) {
 		                    	alert("服务大类请到服务类别中进行修改.")
 		                    	return false;
@@ -99,8 +96,10 @@
 		                    
 		                    
 		                    if(selectedId != undefined)
-								location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/form/{0}",request.getAttribute("requestUrl"),request.getAttribute("requestQuery"), "expanded={1}",pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
-		                    else
+		                    	location.href = "<%=UrlHelper.resolveWithReturnUrl("/partnerServicePrice/form?serviceTypeId={0}&servicePriceId={1}",
+									"", "", "",pageContext)%>".replace("{0}", parentId).replace("{1}", selectedId);
+
+							else
 		                        alert("必须选择择一个节点！");
 		                    return false;
 		                }
@@ -113,7 +112,8 @@
 		                    if(selectedId && selectedId != undefined)
 		                    {
 		                        if(confirm("确认删除所选节点？"))
-		                        	location.href = "<%= UrlHelper.resolveWithReturnUrl("/partnerServicePrice/delete/{0}", request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), "expanded={1}", pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
+		                        	location.href = "<%= UrlHelper.resolveWithReturnUrl("/partnerServicePrice/delete/{0}", 
+		                        	request.getAttribute("requestUrl"), request.getAttribute("requestQuery"), "expanded={1}", pageContext)%>".replace("{0}", selectedId).replace(escape("{1}"), expanded);
 		                    }
 		                    else
 		                        alert("必须选择择一个节点！");

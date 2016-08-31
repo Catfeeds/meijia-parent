@@ -20,6 +20,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnersSearchVo;
 
 @Controller
@@ -70,7 +71,9 @@ public class PartnerServiceTypeController extends BaseController {
 				serviceTypeIds.add(item.getServiceTypeId());
 		}
 		
-		List<PartnerServiceType> datas = partnerServiceTypeService.selectByIds(serviceTypeIds);
+		PartnerServiceTypeSearchVo searchVo1 = new PartnerServiceTypeSearchVo();
+		searchVo1.setServiceTypeIds(serviceTypeIds);
+		List<PartnerServiceType> datas = partnerServiceTypeService.selectBySearchVo(searchVo1);
 		result.setData(datas);
 		return result;
 	}	

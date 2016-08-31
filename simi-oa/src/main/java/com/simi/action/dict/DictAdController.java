@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
+import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
 import com.simi.common.Constants;
@@ -152,7 +153,8 @@ public class DictAdController extends BaseController {
 		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);	
 		if (fileMaps.get("imgUrl") != null) {
 			String imgUrl = fileMaps.get("imgUrl").toString();
-			dictAd.setImgUrl(imgUrl);
+			
+			if (!StringUtil.isEmpty(imgUrl)) dictAd.setImgUrl(imgUrl);
 		}
 		
 		// 更新或者新增

@@ -36,7 +36,7 @@ import com.simi.po.model.order.OrderLog;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerRefServiceType;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
@@ -51,7 +51,7 @@ import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerRefServiceTypeService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
@@ -63,6 +63,7 @@ import com.simi.vo.OrdersListVo;
 import com.simi.vo.order.OrderWaterComVo;
 import com.simi.vo.order.OrdersWaterAddOaVo;
 import com.simi.vo.order.OrdersWaterListVo;
+import com.simi.vo.partners.PartnerServicePriceSearchVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.user.UserAddrVo;
@@ -105,7 +106,7 @@ public class OrderWaterController extends AdminController {
 	private PartnerUserService partnerUserService;
 
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	@Autowired
 	private PartnerServiceTypeService partnerServiceTypeService;
@@ -154,12 +155,11 @@ public class OrderWaterController extends AdminController {
 			OrderExtWater water = orderExtWaterService.selectByOrderId(vo.getOrderId());
 			if (water != null) {
 				Long servicePriceId = water.getServicePriceId();
-				PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-				PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+				PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 				
 				vo.setServicePriceId(servicePriceId);
 				vo.setServicePriceName(servicePrice.getName());
-				vo.setServicePriceImg(servicePriceDetail.getImgUrl());
+				vo.setServicePriceImg(servicePrice.getImgUrl());
 				vo.setServiceNum(water.getServiceNum());
 				vo.setLinkMan(water.getLinkMan());
 				vo.setLinkTel(water.getLinkTel());
@@ -229,10 +229,10 @@ public class OrderWaterController extends AdminController {
 
 		// 商品名称
 		Long servicePriceId = water.getServicePriceId();
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		model.addAttribute("servicePrice", servicePrice);
-		model.addAttribute("servicePriceDetail", servicePriceDetail);
+		model.addAttribute("servicePrice", servicePrice);
 
 		// 用户地址列表
 		List<UserAddrs> userAddrsList = userAddrsService.selectByUserId(orders.getUserId());
@@ -257,28 +257,22 @@ public class OrderWaterController extends AdminController {
 		PartnerUsers partnerUser = list.get(0);
 
 		Long parnterUserId = partnerUser.getUserId();
+		
+		PartnerServicePriceSearchVo searchVo1 = new PartnerServicePriceSearchVo();
+		searchVo1.setUserId(parnterUserId);
+		List<PartnerServicePrice> servicePrices = partnerServicePriceService.selectBySearchVo(searchVo1);
 
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
-
-		List<Long> servicePriceIds = new ArrayList<Long>();
-		for (PartnerServicePriceDetail item : servicePriceDetails) {
-			if (!servicePriceIds.contains(item.getServicePriceId())) {
-				servicePriceIds.add(item.getServicePriceId());
-			}
-		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
 		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
-		PartnerServiceType serviceType = null;
-		for (PartnerServiceType item : serviceTypes) {
-			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(serviceType.getId());
+
+		for (PartnerServicePrice item : servicePrices) {
+			
 			OrderWaterComVo waterComVo = new OrderWaterComVo();
-			waterComVo.setPrice(detail.getPrice());
-			waterComVo.setDisprice(detail.getDisPrice());
-			waterComVo.setImgUrl(detail.getImgUrl());
-			waterComVo.setServicePriceId(serviceType.getId());
-			waterComVo.setName(serviceType.getName());
-			waterComVo.setNamePrice(serviceType.getName() + "(原价:" + detail.getPrice().toString() + "元,折扣价：" + detail.getDisPrice().toString() + "元)");
+			waterComVo.setPrice(item.getPrice());
+			waterComVo.setDisprice(item.getDisPrice());
+			waterComVo.setImgUrl(item.getImgUrl());
+			waterComVo.setServicePriceId(item.getServicePriceId());
+			waterComVo.setName(item.getName());
+			waterComVo.setNamePrice(item.getName() + "(原价:" + item.getPrice().toString() + "元,折扣价：" + item.getDisPrice().toString() + "元)");
 			waterComVos.add(waterComVo);
 
 		}
@@ -286,9 +280,9 @@ public class OrderWaterController extends AdminController {
 
 		// 服务商信息
 		// 服务商列表
-		PartnersSearchVo searchVo1 = new PartnersSearchVo();
-		searchVo1.setServiceTypeId(serviceTypeId);
-		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo1);
+		PartnersSearchVo searchVo2 = new PartnersSearchVo();
+		searchVo2.setServiceTypeId(serviceTypeId);
+		List<PartnerRefServiceType> partnerRefServiceType = partnerRefServiceTypeService.selectBySearchVo(searchVo2);
 		List<Partners> partnerList = new ArrayList<Partners>();
 		for (int i = 0; i < partnerRefServiceType.size(); i++) {
 			Long partnerId = partnerRefServiceType.get(i).getPartnerId();
@@ -397,9 +391,9 @@ public class OrderWaterController extends AdminController {
 		if (!StringUtil.isEmpty(servicePriceIdStr))
 			servicePriceId = Long.valueOf(servicePriceIdStr);
 
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
-		if (servicePriceDetail != null) {
-			order.setPartnerUserId(servicePriceDetail.getUserId());
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+		if (servicePrice != null) {
+			order.setPartnerUserId(servicePrice.getUserId());
 			ordersService.updateByPrimaryKey(order);
 		}
 
@@ -434,28 +428,23 @@ public class OrderWaterController extends AdminController {
 		PartnerUsers partnerUser = list.get(0);
 
 		Long parnterUserId = partnerUser.getUserId();
+		
+		PartnerServicePriceSearchVo searchVo1 = new PartnerServicePriceSearchVo();
+		searchVo1.setUserId(parnterUserId);
+		List<PartnerServicePrice> servicePrices = partnerServicePriceService.selectBySearchVo(searchVo1);
 
-		List<PartnerServicePriceDetail> servicePriceDetails = partnerServicePriceDetailService.selectByUserId(parnterUserId);
-
-		List<Long> servicePriceIds = new ArrayList<Long>();
-		for (PartnerServicePriceDetail item : servicePriceDetails) {
-			if (!servicePriceIds.contains(item.getServicePriceId())) {
-				servicePriceIds.add(item.getServicePriceId());
-			}
-		}
-		List<PartnerServiceType> serviceTypes = partnerServiceTypeService.selectByIds(servicePriceIds);
+		
 		List<OrderWaterComVo> waterComVos = new ArrayList<OrderWaterComVo>();
-		PartnerServiceType serviceType = null;
-		for (PartnerServiceType item : serviceTypes) {
-			serviceType = item;
-			PartnerServicePriceDetail detail = partnerServicePriceDetailService.selectByServicePriceId(serviceType.getId());
+
+		for (PartnerServicePrice item : servicePrices) {
+			
 			OrderWaterComVo waterComVo = new OrderWaterComVo();
-			waterComVo.setPrice(detail.getPrice());
-			waterComVo.setDisprice(detail.getDisPrice());
-			waterComVo.setImgUrl(detail.getImgUrl());
-			waterComVo.setServicePriceId(serviceType.getId());
-			waterComVo.setName(serviceType.getName());
-			waterComVo.setNamePrice(serviceType.getName() + "(原价:" + detail.getPrice().toString() + "元,折扣价：" + detail.getDisPrice().toString() + "元)");
+			waterComVo.setPrice(item.getPrice());
+			waterComVo.setDisprice(item.getDisPrice());
+			waterComVo.setImgUrl(item.getImgUrl());
+			waterComVo.setServicePriceId(item.getServicePriceId());
+			waterComVo.setName(item.getName());
+			waterComVo.setNamePrice(item.getName() + "(原价:" + item.getPrice().toString() + "元,折扣价：" + item.getDisPrice().toString() + "元)");
 			waterComVos.add(waterComVo);
 
 		}
@@ -464,9 +453,8 @@ public class OrderWaterController extends AdminController {
 		// 商品名称
 		Long servicePriceId = water.getServicePriceId();
 		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
 		model.addAttribute("servicePrice", servicePrice);
-		model.addAttribute("servicePriceDetail", servicePriceDetail);
+
 
 		model.addAttribute("contentModel", vo);
 
@@ -491,20 +479,20 @@ public class OrderWaterController extends AdminController {
 		Long serviceTypeId = (long) 239;
 		Long servicePriceId = vo.getServicePriceId();
 		Users u = usersService.selectByMobile(vo.getMobile());
-
+		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-		PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-		PartnerServicePriceDetail servicePriceDetail = null;
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+		
 		String servicePriceName = "";
 		if (servicePrice != null) {
 			servicePriceName = servicePrice.getName();
-			servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(servicePriceId);
+			
 		}
 		
 		BigDecimal orderMoney = new BigDecimal(0.0);// 原价
 		BigDecimal orderPay = new BigDecimal(0.0);// 折扣价
 
-		BigDecimal disPrice = servicePriceDetail.getDisPrice();
+		BigDecimal disPrice = servicePrice.getDisPrice();
 		BigDecimal serviceNumDe = BigDecimal.valueOf(vo.getServiceNum().doubleValue());
 		orderMoney = MathBigDecimalUtil.mul(disPrice, serviceNumDe);
 		orderPay = orderMoney;

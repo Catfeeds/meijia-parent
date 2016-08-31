@@ -33,7 +33,7 @@ import com.simi.service.order.OrderLogService;
 import com.simi.service.order.OrderPayService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailPayService;
@@ -60,7 +60,7 @@ public class OrderExtCleanController extends BaseController {
 	private PartnerServiceTypeService partnerServiceTypeService;
 	
     @Autowired
-    private PartnerServicePriceDetailService partnerServicePriceDetailService;	
+    private PartnerServicePriceService partnerServicePriceService;	
 	
 	@Autowired
 	private OrderLogService orderLogService;

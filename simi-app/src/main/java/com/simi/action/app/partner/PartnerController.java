@@ -16,12 +16,12 @@ import com.meijia.utils.StringUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
-import com.simi.po.model.partners.PartnerServicePriceDetail;
+import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.user.UserImgs;
 import com.simi.po.model.user.Users;
-import com.simi.service.partners.PartnerServicePriceDetailService;
+import com.simi.service.partners.PartnerServicePriceService;
 import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
@@ -29,6 +29,7 @@ import com.simi.service.user.UserImgService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.partners.PartnerServicePriceListVo;
+import com.simi.vo.partners.PartnerServicePriceSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerUserDetailVo;
 import com.simi.vo.partners.PartnerUserSearchVo;
@@ -56,7 +57,7 @@ public class PartnerController extends BaseController {
 	private PartnerServiceTypeService partnerServiceTypeService;
 	
 	@Autowired
-	private PartnerServicePriceDetailService partnerServicePriceDetailService;
+	private PartnerServicePriceService partnerServicePriceService;
 
 	/**
 	 * 获取可用的服务商人员列表
@@ -136,47 +137,40 @@ public class PartnerController extends BaseController {
 		List<Long> partnerIds = new ArrayList<Long>();
 		partnerIds.add(0L);
 		partnerIds.add(partnerId);
-		PartnerServiceTypeSearchVo searchVo = new PartnerServiceTypeSearchVo();
-		searchVo.setParentId(serviceTypeId);
-		searchVo.setViewType((short) 1);
+		PartnerServicePriceSearchVo searchVo = new PartnerServicePriceSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
 		searchVo.setPartnerIds(partnerIds);
 		searchVo.setIsEnable((short)1);
 		
-		List<PartnerServiceType> servicePrices = partnerServiceTypeService.selectBySearchVo(searchVo);
+		List<PartnerServicePrice> servicePrices = partnerServicePriceService.selectBySearchVo(searchVo);
 		
 		List<PartnerServicePriceListVo> servicePriceVos = new ArrayList<PartnerServicePriceListVo>();
 		
-		for (PartnerServiceType item : servicePrices) {
+		for (PartnerServicePrice servicePrice : servicePrices) {
 			PartnerServicePriceListVo servicePriceVo = new PartnerServicePriceListVo();
-			PartnerServicePriceDetail servicePriceDetail = partnerServicePriceDetailService.selectByServicePriceId(item.getId());
-//			PartnerServiceType partnerServiceType = partnerServiceTypeService.selectByPrimaryKey(item.getId());
+
 			//排除掉不是此大类默认的报价和不是此服务人员自己添加的报价
 			//排除掉已经下架的商品
-			if (servicePriceDetail == null) continue;
+			if (servicePrice == null) continue;
 			
 			
-			if (!servicePriceDetail.getUserId().equals(0L)){
-				if(!servicePriceDetail.getUserId().equals(partnerUserId)) continue;
+			if (!servicePrice.getUserId().equals(0L)){
+				if(!servicePrice.getUserId().equals(partnerUserId)) continue;
 			}
-			
-			/*	if (!servicePriceDetail.getUserId().equals(0L))  {
-				if(!servicePriceDetail.getUserId().equals(partnerUserId)||partnerServiceType.getIsEnable().equals(0L)) continue;
-			}*/
-			
-			BeanUtilsExp.copyPropertiesIgnoreNull(servicePriceDetail, servicePriceVo);
-			servicePriceVo.setName(item.getName());
-			servicePriceVo.setServicePriceId(item.getId());
+						
+			BeanUtilsExp.copyPropertiesIgnoreNull(servicePrice, servicePriceVo);
+			servicePriceVo.setName(servicePrice.getName());
 			
 			//图片处理成190x140大小
 			String imgUrl = servicePriceVo.getImgUrl();
 			imgUrl = imgUrl + "?p=0";
 			servicePriceVo.setImgUrl(imgUrl);
 			
-			String detailUrl = "http://app.bolohr.com/simi-h5/discover/service-detail.html?service_type_id=" + item.getId();
+			String detailUrl = "http://app.bolohr.com/simi-h5/discover/service-detail.html?service_type_id=" + servicePriceVo.getServicePriceId();
 			
-			if (servicePriceDetail.getContentDesc().equals("") &&
-				servicePriceDetail.getContentFlow().equals("") &&
-				servicePriceDetail.getContentDesc().equals("")) {
+			if (servicePrice.getContentDesc().equals("") &&
+				servicePrice.getContentFlow().equals("") &&
+				servicePrice.getContentDesc().equals("")) {
 				detailUrl = "";
 			}
 			

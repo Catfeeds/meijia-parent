@@ -6,12 +6,11 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="parent_id" property="parentId" jdbcType="NUMERIC" />
 		<result column="is_enable" property="isEnable" jdbcType="NUMERIC" />
-		<result column="view_type" property="viewType" jdbcType="NUMERIC" />
 		<result column="no" property="no" jdbcType="NUMERIC" />
 		<result column="partner_id" property="partnerId" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		service_type_id, name, parent_id,is_enable, view_type, no, partner_id
+		service_type_id, name, parent_id,is_enable, no, partner_id
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -19,6 +18,7 @@
 		from partner_service_type
 		where service_type_id = #{id,jdbcType=NUMERIC}
 	</select>
+
 	<select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
@@ -26,71 +26,92 @@
 		where parent_id = #{parentId,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectByPartnerIdIn" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.partners.PartnerServiceTypeSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_type
-		where partner_id = 0 or partner_id = #{partnerId,jdbcType=NUMERIC}
+		where 1=1
+
+		<if test="serviceTypeIds != null and serviceTypeIds.size > 0">
+			and service_type_id in
+			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		<if test="name != null and name !='' ">
+			and name like '%${name}%'
+		</if>
+
+		<if test="parentId != null ">
+			and parent_id = #{parentId,jdbcType=NUMERIC}
+		</if>
+
+		<if test="isEnable != null ">
+			and is_enable = #{isEnable,jdbcType=NUMERIC}
+		</if>
+
+		<if test="partnerIds != null and partnerIds.size > 0">
+			and partner_id in
+			<foreach item="item" index="index" collection="partnerIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by no asc
 	</select>
-	
-	<select id="selectByIds" resultMap="BaseResultMap" parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from partner_service_type
-		where service_type_id in
-	 	<foreach item="item" index="index" collection="list"
-	             open="(" separator="," close=")">
-	        #{item}
-	    </foreach>
-	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.partners.PartnerServiceTypeSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from partner_service_type
 		where 1=1
+
+		<if test="serviceTypeIds != null and serviceTypeIds.size > 0">
+			and service_type_id in
+			<foreach item="item" index="index" collection="serviceTypeIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
 		<if test="name != null and name !='' ">
 			and name like '%${name}%'
 		</if>
-		
+
 		<if test="parentId != null ">
 			and parent_id = #{parentId,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="isEnable != null ">
 			and is_enable = #{isEnable,jdbcType=NUMERIC}
 		</if>
-		
-		<if test="viewType != null ">
-			and view_type = #{viewType,jdbcType=NUMERIC}
-		</if>
 
 		<if test="partnerIds != null and partnerIds.size > 0">
-	        and partner_id in 
-	        <foreach item="item" index="index" collection="partnerIds" open="(" separator="," close=")">
+			and partner_id in
+			<foreach item="item" index="index" collection="partnerIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
 		order by no asc
-	</select>	
-	
+	</select>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from partner_service_type
-		where service_type_id = #{id,jdbcType=NUMERIC}
+		where service_type_id = #{serviceTypeId,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.partners.PartnerServiceType">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
-		</selectKey>	
-		insert into partner_service_type (service_type_id, name, parent_id,is_enable, view_type, no, partner_id)
-		values (#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
-		#{parentId,jdbcType=NUMERIC}, #{isEnable,jdbcType=NUMERIC},#{viewType,jdbcType=NUMERIC}, #{no,jdbcType=NUMERIC},
+		</selectKey>
+		insert into partner_service_type (service_type_id, name, parent_id,is_enable, no, partner_id)
+		values (#{id,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR},
+		#{parentId,jdbcType=NUMERIC}, #{isEnable,jdbcType=NUMERIC},#{no,jdbcType=NUMERIC},
 		#{partnerId,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.partners.PartnerServiceType">
-	    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID() AS id
-		</selectKey>	
+		</selectKey>
 		insert into partner_service_type
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -104,9 +125,6 @@
 			</if>
 			<if test="isEnable != null">
 				is_enable,
-			</if>
-			<if test="viewType != null">
-				view_type,
 			</if>
 			<if test="no != null">
 				no,
@@ -128,9 +146,6 @@
 			<if test="isEnable != null">
 				#{isEnable,jdbcType=NUMERIC},
 			</if>
-			<if test="viewType != null">
-				#{viewType,jdbcType=NUMERIC},
-			</if>
 			<if test="no != null">
 				#{no,jdbcType=NUMERIC},
 			</if>
@@ -151,9 +166,6 @@
 			<if test="isEnable != null">
 				is_enable = #{isEnable,jdbcType=NUMERIC},
 			</if>
-			<if test="viewType != null">
-				view_type = #{viewType,jdbcType=NUMERIC},
-			</if>
 			<if test="no != null">
 				no = #{no,jdbcType=NUMERIC},
 			</if>
@@ -168,9 +180,9 @@
 		set name = #{name,jdbcType=VARCHAR},
 		parent_id = #{parentId, jdbcType=NUMERIC},
 		is_enable = #{isEnable, jdbcType=NUMERIC},
-		view_type = #{viewType, jdbcType=NUMERIC},
 		no = #{no,jdbcType=NUMERIC},
 		partner_id = #{partnerId, jdbcType=NUMERIC}
-		where service_type_id = #{id,jdbcType=NUMERIC}
+		where service_type_id =
+		#{id,jdbcType=NUMERIC}
 	</update>
 </mapper>
