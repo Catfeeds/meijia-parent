@@ -54,7 +54,7 @@ public class AtoolsController extends BaseController {
 		String appType = "xcloud";
 		ApptoolsSearchVo searchVo = new ApptoolsSearchVo();
 		searchVo.setAppType(appType);
-		searchVo.setMenuType("t");
+//		searchVo.setMenuType("t");
 		searchVo.setIsOnline((short) 0);
 		
 		

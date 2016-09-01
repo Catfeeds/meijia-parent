@@ -139,7 +139,7 @@ public class Constants {
 	public static String DEFAULT_HEAD_IMG_BACK = "http://img.bolohr.com/85ebd46f40d90977ee01ead3e71bd6fa";
 	
 	//菠萝人事logo
-	public static String DEFAULT_LOGO = "http://img.bolohr.com/3f20537c7e3a6e09545d66649746f680?p=0";
+	public static String DEFAULT_LOGO = "http://img.bolohr.com/314a3ecee7f653526b1dcc661c10142c?p=0";
 	
 	
 	/*

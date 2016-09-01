@@ -342,7 +342,7 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "fc883ba0ec0a77e38b26d2b59e1a1676";
+		String clientId = "1dc0171487db7a3575ca3c7a967c4873";
 		
 		getUserStatus(clientId);
 		
@@ -370,24 +370,30 @@ public class PushUtil {
 		 tranParams.put("ac", "a");		
 		 tranParams.put("ci", "0");
 		 tranParams.put("ct", "0");
-		 tranParams.put("st", "0");
-		 tranParams.put("re", "0");
-		 tranParams.put("rt", "事务提醒");
-		 tranParams.put("rc", "测试声音 	new-mail.caf");
+		 tranParams.put("st", timeStr);
+		 tranParams.put("re", timeStr);
+		 tranParams.put("rt", "Rita");
+		 tranParams.put("rc", "螺蛳粉");
+		 
+		 tranParams.put("ca", "app");
+		tranParams.put("aj", "qa");
+		tranParams.put("pa", "");
+		tranParams.put("go", "");
+		 
 //		 tranParams.put("sound", "new-mail");
 //		 tranParams.put("sound_id", "1000");
 		 
 		 String jsonParams = GsonUtil.GsonString(tranParams);
 		 
-//		 tranParams = GsonUtil.GsonToObject(jsonParams, HashMap.class);
+		 tranParams = GsonUtil.GsonToObject(jsonParams, HashMap.class);
 //		 
 //		 System.out.println("is_show=" + tranParams.get("is_show").toString());
 
 //		 
 		params.put("transmissionContent", jsonParams);
-		PushUtil.AndroidPushToSingle(params);
+//		PushUtil.AndroidPushToSingle(params);
 		
-//		PushUtil.IOSPushToSingle(params, "alertClock");
+		PushUtil.IOSPushToSingle(params, "");
 		
 //		params = new HashMap<String, String>();
 //		params.put("cid", clientId);
