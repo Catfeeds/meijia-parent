@@ -164,7 +164,7 @@ public class JobMsgController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
 
-		List<GroupUser> groupAdmins = groupUserService.selectByGropuId(3L);
+		List<GroupUser> groupAdmins = groupUserService.selectByGropuId(4L);
 
 		for (GroupUser gu : groupAdmins) {
 			// 异步推送 给 测试 人员（运营部），消息
