@@ -155,4 +155,22 @@ public class JobMsgController extends BaseController {
 
 		return result;
 	}
+
+	/*
+	 * 定时 推送消息
+	 */
+	@RequestMapping(value = "push_msg_day", method = RequestMethod.GET)
+	public AppResultData<Object> pushMsgDay(HttpServletRequest request) throws ParseException {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, new String());
+
+		List<GroupUser> groupAdmins = groupUserService.selectByGropuId(3L);
+
+		for (GroupUser gu : groupAdmins) {
+			// 异步推送 给 测试 人员（运营部），消息
+			noticeAsyncService.pushMsgToDevice(gu.getUserId(), "每日推送", "每日热点推送", "", "", "", "");
+		}
+
+		return result;
+	}
 }
