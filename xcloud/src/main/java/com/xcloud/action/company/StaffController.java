@@ -295,6 +295,7 @@ public class StaffController extends BaseController {
 			}
 		}
 		
+		
 		u = usersService.selectByPrimaryKey(userId);
 		
 		// 2. 校验身份证号, 根据身份证号得到一个 userId
@@ -324,7 +325,8 @@ public class StaffController extends BaseController {
 		if (!u.getIdCard().equals(vo.getIdCard().trim())) {
 			u.setIdCard(vo.getIdCard().trim());
 		}
-
+		
+		u.setSex(vo.getSex());
 		usersService.updateByPrimaryKeySelective(u);
 
 		// 处理 XcompanyStaff对象，包括json数据

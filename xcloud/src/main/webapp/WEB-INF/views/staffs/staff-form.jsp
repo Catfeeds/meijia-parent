@@ -78,14 +78,14 @@
 								<!-- --------------- 基本信息 ---------------------------------- -->
 								<div class="am-tab-panel am-fade am-in am-active" id="staff-info">
 									<div class="am-form-group">
-										<label for="user-phone" class="am-u-sm-3 am-form-label">手机号码: </label>
+										<label for="user-phone" class="am-u-sm-3 am-form-label">手机号码<font color="red">*</font>: </label>
 										<div class="am-u-sm-9">
 											<form:input path="mobile" class="am-form-field am-radius js-pattern-mobile" maxLength="11"
 												data-validation-message="" placeholder="手机号" required="required" />
 										</div>
 									</div>
 									<div class="am-form-group">
-										<label for="user-phone" class="am-u-sm-3 am-form-label">姓名: </label>
+										<label for="user-phone" class="am-u-sm-3 am-form-label">姓名<font color="red">*</font>: </label>
 										<div class="am-u-sm-9">
 											<form:input path="realName" class="am-form-field am-radius" placeholder="" maxLength="64" required="required" />
 										</div>
@@ -205,9 +205,11 @@
 										<label class="am-u-sm-3 am-form-label">合同年限:</label>
 										<div class="am-u-sm-9">
 											<form:select path="contractLimit" class="am-form-field am-radius">
-												<form:option value="6个月">6个月</form:option>
-												<form:option value="1年">1年</form:option>
-												<form:option value="2年">2年</form:option>
+												<form:option value="6">6个月</form:option>
+												<form:option value="12">1年</form:option>
+												<form:option value="24">2年</form:option>
+												<form:option value="36">3年</form:option>
+												
 											</form:select>
 										</div>
 										<div class="am-u-sm-3"></div>
