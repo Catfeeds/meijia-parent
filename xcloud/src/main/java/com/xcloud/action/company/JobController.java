@@ -154,7 +154,7 @@ public class JobController extends BaseController {
 	 *   提交 新增/修改 职位
 	 */
 	@AuthPassport
-	@RequestMapping(value = "job_form.json", method = { RequestMethod.POST })
+	@RequestMapping(value = "job_form", method = { RequestMethod.POST })
 	public AppResultData<Object> submitJobForm(HttpServletRequest request,
 			@ModelAttribute("jobVoModel")XcompanyJobVo jobVo, BindingResult bindingResult){
 		

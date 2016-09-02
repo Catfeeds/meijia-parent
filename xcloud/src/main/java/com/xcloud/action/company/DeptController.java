@@ -164,7 +164,7 @@ public class DeptController extends BaseController {
 	 *   提交 新增/修改 部门
 	 */
 	@AuthPassport
-	@RequestMapping(value = "dept_form.json", method = { RequestMethod.POST })
+	@RequestMapping(value = "dept_form", method = { RequestMethod.POST })
 	public AppResultData<Object> submitJobForm(
 			@ModelAttribute("deptVoModel")XcompanyDeptVo deptVo, BindingResult bindingResult){
 		

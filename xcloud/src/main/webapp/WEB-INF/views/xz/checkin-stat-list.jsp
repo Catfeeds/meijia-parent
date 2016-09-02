@@ -23,23 +23,23 @@
 				<div class="am-fl am-cf">
 					<strong class="am-text-primary am-text-lg">考勤明细表</strong> / <small>按月查询员工每日考勤情况</small>
 					<br><br>
-					<small>考勤内容说明:（注:每天中午12点之后能看上午的考勤情况，第二天能看昨天下午的考勤情况）</small>
+					<small>考勤内容说明:（注:每天中午12点之后能看上午的考勤情况，第二天8点之后能看昨天下午的考勤情况）</small>
 					<br>
-					<small>日&nbsp;&nbsp;&nbsp;&nbsp;勤--√;&nbsp;&nbsp;&nbsp;&nbsp;
-						   迟到--迟;&nbsp;&nbsp;&nbsp;&nbsp;
-						   早退--退;&nbsp;&nbsp;&nbsp;&nbsp;
-						   旷工--旷
+					<small>日&nbsp;&nbsp;&nbsp;&nbsp;勤 √;&nbsp;&nbsp;&nbsp;&nbsp;
+						   迟到 迟;&nbsp;&nbsp;&nbsp;&nbsp;
+						   早退 退;&nbsp;&nbsp;&nbsp;&nbsp;
+						   旷工 旷
 					</small>
 					<br>
-					<small>年休假--年;&nbsp;&nbsp;&nbsp;&nbsp;
-						   事假--事;&nbsp;&nbsp;&nbsp;&nbsp;
-						   病假--病;&nbsp;&nbsp;&nbsp;&nbsp;
-						   婚假--婚;&nbsp;&nbsp;&nbsp;&nbsp;
-						   产假--产;&nbsp;&nbsp;&nbsp;&nbsp;
-						   丧假--丧;&nbsp;&nbsp;&nbsp;&nbsp;
-						   其他--其;&nbsp;&nbsp;&nbsp;&nbsp;
-						   周末--/;&nbsp;&nbsp;&nbsp;&nbsp;
-						   节假日--/;&nbsp;&nbsp;&nbsp;&nbsp;
+					<small>年休假 年;&nbsp;&nbsp;&nbsp;&nbsp;
+						   事假 事;&nbsp;&nbsp;&nbsp;&nbsp;
+						   病假 病;&nbsp;&nbsp;&nbsp;&nbsp;
+						   婚假 婚;&nbsp;&nbsp;&nbsp;&nbsp;
+						   产假 产;&nbsp;&nbsp;&nbsp;&nbsp;
+						   丧假 丧;&nbsp;&nbsp;&nbsp;&nbsp;
+						   其他 其;&nbsp;&nbsp;&nbsp;&nbsp;
+						   周末 /;&nbsp;&nbsp;&nbsp;&nbsp;
+						   节假日 /;&nbsp;&nbsp;&nbsp;&nbsp;
 					</small>
 				</div>
 				
