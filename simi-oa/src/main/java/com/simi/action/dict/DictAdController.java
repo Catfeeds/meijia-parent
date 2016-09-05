@@ -100,7 +100,7 @@ public class DictAdController extends BaseController {
 			
 			List<TotalHit> hitList = hitService.selectBySearchVo(hitSearchVo);
 			
-			Long total = 0L;
+			int total = 0;
 			
 			if(hitList.size() > 0){
 				TotalHit totalHit = hitList.get(0);

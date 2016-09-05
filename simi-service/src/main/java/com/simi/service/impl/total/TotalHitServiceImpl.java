@@ -34,7 +34,7 @@ public class TotalHitServiceImpl implements TotalHitService {
 		hit.setId(0L);
 		hit.setLinkId(0L);
 		hit.setLinkType("");
-		hit.setTotal(0L);
+		hit.setTotal(0);
 		hit.setAddTime(TimeStampUtil.getNowSecond());
 
 		return hit;

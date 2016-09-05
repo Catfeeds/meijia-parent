@@ -6,13 +6,13 @@ public class DictAdVo extends DictAd{
 
 	private String adTypeName;
 	
-	private Long totalHit;	//广告 点击次数
+	private int totalHit;	//广告 点击次数
 	
-	public Long getTotalHit() {
+	public int getTotalHit() {
 		return totalHit;
 	}
 
-	public void setTotalHit(Long totalHit) {
+	public void setTotalHit(int totalHit) {
 		this.totalHit = totalHit;
 	}
 

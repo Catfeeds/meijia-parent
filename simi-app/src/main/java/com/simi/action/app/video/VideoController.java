@@ -133,14 +133,15 @@ public class VideoController extends BaseController {
 			
 			HashMap<String, Object> vo = new HashMap<String, Object>();
 			vo.put("channelId", item.getServiceTypeId());
-			vo.put("id", item.getServicePriceId());
+			vo.put("articleId", item.getServicePriceId());
 			vo.put("title", item.getName());
-			vo.put("imgUrl", item.getImgUrl());			
+			vo.put("imgUrl", item.getImgUrl());		
+			vo.put("addTime", TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, "MM-dd HH:mm"));
 			vo.put("totalView", 0);
 			
 			for (TotalHit t : totalHits) {
 				if (t.getLinkId().equals(item.getServicePriceId())) {
-					vo.put("totalView", t.getTotal().intValue());
+					vo.put("totalView", t.getTotal());
 					break;
 				}
 			}
@@ -153,37 +154,27 @@ public class VideoController extends BaseController {
 	
 	
 	/**
-	 * 视频文章频道列表
+	 * 视频文章详细内容接口
 	 * 
 	 */
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
 	public AppResultData<Object> getDetail(
-			@RequestParam(value = "id") Long servicePriceId,
-			@RequestParam(value = "user_id") Long userId
+			@RequestParam(value = "article_id") Long servicePriceId,
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId
 			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		if (servicePriceId.equals(0L)) return result;
 		
 		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		
-		HashMap<String, Object> vo = new HashMap<String, Object>();
-		vo.put("channelId", servicePrice.getServiceTypeId());
-		vo.put("title", servicePrice.getName());
-		vo.put("imgUrl", servicePrice.getImgUrl());
-		vo.put("price", MathBigDecimalUtil.round2(servicePrice.getPrice()));
-		vo.put("disPrice", MathBigDecimalUtil.round2(servicePrice.getDisPrice()));
-		vo.put("content", servicePrice.getContentDesc());
-		vo.put("keywords", servicePrice.getContentFlow());
-		vo.put("videoUrl", servicePrice.getVideoUrl());
-		vo.put("category", servicePrice.getCategory());
-		vo.put("contentDesc", servicePrice.getContentDesc());
-		vo.put("gotoUrl", servicePrice.getGotoUrl());
+		if (servicePrice == null) return result;
 		
-		
-		result.setData(vo);
+
 		
 		//阅读数加1
+		int total = 0;
 		TotalHit record = totalHitService.initTotalHit();
 		TotalHitSearchVo searchVo1 = new TotalHitSearchVo();
 		searchVo1.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
@@ -195,13 +186,39 @@ public class VideoController extends BaseController {
 		
 		record.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
 		record.setLinkId(servicePriceId);
-		record.setTotal(record.getTotal() + 1);
+		
+		total = record.getTotal() + 1;
+		record.setTotal(total);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 		if (record.getId() > 0L) {
 			totalHitService.updateByPrimaryKeySelective(record);
 		} else {
 			totalHitService.insertSelective(record);
 		}
+		
+
+		HashMap<String, Object> vo = new HashMap<String, Object>();
+		vo.put("channelId", servicePrice.getServiceTypeId());
+		vo.put("articleId", servicePrice.getServicePriceId());
+		vo.put("title", servicePrice.getName());
+		vo.put("imgUrl", servicePrice.getImgUrl());
+		vo.put("totalView", total);
+		vo.put("addTime", TimeStampUtil.timeStampToDateFull(servicePrice.getAddTime() * 1000, "MM-dd HH:mm"));
+		
+		vo.put("price", MathBigDecimalUtil.round2(servicePrice.getPrice()));
+		vo.put("disPrice", MathBigDecimalUtil.round2(servicePrice.getDisPrice()));
+		vo.put("content", servicePrice.getContentDesc());
+		vo.put("keywords", servicePrice.getContentFlow());
+		vo.put("videoUrl", servicePrice.getVideoUrl());
+		vo.put("category", servicePrice.getCategory());
+		vo.put("contentDesc", servicePrice.getContentDesc());
+		vo.put("gotoUrl", servicePrice.getGotoUrl());
+		
+		
+		
+		result.setData(vo);		
+		
+		
 		return result;
 	}
 	

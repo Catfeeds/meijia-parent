@@ -84,7 +84,7 @@ public class TotalHitController extends BaseController {
 			//生成一条新纪录
 			totalHit.setLinkType(linkType);
 			totalHit.setLinkId(linkId);
-			totalHit.setTotal(1L);
+			totalHit.setTotal(1);
 			
 			hitService.insertSelective(totalHit);
 		}

@@ -7,7 +7,7 @@ public class TotalHit {
 
     private Long linkId;
 
-    private Long total;
+    private int total;
 
     private Long addTime;
 
@@ -35,11 +35,11 @@ public class TotalHit {
         this.linkId = linkId;
     }
 
-    public Long getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 
