@@ -196,7 +196,7 @@
                            <div class="col-md-offset-4">
                               <button type="button" id ="btn_submit" class="btn btn-success">保存</button>
                            	
-                           	  <c:if test="${contentModel.id > 0 }">
+                           	  <c:if test="${contentModel.servicePriceId > 0 }">
                            	  <button type="button" id ="btn_preview" class="btn btn-success">预览</button>
                            	  </c:if>
                            </div>
@@ -242,5 +242,6 @@
 	<script>
 		$('#orderType').trigger('change');
 	</script>
+	
 </body>
 </html>
