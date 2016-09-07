@@ -27,6 +27,8 @@ public class OrderSearchVo {
 	private String action;
 	
 	private Long  notServiceTypeId;
+	
+	private Long servicePriceId;
 
 	public String getMobile() {
 		return mobile;
@@ -123,6 +125,14 @@ public class OrderSearchVo {
 
 	public void setOrderStatusIn(List<Integer> orderStatusIn) {
 		this.orderStatusIn = orderStatusIn;
+	}
+
+	public Long getServicePriceId() {
+		return servicePriceId;
+	}
+
+	public void setServicePriceId(Long servicePriceId) {
+		this.servicePriceId = servicePriceId;
 	}
 
 }

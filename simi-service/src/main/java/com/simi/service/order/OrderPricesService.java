@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.simi.po.model.order.OrderPrices;
+import com.simi.vo.OrderSearchVo;
 
 public interface OrderPricesService {
 
@@ -26,5 +27,7 @@ public interface OrderPricesService {
 	List<OrderPrices> selectByOrderIds(List<Long> orderIds);
 
 	BigDecimal getPayByOrder(BigDecimal orderPay, Long userCouponId);
+
+	List<OrderPrices> selectBySearchVo(OrderSearchVo searchVo);
 
 }

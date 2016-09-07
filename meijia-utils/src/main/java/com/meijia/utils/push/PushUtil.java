@@ -342,8 +342,9 @@ public class PushUtil {
 	public static void main(String[] args) 
 			throws Exception {
 		
-		String clientId = "1dc0171487db7a3575ca3c7a967c4873";
+		String clientId = "e4a1fc5dc8b60b71e813fa0179a14b1d";
 		
+//		String clientId = "d12ae88bcd6901306e2fa74d494fd02f";
 		getUserStatus(clientId);
 		
 		
@@ -364,16 +365,16 @@ public class PushUtil {
 		 */
 		 HashMap<String, String> tranParams = new HashMap<String, String>();
 		 
-		 Long time1 = TimeStampUtil.getMillisOfDayFull("2015-12-21 14:43:00");
-		 String timeStr = time1.toString();
+		 Long time1 = TimeStampUtil.getNow();
+		
 		 tranParams.put("is", "true");		
 		 tranParams.put("ac", "a");		
 		 tranParams.put("ci", "0");
 		 tranParams.put("ct", "0");
-		 tranParams.put("st", timeStr);
-		 tranParams.put("re", timeStr);
-		 tranParams.put("rt", "Rita");
-		 tranParams.put("rc", "螺蛳粉");
+		 tranParams.put("st", time1.toString());
+		 tranParams.put("re", time1.toString());
+		 tranParams.put("rt", "小白");
+		 tranParams.put("rc", "收到了吗5");
 		 
 		 tranParams.put("ca", "app");
 		tranParams.put("aj", "qa");

@@ -3,6 +3,7 @@ package com.simi.po.dao.order;
 import java.util.List;
 
 import com.simi.po.model.order.OrderPrices;
+import com.simi.vo.OrderSearchVo;
 
 public interface OrderPricesMapper {
     int deleteByPrimaryKey(Long id);
@@ -22,4 +23,6 @@ public interface OrderPricesMapper {
     int updateByPrimaryKeySelective(OrderPrices record);
 
     int updateByPrimaryKey(OrderPrices record);
+
+	List<OrderPrices> selectBySearchVo(OrderSearchVo searchVo);
 }

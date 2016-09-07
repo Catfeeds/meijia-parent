@@ -60,6 +60,34 @@
 		</foreach>
 		order by add_time asc
 	</select>
+	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.OrderSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from orders
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>	
+		
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+		
+		<if test="orderNo != null">
+			and order_no like CONCAT('%','${orderNo}','%' )
+		</if>
+		
+		<if test="orderStatus != null">
+			and order_status = #{orderStatus,jdbcType=NUMERIC}
+		</if>
+
+		<if test="servicePriceId != null">
+			and service_price_id = #{servicePriceId,jdbcType=NUMERIC}
+		</if>
+		
+		order by add_time desc
+	</select>
 
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

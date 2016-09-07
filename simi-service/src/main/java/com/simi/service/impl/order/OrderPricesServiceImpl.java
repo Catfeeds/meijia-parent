@@ -10,6 +10,7 @@ import com.simi.common.Constants;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrderQueryService;
 import com.simi.service.user.UserCouponService;
+import com.simi.vo.OrderSearchVo;
 import com.simi.po.dao.order.OrderPricesMapper;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.user.UserCoupons;
@@ -120,6 +121,11 @@ public class OrderPricesServiceImpl implements OrderPricesService{
 	@Override
 	public List<OrderPrices> selectByOrderIds(List<Long> orderIds) {
 		return orderPricesMapper.selectByOrderIds(orderIds);
+	}
+	
+	@Override
+	public List<OrderPrices> selectBySearchVo(OrderSearchVo searchVo) {
+		return orderPricesMapper.selectBySearchVo(searchVo);
 	}
 
 
