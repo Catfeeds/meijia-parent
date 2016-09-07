@@ -218,7 +218,7 @@ public class VideoController extends BaseController {
 		vo.put("price", MathBigDecimalUtil.round2(servicePrice.getPrice()));
 		vo.put("dis_price", MathBigDecimalUtil.round2(servicePrice.getDisPrice()));
 		vo.put("content", servicePrice.getContentDesc());
-		vo.put("keywords", servicePrice.getContentFlow());
+		vo.put("keywords", servicePrice.getTags());
 
 		vo.put("category", servicePrice.getCategory());
 		vo.put("content_desc", servicePrice.getContentDesc());
@@ -309,6 +309,32 @@ public class VideoController extends BaseController {
 			userActionRecordService.insert(record);
 		}
 
+		return result;
+	}
+	
+	
+	/**
+	 * 视频文章详细内容接口
+	 * 
+	 */
+	@RequestMapping(value = "relate", method = RequestMethod.GET)
+	public AppResultData<Object> relate(
+			@RequestParam(value = "article_id") Long servicePriceId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		if (servicePriceId.equals(0L))
+			return result;
+		
+		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
+
+		if (servicePrice == null)
+			return result;
+		
+		String keywords = servicePrice.getTags();
+		
+		if (StringUtil.isEmpty(keywords)) return result;
+		
 		return result;
 	}
 
