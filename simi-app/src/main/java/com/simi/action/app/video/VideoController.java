@@ -228,6 +228,7 @@ public class VideoController extends BaseController {
 		vo.put("video_url", "");
 		vo.put("partner_user_id", 3669);
 		vo.put("service_type_id", serviceTypeId);
+		vo.put("service_price_id", servicePrice.getServicePriceId());
 		vo.put("is_join", 0);
 		
 		// 是否参加过该课程。或者是否购买过该课程.
