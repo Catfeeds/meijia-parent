@@ -150,7 +150,7 @@ public class VideoController extends BaseController {
 			vo.put("article_id", item.getServicePriceId());
 			vo.put("title", item.getName());
 			vo.put("img_url", item.getImgUrl());
-			vo.put("add_time", TimeStampUtil.timeStampToDateFull(item.getAddTime() * 1000, "MM-dd HH:mm"));
+			vo.put("add_time", TimeStampUtil.timeStampToDateStr(item.getAddTime() * 1000, "MM-dd HH:mm"));
 			vo.put("total_view", 0);
 
 			for (TotalHit t : totalHits) {
@@ -159,6 +159,8 @@ public class VideoController extends BaseController {
 					break;
 				}
 			}
+			
+			datas.add(vo);
 
 		}
 
@@ -213,7 +215,7 @@ public class VideoController extends BaseController {
 		vo.put("title", servicePrice.getName());
 		vo.put("img_url", servicePrice.getImgUrl());
 		vo.put("total_view", total);
-		vo.put("add_time", TimeStampUtil.timeStampToDateFull(servicePrice.getAddTime() * 1000, "MM-dd HH:mm"));
+		vo.put("add_time", TimeStampUtil.timeStampToDateStr(servicePrice.getAddTime() * 1000, "MM-dd HH:mm"));
 
 		vo.put("price", MathBigDecimalUtil.round2(servicePrice.getPrice()));
 		vo.put("dis_price", MathBigDecimalUtil.round2(servicePrice.getDisPrice()));
@@ -278,7 +280,7 @@ public class VideoController extends BaseController {
 	 * 视频文章详细内容接口
 	 * 
 	 */
-	@RequestMapping(value = "join", method = RequestMethod.GET)
+	@RequestMapping(value = "join", method = RequestMethod.POST)
 	public AppResultData<Object> join(@RequestParam(value = "article_id") Long servicePriceId,
 			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId) {
 
@@ -331,9 +333,71 @@ public class VideoController extends BaseController {
 		if (servicePrice == null)
 			return result;
 		
-		String keywords = servicePrice.getTags();
+		String tags = servicePrice.getTags();
 		
-		if (StringUtil.isEmpty(keywords)) return result;
+		if (StringUtil.isEmpty(tags)) return result;
+		
+		PartnerServicePriceSearchVo searchVo = new PartnerServicePriceSearchVo();
+		searchVo.setServiceTypeId(serviceTypeId);
+		
+		searchVo.setTags(tags);
+		
+		
+		List<PartnerServicePrice> list = partnerServicePriceService.selectBySearchVo(searchVo);
+		
+		List<PartnerServicePrice> top10 = new ArrayList<PartnerServicePrice>();
+		
+		int maxLength = list.size();
+		if (maxLength > 10) maxLength = 10;
+		
+		for (int i = 0; i < maxLength; i++) {
+			PartnerServicePrice item = list.get(i);
+			
+			if (item.getServicePriceId().equals(servicePriceId)) continue;
+			
+			top10.add(item);
+		}
+		
+		if (top10.isEmpty()) return result;
+		
+		
+		// 阅读数
+		List<Long> linkIds = new ArrayList<Long>();
+		for (PartnerServicePrice item : top10) {
+			if (!linkIds.contains(item.getServicePriceId())) {
+				linkIds.add(item.getServicePriceId());
+			}
+		}
+
+		TotalHitSearchVo searchVo1 = new TotalHitSearchVo();
+		searchVo1.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
+		searchVo1.setLinkIds(linkIds);
+		List<TotalHit> totalHits = totalHitService.selectBySearchVo(searchVo1);
+
+		List<HashMap<String, Object>> datas = new ArrayList<HashMap<String, Object>>();
+
+		for (int i = 0; i < top10.size(); i++) {
+			PartnerServicePrice item = top10.get(i);
+
+			HashMap<String, Object> vo = new HashMap<String, Object>();
+			vo.put("channel_id", item.getServiceTypeId());
+			vo.put("article_id", item.getServicePriceId());
+			vo.put("title", item.getName());
+			vo.put("img_url", item.getImgUrl());
+			vo.put("add_time", TimeStampUtil.timeStampToDateStr(item.getAddTime() * 1000, "MM-dd HH:mm"));
+			vo.put("total_view", 0);
+
+			for (TotalHit t : totalHits) {
+				if (t.getLinkId().equals(item.getServicePriceId())) {
+					vo.put("total_view", t.getTotal());
+					break;
+				}
+			}
+			
+			datas.add(vo);
+		}
+
+		result.setData(datas);		
 		
 		return result;
 	}

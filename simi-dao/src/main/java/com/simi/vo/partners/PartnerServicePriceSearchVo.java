@@ -25,6 +25,8 @@ public class PartnerServicePriceSearchVo {
 	 private Short isEnable;
 	 
 	 private String keyword;
+	 
+	 private String tags;
 
 	public Long getPartnerId() {
 		return partnerId;
@@ -112,6 +114,14 @@ public class PartnerServicePriceSearchVo {
 
 	public void setUserIds(List<Long> userIds) {
 		this.userIds = userIds;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 	 
 }

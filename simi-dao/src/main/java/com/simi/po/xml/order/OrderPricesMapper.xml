@@ -64,7 +64,7 @@
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.OrderSearchVo">
 		select
 		<include refid="Base_Column_List" />
-		from orders
+		from order_prices
 		where 1=1
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
