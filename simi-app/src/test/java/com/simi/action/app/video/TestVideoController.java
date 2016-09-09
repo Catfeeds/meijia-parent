@@ -39,8 +39,8 @@ public class TestVideoController extends JUnitActionBase  {
     public void testList() throws Exception {
 		String url = "/app/video/list.json";
 
-//		String params = "?channel_id=307";
-		String params = "?keyword=自行车";
+		String params = "?channel_id=307&page=2";
+//		String params = "?keyword=自行车&page=2";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

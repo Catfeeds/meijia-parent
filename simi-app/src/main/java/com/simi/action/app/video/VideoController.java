@@ -129,6 +129,8 @@ public class VideoController extends BaseController {
 		
 		PageInfo p = partnerServicePriceService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<PartnerServicePrice> list = p.getList();
+		
+		if (list.isEmpty()) return result;
 
 		// 阅读数
 		List<Long> linkIds = new ArrayList<Long>();
