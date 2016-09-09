@@ -75,7 +75,6 @@
 			</foreach>
 		</if>
 		
-		
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
@@ -89,9 +88,12 @@
 		</if>
 		
 		<if test="keyword != null">
-			and ( name like CONCAT('%','${keyword}','%' ) OR tags like CONCAT('%','${keyword}','%' ))
+			and MATCH(name, tags) AGAINST ('${keyword}' IN BOOLEAN MODE) 
 		</if>
 		
+		<if test="tags != null">
+			and MATCH(tags) AGAINST ('${tags}' IN BOOLEAN MODE) 
+		</if>
 
 		order by add_time desc
 	</select>

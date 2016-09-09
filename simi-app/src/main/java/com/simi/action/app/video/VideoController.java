@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageInfo;
 import com.meijia.utils.MathBigDecimalUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -107,7 +108,8 @@ public class VideoController extends BaseController {
 	 */
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public AppResultData<Object> list(@RequestParam(value = "channel_id", required = false, defaultValue = "0") Long channelId,
-			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -124,8 +126,9 @@ public class VideoController extends BaseController {
 		if (!StringUtil.isEmpty(keyword)) {
 			searchVo.setKeyword(keyword);
 		}
-
-		List<PartnerServicePrice> list = partnerServicePriceService.selectBySearchVo(searchVo);
+		
+		PageInfo p = partnerServicePriceService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
+		List<PartnerServicePrice> list = p.getList();
 
 		// 阅读数
 		List<Long> linkIds = new ArrayList<Long>();
