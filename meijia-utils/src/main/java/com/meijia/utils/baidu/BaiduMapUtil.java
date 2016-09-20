@@ -393,40 +393,40 @@ public class BaiduMapUtil {
 		// d5.setLng("116.216846");
 		// d5.setName("植物园");
 		
-		Double lng1 = new Double("116.694736");
-		Double lat1 = new Double("39.906796");
+		Double lng1 = new Double("116.697715");
+		Double lat1 = new Double("40.110653");
 		
-		Double lng2 = new Double("116.689441");
-		Double lat2 = new Double("39.909921");
+		Double lng2 = new Double("116.477706");
+		Double lat2 = new Double("39.899465");
 		
 		System.out.println(BaiduMapUtil.Distance(lng1, lat1, lng2, lat2));
 		
-		List<HashMap<String, Object>> matchSettings = new ArrayList<HashMap<String, Object>>();
-		HashMap<String, Object> matchItem1 = new HashMap<String, Object>();
-		matchItem1.put("matchId", 1);
-		matchItem1.put("poiDistance", 50);
-		matchSettings.add(matchItem1);
-		
-		HashMap<String, Object> matchItem2 = new HashMap<String, Object>();
-		matchItem2.put("matchId", 2);
-		matchItem2.put("poiDistance", 30);
-		matchSettings.add(matchItem2);
-		
-		HashMap<String, Object> matchItem3 = new HashMap<String, Object>();
-		matchItem3.put("matchId", 3);
-		matchItem3.put("poiDistance", 80);
-		matchSettings.add(matchItem3);
-		
-		Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
-			public int compare(final Map<String, Object> o1, final Map<String, Object> o2) {
-				return Integer.valueOf(o1.get("poiDistance").toString()).compareTo(Integer.valueOf(o2.get("poiDistance").toString()));
-			}
-		});
-		
-		for (int i = 0; i < matchSettings.size(); i++) {
-			HashMap<String, Object> item = matchSettings.get(i);
-			System.out.println("mathcId = " + item.get("matchId").toString() + " -- poiDistance = " + item.get("poiDistance").toString());
-		}
+//		List<HashMap<String, Object>> matchSettings = new ArrayList<HashMap<String, Object>>();
+//		HashMap<String, Object> matchItem1 = new HashMap<String, Object>();
+//		matchItem1.put("matchId", 1);
+//		matchItem1.put("poiDistance", 50);
+//		matchSettings.add(matchItem1);
+//		
+//		HashMap<String, Object> matchItem2 = new HashMap<String, Object>();
+//		matchItem2.put("matchId", 2);
+//		matchItem2.put("poiDistance", 30);
+//		matchSettings.add(matchItem2);
+//		
+//		HashMap<String, Object> matchItem3 = new HashMap<String, Object>();
+//		matchItem3.put("matchId", 3);
+//		matchItem3.put("poiDistance", 80);
+//		matchSettings.add(matchItem3);
+//		
+//		Collections.sort(matchSettings, new Comparator<Map<String, Object>>() {
+//			public int compare(final Map<String, Object> o1, final Map<String, Object> o2) {
+//				return Integer.valueOf(o1.get("poiDistance").toString()).compareTo(Integer.valueOf(o2.get("poiDistance").toString()));
+//			}
+//		});
+//		
+//		for (int i = 0; i < matchSettings.size(); i++) {
+//			HashMap<String, Object> item = matchSettings.get(i);
+//			System.out.println("mathcId = " + item.get("matchId").toString() + " -- poiDistance = " + item.get("poiDistance").toString());
+//		}
 		
 	}
 

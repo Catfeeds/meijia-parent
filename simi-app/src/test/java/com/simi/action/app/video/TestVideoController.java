@@ -60,7 +60,7 @@ public class TestVideoController extends JUnitActionBase  {
 		String url = "/app/video/detail.json";
 
 //		String params = "?channel_id=307";
-		String params = "?article_id=313&user_id=18";
+		String params = "?article_id=311&user_id=18";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);

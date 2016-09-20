@@ -1,15 +1,19 @@
 package com.simi.action.app.video;
 
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.MathBigDecimalUtil;
@@ -175,11 +179,12 @@ public class VideoController extends BaseController {
 
 	/**
 	 * 视频文章详细内容接口
+	 * @throws URISyntaxException 
 	 * 
 	 */
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
 	public AppResultData<Object> getDetail(@RequestParam(value = "article_id") Long servicePriceId,
-			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId) {
+			@RequestParam(value = "user_id", required = false, defaultValue = "0") Long userId) throws URISyntaxException {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
@@ -233,6 +238,8 @@ public class VideoController extends BaseController {
 		
 		
 		vo.put("video_url", "");
+		vo.put("vid", "");
+		vo.put("cid", "");
 		vo.put("partner_user_id", 3669);
 		vo.put("service_type_id", serviceTypeId);
 		vo.put("service_price_id", servicePrice.getServicePriceId());
@@ -250,7 +257,18 @@ public class VideoController extends BaseController {
 			if (!list.isEmpty()) {
 				vo.put("is_join", 1);
 			}
-			vo.put("video_url", servicePrice.getVideoUrl());
+			
+			String vurl = servicePrice.getVideoUrl();
+			if (!StringUtil.isEmpty(vurl)) {
+				vo.put("video_url", servicePrice.getVideoUrl());
+
+				MultiValueMap<String, String> parameters = UriComponentsBuilder.fromUri(new URI(vurl)).build().getQueryParams();
+				List<String> vid = parameters.get("vid");
+				List<String> cid = parameters.get("cid");
+
+				vo.put("vid", vid.get(0));
+				vo.put("cid", cid.get(0));
+			}
 		}
 
 		// 必须要购买
@@ -270,11 +288,25 @@ public class VideoController extends BaseController {
 				Orders order = ordersService.selectByPrimaryKey(orderId);
 				if (order != null && order.getOrderStatus().equals((short)2)) {
 					vo.put("is_join", 1);
-					vo.put("video_url", servicePrice.getVideoUrl());
+					
+					
+					String vurl = servicePrice.getVideoUrl();
+					if (!StringUtil.isEmpty(vurl)) {
+						vo.put("video_url", servicePrice.getVideoUrl());
+
+						MultiValueMap<String, String> parameters = UriComponentsBuilder.fromUri(new URI(vurl)).build().getQueryParams();
+						List<String> vid = parameters.get("vid");
+						List<String> cid = parameters.get("cid");
+
+						vo.put("vid", vid.get(0));
+						vo.put("cid", cid.get(0));
+					}
 				}
 			}
 			
 		}
+		
+		
 
 		result.setData(vo);
 
