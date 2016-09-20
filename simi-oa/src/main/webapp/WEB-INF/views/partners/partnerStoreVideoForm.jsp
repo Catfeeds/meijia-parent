@@ -76,7 +76,11 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label"></label>
 						<div class="col-md-5">
-							<div id='J_prismPlayer' class='prism-player'></div>
+							<div id="video_container" style="background: #ffffff; width: 600; height: 400; margin-top: 10px;">
+								<div id="video_container_id" style="width: 600; height: 400;"></div>
+								
+
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -174,24 +178,13 @@
 	<!--footer end--> </section>
 	<%@ include file="../shared/importJs.jsp"%>
 	<!--script for this page-->
-	<script src="<c:url value='/assets/aliplayer/prism-min.js'/>"></script>
+	<script type="text/javascript" src="http://vod.open.youku.com/console/js/videoinfo/ykcplayer.min.js"></script>
 	<script src="<c:url value='/assets/jquery-validation/dist/jquery.validate.min.js'/>"></script>
+	
 	<script src="<c:url value='/assets/bootstrap-fileupload/fileinput.min.js'/>" type="text/javascript"></script>
 	<script charset="utf-8" src="<c:url value='/assets/kindeditor-4.1.10/kindeditor.js'/>"></script>
 	<script charset="utf-8" src="<c:url value='/assets/kindeditor-4.1.10/lang/zh_CN.js'/>"></script>
-	<script type="text/javascript">
-		//富编辑器
-		KindEditor.ready(function(K) {
-			K.create("#contentStandard", {
-				width : '500px',
-				height : '500px',
-				afterBlur : function() {
-					this.sync();
-				}//帮助KindEditor获得textarea的值
-			});
-			
-		});
-	</script>
+	<script src="<c:url value='/js/purl.js'/>"></script>
 	<script src="<c:url value='/js/simi/partner/partnerServiceVideoForm.js'/>" type="text/javascript"></script>
 </body>
 </html>

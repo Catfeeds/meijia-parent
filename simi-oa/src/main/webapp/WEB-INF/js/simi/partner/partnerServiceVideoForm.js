@@ -1,23 +1,67 @@
 //阿里云web播放器
-function InitPlayer(url) {
-	var player = new prismplayer({
-		id : "J_prismPlayer", // 容器id
-		source : url, // 视频url // 支持互联网可直接访问的视频地址
-		autoplay : true, // 自动播放
-		bigPlayButton : true, //大播放按钮
-		controlBar : true, //控制面板
-		width : "100%", // 播放器宽度
-		height : "400px" // 播放器高度
+//function InitPlayer(url) {
+//	var player = new prismplayer({
+//		id : "J_prismPlayer", // 容器id
+//		source : url, // 视频url // 支持互联网可直接访问的视频地址
+//		autoplay : true, // 自动播放
+//		bigPlayButton : true, //大播放按钮
+//		controlBar : true, //控制面板
+//		width : "100%", // 播放器宽度
+//		height : "400px" // 播放器高度
+//	});
+//}
+
+//富编辑器
+KindEditor.ready(function(K) {
+	K.create("#contentStandard", {
+		width : '500px',
+		height : '500px',
+		afterBlur : function() {
+			this.sync();
+		}//帮助KindEditor获得textarea的值
 	});
+	
+});
+
+function youkuPlayer(vid, cid) {
+	// document.write('<div id="video_container_id"></div>');
+	
+	var containerid = "video_container_id";
+	var player_params = {
+		"auto_play" : false,
+		"width" : 600,
+		"height" : 400,
+		"playerid" : '0'
+	};
+	var video_params = {
+		"vid" : vid,
+		"cid" : cid
+	};
+	window.ykcplayer(containerid, player_params, video_params);
+	
 }
 
 $("#prew-video-btn").click(function() {
-	if (confirm("如果试播阿里云会产生收费流量?")) {
-		var vurl = $("#videoUrl").val();
-		if (vurl != "") {
-			InitPlayer(vurl);
-		}
+	
+	var vurl = $("#videoUrl").val();
+	
+	var url = $.url(vurl);
+	
+	var vid = url.param("vid");
+	var cid = url.param("cid");
+	
+	console.log("vid = " + vid);
+	console.log("cid = " + cid);
+	
+	if (vid == undefined || cid == undefined) {
+		alert("视频地址不是一个有效的优酷开发云播放地址.");
+		return false;
 	}
+	
+	
+	youkuPlayer(vid, cid);
+	
+	
 });
 
 $('#partner-service-price-form').validate({
