@@ -22,12 +22,14 @@ import com.meijia.utils.TimeStampUtil;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
+import com.simi.po.model.feed.FeedZan;
 import com.simi.po.model.order.OrderPrices;
 import com.simi.po.model.order.Orders;
 import com.simi.po.model.partners.PartnerServicePrice;
 import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.total.TotalHit;
 import com.simi.po.model.user.UserActionRecord;
+import com.simi.service.feed.FeedZanService;
 import com.simi.service.order.OrderPricesService;
 import com.simi.service.order.OrdersService;
 import com.simi.service.partners.PartnerServicePriceService;
@@ -39,6 +41,7 @@ import com.simi.service.user.UserActionRecordService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
 import com.simi.vo.OrderSearchVo;
+import com.simi.vo.feed.FeedSearchVo;
 import com.simi.vo.partners.PartnerServiceTypeSearchVo;
 import com.simi.vo.partners.PartnerServicePriceSearchVo;
 import com.simi.vo.total.TotalHitSearchVo;
@@ -74,6 +77,9 @@ public class VideoController extends BaseController {
 
 	@Autowired
 	private OrderPricesService orderPricesService;
+	
+	@Autowired
+	private FeedZanService feedZanService;
 
 	public Long serviceTypeId = 306L;
 
@@ -218,6 +224,13 @@ public class VideoController extends BaseController {
 		} else {
 			totalHitService.insertSelective(record);
 		}
+		
+		//检测是否赞过
+		FeedSearchVo searchVo2 = new FeedSearchVo();
+		searchVo2.setFid(servicePriceId);
+		searchVo2.setUserId(userId);
+		searchVo2.setFeedType((short) 1);
+		List<FeedZan> feedZans = feedZanService.selectBySearchVo(searchVo2);
 
 		HashMap<String, Object> vo = new HashMap<String, Object>();
 		vo.put("channel_id", servicePrice.getServiceTypeId());
@@ -244,6 +257,9 @@ public class VideoController extends BaseController {
 		vo.put("service_type_id", serviceTypeId);
 		vo.put("service_price_id", servicePrice.getServicePriceId());
 		vo.put("is_join", 0);
+		
+		vo.put("is_zan", 0);
+		if (!feedZans.isEmpty()) vo.put("is_zan", 1);
 		
 		// 是否参加过该课程。或者是否购买过该课程.
 		BigDecimal z = new BigDecimal(0);
