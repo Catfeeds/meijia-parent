@@ -132,16 +132,11 @@ public class OrderController extends BaseController {
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
 		}
-		//如果用户没有手机号，则需要更新用户手机号,并且判断是否唯一.
+		//如果用户没有手机号，则需要绑定手机号.返回错误。
 		if (StringUtil.isEmpty(u.getMobile())) {
-			Users existUser = userService.selectByMobile(mobile);
-			if (!existUser.getId().equals(u.getId())) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("手机号在其他用户已经存在");
-				return result;
-			}
-			u.setMobile(mobile);
-			userService.updateByPrimaryKeySelective(u);
+			v.setMsg("数据错误");
+			v.setStatus(Constants.ERROR_999);
+			return v;
 		}
 		
 		//加入服务地区限制
