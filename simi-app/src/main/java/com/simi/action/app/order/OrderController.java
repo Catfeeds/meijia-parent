@@ -132,11 +132,18 @@ public class OrderController extends BaseController {
 		if (v.getStatus() == Constants.ERROR_999) {
 			return v;
 		}
-		//如果用户没有手机号，则需要绑定手机号.返回错误。
+		//如果用户没有手机号，则需要更新用户手机号,并且判断是否唯一.
 		if (StringUtil.isEmpty(u.getMobile())) {
-			v.setMsg("数据错误");
-			v.setStatus(Constants.ERROR_999);
-			return v;
+			if (!StringUtil.isEmpty(mobile)) {
+				Users existUser = userService.selectByMobile(mobile);
+				if (!existUser.getId().equals(u.getId())) {
+					result.setStatus(Constants.ERROR_999);
+					result.setMsg("手机号在其他用户已经存在");
+					return result;
+				}
+				u.setMobile(mobile);
+				userService.updateByPrimaryKeySelective(u);
+			}
 		}
 		
 		//加入服务地区限制
@@ -210,11 +217,11 @@ public class OrderController extends BaseController {
 		
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+//		PartnerServiceType serviceTypePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		String serviceTypeName = serviceType.getName();
 		String servicePriceName = "";
 		
-		if (servicePrice != null) servicePriceName = serviceTypePrice.getName();
+		if (servicePrice != null) servicePriceName = servicePrice.getName();
 		
 		String serviceContent = serviceTypeName + " " + servicePriceName;
 		
