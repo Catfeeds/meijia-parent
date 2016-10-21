@@ -31,7 +31,7 @@ public class TestUserController extends JUnitActionBase {
 	public void testGetSmsToken() throws Exception {
 
 		String url = "/app/user/get_sms_token.json";
-		String params = "?mobile=19999999998&sms_type=0";
+		String params = "?mobile=18612514665&sms_type=0";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 		ResultActions resultActions = this.mockMvc.perform(getRequest);
