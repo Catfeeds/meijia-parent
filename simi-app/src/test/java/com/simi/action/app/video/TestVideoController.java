@@ -77,7 +77,7 @@ public class TestVideoController extends JUnitActionBase  {
 
      	MockHttpServletRequestBuilder postRequest = post(url);
 	    postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("article_id", "313");
+	    postRequest = postRequest.param("article_id", "311");
 
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
