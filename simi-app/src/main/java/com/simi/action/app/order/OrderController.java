@@ -146,12 +146,6 @@ public class OrderController extends BaseController {
 			}
 		}
 		
-		//加入服务地区限制
-		v = validateService.validateOrderCity(userId);
-		if (v.getStatus() == Constants.ERROR_999) {
-			return v;
-		}
-		
 		//获取服务报价的信息。
 		PartnerServicePrice servicePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		
@@ -161,6 +155,14 @@ public class OrderController extends BaseController {
 			return result;
 		}
 		
+		//加入服务地区限制,如果为视频类，不需要做地区限制.
+		if (!servicePrice.getServiceTypeId().equals(306L)) {
+			v = validateService.validateOrderCity(userId);
+			if (v.getStatus() == Constants.ERROR_999) {
+				return v;
+			}
+		}
+
 		BigDecimal orderMoney = new BigDecimal(0.0);
 		BigDecimal orderPay = new BigDecimal(0.0);
 		
