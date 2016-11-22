@@ -247,9 +247,7 @@ public class VideoController extends BaseController {
 		vo.put("content", servicePrice.getContentStandard());
 		vo.put("keywords", servicePrice.getTags());
 
-		vo.put("category", servicePrice.getCategory());
-		vo.put("content_desc", servicePrice.getContentDesc());
-		vo.put("goto_url", servicePrice.getGotoUrl());
+
 
 		vo.put("video_url", "");
 		vo.put("vid", "");
@@ -262,7 +260,27 @@ public class VideoController extends BaseController {
 		vo.put("is_zan", 0);
 		if (!feedZans.isEmpty())
 			vo.put("is_zan", 1);
-
+		
+		//查询是否已经点击过弹窗信息
+		vo.put("category", "");
+		vo.put("content_desc", "");
+		vo.put("goto_url", "");
+		if (servicePrice.getCategory().equals("h5")) {
+			
+			UserActionSearchVo searchVo = new UserActionSearchVo();
+			searchVo.setUserId(userId);
+			searchVo.setActionType("video-help");
+			searchVo.setParams(serviceTypeId.toString());
+			
+			List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
+			
+			if (rs.isEmpty()) {
+				vo.put("category", servicePrice.getCategory());
+				vo.put("content_desc", servicePrice.getContentDesc());
+				vo.put("goto_url", servicePrice.getGotoUrl());
+			}
+		}
+		
 		// 是否参加过该课程。或者是否购买过该课程.
 		BigDecimal z = new BigDecimal(0);
 		if (servicePrice.getDisPrice().compareTo(z) == 0) {
