@@ -270,7 +270,7 @@ public class VideoController extends BaseController {
 			UserActionSearchVo searchVo = new UserActionSearchVo();
 			searchVo.setUserId(userId);
 			searchVo.setActionType("video-help");
-			searchVo.setParams(serviceTypeId.toString());
+			searchVo.setParams(servicePrice.getServicePriceId().toString());
 			
 			List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
 			
@@ -362,7 +362,7 @@ public class VideoController extends BaseController {
 
 		UserActionSearchVo searchVo = new UserActionSearchVo();
 		searchVo.setUserId(userId);
-		searchVo.setActionType("video-help");
+		searchVo.setActionType("video");
 		searchVo.setParams(servicePriceId.toString());
 
 		List<UserActionRecord> list = userActionRecordService.selectBySearchVo(searchVo);

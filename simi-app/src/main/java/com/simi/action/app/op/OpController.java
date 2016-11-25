@@ -149,10 +149,12 @@ public class OpController extends BaseController {
 			AppResultData<Object> result = new AppResultData<Object>(
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 			
-			AppHelp appHelp = appHelpService.selectByAction(action);
-			
-			if (appHelp == null) {
-				return result;
+			if (!action.equals("video-help")) {
+				AppHelp appHelp = appHelpService.selectByAction(action);
+				
+				if (appHelp == null) {
+					return result;
+				}
 			}
 			
 			//判断用户是否已经操作过，如果操作过则直接返回空值.
