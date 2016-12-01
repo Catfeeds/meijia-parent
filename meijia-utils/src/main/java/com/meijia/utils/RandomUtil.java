@@ -29,5 +29,9 @@ public class RandomUtil {
     {
         return RandomStringUtils.random(parm, chars);
     }
+    
+    public static void main(String[] args) {  
+    	System.out.println( 130 + Integer.parseInt(RandomUtil.randomNumber(1)));
+    }
 
 }

@@ -209,7 +209,7 @@ public class VideoController extends BaseController {
 		TotalHit record = totalHitService.initTotalHit();
 		TotalHitSearchVo searchVo1 = new TotalHitSearchVo();
 		searchVo1.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
-		searchVo1.setLinkId(serviceTypeId);
+		searchVo1.setLinkId(servicePriceId);
 		List<TotalHit> totalHits = totalHitService.selectBySearchVo(searchVo1);
 		if (!totalHits.isEmpty()) {
 			record = totalHits.get(0);
