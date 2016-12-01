@@ -245,6 +245,12 @@ public class VideoController extends BaseController {
 		vo.put("price", MathBigDecimalUtil.round2(servicePrice.getPrice()));
 		vo.put("dis_price", MathBigDecimalUtil.round2(servicePrice.getDisPrice()));
 		vo.put("content", servicePrice.getContentStandard());
+		
+		String teacher = "";
+		if (!StringUtil.isEmpty(servicePrice.getContentFlow())) {
+			teacher = servicePrice.getContentFlow();
+		}
+		vo.put("teacher", teacher);
 		vo.put("keywords", servicePrice.getTags());
 
 
