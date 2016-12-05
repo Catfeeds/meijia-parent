@@ -163,7 +163,7 @@ public class PushTestController extends BaseController {
 		tranParams.put("ca", category);
 		tranParams.put("aj", action);
 		tranParams.put("pa", gparams);
-		tranParams.put("go", gotoUrl);
+		tranParams.put("go", "http://www.bolohr.com");
 
 		// JsonObject jsonParams = JsonUtil.mapTojson(tranParams);
 
