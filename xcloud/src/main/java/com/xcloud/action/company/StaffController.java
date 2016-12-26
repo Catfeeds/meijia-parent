@@ -593,10 +593,14 @@ public class StaffController extends BaseController {
 		}
 
 		List<Object> excelDatas = new ArrayList<Object>();
-
+		try {
 		InputStream in = new FileInputStream(path + newFileName);
 		excelDatas = ExcelUtil.readToList(path + newFileName, in, 0, 0);
-
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			model.addAttribute("errors", "表格数据为空，请下载模板后填写.");
+			return "/staffs/staff-import-error";
+		}
 		// 校验表格是否正确.
 		AppResultData<Object> validateResult = xcompanyStaffService.validateStaffImport(companyId, excelDatas);
 		if (validateResult.getStatus() != Constants.SUCCESS_0) {
