@@ -25,12 +25,12 @@ public class TestOrderAddController extends JUnitActionBase  {
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//通用订单. 无需支付
-	    postRequest = postRequest.param("user_id", "77");
-	    postRequest = postRequest.param("partner_user_id", "274");
-	    postRequest = postRequest.param("service_type_id", "180");
-	    postRequest = postRequest.param("service_price_id", "183");
-	    postRequest = postRequest.param("mobile", "13146012753");
-	    postRequest = postRequest.param("pay_type", "0");
+	    postRequest = postRequest.param("user_id", "2");
+	    postRequest = postRequest.param("partner_user_id", "3669");
+	    postRequest = postRequest.param("service_type_id", "306");
+	    postRequest = postRequest.param("service_price_id", "310");
+	    postRequest = postRequest.param("mobile", "18600283903");
+	    postRequest = postRequest.param("pay_type", "1");
 //	    postRequest = postRequest.param("user_coupon_id", "266");
 	    
 	    

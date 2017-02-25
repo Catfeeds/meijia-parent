@@ -142,22 +142,28 @@ public class OpController extends BaseController {
 		@RequestMapping(value = "post_help", method = RequestMethod.POST)
 		public AppResultData<Object> postHelp(
 				@RequestParam("action") String action,
-				@RequestParam("user_id") Long userId) {
+				@RequestParam("user_id") Long userId,
+				@RequestParam(value = "link_id", required = false, defaultValue="0") Long linkId
+				) {
 			
 			AppResultData<Object> result = new AppResultData<Object>(
 					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 			
-			AppHelp appHelp = appHelpService.selectByAction(action);
-			
-			if (appHelp == null) {
-				return result;
+			if (!action.equals("video-help")) {
+				AppHelp appHelp = appHelpService.selectByAction(action);
+				
+				if (appHelp == null) {
+					return result;
+				}
 			}
 			
 			//判断用户是否已经操作过，如果操作过则直接返回空值.
 			UserActionSearchVo searchVo = new UserActionSearchVo();
 			searchVo.setUserId(userId);
-			searchVo.setActionType("app_help");
-			searchVo.setParams(action);
+			searchVo.setActionType(action);
+			
+			if (linkId > 0L)
+				searchVo.setParams(linkId.toString());
 			
 			List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
 			
@@ -167,8 +173,10 @@ public class OpController extends BaseController {
 			
 			UserActionRecord record = userActionRecordService.initUserActionRecord();
 			record.setUserId(userId);
-			record.setActionType("app_help");
-			record.setParams(action);
+			record.setActionType(action);
+			if (linkId > 0L)
+				record.setParams(linkId.toString());
+			
 			
 			userActionRecordService.insert(record);
 			

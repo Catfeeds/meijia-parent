@@ -1,5 +1,5 @@
 cd /data/src/meijia-parent/
-svn up
+git pull
 mvn clean package
 /data/tomcat/bin/shutdown.sh
 sleep 1

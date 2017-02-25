@@ -76,7 +76,7 @@ public class NoticeAppAsyncServiceImpl implements NoticeAppAsyncService {
 		String deviceType = userPushBind.getDeviceType();
 		pushUtilMsg(tranParams, clientId, deviceType);
 		
-
+		System.out.println(userId + "====userid sended pushMsgToDevice");
 		return new AsyncResult<Boolean>(true);
 	}	
 	

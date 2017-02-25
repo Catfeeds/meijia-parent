@@ -74,7 +74,7 @@
 			<![CDATA[ and update_time >  #{updateTime,jdbcType=NUMERIC} ]]>
 		</if>
 
-		order by no asc, update_time desc
+		order by no desc, update_time desc
 	</select>
 
 	<select id="selectByAdType" resultMap="BaseResultMap" parameterType="java.lang.String">

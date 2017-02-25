@@ -168,11 +168,11 @@ public class PartnerController extends BaseController {
 			
 			String detailUrl = "http://app.bolohr.com/simi-h5/discover/service-detail.html?service_type_id=" + servicePriceVo.getServicePriceId();
 			
-			if (servicePrice.getContentDesc().equals("") &&
-				servicePrice.getContentFlow().equals("") &&
-				servicePrice.getContentDesc().equals("")) {
-				detailUrl = "";
-			}
+//			if (servicePrice.getContentDesc().equals("") &&
+//				servicePrice.getContentFlow().equals("") &&
+//				servicePrice.getContentDesc().equals("")) {
+//				detailUrl = "";
+//			}
 			
 			servicePriceVo.setDetailUrl(detailUrl);
 			servicePriceVos.add(servicePriceVo);

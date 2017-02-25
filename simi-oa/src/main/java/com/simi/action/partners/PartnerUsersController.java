@@ -26,6 +26,7 @@ import com.github.pagehelper.PageInfo;
 import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.MobileUtil;
+import com.meijia.utils.RandomUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
 import com.simi.action.BaseController;
@@ -38,6 +39,7 @@ import com.simi.po.model.partners.PartnerServiceType;
 import com.simi.po.model.partners.PartnerUsers;
 import com.simi.po.model.partners.Partners;
 import com.simi.po.model.record.RecordRates;
+import com.simi.po.model.total.TotalHit;
 import com.simi.po.model.user.TagUsers;
 import com.simi.po.model.user.Tags;
 import com.simi.po.model.user.Users;
@@ -50,6 +52,7 @@ import com.simi.service.partners.PartnerServiceTypeService;
 import com.simi.service.partners.PartnerUserService;
 import com.simi.service.partners.PartnersService;
 import com.simi.service.record.RecordRatesService;
+import com.simi.service.total.TotalHitService;
 import com.simi.service.user.TagsService;
 import com.simi.service.user.TagsUsersService;
 import com.simi.service.user.UsersService;
@@ -60,6 +63,7 @@ import com.simi.vo.partners.PartnerUserSearchVo;
 import com.simi.vo.partners.PartnersSearchVo;
 import com.simi.vo.record.RecordRateSearchVo;
 import com.simi.vo.record.RecordRateVo;
+import com.simi.vo.total.TotalHitSearchVo;
 
 /**
  * @description：
@@ -105,6 +109,9 @@ public class PartnerUsersController extends BaseController {
 	
 	@Autowired
 	private ImgService imgService;
+	
+	@Autowired
+	private TotalHitService totalHitService;
 
 	/**
 	 * 服务人员列表
@@ -471,6 +478,33 @@ public class PartnerUsersController extends BaseController {
 			partnerServicePriceService.updateByPrimaryKeySelective(record);
 		} else {
 			partnerServicePriceService.insert(record);
+			
+			//对于视频大类，新增的情况，需要增加阅读数起步数量为100以上的随机值.
+			servicePriceId = record.getServicePriceId();
+			
+			int total = 0;
+			TotalHit totalHit = totalHitService.initTotalHit();
+			TotalHitSearchVo searchVo1 = new TotalHitSearchVo();
+			searchVo1.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
+			searchVo1.setLinkId(servicePriceId);
+			List<TotalHit> totalHits = totalHitService.selectBySearchVo(searchVo1);
+			if (!totalHits.isEmpty()) {
+				totalHit = totalHits.get(0);
+			}
+
+			totalHit.setLinkType(Constants.TOTAL_HIT_LINK_TYPE_SERVICE_PRICE);
+			totalHit.setLinkId(servicePriceId);
+
+//			total = record.getTotal() + 1;
+			total = 130 + Integer.parseInt(RandomUtil.randomNumber(1));
+			totalHit.setTotal(total);
+			totalHit.setAddTime(TimeStampUtil.getNowSecond());
+			if (totalHit.getId() > 0L) {
+				totalHitService.updateByPrimaryKeySelective(totalHit);
+			} else {
+				totalHitService.insertSelective(totalHit);
+			}
+			
 		}
 
 		return "redirect:/partners/partner_service_price_list?partner_id=" + partnerId + "&user_id=" + vo.getUserId() + "&service_type_id=" + serviceTypeId;

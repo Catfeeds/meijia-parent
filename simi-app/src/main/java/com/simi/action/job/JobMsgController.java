@@ -168,7 +168,7 @@ public class JobMsgController extends BaseController {
 
 		for (GroupUser gu : groupAdmins) {
 			// 异步推送 给 测试 人员（运营部），消息
-			noticeAsyncService.pushMsgToDevice(gu.getUserId(), "每日推送", "每日热点推送", "", "", "", "");
+			noticeAsyncService.pushMsgToDevice(gu.getUserId(), "每日推送", "每日热点推送", "h5", "", "", "http://bolohr.com");
 		}
 
 		return result;

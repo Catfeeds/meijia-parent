@@ -60,7 +60,7 @@ public class TestVideoController extends JUnitActionBase  {
 		String url = "/app/video/detail.json";
 
 //		String params = "?channel_id=307";
-		String params = "?article_id=311&user_id=18";
+		String params = "?article_id=308&user_id=18";
 		MockHttpServletRequestBuilder getRequest = get(url + params);
 
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
@@ -77,7 +77,7 @@ public class TestVideoController extends JUnitActionBase  {
 
      	MockHttpServletRequestBuilder postRequest = post(url);
 	    postRequest = postRequest.param("user_id", "18");
-	    postRequest = postRequest.param("article_id", "313");
+	    postRequest = postRequest.param("article_id", "311");
 
 
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -101,6 +101,26 @@ public class TestVideoController extends JUnitActionBase  {
 	    ResultActions resultActions = this.mockMvc.perform(getRequest);
 	    resultActions.andExpect(content().contentType(this.mediaType));
 	    resultActions.andExpect(status().isOk());
+
+	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
+
+    }
+	
+	@Test
+    public void testHelp() throws Exception {
+		String url = "/app/op/post_help.json";
+
+     	MockHttpServletRequestBuilder postRequest = post(url);
+	    postRequest = postRequest.param("user_id", "18");
+	    postRequest = postRequest.param("action", "video-help");
+	    postRequest = postRequest.param("link_id", "336");
+
+
+	    ResultActions resultActions = mockMvc.perform(postRequest);
+
+	    resultActions.andExpect(content().contentType(this.mediaType));
+	    resultActions.andExpect(status().isOk());
+
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 

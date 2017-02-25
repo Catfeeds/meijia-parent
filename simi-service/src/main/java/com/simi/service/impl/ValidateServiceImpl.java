@@ -64,7 +64,7 @@ public class ValidateServiceImpl implements ValidateService {
 
 		UserTrailReal userTrailReal = userTrailRealService.selectByUserId(userId);
 
-		if (userTrailReal != null) {
+		if (userTrailReal != null && !StringUtil.isEmpty(userTrailReal.getCity())) {
 			if (!userTrailReal.getCity().equals("北京市")) {
 				result.setStatus(Constants.ERROR_999);
 				result.setMsg("目前仅支持北京市区服务范围，敬请谅解！");

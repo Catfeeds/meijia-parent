@@ -70,7 +70,6 @@ $("#calculate").on("click",function() {
 			}
 			
 			var vo = data.data;
-
 			$("#pensionP").html(vo.pensionP);
 			$("#lpensionP").html(vo.pensionPio);
 			
@@ -88,7 +87,7 @@ $("#calculate").on("click",function() {
 			$("#lunemploymentP").html(vo.unemploymentPio);
 			
 			$("#unemploymentC").html(vo.unemploymentC);
-			$("#lunemploymentC").html(vo.unemploymentCip);
+			$("#lunemploymentC").html(vo.unemploymentCio);
 			
 			
 			$("#injuryP").html(vo.injuryP);

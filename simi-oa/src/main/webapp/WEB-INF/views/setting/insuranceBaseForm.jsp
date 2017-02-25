@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ include file="../shared/taglib.jsp"%>
-
+<%@ taglib prefix="citySelectTag" uri="/WEB-INF/tags/citySelect.tld"%>
 <html>
 <head>
 
@@ -34,13 +34,14 @@
 						<div class="form-group required">
 							<label class="col-md-2 control-label">选择城市*</label>
 							<div class="col-md-5">
-								<form:select class="form-control" path="cityId">
+								<%-- <form:select class="form-control" path="cityId">
 											<option value="">请选择城市</option>
 											<form:option value="2" label="北京"/>  
 											<form:option value="74" label="上海"/>  
 											<form:option value="198" label="广州"/>
 											<form:option value="200" label="深圳"/>
-								</form:select>
+								</form:select> --%>
+								<citySelectTag:select selectId="${searchModel.cityId }"/>
 							</div>
 						</div>
 						

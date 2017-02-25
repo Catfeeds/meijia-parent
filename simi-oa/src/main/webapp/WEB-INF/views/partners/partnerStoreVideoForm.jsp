@@ -141,6 +141,16 @@
 							<form:errors path="disPrice" class="field-has-error"></form:errors>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label class="col-md-2 control-label">讲师&nbsp;*</label>
+						<div class="col-md-5">
+							<form:input path="contentFlow" class="form-control" placeholder="讲师" />
+							<br />
+							<form:errors path="contentFlow" class="field-has-error"></form:errors>
+						</div>
+					</div>
+					
 					<div class="form-group required">
 						<label class="col-md-2 control-label">文章详情</label>
 						<div class="col-md-9">

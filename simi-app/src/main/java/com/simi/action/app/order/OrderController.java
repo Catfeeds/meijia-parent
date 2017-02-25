@@ -134,20 +134,16 @@ public class OrderController extends BaseController {
 		}
 		//如果用户没有手机号，则需要更新用户手机号,并且判断是否唯一.
 		if (StringUtil.isEmpty(u.getMobile())) {
-			Users existUser = userService.selectByMobile(mobile);
-			if (!existUser.getId().equals(u.getId())) {
-				result.setStatus(Constants.ERROR_999);
-				result.setMsg("手机号在其他用户已经存在");
-				return result;
+			if (!StringUtil.isEmpty(mobile)) {
+				Users existUser = userService.selectByMobile(mobile);
+				if (!existUser.getId().equals(u.getId())) {
+					result.setStatus(Constants.ERROR_999);
+					result.setMsg("手机号在其他用户已经存在");
+					return result;
+				}
+				u.setMobile(mobile);
+				userService.updateByPrimaryKeySelective(u);
 			}
-			u.setMobile(mobile);
-			userService.updateByPrimaryKeySelective(u);
-		}
-		
-		//加入服务地区限制
-		v = validateService.validateOrderCity(userId);
-		if (v.getStatus() == Constants.ERROR_999) {
-			return v;
 		}
 		
 		//获取服务报价的信息。
@@ -159,6 +155,14 @@ public class OrderController extends BaseController {
 			return result;
 		}
 		
+		//加入服务地区限制,如果为视频类，不需要做地区限制.
+		if (!servicePrice.getServiceTypeId().equals(306L)) {
+			v = validateService.validateOrderCity(userId);
+			if (v.getStatus() == Constants.ERROR_999) {
+				return v;
+			}
+		}
+
 		BigDecimal orderMoney = new BigDecimal(0.0);
 		BigDecimal orderPay = new BigDecimal(0.0);
 		
@@ -215,11 +219,11 @@ public class OrderController extends BaseController {
 		
 		
 		PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(serviceTypeId);
-		PartnerServiceType serviceTypePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
+//		PartnerServiceType serviceTypePrice = partnerServicePriceService.selectByPrimaryKey(servicePriceId);
 		String serviceTypeName = serviceType.getName();
 		String servicePriceName = "";
 		
-		if (servicePrice != null) servicePriceName = serviceTypePrice.getName();
+		if (servicePrice != null) servicePriceName = servicePrice.getName();
 		
 		String serviceContent = serviceTypeName + " " + servicePriceName;
 		
