@@ -281,7 +281,7 @@ public class MsgController extends AdminController {
 
 		if (selectUserType == 0) {
 			// 选择 普通用户（一个月的）
-			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_0);
+//			searchVo.setUserType(Constants.OA_PUSH_USER_TYPE_0);
 //			searchVo.setUserIds(lastMonthUser);
 
 			userList = usersService.selectBySearchVo(searchVo);
