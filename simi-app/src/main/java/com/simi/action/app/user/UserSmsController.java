@@ -41,12 +41,12 @@ public class UserSmsController extends BaseController {
 		// 2'调用函数生成六位验证码，调用短信平台，将发送的信息返回值更新到 user_sms_token
 		String code = RandomUtil.randomNumber();
 
-		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")
-				||mobile.equals("13701187136")||mobile.equals("13810002890")||mobile.equals("18610807136")
-				||mobile.equals("18612514665")||mobile.equals("13146012753")||mobile.equals("15727372986")
-		 ) {
-			code = "000000";
-		}
+//		if (mobile.equals("17090397818")||mobile.equals("17090397828")||mobile.equals("17090397822")
+//				||mobile.equals("13701187136")||mobile.equals("13810002890")||mobile.equals("18610807136")
+//				||mobile.equals("18612514665")||mobile.equals("13146012753")||mobile.equals("15727372986")
+//		 ) {
+//			code = "000000";
+//		}
 //13701187136,13810002890,18610807136,18612514665,13146012753
 		
 		String[] content = new String[] { code, Constants.GET_CODE_MAX_VALID };
