@@ -1,4 +1,4 @@
-package com.duiba.credits.sdk;
+package cn.com.duiba.credits.sdk;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;

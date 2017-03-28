@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.duiba.credits.sdk.CreditConsumeParams;
-import com.duiba.credits.sdk.CreditNotifyParams;
-import com.duiba.credits.sdk.CreditTool;
+import cn.com.duiba.credits.sdk.CreditConsumeParams;
+import cn.com.duiba.credits.sdk.CreditNotifyParams;
+import cn.com.duiba.credits.sdk.CreditTool;
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
 import com.meijia.utils.OrderNoUtil;
@@ -116,7 +116,7 @@ public class UserScoreController extends BaseController {
 	// 兑吧积分兑换通知接口，生成订单
 	// 对应文档
 	// http://docs.duiba.com.cn/tech_doc_book/server/consume_credits_api.html
-	@SuppressWarnings({ "rawtypes", "static-access", "static-access" })
+	@SuppressWarnings({ "rawtypes" })
 	@RequestMapping(value = "notify_score", method = RequestMethod.GET)
 	public Map notifyScore(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
