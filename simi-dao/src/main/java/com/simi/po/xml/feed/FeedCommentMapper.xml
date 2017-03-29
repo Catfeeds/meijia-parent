@@ -24,19 +24,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from feed_comment
-		where 1 = 1
-		<if test="fid != null">
-			and fid = #{fid,jdbcType=NUMERIC}
-		</if>
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-		<if test="feedType != null">
-			and feed_type = #{feedType,jdbcType=NUMERIC}
-		</if>
-		<if test="status != null">
-			and status = #{status,jdbcType=NUMERIC}
-		</if>
+		<include refid="bySearchVo"/>
 		order by status desc, add_time desc
 	</select>
 
@@ -45,18 +33,7 @@
 		<include refid="Base_Column_List" />
 		from feed_comment
 		where 1 = 1
-		<if test="fid != null">
-			and fid = #{fid,jdbcType=NUMERIC}
-		</if>
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-		<if test="feedType != null">
-			and feed_type = #{feedType,jdbcType=NUMERIC}
-		</if>
-		<if test="status != null">
-			and status = #{status,jdbcType=NUMERIC}
-		</if>
+		<include refid="bySearchVo"/>
 		order by add_time desc
 	</select>
 
@@ -64,29 +41,21 @@
 		select count(*)
 		from feed_comment
 		where 1 = 1
-		<if test="fid != null">
-			and fid = #{fid,jdbcType=NUMERIC}
-		</if>
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-		<if test="feedType != null">
-			and feed_type = #{feedType,jdbcType=NUMERIC}
-		</if>
-		<if test="status != null">
-			and status = #{status,jdbcType=NUMERIC}
-		</if>
+		<include refid="bySearchVo"/>
 	</select>
 
 	<select id="totalByFids" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select fid, count(*) as total
 		from feed_comment
+		<include refid="bySearchVo"/>
+		group by fid
+		order by fid desc
+	</select>
+	
+	<sql id="bySearchVo">
 		where 1 = 1
 		<if test="fid != null">
 			and fid = #{fid,jdbcType=NUMERIC}
-		</if>
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		<if test="fids != null">
 			and fid in
@@ -94,16 +63,24 @@
 				#{item}
 			</foreach>
 		</if>
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
+		</if>	
+		
+		<if test="startTime !=null">
+			<![CDATA[ and add_time >= #{startTime}]]>
 		</if>
 
-		group by fid
-		order by fid desc
-	</select>
+		<if test="endTime !=null">
+			<![CDATA[ and add_time <= #{endTime}]]>
+		</if>
+	</sql>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from feed_comment

@@ -17,54 +17,54 @@
 	<sql id="Base_Column_List">
 		fid, user_id, feed_type, title, lat, lng, poi_name, total_view, feed_extra, status, add_time
 	</sql>
-	
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from feeds
 		where fid = #{fid,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from feeds
-		where 1=1
-		<if test="fid != null">
-			and fid = #{fid,jdbcType=NUMERIC}
-		</if>
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="commentUserId != null">
-			and ( user_id = #{commentUserId,jdbcType=NUMERIC} OR fid IN (select fid from feed_comment where user_id = #{commentUserId,jdbcType=NUMERIC} and feed_type = #{feedType,jdbcType=NUMERIC})  )
-		</if>
-		
-		<if test="feedType != null">
-			and feed_type = #{feedType,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="userIds != null">
-			and user_id in
-			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		
-		
-		
-		<if test="status != null">
-			and status = #{status,jdbcType=NUMERIC}
-		</if>
-		
+		<include refid="bySearchVo"/>
 		order by add_time desc
 	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from feeds
+		<include refid="bySearchVo"/>
+		order by add_time desc
+	</select>
+
+	<select id="totalByUserIds" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
+		select user_id, count(distinct fid) as total
+		from
+		(
+		select user_id, fid
+		from feeds where 1 = 1
+		<if test="userIds != null">
+			and user_id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		union all
+		select user_id, fid
+		from feed_comment where 1 = 1
+		and user_id in
+		<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		) as T
+		group by user_id
+	</select>
+
+	<sql id="bySearchVo">
 		where 1=1
 		<if test="fid != null">
 			and fid = #{fid,jdbcType=NUMERIC}
@@ -72,11 +72,16 @@
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
-		
+
+		<if test="commentUserId != null">
+			and ( user_id = #{commentUserId,jdbcType=NUMERIC} OR fid IN (select fid from feed_comment where user_id = #{commentUserId,jdbcType=NUMERIC} and feed_type =
+			#{feedType,jdbcType=NUMERIC}) )
+		</if>
+
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="userIds != null">
 			and user_id in
 			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
@@ -88,37 +93,21 @@
 			and status = #{status,jdbcType=NUMERIC}
 		</if>
 		
-		order by add_time desc
-	</select>
-	
-	<select id="totalByUserIds" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
-		select user_id, count(distinct fid) as total
-		from 
-	    (
-			select user_id, fid
-			from feeds where 1 = 1
-			<if test="userIds != null">
-			and user_id in
-			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-			</if>
-			union all
-			select user_id, fid
-			from feed_comment where 1 = 1
-			and user_id in
-			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		)  as T
-		group by user_id
-	</select>
+		<if test="startTime !=null">
+			<![CDATA[ and add_time >= #{startTime}]]>
+		</if>
+
+		<if test="endTime !=null">
+			<![CDATA[ and add_time <= #{endTime}]]>
+		</if>
+
+	</sql>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from feeds
 		where fid = #{fid,jdbcType=NUMERIC}
 	</delete>
-	
+
 	<insert id="insert" parameterType="com.simi.po.model.feed.Feeds">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="fid">
 			SELECT LAST_INSERT_ID() AS fid
@@ -126,9 +115,11 @@
 		insert into feeds (fid, user_id, feed_type, title,
 		lat, lng, poi_name, total_view, feed_extra, status,
 		add_time)
-		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{feedType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
+		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
+		#{feedType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
 		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
-		#{totalView,jdbcType=NUMERIC}, #{feedExtra,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, 
+		#{totalView,jdbcType=NUMERIC},
+		#{feedExtra,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.Feeds">
@@ -247,7 +238,8 @@
 		update feeds
 		set user_id = #{userId,jdbcType=NUMERIC},
 		feed_type = #{feedType,jdbcType=NUMERIC},
-		title = #{title,jdbcType=VARCHAR},
+		title =
+		#{title,jdbcType=VARCHAR},
 		lat = #{lat,jdbcType=VARCHAR},
 		lng = #{lng,jdbcType=VARCHAR},
 		poi_name = #{poiName,jdbcType=VARCHAR},
@@ -257,7 +249,7 @@
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where fid = #{fid,jdbcType=NUMERIC}
 	</update>
-	
+
 	<update id="updateByTotalView" parameterType="java.lang.Long">
 		update feeds
 		set total_view = total_view + 1

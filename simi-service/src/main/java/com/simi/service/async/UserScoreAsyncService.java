@@ -12,5 +12,11 @@ public interface UserScoreAsyncService {
 
 	Future<Boolean> consumeScore(Long userId, Integer score, String action, String params, String remarks);
 
+	Future<Boolean> sendScoreFeedAdd(Long userId, Long fid);
+
+	Future<Boolean> sendScoreFeedComment(Long userId, Long commentId);
+
+	Future<Boolean> sendScoreFeedCaiNa(Long userId, int score, Long commentId);
+
 
 }

@@ -192,8 +192,10 @@ public class FeedController extends BaseController {
 		}
 		
 		//扣除积分
-		userScoreAsyncService.consumeScore(userId, score, "qa", fid.toString(), "问题悬赏");
-		
+		if (score > 0) {
+			userScoreAsyncService.consumeScore(userId, score, "qa", fid.toString(), "问题悬赏");
+		}
+		userScoreAsyncService.sendScoreFeedAdd(userId, fid);
 		// 生成动态消息
 //		feedMsgAsyncService.newFeedMsg(fid);
 		
@@ -438,8 +440,7 @@ public class FeedController extends BaseController {
 		
 		if (feedType.equals((short) 2)) {
 			//答题奖励
-			userScoreAsyncService.sendScore(userId, Constants.SCORE_QA_COMMENT, "qa", commentId.toString(), "答题奖励");
-			
+			userScoreAsyncService.sendScoreFeedComment(userId, commentId);
 			//针对题主进行消息提醒
 			feedMsgAsyncService.newFeedCommentMsg(userId, fid, feedType, commentId);
 			
@@ -506,7 +507,7 @@ public class FeedController extends BaseController {
 			//1.
 			
 			//答题奖励  //问题悬赏
-			userScoreAsyncService.sendScore(commentUserId, score, "qa", commentId.toString(), "采纳问答");
+			userScoreAsyncService.sendScoreFeedCaiNa(commentUserId, score, commentId);
 		}
 		
 		if (feedType.equals((short) 2)) {

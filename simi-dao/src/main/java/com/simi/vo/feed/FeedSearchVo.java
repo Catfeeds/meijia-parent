@@ -23,6 +23,10 @@ public class FeedSearchVo {
 	private Long tagId;
 	
 	private Long commentId;
+	
+	private Long startTime;
+	
+	private Long endTime;
 
 	public Long getFid() {
 		return fid;
@@ -102,6 +106,22 @@ public class FeedSearchVo {
 
 	public void setCommentUserId(Long commentUserId) {
 		this.commentUserId = commentUserId;
+	}
+
+	public Long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+
+	public Long getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
 	}
 		
 

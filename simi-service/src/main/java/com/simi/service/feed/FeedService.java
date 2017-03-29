@@ -35,5 +35,7 @@ public interface FeedService {
 
 	List<HashMap> totalByUserIds(FeedSearchVo searchVo);
 
+	List<Feeds> selectBySearchVo(FeedSearchVo searchVo);
+
 	
 }

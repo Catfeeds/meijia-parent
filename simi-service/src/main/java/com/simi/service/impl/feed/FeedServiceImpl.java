@@ -226,6 +226,11 @@ public class FeedServiceImpl implements FeedService {
 		PageInfo result = new PageInfo(list);
 		return result;
 	}
+	
+	@Override
+	public List<Feeds> selectBySearchVo(FeedSearchVo searchVo) {
+		return feedsMapper.selectBySearchVo(searchVo);
+	}
 
 	@Override
 	public int updateByPrimaryKey(Feeds record) {
