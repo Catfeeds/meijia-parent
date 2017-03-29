@@ -2,7 +2,10 @@ package com.simi.service.order;
 
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.simi.po.model.order.OrderScore;
+import com.simi.vo.OrderSearchVo;
+import com.simi.vo.order.OrderScoreVo;
 
 public interface OrderScoreService {
 
@@ -27,5 +30,11 @@ public interface OrderScoreService {
 	OrderScore selectByOrderNum(String orderNum);
 
 	OrderScore initOrderScore();
+
+	PageInfo selectByListPage(OrderSearchVo searchVo, int pageNo, int pageSize);
+
+	List<OrderScore> selectBySearchVo(OrderSearchVo searchVo);
+
+	OrderScoreVo getVos(OrderScore item);
 
 }

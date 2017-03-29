@@ -29,6 +29,8 @@ public class OrderSearchVo {
 	private Long  notServiceTypeId;
 	
 	private Long servicePriceId;
+	
+	private String orderNum;
 
 	public String getMobile() {
 		return mobile;
@@ -133,6 +135,14 @@ public class OrderSearchVo {
 
 	public void setServicePriceId(Long servicePriceId) {
 		this.servicePriceId = servicePriceId;
+	}
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
 	}
 
 }

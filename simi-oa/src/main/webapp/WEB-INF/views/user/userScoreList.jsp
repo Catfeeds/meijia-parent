@@ -67,7 +67,7 @@
 					<c:forEach items="${contentModel.list}" var="item">
 						<tr>
 							<td>${ item.addTimeStr }</td>
-							<td>${ item.id }</td>
+							<td>${ item.userId }</td>
 							<td>${ item.mobile }</td>
 							<td>${ item.actionName }</td>
 							<td>${ item.scoreStr }</td>

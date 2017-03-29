@@ -24,7 +24,8 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		order_id, user_id, mobile, order_no, order_status, add_time, update_time, credits,
-		appKey, timestamp, description, orderNum, type, facePrice, actualPrice, ip, waitAudit,
+		appKey, timestamp, description, orderNum, type, facePrice, actualPrice, ip,
+		waitAudit,
 		params, sign
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -33,28 +34,68 @@
 		from order_score
 		where order_id = #{orderId,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from order_score
 		where user_id = #{userId,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from order_score
 		where order_no = #{orderNo,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectByOrderNum" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from order_score
 		where orderNum = #{orderNum,jdbcType=VARCHAR}
 	</select>
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from order_score
+		<include refid="bySearchVo" />
+		order by add_time desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from order_score
+		<include refid="bySearchVo" />
+		order by add_time desc
+	</select>
 	
+	<sql id="bySearchVo">
+	
+		where 1=1
+		<if test="userId != null">
+			and user_id = #{userId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="mobile != null and mobile != ''">
+			and mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+
+		<if test="orderNo != null and orderNo != ''">
+			and order_no = #{orderNo,jdbcType=VARCHAR}
+		</if>
+
+		<if test="orderNum != null and orderNum != ''">
+			and orderNum = #{orderNum,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="orderStatus != null">
+			and order_status = #{orderStatus,jdbcType=NUMERIC}
+		</if>
+	</sql>
+
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from order_score
 		where order_id = #{orderId,jdbcType=NUMERIC}
@@ -62,8 +103,8 @@
 	<insert id="insert" parameterType="com.simi.po.model.order.OrderScore">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="orderId">
 			SELECT LAST_INSERT_ID() AS order_id
-		</selectKey>	
-	
+		</selectKey>
+
 		insert into order_score (order_id, user_id, mobile,
 		order_no, order_status, add_time,
 		update_time, credits, appKey,
@@ -72,18 +113,21 @@
 		ip, waitAudit, params,
 		sign)
 		values (#{orderId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{mobile,jdbcType=CHAR},
-		#{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC},
+		#{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=NUMERIC},
+		#{addTime,jdbcType=NUMERIC},
 		#{updateTime,jdbcType=NUMERIC}, #{credits,jdbcType=INTEGER}, #{appkey,jdbcType=VARCHAR},
-		#{timestamp,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{ordernum,jdbcType=VARCHAR},
+		#{timestamp,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR}, #{ordernum,jdbcType=VARCHAR},
 		#{type,jdbcType=VARCHAR}, #{faceprice,jdbcType=VARCHAR}, #{actualprice,jdbcType=VARCHAR},
-		#{ip,jdbcType=VARCHAR}, #{waitaudit,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
+		#{ip,jdbcType=VARCHAR},
+		#{waitaudit,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
 		#{sign,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.order.OrderScore">
 		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="orderId">
 			SELECT LAST_INSERT_ID() AS order_id
-		</selectKey>	
-	
+		</selectKey>
+
 		insert into order_score
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="orderId != null">
@@ -268,15 +312,18 @@
 		update order_score
 		set user_id = #{userId,jdbcType=NUMERIC},
 		mobile = #{mobile,jdbcType=CHAR},
-		order_no = #{orderNo,jdbcType=VARCHAR},
+		order_no =
+		#{orderNo,jdbcType=VARCHAR},
 		order_status = #{orderStatus,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC},
 		update_time = #{updateTime,jdbcType=NUMERIC},
-		credits = #{credits,jdbcType=INTEGER},
+		credits =
+		#{credits,jdbcType=INTEGER},
 		appKey = #{appkey,jdbcType=VARCHAR},
 		timestamp = #{timestamp,jdbcType=VARCHAR},
 		description = #{description,jdbcType=VARCHAR},
-		orderNum = #{ordernum,jdbcType=VARCHAR},
+		orderNum =
+		#{ordernum,jdbcType=VARCHAR},
 		type = #{type,jdbcType=VARCHAR},
 		facePrice = #{faceprice,jdbcType=VARCHAR},
 		actualPrice = #{actualprice,jdbcType=VARCHAR},
