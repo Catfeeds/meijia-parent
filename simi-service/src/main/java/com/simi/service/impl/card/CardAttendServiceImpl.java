@@ -18,6 +18,7 @@ import com.simi.service.user.UsersService;
 import com.simi.vo.card.CardSearchVo;
 import com.simi.vo.card.LinkManVo;
 import com.simi.vo.user.UserFriendSearchVo;
+import com.simi.common.Constants;
 import com.simi.po.model.card.CardAttend;
 import com.simi.po.model.user.UserFriendReq;
 import com.simi.po.model.user.UserFriends;
@@ -144,7 +145,7 @@ public class CardAttendServiceImpl implements CardAttendService {
 				}
 				
 				if (newUser == null) {
-					newUser = userService.genUser(mobile, item.getName(), "", (short) 3, "");					
+					newUser = userService.genUser(mobile, item.getName(), "", (short) 3, Constants.USER_TYPE_0, "");					
 					usersAsyncService.genImUser(newUser.getId());
 				}
 				

@@ -65,7 +65,9 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		userDetailScoreService.insert(record);
 		
 		//更新总积分
-		u.setScore(u.getScore() + score);
+		Integer userScore = u.getScore();
+		if (userScore == null) userScore = 0;
+		u.setScore(userScore + score);
 		
 		
 		if (!action.equals("order")) {

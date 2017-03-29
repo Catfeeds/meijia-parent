@@ -174,7 +174,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 	
 	@Override
-	public Users genUser(String mobile, String name, String realName, short addFrom, String introduction) {
+	public Users genUser(String mobile, String name, String realName, short addFrom, short userType, String introduction) {
 		Users u = selectByMobile(mobile);
 		if (u == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			u = this.initUsers();
@@ -194,6 +194,53 @@ public class UsersServiceImpl implements UsersService {
 			u.setIntroduction(introduction);
 			
 			u.setHeadImg(Constants.DEFAULT_HEAD_IMG);
+			this.insertSelective(u);
+			
+			Long userId = u.getId();
+			// 检测用户所在地，异步操作
+			userAsyncService.userMobileCity(userId);
+
+			// 新用户注册通知运营人员
+			userAsyncService.newUserNotice(userId);
+
+			// 默认加固定客服用户为好友
+			userAsyncService.addDefaultFriends(userId);
+			
+			// 发送默认欢迎消息
+			userMsgAsyncService.newUserMsg(userId);
+			
+			//新用户注册赠送积分
+			userScoreAsyncService.sendScore(userId, Constants.SCORE_USER_REG, "new_user", u.getId().toString(), "新用户注册");
+			
+			//默认统计数
+			userAsyncService.statUserInit(userId);
+		}
+		return u;
+	}
+	
+	@Override
+	public Users genUser(Users u) {
+		
+		Users userExist = null;
+		String mobile = u.getMobile();
+		if (!StringUtil.isEmpty(mobile)) {
+			userExist = this.selectByMobile(mobile);
+		} else {
+			String openId = u.getOpenid();
+			String thirdType = u.getThirdType();
+			if (!StringUtil.isEmpty(openId) && !StringUtil.isEmpty(thirdType)) {
+				UserSearchVo searchVo = new UserSearchVo();
+				searchVo.setOpenid(openId);
+				searchVo.setThirdType(thirdType);
+				
+				List<Users> rs = this.selectBySearchVo(searchVo);
+				if (!rs.isEmpty()) {
+					userExist = rs.get(0);
+				}
+			}
+		}
+		
+		if (userExist == null) {// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			this.insertSelective(u);
 			
 			Long userId = u.getId();

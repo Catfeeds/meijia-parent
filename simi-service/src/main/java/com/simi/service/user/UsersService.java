@@ -48,6 +48,8 @@ public interface UsersService {
 
 	List<UserStatVo> getUserStatVos(List<Users> list);
 
-	Users genUser(String mobile, String name, String realName, short addFrom, String introduction);
+	Users genUser(String mobile, String name, String realName, short addFrom, short userType, String introduction);
+
+	Users genUser(Users u);
 	
 }

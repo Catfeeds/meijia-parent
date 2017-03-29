@@ -8,6 +8,12 @@ public class Constants {
 	 * 验证码最大值
 	 */
 	public static int CHECK_CODE_MAX_LENGTH = 999999;
+	
+	//用户类型  0 = 普通用户  1= 客服 2 = 服务商
+	public static short USER_TYPE_0 = 0;
+	public static short USER_TYPE_1 = 1;
+	public static short USER_TYPE_2 = 2;
+
 
 	//'0' COMMENT '用户来源 0 = APP  1 = 微网站  2 = 管理后台 3 = 云平台'
 	public static short USER_APP = 0;

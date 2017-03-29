@@ -248,7 +248,7 @@ public class StaffController extends BaseController {
 
 			// 验证手机号是否已经注册，如果未注册，则自动注册用户，
 			if (userExist == null) {
-				u = usersService.genUser(mobile, "", realName, Constants.USER_XCOULD, "");
+				u = usersService.genUser(mobile, "", realName, Constants.USER_XCOULD, Constants.USER_TYPE_0, "");
 			}
 			userId = u.getId();
 		}

@@ -129,7 +129,7 @@ public class UserFriendController extends BaseController {
 		
 		if (friendUser == null) {
 			//1. 注册为用户
-			friendUser = userService.genUser(mobile, name, "", (short) 2, "");
+			friendUser = userService.genUser(mobile, name, "", (short) 2, Constants.USER_TYPE_0, "");
 			
 			//如果第一次登陆未注册时未成功注册环信，则重新注册
 			UserRef3rd userRef3rd = userRef3rdService.selectByUserIdForIm(friendUser.getId());

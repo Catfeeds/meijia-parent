@@ -81,12 +81,7 @@ public class PartnerRegisterController extends BaseController {
 		// 手机号对应的用户表 users 没有则创建
 		Users users = usersService.selectByMobile(mobile);
 		if (users == null) {
-
-			users = usersService.initUsers();
-			users.setUserType((short) 2);
-			users.setMobile(mobile);
-			users.setName(name);
-			usersService.insert(users);
+			users = usersService.genUser(mobile, name, "", Constants.USER_WWZ, Constants.USER_TYPE_2,"");
 		}
 		if (users != null && users.getUserType() == 0) {
 

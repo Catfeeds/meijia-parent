@@ -128,7 +128,7 @@ public class AssetUseController extends BaseController {
 		} else if (!StringUtil.isEmpty(mobile)) {
 			u = userService.selectByMobile(mobile);
 			if (u == null) {
-				u = userService.genUser(mobile, name, name,  (short) 3, "");
+				u = userService.genUser(mobile, name, name,  (short) 3, Constants.USER_TYPE_0, "");
 			}
 		}
 		

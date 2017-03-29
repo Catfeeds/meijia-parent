@@ -167,7 +167,7 @@ public class OrderPartnerController extends BaseController {
 		Users u = userService.selectByMobile(mobile);
 		
 		if (u == null) {
-			u = userService.genUser(mobile, "", "", (short) 0, "");					
+			u = userService.genUser(mobile, "", "", (short) 0, Constants.USER_TYPE_0, "");					
 			usersAsyncService.genImUser(u.getId());
 		}
 		

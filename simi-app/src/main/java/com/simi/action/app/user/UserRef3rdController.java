@@ -116,7 +116,7 @@ public class UserRef3rdController extends BaseController {
 				users.setHeadImg(headImg);
 			}
 			users.setAddFrom((short) loginFrom);
-			userService.insertSelective(users);
+			users = userService.genUser(users);
 
 			// 第三方账号注册绑定环信账号
 			userRef3rdService.genImUser(users);
