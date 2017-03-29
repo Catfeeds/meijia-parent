@@ -23,6 +23,8 @@ public class UserSearchVo {
 	private List<Long> userIds;
 	
 	private List<String> mobiles;
+	
+	private String orderByStr;
 
 	public String getName() {
 		return name;
@@ -102,5 +104,13 @@ public class UserSearchVo {
 
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
+	}
+
+	public String getOrderByStr() {
+		return orderByStr;
+	}
+
+	public void setOrderByStr(String orderByStr) {
+		this.orderByStr = orderByStr;
 	}
 }

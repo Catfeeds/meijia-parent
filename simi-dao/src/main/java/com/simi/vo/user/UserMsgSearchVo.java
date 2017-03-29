@@ -4,6 +4,8 @@ public class UserMsgSearchVo {
 
 	private Long userId;
 	
+	private String mobile;
+	
 	private Long fromUserId;
 
 	private Long toUserId;
@@ -80,6 +82,14 @@ public class UserMsgSearchVo {
 
 	public void setParams(String params) {
 		this.params = params;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 }

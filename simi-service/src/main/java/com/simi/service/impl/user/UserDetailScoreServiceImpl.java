@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.simi.service.user.UserDetailScoreService;
+import com.simi.utils.UserUtil;
+import com.simi.vo.user.UserDetailScoreVo;
 import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.po.dao.user.UserDetailScoreMapper;
 import com.simi.po.dao.user.UsersMapper;
 import com.simi.po.model.user.UserDetailScore;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.TimeStampUtil;
 
 @Service
@@ -75,5 +78,24 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	public int updateByPrimaryKeySelective(UserDetailScore record) {
 		
 		return userDetailScoreMapper.updateByPrimaryKeySelective(record);
+	}
+	
+	@Override
+	public UserDetailScoreVo getVo(UserDetailScore item) {
+		UserDetailScoreVo vo = new UserDetailScoreVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		
+		String scoreStr = "";
+		if (vo.getIsConsume().equals((short)0)) scoreStr = "+" + vo.getScore();
+		if (vo.getIsConsume().equals((short)1)) scoreStr = "-" + vo.getScore();
+		vo.setScoreStr(scoreStr);
+		
+		String actionName = UserUtil.getScoreActionName(vo.getAction());
+		vo.setActionName(actionName);
+		
+		String addTimeStr = TimeStampUtil.timeStampToDateStr(vo.getAddTime() * 1000, "yyyy-MM-dd HH:mm");
+		vo.setAddTimeStr(addTimeStr);
+				
+		return vo;
 	}
 }

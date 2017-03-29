@@ -151,3 +151,7 @@ function btn_del(path) {
     location.href = appRootUrl + path;
 }
 
+function btn_link_blank(path) {
+	window.open(appRootUrl + path, "_blank");
+}
+

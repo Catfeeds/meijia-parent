@@ -32,7 +32,8 @@
 	<sql id="Base_Column_List">
 		id, province_name, mobile, 3rd_type, openid, name, real_name, id_card, sex,
 		introduction, level, head_img, qr_code, rest_money, score, exp,
-		user_type, add_from,add_time, update_time
+		user_type, add_from,add_time,
+		update_time
 	</sql>
 
 	<select id="selectByAll" resultMap="BaseResultMap">
@@ -40,7 +41,7 @@
 		<include refid="Base_Column_List" />
 		from users
 	</select>
-	
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
@@ -54,108 +55,34 @@
 		from users
 		where mobile = #{mobile,jdbcType=VARCHAR}
 	</select>
-	
+
 	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from users
-		where 1=1
-		<if test="userId != null">
-			and id = #{id,jdbcType=NUMERIC}
+		<include refid="bySearchVo" />
+		<if test="orderByStr!=null">
+			${orderByStr}
 		</if>
-		
-		<if test="name != null">
-			and name like CONCAT('%','${name}','%' )
+		<if test="orderByStr==null or orderByStr==''">
+			order by add_time desc
 		</if>
-		
-		<if test="mobile != null">
-			and mobile like CONCAT('%','${mobile}','%' )
-		</if>
-		
-		<if test="userType != null">
-			and user_type = #{userType,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="thirdType != null">
-			and 3rd_type = #{thirdType,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="openid != null">
-			and openid = #{openid,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="idCard != null">
-			and id_card = #{idCard,jdbcType=VARCHAR}
-		</if>
-		
-		<if test="userIds != null">
-			and id in
-			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		
-		<if test="mobiles != null">
-			and mobile in
-			<foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-
-		order by add_time desc
 	</select>
-	
+
 	<!--根据手机号查询用户信息 -->
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from users
-		where 1=1
-		<if test="userId != null">
-			and id = #{id,jdbcType=NUMERIC}
+		<include refid="bySearchVo" />
+		<if test="orderByStr!=null">
+			${orderByStr}
 		</if>
-		
-		<if test="name != null">
-			and name like CONCAT('%','${name}','%' )
+		<if test="orderByStr==null or orderByStr==''">
+			order by add_time desc
 		</if>
-		
-		<if test="mobile != null">
-			and mobile like CONCAT('%','${mobile}','%' )
-		</if>
-		
-		<if test="userType != null">
-			and user_type = #{userType,jdbcType=NUMERIC}
-		</if>
-				
-		<if test="thirdType != null">
-			and lower(3rd_type) = lower(#{thirdType,jdbcType=NUMERIC})
-		</if>
-		
-		<if test="openid != null">
-			and openid = #{openid,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="idCard != null">
-			and id_card = #{idCard,jdbcType=VARCHAR}
-		</if>
-		
-		<if test="userIds != null and userIds.size() > 0 ">
-			and id in
-			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		
-		<if test="mobiles != null and mobiles.size() > 0">
-			and mobile in
-			<foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-
-		order by add_time desc
 	</select>
-	
+
 	<!-- 根据手机号查询用户list -->
 	<select id="selectNotInMobiles" resultMap="BaseResultMap">
 		select
@@ -170,14 +97,15 @@
 	<select id="statByMonth" resultMap="statResultMap" parameterType="java.lang.Long">
 		select FROM_UNIXTIME(add_time,'%Y-%m') as names, count(name) as value
 		from users
-		where add_time between #{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
+		where add_time between
+		#{endTime,jdbcType=NUMERIC} and #{startTime,jdbcType=NUMERIC} group by names
 	</select>
-	
+
 	<!-- 用户个数统计 -->
-	 <select id="statByTotalUser" resultType="java.lang.Integer" parameterType="com.simi.vo.chart.ChartSearchVo">
-		SELECT 
-			   COUNT(*) AS total 
-			   FROM users
+	<select id="statByTotalUser" resultType="java.lang.Integer" parameterType="com.simi.vo.chart.ChartSearchVo">
+		SELECT
+		COUNT(*) AS total
+		FROM users
 		WHERE 1=1
 		<if test="startTime !=null">
 			<![CDATA[ and add_time >= #{startTime}]]>
@@ -186,6 +114,52 @@
 			<![CDATA[ and add_time <= #{endTime}]]>
 		</if>
 	</select>
+
+	<sql id="bySearchVo">
+		where 1=1
+		<if test="userId != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+
+		<if test="name != null">
+			and name like CONCAT('%','${name}','%' )
+		</if>
+
+		<if test="mobile != null">
+			and mobile like CONCAT('%','${mobile}','%' )
+		</if>
+
+		<if test="userType != null">
+			and user_type = #{userType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="thirdType != null">
+			and 3rd_type = #{thirdType,jdbcType=NUMERIC}
+		</if>
+
+		<if test="openid != null">
+			and openid = #{openid,jdbcType=NUMERIC}
+		</if>
+
+		<if test="idCard != null">
+			and id_card = #{idCard,jdbcType=VARCHAR}
+		</if>
+
+		<if test="userIds != null">
+			and id in
+			<foreach item="item" index="index" collection="userIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+		<if test="mobiles != null">
+			and mobile in
+			<foreach item="item" index="index" collection="mobiles" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+	</sql>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from users
@@ -200,7 +174,7 @@
 		insert into users (id, province_name, mobile,
 		3rd_type, openid, name,
 		real_name, id_card, sex,
-		introduction, level, 
+		introduction, level,
 		head_img, qr_code, rest_money, score, exp,
 		user_type, add_from,
 		add_time, update_time)
@@ -212,7 +186,7 @@
 		#{headImg,jdbcType=VARCHAR},
 		#{qrCode,jdbcType=VARCHAR}, #{restMoney,jdbcType=DECIMAL}, #{score,jdbcType=INTEGER},
 		#{exp,jdbcType=INTEGER},
-		#{userType,jdbcType=NUMERIC}, 
+		#{userType,jdbcType=NUMERIC},
 		#{addFrom,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC})
 	</insert>
@@ -414,7 +388,8 @@
 		update users
 		set province_name = #{provinceName,jdbcType=VARCHAR},
 		mobile = #{mobile,jdbcType=CHAR},
-		3rd_type = #{thirdType,jdbcType=VARCHAR},
+		3rd_type =
+		#{thirdType,jdbcType=VARCHAR},
 		openid = #{openid,jdbcType=VARCHAR},
 		name = #{name,jdbcType=VARCHAR},
 		real_name = #{realName,jdbcType=VARCHAR},
@@ -424,7 +399,8 @@
 		introduction =#{introduction,jdbcType=VARCHAR},
 		level = #{level,jdbcType=NUMERIC},
 		head_img = #{headImg,jdbcType=VARCHAR},
-		qr_code = #{qrCode,jdbcType=VARCHAR},
+		qr_code =
+		#{qrCode,jdbcType=VARCHAR},
 		rest_money =
 		#{restMoney,jdbcType=DECIMAL},
 		score = #{score,jdbcType=INTEGER},

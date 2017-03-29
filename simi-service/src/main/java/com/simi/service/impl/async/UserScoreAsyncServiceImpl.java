@@ -129,9 +129,9 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		List<Cards> rs = cardService.selectBySearchVo(searchVo);
 		
 		if (cardType.equals((short)3)) {
-			if (rs.size() > 200) return new AsyncResult<Boolean>(true);
+			if (rs.size() > 20) return new AsyncResult<Boolean>(true);
 		} else {
-			if (rs.size() > 10) return new AsyncResult<Boolean>(true);
+			if (rs.size() > 1) return new AsyncResult<Boolean>(true);
 		}
 		Integer score = Constants.SCORE_CARD_CREATE;
 		
