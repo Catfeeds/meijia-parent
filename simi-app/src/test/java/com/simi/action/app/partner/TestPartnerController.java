@@ -98,22 +98,21 @@ public class TestPartnerController extends JUnitActionBase  {
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 
     }		
-	
+	*/
 	@Test
-    public void testPartnerAdd() throws Exception {
+    public void testPartnerRegist() throws Exception {
 
-		String url = "/app/order/post_add.json";
+		String url = "/app/partner/post_partner_register.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//通用订单. 无需支付
-	    postRequest = postRequest.param("user_id", "77");
-	    postRequest = postRequest.param("partner_user_id", "274");
-	    postRequest = postRequest.param("service_type_id", "180");
-	    postRequest = postRequest.param("service_price_id", "183");
-	    postRequest = postRequest.param("mobile", "13146012753");
-	    postRequest = postRequest.param("pay_type", "0");
-//	    postRequest = postRequest.param("user_coupon_id", "266");
+	    postRequest = postRequest.param("company_name", "北京测试保洁科技有限公司");
+	    postRequest = postRequest.param("name", "199xxxxx998");
+	    postRequest = postRequest.param("register_type", "1");
+	    postRequest = postRequest.param("service_type_id", "204");
+	    postRequest = postRequest.param("mobile", "19910809998");
+
 	    
 	    
 	    ResultActions resultActions = mockMvc.perform(postRequest);
@@ -124,5 +123,5 @@ public class TestPartnerController extends JUnitActionBase  {
 
 	    System.out.println("RestultActons: " + resultActions.andReturn().getResponse().getContentAsString());
 	    Thread.sleep(200000); // 因为junit结束会结束jvm，所以让它等会异步线程  
-    }*/
+    }
 }

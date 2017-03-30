@@ -7,6 +7,12 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="assets/css/amazeui.min.css">
     <link rel="stylesheet" href="assets/css/store.css">
+
+<!--<![阿里云播放器引用css]-->
+    <link rel="stylesheet" href="assets/css/index-min.css">
+<!--<![阿里云播放器引用js]-->
+    <script src="assets/js/prism-min.js"></script>
+
     <title>使用帮助</title>
 </head>
 <body style="background:#ececec">
@@ -57,10 +63,23 @@
 
   </div>
 </div>
+【介绍视频】
+<div id='J_prismPlayer' class='prism-player'></div>
+<script type=text/javascript>
+    	var player = new prismplayer({
+		    id: "J_prismPlayer", // 容器id
+		    source: "http://cloud.video.taobao.com/play/u/2554695624/p/1/e/6/t/1/fv/102/28552077.mp4",         //视频url支持互联网可直接访问的视频地址
+		    autoplay: true,      // 自动播放
+		    width: "100%",       // 播放器宽度
+		    height: "400px"      // 播放器高度
+		});
+</script>
+<br><br><br><br>
 <script src="assets/js/jquery.min.js"></script>
   <!--<![endif]-->
   <script src="assets/js/amazeui.min.js"></script>
   <script src="assets/js/app.js"></script>
+
 
 </body>
 </html>

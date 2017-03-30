@@ -3,7 +3,9 @@ package com.simi.vo.partners;
 import java.util.List;
 
 public class PartnersSearchVo {
-
+	
+	private Long userId;
+	
 	private Long partnerId;
 	
 	private Long serviceTypeId;
@@ -112,6 +114,14 @@ public class PartnersSearchVo {
 
 	public void setSpiderPartnerIds(List<Long> spiderPartnerIds) {
 		this.spiderPartnerIds = spiderPartnerIds;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 }
