@@ -32,7 +32,6 @@
 		select
 		<include refid="Base_Column_List" />
 		from feed_comment
-		where 1 = 1
 		<include refid="bySearchVo"/>
 		order by add_time desc
 	</select>
@@ -40,7 +39,6 @@
 	<select id="totalByFid" resultType="java.lang.Integer" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select count(*)
 		from feed_comment
-		where 1 = 1
 		<include refid="bySearchVo"/>
 	</select>
 
