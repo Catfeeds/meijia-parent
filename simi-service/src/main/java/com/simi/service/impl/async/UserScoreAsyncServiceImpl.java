@@ -78,11 +78,15 @@ public class UserScoreAsyncServiceImpl implements UserScoreAsyncService {
 		//更新总积分
 		Integer userScore = u.getScore();
 		if (userScore == null) userScore = 0;
-		u.setScore(userScore + score);
+		Integer scoreAfter = userScore + score;
+		u.setScore(scoreAfter);
 		
 		
 		if (!action.equals("order")) {
-			u.setExp(u.getExp() + score);
+			Integer userExp = u.getExp();
+			if (userExp == null) userExp = 0;
+			Integer expAfter = userExp + score;
+			u.setExp(expAfter);
 		}
 		usersService.updateByPrimaryKeySelective(u);
 		

@@ -237,7 +237,7 @@ public class UserLeaveController extends BaseController {
 		searchVo1.setStartTime(TimeStampUtil.getBeginOfToday());
 		searchVo1.setEndTime(TimeStampUtil.getEndOfToday());
 		List<UserLeave> list = userLeaveService.selectBySearchVo(searchVo1);
-		if (list.size() <= 0) {
+		if (list.size() <= 2) {
 			userScoreAsyncService.sendScore(userId, Constants.SCORE_LEAVE, "leave", leaveId.toString(), "请假申请");
 		}
 		

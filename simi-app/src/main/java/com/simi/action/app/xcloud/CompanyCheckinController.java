@@ -167,7 +167,7 @@ public class CompanyCheckinController extends BaseController {
 		searchVo1.setStartTime(startTime);
 		searchVo1.setEndTime(endTime);
 		List<XcompanyCheckin> list = xCompanyCheckinService.selectBySearchVo(searchVo1);
-		if (list.size() <= 10) {
+		if (list.size() < 3) {
 			userScoreAsyncService.sendScore(userId, Constants.SCORE_CHECKIN, "checkin", record.getId().toString(), "云考勤");
 		}
 		

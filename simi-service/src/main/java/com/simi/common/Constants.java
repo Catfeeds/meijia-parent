@@ -166,12 +166,13 @@ public class Constants {
 	public static int SCORE_USER_REG = 100;			//用户注册
 	public static int SCORE_DAY_SIGN = 30;			//签到
 	public static int SCORE_CARD_CREATE = 10;		//创建卡片
-	public static int SCORE_LEAVE = 1;				//请假申请
-	public static int SCORE_CHECKIN = 1;			//云考勤
+	public static int SCORE_LEAVE = 10;				//请假申请
+	public static int SCORE_CHECKIN = 10;			//云考勤
 	public static int SCORE_COMPANY_CREATE = 300;	//创建公司/团队
 	public static int SCORE_QA= 5;					//提出问题
 	public static int SCORE_QA_COMMENT = 5;			//回答问题
 	public static int SCORE_QA_CAINA = 10;			//问题采纳
+	public static int SCORE_ASSET = 10;				//资产管理
 	
 	
 	/*

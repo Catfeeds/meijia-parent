@@ -30,6 +30,7 @@ import com.simi.po.model.xcloud.XcompanyAssets;
 import com.simi.service.ImgService;
 import com.simi.service.ValidateService;
 import com.simi.service.async.UserMsgAsyncService;
+import com.simi.service.async.UserScoreAsyncService;
 import com.simi.service.record.RecordAssetService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
@@ -67,6 +68,9 @@ public class AssetController extends BaseController {
 	
 	@Autowired
 	private ValidateService validateService;
+	
+	@Autowired
+	private UserScoreAsyncService userScoreAsyncService;
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/post_asset", method = { RequestMethod.POST })
@@ -162,6 +166,17 @@ public class AssetController extends BaseController {
 		String title = "资产登记";
 		String summary =  "你生成了新的资产登记";
 		userMsgAsyncService.newActionAppMsg(userId, id, "asset", title, summary, "");
+		
+		//积分赠送
+		AssetSearchVo searchVo = new AssetSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setCompanyId(companyId);
+		searchVo.setStartTime(TimeStampUtil.getBeginOfToday());
+		searchVo.setEndTime(TimeStampUtil.getEndOfToday());
+		List<RecordAssets> list = recordAssetService.selectBySearchVo(searchVo);
+		if (list.size() < 3) {
+			userScoreAsyncService.sendScore(userId, Constants.SCORE_LEAVE, "asset", id.toString(), "资产登记");
+		}
 
 		return result;
 
