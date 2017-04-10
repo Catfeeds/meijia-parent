@@ -41,6 +41,7 @@
 							<label class="col-md-2 control-label">团队名称&nbsp;*</label>
 							<div class=col-md-5>
 								<form:input path="companyName" class="form-control" placeholder="团队名称" maxSize="10" />
+								<form:errors path="companyName" class="field-has-error"></form:errors>
 							</div>
 						</div>
 						<div class="form-group">

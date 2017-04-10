@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -235,10 +236,14 @@ public class PartnersController extends BaseController {
 				}
 			}
 		}
+		
+		
+		Long[] checkedAuthorityIdsArray = new Long[checkedPartnerTypeIds.size()];
+		checkedPartnerTypeIds.toArray(checkedAuthorityIdsArray);
+		partnerFormVo.setPartnerTypeIds(checkedAuthorityIdsArray);
+		
 		if (!model.containsAttribute("partners")) {
-			Long[] checkedAuthorityIdsArray = new Long[checkedPartnerTypeIds.size()];
-			checkedPartnerTypeIds.toArray(checkedAuthorityIdsArray);
-			partnerFormVo.setPartnerTypeIds(checkedAuthorityIdsArray);
+			
 			model.addAttribute("partners", partnerFormVo);
 		}
 		String expanded = ServletRequestUtils.getStringParameter(request, "expanded", null);
@@ -320,13 +325,13 @@ public class PartnersController extends BaseController {
 	 */
 	@AuthPassport
 	@RequestMapping(value = "/savePartnerAddNewForm", method = { RequestMethod.POST })
-	public String doPartnerForm(HttpServletRequest request, Model model, @ModelAttribute("partners") PartnerFormVo partners, BindingResult result)
+	public String doPartnerForm(HttpServletRequest request, Model model, @ModelAttribute("partners") PartnerFormVo partners, BindingResult result, HttpServletRequest response)
 			throws IOException {
 		// String registerTime = request.getParameter("registerTime");
 		String registerTime = request.getParameter("registerTime");
 
 		Long partnerId = partners.getPartnerId();
-		  
+				  
 		Map<String, String> fileMaps = imgService.multiFileUpLoad(request);
 		if (fileMaps.get("companyDescImg") != null) {
 			String imgUrl = fileMaps.get("companyDescImg");
@@ -362,7 +367,16 @@ public class PartnersController extends BaseController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			
+			//需要检测库里是否已经有相同的名称，如果有则不能更新
+			PartnersSearchVo searchVo = new PartnersSearchVo();
+			searchVo.setCompanyName(partners.getCompanyName());
+			List<Partners> listExist = partnersService.selectBySearchVo(searchVo);
+			if (!listExist.isEmpty()) {
+				result.addError(new FieldError("partners", "companyName", "公司名称已存在."));
+				return spiderPartnerForm(model, partnerId, request, response);
+			}
+			
 			partnersItem.setServiceArea("");
 			partnersItem.setServiceType("");
 			partnersItem.setAdminId(accountAuth.getId());

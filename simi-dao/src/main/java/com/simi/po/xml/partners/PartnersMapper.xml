@@ -96,7 +96,7 @@
 		
 		<if test="spiderPartnerIds != null">
 			and spider_partner_id in
-			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			<foreach item="item" index="index" collection="spiderPartnerIds" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>

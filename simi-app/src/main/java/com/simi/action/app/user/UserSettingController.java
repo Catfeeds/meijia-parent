@@ -44,7 +44,7 @@ public class UserSettingController extends BaseController {
 	/**
 	 * 设置常用提醒
 	 */
-	@RequestMapping(value = "/get_default_subscribe_tags", method = RequestMethod.POST)
+	@RequestMapping(value = "/get_default_subscribe_tags")
 	public AppResultData<Object> getDefaultSubScribeTags() {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");

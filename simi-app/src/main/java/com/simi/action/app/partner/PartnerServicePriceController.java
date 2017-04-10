@@ -132,7 +132,7 @@ public class PartnerServicePriceController extends BaseController {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 
 		PartnerUsers partnerUsers = partnerUserService.selectByUserId(userId);
-
+		if (partnerUsers == null) return result;
 		Long partnerId = partnerUsers.getPartnerId();
 		Long serviceTypeId = partnerUsers.getServiceTypeId();
 
