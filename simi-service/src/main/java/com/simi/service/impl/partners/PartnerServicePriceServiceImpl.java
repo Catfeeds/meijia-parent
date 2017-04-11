@@ -82,6 +82,7 @@ public class PartnerServicePriceServiceImpl implements PartnerServicePriceServic
 		record.setCategory("");
 		record.setAction("");
 		record.setParams("");
+		record.setTags("");
 		record.setGotoUrl("");
 		record.setExtendId(0L);
 		record.setIsEnable((short) 1);

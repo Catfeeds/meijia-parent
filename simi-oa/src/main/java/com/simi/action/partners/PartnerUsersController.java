@@ -460,7 +460,9 @@ public class PartnerUsersController extends BaseController {
 		record.setAction(vo.getAction());
 		record.setParams(vo.getParams());
 		record.setGotoUrl(vo.getGotoUrl());
-		record.setTags(vo.getTags());
+		
+		if (vo.getTags() != null)
+			record.setTags(vo.getTags());
 		
 		
 		record.setExtendId(vo.getExtendId());
