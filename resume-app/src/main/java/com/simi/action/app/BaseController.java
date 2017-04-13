@@ -1,11 +1,16 @@
 package com.simi.action.app;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.meijia.utils.TimeStampUtil;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.vo.AppResultData;
@@ -19,7 +24,26 @@ public class BaseController {
     public AppResultData<String> exp(HttpServletRequest request, Exception ex) {
 
         request.setAttribute("ex", ex);
-
+        
+        logger.info("request begin_time: "+ TimeStampUtil.timeStampToDateStr(beginTime));
+		logger.info(request.getMethod() + " " + request.getRequestURL());
+		
+		Map<String,String> params = new HashMap<String,String>();
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			//乱码解决
+			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
+			params.put(name, valueStr);
+		}
+		logger.info(params.toString());
+		
         logger.error("Global exception found, Exception is: {}", ex);
 //        System.out.println("-----------------------message--------------------------------");
 //        System.out.println(ex.getMessage());
