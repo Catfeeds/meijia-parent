@@ -181,8 +181,10 @@ public class UsersAsyncServiceImpl implements UsersAsyncService {
 			e.printStackTrace();
 		}
 
-		u.setProvinceName(provinceName);
-		usersService.updateByPrimaryKeySelective(u);
+		Users updateUser = new Users();
+		updateUser.setId(userId);
+		updateUser.setProvinceName(provinceName);
+		usersService.updateByPrimaryKeySelective(updateUser);
 		return new AsyncResult<Boolean>(true);
 	}
 

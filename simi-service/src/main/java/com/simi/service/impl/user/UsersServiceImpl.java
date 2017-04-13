@@ -200,6 +200,7 @@ public class UsersServiceImpl implements UsersService {
 			
 			//新用户注册赠送积分
 			userScoreAsyncService.sendScore(userId, Constants.SCORE_USER_REG, "new_user", u.getId().toString(), "新用户注册");
+			
 
 			// 新用户注册通知运营人员
 			userAsyncService.newUserNotice(userId);
@@ -209,6 +210,7 @@ public class UsersServiceImpl implements UsersService {
 			
 			// 发送默认欢迎消息
 			userMsgAsyncService.newUserMsg(userId);
+			
 			
 			//默认统计数
 			userAsyncService.statUserInit(userId);
