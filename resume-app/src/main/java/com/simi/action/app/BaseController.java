@@ -26,7 +26,7 @@ public class BaseController {
         request.setAttribute("ex", ex);
         
        
-		
+        long beginTime = TimeStampUtil.getNow();
 		Map<String,String> params = new HashMap<String,String>();
 		Map requestParams = request.getParameterMap();
 		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
