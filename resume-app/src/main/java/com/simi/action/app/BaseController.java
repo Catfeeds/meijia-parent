@@ -25,8 +25,7 @@ public class BaseController {
 
         request.setAttribute("ex", ex);
         
-        logger.info("request begin_time: "+ TimeStampUtil.timeStampToDateStr(beginTime));
-		logger.info(request.getMethod() + " " + request.getRequestURL());
+       
 		
 		Map<String,String> params = new HashMap<String,String>();
 		Map requestParams = request.getParameterMap();
@@ -42,9 +41,12 @@ public class BaseController {
 			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
 			params.put(name, valueStr);
 		}
-		logger.info(params.toString());
+		
 		
         logger.error("Global exception found, Exception is: {}", ex);
+        logger.error("request begin_time: "+ TimeStampUtil.timeStampToDateStr(beginTime));
+		logger.error(request.getMethod() + " " + request.getRequestURL());
+		logger.error(params.toString());
 //        System.out.println("-----------------------message--------------------------------");
 //        System.out.println(ex.getMessage());
 //        System.out.println("-----------------------cause--------------------------------");
