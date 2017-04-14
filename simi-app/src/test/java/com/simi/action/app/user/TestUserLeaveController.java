@@ -20,30 +20,30 @@ public class TestUserLeaveController extends JUnitActionBase{
 
 	
 	/**
-	 * 	提交卡片接口 单元测试
+	 * 	提交请假申请
 	 */
 	@Test
-    public void testPostCard() throws Exception {
+    public void testPostLeave() throws Exception {
 
 		String url = "/app/user/post_leave.json";
 
      	MockHttpServletRequestBuilder postRequest = post(url);
      	
      	//新增
-     	postRequest = postRequest.param("company_id", "15");
-	    postRequest = postRequest.param("user_id", "278");
+     	postRequest = postRequest.param("company_id", "6");
+	    postRequest = postRequest.param("user_id", "1");
 	    postRequest = postRequest.param("leave_type", "1");
-	    postRequest = postRequest.param("start_date", "2016-01-28");
-	    postRequest = postRequest.param("end_date", "2016-01-28");
-	    postRequest = postRequest.param("total_days", "1");
-	    postRequest = postRequest.param("remarks", "有事");
+	    postRequest = postRequest.param("start_date", "2017-04-15");
+	    postRequest = postRequest.param("end_date", "2017-04-16");
+	    postRequest = postRequest.param("total_days", "2天");
+	    postRequest = postRequest.param("remarks", "开会");
 	    
-	    //参会人员
+	    //审批人员
 	    List<LinkManVo> attendsList = new ArrayList<LinkManVo>();
 	    LinkManVo a1 = new LinkManVo();
-	    a1.setMobile("18612514665");
-	    a1.setName("18612514665");
-	    a1.setUser_id(18L);
+	    a1.setMobile("13701187136");
+	    a1.setName("哈雷僧");
+	    a1.setUser_id(195L);
 //	    LinkManVo a2 = new LinkManVo();
 //	    a2.setMobile("18037338893");
 //	    a2.setName("A");

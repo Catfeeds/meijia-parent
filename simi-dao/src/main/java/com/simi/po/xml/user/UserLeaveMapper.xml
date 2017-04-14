@@ -30,6 +30,19 @@
 		select
 		<include refid="Base_Column_List" />
 		from user_leave
+		<include refid="bySearchVo" />
+		order by update_time desc
+	</select>
+
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserLeaveSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from user_leave
+		<include refid="bySearchVo" />
+		order by leave_id desc
+	</select>
+	
+	<sql id="bySearchVo">
 		where 1=1
 		<if test="companyId != null">
 			and company_id = #{companyId,jdbcType=NUMERIC}
@@ -68,43 +81,10 @@
 		<if test="endTime != null">
 			<![CDATA[ and add_time <= #{endTime,jdbcType=NUMERIC} ]]>
 		</if>
-
-		order by update_time desc
-	</select>
-
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserLeaveSearchVo">
-		select
-		<include refid="Base_Column_List" />
-		from user_leave
-		where 1=1
-		<if test="companyId != null">
-			and company_id = #{companyId,jdbcType=NUMERIC}
-		</if>
-
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
 		
-		<if test="mobile != null">
-			and user_id in (select id from users where mobile like CONCAT('%','${mobile}','%' ) )
-		</if>
-
-		<if test="startDate != null">
-			<![CDATA[ and (  ( start_date >= #{startDate,jdbcType=NUMERIC} and end_date <= #{startDate,jdbcType=NUMERIC} ) OR
-							 ( start_date >= #{endDate,jdbcType=NUMERIC} and end_date <= #{endDate,jdbcType=NUMERIC} )
-						  )
-			 ]]>
-		</if>
-
-		<if test="status != null">
-			and status in
-			<foreach item="item" index="index" collection="status" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-
-		order by leave_id desc
-	</select>
+	
+	
+	</sql>
 
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
