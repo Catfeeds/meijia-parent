@@ -65,6 +65,7 @@ public class FeedServiceImpl implements FeedService {
 		record.setTotalView(0);
 		record.setFeedExtra("");
 		record.setStatus((short) 0);
+		record.setFeatured((short) 0);
 		record.setAddTime(TimeStampUtil.getNowSecond());
 
 		return record;

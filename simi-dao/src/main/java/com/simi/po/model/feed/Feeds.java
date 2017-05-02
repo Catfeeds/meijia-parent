@@ -20,6 +20,8 @@ public class Feeds {
     private String feedExtra;
     
     private Short status;
+    
+    private Short featured;
 
     private Long addTime;
 
@@ -109,5 +111,13 @@ public class Feeds {
 
 	public void setStatus(Short status) {
 		this.status = status;
+	}
+
+	public Short getFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(Short featured) {
+		this.featured = featured;
 	}
 }

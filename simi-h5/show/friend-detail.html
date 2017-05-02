@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/store.css">
+    <title>好友个人主页</title>
+</head>
+<body>
+<div class="pet_mian" id="top">
+    	<div class="pet_grzx">
+			<div class="pet_grzx_nr">
+		    	<div class="pet_grzx_ico">
+		          	<img src="images/a3.png" alt="">
+		      	</div>
+		      	<div class="pet_grzx_name">张三</div>
+		      	<div class="pet_grzx_map">LV3</div>
+		      	<!--
+		      	<div class="pet_grzx_num_font">个人一句话简介</div>
+		      	<div class="pet_grzx_num">
+		          <span>653<i>同行排名</i></span>
+		          <span>2304<i>经验值</i></span>
+		          <span>2304<i>经验值</i></span>
+		     	 </div>
+		     	 -->
+		      	<hr>
+		  	</div>
+  			<div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+  				<div class="am-list-news-bd">
+  					<ul class="am-list">
+     				<!--缩略图在标题右边-->
+      
+				      	<li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_list_one_block">
+				        
+				        	<div class=" am-u-sm-8 am-list-main pet_list_one_nr">
+				            	<h3 class="am-list-item-hd pet_list_one_bt" id = "serviceContent">主人很忙，什么都没有留下~</h3>
+				            	<div class="pet_article_user_time pet_hd_con_map" id = "serviceAddr" ><i class="iconfont">&#xe632;</i>所在地：北京</div>
+				        	</div>
+				        	<!--
+				          	<div class="am-u-sm-4 am-list-thumb">
+				            	<a href="###" class="">
+				              	<img src="" id ="cardLogo" class="pet_list_one_img" alt=""/>
+				            	</a>
+				          	</div>
+				          	-->
+				      	</li>
+				    </ul>
+  				</div>
+    		</div>
+		</div>
+
+		<div class="pet_article_dowload pet_dowload_more_top_off">
+	      	<div class="pet_article_dowload_title">大家都在用，就差你了~~</div>
+	      	<div class="pet_article_dowload_content pet_dowload_more_top_bg"><div class="pet_article_dowload_triangle pet_dowload_more_top_san"></div>
+	      	<div class="pet_article_dowload_ico"><img src="images/footdon.png" alt=""></div>
+	      	<div class="pet_article_dowload_content_font">菠萝HR，人事行政必备神器，快来试试吧。 </div>
+	      	<div class="pet_article_dowload_all">
+		        <a href="http://bolohr.com/m/app" class="pet_article_dowload_Az am-icon-apple"> App store</a>
+		        <a href="http://bolohr.com/m/app" class="pet_article_dowload_Pg am-icon-android"> Android</a>
+	      	</div>
+    	</div>
+    	<div class="pet_article_footer_info">Copyright(c) 菠萝人事 All Rights Reserved</div>
+</div>
+ <script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+	
+	<!--本页面使用的js-->
+	<script src="assets/js/common/validate-methods.js"></script>
+	<script src="assets/js/countdown.js"></script>
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/company/card-share.js"></script>
+<script>
+$(function(){
+
+    // 动态计算新闻列表文字样式
+    auto_resize();
+    $(window).resize(function() {
+        auto_resize();
+    });
+    $('.am-list-thumb img').load(function(){
+        auto_resize();
+    });
+
+    $('.am-list > li:last-child').css('border','none');
+    function auto_resize(){
+        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
+
+    }
+        $('.pet_nav_gengduo').on('click',function(){
+            $('.pet_more_list').addClass('pet_more_list_show');
+       });
+        $('.pet_more_close').on('click',function(){
+            $('.pet_more_list').removeClass('pet_more_list_show');
+        });
+});
+
+</script>
+</body>
+</html>

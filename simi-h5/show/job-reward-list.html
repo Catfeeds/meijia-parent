@@ -8,12 +8,52 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="assets/css/amazeui.min.css">
     <link rel="stylesheet" href="assets/css/store.css">
-    <title>赏金猎人列表</title>
+    <title>圈内招聘列表</title>
 </head>
 <body style="background:#ececec">
 
 <div class="pet_content_block pet_hd_con">
-<div class="pet_hd_con_head"><img src="images/ad-banner-xuanshang.jpg" alt=""></div>
+  
+  <div class="pet_hd_con_head"><img src="images/ad-banner-xuanshang.jpg" alt=""></div>
+  
+
+  <ul class="am-nav am-nav-pills am-nav-justify">
+    <li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+            职位 <span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+            <li class="am-dropdown-header">选择要查看的职位</li>
+            <li class="am-active"><a href="#">全部职位</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">人事招聘专员</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">人事部经理</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">行政前台</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">行政部经理</a></li>
+        </ul>
+    </li>
+    <li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+            地区 <span class="am-icon-caret-down"></span>
+        </a>
+          <ul class="am-dropdown-content">
+            <li class="am-dropdown-header">选择要查看的地区</li>
+            <li class="am-active"><a href="#">全部地区</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">北京</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">上海</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">深圳</a></li>
+            <li class="am-divider"></li>
+            <li><a href="#">广州</a></li>
+        </ul>
+    </li>
+  </ul>
+
   <div data-am-widget="list_news" class="am-list-news am-list-news-default am-no-layout">
 
           <div class="am-list-news-bd">
@@ -22,25 +62,25 @@
               	
               </ul>
           </div>
-          
-          <button type="button" id="btn-get-more" class="am-btn am-btn-primary am-btn-block" style="display:none">加载更多</button>
+          <center><button type="button" id="btn-get-more" class="am-btn am-btn-default am-round" style="display:none">点击加载更多</button></center>
+          <br>
     </div>
     
     
        <div id="resumeListModel" style="display:none">
-    
+     
          
          <li  id="resultCard" 
 		 	 onclick = "resumeDetailForm({userId},{resumeId})"	 
          	class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-right pet_hd_list">
                   <a href="###" class="pet_hd_block">
                     <div class="pet_hd_block_title">{title}</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe632;</i>所在地：{cityName}</div>
-                    <div class="pet_hd_block_map"><i class="iconfont">&#xe617;</i>{endTimeStr}</div>
-                    
-                    
-                    <div class="pet_hd_block_tag">{rewardCss} 以成功入职为准</div>
-                    
+                    <div class="pet_hd_block_map"><span class="am-fl"><i class="am-icon-compass"></i>所在地：{cityName}</span> &nbsp;<span class="am-fr am-text-warning"><i class="am-icon-yen"></i><strong>薪资：3K-6K</strong></span></div>
+
+                    <div class="pet_hd_block_map"><span class="am-fl"><i class="am-icon-clock-o"></i>截止日：{endTimeStr}</span>
+                    <!--<span class="am-fr"><i class="am-icon-lightbulb-o"></i>经验：1年以上</span>-->
+                    </div>
+                    <div class="pet_hd_block_tag">{rewardCss} </div>
                   </a>
           </li>
          
@@ -53,7 +93,7 @@
       <ul class="am-navbar-nav am-cf am-avg-sm-4">
           <li id="publishJobHunter" >
             <a href="##" >
-                <span class="am-navbar-label">发布悬赏需求</span>
+                <span class="am-navbar-label-bottom">发布招聘需求</span>
             </a>
           </li>
       </ul>

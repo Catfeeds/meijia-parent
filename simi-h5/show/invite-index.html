@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
 <meta charset="UTF-8">
-<title>企业用户注册与登录</title>
+<title>猎头加盟</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -31,12 +31,19 @@
 <body>
 
 	<div class="am-g" >
-		<img src="images/invist-bg.jpg" class="am-img-responsive" alt="" />
+		<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
+		  <ul class="am-slides">
+		    <li><img src="images/ad-banner-store1.jpg" /></li>
+		    <li><img src="images/ad-banner-store2.jpg" /></li>
+		  </ul>
+		</div>
 		<div class="am-u-md-centered">
+		<h2 align="center">企管人资专家好，先填写申请信息哦~</h2>
+		<hr>
 		<form action="" id="sec-form" class="am-forml">
 
 		 <div class="am-form-group">
-		      <label for="doc-ipt-email-1">请输入手机号</label>
+		      <label for="doc-ipt-email-1">请输入手机号（必填）</label>
 		      <input type="text" type="text" id="mobile" name = "mobile" class="am-form-field" placeholder="输入手机号" required>
 		 </div>
 
@@ -48,13 +55,14 @@
 						placeholder="输入您的手机号" type="button">获取验证码</button>
 				</span>
 		</div>
+		<br>
 			 <div class="am-form-group">
-		      <label for="doc-ipt-email-1">请输入昵称</label>
+		      <label for="doc-ipt-email-1">请输入昵称（必填）</label>
 		      <input type="text" type="text" id="name" name = "name" class="am-form-field" placeholder="请输昵称，可选填">
 		 </div>
 
 			<div class="am-form-group">
-		      <label for="doc-ipt-email-1">请输入真实姓名</label>
+		      <label for="doc-ipt-email-1">请输入真实姓名（必填）</label>
 		      <input type="text" type="text" id="real_name" name = "real_name" class="am-form-field" placeholder="请输入真实姓名" required>
 		 </div>
 
@@ -83,24 +91,24 @@
 			</div><br> -->
 			
 			<div class="am-form-group">
-				<label for="doc-ipt-email-1">请输入所学专业</label>
+				<label for="doc-ipt-email-1">您擅长的专业领域（必填）</label>
 					<input type="text" id="major" name="major" class="am-form-field" placeholder="请输入所学专业" required>
 			</div>
 
 			<div class="am-form-group">
-				<label for="doc-select-1">最高学历</label> <select id="degreeId" name="degreeId"  class="am-form-field">
-					<option value="0">小学</option>
+				<label for="doc-select-1">您的最高学历</label> <select id="degreeId" name="degreeId"  class="am-form-field">
 					<option value="1">初中</option>
 					<option value="2">高中</option>
 					<option value="3">专科</option>
 					<option value="4" selected="selected">本科</option>
 					<option value="5">硕士研究生</option>
-					<option value="6">博士研究生</option>
+					<option value="6">博士</option>
 				</select> <span class="am-form-caret"></span>
 			</div>
 			
 			<input type="hidden" id="tag_ids" name="tag_ids" value="" />
 			<div class="am-form-group" >
+				<label for="doc-select-2">选择您的技能标签</label>
 				<div id ="tagNames" name ="tagNames">
 				
 				</div>

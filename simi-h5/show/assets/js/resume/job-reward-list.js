@@ -47,9 +47,9 @@ function resumeList (page) {
 				
 				if(resumeListVo[i].end_time_flag == "disable"){
 					//已 截止
-					htmlPart = htmlPart.replace('{rewardCss}',"<span class='hd_tag_js'>已截止</span>");
+					htmlPart = htmlPart.replace('{rewardCss}',"<span class='hd_tag_js'>悬赏已截止</span>");
 				}else{
-					htmlPart = htmlPart.replace('{rewardCss}',"<span>赏金"+resumeListVo[i].reward+"元</span>");
+					htmlPart = htmlPart.replace('{rewardCss}',"<span>推荐奖金："+resumeListVo[i].reward+"元</span>");
 				}
 				
 				partnerServiceTypeHtml += htmlPart;

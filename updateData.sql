@@ -18,4 +18,8 @@ update users as T,
 ) as T3
 set T.score = T3.total, T.exp = T3.addExp  where T.id = T3.user_id
 
+ALTER TABLE `feeds` ADD `featured` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否精选 1 = 是 0 = 否' AFTER `status`;
+
+ALTER TABLE `feeds` ADD FULLTEXT(`title`)  WITH PARSER ngram;
+
 

@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="assets/css/amazeui.min.css">
     <link rel="stylesheet" href="assets/css/store.css">
-    <title>发布职位悬赏需求</title>
+    <title>发布招聘需求</title>
 </head>
 <body style="background:#ececec">
 
@@ -18,8 +18,6 @@
 <form class="am-form" id="jobHunterReqPublishForm" data-am-validator>
   <fieldset>
     <legend></legend>
-	
-	
 	<input type="hidden" id="publishUserId" name="publishUserId" value="">	
 	<input type="hidden" id="publishUserName" name="publishUserName" value=""> 		
 	<input type="hidden" id="publishCityName" name="publishCityName" value="">
@@ -31,45 +29,57 @@
     </div>
 		
 	<div class="am-form-group">
-      <label for="publishCity">所在城市:</label>
+      <label for="publishCity">所在城市：</label>
       <span id="publishCity"></span>
     </div>	
 		
     <div class="am-form-group">
-      <label for="publishTitle">标题:</label>
-      <input type="text" class="am-form-field" required id="publishTitle" maxlength="32" placeholder="岗位名称+人数">
+      <label for="publishTitle">一句话需求概述（如：人事专员2名）</label>
+      <input type="text" class="am-form-field" required id="publishTitle" maxlength="32" placeholder="岗位名称+招聘人数，例如：人事专员2名">
     </div>
 
     <div class="am-form-group">
-      <label for="publishTimeSelect">有效期</label>
+      <label for="doc-select-1">职位</label>
+      <select id="doc-select-1">
+        <option value="option1">人事专员</option>
+        <option value="option2">人事经理</option>
+        <option value="option3">行政专员</option>
+        <option value="option4">行政经理</option>
+        <option value="option5">其他</option>
+      </select>
+      <span class="am-form-caret"></span>
+    </div>
+
+    <div class="am-form-group">
+      <label for="publishTimeSelect">招聘有效期</label>
       <select id="publishTimeSelect" required>
       </select>
       <span class="am-form-caret"></span>
     </div>
 
     <div class="am-form-group">
-      <label for="reward">赏金</label>
-      <input type="text" id="reward" class="am-form-field js-pattern-pinteger" required maxlength="10" placeholder="输入职位悬赏金额">
+      <label for="reward">推荐入职奖金（有奖励更易招到人哦）</label>
+      <input type="text" id="reward" class="am-form-field js-pattern-pinteger" maxlength="10" placeholder="推荐入职奖金，例如500元，以成功入职为准">
     </div>
 	
 	<div class="am-form-group">
       <label for="jobRes">岗位职责</label>
-      <textarea id="jobRes" class="am-form-field" required rows="6" maxlength="1020" placeholder="请填写岗位职责.." ></textarea>
+      <textarea id="jobRes" class="am-form-field" required rows="5" maxlength="1020" placeholder="请填写岗位职责和工作说明..." ></textarea>
     </div>
     
     <div class="am-form-group">
       <label for="jobReq">任职要求</label>
-      <textarea id="jobReq" class="am-form-field" required rows="6" maxlength="1020" placeholder="请填写任职要求.." ></textarea>
+      <textarea id="jobReq" class="am-form-field" required rows="5" maxlength="1020" placeholder="请填写岗位的具体任职要求..." ></textarea>
     </div>
 	
 	 <div class="am-form-group">
-      <label for="remarks">补充说明</label>
-      <textarea id="remarks" class="am-form-field" rows="6" maxlength="1020" placeholder="可在此填写期望入职日期等.." ></textarea>
+      <label for="remarks">联系方式</label>
+      <textarea id="remarks" class="am-form-field" required rows="3" maxlength="1020" placeholder="请填写联系方式，以便沟通招聘信息..." ></textarea>
     </div>
 	
 	
 <div data-am-sticky>
-  <button type="button" id="jobHunterSubmit" class="am-btn am-btn-primary am-btn-block">提交</button>
+  <button type="button" id="jobHunterSubmit" class="am-btn am-btn-lg am-btn-warning am-btn-block">确认并发布</button>
 </div>
   </fieldset>
 </form>

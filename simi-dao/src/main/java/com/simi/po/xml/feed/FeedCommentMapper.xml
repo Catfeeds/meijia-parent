@@ -24,7 +24,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from feed_comment
-		<include refid="bySearchVo"/>
+		<include refid="bySearchVo" />
 		order by status desc, add_time desc
 	</select>
 
@@ -32,24 +32,24 @@
 		select
 		<include refid="Base_Column_List" />
 		from feed_comment
-		<include refid="bySearchVo"/>
+		<include refid="bySearchVo" />
 		order by add_time desc
 	</select>
 
 	<select id="totalByFid" resultType="java.lang.Integer" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select count(*)
 		from feed_comment
-		<include refid="bySearchVo"/>
+		<include refid="bySearchVo" />
 	</select>
 
 	<select id="totalByFids" resultType="java.util.HashMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select fid, count(*) as total
 		from feed_comment
-		<include refid="bySearchVo"/>
+		<include refid="bySearchVo" />
 		group by fid
 		order by fid desc
 	</select>
-	
+
 	<sql id="bySearchVo">
 		where 1 = 1
 		<if test="fid != null">
@@ -69,8 +69,8 @@
 		</if>
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
-		</if>	
-		
+		</if>
+
 		<if test="startTime !=null">
 			<![CDATA[ and add_time >= #{startTime}]]>
 		</if>
@@ -87,25 +87,7 @@
 
 	<delete id="deleteBySearchVo" parameterType="com.simi.vo.feed.FeedSearchVo">
 		delete from feed_comment
-		where 1 = 1
-		<if test="fid != null">
-			and fid = #{fid,jdbcType=NUMERIC}
-		</if>
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-		<if test="fids != null">
-			and fid in
-			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="feedType != null">
-			and feed_type = #{feedType,jdbcType=NUMERIC}
-		</if>
-		<if test="status != null">
-			and status = #{status,jdbcType=NUMERIC}
-		</if>
+		<include refid="bySearchVo"/>
 	</delete>
 
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedComment">
@@ -115,7 +97,8 @@
 		insert into feed_comment (id, fid, user_id, feed_type,
 		comment, status, add_time)
 		values (#{id,jdbcType=NUMERIC}, #{fid,jdbcType=NUMERIC},
-		#{userId,jdbcType=NUMERIC}, #{feedType,jdbcType=NUMERIC},
+		#{userId,jdbcType=NUMERIC},
+		#{feedType,jdbcType=NUMERIC},
 		#{comment,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.FeedComment">

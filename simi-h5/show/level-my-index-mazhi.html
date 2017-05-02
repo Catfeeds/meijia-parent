@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="assets/css/amazeui.min.css">
+<link rel="stylesheet" href="assets/css/store.css">
+<title>我的等级</title>
+</head>
+<body>
+	<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+		<a href="#top" title=""> <img class="am-gotop-icon-custom" src="images/goTop.png" />
+		</a>
+	</div>
+
+	<div class="pet_mian" id="top">
+		<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}'>
+			<ul class="am-slides">
+				<li><img src="images/level-banner-1.jpg" id="level-img">
+					<div class="pet_slider_font">
+						<span class="pet_slider_emoji"></span> <span></span>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="pet_content_block">
+			<article data-am-widget="paragraph" class="am-paragraph am-paragraph-default pet_content_article"
+				data-am-paragraph="{ tableScrollable: true, pureview: true }"
+			>
+
+				<h2 class="pet_article_title" align="center">您的等级：<label id="level-name"></label></h2>
+				<div class="pet_article_user_time" align="center">当前经验值：<label id="exp"></label></div>
+
+				<div class="am-progress am-progress-striped am-progress-sm am-active ">
+					<div class="am-progress-bar am-progress-bar-warning" style="width: 0%" id="level-progress"></div>
+				</div>
+
+				<p>
+				<h2 class="pet_article_title" align="center">同行月度排行榜<label id="level-name"></label></h2>
+				<blockquote>
+					<p>您的排名：第23位，亲，继续努力哦~</p>
+				</blockquote>
+				</p>
+
+				<table class="am-table am-table-bordered am-table-striped am-table-hover">
+				    <thead>
+				        <tr>
+				            <th>排名</th>
+				            <th>用户</th>
+				            <th>经验值</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr class="am-active">
+				            <td>1</td>
+				            <td>爱笑的猫</td>
+				            <td>20128</td>
+				        </tr>
+				        <tr>
+				            <td>2</td>
+				            <td>阿斯顿发斯蒂芬</td>
+				            <td>20000</td>
+				        </tr>
+				        <tr>
+				            <td>3</td>
+				            <td>阿斯蒂芬</td>
+				            <td>20000</td>
+				        </tr>
+				        <tr>
+				            <td>4</td>
+				            <td>发斯蒂芬</td>
+				            <td>19000</td>
+				        </tr>
+				        <tr>
+				            <td>5</td>
+				            <td>蒂芬</td>
+				            <td>18000</td>
+				        </tr>
+				        <tr>
+				            <td>6</td>
+				            <td>阿斯顿芬</td>
+				            <td>17000</td>
+				        </tr>
+				        <tr>
+				            <td>7</td>
+				            <td>阿斯蒂芬</td>
+				            <td>15000</td>
+				        </tr>
+				    </tbody>
+				</table>
+
+				<div class="pet_hd_con_gp_list_nr">
+					<div class="pet_hd_con_gp_list_nr_tag">常用经验值获取说明</div>
+
+					<table class="am-table">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th>经验值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>新用户注册</td>
+								<td>+100</td>
+							</tr>
+							<tr>
+								<td>创建企业/团队</td>
+								<td>+300</td>
+							</tr>
+							<tr>
+								<td>好友邀请</td>
+								<td>+100</td>
+							</tr>
+							<tr>
+								<td>每日签到</td>
+								<td>+30</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="pet_hd_con_gp_list_nr">
+					<div class="pet_hd_con_gp_list_nr_tag">工作应用也能获取经验</div>
+					<p></p>
+
+					<table class="am-table">
+						<thead>
+							<tr>
+								<th>操作</th>
+								<th>经验值</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>创建工作（例如事务提醒）</td>
+								<td>+100（上限2000）</td>
+							</tr>
+							<tr>
+								<td>创建服务（例如团建）</td>
+								<td>+200（上限4000）</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</article>
+
+		</div>
+	</div>
+	<script src="assets/js/jquery.min.js"></script>
+	<!--<![endif]-->
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/common/common.js"></script>
+
+	<script src="assets/js/user/level-my-index.js"></script>
+</body>
+</html>

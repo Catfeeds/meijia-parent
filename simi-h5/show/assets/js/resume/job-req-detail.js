@@ -23,10 +23,10 @@ function initDetailPage(){
 				
 				$("#title").text(result.title);
 				$("#userName").append("发布人:	"+result.user_name);
-				$("#limitDay").append("有效时长:	"+result.limit_day_str);
+				$("#limitDay").append("截止日:	"+result.limit_day_str);
 				$("#cityName").append("所在城市:	"+result.city_name);
 				
-				$("#reward").text("赏金: ￥" + result.reward);
+				$("#reward").text("推荐奖金: " + result.reward + " 元");
 				
 				$("#jobRes").text(result.job_res);
 				$("#jobReq").text(result.job_req);

@@ -75,6 +75,40 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .pet_nav_ms {background: #7fd02b; }
 .pet_nav_qs {background: #19ce8b; }
 .pet_nav_qt {background: #fe618e; }
+
+/* 招聘列表相关 */
+.am-navbar-nav a .am-navbar-label-bottom {
+  padding-top: 2px;
+  line-height: 1;
+  font-size: 18px;
+  display: block;
+  word-wrap: normal;
+  /* for IE */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/**
+  * Navbar Theme: default
+  * Author: hzp (hzp@yunshipei.com)
+  */
+.am-navbar-warning a {
+  color: #fff;
+}
+.am-navbar-default .am-navbar-nav {
+  background-color: #F37B1D;
+}
+.am-navbar-default .am-navbar-actions {
+  background-color: #F37B1D;
+}
+.am-navbar-default .am-navbar-actions a {
+  border-bottom: 1px solid #F37B1D;
+}
+.am-pagination {
+  position: relative;
+}
+
 /* 文章列表 */
 .am-list-news-default { margin-top: 0;}
 .pet_content_main .am-list>li {margin-bottom: 0; border: none; border-bottom: 1px solid #f1f1f1;}
@@ -337,7 +371,7 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .pet_hd_block_map { margin: 5px 0 10px; width: 100%; font-size: 14px; line-height: 20px; height: 20px; }
 .pet_hd_block_map i { padding-right: 5px;}
 .pet_hd_block_tag { width: 100%; font-size: 14px;}
-.pet_hd_block_tag span { display: inline-block; text-align: center; background: #f28d00; border-radius: 4px; width: 70px; height: 22px; line-height: 22px; color: #fff;}
+.pet_hd_block_tag span { display: inline-block; text-align: center; background: #f28d00; border-radius: 4px; width: 140px; height: 22px; line-height: 22px; color: #fff;}
 .pet_hd_block_tag span.hd_tag_jh { background: #00a0e9;}
 .pet_hd_block_tag span.hd_tag_js { background: #999999;}
 // 活动内页
@@ -354,7 +388,7 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .pet_hd_con_gp_list span i { font-style: normal; display: block; font-size: 16px; color: #222; }
 .pet_hd_con_gp_list span:hover { background: #ff5656; border: 1px solid #ff5656; color: #fff;}
 .pet_hd_con_gp_list span:hover i { color: #fff;}
-.pet_hd_con_gp_list span { position: relative;  color: #a1a1a1; font-size: 12px; border: 1px solid #aaa; border-radius: 5px;  display: inline-block; width: 25%; padding: 5px 10px; line-height: 18px; color: #222;}
+.pet_hd_con_gp_list span { position: relative;  color: #a1a1a1; font-size: 14px; border: 1px solid #aaa; border-radius: 5px;  display: inline-block; width: 50%; padding: 5px 10px; line-height: 18px; color: #222;}
 .pet_hd_con_gp_list .pet_hd_con_gp_list_on { background: #ff5656; border: 1px solid #ff5656; color: #fff;}
 .pet_hd_con_gp_list .pet_hd_con_gp_list_on i { color: #fff;}
 .pet_hd_con_gp_list_sm { width: 100%; font-size: 12px; color: #222; padding: 10px 0;}

@@ -12,10 +12,11 @@
 		<result column="total_view" property="totalView" jdbcType="NUMERIC" />
 		<result column="feed_extra" property="feedExtra" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="NUMERIC" />
+		<result column="featured" property="featured" jdbcType="NUMERIC" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		fid, user_id, feed_type, title, lat, lng, poi_name, total_view, feed_extra, status, add_time
+		fid, user_id, feed_type, title, lat, lng, poi_name, total_view, feed_extra, status, featured, add_time
 	</sql>
 
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -72,6 +73,10 @@
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
+		
+		<if test="title != null and title != ''">
+			and MATCH(title) AGAINST ('${title}' IN BOOLEAN MODE) 
+		</if>
 
 		<if test="commentUserId != null">
 			and ( user_id = #{commentUserId,jdbcType=NUMERIC} OR fid IN (select fid from feed_comment where user_id = #{commentUserId,jdbcType=NUMERIC} and feed_type =
@@ -91,6 +96,15 @@
 		
 		<if test="status != null">
 			and status = #{status,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="featured != null">
+			and featured = #{featured,jdbcType=NUMERIC}
+		</if>
+		
+		
+		<if test="feedExtra != null and feedExtra == 1">
+			and feedExtra > 0
 		</if>
 		
 		<if test="startTime !=null">
@@ -113,13 +127,13 @@
 			SELECT LAST_INSERT_ID() AS fid
 		</selectKey>
 		insert into feeds (fid, user_id, feed_type, title,
-		lat, lng, poi_name, total_view, feed_extra, status,
+		lat, lng, poi_name, total_view, feed_extra, status, featured,
 		add_time)
 		values (#{fid,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC},
 		#{feedType,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR},
 		#{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{poiName,jdbcType=VARCHAR},
 		#{totalView,jdbcType=NUMERIC},
-		#{feedExtra,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC},
+		#{feedExtra,jdbcType=VARCHAR}, #{status,jdbcType=NUMERIC}, #{featured,jdbcType=NUMERIC},
 		#{addTime,jdbcType=NUMERIC})
 	</insert>
 	<insert id="insertSelective" parameterType="com.simi.po.model.feed.Feeds">
@@ -158,6 +172,9 @@
 			<if test="status != null">
 				status,
 			</if>
+			<if test="featured != null">
+				featured,
+			</if>
 			<if test="addTime != null">
 				add_time,
 			</if>
@@ -192,6 +209,9 @@
 			</if>
 			<if test="status != null">
 				#{status,jdbcType=NUMERIC},
+			</if>
+			<if test="featured != null">
+				#{featured,jdbcType=NUMERIC},
 			</if>
 			<if test="addTime != null">
 				#{addTime,jdbcType=NUMERIC},
@@ -228,6 +248,9 @@
 			<if test="status != null">
 				status = #{status,jdbcType=NUMERIC},
 			</if>
+			<if test="featured != null">
+				featured = #{featured,jdbcType=NUMERIC},
+			</if>
 			<if test="addTime != null">
 				add_time = #{addTime,jdbcType=NUMERIC},
 			</if>
@@ -246,6 +269,7 @@
 		total_view = #{totalView,jdbcType=NUMERIC},
 		feed_extra = #{feedExtra,jdbcType=VARCHAR},
 		status = #{status,jdbcType=NUMERIC},
+		featured = #{featured,jdbcType=NUMERIC},
 		add_time = #{addTime,jdbcType=NUMERIC}
 		where fid = #{fid,jdbcType=NUMERIC}
 	</update>

@@ -18,7 +18,7 @@
 		from feed_zan
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
@@ -29,15 +29,15 @@
 		</if>
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>		
-		
+		</if>
+
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
-		</if>	
-		
+		</if>
+
 		<if test="commentId != null">
 			and comment_id = #{commentId,jdbcType=NUMERIC}
-		</if>	
+		</if>
 	</select>
 
 	<select id="getByTop10" resultMap="BaseResultMap" parameterType="com.simi.vo.feed.FeedSearchVo">
@@ -50,12 +50,12 @@
 		</if>
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>		
-		
+		</if>
+
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="commentId != null">
 			and comment_id = #{commentId,jdbcType=NUMERIC}
 		</if>
@@ -71,12 +71,12 @@
 		</if>
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>		
-		
+		</if>
+
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="commentId != null">
 			and comment_id = #{commentId,jdbcType=NUMERIC}
 		</if>
@@ -89,26 +89,26 @@
 		<if test="fid != null">
 			and fid = #{fid,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="fids != null">
 			and fid in
 			<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
 				#{item}
 			</foreach>
 		</if>
-		
+
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>		
-		
+		</if>
+
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="commentId != null">
 			and comment_id = #{commentId,jdbcType=NUMERIC}
 		</if>
-		
+
 		group by fid
 		order by fid desc
 	</select>
@@ -118,7 +118,7 @@
 		delete from feed_zan
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
-	
+
 	<delete id="deleteBySearchVo" parameterType="com.simi.vo.feed.FeedSearchVo">
 		delete from feed_zan
 		where 1=1
@@ -127,17 +127,17 @@
 		</if>
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>		
-		
+		</if>
+
 		<if test="feedType != null">
 			and feed_type = #{feedType,jdbcType=NUMERIC}
 		</if>
-		
+
 		<if test="commentId != null">
 			and comment_id = #{commentId,jdbcType=NUMERIC}
 		</if>
 	</delete>
-	
+
 	<insert id="insert" parameterType="com.simi.po.model.feed.FeedZan">
 		insert into feed_zan (id, fid, user_id, feed_type, comment_id,
 		add_time)
@@ -214,7 +214,8 @@
 		update feed_zan
 		set fid = #{fid,jdbcType=NUMERIC},
 		user_id = #{userId,jdbcType=NUMERIC},
-		feed_type = #{feedType,jdbcType=NUMERIC},
+		feed_type =
+		#{feedType,jdbcType=NUMERIC},
 		comment_id = #{commentId,jdbcType=NUMERIC},
 		add_time =
 		#{addTime,jdbcType=NUMERIC}

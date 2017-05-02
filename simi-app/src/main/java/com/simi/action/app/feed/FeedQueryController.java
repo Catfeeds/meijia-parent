@@ -87,7 +87,7 @@ public class FeedQueryController extends BaseController {
 	 * @param user_id
 	 *            用户ID
 	 * @param feed_from
-	 *            0 = 用户及好友所有的动态 1= 用户发布的动态
+	 *            0 = 最新 1 = 我发布的 2 = 悬赏 3 = 精选
 	 *
 	 * @return List<FeedListVo>
 	 */
@@ -115,10 +115,23 @@ public class FeedQueryController extends BaseController {
 
 		FeedSearchVo searchVo = new FeedSearchVo();
 		searchVo.setFeedType(feedType);
+		
+		//feedFrom = 1 表示我发布的和我回复的
 		if (feedFrom.equals((short) 1)) {
 			searchVo.setCommentUserId(userId);
 		}
-
+		
+		//feedFrom = 2 表示悬赏数大于0的
+		if (feedFrom.equals((short) 2)) {
+			searchVo.setFeedExtra((short) 1);
+		}
+		
+		//feedFrom = 3 表示是精选的.
+		if (feedFrom.equals((short) 3)) {
+			searchVo.setFeatured((short) 1);
+		}
+		
+		
 		PageInfo pageInfo = feedService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
 		List<Feeds> feeds = pageInfo.getList();
 		List<FeedListVo> feedList = new ArrayList<FeedListVo>();

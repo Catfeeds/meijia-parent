@@ -10,6 +10,8 @@ public class FeedSearchVo {
 	
 	private Long userId;
 	
+	private String title;
+	
 	private Long commentUserId;
 	
 	private Short feedType;
@@ -27,7 +29,11 @@ public class FeedSearchVo {
 	private Long startTime;
 	
 	private Long endTime;
-
+	
+	private Short feedExtra;	//问答悬赏大于0的 1 = 大于0
+	
+	private Short featured;     //是否精选
+	
 	public Long getFid() {
 		return fid;
 	}
@@ -122,6 +128,30 @@ public class FeedSearchVo {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public Short getFeedExtra() {
+		return feedExtra;
+	}
+
+	public void setFeedExtra(Short feedExtra) {
+		this.feedExtra = feedExtra;
+	}
+
+	public Short getFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(Short featured) {
+		this.featured = featured;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 		
 
