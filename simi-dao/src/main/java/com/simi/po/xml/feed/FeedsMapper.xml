@@ -104,7 +104,7 @@
 		
 		
 		<if test="feedExtra != null and feedExtra == 1">
-			and feedExtra > 0
+			and feed_extra > 0
 		</if>
 		
 		<if test="startTime !=null">
