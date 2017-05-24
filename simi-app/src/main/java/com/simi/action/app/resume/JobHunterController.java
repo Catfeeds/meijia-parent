@@ -85,7 +85,6 @@ public class JobHunterController extends BaseController {
 		}
 		
 		ResumeChangeSearchVo searchVo = new ResumeChangeSearchVo();
-		if(partnerUserId > 0L) searchVo.setUserId(partnerUserId);
 		
 		if (hrDictId > 0L) searchVo.setHrDictId(hrDictId);
 		
