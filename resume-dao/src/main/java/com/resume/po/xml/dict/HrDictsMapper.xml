@@ -30,14 +30,7 @@
 		<include refid="Base_Column_List" />
 		from hr_dicts
 		where 1 = 1
-		<if test="fromId != null">
-			and from_id = #{fromId,jdbcType=NUMERIC}
-		</if>
-
-		<if test="type != null">
-			and type = #{type,jdbcType=VARCHAR}
-		</if>
-
+		<include refid="bySearchVo" />
 		order by id asc
 	</select>
 
@@ -45,6 +38,11 @@
 		select
 		<include refid="Base_Column_List" />
 		from hr_dicts
+		<include refid="bySearchVo" />
+		order by id asc
+	</select>
+	
+	<sql id ="bySearchVo">
 		where 1 = 1
 		<if test="fromId != null">
 			and from_id = #{fromId,jdbcType=NUMERIC}
@@ -57,9 +55,15 @@
 		<if test="pid != null">
 			and pid = #{pid,jdbcType=VARCHAR}
 		</if>
-
-		order by id asc
-	</select>
+		
+		<if test="pids != null">
+			and pid in
+			<foreach item="item" index="index" collection="pids" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	
+	</sql>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from hr_dicts

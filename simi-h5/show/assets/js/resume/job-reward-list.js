@@ -12,12 +12,26 @@ var $partnerListPage = 1;
 
 
 function resumeList (page) {
-	var ajaxUrl = appRootUrl + "resume/hr_job_hunter_list.json?partner_user_id="+partnerUserId;
-	ajaxUrl = ajaxUrl + "&page="+page;
+	var ajaxUrl = appRootUrl + "resume/hr_job_hunter_list.json";
 	
+	var hrDictId = $("#hrDictId").val();
+	var cityName = $("#cityName").val();
+	var params = {};
+	params.partner_user_id = partnerUserId;
+	params.page = page;
+	console.log("hrdictID = " + hrDictId);
+	if (hrDictId != undefined && hrDictId != "") {
+		params.hr_dict_id = hrDictId;
+	}
+	
+	if (cityName != undefined && cityName != "") {
+		params.city_name = cityName;
+	}
+	console.log(params);
 	$.ajax({
 		type : "GET",
 		url : ajaxUrl,
+		data : params,
 		dataType : "json",
 		cache : true,
 		async : false,	
@@ -76,6 +90,34 @@ function resumeList (page) {
 resumeList(1);
 
 
+function getJobs() {
+	var ajaxUrl = resumeAppUrl + "/hrDict/getByPids.json";
+	var pids = "5002000,3010000";
+	var params = {};
+	params.pids = pids;
+	$.ajax({
+		type : "GET",
+		url : ajaxUrl,
+		data : params,
+		dataType : "json",
+		cache : true,
+		success : function(data) {
+			
+			if (data.status == 0) {
+				
+				var result = data.data;
+				var liHtml = "";
+				$.each(result, function(i, item) {
+					liHtml+="<li class=\"am-divider\"></li>";
+					liHtml+=" <li><a href=\"#\" onclick=\"changeJob("+item.id+", '"+ item.name +"')\">"+item.name+"</a></li>";
+				});
+				$("#jobListUl").append(liHtml);
+			}
+		}
+	});
+}
+
+getJobs();
 //点击加载更多
 $("#btn-get-more").on('click', function(e) {
 	$partnerListPage = $partnerListPage + 1;
@@ -99,5 +141,29 @@ $("#publishJobHunter").on("click",function(){
 	window.location.href = url;
 	
 });
+
+function changeJob(jobId, jobName) {
+	console.log("changeJob == " + jobId);
+	if (jobId == undefined ) return false;
+	$("#hrDictId").val(jobId);
+	$("#selectJobTitle").html(jobName);
+	$("#displayContainer").html("");
+	$("#job-dropdown").dropdown('close');
+	resumeList(1);
+}
+
+function changeArea(cityName) {
+	if (cityName == undefined ) return false;
+	$("#cityName").val(cityName);
+	if (cityName == "") {
+		$("#seletAreaTitle").html("地区");
+	} else {
+		$("#seletAreaTitle").html(cityName);
+	}
+	
+	$("#displayContainer").html("");
+	$("#city-dropdown").dropdown('close');
+	resumeList(1);
+}
 
 

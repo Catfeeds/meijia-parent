@@ -25,7 +25,7 @@ function initDetailPage(){
 				$("#userName").append("发布人:	"+result.user_name);
 				$("#limitDay").append("截止日:	"+result.limit_day_str);
 				$("#cityName").append("所在城市:	"+result.city_name);
-				
+				$("#jobName").append("职位:	"+result.hr_dict_name);
 				$("#reward").text("推荐奖金: " + result.reward + " 元");
 				
 				$("#jobRes").text(result.job_res);

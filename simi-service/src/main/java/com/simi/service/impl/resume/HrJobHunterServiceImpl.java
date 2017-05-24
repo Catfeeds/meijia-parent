@@ -131,6 +131,8 @@ public class HrJobHunterServiceImpl implements HrJobHunterService {
 		hunter.setId(0L);
 	    hunter.setUserId(0L);
 	    hunter.setName("");
+	    hunter.setHrDictId(0L);
+	    hunter.setHrDictName("");
 	    hunter.setCityName("");
 	    hunter.setLimitDay((short)0);
 	    hunter.setTitle("");

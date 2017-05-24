@@ -1,5 +1,7 @@
 package com.simi.vo.resume;
 
+import java.util.List;
+
 public class HrDictSearchVo {
 	
     private Long fromId;
@@ -7,6 +9,8 @@ public class HrDictSearchVo {
     private String type;
     
     private String pid;
+    
+    private List<String> pids;
     
 	public Long getFromId() {
 		return fromId;
@@ -30,6 +34,14 @@ public class HrDictSearchVo {
 
 	public void setPid(String pid) {
 		this.pid = pid;
+	}
+
+	public List<String> getPids() {
+		return pids;
+	}
+
+	public void setPids(List<String> pids) {
+		this.pids = pids;
 	}
 
 }

@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.StringUtil;
+import com.resume.po.model.dict.HrDicts;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
 import com.simi.common.Constants;
 import com.simi.po.model.resume.HrJobHunter;
 import com.simi.po.model.user.UserTrailReal;
 import com.simi.po.model.user.Users;
+import com.simi.service.resume.HrDictsService;
 import com.simi.service.resume.HrJobHunterService;
 import com.simi.service.user.UserTrailRealService;
 import com.simi.service.user.UsersService;
@@ -39,11 +42,15 @@ public class JobHunterController extends BaseController {
 	
 	@Autowired
 	private UserTrailRealService  userTrRealService;
+	
 	@Autowired
 	private UsersService userService;
 	
 	@Autowired
 	private HrJobHunterService hunterService;
+	
+	@Autowired
+	private HrDictsService hrDictsService;
 	
 	/**
 	 * 
@@ -61,6 +68,8 @@ public class JobHunterController extends BaseController {
 	@RequestMapping(value = "hr_job_hunter_list.json",method = RequestMethod.GET)
 	public AppResultData<Object> hrResumeChangeList(
 			@RequestParam("partner_user_id") Long partnerUserId, 
+			@RequestParam(value = "hr_dict_id", required = false, defaultValue = "0") Long hrDictId,
+			@RequestParam(value = "city_name", required = false, defaultValue = "") String cityName,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page){
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
@@ -76,9 +85,11 @@ public class JobHunterController extends BaseController {
 		}
 		
 		ResumeChangeSearchVo searchVo = new ResumeChangeSearchVo();
-		if(partnerUserId > 0L){
-			searchVo.setUserId(partnerUserId);
-		}
+		if(partnerUserId > 0L) searchVo.setUserId(partnerUserId);
+		
+		if (hrDictId > 0L) searchVo.setHrDictId(hrDictId);
+		
+		if (!StringUtil.isEmpty(cityName)) searchVo.setCityName(cityName);
 		
 		//分页
 		PageInfo info = hunterService.selectByListPage(searchVo, page, Constants.PAGE_MAX_NUMBER);
@@ -125,6 +136,8 @@ public class JobHunterController extends BaseController {
 			hunterVo.setCityName(city);
 		}
 		
+		if (StringUtil.isEmpty(hunterVo.getCityName())) hunterVo.setCityName("北京市");
+		
 		
 		Users users = userService.selectByPrimaryKey(partnerUserId);
 		String name = users.getName();	
@@ -170,6 +183,7 @@ public class JobHunterController extends BaseController {
 			@RequestParam("city_name")String cityName,
 			@RequestParam("reward")String reward,
 			@RequestParam("publish_title")String title,
+			@RequestParam("hr_dict_id") Long hrDictId,
 			@RequestParam("publish_limit_day")Short limitDay,
 			@RequestParam("publish_job_res")String jobRes,
 			@RequestParam("publish_job_req")String jobReq,
@@ -191,6 +205,9 @@ public class JobHunterController extends BaseController {
 			return result;
 		}
 		
+		//职位ID和名称
+		HrDicts hrDict = hrDictsService.selectByPrimaryKey(hrDictId);
+		
 		HrJobHunter hunter = hunterService.initHrJobHunter();
 		
 		hunter.setUserId(userId);
@@ -198,6 +215,8 @@ public class JobHunterController extends BaseController {
 		hunter.setCityName(cityName);
 		hunter.setLimitDay(limitDay);
 		hunter.setTitle(title);
+		hunter.setHrDictId(hrDictId);
+		hunter.setHrDictName(hrDict.getName());
 		hunter.setJobRes(jobRes);
 		hunter.setJobReq(jobReq);
 		hunter.setRemarks(remarks);

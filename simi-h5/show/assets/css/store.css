@@ -112,7 +112,7 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 /* 文章列表 */
 .am-list-news-default { margin-top: 0;}
 .pet_content_main .am-list>li {margin-bottom: 0; border: none; border-bottom: 1px solid #f1f1f1;}
-.am-list-news-default .am-list .am-list-item-desced .am-list-item-text { margin: 0;}
+.am-list-news-default .am-list .am-list-item-desced .am-list-item-text { margin: 0; -webkit-line-clamp: 4; font-size: 1.5rem; max-height: 6em;}
 .pet_content_main .am-list, .am-topbar { margin-bottom: 0;}
 .pet_content_main .am-list-news-default { margin: 0;}
 .pet_content_main .am-list-item-hd a  { color: #222; font-weight: bold;}
@@ -123,9 +123,8 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .pet_content_main .am-list-news-default  .pet_list_one_info_ico { width: 26px; height: 26px; float: left;}
 .am-list-news-default .am-list .pet_list_one_block { padding-bottom: 20px; margin-bottom: 7px;}
 .pet_content_main .am-list-news-default  .pet_list_one_info_ico img {width: 100%;border-radius: 50%;}
-.pet_content_main .am-list-news-default  .pet_list_one_info_name { color: #757575; float: left; font-size: 12px; height: 26px; line-height: 26px; text-indent: .5em;}
+.pet_content_main .am-list-news-default  .pet_list_one_info_name { color: #757575; float: left; font-size: 15px; height: 26px; line-height: 26px; text-indent: .5em;}
 .pet_content_main .am-list-news-default  .pet_list_one_info_r { float: right;}
-.am-list-news-default .am-list .am-list-item-desced  .pet_list_two_text { margin-top: 5px; }
 .pet_list_one_info_tytj { float: left; font-size: 16px; color: #222; font-weight: bold;}
 .pet_list_one_list { padding: 8px 0;}
 .pet_list_one_list li{ padding: 0;}
@@ -170,6 +169,7 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 
 /* 内页文章 */
 .pet_content { width: 100%; background: #ececec; padding-top: 49px;}
+.pet_content_friend { width: 100%; background: #ececec; padding-top: 0;}
 .am-paragraph-default a { color: #ff5656;}
 .pet_content_block { width: 100%; background: #fff; margin: 0 auto;  box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
 .pet_content_block .am-paragraph-default img { border: none; padding: 0; margin: 0 auto;max-width: 100%;}
@@ -205,7 +205,7 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .link_share_button .share_ico_link { color:#e86060; }
 .link_share_button .share_ico_wx { color:#6dc35e;}
 .link_share_button .share_ico_pyq { color:#6959f0;}
-.pet_content_list { padding-top: 29px;}
+.pet_content_list { padding-top: 0;}
 
 /* 评论 */
 .pet_comment_list { width: 100%; padding-top: 20px;}
@@ -264,6 +264,7 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .pet_article_dowload_Pg:hover { border: 1px solid #54d669 ; color: #54d669 ;}
 .pet_article_footer_info {  text-align: center; font-size: 12px; color:#b9b8b8; height: 30px; line-height: 30px; margin:17px;}
 .pet_article_like {  width: 100%; background: #fff; margin: 0 auto;  box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-top: 20px; padding: 18px;}
+.pet_article_like_mz {  width: 100%; background: #fff; margin: 0 auto;  box-shadow: 0 1px 2px rgba(0,0,0,0.05); margin-top: 0; padding: 18px;}
 .pet_article_like_delete { padding: 0;box-shadow:none;}
 .pet_article_like_title {font-weight: bold; color: #222; font-size: 16px; width: 100%;border-bottom: 1px solid #f1f1f1; padding-bottom: 15px; margin-bottom: 5px;}
 
@@ -450,8 +451,8 @@ background-size: 100%; width: 100%; height: 100%; bottom: 0; left: 0; z-index: 1
 .pet_sixin_form_r_nr_sj { position: absolute; background: #f0f0f0; width: 17px; height: 17px;-webkit-transform:rotate(45deg);transform:rotate(45deg);top:14px; right:-8px; border-radius: 2px;}
 
 .pet_grzx { width: 100%; background: #fff; padding-top: 20px;}
-.pet_grzx_nr {width: 100%; padding: 40px 20px 0; overflow: hidden;}
-.pet_grzx_ico { margin: 0 auto; width: 200px; height: 200px; border-radius: 50%; overflow: hidden;}
+.pet_grzx_nr {width: 100%; padding: 20px 20px 0; overflow: hidden;}
+.pet_grzx_ico { margin: 0 auto; width: 150px; height: 150px; border-radius: 50%; overflow: hidden;}
 .pet_grzx_ico img { width: 100%;}
 .pet_grzx_name { width: 100%; font-size: 20px;  padding: 15px 0 0; text-align: center; color: #222;}
 .pet_grzx_map { font-size: 14px;width: 100%;  text-align: center; color: #a1a1a1;}

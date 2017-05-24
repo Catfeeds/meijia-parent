@@ -46,6 +46,34 @@ function initFormPage(){
 			}
 		}
 	});
+	
+	getJobs();
+}
+
+function getJobs() {
+	var ajaxUrl = resumeAppUrl + "/hrDict/getByPids.json";
+	var pids = "5002000,3010000";
+	var params = {};
+	params.pids = pids;
+	$.ajax({
+		type : "GET",
+		url : ajaxUrl,
+		data : params,
+		dataType : "json",
+		cache : true,
+		success : function(data) {
+			
+			if (data.status == 0) {
+				
+				var result = data.data;
+				var options = "";
+				$.each(result, function(i, item) {
+					options+= "<option value='"+item.id+"'>"+ item.name +"</option>";
+				});
+				$("#hrDictJobId").append(options);
+			}
+		}
+	});
 }
 
 //1. 页面加载执行
@@ -74,6 +102,7 @@ function submitPublish(){
 	params.city_name = $("#publishCityName").val();
 	
 	params.publish_title = $("#publishTitle").val();
+	params.hr_dict_id = $("#hrDictJobId").val();
 	params.publish_limit_day = $("#publishTimeSelect").find("option:selected").val();
 	
 	params.reward = $("#reward").val();

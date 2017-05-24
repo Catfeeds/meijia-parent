@@ -18,38 +18,32 @@
   
 
   <ul class="am-nav am-nav-pills am-nav-justify">
-    <li class="am-dropdown" data-am-dropdown>
+  	<input type="hidden" id="hrDictId"  value=""/>
+  	<input type="hidden" id="cityName" value=""/>
+    <li class="am-dropdown" data-am-dropdown id="job-dropdown">
         <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-            职位 <span class="am-icon-caret-down"></span>
+            <label id="selectJobTitle">职位</label> <span class="am-icon-caret-down"></span>
         </a>
-        <ul class="am-dropdown-content">
+        <ul class="am-dropdown-content" id="jobListUl">
             <li class="am-dropdown-header">选择要查看的职位</li>
-            <li class="am-active"><a href="#">全部职位</a></li>
-            <li class="am-divider"></li>
-            <li><a href="#">人事招聘专员</a></li>
-            <li class="am-divider"></li>
-            <li><a href="#">人事部经理</a></li>
-            <li class="am-divider"></li>
-            <li><a href="#">行政前台</a></li>
-            <li class="am-divider"></li>
-            <li><a href="#">行政部经理</a></li>
+            <li class="am-active" id="selectedJobLi"><a href="#" onclick="changeJob(0, '全部职位')">全部职位</a></li>
         </ul>
     </li>
-    <li class="am-dropdown" data-am-dropdown>
+    <li class="am-dropdown" data-am-dropdown id="city-dropdown">
         <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-            地区 <span class="am-icon-caret-down"></span>
+            <label id="seletAreaTitle">地区</label> <span class="am-icon-caret-down"></span>
         </a>
           <ul class="am-dropdown-content">
             <li class="am-dropdown-header">选择要查看的地区</li>
-            <li class="am-active"><a href="#">全部地区</a></li>
+            <li class="am-active"><a href="#" onclick="changeArea('')">全部地区</a></li>
             <li class="am-divider"></li>
-            <li><a href="#">北京</a></li>
+            <li><a href="#" onclick="changeArea('北京市')">北京市</a></li>
             <li class="am-divider"></li>
-            <li><a href="#">上海</a></li>
+            <li><a href="#" onclick="changeArea('上海市')">上海市</a></li>
             <li class="am-divider"></li>
-            <li><a href="#">深圳</a></li>
+            <li><a href="#" onclick="changeArea('深圳市')">深圳市</a></li>
             <li class="am-divider"></li>
-            <li><a href="#">广州</a></li>
+            <li><a href="#" onclick="changeArea('广州市')">广州市</a></li>
         </ul>
     </li>
   </ul>

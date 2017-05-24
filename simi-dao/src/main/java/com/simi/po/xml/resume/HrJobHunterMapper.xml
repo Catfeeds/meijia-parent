@@ -1,213 +1,243 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.simi.po.dao.resume.HrJobHunterMapper" >
-  <resultMap id="BaseResultMap" type="com.simi.po.model.resume.HrJobHunter" >
-    <id column="id" property="id" jdbcType="NUMERIC" />
-    <result column="user_id" property="userId" jdbcType="NUMERIC" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="reward" property="reward" jdbcType="VARCHAR" />
-    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
-    <result column="limit_day" property="limitDay" jdbcType="NUMERIC" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="job_res" property="jobRes" jdbcType="VARCHAR" />
-    <result column="job_req" property="jobReq" jdbcType="VARCHAR" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="add_time" property="addTime" jdbcType="NUMERIC" />
-    <result column="update_time" property="updateTime" jdbcType="NUMERIC" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, name, reward, city_name, limit_day, title, job_res, job_req, remarks, 
-    add_time, update_time
-  </sql>
-   
-  
-  <select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
+<mapper namespace="com.simi.po.dao.resume.HrJobHunterMapper">
+	<resultMap id="BaseResultMap" type="com.simi.po.model.resume.HrJobHunter">
+		<id column="id" property="id" jdbcType="NUMERIC" />
+		<result column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="hr_dict_id" property="hrDictId" jdbcType="NUMERIC" />
+		<result column="hr_dict_name" property="hrDictName" jdbcType="VARCHAR" />
+		<result column="reward" property="reward" jdbcType="VARCHAR" />
+		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
+		<result column="limit_day" property="limitDay" jdbcType="NUMERIC" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="job_res" property="jobRes" jdbcType="VARCHAR" />
+		<result column="job_req" property="jobReq" jdbcType="VARCHAR" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
+		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, name, hr_dict_id, hr_dict_name, reward, city_name, limit_day, title, job_res, job_req, remarks,
+		add_time, update_time
+	</sql>
+
+
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from hr_job_hunter
-		where 1 = 1  
-		<if test="userId != null">
-			and user_id = #{userId,jdbcType=NUMERIC}
-		</if>
-		
-		<if test="limitDay != null">
-			and limit_day = #{limitDay,jdbcType=NUMERIC}
-		</if>
-		
+		<include refid="bySearchVo" />
 		order by update_time desc
 	</select>
-	
+
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.ResumeChangeSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from hr_job_hunter
-		where 1 = 1 
+		<include refid="bySearchVo" />
+		order by update_time desc
+	</select>
+	
+	<sql id="bySearchVo">
+		where 1 = 1
 		<if test="userId != null">
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
+		<if test="hrDictId != null">
+			and hr_dict_id = #{hrDictId,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="cityName != null">
+			and city_name = #{cityName,jdbcType=VARCHAR}
+		</if>
+
 		<if test="limitDay != null">
 			and limit_day = #{limitDay,jdbcType=NUMERIC}
 		</if>
-				
-		order by update_time desc
+	
+	</sql>
+
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from hr_job_hunter
+		where id = #{id,jdbcType=NUMERIC}
 	</select>
-  
-  
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from hr_job_hunter
-    where id = #{id,jdbcType=NUMERIC}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from hr_job_hunter
-    where id = #{id,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.simi.po.model.resume.HrJobHunter" >
-    insert into hr_job_hunter (id, user_id, name, 
-      reward, city_name, limit_day, 
-      title, job_res, job_req, 
-      remarks, add_time, update_time
-      )
-    values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
-      #{reward,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{limitDay,jdbcType=NUMERIC}, 
-      #{title,jdbcType=VARCHAR}, #{jobRes,jdbcType=VARCHAR}, #{jobReq,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.simi.po.model.resume.HrJobHunter" >
-    insert into hr_job_hunter
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="reward != null" >
-        reward,
-      </if>
-      <if test="cityName != null" >
-        city_name,
-      </if>
-      <if test="limitDay != null" >
-        limit_day,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="jobRes != null" >
-        job_res,
-      </if>
-      <if test="jobReq != null" >
-        job_req,
-      </if>
-      <if test="remarks != null" >
-        remarks,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=NUMERIC},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="reward != null" >
-        #{reward,jdbcType=VARCHAR},
-      </if>
-      <if test="cityName != null" >
-        #{cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="limitDay != null" >
-        #{limitDay,jdbcType=NUMERIC},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="jobRes != null" >
-        #{jobRes,jdbcType=VARCHAR},
-      </if>
-      <if test="jobReq != null" >
-        #{jobReq,jdbcType=VARCHAR},
-      </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.resume.HrJobHunter" >
-    update hr_job_hunter
-    <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=NUMERIC},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="reward != null" >
-        reward = #{reward,jdbcType=VARCHAR},
-      </if>
-      <if test="cityName != null" >
-        city_name = #{cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="limitDay != null" >
-        limit_day = #{limitDay,jdbcType=NUMERIC},
-      </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="jobRes != null" >
-        job_res = #{jobRes,jdbcType=VARCHAR},
-      </if>
-      <if test="jobReq != null" >
-        job_req = #{jobReq,jdbcType=VARCHAR},
-      </if>
-      <if test="remarks != null" >
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=NUMERIC},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.simi.po.model.resume.HrJobHunter" >
-    update hr_job_hunter
-    set user_id = #{userId,jdbcType=NUMERIC},
-      name = #{name,jdbcType=VARCHAR},
-      reward = #{reward,jdbcType=VARCHAR},
-      city_name = #{cityName,jdbcType=VARCHAR},
-      limit_day = #{limitDay,jdbcType=NUMERIC},
-      title = #{title,jdbcType=VARCHAR},
-      job_res = #{jobRes,jdbcType=VARCHAR},
-      job_req = #{jobReq,jdbcType=VARCHAR},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=NUMERIC},
-      update_time = #{updateTime,jdbcType=NUMERIC}
-    where id = #{id,jdbcType=NUMERIC}
-  </update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from hr_job_hunter
+		where id = #{id,jdbcType=NUMERIC}
+	</delete>
+	<insert id="insert" parameterType="com.simi.po.model.resume.HrJobHunter">
+		insert into hr_job_hunter (id, user_id, name, hr_dict_id, hr_dict_name,
+		reward, city_name, limit_day,
+		title, job_res, job_req,
+		remarks,
+		add_time, update_time
+		)
+		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
+		#{hrDictId,jdbcType=NUMERIC}, #{hrDictName,jdbcType=VARCHAR},
+		#{reward,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{limitDay,jdbcType=NUMERIC},
+		#{title,jdbcType=VARCHAR}, #{jobRes,jdbcType=VARCHAR}, #{jobReq,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.simi.po.model.resume.HrJobHunter">
+		insert into hr_job_hunter
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="hrDictId != null">
+				hr_dict_id,
+			</if>
+			<if test="hrDictName != null">
+				hr_dict_name,
+			</if>
+			<if test="reward != null">
+				reward,
+			</if>
+			<if test="cityName != null">
+				city_name,
+			</if>
+			<if test="limitDay != null">
+				limit_day,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="jobRes != null">
+				job_res,
+			</if>
+			<if test="jobReq != null">
+				job_req,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=NUMERIC},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="hrDictId != null">
+				#{hrDictId,jdbcType=NUMERIC},
+			</if>
+			<if test="hrDictName != null">
+				#{hrDictName,jdbcType=VARCHAR},
+			</if>
+			<if test="reward != null">
+				#{reward,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="limitDay != null">
+				#{limitDay,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="jobRes != null">
+				#{jobRes,jdbcType=VARCHAR},
+			</if>
+			<if test="jobReq != null">
+				#{jobReq,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=NUMERIC},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.simi.po.model.resume.HrJobHunter">
+		update hr_job_hunter
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=NUMERIC},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="hrDictId != null">
+				hr_dict_id = #{hrDictId,jdbcType=NUMERIC},
+			</if>
+			<if test="hrDictName != null">
+				hr_dict_name = #{hrDictName,jdbcType=VARCHAR},
+			</if>
+			<if test="reward != null">
+				reward = #{reward,jdbcType=VARCHAR},
+			</if>
+			<if test="cityName != null">
+				city_name = #{cityName,jdbcType=VARCHAR},
+			</if>
+			<if test="limitDay != null">
+				limit_day = #{limitDay,jdbcType=NUMERIC},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="jobRes != null">
+				job_res = #{jobRes,jdbcType=VARCHAR},
+			</if>
+			<if test="jobReq != null">
+				job_req = #{jobReq,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=NUMERIC},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=NUMERIC},
+			</if>
+		</set>
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.simi.po.model.resume.HrJobHunter">
+		update hr_job_hunter
+		set user_id = #{userId,jdbcType=NUMERIC},
+		name = #{name,jdbcType=VARCHAR},
+		hr_dict_id =
+		#{hrDictId,jdbcType=NUMERIC},
+		hr_dict_name = #{hrDictName,jdbcType=VARCHAR},
+		reward = #{reward,jdbcType=VARCHAR},
+		city_name = #{cityName,jdbcType=VARCHAR},
+		limit_day =
+		#{limitDay,jdbcType=NUMERIC},
+		title = #{title,jdbcType=VARCHAR},
+		job_res = #{jobRes,jdbcType=VARCHAR},
+		job_req = #{jobReq,jdbcType=VARCHAR},
+		remarks = #{remarks,jdbcType=VARCHAR},
+		add_time = #{addTime,jdbcType=NUMERIC},
+		update_time = #{updateTime,jdbcType=NUMERIC}
+		where id = #{id,jdbcType=NUMERIC}
+	</update>
 </mapper>

@@ -6,6 +6,10 @@ public class HrJobHunter {
     private Long userId;
 
     private String name;
+    
+    private Long hrDictId;
+    
+    private String hrDictName;
 
     private String reward;
 
@@ -120,4 +124,20 @@ public class HrJobHunter {
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Long getHrDictId() {
+		return hrDictId;
+	}
+
+	public void setHrDictId(Long hrDictId) {
+		this.hrDictId = hrDictId;
+	}
+
+	public String getHrDictName() {
+		return hrDictName;
+	}
+
+	public void setHrDictName(String hrDictName) {
+		this.hrDictName = hrDictName;
+	}
 }

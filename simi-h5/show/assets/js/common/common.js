@@ -1,7 +1,7 @@
 var host = window.location.host;
 var appName = "simi";
 var appRootUrl = "http://" + host + "/" + appName + "/app/";
-
+var resumeAppUrl = "http://" + host + "/resume/app/";
 var simiOaRootUrl = "http://" + host + "/simi-oa";
 
 function getUrlParam(name) {
