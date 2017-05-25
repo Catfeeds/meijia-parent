@@ -1,4 +1,5 @@
 cd /data/src/meijia-parent/
+git reset --hard HEAD
 git pull
 mvn clean package
 /data/tomcat/bin/shutdown.sh
