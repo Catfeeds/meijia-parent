@@ -7,9 +7,13 @@ public class HrJobHunter {
 
     private String name;
     
-    private Long hrDictId;
+    private Long jobId;
     
-    private String hrDictName;
+    private String jobName;
+    
+    private Long salaryId;
+    
+    private String salaryName;
 
     private String reward;
 
@@ -125,19 +129,35 @@ public class HrJobHunter {
         this.updateTime = updateTime;
     }
 
-	public Long getHrDictId() {
-		return hrDictId;
+	public Long getJobId() {
+		return jobId;
 	}
 
-	public void setHrDictId(Long hrDictId) {
-		this.hrDictId = hrDictId;
+	public void setJobId(Long jobId) {
+		this.jobId = jobId;
 	}
 
-	public String getHrDictName() {
-		return hrDictName;
+	public String getJobName() {
+		return jobName;
 	}
 
-	public void setHrDictName(String hrDictName) {
-		this.hrDictName = hrDictName;
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
+	public Long getSalaryId() {
+		return salaryId;
+	}
+
+	public void setSalaryId(Long salaryId) {
+		this.salaryId = salaryId;
+	}
+
+	public String getSalaryName() {
+		return salaryName;
+	}
+
+	public void setSalaryName(String salaryName) {
+		this.salaryName = salaryName;
 	}
 }

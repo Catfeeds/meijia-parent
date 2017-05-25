@@ -18,6 +18,7 @@
 <form class="am-form" id="jobHunterReqPublishForm" data-am-validator>
   <fieldset>
     <legend></legend>
+    <input type="hidden" id="resumeId" name="resumeId" value="">	
 	<input type="hidden" id="publishUserId" name="publishUserId" value="">	
 	<input type="hidden" id="publishUserName" name="publishUserName" value=""> 		
 	<input type="hidden" id="publishCityName" name="publishCityName" value="">
@@ -40,10 +41,15 @@
 
     <div class="am-form-group">
       <label for="doc-select-1">职位</label>
-      <select id="hrDictJobId" required>
+      <select id="jobId" required>
       	<option value="">请选择职位</option>
       </select>
       <span class="am-form-caret"></span>
+    </div>
+    
+    <div class="am-form-group">
+      <label for="publishSalary">预期工资</label>
+      <select id="salaryId" required></select>
     </div>
 
     <div class="am-form-group">
@@ -55,7 +61,7 @@
 
     <div class="am-form-group">
       <label for="reward">推荐入职奖金（有奖励更易招到人哦）</label>
-      <input type="text" id="reward" class="am-form-field js-pattern-pinteger" maxlength="10" placeholder="推荐入职奖金，例如500元，以成功入职为准">
+      <input type="text" id="reward" class="am-form-field " maxlength="10" placeholder="推荐入职奖金，例如500元，以成功入职为准">
     </div>
 	
 	<div class="am-form-group">

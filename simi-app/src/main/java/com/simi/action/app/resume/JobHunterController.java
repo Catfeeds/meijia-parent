@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageInfo;
+import com.meijia.utils.BeanUtilsExp;
 import com.meijia.utils.StringUtil;
+import com.meijia.utils.TimeStampUtil;
 import com.resume.po.model.dict.HrDicts;
 import com.simi.action.app.BaseController;
 import com.simi.common.ConstantMsg;
@@ -68,7 +70,7 @@ public class JobHunterController extends BaseController {
 	@RequestMapping(value = "hr_job_hunter_list.json",method = RequestMethod.GET)
 	public AppResultData<Object> hrResumeChangeList(
 			@RequestParam("partner_user_id") Long partnerUserId, 
-			@RequestParam(value = "hr_dict_id", required = false, defaultValue = "0") Long hrDictId,
+			@RequestParam(value = "job_id", required = false, defaultValue = "0") Long jobId,
 			@RequestParam(value = "city_name", required = false, defaultValue = "") String cityName,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page){
 		
@@ -86,7 +88,7 @@ public class JobHunterController extends BaseController {
 		
 		ResumeChangeSearchVo searchVo = new ResumeChangeSearchVo();
 		
-		if (hrDictId > 0L) searchVo.setHrDictId(hrDictId);
+		if (jobId > 0L) searchVo.setJobId(jobId);
 		
 		if (!StringUtil.isEmpty(cityName)) searchVo.setCityName(cityName);
 		
@@ -121,12 +123,16 @@ public class JobHunterController extends BaseController {
 	 */
 	@RequestMapping(value = "hr_job_hunter_form.json",method = RequestMethod.GET)
 	public AppResultData<Object> hrHunterChangeForm(
-			@RequestParam("partner_user_id") Long partnerUserId){
+			@RequestParam("partner_user_id") Long partnerUserId,
+			@RequestParam("resume_id") Long resumeId){
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
 		JobHunterVo hunterVo = hunterService.initHunterVo();
-
+		if (resumeId > 0L) {
+			HrJobHunter hunter = hunterService.selectByPrimaryKey(resumeId);
+			BeanUtilsExp.copyPropertiesIgnoreNull(hunter, hunterVo);
+		}
 		//所在城市	
 		UserTrailReal trailReal = userTrRealService.selectByUserId(partnerUserId);
 		
@@ -177,12 +183,14 @@ public class JobHunterController extends BaseController {
 	 */
 	@RequestMapping(value = "hr_job_hunter_form.json",method = RequestMethod.POST)
 	public AppResultData<Object> submitHrHunterChangeForm(
+			@RequestParam("resume_id") Long resumeId,
 			@RequestParam("user_id") Long userId,
 			@RequestParam("user_name")String userName,
 			@RequestParam("city_name")String cityName,
 			@RequestParam("reward")String reward,
 			@RequestParam("publish_title")String title,
-			@RequestParam("hr_dict_id") Long hrDictId,
+			@RequestParam("job_id") Long jobId,
+			@RequestParam("salary_id") Long salaryId,
 			@RequestParam("publish_limit_day")Short limitDay,
 			@RequestParam("publish_job_res")String jobRes,
 			@RequestParam("publish_job_req")String jobReq,
@@ -205,23 +213,38 @@ public class JobHunterController extends BaseController {
 		}
 		
 		//职位ID和名称
-		HrDicts hrDict = hrDictsService.selectByPrimaryKey(hrDictId);
-		
+		HrDicts hrDictJob = hrDictsService.selectByPrimaryKey(jobId);
+		HrDicts hrDictSalary = hrDictsService.selectByPrimaryKey(salaryId);
 		HrJobHunter hunter = hunterService.initHrJobHunter();
+		
+		if (resumeId > 0L) {
+			hunter = hunterService.selectByPrimaryKey(resumeId);
+			
+			if (hunter == null ) return result;
+			
+			if (!hunter.getUserId().equals(userId)) return result;
+		}
 		
 		hunter.setUserId(userId);
 		hunter.setName(userName);
 		hunter.setCityName(cityName);
 		hunter.setLimitDay(limitDay);
 		hunter.setTitle(title);
-		hunter.setHrDictId(hrDictId);
-		hunter.setHrDictName(hrDict.getName());
+		hunter.setJobId(jobId);
+		hunter.setJobName(hrDictJob.getName());
+		hunter.setSalaryId(salaryId);
+		hunter.setSalaryName(hrDictSalary.getName());
 		hunter.setJobRes(jobRes);
 		hunter.setJobReq(jobReq);
 		hunter.setRemarks(remarks);
 		hunter.setReward(reward);
 		
-		hunterService.insert(hunter);
+		if (resumeId > 0L) {
+			hunter.setUpdateTime(TimeStampUtil.getNowSecond());
+			hunterService.updateByPrimaryKey(hunter);
+		} else {
+			hunterService.insert(hunter);
+		}
 		
 		return result;
 	}
@@ -239,17 +262,19 @@ public class JobHunterController extends BaseController {
 	 */
 	@RequestMapping(value = "hr_job_hunter_detail.json",method = RequestMethod.GET)
 	public AppResultData<Object> resumeDetailForm(
-			@RequestParam("partner_user_id")Long userId,
-			@RequestParam("resume_id")Long resumeId){
+			@RequestParam(value = "partner_user_id", required = false, defaultValue = "0") Long userId,
+			@RequestParam("resume_id") Long resumeId){
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
+		if (userId > 0L) {
 		Users users = userService.selectByPrimaryKey(userId);
 		
-		if(users == null){
-			result.setData("用户不存在");
-			result.setStatus(Constants.ERROR_999);
-			return result;
+			if(users == null){
+				result.setData("用户不存在");
+				result.setStatus(Constants.ERROR_999);
+				return result;
+			}
 		}
 		
 		HrJobHunter hunter = hunterService.selectByPrimaryKey(resumeId);

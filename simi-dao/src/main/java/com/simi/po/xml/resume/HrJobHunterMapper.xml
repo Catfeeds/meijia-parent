@@ -5,8 +5,10 @@
 		<id column="id" property="id" jdbcType="NUMERIC" />
 		<result column="user_id" property="userId" jdbcType="NUMERIC" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="hr_dict_id" property="hrDictId" jdbcType="NUMERIC" />
-		<result column="hr_dict_name" property="hrDictName" jdbcType="VARCHAR" />
+		<result column="job_id" property="jobId" jdbcType="NUMERIC" />
+		<result column="job_name" property="jobName" jdbcType="VARCHAR" />
+		<result column="salary_id" property="salaryId" jdbcType="NUMERIC" />
+		<result column="salary_name" property="salaryName" jdbcType="VARCHAR" />
 		<result column="reward" property="reward" jdbcType="VARCHAR" />
 		<result column="city_name" property="cityName" jdbcType="VARCHAR" />
 		<result column="limit_day" property="limitDay" jdbcType="NUMERIC" />
@@ -18,7 +20,7 @@
 		<result column="update_time" property="updateTime" jdbcType="NUMERIC" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, user_id, name, hr_dict_id, hr_dict_name, reward, city_name, limit_day, title, job_res, job_req, remarks,
+		id, user_id, name, job_id, job_name, salary_id, salary_name, reward, city_name, limit_day, title, job_res, job_req, remarks,
 		add_time, update_time
 	</sql>
 
@@ -45,8 +47,8 @@
 			and user_id = #{userId,jdbcType=NUMERIC}
 		</if>
 		
-		<if test="hrDictId != null">
-			and hr_dict_id = #{hrDictId,jdbcType=NUMERIC}
+		<if test="jobId != null">
+			and job_id = #{jobId,jdbcType=NUMERIC}
 		</if>
 		
 		<if test="cityName != null">
@@ -72,14 +74,15 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</delete>
 	<insert id="insert" parameterType="com.simi.po.model.resume.HrJobHunter">
-		insert into hr_job_hunter (id, user_id, name, hr_dict_id, hr_dict_name,
+		insert into hr_job_hunter (id, user_id, name, job_id, job_name, salary_id, salary_name,
 		reward, city_name, limit_day,
 		title, job_res, job_req,
 		remarks,
 		add_time, update_time
 		)
 		values (#{id,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR},
-		#{hrDictId,jdbcType=NUMERIC}, #{hrDictName,jdbcType=VARCHAR},
+		#{jobId,jdbcType=NUMERIC}, #{jobName,jdbcType=VARCHAR},
+		#{salaryId,jdbcType=NUMERIC}, #{salaryName,jdbcType=VARCHAR},
 		#{reward,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{limitDay,jdbcType=NUMERIC},
 		#{title,jdbcType=VARCHAR}, #{jobRes,jdbcType=VARCHAR}, #{jobReq,jdbcType=VARCHAR},
 		#{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=NUMERIC}, #{updateTime,jdbcType=NUMERIC}
@@ -97,11 +100,17 @@
 			<if test="name != null">
 				name,
 			</if>
-			<if test="hrDictId != null">
-				hr_dict_id,
+			<if test="jobId != null">
+				job_id,
 			</if>
-			<if test="hrDictName != null">
-				hr_dict_name,
+			<if test="jobName != null">
+				job_name,
+			</if>
+			<if test="salaryId != null">
+				salary_id,
+			</if>
+			<if test="salaryName != null">
+				salary_name,
 			</if>
 			<if test="reward != null">
 				reward,
@@ -141,11 +150,17 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
-			<if test="hrDictId != null">
-				#{hrDictId,jdbcType=NUMERIC},
+			<if test="jobId != null">
+				#{jobId,jdbcType=NUMERIC},
 			</if>
-			<if test="hrDictName != null">
-				#{hrDictName,jdbcType=VARCHAR},
+			<if test="jobName != null">
+				#{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="salaryId != null">
+				#{salaryId,jdbcType=NUMERIC},
+			</if>
+			<if test="salaryName != null">
+				#{salaryName,jdbcType=VARCHAR},
 			</if>
 			<if test="reward != null">
 				#{reward,jdbcType=VARCHAR},
@@ -185,11 +200,17 @@
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
-			<if test="hrDictId != null">
-				hr_dict_id = #{hrDictId,jdbcType=NUMERIC},
+			<if test="jobId != null">
+				job_id = #{jobId,jdbcType=NUMERIC},
 			</if>
-			<if test="hrDictName != null">
-				hr_dict_name = #{hrDictName,jdbcType=VARCHAR},
+			<if test="jobName != null">
+				job_name = #{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="salaryId != null">
+				salary_id = #{salaryId,jdbcType=NUMERIC},
+			</if>
+			<if test="salaryName != null">
+				salary_name = #{salaryName,jdbcType=VARCHAR},
 			</if>
 			<if test="reward != null">
 				reward = #{reward,jdbcType=VARCHAR},
@@ -225,9 +246,11 @@
 		update hr_job_hunter
 		set user_id = #{userId,jdbcType=NUMERIC},
 		name = #{name,jdbcType=VARCHAR},
-		hr_dict_id =
-		#{hrDictId,jdbcType=NUMERIC},
-		hr_dict_name = #{hrDictName,jdbcType=VARCHAR},
+		job_id =
+		#{jobId,jdbcType=NUMERIC},
+		job_name = #{jobName,jdbcType=VARCHAR},
+		salary_id = #{salaryId,jdbcType=NUMERIC},
+		salary_name = #{salaryName,jdbcType=VARCHAR},
 		reward = #{reward,jdbcType=VARCHAR},
 		city_name = #{cityName,jdbcType=VARCHAR},
 		limit_day =

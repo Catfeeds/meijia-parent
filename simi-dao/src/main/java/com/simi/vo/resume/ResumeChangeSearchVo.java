@@ -6,7 +6,7 @@ public class ResumeChangeSearchVo {
 	
 	private Short limitDay;
 	
-	private Long hrDictId;
+	private Long jobId;
 	
 	private String cityName;
 
@@ -26,20 +26,20 @@ public class ResumeChangeSearchVo {
 		this.userId = userId;
 	}
 
-	public Long getHrDictId() {
-		return hrDictId;
-	}
-
-	public void setHrDictId(Long hrDictId) {
-		this.hrDictId = hrDictId;
-	}
-
 	public String getCityName() {
 		return cityName;
 	}
 
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+
+	public Long getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(Long jobId) {
+		this.jobId = jobId;
 	}
 	
 }

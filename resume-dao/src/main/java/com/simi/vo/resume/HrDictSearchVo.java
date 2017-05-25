@@ -12,6 +12,10 @@ public class HrDictSearchVo {
     
     private List<String> pids;
     
+    private String notCode;
+    
+    private String orderByStr;
+    
 	public Long getFromId() {
 		return fromId;
 	}
@@ -42,6 +46,22 @@ public class HrDictSearchVo {
 
 	public void setPids(List<String> pids) {
 		this.pids = pids;
+	}
+
+	public String getNotCode() {
+		return notCode;
+	}
+
+	public void setNotCode(String notCode) {
+		this.notCode = notCode;
+	}
+
+	public String getOrderByStr() {
+		return orderByStr;
+	}
+
+	public void setOrderByStr(String orderByStr) {
+		this.orderByStr = orderByStr;
 	}
 
 }

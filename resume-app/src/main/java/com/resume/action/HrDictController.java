@@ -43,22 +43,40 @@ public class HrDictController extends BaseController {
 		
 	}
 	
-	@RequestMapping(value = "getByPids", method = RequestMethod.GET)
-	public AppResultData<Object> getParentByPid(@RequestParam("pids") String pids) {
+	@RequestMapping(value = "getByOption", method = RequestMethod.GET)
+	public AppResultData<Object> getParentByPid(
+			@RequestParam(value = "pids", required = false, defaultValue = "") String pids,
+			@RequestParam(value = "type", required = false, defaultValue = "") String type,
+			@RequestParam(value = "from_id", required = false, defaultValue = "") Long fromId,
+			@RequestParam(value = "not_code", required = false, defaultValue = "") String notCode,
+			@RequestParam(value = "order_by_str", required = false, defaultValue = "") String orderByStr
+			) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0,
 				ConstantMsg.SUCCESS_0_MSG, new String());
 		
-		if (StringUtil.isEmpty(pids)) return result;
+		HrDictSearchVo searchVo = new HrDictSearchVo();
+		if (!StringUtil.isEmpty(pids)) {
 		
-		String[] pidAry = StringUtil.convertStrToArray(pids);
-		List<String> pidList = new ArrayList<String>();
-		for (int i = 0; i < pidAry.length; i++) {
-			pidList.add(pidAry[i]);
+			String[] pidAry = StringUtil.convertStrToArray(pids);
+			List<String> pidList = new ArrayList<String>();
+			for (int i = 0; i < pidAry.length; i++) {
+				pidList.add(pidAry[i]);
+			}
+			searchVo.setPids(pidList);
 		}
 		
-		HrDictSearchVo searchVo = new HrDictSearchVo();
-		searchVo.setPids(pidList);
+		if (!StringUtil.isEmpty(type)) searchVo.setType(type);
+		
+		if (fromId != null && fromId > 0L) searchVo.setFromId(fromId);
+		
+		if (!StringUtil.isEmpty(notCode)) searchVo.setNotCode(notCode);
+		
+		if (!StringUtil.isEmpty(notCode)) {
+			searchVo.setOrderByStr(orderByStr);
+		} else {
+			searchVo.setOrderByStr("id asc");
+		}
 		
 		List<HrDicts> list = hrDictService.selectBySearchVo(searchVo);
 		

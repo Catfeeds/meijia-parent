@@ -31,7 +31,13 @@
 		from hr_dicts
 		where 1 = 1
 		<include refid="bySearchVo" />
-		order by id asc
+		order by
+		<if test="orderByStr != null">
+			${orderByStr}
+		</if>
+		<if test="orderByStr == null or orderByStr == ''">
+			id asc
+		</if>
 	</select>
 
 	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.resume.HrDictSearchVo">
@@ -39,7 +45,13 @@
 		<include refid="Base_Column_List" />
 		from hr_dicts
 		<include refid="bySearchVo" />
-		order by id asc
+		order by
+		<if test="orderByStr != null">
+			${orderByStr}
+		</if>
+		<if test="orderByStr == null or orderByStr == ''">
+			id asc
+		</if>
 	</select>
 	
 	<sql id ="bySearchVo">
@@ -61,6 +73,10 @@
 			<foreach item="item" index="index" collection="pids" open="(" separator="," close=")">
 				#{item}
 			</foreach>
+		</if>
+		
+		<if test="notCode != null">
+			<![CDATA[ and code <> #{notCode,jdbcType=VARCHAR}]]>
 		</if>
 	
 	</sql>

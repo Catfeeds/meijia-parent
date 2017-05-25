@@ -14,14 +14,14 @@ var $partnerListPage = 1;
 function resumeList (page) {
 	var ajaxUrl = appRootUrl + "resume/hr_job_hunter_list.json";
 	
-	var hrDictId = $("#hrDictId").val();
+	var jobId = $("#jobId").val();
 	var cityName = $("#cityName").val();
 	var params = {};
 	params.partner_user_id = partnerUserId;
 	params.page = page;
-	console.log("hrdictID = " + hrDictId);
-	if (hrDictId != undefined && hrDictId != "") {
-		params.hr_dict_id = hrDictId;
+	console.log("jobId = " + jobId);
+	if (jobId != undefined && jobId != "") {
+		params.job_id = jobId;
 	}
 	
 	if (cityName != undefined && cityName != "") {
@@ -53,9 +53,11 @@ function resumeList (page) {
 				
 				htmlPart = htmlPart.replace('{title}',resumeListVo[i].title);
 				htmlPart = htmlPart.replace('{cityName}',resumeListVo[i].city_name);
+				htmlPart = htmlPart.replace('{salaryName}',resumeListVo[i].salary_name);
 				htmlPart = htmlPart.replace('{endTimeStr}',resumeListVo[i].end_time_str);
 				
-				htmlPart = htmlPart.replace('{userId}',resumeListVo[i].user_id);
+//				htmlPart = htmlPart.replace('{userId}',resumeListVo[i].user_id);
+				htmlPart = htmlPart.replace('{userId}', partnerUserId);
 				htmlPart = htmlPart.replace('{resumeId}',resumeListVo[i].id);
 				
 				
@@ -91,7 +93,7 @@ resumeList(1);
 
 
 function getJobs() {
-	var ajaxUrl = resumeAppUrl + "/hrDict/getByPids.json";
+	var ajaxUrl = resumeAppUrl + "/hrDict/getByOption.json";
 	var pids = "5002000,3010000";
 	var params = {};
 	params.pids = pids;
@@ -145,7 +147,7 @@ $("#publishJobHunter").on("click",function(){
 function changeJob(jobId, jobName) {
 	console.log("changeJob == " + jobId);
 	if (jobId == undefined ) return false;
-	$("#hrDictId").val(jobId);
+	$("#jobId").val(jobId);
 	$("#selectJobTitle").html(jobName);
 	$("#displayContainer").html("");
 	$("#job-dropdown").dropdown('close');
