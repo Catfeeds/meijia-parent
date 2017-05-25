@@ -13,7 +13,7 @@ rm -rf /data/tomcat/webapps/simi-oa
 rm -rf /data/tomcat/webapps/xcloud
 \cp -rf /data/src/meijia-parent/xcloud/target/xcloud.war /data/tomcat/webapps/
 
-rm -rf /data/tomcat/webapps/resume-app
+rm -rf /data/tomcat/webapps/resume
 \cp -rf /data/src/meijia-parent/resume-app/target/resume.war /data/tomcat/webapps/
 
 /data/tomcat/bin/startup.sh
