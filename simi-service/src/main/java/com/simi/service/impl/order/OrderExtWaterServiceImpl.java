@@ -429,10 +429,10 @@ public class OrderExtWaterServiceImpl implements OrderExtWaterService{
 			Long servicePriceId = orderExtWater.getServicePriceId();
 			
 			PartnerServiceType servicePrice = partnerServiceTypeService.selectByPrimaryKey(servicePriceId);
-			
-			orderExtra+= servicePrice.getName() + ", ";
-			orderExtra+= "数量:"+ orderExtWater.getServiceNum().toString();
-			
+			if (servicePrice != null) {
+				orderExtra+= servicePrice.getName() + ", ";
+				orderExtra+= "数量:"+ orderExtWater.getServiceNum().toString();
+			}
 		}
 		
 		return orderExtra;
