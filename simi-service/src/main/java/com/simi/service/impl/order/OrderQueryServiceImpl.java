@@ -343,6 +343,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		vo.setServiceTypeName("");
 		if (order.getServiceTypeId() > 0L) {
 			PartnerServiceType serviceType = partnerServiceTypeService.selectByPrimaryKey(order.getServiceTypeId());
+			if (serviceType != null)
 			vo.setServiceTypeName(serviceType.getName());
 		}
 		
