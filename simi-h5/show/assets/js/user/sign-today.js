@@ -128,9 +128,8 @@ function daySign() {
 			var datas = data.data;
 			
 			
-			$("#signed").val(1);
-			$("#btn-day-sign").val("已签到");
-			
+			getTodaySign();
+			getDaySignList();
 			$("#day-sign-success").modal('open');
 			
 		}
