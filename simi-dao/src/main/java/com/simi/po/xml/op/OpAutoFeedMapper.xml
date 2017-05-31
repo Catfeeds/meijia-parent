@@ -20,18 +20,37 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectByTotal" resultMap="BaseResultMap" >
+	<select id="selectByTotal" resultMap="BaseResultMap" parameterType="com.simi.vo.op.OpAutoFeedSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from op_auto_feed
-		where status = 1 order by total asc limit 10
+		<include refid="bySearchVo"/>
+		order by total asc limit 10
 	</select>
 	
 	<select id="selectByListPage" resultMap="BaseResultMap" >
 		select
 		<include refid="Base_Column_List" />
-		from op_auto_feed order by id desc
+		from op_auto_feed 
+		<include refid="bySearchVo"/>
+		order by id desc
 	</select>
+	
+	<sql id="bySearchVo">
+		WHERE 1 = 1
+		<if test="id != null">
+			and id = #{id,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="autoType != null">
+			and auto_type = #{autoType,jdbcType=NUMERIC}
+		</if>
+		
+		<if test="status != null">
+			and status = #{status,jdbcType=NUMERIC}
+		</if>
+	
+	</sql>
 	
 	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

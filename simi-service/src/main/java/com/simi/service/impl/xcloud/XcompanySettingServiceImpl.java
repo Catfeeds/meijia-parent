@@ -35,7 +35,7 @@ public class XcompanySettingServiceImpl implements XCompanySettingService {
 		record.setId(0L);
 		record.setCompanyId(0L);
 		record.setUserId(0L);
-		record.setName("社保公积金基数");
+		record.setName("");
 		record.setSettingJson("");
 		// 社保公积金 setting_type = insurance
 		record.setSettingType(Constants.SETTING_TYPE_INSURANCE);

@@ -697,5 +697,19 @@ public class DateUtil {
 		
 		System.out.println(DateUtil.compare("2016-08-09", "2016-08-08"));
 		
+		
+		
+		String firstWeek = DateUtil.getFirstDayOfWeek();
+		Date d = DateUtil.parse(firstWeek);
+		for (int i = 0; i < 7; i++) {
+			
+			String dd = DateUtil.addDay(d, i, Calendar.DATE, DateUtil.DEFAULT_PATTERN);
+			Date weekDate = DateUtil.parse(dd);
+			Week we = DateUtil.getWeek(weekDate);
+			System.out.println(we.getShortNameCn()+ "---" + dd);
+		}
+		
+		
+		
 	}
 }

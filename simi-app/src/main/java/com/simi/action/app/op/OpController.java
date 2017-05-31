@@ -29,6 +29,7 @@ import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
 import com.simi.vo.ImgSearchVo;
+import com.simi.vo.op.OpAutoFeedSearchVo;
 import com.simi.vo.op.OpAutoFeedVo;
 import com.simi.vo.po.AdSearchVo;
 import com.simi.vo.user.UserActionSearchVo;
@@ -38,205 +39,195 @@ import com.simi.vo.user.UserActionSearchVo;
 public class OpController extends BaseController {
 
 	@Autowired
-	private OpChannelService opChannelService;	
+	private OpChannelService opChannelService;
 
 	@Autowired
 	private OpAdService opAdService;
-	
+
 	@Autowired
 	private AppHelpService appHelpService;
 
 	@Autowired
 	private UserActionRecordService userActionRecordService;
-	
+
 	@Autowired
 	private OpAutoFeedService opAutoFeedService;
-	
+
 	@Autowired
-	ImgService imgService;	
+	ImgService imgService;
 
 	@RequestMapping(value = "get_channels", method = RequestMethod.GET)
-	public AppResultData<Object> getChannels(
-			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType,
-			@RequestParam(value = "channel_positon", required = false, defaultValue="discovery") String channelPositon) {
-		//List<OpChannel> opChannels = opChannelService.selectByAppType(appType);
-		List<OpChannel> opChannels = opChannelService.selectByAppTypeAndPosition(appType,channelPositon);
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, opChannels);
+	public AppResultData<Object> getChannels(@RequestParam(value = "app_type", required = false, defaultValue = "xcloud") String appType,
+			@RequestParam(value = "channel_positon", required = false, defaultValue = "discovery") String channelPositon) {
+		// List<OpChannel> opChannels =
+		// opChannelService.selectByAppType(appType);
+		List<OpChannel> opChannels = opChannelService.selectByAppTypeAndPosition(appType, channelPositon);
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, opChannels);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "get_ads", method = RequestMethod.GET)
-	public AppResultData<Object> getAds(
-			@RequestParam(value = "channel_id", required = false, defaultValue="1") String channelId,
-			@RequestParam(value = "app_type", required = false, defaultValue="xcloud") String appType,
-			@RequestParam(value = "t", required = false, defaultValue="0") Long t
-			) {
+	public AppResultData<Object> getAds(@RequestParam(value = "channel_id", required = false, defaultValue = "1") String channelId,
+			@RequestParam(value = "app_type", required = false, defaultValue = "xcloud") String appType,
+			@RequestParam(value = "t", required = false, defaultValue = "0") Long t) {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		if (StringUtil.isEmpty(channelId)) return result;
-		
-		channelId+= ",";
-		
-		
+		if (StringUtil.isEmpty(channelId))
+			return result;
+
+		channelId += ",";
+
 		AdSearchVo searchVo = new AdSearchVo();
 		if (t > 0L) {
 			searchVo.setUpdateTime(t);
 		}
-		
+
 		searchVo.setAppType(appType);
 		searchVo.setAdType(channelId);
-		searchVo.setEnable((short)1);
+		searchVo.setEnable((short) 1);
 		List<OpAd> list = opAdService.selectBySearchVo(searchVo);
-		
-		if (list.isEmpty()) return result;
-		
-//		for (int i =0 ; i < list.size(); i++) {
-//			OpAd item = list.get(i);
-//			String imgUrl = item.getImgUrl();
-//			imgUrl =  imgUrl + "?w=300&h=125";
-//			item.setImgUrl(imgUrl);
-//			list.set(i, item);
-//		}
-		
-		
+
+		if (list.isEmpty())
+			return result;
+
+		// for (int i =0 ; i < list.size(); i++) {
+		// OpAd item = list.get(i);
+		// String imgUrl = item.getImgUrl();
+		// imgUrl = imgUrl + "?w=300&h=125";
+		// item.setImgUrl(imgUrl);
+		// list.set(i, item);
+		// }
+
 		result.setData(list);
-		
+
 		return result;
 	}
-	//帮助接口
+
+	// 帮助接口
 	@RequestMapping(value = "get_appHelp", method = RequestMethod.GET)
-	public AppResultData<Object> getAppHelp(
-			@RequestParam("action") String action,
-			@RequestParam("user_id") Long userId) {
-		
-		AppResultData<Object> result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
-		//判断用户是否已经操作过，如果操作过则直接返回空值.
+	public AppResultData<Object> getAppHelp(@RequestParam("action") String action, @RequestParam("user_id") Long userId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		// 判断用户是否已经操作过，如果操作过则直接返回空值.
 		UserActionSearchVo searchVo = new UserActionSearchVo();
 		searchVo.setUserId(userId);
 		searchVo.setActionType("app_help");
 		searchVo.setParams(action);
-		
+
 		List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
 		if (!rs.isEmpty()) {
 			return result;
 		}
-		
-		
+
 		AppHelp appHelp = appHelpService.selectByAction(action);
-		
+
 		if (appHelp == null) {
 			return result;
 		}
-		
-		result = new AppResultData<Object>(
-				Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appHelp);
-		
+
+		result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, appHelp);
+
 		return result;
 	}
-	
-	
-	//帮助接口
-		@RequestMapping(value = "post_help", method = RequestMethod.POST)
-		public AppResultData<Object> postHelp(
-				@RequestParam("action") String action,
-				@RequestParam("user_id") Long userId,
-				@RequestParam(value = "link_id", required = false, defaultValue="0") Long linkId
-				) {
-			
-			AppResultData<Object> result = new AppResultData<Object>(
-					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-			
-			if (!action.equals("video-help")) {
-				AppHelp appHelp = appHelpService.selectByAction(action);
-				
-				if (appHelp == null) {
-					return result;
-				}
-			}
-			
-			//判断用户是否已经操作过，如果操作过则直接返回空值.
-			UserActionSearchVo searchVo = new UserActionSearchVo();
-			searchVo.setUserId(userId);
-			searchVo.setActionType(action);
-			
-			if (linkId > 0L)
-				searchVo.setParams(linkId.toString());
-			
-			List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
-			
-			if (!rs.isEmpty()) {
+
+	// 帮助接口
+	@RequestMapping(value = "post_help", method = RequestMethod.POST)
+	public AppResultData<Object> postHelp(@RequestParam("action") String action, @RequestParam("user_id") Long userId,
+			@RequestParam(value = "link_id", required = false, defaultValue = "0") Long linkId) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		if (!action.equals("video-help")) {
+			AppHelp appHelp = appHelpService.selectByAction(action);
+
+			if (appHelp == null) {
 				return result;
 			}
-			
-			UserActionRecord record = userActionRecordService.initUserActionRecord();
-			record.setUserId(userId);
-			record.setActionType(action);
-			if (linkId > 0L)
-				record.setParams(linkId.toString());
-			
-			
-			userActionRecordService.insert(record);
-			
+		}
+
+		// 判断用户是否已经操作过，如果操作过则直接返回空值.
+		UserActionSearchVo searchVo = new UserActionSearchVo();
+		searchVo.setUserId(userId);
+		searchVo.setActionType(action);
+
+		if (linkId > 0L)
+			searchVo.setParams(linkId.toString());
+
+		List<UserActionRecord> rs = userActionRecordService.selectBySearchVo(searchVo);
+
+		if (!rs.isEmpty()) {
 			return result;
 		}
-		
-		@RequestMapping(value = "op_ad_gen_icon", method = RequestMethod.GET)
-		public AppResultData<Object> genIcon() throws Exception {
-			
-			AppResultData<Object> result = new AppResultData<Object>(
-					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-			
-			AdSearchVo searchVo = new AdSearchVo();
-//			searchVo.setAdType("99");
-			List<OpAd> list = opAdService.selectBySearchVo(searchVo);
-			
-			
-			String iconPath = "/Users/lnczx/Downloads/icons/";
-			for(OpAd item : list) {
-				if (item.getAdType().indexOf("99") >= 0) {
+
+		UserActionRecord record = userActionRecordService.initUserActionRecord();
+		record.setUserId(userId);
+		record.setActionType(action);
+		if (linkId > 0L)
+			record.setParams(linkId.toString());
+
+		userActionRecordService.insert(record);
+
+		return result;
+	}
+
+	@RequestMapping(value = "op_ad_gen_icon", method = RequestMethod.GET)
+	public AppResultData<Object> genIcon() throws Exception {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+
+		AdSearchVo searchVo = new AdSearchVo();
+		// searchVo.setAdType("99");
+		List<OpAd> list = opAdService.selectBySearchVo(searchVo);
+
+		String iconPath = "/Users/lnczx/Downloads/icons/";
+		for (OpAd item : list) {
+			if (item.getAdType().indexOf("99") >= 0) {
 
 				String filename = "opad_" + item.getId() + ".jpg";
 				System.out.println(item.getImgUrl());
 				ImgServerUtil.download(item.getImgUrl(), filename, iconPath);
-				}
 			}
-			
-			return result;
-		}		
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "op_auto_feed", method = RequestMethod.GET)
+	public AppResultData<Object> opAutoFeed(@RequestParam(value = "auto_type", required = false, defaultValue = "0") Short autoType) {
+
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		@RequestMapping(value = "op_auto_feed", method = RequestMethod.GET)
-		public AppResultData<Object> opAutoFeed()  {
-			
-			AppResultData<Object> result = new AppResultData<Object>(
-					Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-			
-			List<OpAutoFeed> list =  opAutoFeedService.selectByTotal();
-			
-			if (list.isEmpty()) return result;
-			
-			Collections.shuffle(list);  
-			
-			OpAutoFeed item = list.get(0);
-			
-			OpAutoFeedVo vo = new OpAutoFeedVo();
-			BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
-			ImgSearchVo isearchVo = new ImgSearchVo();
-			isearchVo.setLinkId(vo.getId());
-			isearchVo.setLinkType("op_auto_feed");
-			List<Imgs> imgList = imgService.selectBySearchVo(isearchVo);
-			vo.setImgs(imgList);
-			
-			//使用数加1;
-			item.setTotal(item.getTotal() + 1);
-			item.setStatus((short) 0);
-			opAutoFeedService.updateByPrimaryKeySelective(item);
-			
-			result.setData(vo);
+		
+		OpAutoFeedSearchVo searchVo = new OpAutoFeedSearchVo();
+		searchVo.setAutoType(autoType);
+		searchVo.setStatus((short) 1);
+		
+		List<OpAutoFeed> list = opAutoFeedService.selectByTotal(searchVo);
+
+		if (list.isEmpty())
 			return result;
-		}				
-	
-	
+		
+		//打乱顺序
+		Collections.shuffle(list);
+
+		OpAutoFeed item = list.get(0);
+
+		OpAutoFeedVo vo = new OpAutoFeedVo();
+		BeanUtilsExp.copyPropertiesIgnoreNull(item, vo);
+		ImgSearchVo isearchVo = new ImgSearchVo();
+		isearchVo.setLinkId(vo.getId());
+		isearchVo.setLinkType("op_auto_feed");
+		List<Imgs> imgList = imgService.selectBySearchVo(isearchVo);
+		vo.setImgs(imgList);
+
+		// 使用数加1;
+		item.setTotal(item.getTotal() + 1);
+//		item.setStatus((short) 0);
+		opAutoFeedService.updateByPrimaryKeySelective(item);
+
+		result.setData(vo);
+		return result;
+	}
+
 }

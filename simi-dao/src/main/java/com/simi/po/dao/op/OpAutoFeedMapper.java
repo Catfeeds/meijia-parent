@@ -3,6 +3,7 @@ package com.simi.po.dao.op;
 import java.util.List;
 
 import com.simi.po.model.op.OpAutoFeed;
+import com.simi.vo.op.OpAutoFeedSearchVo;
 
 public interface OpAutoFeedMapper {
     int deleteByPrimaryKey(Long id);
@@ -17,7 +18,7 @@ public interface OpAutoFeedMapper {
 
     int updateByPrimaryKey(OpAutoFeed record);
     
-    List<OpAutoFeed> selectByTotal();
+    List<OpAutoFeed> selectByTotal(OpAutoFeedSearchVo searchVo);
 
 	List<OpAutoFeed> selectByListPage();
 }

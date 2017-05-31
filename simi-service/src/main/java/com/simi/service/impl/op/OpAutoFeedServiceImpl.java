@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simi.service.op.OpAutoFeedService;
 import com.simi.service.op.OpChannelService;
+import com.simi.vo.op.OpAutoFeedSearchVo;
 import com.simi.po.dao.op.OpAutoFeedMapper;
 import com.simi.po.model.op.OpAutoFeed;
 import com.meijia.utils.TimeStampUtil;
@@ -64,7 +65,7 @@ public class OpAutoFeedServiceImpl implements OpAutoFeedService {
 	}
 	
 	@Override
-	public List<OpAutoFeed> selectByTotal() {
-		return opAutoFeedMapper.selectByTotal();
+	public List<OpAutoFeed> selectByTotal(OpAutoFeedSearchVo searchVo) {
+		return opAutoFeedMapper.selectByTotal(searchVo);
 	}
 }

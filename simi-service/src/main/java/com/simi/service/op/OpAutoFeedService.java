@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 import com.simi.po.model.op.OpAutoFeed;
+import com.simi.vo.op.OpAutoFeedSearchVo;
 
 public interface OpAutoFeedService {
 
@@ -17,6 +18,6 @@ public interface OpAutoFeedService {
 
 	Long insertSelective(OpAutoFeed opAd);
 
-	List<OpAutoFeed> selectByTotal();
+	List<OpAutoFeed> selectByTotal(OpAutoFeedSearchVo searchVo);
 
 }
