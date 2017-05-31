@@ -1,5 +1,6 @@
 package com.simi.action.app.user;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import cn.com.duiba.credits.sdk.CreditConsumeParams;
 import cn.com.duiba.credits.sdk.CreditNotifyParams;
 import cn.com.duiba.credits.sdk.CreditTool;
+
 import com.github.pagehelper.PageInfo;
 import com.meijia.utils.DateUtil;
+import com.meijia.utils.MobileUtil;
 import com.meijia.utils.OrderNoUtil;
 import com.meijia.utils.StringUtil;
 import com.meijia.utils.TimeStampUtil;
@@ -35,6 +38,7 @@ import com.simi.service.order.OrderScoreService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
 import com.simi.vo.AppResultData;
+import com.simi.vo.user.UserDetailScoreSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
 @Controller
@@ -96,7 +100,7 @@ public class UserScoreController extends BaseController {
 			@RequestParam("user_id") Long userId, 
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		UserMsgSearchVo searchVo = new UserMsgSearchVo();
+		UserDetailScoreSearchVo searchVo = new UserDetailScoreSearchVo();
 		searchVo.setUserId(userId);
 		
 		//最近30天.
@@ -242,5 +246,57 @@ public class UserScoreController extends BaseController {
 		}
 		
 		response.getOutputStream().write("ok".getBytes());
+	}
+	
+	//获取用户的积分排名，在月度的积分排名
+	@RequestMapping(value = "get_score_ranking", method = RequestMethod.GET)
+	public AppResultData<Object> getUserScoreRanking(@RequestParam("user_id") Long userId) {
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		UserDetailScoreSearchVo searchVo = new UserDetailScoreSearchVo();
+		String startDay = DateUtil.getFirstDayOfMonth(DateUtil.getYear(), DateUtil.getMonth());
+		String enDay = DateUtil.getLastDayOfMonth();
+		
+		Long startTime = TimeStampUtil.getMillisOfDayFull(startDay + " 00:00:00") / 1000;
+		Long endTime = TimeStampUtil.getMillisOfDayFull(enDay + " 23:59:59")/1000;
+		searchVo.setStartTime(startTime);
+		searchVo.setEndTime(endTime);
+		
+		List<HashMap> rankList = userDetailScoreService.scoreRanking(searchVo);
+		List<HashMap> topRanks = new ArrayList<HashMap>();
+		int curRank = 0;
+		for (int i = 0 ; i < rankList.size(); i++) {
+			HashMap item = rankList.get(i);
+			Long uId = Long.valueOf(item.get("user_id").toString());
+			Integer score = Integer.valueOf(item.get("score").toString());
+			String rowNumStr = item.get("rownum").toString();
+			double rowNumDouble = Double.valueOf(rowNumStr);
+			int rowNum = (int) Math.floor(rowNumDouble);
+			Users u = userService.selectByPrimaryKey(uId);
+			if (i < 10) {
+				HashMap<String, String> vo = new HashMap<String, String>();
+				vo.put("user_id", String.valueOf(uId));
+				String name = u.getName();
+				
+				if (StringUtil.isEmpty(u.getName())) {
+					name = MobileUtil.getMobileX(u.getMobile());
+				}
+				vo.put("name", name);
+				vo.put("rownum", String.valueOf(rowNum));
+				vo.put("score", String.valueOf(score));
+				topRanks.add(vo);
+			}
+			
+			if (uId.equals(userId)) {
+				curRank = rowNum;
+			}
+		}
+		
+		Map<String, Object> datas = new HashMap<String, Object>();
+		datas.put("top_ranks", topRanks);
+		datas.put("cur_rank", curRank);
+		result.setData(datas);
+
+		return result;
 	}
 }

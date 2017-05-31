@@ -17,6 +17,7 @@ import com.simi.po.model.user.UserDetailScore;
 import com.simi.po.model.user.Users;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.user.UserDetailScoreSearchVo;
 import com.simi.vo.user.UserMsgSearchVo;
 
 @Controller
@@ -47,7 +48,7 @@ public class CleanupUserScoreController extends BaseController {
 		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
 			List<Users> list = userService.selectByAll();
 			for (Users u : list) {
-				UserMsgSearchVo searchVo = new UserMsgSearchVo();
+				UserDetailScoreSearchVo searchVo = new UserDetailScoreSearchVo();
 				searchVo.setUserId(u.getId());
 				searchVo.setAction("new_user");
 				List<UserDetailScore> scores = userDetailScoreService.selectBySearchVo(searchVo);

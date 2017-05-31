@@ -12,6 +12,7 @@
 		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
 		<result column="add_time" property="addTime" jdbcType="NUMERIC" />
 	</resultMap>
+	
 	<sql id="Base_Column_List">
 		id, user_id, mobile, score, action, params, is_consume, remarks, add_time
 	</sql>
@@ -22,7 +23,7 @@
 		where id = #{id,jdbcType=NUMERIC}
 	</select>
 
-	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
+	<select id="selectByListPage" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserDetailScoreSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_detail_score
@@ -30,13 +31,27 @@
 		order by add_time desc
 	</select>
 
-	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserMsgSearchVo">
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.user.UserDetailScoreSearchVo">
 		select
 		<include refid="Base_Column_List" />
 		from user_detail_score
 		<include refid="bySearchVo" />
 		order by add_time desc
 	</select>
+	
+	<select id="scoreRanking" resultType="HashMap" parameterType="com.simi.vo.user.UserDetailScoreSearchVo">
+		SELECT
+	    T1.user_id,
+	    T1.score,
+	    CASE WHEN @rowtotal = T1.score THEN @rownum WHEN @rowtotal := T1.score THEN @rownum :=@rownum + 1 WHEN @rowtotal = 0 THEN @rownum :=@rownum + 1 END AS rownum
+		FROM
+	    (select user_id, sum(score) as score from user_detail_score 
+	    <include refid="bySearchVo"/>
+	     group by user_id order by score desc) as T1,
+	    (SELECT @rownum := 0 ,@rowtotal := NULL) as T2    
+	</select>
+	
+	
 
 	<sql id="bySearchVo">
 	
@@ -51,6 +66,10 @@
 
 		<if test="action != null and action != ''">
 			and action = #{action,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="isConsume != null">
+			and is_consume = #{isConsume,jdbcType=NUMERIC}
 		</if>
 
 		<if test="params != null and params != ''">

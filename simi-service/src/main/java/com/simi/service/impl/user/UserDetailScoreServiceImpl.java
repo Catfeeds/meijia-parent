@@ -1,5 +1,6 @@
 package com.simi.service.impl.user;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.utils.UserUtil;
+import com.simi.vo.user.UserDetailScoreSearchVo;
 import com.simi.vo.user.UserDetailScoreVo;
 import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.po.dao.user.UserDetailScoreMapper;
@@ -42,7 +44,7 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	}
 
 	@Override
-	public PageInfo selectByListPage(UserMsgSearchVo searchVo, int pageNo, int pageSize) {
+	public PageInfo selectByListPage(UserDetailScoreSearchVo searchVo, int pageNo, int pageSize) {
 		PageHelper.startPage(pageNo, pageSize);
 		List<UserDetailScore> list = userDetailScoreMapper.selectByListPage(searchVo);
 		PageInfo result = new PageInfo(list);
@@ -50,7 +52,7 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 	}
 	
 	@Override
-	public List<UserDetailScore> selectBySearchVo(UserMsgSearchVo searchVo) {
+	public List<UserDetailScore> selectBySearchVo(UserDetailScoreSearchVo searchVo) {
 		return userDetailScoreMapper.selectBySearchVo(searchVo);
 	}
 
@@ -97,5 +99,10 @@ public class UserDetailScoreServiceImpl implements UserDetailScoreService {
 		vo.setAddTimeStr(addTimeStr);
 				
 		return vo;
+	}
+	
+	@Override
+	public List<HashMap> scoreRanking(UserDetailScoreSearchVo searchVo) {
+		return userDetailScoreMapper.scoreRanking(searchVo);
 	}
 }

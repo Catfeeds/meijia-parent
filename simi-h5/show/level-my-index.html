@@ -33,7 +33,7 @@
 				data-am-paragraph="{ tableScrollable: true, pureview: true }"
 			>
 
-				<h1 class="pet_article_title" align="center">您的等级：<label id="level-name"></label></h1>
+				<h2 class="pet_article_title" align="center">您的等级：<label id="level-name"></label></h2>
 				<div class="pet_article_user_time" align="center">当前经验值：<label id="exp"></label></div>
 
 				<div class="am-progress am-progress-striped am-progress-sm am-active ">
@@ -41,11 +41,24 @@
 				</div>
 
 				<p>
+				<h2 class="pet_article_title" align="center">同行月度排行榜<label id="level-name"></label></h2>
 				<blockquote>
-					<p>您的等级见证了您的成长！伴随经验值的不断提升，等级将加速提升~</p>
+					<p id="curRankDiv">您的排名：第23位，亲，继续努力哦~</p>
 				</blockquote>
 				</p>
 
+				<table class="am-table am-table-bordered am-table-striped am-table-hover">
+				    <thead>
+				        <tr>
+				            <th>排名</th>
+				            <th>用户</th>
+				            <th>经验值</th>
+				        </tr>
+				    </thead>
+				    <tbody id="topRankDiv">
+				       
+				    </tbody>
+				</table>
 
 				<div class="pet_hd_con_gp_list_nr">
 					<div class="pet_hd_con_gp_list_nr_tag">常用经验值获取说明</div>
@@ -60,19 +73,19 @@
 						<tbody>
 							<tr>
 								<td>新用户注册</td>
-								<td>+1000</td>
+								<td>+100</td>
 							</tr>
 							<tr>
 								<td>创建企业/团队</td>
-								<td>+3000</td>
+								<td>+300</td>
 							</tr>
 							<tr>
 								<td>好友邀请</td>
-								<td>+1000</td>
+								<td>+100</td>
 							</tr>
 							<tr>
 								<td>每日签到</td>
-								<td>+300</td>
+								<td>+30</td>
 							</tr>
 						</tbody>
 					</table>
@@ -91,12 +104,12 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>创建工作（例如事务提醒）</td>
-								<td>+100（上限2000）</td>
+								<td><small>创建工作（例如事务提醒）</small></td>
+								<td><small>+100（上限2000）</small></td>
 							</tr>
 							<tr>
-								<td>创建服务（例如团建）</td>
-								<td>+200（上限4000）</td>
+								<td><small>创建服务（例如团建）</small></td>
+								<td><small>+200（上限4000）</small></td>
 							</tr>
 						</tbody>
 					</table>

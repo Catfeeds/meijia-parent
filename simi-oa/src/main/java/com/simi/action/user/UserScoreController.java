@@ -20,6 +20,7 @@ import com.simi.po.model.user.Users;
 import com.simi.service.user.UserAddrsService;
 import com.simi.service.user.UserDetailScoreService;
 import com.simi.service.user.UsersService;
+import com.simi.vo.user.UserDetailScoreSearchVo;
 import com.simi.vo.user.UserDetailScoreVo;
 import com.simi.vo.user.UserMsgSearchVo;
 import com.simi.vo.user.UserSearchVo;
@@ -41,7 +42,7 @@ public class UserScoreController extends AdminController {
 	@AuthPassport
 	@RequestMapping(value = "/scoreList", method = { RequestMethod.GET })
 	public String userList(HttpServletRequest request, Model model,
-			UserMsgSearchVo searchVo, Long userId) {
+			UserDetailScoreSearchVo searchVo, Long userId) {
 		model.addAttribute("requestUrl", request.getServletPath());
 		model.addAttribute("requestQuery", request.getQueryString());
 
