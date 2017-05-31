@@ -63,22 +63,26 @@ function getDaySignList() {
 			var trValue1 = "<tr>";
 			var trHeader2 = "<tr>";
 			var trValue2 = "<tr>";
+			
+			var totalSigned = 0;
 			$.each(result, function(i, item) {
 				var week = item.week;
 				var day = item.day;
 				var dayStr = item.dayStr;
 				var signed = item.signed;
+
+				if (signed == "已签") totalSigned = totalSigned + 1;
 				
 				if (day <= 4) {
 					trHeader1+="<td><strong>"+week+"</strong><br>"+dayStr+"</td>";
-					if (signed == 0) {
+					if (signed == "") {
 						trValue1+="<td><button type=\"button\" class=\"am-btn am-btn-default am-radius\">未签</button></td>";
 					} else {
 						trValue1+="<td><button type=\"button\" class=\"am-btn am-btn-warning am-radius\">已签</button></td>";
 					}
 				} else {
 					trHeader2+="<td><strong>"+week+"</strong><br>"+dayStr+"</td>";
-					if (signed == 0) {
+					if (signed == "") {
 						trValue2+="<td><button type=\"button\" class=\"am-btn am-btn-default am-radius\">未签</button></td>";
 					} else {
 						trValue2+="<td><button type=\"button\" class=\"am-btn am-btn-warning am-radius\">已签</button></td>";
@@ -98,6 +102,8 @@ function getDaySignList() {
 			tableHtml+="</table>";
 			
 			$("#sign-list").html(tableHtml);
+			
+			$("#totalDaySign").html(totalSigned);
 		}
 	});
 }
