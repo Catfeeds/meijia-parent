@@ -36,6 +36,7 @@ import com.simi.po.model.user.UserRef;
 import com.simi.po.model.user.UserRef3rd;
 import com.simi.po.model.user.Users;
 import com.simi.po.model.xcloud.Xcompany;
+import com.simi.po.model.xcloud.XcompanyDept;
 import com.simi.po.model.xcloud.XcompanySetting;
 import com.simi.po.model.xcloud.XcompanyStaff;
 import com.simi.service.async.UserMsgAsyncService;
@@ -56,6 +57,7 @@ import com.simi.service.user.UserRefService;
 import com.simi.service.user.UsersService;
 import com.simi.service.xcloud.XCompanyService;
 import com.simi.service.xcloud.XCompanySettingService;
+import com.simi.service.xcloud.XcompanyDeptService;
 import com.simi.service.xcloud.XcompanyStaffService;
 import com.simi.vo.user.GroupsSearchVo;
 import com.simi.vo.user.UserBaseVo;
@@ -130,6 +132,9 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
 	private GroupUserService groupUserService;
+	
+	@Autowired
+	private XcompanyDeptService xCompanyDeptService;
 	
 	@Override
 	public Long insert(Users record) {
@@ -587,6 +592,36 @@ public class UsersServiceImpl implements UsersService {
 		vo.setLevelMax(levelMax);
 		vo.setLevelBanner(levelBanner);
 		
+		// 用户是否为某个团队的职员
+		vo.setCompanyId(0L);
+		vo.setCompanyName("");
+		vo.setJobName("");
+		vo.setDeptName("");
+		
+		Xcompany defaultXcompany = xcompanyStaffService.getDefaultCompanyByUserId(userId);
+		
+		if (defaultXcompany != null) {
+			Long companyId = defaultXcompany.getCompanyId();
+			vo.setCompanyId(companyId);
+			vo.setCompanyName(defaultXcompany.getCompanyName());
+			
+			//获取职位
+			UserCompanySearchVo searchVo = new UserCompanySearchVo();
+			searchVo.setUserId(userId);
+			searchVo.setStatus((short) 1);
+			searchVo.setCompanyId(companyId);
+			List<XcompanyStaff> companyList = xcompanyStaffService.selectBySearchVo(searchVo);
+			if (!companyList.isEmpty()) {
+				XcompanyStaff xs = companyList.get(0);
+				Long deptId = xs.getDeptId();
+				XcompanyDept dept = xCompanyDeptService.selectByXcompanyIdAndDeptId(companyId, deptId);
+				if (dept != null && !dept.getName().equals("未分配")) {
+					
+					vo.setDeptName(dept.getName());
+				}
+			}
+			
+		}
 		
 		return vo;
 	}

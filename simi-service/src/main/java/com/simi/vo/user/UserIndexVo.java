@@ -40,6 +40,14 @@ public class UserIndexVo  {
 	private Integer levelMax;
 	
 	private String levelBanner;
+	
+    private Long companyId;
+    
+    private String companyName;
+    
+    private String jobName;
+    
+    private String deptName;
 
 	public long getId() {
 		return Id;
@@ -183,5 +191,37 @@ public class UserIndexVo  {
 
 	public void setLevelBanner(String levelBanner) {
 		this.levelBanner = levelBanner;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 }

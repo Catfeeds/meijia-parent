@@ -14,19 +14,11 @@
     	<div class="pet_grzx">
 			<div class="pet_grzx_nr">
 		    	<div class="pet_grzx_ico">
-		          	<img src="images/a3.png" alt="">
+		          	<img id="headImg" src="images/a3.png" alt="">
 		      	</div>
-		      	<div class="pet_grzx_name">张三</div>
-		      	<div class="pet_grzx_map">LV3</div>
-		      	<!--
-		      	<div class="pet_grzx_num_font">北京美家生活科技有限公司</div>
+		      	<div class="pet_grzx_name" id="name">张三</div>
+		      	<div class="pet_grzx_map" id="level">LV3</div>
 		      	
-		      	<div class="pet_grzx_num">
-		          <span>653<i>同行排名</i></span>
-		          <span>2304<i>经验值</i></span>
-		          <span>2304<i>经验值</i></span>
-		     	 </div>
-		     	 -->
 		  	</div>
 		  	<div class="pet_content_friend pet_content_list">
 		      <div class="pet_article_like">
@@ -40,10 +32,10 @@
 				      		<div class="pet_list_one_info">
 					            <div class="pet_list_one_info_l">
 					                <div class="pet_list_one_info_ico"><span class="am-icon-phone am-icon-sm"></span></div>
-					                <div class="pet_list_one_info_name"><strong>10086</strong></div>
+					                <div class="pet_list_one_info_name"><strong id="mobile"></strong></div>
 					            </div>
 					            <div class="pet_list_one_info_r">
-					                <div class="pet_list_tag pet_list_tag_zzs"><a href="tel:10086">拨打电话</a> &emsp;| &emsp; <a href="sms:10086">发短信</a></div>
+					                <div class="pet_list_tag pet_list_tag_zzs"><a id="mobileHref" href="">拨打电话</a> &emsp;| &emsp; <a id="smsHref" href="">发短信</a></div>
 					            </div>
 					        </div>
 				      	</li>
@@ -54,14 +46,14 @@
 					                <div class="pet_list_one_info_name"><strong>办公信息</strong></div>
 					            </div>
 					            <div class="pet_list_one_info_r">
-					                <div class="pet_list_tag pet_list_tag_zzs">仅同事可见</div>
+					                <div class="pet_list_tag pet_list_tag_zzs"></div>
 					            </div>
 					        </div>
 					        <div class=" am-u-sm-8 am-list-main pet_list_one_nr">
-					            <div class="pet_article_user_time pet_hd_con_map" id = "serviceAddr" ><span class="am-icon-info"> 城市：</span>北京</div>
-				            	<div class="pet_article_user_time pet_hd_con_map" id = "serviceAddr" ><span class="am-icon-info"> 企业：</span>北京美家生活科技有限公司</div>
-				            	<div class="pet_article_user_time pet_hd_con_map" id = "serviceAddr" ><span class="am-icon-info"> 部门：</span>人力资源部</div>
-				            	<div class="pet_article_user_time pet_hd_con_map" id = "serviceAddr" ><span class="am-icon-info"> 邮箱：</span>biz@bolohr.com</div>
+					            <div class="pet_article_user_time pet_hd_con_map" ><span class="am-icon-info"> 城市：</span><span id="cityName"></span></div>
+				            	<div class="pet_article_user_time pet_hd_con_map" ><span class="am-icon-info"> 企业：</span><span id="companyName"></span></div>
+				            	<div class="pet_article_user_time pet_hd_con_map" ><span class="am-icon-info"> 部门：</span><span id="deptName"></span></div>
+				            	<div class="pet_article_user_time pet_hd_con_map" ><span class="am-icon-info"> 邮箱：</span><span id="email"></span></div>
 
 					        </div>
 					          
@@ -86,45 +78,10 @@
       <div class="pet_article_footer_info">Copyright(c) 菠萝人事 All Rights Reserved</div>
 </div>
 </div>
- <script src="assets/js/jquery.min.js"></script>
-	<!--<![endif]-->
-	<script src="assets/js/amazeui.min.js"></script>
-	<script src="assets/js/app.js"></script>
-	<script src="assets/js/common/common.js"></script>
-	
-	<!--本页面使用的js-->
-	<script src="assets/js/common/validate-methods.js"></script>
-	<script src="assets/js/countdown.js"></script>
-
-
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/company/card-share.js"></script>
-<script>
-$(function(){
-
-    // 动态计算新闻列表文字样式
-    auto_resize();
-    $(window).resize(function() {
-        auto_resize();
-    });
-    $('.am-list-thumb img').load(function(){
-        auto_resize();
-    });
-
-    $('.am-list > li:last-child').css('border','none');
-    function auto_resize(){
-        $('.pet_list_one_nr').height($('.pet_list_one_img').height());
-
-    }
-        $('.pet_nav_gengduo').on('click',function(){
-            $('.pet_more_list').addClass('pet_more_list_show');
-       });
-        $('.pet_more_close').on('click',function(){
-            $('.pet_more_list').removeClass('pet_more_list_show');
-        });
-});
-
-</script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/common/common.js"></script>
+<script src="assets/js/user/friend-detail.js"></script>
 </body>
 </html>
