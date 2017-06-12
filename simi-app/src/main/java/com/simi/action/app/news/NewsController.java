@@ -51,7 +51,7 @@ public class NewsController extends BaseController {
 		
 		String slug = "";
 		if (newsType.equals("topline")) slug = "首页精选";
-		if (newsType.equals("info ")) slug = "职场";
+		if (newsType.equals("info")) slug = "职场";
 		
 		String wpUrl = "http://bolohr.com/";
 		Map<String, String> paramMap = new HashMap<String, String>();

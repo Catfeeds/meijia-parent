@@ -2,6 +2,8 @@ package com.simi.action.app.news;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,29 +35,31 @@ public class TokenController extends BaseController {
 	private XCompanySettingService xCompanySettingService;
 	
 	@RequestMapping(value = "do_token", method = RequestMethod.GET)
-	public AppResultData<Object> genToken() {
+	public AppResultData<Object> genToken(HttpServletRequest request) {
 		
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
-		
-		CompanySettingSearchVo searchVo1 = new CompanySettingSearchVo();
-		searchVo1.setSettingType(Constants.SETTING_TOKEN);
-		List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo1);
-		
-		XcompanySetting record = xCompanySettingService.initXcompanySetting();
-		if (!list.isEmpty()) {
-			record = list.get(0);
-		}
-		
-		String token =  WxUtil.getNonceStr();
-		record.setUserId(0L);
-		record.setSettingJson(token);
-		record.setSettingType(Constants.SETTING_TOKEN);
-		
-		if (record.getId() > 0L) {
-			record.setUpdateTime(TimeStampUtil.getNowSecond());
-			xCompanySettingService.updateByPrimaryKeySelective(record);
-		} else {
-			xCompanySettingService.insert(record);
+		String reqHost = request.getRemoteHost();
+		if (reqHost.equals("localhost") || reqHost.equals("127.0.0.1")) {
+			CompanySettingSearchVo searchVo1 = new CompanySettingSearchVo();
+			searchVo1.setSettingType(Constants.SETTING_TOKEN);
+			List<XcompanySetting> list = xCompanySettingService.selectBySearchVo(searchVo1);
+			
+			XcompanySetting record = xCompanySettingService.initXcompanySetting();
+			if (!list.isEmpty()) {
+				record = list.get(0);
+			}
+			
+			String token =  WxUtil.getNonceStr();
+			record.setUserId(0L);
+			record.setSettingJson(token);
+			record.setSettingType(Constants.SETTING_TOKEN);
+			
+			if (record.getId() > 0L) {
+				record.setUpdateTime(TimeStampUtil.getNowSecond());
+				xCompanySettingService.updateByPrimaryKeySelective(record);
+			} else {
+				xCompanySettingService.insert(record);
+			}
 		}
 		return result;
 	}
