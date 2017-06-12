@@ -62,7 +62,7 @@ public class NewsController extends BaseController {
 		paramMap.put("include", "id,title,modified,url");
 		
 		String content = HttpClientUtil.get(wpUrl, paramMap);
-		System.out.println(content);
+		if (StringUtil.isEmpty(content)) return result;
 		
 		JSONObject dataJson;
 		List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
@@ -99,4 +99,67 @@ public class NewsController extends BaseController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "search", method = RequestMethod.GET)
+	public AppResultData<Object> search(
+			@RequestParam(value = "keyword", required = false, defaultValue="") String keyword,
+			@RequestParam(value = "count", required = false, defaultValue="10") int count,
+			@RequestParam(value = "token", required = false, defaultValue="") String token
+			) {
+		
+		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
+		
+		if (StringUtil.isEmpty(keyword) ||  StringUtil.isEmpty(token)) {
+			result.setStatus(Constants.ERROR_999);
+			result.setMsg("参数不正确");
+			return result;
+		}
+		
+		String wpUrl = "http://bolohr.com/api/get_search_results/";
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("s", keyword);
+		paramMap.put("count", String.valueOf(count));
+		paramMap.put("order", "DESC");
+		paramMap.put("page", "1");
+		paramMap.put("include", "id,title,modified,url");
+		
+		String content = HttpClientUtil.get(wpUrl, paramMap);
+		if (StringUtil.isEmpty(content)) return result;
+//		System.out.println(content);
+		
+		JSONObject dataJson;
+		List<Map<String, String>> datas = new ArrayList<Map<String, String>>();
+		try {
+			dataJson = new JSONObject(content);
+			String status = dataJson.getString("status");
+			if (!status.equals("ok"))
+				return result;
+
+			JSONArray elements = dataJson.getJSONArray("posts");
+			
+			for (int i = 0; i < elements.length(); i++) {
+				JSONObject element = elements.getJSONObject(i);
+				String id = element.getString("id");
+				String title = element.getString("title");
+				String modified = element.getString("modified");
+				String url = element.getString("url");
+				System.out.println(title);
+				
+				Map<String, String> item = new HashMap<String, String>();
+				item.put("id", id);
+				item.put("title", title);
+				item.put("modified", modified);
+				item.put("url", url);
+				datas.add(item);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		result.setData(datas);
+		
+		return result;
+	}	
 }
