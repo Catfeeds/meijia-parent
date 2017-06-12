@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
@@ -29,6 +30,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 
 /**
  * HTTP工具类
@@ -359,69 +361,82 @@ public class HttpClientUtil {
 	}
 
 	public static void main(String[] args) {
-		 Map<String, String> params = new HashMap<String, String>();
-		// params.put("merNo", "301100100001630");
-		// params.put("signType", "MD5");
-		// params.put("merBindAgrNo", "00003018007000006450000013866742");
-		// params.put("interfaceVersion", "1.0.0.0");
-		// params.put("amount", "1000");
-		// params.put("orderDate", "20120823");
-		// params.put("orderNo", "UDP1208230917531231111");
-		// params.put("merReqTime", "20120823091802");
-		// params.put("goodsDesc", "为号码交费充值元");
-		// params.put("goodsName", "中国联通交费充值");
-		// params.put("userIdeMark", "3");
-		// params.put("bankAgrMode", "9");
-		// params.put("signMsg", "3ced24a118461043901d47815e6905a9");
-		// System.out.println(HttpClientUtil.getUrl(params));
-		// System.out.println(HttpClientUtil.post("xxxx", params));
-		//开门
-//		String username = "admin";
-//		String password = "888888";
-//		String url = "http://192.168.0.67/cdor.cgi?open=1";
-////		params.put("open", "1");
-//		System.out.println(HttpClientUtil.postByAuth(url, username, password, params));
+//		 Map<String, String> params = new HashMap<String, String>();
+//		// params.put("merNo", "301100100001630");
+//		// params.put("signType", "MD5");
+//		// params.put("merBindAgrNo", "00003018007000006450000013866742");
+//		// params.put("interfaceVersion", "1.0.0.0");
+//		// params.put("amount", "1000");
+//		// params.put("orderDate", "20120823");
+//		// params.put("orderNo", "UDP1208230917531231111");
+//		// params.put("merReqTime", "20120823091802");
+//		// params.put("goodsDesc", "为号码交费充值元");
+//		// params.put("goodsName", "中国联通交费充值");
+//		// params.put("userIdeMark", "3");
+//		// params.put("bankAgrMode", "9");
+//		// params.put("signMsg", "3ced24a118461043901d47815e6905a9");
+//		// System.out.println(HttpClientUtil.getUrl(params));
+//		// System.out.println(HttpClientUtil.post("xxxx", params));
+//		//开门
+////		String username = "admin";
+////		String password = "888888";
+////		String url = "http://192.168.0.67/cdor.cgi?open=1";
+//////		params.put("open", "1");
+////		System.out.println(HttpClientUtil.postByAuth(url, username, password, params));
+//		
+//		//
+//		
+//		String apiKey = "8cca3859e9b222f51c51698f8016e293";
+//		int year = 2016;
+//		// 获取年度的假日列表url
+//		String yearUrl = "http://apis.baidu.com/xiaogg/holiday/holiday";
+//
+//		Map<String, String> yearParams = new HashMap<String, String>();
+//		yearParams.put("d", String.valueOf(year));
+//		
+//		Map<String, String> headers = new HashMap<String, String>();
+//		headers.put("apikey", apiKey);
+//		
+////		String yearRes = HttpClientUtil.get(yearUrl, yearParams, headers);
+//		
+//		String yearRes = "{\"2016\":[\"0207\",\"0208\",\"0209\",\"0210\",\"0211\",\"0212\",\"0213\",\"0404\",\"0501\",\"0502\",\"0609\",\"0610\",\"0611\",\"0915\",\"0916\",\"0917\",\"1001\",\"1002\",\"1003\",\"1004\",\"1005\",\"1006\",\"1007\",\"0101\"]}";
+//		System.out.println(yearRes);
+//		
+//		JSONObject ja = JSONObject.fromObject(yearRes);
+//		if (ja.containsKey("errNum")) {
+//			System.out.println(ja.get("errNum") + ":" + ja.get("errMsg"));
+//		}
+//		
+//		System.out.println(ja);
+//		
+//		String list = ja.get(String.valueOf(year)).toString();
+//		System.out.println(list);
+//		
+//		JSONArray jsonArray = JSONArray.fromObject(list);
+//		
+//		Iterator it = jsonArray.iterator();
+//		
+//		while (it.hasNext()) {
+//			System.out.println(it.next().toString());
+//			String datePart = it.next().toString();
+//			String dateStr = String.valueOf(year) + datePart;
+//			Date date = DateUtil.parse(dateStr, "yyyyMMdd");
+//			String day = DateUtil.formatDate(date);
+//			System.out.println(day);
+//        }
+		int count = 10;
+		String wpUrl = "http://bolohr.com/";
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("json", "get_tag_posts");
+		paramMap.put("count", String.valueOf(count));
+		paramMap.put("order", "DESC");
+		paramMap.put("slug", "首页精选");
+		paramMap.put("include", "id,title,modified,url");
 		
-		//
+//		String params = HttpClientUtil.getUrl(paramMap);
+//		wpUrl = wpUrl + "?" + params;
 		
-		String apiKey = "8cca3859e9b222f51c51698f8016e293";
-		int year = 2016;
-		// 获取年度的假日列表url
-		String yearUrl = "http://apis.baidu.com/xiaogg/holiday/holiday";
-
-		Map<String, String> yearParams = new HashMap<String, String>();
-		yearParams.put("d", String.valueOf(year));
 		
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("apikey", apiKey);
-		
-//		String yearRes = HttpClientUtil.get(yearUrl, yearParams, headers);
-		
-		String yearRes = "{\"2016\":[\"0207\",\"0208\",\"0209\",\"0210\",\"0211\",\"0212\",\"0213\",\"0404\",\"0501\",\"0502\",\"0609\",\"0610\",\"0611\",\"0915\",\"0916\",\"0917\",\"1001\",\"1002\",\"1003\",\"1004\",\"1005\",\"1006\",\"1007\",\"0101\"]}";
-		System.out.println(yearRes);
-		
-		JSONObject ja = JSONObject.fromObject(yearRes);
-		if (ja.containsKey("errNum")) {
-			System.out.println(ja.get("errNum") + ":" + ja.get("errMsg"));
-		}
-		
-		System.out.println(ja);
-		
-		String list = ja.get(String.valueOf(year)).toString();
-		System.out.println(list);
-		
-		JSONArray jsonArray = JSONArray.fromObject(list);
-		
-		Iterator it = jsonArray.iterator();
-		
-		while (it.hasNext()) {
-			System.out.println(it.next().toString());
-			String datePart = it.next().toString();
-			String dateStr = String.valueOf(year) + datePart;
-			Date date = DateUtil.parse(dateStr, "yyyyMMdd");
-			String day = DateUtil.formatDate(date);
-			System.out.println(day);
-        }
 	}
 
 }

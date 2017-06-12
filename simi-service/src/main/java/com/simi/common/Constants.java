@@ -206,4 +206,7 @@ public class Constants {
 	
 	public static String SETTING_CHICKIN_NET = "checkin-net"; //考勤地点设置
 	public static String SETTING_ALARM_DAY_SIGN = "alarm_day_sign";  //设置签到提醒.
+	
+	
+	public static String SETTING_TOKEN = "token"; 		//生成生命周期20分钟的token
 }
