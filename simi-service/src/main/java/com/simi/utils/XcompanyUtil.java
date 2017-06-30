@@ -58,13 +58,13 @@ public class XcompanyUtil {
 	@SuppressWarnings("unchecked")
 	public static String genQrCode(String invitationCode) throws WriterException, IOException {
 		
-		String qrCodeLogo = Constants.DEFAULT_LOGO;
+		String qrCodeLogo = "";
 		
 		String contents = "xcloud-h5://t=company-join";
 		contents += "&a=new";
 		contents += "&p=" + invitationCode;
 
-		BufferedImage qrCodeImg = QrCodeUtil.genBarcode(contents, 800, 800, qrCodeLogo);
+		BufferedImage qrCodeImg = QrCodeUtil.genBarcodeNotLogo(contents, 800, 800);
 
 		ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
 		try {

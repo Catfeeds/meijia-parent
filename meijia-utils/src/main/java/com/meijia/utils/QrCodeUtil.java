@@ -116,6 +116,69 @@ public class QrCodeUtil {
   
         return image;  
     }  
+    
+    public static BufferedImage genBarcodeNotLogo(String content, int width,  
+            int height) throws WriterException,  
+            IOException {  
+        // 读取源图像  
+       
+        int[][] srcPixels = new int[IMAGE_WIDTH][IMAGE_HEIGHT];  
+        
+  
+        Map<EncodeHintType, Object> hint = new HashMap<EncodeHintType, Object>();  
+        hint.put(EncodeHintType.CHARACTER_SET, "utf-8");  
+        hint.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);  
+        // 生成二维码  
+        BitMatrix matrix = mutiWriter.encode(content, BarcodeFormat.QR_CODE,  
+                width, height, hint);  
+  
+        // 二维矩阵转为一维像素数组  
+        int halfW = matrix.getWidth() / 2;  
+        int halfH = matrix.getHeight() / 2;  
+        int[] pixels = new int[width * height];  
+  
+        for (int y = 0; y < matrix.getHeight(); y++) {  
+            for (int x = 0; x < matrix.getWidth(); x++) {  
+                // 读取图片  
+                if (x > halfW - IMAGE_HALF_WIDTH  
+                        && x < halfW + IMAGE_HALF_WIDTH  
+                        && y > halfH - IMAGE_HALF_WIDTH  
+                        && y < halfH + IMAGE_HALF_WIDTH) {  
+                    pixels[y * width + x] = srcPixels[x - halfW  
+                            + IMAGE_HALF_WIDTH][y - halfH + IMAGE_HALF_WIDTH];  
+                }   
+                // 在图片四周形成边框  
+                else if ((x > halfW - IMAGE_HALF_WIDTH - FRAME_WIDTH  
+                        && x < halfW - IMAGE_HALF_WIDTH + FRAME_WIDTH  
+                        && y > halfH - IMAGE_HALF_WIDTH - FRAME_WIDTH && y < halfH  
+                        + IMAGE_HALF_WIDTH + FRAME_WIDTH)  
+                        || (x > halfW + IMAGE_HALF_WIDTH - FRAME_WIDTH  
+                                && x < halfW + IMAGE_HALF_WIDTH + FRAME_WIDTH  
+                                && y > halfH - IMAGE_HALF_WIDTH - FRAME_WIDTH && y < halfH  
+                                + IMAGE_HALF_WIDTH + FRAME_WIDTH)  
+                        || (x > halfW - IMAGE_HALF_WIDTH - FRAME_WIDTH  
+                                && x < halfW + IMAGE_HALF_WIDTH + FRAME_WIDTH  
+                                && y > halfH - IMAGE_HALF_WIDTH - FRAME_WIDTH && y < halfH  
+                                - IMAGE_HALF_WIDTH + FRAME_WIDTH)  
+                        || (x > halfW - IMAGE_HALF_WIDTH - FRAME_WIDTH  
+                                && x < halfW + IMAGE_HALF_WIDTH + FRAME_WIDTH  
+                                && y > halfH + IMAGE_HALF_WIDTH - FRAME_WIDTH && y < halfH  
+                                + IMAGE_HALF_WIDTH + FRAME_WIDTH)) {  
+                    pixels[y * width + x] = 0xfffffff;  
+                } else {  
+                    // 此处可以修改二维码的颜色，可以分别制定二维码和背景的颜色；  
+                    pixels[y * width + x] = matrix.get(x, y) ? 0xff000000  
+                            : 0xfffffff;  
+                }  
+            }  
+        }  
+  
+        BufferedImage image = new BufferedImage(width, height,  
+                BufferedImage.TYPE_INT_RGB);  
+        image.getRaster().setDataElements(0, 0, width, height, pixels);  
+  
+        return image;  
+    }  
   
     /** 
      * 把传入的原始图像按高度和宽度进行缩放，生成符合要求的图标 
@@ -181,8 +244,15 @@ public class QrCodeUtil {
     }  
   
     public static void main(String[] args) {  
-    	QrCodeUtil.encode("1",  800, 800, 
-    		"http://img.bolohr.com/314a3ecee7f653526b1dcc661c10142c?p=0", 
-            "/Users/lnczx/Pictures/1.jpg");  
+//    	QrCodeUtil.encode("1",  800, 800, 
+//    		"http://img.bolohr.com/314a3ecee7f653526b1dcc661c10142c?p=0", 
+//            "/Users/lnczx/Pictures/1.jpg");  
+    	
+    	try {
+			QrCodeUtil.genBarcodeNotLogo("1111", 800, 800);
+		} catch (WriterException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }  
 }  
