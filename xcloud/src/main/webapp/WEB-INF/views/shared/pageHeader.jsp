@@ -53,7 +53,7 @@
 				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-shcedule-card')" title="效率">&nbsp; 效率 &nbsp;</a>
 			</li>
 			<li id="top-study">
-				<a href="/xcloud/study/list" onclick="setTopMenuId('top-study', 'collapse-nav-study')" title="成长" target="_top">&nbsp; 成长 &nbsp;</a>
+				<a href="/xcloud/study/index" onclick="setTopMenuId('top-study', 'collapse-nav-study')" title="成长" target="_top">&nbsp; 成长 &nbsp;</a>
 			</li>
 			<li id="top-hr">
 				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">&nbsp; 人事 &nbsp;</a>
