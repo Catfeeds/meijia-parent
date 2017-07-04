@@ -44,7 +44,8 @@
 	<context:component-scan base-package="com.xcloud.action.**,
 					  					  com.xcloud.action.company.**,
 					  					  com.xcloud.action.schedule.**,
-					  					  com.xcloud.action.atools.**" 
+					  					  com.xcloud.action.study.**,
+					  					  com.xcloud.action.atools.**"
 					  					  use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
