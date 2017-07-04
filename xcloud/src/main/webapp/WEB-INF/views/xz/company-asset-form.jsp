@@ -40,7 +40,7 @@
 						class="am-panel-hd"> <img
 						src="<c:url value='/assets/img/a1.png'/>"
 						class="am-img-thumbnail am-circle" width="35" height="35">
-					云小秘提示您 </header>
+					菠萝小秘提示您 </header>
 					<div class="am-panel-bd">可以用App扫描资产物品的二维码快速完成入库登记，快去试试吧~~</div>
 					<div class="am-panel-bd"><center><img src="<c:url value='${qrCode }'/>" width="200" height="200" /></center></div>
 					</section>

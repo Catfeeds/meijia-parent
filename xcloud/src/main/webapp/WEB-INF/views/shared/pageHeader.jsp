@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header class="am-topbar admin-header">
 	<div class="am-topbar-brand">
-		<img src="http://app.bolohr.com/simi-h5/icon/web-logo.png" height="25" width="25"> | <a href="/xcloud/company/company-form" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" 
+		<img src="http://app.bolohr.com/simi-h5/icon/web-logo.png" height="30px" width="30px"> | <a href="/xcloud/company/company-form" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" 
 				class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
 						${sessionScope.accountAuth.companyName}
 				</a>
@@ -15,7 +15,7 @@
 				</a>
 				
 				<ul class="am-dropdown-content">
-				<center>[切换所在的公司]</center>
+				<center>[切换您所在的公司]</center>
 					<c:forEach items="${sessionScope.accountAuth.companyList}" var="item">
 						<c:if test="${item.companyId != sessionScope.accountAuth.companyId}">
 
@@ -36,7 +36,7 @@
 			</a>
 		</c:if>
 		<a href="javascript:;">
-			<span class="am-badge am-badge-danger am-radius"></span>
+			<span class="am-badge am-badge-danger am-radius">个人免费版</span>
 		</a>
 	</div>
 	<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -47,34 +47,34 @@
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 		<ul id="top-ul" class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
 			<li class="am-nav" id="top-index">
-				<a href="/xcloud/index" onclick="setTopMenuId('top-index', '')" title="首页">首页</a>
+				<a href="/xcloud/index" onclick="setTopMenuId('top-index', '')" title="首页">&nbsp; 首页 &nbsp;</a>
 			</li>
 			<li id="top-schedule">
-				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-shcedule-card')" title="工作日程">日程</a>
+				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-shcedule-card')" title="效率">&nbsp; 效率 &nbsp;</a>
 			</li>
-			<!-- 			<li id="top-staff">
-				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-staff', '')" title="通讯录" target="_top">通讯录</a>
-			</li> -->
+			<li id="top-study">
+				<a href="/xcloud/study/list" onclick="setTopMenuId('top-study', 'collapse-nav-study')" title="成长" target="_top">&nbsp; 成长 &nbsp;</a>
+			</li>
 			<li id="top-hr">
-				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">人事</a>
+				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">&nbsp; 人事 &nbsp;</a>
 			</li>
 			<li id="top-xz">
 				<a href="/xcloud/xz/assets/company_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')" title="行政"
-					 target="_top">行政</a>
+					 target="_top">&nbsp; 行政 &nbsp;</a>
 			</li>
 			<li id="top-atools">
-				<a href="/xcloud/atools/list" onclick="setTopMenuId('top-atools', 'collapse-nav-atools')" title="应用中心" target="_top">应用中心</a>
+				<a href="/xcloud/atools/list" onclick="setTopMenuId('top-atools', 'collapse-nav-atools')" title="应用" target="_top">&nbsp; 应用 &nbsp;</a>
 			</li>
 			<li class="am-dropdown" data-am-dropdown>
 				<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-					<img src="<c:url value='${sessionScope.accountAuth.headImg}'/>" class="am-circle am-img-thumbnail" width="30" height="25" /> ${sessionScope.accountAuth.realName}
+					<img src="<c:url value='${sessionScope.accountAuth.headImg}'/>" class="tr-am-img-thumbnail" width="30px" height="30px" />
 					<span class="am-icon-caret-down"></span>
 				</a>
 				<ul class="am-dropdown-content">
 					<li>
 						<a href="/xcloud/staff/staff-form?staff_id=${sessionScope.accountAuth.staffId}">
 							<span class="am-icon-user"></span>
-							个人资料
+							我的资料
 						</a>
 					</li>
 					<!-- <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li> -->

@@ -41,12 +41,13 @@
 			</div>
 			<hr>
 			<div class="am-g">
-				<div class="am-u-sm-12">
+				<div class="am-u-sm-1">
+				</div>
+				<div class="am-u-sm-11">
 					<form class="am-form">
 						<table class="am-table">
 							<thead>
 								<tr>
-									</th>
 									<th class="table-name">应用</th>
 									<th class="table-title">名称</th>
 									<th class="table-title">介绍</th>
@@ -57,7 +58,7 @@
 							<c:forEach items="${contentModel}" var="item">
 								<tr>
 									
-									<td><img width="60" height="60" src="${ item.logo }"/></td>
+									<td><img width="40" height="40" src="${ item.logo }"/></td>
 									<td>${item.name}</td>
 									
 									<td>${item.appDescribe}</td>
@@ -84,88 +85,10 @@
 									 <a href ="/xcloud/atools/user_app_tools_oa?t_id=${item.tId}&status=0&user_id=${item.userId}">取消</a>
 									
 									</c:if>
-										<!-- <div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<input id="alive" type="checkbox" checked data-on-color="success" >
-											</div>
-										</div> -->
-										<!-- <div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
-													<span class="am-icon-upload"></span> 启用
-												</button>
-												<button
-													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-												>
-													<span class="am-icon-download"></span> 停用
-												</button>
-											</div>
-										</div> -->
 									</td>
 								</tr>
 								</c:forEach>
-								<!-- <tr>
-									<td><a href="#"><img
-											src="https://static.dingtalk.com/media/lALOASopBszIzMg_200_200.png_450x10000q90.jpg"
-											width="60" height="60"
-										/></a></td>
-									<td>饮用水管理</td>
-									<td>已启用</td>
-									<td class="am-hide-sm-only">企业可以通过手机移动考勤和实体考勤机相结合的方式，实现功能强大的企业考勤管理。</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
-													<span class="am-icon-upload"></span> 启用
-												</button>
-												<button
-													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-												>
-													<span class="am-icon-download"></span> 停用
-												</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><a href="#"><img
-											src="https://static.dingtalk.com/media/lALOASoo-8zIzMg_200_200.png_450x10000q90.jpg"
-											width="60" height="60"
-										/></a></td>
-									<td>绿植管理</td>
-									<td>已停用</td>
-									<td class="am-hide-sm-only">企业可以通过手机移动考勤和实体考勤机相结合的方式，实现功能强大的企业考勤管理。</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<input id="alive" type="checkbox" checked data-on-color="success" >
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><a href="#"><img
-											src="https://static.dingtalk.com/media/lALOASoo6MzIzMg_200_200.png_450x10000q90.jpg"
-											width="60" height="60"
-										/></a></td>
-									<td>薪资管理</td>
-									<td>即将上线</td>
-									<td class="am-hide-sm-only">企业可以通过手机移动考勤和实体考勤机相结合的方式，实现功能强大的企业考勤管理。</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
-													<span class="am-icon-upload"></span> 启用
-												</button>
-												<button
-													class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-												>
-													<span class="am-icon-download"></span> 停用
-												</button>
-											</div>
-										</div>
-									</td>
-								</tr> -->
+								
 							</tbody>
 						</table>
 					</form>

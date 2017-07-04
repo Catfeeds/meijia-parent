@@ -37,7 +37,7 @@
 				<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
 					<section class="am-panel am-panel-default"> <header class="am-panel-hd"> <img
 						src="<c:url value='/assets/img/a1.png'/>" class="am-img-thumbnail am-circle" width="35" height="35">
-					云小秘提示您 </header>
+					菠萝小秘提示您 </header>
 					<div class="am-panel-bd">可以用APP一键扫码叫水，快来试试吧~~</div>
 					<div class="am-panel-bd"><center><img src="<c:url value='${qrCode }'/>" width="200" height="200" /></center></div>
 					</section>

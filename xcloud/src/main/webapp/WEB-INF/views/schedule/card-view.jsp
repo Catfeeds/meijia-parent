@@ -43,7 +43,7 @@
 						class="am-panel-hd"
 					> <img src="<c:url value='/assets/img/a1.png'/>"
 						class="am-img-thumbnail am-circle" width="35" height="35"
-					> 云小秘提示您 </header>
+					> 菠萝小秘提示您 </header>
 					<div class="am-panel-bd">${cardTips }</div>
 					</section>
 				</div>

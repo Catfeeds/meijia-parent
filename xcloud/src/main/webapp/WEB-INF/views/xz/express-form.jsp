@@ -40,7 +40,7 @@
 						class="am-panel-hd"> <img
 						src="<c:url value='/assets/img/a1.png'/>"
 						class="am-img-thumbnail am-circle" width="35" height="35">
-					云小秘提示您 </header>
+					菠萝小秘提示您 </header>
 					<div class="am-panel-bd">可以用App扫描快递单的二维码快速录入快递信息，快去试试吧~~</div>
 					<div class="am-panel-bd"><center><img src="<c:url value='${qrCode }'/>" width="200" height="200" /></center></div>
 					</section>

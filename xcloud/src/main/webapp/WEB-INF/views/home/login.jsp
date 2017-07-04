@@ -51,10 +51,10 @@
 					<div class="am-tabs am-margin " data-am-tabs>
 						<ul class="am-tabs-nav am-nav am-nav-tabs">
 							<li class="am-active">
-								<a id="tab-login-pass" href="#tab-login-pass"></a>
+								<a id="tab-login-pass" href="#tab-login-pass"><strong>密码方式登录</strong></a>
 							</li>
 							<li>
-								<a id="tab-login-sms" href="#tag-login-sms"></a>
+								<a id="tab-login-sms" href="#tag-login-sms"><strong>短信验证码登录</strong></a>
 							</li>
 						</ul>
 						<div class="am-tabs-bd">
@@ -63,7 +63,7 @@
 								<form:form method="post" modelAttribute="contentModel" id="login-form" 
 									class="am-form am-padding-xl am-padding-bottom-sm">
 									<div class="am-g am-container">
-										<h2>登录管理平台</h2>
+										<h3>使用手机号和密码登录平台</h3>
 										<form:errors path="username" class="am-alert am-alert-danger center"></form:errors>
 									</div>
 									<div class="am-g am-padding-sm">
@@ -78,9 +78,9 @@
 												placeholder="密码" data-validation-message="请输入密码" required="required" />
 										</div>
 										<div class="am-form-group">
-											<div id="drag" style="width: 239px;"></div>
+											<div id="drag" style="width: 215px;"></div>
 										</div>
-										<button type="button" id="login-btn" class="am-btn am-btn-danger am-btn-block am-radius">登 录</button>
+										<button type="button" id="login-btn" class="am-btn am-btn-success am-btn-block am-radius">登 录</button>
 										<div class="am-form-group am-margin-top-sm am-text-sm">
 											<div class="am-fl">
 												<a href="#" onclick="javascript:loginSwitch('tab-login-sms')">
@@ -100,7 +100,7 @@
 								<form:form method="post" modelAttribute="contentModel" id="login-form-sms" action="login-sms"
 									class="am-form am-padding-xl am-padding-bottom-sm">
 									<div class="am-g am-container">
-										<h2>登录管理平台</h2>
+										<h3>使用短信验证码登录平台</h3>
 										<form:errors path="password" class="am-alert am-alert-danger center"></form:errors>
 									</div>
 									<div class="am-g am-padding-sm">
@@ -116,13 +116,12 @@
 												data-validation-message="验证失败" />
 											<span class="am-input-group-btn">
 												<button id="btn_sms_token" class="am-btn am-btn-warning" type="button">
-													<i class="am-icon-spinner am-icon-spin"></i>
-													获取
+													点击获取
 												</button>
 											</span>
 										</div>
 										
-										<button type="button" id="login-btn-sms" class="am-btn am-btn-danger am-btn-block am-radius">登 录</button>
+										<button type="button" id="login-btn-sms" class="am-btn am-btn-success am-btn-block am-radius">登 录</button>
 										<div class="am-form-group am-margin-top-sm am-text-sm">
 											<div class="am-fl">
 												<a href="#" onclick="javascript:loginSwitch('tab-login-pass')">
@@ -169,7 +168,7 @@
 							class="am-form-field am-radius js-pattern-valitecode" placeholder="手机短信验证码" data-validation-message="验证失败"
 							required="required" type="text">
 						<span class="am-input-group-btn">
-							<button id="getValidateCodeBtn" class="am-btn am-btn-default" type="button">获取验证码</button>
+							<button id="getValidateCodeBtn" class="am-btn am-btn-warning" type="button">获取验证码</button>
 						</span>
 					</div>
 					<div class="am-form-group am-input-group">
