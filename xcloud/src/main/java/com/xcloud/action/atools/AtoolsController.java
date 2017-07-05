@@ -133,4 +133,10 @@ public class AtoolsController extends BaseController {
 	public String toolsReq(){
 		return "atools/atools-req";
 	}
+	
+	@AuthPassport
+	@RequestMapping(value = "sys-intro",method = RequestMethod.GET)
+	public String sysIntro(){
+		return "atools/sys-intro";
+	}
 }

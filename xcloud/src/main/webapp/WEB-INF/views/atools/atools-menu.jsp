@@ -17,6 +17,7 @@
 			</a>
 		</li>
 		
+		<li><a href="/xcloud/atools/sys-intro"><span class="am-icon-binoculars"></span>&nbsp; 版本说明</a></li>
 	</ul>
 
 
