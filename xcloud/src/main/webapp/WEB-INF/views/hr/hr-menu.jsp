@@ -4,6 +4,34 @@
 	<ul class="am-list admin-sidebar-list">
 		
 		<li class="admin-parent">
+			<a class="am-collapsed" onclick="setMenuId('collapse-nav-hr-entry')"> 
+				<span class="am-icon-user"></span>&nbsp; 入职管理
+				<span class="am-icon-angle-right am-fr am-margin-right"></span>
+			</a>
+			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-entry">
+				<li>
+					<a href="/xcloud/hr/offer-form" class="am-cf"> 
+						<span class="am-icon-folder-open-o"></span>&nbsp; 发offer
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/hr/offer-list" class="am-cf"> 
+						<span class="am-icon-user-plus"></span>&nbsp; offer管理
+					</a>
+				</li>
+				<li>
+					<a href="/xcloud/hr/staff-flow" class="am-cf"> 
+						<span class="am-icon-puzzle-piece"></span>&nbsp; 办理入职
+					</a>
+				</li>
+			</ul>
+		</li>
+		
+		<li><a href="/xcloud/hr/salary-index"><span class="am-icon-binoculars"></span>&nbsp; 薪酬管理</a></li>
+		<li><a href="/xcloud/hr/insu-index"><span class="am-icon-binoculars"></span>&nbsp; 社保管理</a></li>
+		<li><a href="/xcloud/hr/hr-report"><span class="am-icon-binoculars"></span>&nbsp; 人事报表</a></li>
+		
+		<li class="admin-parent">
 			<a class="am-collapsed" onclick="setMenuId('collapse-nav-hr-staff')"> 
 				<span class="am-icon-user"></span>&nbsp; 员工管理
 				<span class="am-icon-angle-right am-fr am-margin-right"></span>
@@ -96,48 +124,10 @@
 					</a>
 				</li>
 			
-				<!-- <li>
-					<a href="#" class="am-cf"> 
-						<span class="am-icon-forumbee"></span> 发布职位
-					</a>
-				</li>
-				<li>
-					<a href="#"> 
-						<span class="am-icon-list"></span> 职位一览
-					</a>
-				</li>
-				
-				<li>
-					<a href="/xcloud/hr/hunter/job_publish_list" class="am-cf"> 
-						<span class="am-icon-dot-circle-o"></span> 内推悬赏大厅
-					</a>
-				</li> -->
 			</ul>
 		</li>
 		
-		<!-- <li class="admin-parent">
-			<a class="am-collapsed" onclick="setMenuId('collapse-nav-hr-resume')"> 
-				<span class="am-icon-th-list"></span> 企业人才库
-				<span class="am-icon-angle-right am-fr am-margin-right"></span>
-			</a>
-			<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav-hr-resume">
-				<li>
-					<a href="#" class="am-cf"> 
-						<span class="am-icon-cloud-upload"></span> 导入简历
-					</a>
-				</li>
-				<li>
-					<a href="/xcloud/hr/resume/resume_exchange_list" class="am-cf"> 
-						<span class="am-icon-exchange"></span> 简历交换大厅
-					</a>
-				</li>
-				<li>
-					<a href="#" class="am-cf"> 
-						<span class="am-icon-rss"></span> 人才信息订阅
-					</a>
-				</li>
-			</ul>
-		</li> -->
+		
 		<li><a href="/xcloud/hr/service"><span class="am-icon-binoculars"></span>&nbsp; 找服务商</a></li>
 	</ul>
 </div>

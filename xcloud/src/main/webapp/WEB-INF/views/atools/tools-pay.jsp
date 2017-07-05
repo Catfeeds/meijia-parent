@@ -14,7 +14,7 @@
 	<!--header end-->
 	<div class="am-cf admin-main">
 		<!-- sidebar start -->
-		<%@ include file="../atools/atools-menu.jsp"%>
+		<%@ include file="../schedule/schedule-menu.jsp"%>
 		<!-- sidebar end -->
 		<!-- content start -->
 		<div class="admin-content">

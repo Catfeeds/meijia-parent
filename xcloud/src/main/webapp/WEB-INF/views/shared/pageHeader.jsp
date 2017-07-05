@@ -50,13 +50,13 @@
 				<a href="/xcloud/index" onclick="setTopMenuId('top-index', '')" title="首页">&nbsp; 首页 &nbsp;</a>
 			</li>
 			<li id="top-schedule">
-				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-shcedule-card')" title="效率">&nbsp; 效率 &nbsp;</a>
+				<a href="/xcloud/schedule/list" onclick="setTopMenuId('top-schedule', 'collapse-nav-atools')" title="效率">&nbsp; 效率 &nbsp;</a>
 			</li>
 			<li id="top-study">
 				<a href="/xcloud/study/index" onclick="setTopMenuId('top-study', 'collapse-nav-study')" title="成长" target="_top">&nbsp; 成长 &nbsp;</a>
 			</li>
 			<li id="top-hr">
-				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-staff')" title="人事" target="_top">&nbsp; 人事 &nbsp;</a>
+				<a href="/xcloud/staff/list" onclick="setTopMenuId('top-hr', 'collapse-nav-hr-entry')" title="人事" target="_top">&nbsp; 人事 &nbsp;</a>
 			</li>
 			<li id="top-xz">
 				<a href="/xcloud/xz/assets/company_asset_list" onclick="setTopMenuId('top-xz', 'collapse-nav-xz-assets')" title="行政"
