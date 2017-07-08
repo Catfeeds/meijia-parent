@@ -164,7 +164,7 @@ public class Constants {
 	
 	//积分和经验值返回定义
 	public static int SCORE_USER_REG = 100;			//用户注册
-	public static int SCORE_DAY_SIGN = 30;			//签到
+	public static int SCORE_DAY_SIGN = 10;			//签到
 	public static int SCORE_CARD_CREATE = 10;		//创建卡片
 	public static int SCORE_LEAVE = 10;				//请假申请
 	public static int SCORE_CHECKIN = 10;			//云考勤

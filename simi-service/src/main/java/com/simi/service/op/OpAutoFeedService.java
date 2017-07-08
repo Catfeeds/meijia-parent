@@ -20,4 +20,6 @@ public interface OpAutoFeedService {
 
 	List<OpAutoFeed> selectByTotal(OpAutoFeedSearchVo searchVo);
 
+	List<OpAutoFeed> selectBySearchVo(OpAutoFeedSearchVo searchVo);
+
 }

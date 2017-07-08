@@ -1,9 +1,13 @@
 package com.simi.vo.user;
 
+import java.util.List;
+
 
 public class UserActionSearchVo {
 	  
 	  private Long userId;
+	  
+	  private List<Long> userIds;
 	  
 	  private String actionType;
 	  
@@ -51,6 +55,14 @@ public class UserActionSearchVo {
 
 	public void setEndTime(Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public List<Long> getUserIds() {
+		return userIds;
+	}
+
+	public void setUserIds(List<Long> userIds) {
+		this.userIds = userIds;
 	}
 
 }

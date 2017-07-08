@@ -68,4 +68,9 @@ public class OpAutoFeedServiceImpl implements OpAutoFeedService {
 	public List<OpAutoFeed> selectByTotal(OpAutoFeedSearchVo searchVo) {
 		return opAutoFeedMapper.selectByTotal(searchVo);
 	}
+	
+	@Override
+	public List<OpAutoFeed> selectBySearchVo(OpAutoFeedSearchVo searchVo) {
+		return opAutoFeedMapper.selectBySearchVo(searchVo);
+	}
 }

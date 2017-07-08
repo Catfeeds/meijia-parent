@@ -37,10 +37,13 @@ function getTodaySign() {
 				$("#btn-day-sign").html("点我签到 领取奖励");
 			}
 			
-			var alarmDaySign = datas.alarm_day_sign;
+			var alarmDaySign = datas.alarmDaySign;
 			if (alarmDaySign == 1) {
 				$("#alarmDaySignCheckBox").uCheck('check');
 			}
+			
+			var totalContinue = datas.totalContinue;
+			$("#totalDaySign").html(totalContinue);
 		}
 	});
 }
@@ -73,7 +76,7 @@ function getDaySignList() {
 
 				if (signed == "已签") totalSigned = totalSigned + 1;
 				
-				if (day <= 4) {
+				if (i < 4) {
 					trHeader1+="<td><strong>"+week+"</strong><br>"+dayStr+"</td>";
 					if (signed == "") {
 						trValue1+="<td><button type=\"button\" class=\"am-btn am-btn-default am-radius\">未签</button></td>";
@@ -91,8 +94,15 @@ function getDaySignList() {
 			});
 			trHeader1+= "</tr>";
 			trValue1+= "</tr>";
-			trHeader2+= "<td><strong>领取<br>一周奖励</strong></td></tr>";
-			trValue2+= "<td><button type=\"button\" class=\"am-btn am-btn-default am-radius\">抽奖</button></td></tr>";
+			
+			if (totalSigned == 7) {
+				trHeader2+= "<td><strong>领取<br>一周奖励</strong></td></tr>";
+				trValue2+= "<td><button type=\"button\" class=\"am-btn am-btn-default am-radius\" onclick=\"daySignLottery()\">抽奖</button></td></tr>";
+			} else  {
+				trHeader2+= "<td><strong>领取<br>一周奖励</strong></td></tr>";
+				trValue2+= "<td></td></tr>";
+			}
+			
 			
 			tableHtml+=trHeader1;
 			tableHtml+=trValue1;
@@ -103,7 +113,6 @@ function getDaySignList() {
 			
 			$("#sign-list").html(tableHtml);
 			
-			$("#totalDaySign").html(totalSigned);
 		}
 	});
 }
@@ -171,4 +180,11 @@ function setAlarmDaySign() {
 			var status = data.status;
 		}
 	});
+}
+
+function daySignLottery() {
+	if (userId == undefined || userId == "" || userId == 0) return false;
+	
+	location.href = "http://" + host + "/simi-h5/lottery/index.html?user_id="+userId;
+	
 }

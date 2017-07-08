@@ -19,6 +19,8 @@ public interface OpAutoFeedMapper {
     int updateByPrimaryKey(OpAutoFeed record);
     
     List<OpAutoFeed> selectByTotal(OpAutoFeedSearchVo searchVo);
+    
+    List<OpAutoFeed> selectBySearchVo(OpAutoFeedSearchVo searchVo);
 
 	List<OpAutoFeed> selectByListPage();
 }

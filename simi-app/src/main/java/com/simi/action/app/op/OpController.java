@@ -1,6 +1,8 @@
 package com.simi.action.app.op;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import com.simi.service.op.OpAutoFeedService;
 import com.simi.service.op.OpChannelService;
 import com.simi.service.user.UserActionRecordService;
 import com.meijia.utils.BeanUtilsExp;
+import com.meijia.utils.DateUtil;
 import com.meijia.utils.ImgServerUtil;
 import com.meijia.utils.StringUtil;
 import com.simi.vo.AppResultData;
@@ -198,19 +201,27 @@ public class OpController extends BaseController {
 
 		AppResultData<Object> result = new AppResultData<Object>(Constants.SUCCESS_0, ConstantMsg.SUCCESS_0_MSG, "");
 		
-		
+		Calendar ca = new GregorianCalendar();
+		int days = ca.get(Calendar.WEEK_OF_YEAR);
 		OpAutoFeedSearchVo searchVo = new OpAutoFeedSearchVo();
 		searchVo.setAutoType(autoType);
+		searchVo.setId(Long.valueOf(days));
 		searchVo.setStatus((short) 1);
 		
 		List<OpAutoFeed> list = opAutoFeedService.selectByTotal(searchVo);
 
-		if (list.isEmpty())
-			return result;
+		if (list.isEmpty()) {
+			searchVo = new OpAutoFeedSearchVo();
+			searchVo.setAutoType(autoType);
+			searchVo.setId(Long.valueOf(days));
+			searchVo.setStatus((short) 1);
+			list = opAutoFeedService.selectByTotal(searchVo);
+			
+			if (list.isEmpty()) return result;
+		}
+		
 		
 		//打乱顺序
-		Collections.shuffle(list);
-
 		OpAutoFeed item = list.get(0);
 
 		OpAutoFeedVo vo = new OpAutoFeedVo();
@@ -221,10 +232,6 @@ public class OpController extends BaseController {
 		List<Imgs> imgList = imgService.selectBySearchVo(isearchVo);
 		vo.setImgs(imgList);
 
-		// 使用数加1;
-		item.setTotal(item.getTotal() + 1);
-//		item.setStatus((short) 0);
-		opAutoFeedService.updateByPrimaryKeySelective(item);
 
 		result.setData(vo);
 		return result;

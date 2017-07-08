@@ -28,6 +28,14 @@
 		order by total asc limit 10
 	</select>
 	
+	<select id="selectBySearchVo" resultMap="BaseResultMap" parameterType="com.simi.vo.op.OpAutoFeedSearchVo">
+		select
+		<include refid="Base_Column_List" />
+		from op_auto_feed
+		<include refid="bySearchVo"/>
+		order by id desc
+	</select>
+	
 	<select id="selectByListPage" resultMap="BaseResultMap" >
 		select
 		<include refid="Base_Column_List" />
